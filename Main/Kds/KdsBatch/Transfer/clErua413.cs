@@ -271,6 +271,7 @@ namespace KdsBatch
               {
                   fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
                   fErech += GetErechRechiv(clGeneral.enRechivim.YomMachla.GetHashCode());
+                  fErech += GetErechRechiv(clGeneral.enRechivim.YomTeuna.GetHashCode());
               }
               else
               {

@@ -397,6 +397,13 @@ namespace KdsBatch
                 return Meafyenim[91].Value;
             }
         }
+        public int iMeafyen92
+        {
+            get
+            {
+                return Meafyenim[92].IntValue;
+            }
+        }
         public int iMeafyen100
         {
             get

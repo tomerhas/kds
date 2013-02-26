@@ -172,7 +172,11 @@ namespace KdsBatch
                 //if (_iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode())
                 //{
                 sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomTipatChalav.GetHashCode()), 4, 2));
-                sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomTeuna.GetHashCode()), 4, 2));
+                
+                if (_iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode()  || (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode() && _dMonth >= dTakanonSoziali))
+                    sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomTeuna.GetHashCode()), 4, 2));
+                else sErua416.Append(GetBlank(4));
+            
                 sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomHadracha.GetHashCode()), 4, 2));
                 //if (_iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode() && _iMaamadRashi != clGeneral.enMaamad.Friends.GetHashCode())
                 //{

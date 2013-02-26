@@ -3189,12 +3189,15 @@ namespace KdsBatch
 
                         //ג
 
-                        if (((objOved.Taarich < objOved.objParameters.dChodeshTakanonSoziali &&
-                                (objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8 || objOved.objPirteyOved.iMutamut == 1 ||
-                                objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8) && fMichsaYomit > 0) ||
-                                 (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iMutamBitachon == 6)) && objOved.objPirteyOved.iZmanMutamut > 0)
+                        //if (((objOved.Taarich < objOved.objParameters.dChodeshTakanonSoziali &&
+                        //        (objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8 || objOved.objPirteyOved.iMutamut == 1 ||
+                        //        objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8) && fMichsaYomit > 0) ||
+                        //         (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iMutamBitachon == 6)) && objOved.objPirteyOved.iZmanMutamut > 0)
+                        if ((objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8 || objOved.objPirteyOved.iMutamut == 1 ||
+                                objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8) && fMichsaYomit > 0 && objOved.objPirteyOved.iZmanMutamut > 0)
                         {
-                                if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode())
+                                if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode() &&
+                                    ((objOved.objPirteyOved.iMutamBitachon == 6) || (objOved.objPirteyOved.iZmanMutamut > 0 && objOved.Taarich < objOved.objParameters.dChodeshTakanonSoziali)))
                                 {
                                      rowSidur = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur in(99820,99822,99821)");
                                
@@ -3208,7 +3211,9 @@ namespace KdsBatch
                                     //    fErechRechiv = (objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit;    
                                     //}
                                 }
-                                else if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
+                                else if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() ||
+                                         (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode() &&
+                                          objOved.objPirteyOved.iMutamBitachon != 6 && objOved.objPirteyOved.iZmanMutamut > 0 && objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali) )
                                 {
                                     if (objOved.objMeafyeneyOved.iMeafyen33 == 0 && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut)
                                     {
@@ -3512,14 +3517,16 @@ namespace KdsBatch
                 fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich); 
              //   iSugYom = SugYom;
 
-                if (((objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (objOved.objMeafyeneyOved.sMeafyen32 != "1")) ||
-                    objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() && fMichsaYomit == 0 && oCalcBL.CheckYomShishi(objOved.SugYom))
+                if (!(objOved.objMeafyeneyOved.iMeafyen92>0 && oCalcBL.CheckYomShishi(objOved.SugYom)))
                 {
+                    if (((objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (objOved.objMeafyeneyOved.sMeafyen32 != "1")) ||
+                        objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() && fMichsaYomit == 0 && oCalcBL.CheckYomShishi(objOved.SugYom))
+                    {
 
-                    fDakotRechiv = CalcDayRechiv76(fMichsaYomit, objOved.Taarich);
+                        fDakotRechiv = CalcDayRechiv76(fMichsaYomit, objOved.Taarich);
 
-                    addRowToTable(clGeneral.enRechivim.Nosafot125.GetHashCode(), fDakotRechiv);
-
+                        addRowToTable(clGeneral.enRechivim.Nosafot125.GetHashCode(), fDakotRechiv);
+                    }
                 }
             }
             catch (Exception ex)
@@ -3594,14 +3601,17 @@ namespace KdsBatch
                 fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich); 
                // iSugYom = SugYom;
 
-                if ((objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) ||
-                    objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() && fMichsaYomit == 0 && oCalcBL.CheckYomShishi(objOved.SugYom))
+                if (!(objOved.objMeafyeneyOved.iMeafyen92 > 0 && oCalcBL.CheckYomShishi(objOved.SugYom)))
                 {
+                    if ((objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) ||
+                        objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() && fMichsaYomit == 0 && oCalcBL.CheckYomShishi(objOved.SugYom))
+                    {
 
-                    fDakotRechiv = CalcDayRechiv77(fMichsaYomit, objOved.Taarich);
+                        fDakotRechiv = CalcDayRechiv77(fMichsaYomit, objOved.Taarich);
 
-                    addRowToTable(clGeneral.enRechivim.Nosafot150.GetHashCode(), fDakotRechiv);
+                        addRowToTable(clGeneral.enRechivim.Nosafot150.GetHashCode(), fDakotRechiv);
 
+                    }
                 }
             }
             catch (Exception ex)
@@ -3696,16 +3706,18 @@ namespace KdsBatch
             float fSumDakotRechiv, fDakotNahagut, fDakotTnua, fDakotTafkid, fTosefetZmanNesia, fDakotZikuyChofesh, fDakotNochehut;
             float fDakotRechiv76, fDakotRechiv77, fZmanRetzifutShabat275, fNosafotShabatKizuz, fMichsaYomit;
             Boolean bShishiErevChag = false, bNotCalc=false;
+            float fRechivEzer;
             try
             {
                 fSumDakotRechiv = 0;
                 fDakotZikuyChofesh = 0;
-
+                fRechivEzer = 0;
+                fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
+                   
                if  (oCalcBL.CheckYomShishi(objOved.SugYom) || oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom))
                {
                    bShishiErevChag = true;
 
-                   fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                    fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
 
                    if (fDakotNochehut > 0 && fMichsaYomit > 0 && fMichsaYomit > fDakotNochehut)
@@ -3731,7 +3743,12 @@ namespace KdsBatch
                            fZmanRetzifutShabat275 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanRetzifutShabat); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanRetzifutShabat.GetHashCode(), objOved.Taarich);
 
                            fSumDakotRechiv = (fDakotNahagut + fDakotTnua + fDakotTafkid + fZmanRetzifutShabat275) - (fDakotZikuyChofesh + fTosefetZmanNesia);
-                           addRowToTable(clGeneral.enRechivim.NosafotShabat.GetHashCode(), fSumDakotRechiv);
+
+                           if (objOved.objMeafyeneyOved.iMeafyen92>0 &&  oCalcBL.CheckYomShishi(objOved.SugYom))
+                           {
+                               fRechivEzer = fDakotNochehut - fSumDakotRechiv;
+                           }
+                           addRowToTable(clGeneral.enRechivim.NosafotShabat.GetHashCode(), fSumDakotRechiv, fRechivEzer);
                        }
                        fNosafotShabatKizuz = 0;
                        if (fSumDakotRechiv > 0)
@@ -4067,7 +4084,7 @@ namespace KdsBatch
                     {
                         fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
 
-                        if (fMichsaYomit > 0)
+                        if (fMichsaYomit > 0 || (objOved.objMeafyeneyOved.iMeafyen92>0 && oCalcBL.CheckYomShishi(objOved.SugYom)))
                         {
                             fDakotRechiv = CalcDayRechiv76(fMichsaYomit, objOved.Taarich);
 
@@ -4098,7 +4115,7 @@ namespace KdsBatch
                     //אחרת, אין לפתוח רשומה לרכיב.
                     //אם מכסה יומית  מחושבת (רכיב 126) > 0 
                     //ערך הרכיב = ערך רכיב נוספות 150% (רכיב 77) 
-                    if (fMichsaYomit > 0)
+                    if (fMichsaYomit > 0 || (objOved.objMeafyeneyOved.iMeafyen92 > 0 && oCalcBL.CheckYomShishi(objOved.SugYom)))
                     {
                         if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
                         {
@@ -5415,11 +5432,19 @@ namespace KdsBatch
                 {
                     fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
                     fDakotNocheut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
-                    if (fMichsaYomit > 0 && fDakotNocheut > fMichsaYomit)
+                    if ((fMichsaYomit > 0 && fDakotNocheut > fMichsaYomit))
                     {
                         fSumDakotRechiv = (fDakotNocheut - fMichsaYomit) / 60;
                         addRowToTable(clGeneral.enRechivim.Nosafot100.GetHashCode(), fSumDakotRechiv);
                     }
+                   
+                    //if (objOved.objMeafyeneyOved.iMeafyen92 > 0 && oCalcBL.CheckYomShishi(objOved.SugYom))
+                    //{
+                    //    fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot25.GetHashCode(), objOved.Taarich);
+                    //    fSumDakotRechiv += oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot50.GetHashCode(), objOved.Taarich);
+                    //    addRowToTable(clGeneral.enRechivim.Nosafot100.GetHashCode(), (fSumDakotRechiv/60));
+                  
+                    //}
                 }
             }
             catch (Exception ex)
@@ -7971,7 +7996,7 @@ namespace KdsBatch
         }
         private void addRowToTable(int iKodRechiv, float fErechRechiv, float fErechEzer)
         {
-            if (fErechRechiv > 0)
+            if (fErechRechiv > 0 || fErechEzer>0)
             {
                 DataRow drChishuv;
 //                DataRow[] drChishuvRows;
