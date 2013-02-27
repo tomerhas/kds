@@ -7991,7 +7991,8 @@ namespace KdsBatch
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
                         oSidur = (clSidur)htEmployeeDetails[i];
-
+                        bHaveSidurVisaFromMapa = false;
+                        bHaveSidurFromMatala = false;
                         //סידור מפה: אינו מתחיל בספרות 99/
                         //סידור מיוחד שמקורו במטלה מהמפה (באחת הרשומות של הפעילויות בסידור0< TB_peilut_Ovdim. Mispar_matala)/
                         //סידור ויזה שהגיע מהמפה (בפעילות שהיא מסוג מק"ט 5 קיים ערך בשדה MISPAR_VISA

@@ -61,7 +61,7 @@
                    <ContentTemplate> 
                      <div id="divNetunim" runat="server" onscroll="FreezeHeader(this)" dir="rtl" style="text-align:right;width:965px;overflow-x:hidden;">
                         <asp:GridView ID="grdRikuzim" runat="server" AllowSorting="true" 
-                                   AutoGenerateColumns="false" PageSize="9" CssClass="Grid"  
+                                   AutoGenerateColumns="false" PageSize="7" CssClass="Grid"  
                                  Width="950px" EmptyDataText="לא נמצאו נתונים!" ShowHeader="true" 
                                  OnRowDataBound="grdRikuzim_RowDataBound" OnSorting="grdRikuzim_Sorting" >                                 
                                <Columns>                                                            
