@@ -2617,7 +2617,7 @@ namespace KdsBatch
                     }
 
                     if (firstSidurOfTheDay.iLoLetashlum==0 && shatGmarOfPrevDay != DateTime.MinValue &&
-                        shatGmarOfPrevDay.Day == firstSidurOfTheDay.dFullShatHatchala.Day &&
+                        shatGmarOfPrevDay.Date == firstSidurOfTheDay.dFullShatHatchala.Date &&
                         (shatGmarOfPrevDay - firstSidurOfTheDay.dFullShatHatchala) > TimeSpan.Zero)
                     {
                         hasHafifa = true;
@@ -2626,7 +2626,7 @@ namespace KdsBatch
 
                     if (lastSidurOfTheDay.iLoLetashlum == 0 && shatHatchalaOfNextDay != DateTime.MinValue &&
                         lastSidurOfTheDay.dFullShatGmar != DateTime.MinValue &&
-                        lastSidurOfTheDay.dFullShatGmar.Day == shatHatchalaOfNextDay.Day &&
+                        lastSidurOfTheDay.dFullShatGmar.Date == shatHatchalaOfNextDay.Date &&
                         (lastSidurOfTheDay.dFullShatGmar - shatHatchalaOfNextDay) > TimeSpan.Zero)
                     {
                         hasHafifa = true;
