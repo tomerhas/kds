@@ -557,9 +557,12 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=iif(Fields!LO_LETASHLUM.Value="1","לא לתשלום",
-iif((Fields!MISPAR_SIDUR.Value = nothing and Fields!DAYOFWEEK.Value &lt;&gt; "ו" and Fields!DAYOFWEEK.Value &lt;&gt; "ש" and Fields!DAYOFWEEK.Value &lt;&gt; "ח" and Fields!DAYOFWEEK.Value &lt;&gt; "ע") ,"אין דיווח",
-iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value= nothing)  ,"חסר דיווח","")))</Value>
+                                                    <Value>=Fields!HEARA.Value
+
+'iif(Fields!LO_LETASHLUM.Value="1","לא לתשלום",
+'iif(Fields!KOD_HEADRUT.Value=1,"חופשה מאושרת",
+'iif((Fields!MISPAR_SIDUR.Value = nothing and Fields!DAYOFWEEK.Value &lt;&gt; "ו" and Fields!DAYOFWEEK.Value &lt;&gt; "ש" and Fields!DAYOFWEEK.Value &lt;&gt; "ח" and Fields!DAYOFWEEK.Value &lt;&gt; "ע") ,"אין דיווח",
+'iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value= nothing)  ,"חסר דיווח",""))))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -579,6 +582,7 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                                               <PaddingRight>2pt</PaddingRight>
                                               <PaddingTop>1pt</PaddingTop>
                                               <PaddingBottom>1pt</PaddingBottom>
+                                              <Direction>RTL</Direction>
                                             </Style>
                                           </Textbox>
                                         </CellContents>
@@ -1001,7 +1005,6 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                                               <PaddingBottom>1pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -2028,6 +2031,14 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
         <Field Name="LO_LETASHLUM">
           <DataField>LO_LETASHLUM</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KOD_HEADRUT">
+          <DataField>KOD_HEADRUT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HEARA">
+          <DataField>HEARA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="DIFFERENCE_HOUR">
           <Value>=
