@@ -258,7 +258,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 tarMe =  DateTime.Parse(CtrlStartDate);
                 if (tarMe >= DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy")))
                     CtrlEndDate =  DateTime.Now.ToString("dd/MM/yyyy");
-                else CtrlEndDate = DateTime.Parse("01/" + tarMe.ToString("MM/yyyy")).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
+              //  else CtrlEndDate = DateTime.Parse("01/" + tarMe.ToString("MM/yyyy")).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
             }
         }
         catch (Exception ex)

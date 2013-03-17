@@ -3272,7 +3272,7 @@ namespace KdsBatch
                             }
                             if (fMichsaYomit > 0 && fMichsaYomit > fDakotNochehut && fDakotNochehut > 0 ) //|| (objOved.SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode())))
                             {
-                                fKizuzMeheadrut = (fMichsaYomit - fDakotNochehut) / 60;
+                                fKizuzMeheadrut = (fMichsaYomit - fDakotNochehut)/ 60;
                             }
                         }
 
@@ -3287,13 +3287,17 @@ namespace KdsBatch
                             fErechRechiv = fErechRechiv * float.Parse("0.6");
                         }
 
+                        rowSidur = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur=99822");
 
-                        if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                        if (rowSidur.Length == 0)
                         {
-                            if (fErechRechiv == 1 && objOved.objMatzavOved.iKod_Headrut == 0 && objOved.Taarich<= objOved.oGeneralData._TarAd.AddMonths(-1))
+                            if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
                             {
-                                fErechRechiv = 0;
-                                addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), 1);
+                                if (fErechRechiv == 1 && objOved.objMatzavOved.iKod_Headrut == 0 && objOved.Taarich < DateTime.Parse("01/" + (objOved.oGeneralData._TarAd.Date.ToString("MM/yyyy"))))
+                                {
+                                    fErechRechiv = 0;
+                                    addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), 1);
+                                }
                             }
                         }
                         fErechRechiv = float.Parse(Math.Round(fErechRechiv, 2).ToString()); 

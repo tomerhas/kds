@@ -547,7 +547,9 @@ namespace KdsLibrary.Utils.Reports
         SpecificAverage,
         ProfitOfLinesDetailed,
         ProfitOfLinesGroup,
-        RdlPrecenceOvdeyMeshekShishiShabat
+        RdlPrecenceOvdeyMeshekShishiShabat,
+        RdlCountOvdeyMeshekShabat,
+        RdlReportMushalimDetails
     }
     public enum Orientation
     {
