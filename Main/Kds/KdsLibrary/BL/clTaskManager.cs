@@ -36,6 +36,24 @@ namespace KdsLibrary.BL
             }
         }
 
+        public DataTable GetLogKvuzotByKod(int kod_kvuza, int kod_peilut, DateTime taarich)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                clDal oDal = new clDal();
+                oDal.AddParameter("p_kod_kvuza", ParameterType.ntOracleInteger, kod_kvuza, ParameterDir.pdInput);
+                oDal.AddParameter("p_kod_peilut", ParameterType.ntOracleInteger, kod_peilut, ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);  
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(clGeneral.cGetLogKvuzotByKod, ref dt);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public DataTable GetStausSdrn(string dTaarich)
         {
             try

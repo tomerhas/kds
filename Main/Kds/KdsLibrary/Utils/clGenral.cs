@@ -336,6 +336,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
         #region pkg_task_Manager 
         public const string cGetStuckGroup = "pkg_task_Manager.GetStuckGroup";
+        public const string cGetLogKvuzotByKod = "pkg_task_Manager.GetLogKvuzotByKod";
         #endregion 
         #region pkg_utils constants
         public const string cProGetPremiaYadanit = "pkg_utils.pro_get_premia_yadanit";
@@ -368,6 +369,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const string cProMoveRecordsToHistory = "PKG_UTILS.MoveRecordsToHistory";
         public const string cProGetTavlaotToRefresh = "PKG_UTILS.pro_get_tavlaot_to_refresh";
         public const string cProGetOvdimLeBakashatChishuv = "PKG_UTILS.pro_get_ovdim_by_bakasha";
+
+        
      
 #endregion
         #region PKG_APPROVALS constants
