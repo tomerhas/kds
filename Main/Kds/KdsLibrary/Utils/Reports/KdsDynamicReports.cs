@@ -533,6 +533,7 @@ namespace KdsLibrary.Utils.Reports
         IdkuneyRashemet,
         Average,
         DescriptionAllComponents,
+        AverageLeOved,
         HityazvutBePundakimHitchashbenut,
         HityazvutBePundakimTlunot,
         HityazvutBePundakimKalkalit,

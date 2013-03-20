@@ -410,23 +410,29 @@ namespace KdsBatch.TaskManager
             try
             {
                 LogDt = oTask.GetLogKvuzotByKod(4, 1, Taarich.AddDays(1));
-                moedTchilaSdrn = DateTime.Parse(LogDt.Rows[0]["moed_tchila"].ToString());
-                LogDt = oTask.GetLogKvuzotByKod(21, 1, Taarich.AddDays(1));
-                moedTchilaBakara = DateTime.Parse(LogDt.Rows[0]["moed_tchila"].ToString());
-                numLog21 = LogDt.Rows.Count;
-
-                if (numLog21 > 1 && moedTchilaBakara.Subtract(moedTchilaSdrn).TotalMinutes >= 60)
+                if (LogDt.Rows.Count > 0)
                 {
-                     sdrnDt = oTask.GetStausSdrn(Taarich.ToString("yyyyMMdd"));
-                     if (sdrnDt.Rows.Count == 0 || sdrnDt.Rows[0]["STATUS"].ToString() == "")
-                     {
-                         oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
-                         CheckStatusAgain(Taarich, "RunBakaratSDRN");
-                     }
-                     else if (sdrnDt.Rows[0]["STATUS"].ToString() == "1" || sdrnDt.Rows[0]["STATUS"].ToString() == "2")
-                     {
-                        CheckStatusAgain(Taarich, "RunBakaratSDRN");
-                     }    
+                    moedTchilaSdrn = DateTime.Parse(LogDt.Rows[0]["moed_tchila"].ToString());
+                    LogDt = oTask.GetLogKvuzotByKod(21, 2, Taarich.AddDays(1));
+                    if (LogDt.Rows.Count > 0)
+                    {
+                        moedTchilaBakara = DateTime.Parse(LogDt.Rows[0]["moed_tchila"].ToString());
+                        numLog21 = LogDt.Rows.Count;
+
+                        if (numLog21 > 1 && moedTchilaBakara.Subtract(moedTchilaSdrn).TotalMinutes >= 60)
+                        {
+                            sdrnDt = oTask.GetStausSdrn(Taarich.ToString("yyyyMMdd"));
+                            if (sdrnDt.Rows.Count == 0 || sdrnDt.Rows[0]["STATUS"].ToString() == "")
+                            {
+                                oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
+                                CheckStatusAgain(Taarich, "RunBakaratSDRN");
+                            }
+                            else if (sdrnDt.Rows[0]["STATUS"].ToString() == "1" || sdrnDt.Rows[0]["STATUS"].ToString() == "2")
+                            {
+                                CheckStatusAgain(Taarich, "RunBakaratSDRN");
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)

@@ -124,30 +124,6 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         {
             switch (Report.NameReport)
             {
-                //case ReportName.DescriptionAllComponents:
-                //    SetWorkerViewLevel();
-                //        if (WorkerViewLevel.SelectedValue == "1")
-                //        {
-                //            MisparIshi.Enabled = true;
-                //            CompanyId.Enabled = false;
-                //            Region.Enabled = false;
-                //            Snif.Enabled = false;
-                //            Maamad.Enabled = false;
-                //            Isuk.Enabled = false;
-                //            Kod_Yechida.Enabled = false;
-                //        }
-                //        else
-                //        {
-                //            MisparIshi.Enabled = false;
-                //            CompanyId.Enabled = true;
-                //            Region.Enabled = true;
-                //            Snif.Enabled = true;
-                //            Maamad.Enabled = true;
-                //            Isuk.Enabled = true;
-                //            Kod_Yechida.Enabled = true;
-                //        }
-                    
-                //    break;
                 case ReportName.DriverWithoutTacograph:
                 case ReportName.DriverWithoutSignature:
                     if (!Page.IsPostBack)
