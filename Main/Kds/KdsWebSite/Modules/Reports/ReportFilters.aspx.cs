@@ -124,6 +124,30 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         {
             switch (Report.NameReport)
             {
+                //case ReportName.DescriptionAllComponents:
+                //    SetWorkerViewLevel();
+                //        if (WorkerViewLevel.SelectedValue == "1")
+                //        {
+                //            MisparIshi.Enabled = true;
+                //            CompanyId.Enabled = false;
+                //            Region.Enabled = false;
+                //            Snif.Enabled = false;
+                //            Maamad.Enabled = false;
+                //            Isuk.Enabled = false;
+                //            Kod_Yechida.Enabled = false;
+                //        }
+                //        else
+                //        {
+                //            MisparIshi.Enabled = false;
+                //            CompanyId.Enabled = true;
+                //            Region.Enabled = true;
+                //            Snif.Enabled = true;
+                //            Maamad.Enabled = true;
+                //            Isuk.Enabled = true;
+                //            Kod_Yechida.Enabled = true;
+                //        }
+                    
+                //    break;
                 case ReportName.DriverWithoutTacograph:
                 case ReportName.DriverWithoutSignature:
                     if (!Page.IsPostBack)
@@ -573,9 +597,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get { return (Label)TdFilter.FindControl("LBL_P_MIS_RITZA_LEHASVAA"); }
     }
-    private DropDownList Maamad
+    private ListBox Maamad
     {
-        get { return (DropDownList)TdFilter.FindControl("P_MAMAD"); }
+        get { return (ListBox)TdFilter.FindControl("P_MAMAD"); }
     }
     private ListBox Isuk
     {
@@ -589,9 +613,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get { return (CheckBoxList)TdFilter.FindControl("P_EZOR"); }
     }
-    private DropDownList Snif
+    private ListBox Snif
     {
-        get { return (DropDownList)TdFilter.FindControl("P_SNIF"); }
+        get { return (ListBox)TdFilter.FindControl("P_SNIF"); }
     }
     private DropDownList Region
     {
@@ -606,7 +630,11 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get { return (DropDownList)TdFilter.FindControl("P_SHAA"); }
     }
-
+    private ListBox Kod_Yechida
+    {
+        get { return (ListBox)TdFilter.FindControl("P_KOD_YECHIDA"); }
+    }
+    
 
 
     private AjaxControlToolkit.AutoCompleteExtender Auto_P_MIS_RASHEMET
