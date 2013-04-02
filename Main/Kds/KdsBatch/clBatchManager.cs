@@ -1224,7 +1224,7 @@ namespace KdsBatch
                     if (CheckErrorActive(164)) IsSidurSummerValid164(ref  oSidur, ref dtErrors);
                     if (CheckErrorActive(161)) IsSidurNAhagutValid161(drSugSidur, ref oSidur, ref dtErrors);
                     if (CheckErrorActive(195)) IsFirstDayShlilatRishayon195(drSugSidur, ref oSidur, ref dtErrors);
-                  //  if (CheckErrorActive(196)) IsSidurKupaiLeloHachtama196(i,drSugSidur, ref oSidur, ref dtErrors);
+            ////        if (CheckErrorActive(196)) IsSidurKupaiLeloHachtama196(i,drSugSidur, ref oSidur, ref dtErrors);
                     //IsSidurGriraValid177(drSugSidur, ref oSidur, ref dtErrors);
                    
                     if (!(bFirstSidur))//לא נבצע את הבדיקה לסידור הראשון
@@ -5678,30 +5678,33 @@ namespace KdsBatch
             clSidur ESidur;
             try
             {
-                if (oSidur.sSugAvoda == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString() || (drSugSidur.Length > 0 && drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString()))
+                if (oOvedYomAvodaDetails.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() )
                 {
-                    bError = true;
-                    for (int i = 0; i < htEmployeeDetails.Count; i++)
+                    if (oSidur.sSugAvoda == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString() || (drSugSidur.Length > 0 && drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString()))
                     {
-                        if (i != iSidur)
+                        bError = true;
+                        for (int i = 0; i < htEmployeeDetails.Count; i++)
                         {
-                            ESidur = (clSidur)htEmployeeDetails[i];
-                            if (ESidur.sSugAvoda == clGeneral.enSugAvoda.Shaon.GetHashCode().ToString())
+                            if (i != iSidur)
                             {
-                                if ((Math.Abs(oSidur.dFullShatHatchala.Subtract(ESidur.dFullShatHatchala).TotalMinutes) <= 60) &&
-                                    (Math.Abs(ESidur.dFullShatGmar.Subtract(oSidur.dFullShatGmar).TotalMinutes) <= 60))
+                                ESidur = (clSidur)htEmployeeDetails[i];
+                                if (ESidur.sSugAvoda == clGeneral.enSugAvoda.Shaon.GetHashCode().ToString())
+                                {
+                                    if ((Math.Abs(oSidur.dFullShatHatchala.Subtract(ESidur.dFullShatHatchala).TotalMinutes) <= 60) &&
+                                        (Math.Abs(ESidur.dFullShatGmar.Subtract(oSidur.dFullShatGmar).TotalMinutes) <= 60))
                                         bError = false;
+                                }
                             }
                         }
                     }
-                }
 
-                if (bError)
-                {
-                    drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "", enErrors.errkupaiLeloHachtama.GetHashCode());
-                    dtErrors.Rows.Add(drNew);
-                    isValid = false;
+                    if (bError)
+                    {
+                        drNew = dtErrors.NewRow();
+                        InsertErrorRow(oSidur, ref drNew, "", enErrors.errkupaiLeloHachtama.GetHashCode());
+                        dtErrors.Rows.Add(drNew);
+                        isValid = false;
+                    }
                 }
             }
             catch (Exception ex)
@@ -6951,6 +6954,7 @@ namespace KdsBatch
                         //שינוי 27
                         FixedShatHatchalaAndGmarSidurMapa27(ref oSidur, ref oObjSidurimOvdimUpd);
 
+                        
                         //שינוי 21
                        // FixedShatHatchalaForSidurVisa21(ref oSidur, ref oObjSidurimOvdimUpd);
                         htEmployeeDetails[i] = oSidur;
@@ -7856,6 +7860,58 @@ namespace KdsBatch
             {
                 clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 27, oSidur.iMisparIshi,oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "FixedShatHatchalaAndGmarSidurMapa27: " + ex.Message, null);
                 _bSuccsess = false;
+            }
+        }
+
+        private void SetShaotSidurKupai(int Index,ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
+        {
+            //string sug_sidur = "";
+            DataRow[] drSugSidur;
+            clSidur ESidur;
+            DateTime dShatHatchala, dShatGmar;
+            try
+            {
+                if (oOvedYomAvodaDetails.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                {
+                    drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, oSidur.dSidurDate, _dtSugSidur);
+
+                    if (oSidur.sSugAvoda == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString() || (drSugSidur.Length > 0 && drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString()))
+                    {
+                        for (int i = 0; i < htEmployeeDetails.Count; i++)
+                        {
+                            if (i != Index)
+                            {
+                                ESidur = (clSidur)htEmployeeDetails[i];
+                                if (ESidur.sSugAvoda == clGeneral.enSugAvoda.Shaon.GetHashCode().ToString())
+                                {
+                                    if ((Math.Abs(oSidur.dFullShatHatchala.Subtract(ESidur.dFullShatHatchala).TotalMinutes) <= 60) &&
+                                        (Math.Abs(ESidur.dFullShatGmar.Subtract(oSidur.dFullShatGmar).TotalMinutes) <= 60))
+                                    {
+                                        dShatHatchala = oSidur.dFullShatHatchala > ESidur.dFullShatHatchala ? oSidur.dFullShatHatchala : ESidur.dFullShatHatchala;
+                                        dShatGmar = oSidur.dFullShatGmar < ESidur.dFullShatGmar?oSidur.dFullShatGmar : ESidur.dFullShatGmar;
+
+                                        if (dShatHatchala != oObjSidurimOvdimUpd.SHAT_HATCHALA)
+                                        {
+                                            UpdateShatHatchala(ref oSidur, i, dShatHatchala, ref oObjSidurimOvdimUpd);
+                                        }
+                                        if (dShatGmar != oObjSidurimOvdimUpd.SHAT_GMAR)
+                                        {
+                                            oObjSidurimOvdimUpd.SHAT_GMAR = dShatGmar;
+                                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+
+                                            oSidur.dFullShatGmar = oObjSidurimOvdimUpd.SHAT_GMAR;
+                                            oSidur.sShatGmar = oSidur.dFullShatGmar.ToString("HH:mm");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+           //     clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errFirstDayShlilatRishayon195.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNAhagutValid161: " + ex.Message, null);
             }
         }
 
