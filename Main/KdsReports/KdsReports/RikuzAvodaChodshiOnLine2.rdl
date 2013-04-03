@@ -340,146 +340,6 @@
           </Border>
         </Style>
       </Rectangle>
-      <Textbox Name="Textbox6">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value xml:space="preserve">                        </Value>
-                <Style />
-              </TextRun>
-              <TextRun>
-                <Value> ל י ד י ע ת            ה ע ו ב ד י ם</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>חובה על עובד</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value> הנמצא בחופשה לדווח על כך באמצעות כרטיס עבודה או טופס דיווח העדרות אל מחלקת רישום. במידה ולא יתקבל דיווח מתאים </Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>.במחלקת רישום לגבי חודש קלנדרי מלא - לא יזוכה העובד בשכר, או בימי חופש, בגין אותו חודש </Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontSize>11pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>בברכת     חברים             מחלקת     רישום</Value>
-                <Style>
-                  <FontSize>11pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>7.32355cm</Top>
-        <Left>0.32341cm</Left>
-        <Height>3.74854cm</Height>
-        <Width>20.55873cm</Width>
-        <ZIndex>4</ZIndex>
-        <Style>
-          <Border>
-            <Style>Solid</Style>
-          </Border>
-          <BackgroundColor>Gainsboro</BackgroundColor>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Tablix Name="Tablix9">
         <TablixBody>
           <TablixColumns>
@@ -1238,7 +1098,7 @@
         <Left>0.37826cm</Left>
         <Height>0.79611cm</Height>
         <Width>20.46462cm</Width>
-        <ZIndex>5</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1265,7 +1125,7 @@
         <Left>0.61661cm</Left>
         <Height>0.29819cm</Height>
         <Width>1.26948cm</Width>
-        <ZIndex>6</ZIndex>
+        <ZIndex>5</ZIndex>
         <Visibility>
           <Hidden>true</Hidden>
         </Visibility>
@@ -1297,7 +1157,7 @@
         <Left>19.90327cm</Left>
         <Height>0.24807cm</Height>
         <Width>0.97887cm</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>6</ZIndex>
         <Visibility>
           <Hidden>true</Hidden>
         </Visibility>
@@ -3262,7 +3122,7 @@
         <Left>0.37826cm</Left>
         <Height>1.24282cm</Height>
         <Width>22.8713cm</Width>
-        <ZIndex>8</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -4882,7 +4742,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <Left>9.75508cm</Left>
         <Height>1.24282cm</Height>
         <Width>18.94294cm</Width>
-        <ZIndex>9</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -6864,7 +6724,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <Left>0.3777cm</Left>
         <Height>1.05506cm</Height>
         <Width>20.46992cm</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -10180,7 +10040,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <Left>0.37826cm</Left>
         <Height>1.49815cm</Height>
         <Width>20.46981cm</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -10552,11 +10412,11 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsPirteyOved</DataSetName>
-        <Top>4.56948in</Top>
-        <Left>3.79932in</Left>
+        <Top>2.97573in</Top>
+        <Left>3.81265in</Left>
         <Height>0.47013in</Height>
         <Width>4.40866in</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -10787,11 +10647,11 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsKizuz</DataSetName>
-        <Top>5.21322in</Top>
-        <Left>3.79932in</Left>
+        <Top>3.61947in</Top>
+        <Left>3.81265in</Left>
         <Height>0.47013in</Height>
         <Width>4.42199in</Width>
-        <ZIndex>13</ZIndex>
+        <ZIndex>12</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("dsKizuz")&gt;0,false,true)</Hidden>
         </Visibility>
@@ -10802,7 +10662,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>5.68335in</Height>
+    <Height>4.16252in</Height>
     <Style />
   </Body>
   <Width>11.29843in</Width>
