@@ -20,7 +20,6 @@ namespace KdsBatch.premyot {
     using System.Web.Services.Protocols;
     using System.ComponentModel;
     using System.Xml.Serialization;
-    using System.Net;
     
     
     /// <remarks/>
@@ -29,20 +28,12 @@ namespace KdsBatch.premyot {
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="wsPremyotSoap", Namespace="http://tempuri.org/")]
     public partial class wsPremyot : System.Web.Services.Protocols.SoapHttpClientProtocol {
-
-        protected override WebRequest GetWebRequest(Uri uri)
-        {
-            HttpWebRequest webRequest = (HttpWebRequest)base.GetWebRequest(uri);
-
-            webRequest.KeepAlive = false;
-
-            return webRequest;
-        }
-
-
+        
         private System.Threading.SendOrPostCallback CalcPremyotNihulTnuaOperationCompleted;
         
         private System.Threading.SendOrPostCallback CalcPremyotNihulTnuaToMonthOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback MeshekDataInputOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -87,6 +78,9 @@ namespace KdsBatch.premyot {
         
         /// <remarks/>
         public event CalcPremyotNihulTnuaToMonthCompletedEventHandler CalcPremyotNihulTnuaToMonthCompleted;
+        
+        /// <remarks/>
+        public event MeshekDataInputCompletedEventHandler MeshekDataInputCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/CalcPremyotNihulTnua", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -141,6 +135,33 @@ namespace KdsBatch.premyot {
             if ((this.CalcPremyotNihulTnuaToMonthCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.CalcPremyotNihulTnuaToMonthCompleted(this, new CalcPremyotNihulTnuaToMonthCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/MeshekDataInput", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool MeshekDataInput() {
+            object[] results = this.Invoke("MeshekDataInput", new object[0]);
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void MeshekDataInputAsync() {
+            this.MeshekDataInputAsync(null);
+        }
+        
+        /// <remarks/>
+        public void MeshekDataInputAsync(object userState) {
+            if ((this.MeshekDataInputOperationCompleted == null)) {
+                this.MeshekDataInputOperationCompleted = new System.Threading.SendOrPostCallback(this.OnMeshekDataInputOperationCompleted);
+            }
+            this.InvokeAsync("MeshekDataInput", new object[0], this.MeshekDataInputOperationCompleted, userState);
+        }
+        
+        private void OnMeshekDataInputOperationCompleted(object arg) {
+            if ((this.MeshekDataInputCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.MeshekDataInputCompleted(this, new MeshekDataInputCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -202,6 +223,32 @@ namespace KdsBatch.premyot {
         private object[] results;
         
         internal CalcPremyotNihulTnuaToMonthCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    public delegate void MeshekDataInputCompletedEventHandler(object sender, MeshekDataInputCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class MeshekDataInputCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal MeshekDataInputCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

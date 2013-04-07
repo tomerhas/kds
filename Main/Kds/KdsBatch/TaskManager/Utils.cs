@@ -224,7 +224,79 @@ namespace KdsBatch.TaskManager
 			}
 		}
 
-	   
+        public void CreateNetuneyPremiyot()
+        {
+            clBatch oBatch = new clBatch();
+            premyot.wsPremyot wsPremyot = new premyot.wsPremyot();
+            long lRequestNum = 0;
+            try
+            {
+
+                lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.LoadNetuneyMeshekForPremyot, "RunLoadNetuneyMeshekForPremyot", -12);
+                wsPremyot.UseDefaultCredentials = false;
+                wsPremyot.Credentials = new System.Net.NetworkCredential(ConfigurationSettings.AppSettings["RSUserName"], ConfigurationSettings.AppSettings["RSPassword"], ConfigurationSettings.AppSettings["RSDomain"]);
+
+                wsPremyot.MeshekDataInputCompleted += (sender, args) =>  CallbackCreateNetuneyPremiyot(sender, args, lRequestNum);
+
+                wsPremyot.MeshekDataInputAsync();
+
+            }
+            catch (Exception ex)
+            {
+                if (lRequestNum > 0)
+                {
+                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, ex.Message);
+                    clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
+                }
+                else clGeneral.LogError(ex);
+                throw (ex);
+            }
+			
+        }
+        private void CallbackCreateNetuneyPremiyot(object sender, KdsBatch.premyot.MeshekDataInputCompletedEventArgs e, long lRequestNum)
+        {
+            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "יצירת נתוני פרמיות הסתיימה");
+            bool bSuccess = false;
+            clBatch oBatch = new clBatch();
+            premyot.wsPremyot wsPremyot = (premyot.wsPremyot)sender;
+
+            try
+            {
+                if (null == e.Error)
+                {
+                    bSuccess = e.Result;
+                    if (bSuccess)
+                        clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
+                    else
+                    {
+                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "הפעולה נכשלה - בדוק רשומות בקובץ לוג");
+                        clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
+                    }
+                }
+                else
+                {
+                    wsPremyot.Abort();
+                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, e.Error.Message);
+                    clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
+                }
+            }
+            catch (Exception ex)
+            {
+                wsPremyot.Abort();
+                if (lRequestNum > 0)
+                {
+                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, ex.Message);
+                    clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
+                }
+                else clGeneral.LogError(ex);
+                throw (ex);
+            }
+            finally
+            {
+                wsPremyot.Dispose();
+            }
+        }
+
 		public void RunCalculationPremyot()
 		{
 			clBatch oBatch = new clBatch();

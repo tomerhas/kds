@@ -1122,7 +1122,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             RifreshKnisot=15,
             TransferTekenNehagim=16,
             HasavatNetuniToOracle = 17,
-            RetroSpectSDRN =18
+            RetroSpectSDRN =18,
+            LoadNetuneyMeshekForPremyot=19
         }
         public enum enBechishuvSachar
         {
