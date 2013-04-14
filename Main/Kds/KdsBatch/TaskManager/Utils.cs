@@ -58,7 +58,7 @@ namespace KdsBatch.TaskManager
 			try
 			{
 				KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
-                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfPremiyotMusachim&NihulTnua", -12);
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfPremiyotMusachim&NihulTnua&Yadaniyot", -12);
 				client.ShinuyimVeShguimBatch(lRequestNum, DateTime.Now, clGeneral.enCalcType.ShinuyimVeSghuimPremiot, clGeneral.BatchExecutionType.All);
 			   // oUtils.RunSinuyimVeShguimBatch(lRequestNum, DateTime.Now, clGeneral.enCalcType.ShinuyimVeSghuimPremiot, clGeneral.BatchExecutionType.All);
 				// KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, clGeneral.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
@@ -66,7 +66,7 @@ namespace KdsBatch.TaskManager
 			}
 			catch (Exception ex)
 			{
-                throw new Exception("RunShguimOfPremiyotMusachim&NihulTnua:" + ex.Message);
+                throw new Exception("RunShguimOfPremiyotMusachim&NihulTnua&Yadaniyot:" + ex.Message);
 			}
 		}
 		public void RunCalcPremiyotMusachim()
@@ -77,7 +77,7 @@ namespace KdsBatch.TaskManager
 			try
 			{
 				KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
-                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "RunCalcPremiyotMusachim&NihulTnua", -12);
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "RunCalcPremiyotMusachim&NihulTnua&Yadaniyot", -12);
 				client.CalcBatchPremiyot(lRequestNum);
 			  
 				//lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "RunCalcPremiyotMusachim", -12);
@@ -86,7 +86,7 @@ namespace KdsBatch.TaskManager
 			}
 			catch (Exception ex)
 			{
-				throw new Exception("RunCalcPremiyotMusachim&NihulTnua:" + ex.Message);
+				throw new Exception("RunCalcPremiyotMusachim&NihulTnua&Yadaniyot:" + ex.Message);
 			}
 		}
 		public void RunIshurimOfSdrn()
