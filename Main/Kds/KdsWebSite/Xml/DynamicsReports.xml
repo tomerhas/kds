@@ -158,7 +158,7 @@
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
       </DropDownList>
     </Filter>
-  </Report>
+  </Report>mes
   <Report  RdlName="PremiotPresence" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נוכחות לפרמיה (עבור פרמיות ידניות)" Orientation="Landscape" ZoomPercent="100" ProductionType="Heavy">
     <Filter ParameterName="P_KOD_PREMIA" Caption="סוג פרמיה" BoxeType="DropDown"  DataType="System.Int32" RunAtServer="true">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_UTILS.pro_get_premyot_details" ValueField="Kod_Premia" TextField="Teur_Premia">
@@ -171,6 +171,9 @@
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
       </DropDownList>
+    </Filter>
+    <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32">
+      <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
     <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
       <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdimForPremiot" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
