@@ -2565,18 +2565,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 Report.AddParameter("P_URL_BARCODE", urlBarcode);
                
                 
-                if (bWorkCardWasUpdate)
-                {
+                //if (bWorkCardWasUpdate)
+                //{
                     //במידה ויש ערך בטבלת מעדכן אחרון והכרטיס עלה ללא התייחסות ולחצו על מאשר או מסתייג נשלח תיקון 0, שלא היה תיקון
                     if ((iOldMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull.GetHashCode()) && (oMeasherMistayeg != clGeneral.enMeasherOMistayeg.ValueNull))
                         Report.AddParameter("P_TIKUN", "0");
                     else
                         Report.AddParameter("P_TIKUN", "1");
-                }
-                else
-                {   //אם אין ערך המעדכן אחרון, לא נשלח תיקון, כלומר 0
-                    Report.AddParameter("P_TIKUN",  "0");
-                }
+                //}
+                //else
+                //{   //אם אין ערך המעדכן אחרון, לא נשלח תיקון, כלומר 0
+                //    Report.AddParameter("P_TIKUN",  "0");
+                //}
                 
 
                 s = Report.CreateReport("/KdsReports/PrintWorkCard", eFormat.PDF, true);
