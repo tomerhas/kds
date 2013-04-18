@@ -2625,15 +2625,15 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 
                 
                 ReportParameters.Add("P_URL_BARCODE", urlBarcode);
-                if (bWorkCardWasUpdate)
-                {
+                //if (bWorkCardWasUpdate)
+                //{
                     if ((iOldMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull.GetHashCode()) && (oMeasherMistayeg != clGeneral.enMeasherOMistayeg.ValueNull))
                         ReportParameters.Add("P_TIKUN", "0");
                     else
                         ReportParameters.Add("P_TIKUN", "1");
-                }
-                else
-                    ReportParameters.Add("P_TIKUN", "0");
+                //}
+                //else
+                //    ReportParameters.Add("P_TIKUN", "0");
 
                 
                 OpenReport(ReportParameters, (Button)sender, ReportName.PrintWorkCard.ToString());
