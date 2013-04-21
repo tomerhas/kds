@@ -11529,7 +11529,7 @@ namespace KdsBatch
                                                 oPeilut.dFullShatYetzia = oObjPeilutUpd.NEW_SHAT_YETZIA;
                                             }
                                             oPeilut.sShatYetzia = oPeilut.dFullShatYetzia.ToString("HH:mm");
-                                            oSidur.htPeilut[j] = oPeilut;
+                                            oSidur.htPeilut[i] = oPeilut;
                                             iMoneKidum--;
                                             i--;
                                             //}
