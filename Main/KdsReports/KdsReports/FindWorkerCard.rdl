@@ -340,7 +340,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>מס רכב</Value>
+                              <Value>מס רישוי</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Color>#000000</Color>
@@ -366,6 +366,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1075,14 +1076,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="OTO_NO">
+                    <Textbox Name="LICENSE_NUMBER">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!OTO_NO.Value</Value>
+                              <Value>=Fields!LICENSE_NUMBER.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -1093,7 +1094,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>OTO_NO</rd:DefaultName>
+                      <rd:DefaultName>LICENSE_NUMBER</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1203,7 +1204,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
