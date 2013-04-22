@@ -12302,9 +12302,14 @@ namespace KdsBatch
                         oObjSidurimOvdimIns.TAARICH = dCardDate;
                         oObjSidurimOvdimIns.MISPAR_ISHI = iMisparIshi;
                         oObjSidurimOvdimIns.MISPAR_SIDUR = SIDUR_HEADRUT_BETASHLUM;
-                        oObjSidurimOvdimIns.SHAT_HATCHALA = (String.IsNullOrEmpty(dt.Rows[0]["shat_hatchala_muteret"].ToString())) ? oParam.dSidurStartLimitHourParam1 : DateTime.Parse(dt.Rows[0]["shat_hatchala_muteret"].ToString());//DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", "04:00"));
-                        oObjSidurimOvdimIns.SHAT_GMAR = (String.IsNullOrEmpty(dt.Rows[0]["shat_gmar_muteret"].ToString())) ? oParam.dSidurLimitShatGmar : DateTime.Parse(dt.Rows[0]["shat_gmar_muteret"].ToString()); //DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", "28:00"));
-
+                        oObjSidurimOvdimIns.LO_LETASHLUM = 0;
+                        oObjSidurimOvdimIns.HASHLAMA = 0;
+                        oObjSidurimOvdimIns.PITZUL_HAFSAKA = 0;
+                        oObjSidurimOvdimIns.CHARIGA=0;
+                        oObjSidurimOvdimIns.SHAT_HATCHALA = (String.IsNullOrEmpty(dt.Rows[0]["shat_hatchala_muteret"].ToString())) ? oParam.dSidurStartLimitHourParam1 : DateTime.Parse(dCardDate.ToShortDateString() +" "+ DateTime.Parse(dt.Rows[0]["shat_hatchala_muteret"].ToString()).ToLongTimeString());
+                        oObjSidurimOvdimIns.SHAT_GMAR = (String.IsNullOrEmpty(dt.Rows[0]["shat_gmar_muteret"].ToString())) ? oParam.dSidurLimitShatGmar : DateTime.Parse(dCardDate.ToShortDateString() + " " + DateTime.Parse(dt.Rows[0]["shat_gmar_muteret"].ToString()).ToLongTimeString());
+                        oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oObjSidurimOvdimIns.SHAT_HATCHALA;
+                        oObjSidurimOvdimIns.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimIns.SHAT_GMAR;
                         oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
                     }
                 }
