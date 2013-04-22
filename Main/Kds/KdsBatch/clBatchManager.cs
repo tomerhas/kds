@@ -12287,20 +12287,26 @@ namespace KdsBatch
         }
         private void NewSidurHeadrutWithPaymeny15(int iMisparIshi, DateTime dCardDate, int iSugYom, bool bLoLetashlum)
         {
+            DataTable dt;
             //לעובדים להם יש מאפיין אישי 63 (משפחה שכולה) , אם סוג יום = 17 (יום הזכרון) ואין להם סידור עבודה אחר באות יום (שאינו מסומן לא לתשלום) , יש לפתוח להם סידור 99801 (העדרות בתשלום יום עבודה) עם שעות מ-0400 – 2800 (כדי שדיווח אחר יצא לשגוי בחפיפה אם ידווח).            
             try
             {
+
                 if ((oMeafyeneyOved.Meafyen63Exists) && (iSugYom == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode()) && (!bLoLetashlum))
                 {
-                    oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
-                    //InsertToObjSidurimOvdimForInsert(ref oSidur, ref oObjSidurimOvdimIns);
-                    oObjSidurimOvdimIns.TAARICH = dCardDate;
-                    oObjSidurimOvdimIns.MISPAR_ISHI = iMisparIshi;
-                    oObjSidurimOvdimIns.MISPAR_SIDUR = SIDUR_HEADRUT_BETASHLUM;
-                    oObjSidurimOvdimIns.SHAT_HATCHALA = oParam.dSidurStartLimitHourParam1;//DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", "04:00"));
-                    oObjSidurimOvdimIns.SHAT_GMAR = oParam.dSidurLimitShatGmar;//DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", "28:00"));
+                    if (!IsSidurExits(99801))
+                    {
+                        dt = clWorkCard.GetMeafyeneySidurById(dCardDate, 99801);
+                        oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
+                        //InsertToObjSidurimOvdimForInsert(ref oSidur, ref oObjSidurimOvdimIns);
+                        oObjSidurimOvdimIns.TAARICH = dCardDate;
+                        oObjSidurimOvdimIns.MISPAR_ISHI = iMisparIshi;
+                        oObjSidurimOvdimIns.MISPAR_SIDUR = SIDUR_HEADRUT_BETASHLUM;
+                        oObjSidurimOvdimIns.SHAT_HATCHALA = (String.IsNullOrEmpty(dt.Rows[0]["shat_hatchala_muteret"].ToString())) ? oParam.dSidurStartLimitHourParam1 : DateTime.Parse(dt.Rows[0]["shat_hatchala_muteret"].ToString());//DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", "04:00"));
+                        oObjSidurimOvdimIns.SHAT_GMAR = (String.IsNullOrEmpty(dt.Rows[0]["shat_gmar_muteret"].ToString())) ? oParam.dSidurLimitShatGmar : DateTime.Parse(dt.Rows[0]["shat_gmar_muteret"].ToString()); //DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", "28:00"));
 
-                    oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
+                        oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
+                    }
                 }
             }
             catch (Exception ex)
@@ -12310,6 +12316,17 @@ namespace KdsBatch
             }
         }
 
+        private bool IsSidurExits(int mispar_sidur)
+        {
+            clSidur oSidur;
+            for (int i = 0; i < htEmployeeDetails.Count; i++)
+            {
+                oSidur = (clSidur)htEmployeeDetails[i];
+                if (oSidur.iMisparSidur == mispar_sidur)
+                    return true;
+            }
+            return false;
+        }
         private void DeleteElementRechev07(ref clSidur oSidur, ref clPeilut oPeilut, ref int iIndexPeilut,ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
         {
             //ביטול אלמנט השאלת רכב
