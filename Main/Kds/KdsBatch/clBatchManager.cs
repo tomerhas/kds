@@ -12306,6 +12306,7 @@ namespace KdsBatch
                         oObjSidurimOvdimIns.HASHLAMA = 0;
                         oObjSidurimOvdimIns.PITZUL_HAFSAKA = 0;
                         oObjSidurimOvdimIns.CHARIGA=0;
+                        oObjSidurimOvdimIns.OUT_MICHSA = 0;
                         oObjSidurimOvdimIns.SHAT_HATCHALA = (String.IsNullOrEmpty(dt.Rows[0]["shat_hatchala_muteret"].ToString())) ? oParam.dSidurStartLimitHourParam1 : DateTime.Parse(dCardDate.ToShortDateString() +" "+ DateTime.Parse(dt.Rows[0]["shat_hatchala_muteret"].ToString()).ToLongTimeString());
                         oObjSidurimOvdimIns.SHAT_GMAR = (String.IsNullOrEmpty(dt.Rows[0]["shat_gmar_muteret"].ToString())) ? oParam.dSidurLimitShatGmar : DateTime.Parse(dCardDate.ToShortDateString() + " " + DateTime.Parse(dt.Rows[0]["shat_gmar_muteret"].ToString()).ToLongTimeString());
                         oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oObjSidurimOvdimIns.SHAT_HATCHALA;

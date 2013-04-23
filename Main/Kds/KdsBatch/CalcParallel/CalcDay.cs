@@ -3041,7 +3041,8 @@ namespace KdsBatch
                             if (((objOved.Taarich < objOved.objParameters.dChodeshTakanonSoziali && 
                                 (objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8 || objOved.objPirteyOved.iMutamut == 1 ||
                                 objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8) && fMichsaYomit > 0) ||
-                                 (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iMutamBitachon == 6)) && objOved.objPirteyOved.iZmanMutamut > 0)
+                                 (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iMutamBitachon == 6)) 
+                                 && (objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 ||  objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)))
                             {
                                 if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
                                 {
@@ -3078,7 +3079,7 @@ namespace KdsBatch
 
                            // oEzerPratim =  objOved.PirteyOved.First(Pratim => (Pratim.iMutamut == 4 || Pratim.iMutamut == 5 || Pratim.iMutamut == 8));
 
-                            if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iZmanMutamut > 0 &&
+                            if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && (objOved.objPirteyOved.iZmanMutamut > 0  && (objOved.objPirteyOved.iMutamut == 1 ||  objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7))&&
                                 (((objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && objOved.objPirteyOved.iIshurKeren > 0) ||
                                  (objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 8 || objOved.objPirteyOved.iSibotMutamut == 1 ) ))
                             {
@@ -3194,10 +3195,12 @@ namespace KdsBatch
                         //        objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8) && fMichsaYomit > 0) ||
                         //         (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iMutamBitachon == 6)) && objOved.objPirteyOved.iZmanMutamut > 0)
                         if ((objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8 || objOved.objPirteyOved.iMutamut == 1 ||
-                                objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8) && fMichsaYomit > 0 && objOved.objPirteyOved.iZmanMutamut > 0)
+                                objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8)
+                                && fMichsaYomit > 0 && (objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)))
                         {
                                 if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode() &&
-                                    ((objOved.objPirteyOved.iMutamBitachon == 6) || (objOved.objPirteyOved.iZmanMutamut > 0 && objOved.Taarich < objOved.objParameters.dChodeshTakanonSoziali)))
+                                    ((objOved.objPirteyOved.iMutamBitachon == 6) ||
+                                     ((objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)) && objOved.Taarich < objOved.objParameters.dChodeshTakanonSoziali)))
                                 {
                                      rowSidur = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur in(99820,99822,99821)");
                                
@@ -3213,7 +3216,8 @@ namespace KdsBatch
                                 }
                                 else if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() ||
                                          (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode() &&
-                                          objOved.objPirteyOved.iMutamBitachon != 6 && objOved.objPirteyOved.iZmanMutamut > 0 && objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali) )
+                                          objOved.objPirteyOved.iMutamBitachon != 6 && objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali &&
+                                          (objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7))))
                                 {
                                     if (objOved.objMeafyeneyOved.iMeafyen33 == 0 && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut)
                                     {
