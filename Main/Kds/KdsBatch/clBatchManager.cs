@@ -700,7 +700,8 @@ namespace KdsBatch
                 catch { return false; }
 
                 //Get Oved Matzav
-              //  dtMatzavOved = GetOvedMatzav(iMisparIshi, dCardDate);
+                if (dtMatzavOved == null)
+                    dtMatzavOved = GetOvedMatzav(iMisparIshi, dCardDate);
                 if (dtMatzavOved.Rows.Count > 0)
                 {
                     dTarTchilatMatzav = DateTime.Parse(dtMatzavOved.Rows[0]["TAARICH_HATCHALA"].ToString());
