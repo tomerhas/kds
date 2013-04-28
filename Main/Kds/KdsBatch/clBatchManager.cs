@@ -700,7 +700,7 @@ namespace KdsBatch
                 catch { return false; }
 
                 //Get Oved Matzav
-                dtMatzavOved = GetOvedMatzav(iMisparIshi, dCardDate);
+              //  dtMatzavOved = GetOvedMatzav(iMisparIshi, dCardDate);
                 if (dtMatzavOved.Rows.Count > 0)
                 {
                     dTarTchilatMatzav = DateTime.Parse(dtMatzavOved.Rows[0]["TAARICH_HATCHALA"].ToString());
@@ -6502,6 +6502,7 @@ namespace KdsBatch
                 //Get Meafyeney Sug Sidur
                 dtSugSidur = clDefinitions.GetSugeySidur();
 
+                dtMatzavOved = GetOvedMatzav(iMisparIshi, dCardDate);
                 //Get Mutamut
                 dtMutamut = oUtils.GetCtbMutamut();
 
@@ -12482,33 +12483,36 @@ namespace KdsBatch
                 // אין לבצע את השינוי עבור סידורים מיוחדים עם ערך 1 במאפיין 4.
                 if (!(oSidur.bSidurMyuhad && oSidur.iSidurLoNibdakSofShavua == 1))
                 {
-                    bSign = Condition1Saif11(ref oSidur);
+                    bSign = IsOvedMatzavExists("6");
                     if (!bSign)
                     {
-                        //תנאי 2
-                        bSign = Condition2Saif11(ref oSidur);
+                        bSign = Condition1Saif11(ref oSidur);
                         if (!bSign)
                         {
-                            //תנאי 3
-                            bSign = Condition3Saif11(ref oSidur, iSidurIndex);
+                            //תנאי 2
+                            bSign = Condition2Saif11(ref oSidur);
                             if (!bSign)
                             {
-                                //תנאי 4
-                                bSign = Condition4Saif11(ref oSidur);
+                                //תנאי 3
+                                bSign = Condition3Saif11(ref oSidur, iSidurIndex);
                                 if (!bSign)
                                 {
-                                    //5 תנאי
-                                    bSign = Condition5Saif11(ref oSidur);
+                                    //תנאי 4
+                                    bSign = Condition4Saif11(ref oSidur);
                                     if (!bSign)
                                     {
-                                        //תנאי 6
-                                        bSign = Condition6Saif11(ref oSidur);
+                                        //5 תנאי
+                                        bSign = Condition5Saif11(ref oSidur);
                                         if (!bSign)
                                         {
-                                            //אגד תעבורה 
-                                            //bSign =  Saif5EggedTaavura(drSugSidur, ref oSidur);
-                                            //if (!bSign)
-                                            //{
+                                            //תנאי 6
+                                            bSign = Condition6Saif11(ref oSidur);
+                                            if (!bSign)
+                                            {
+                                                //אגד תעבורה 
+                                                //bSign =  Saif5EggedTaavura(drSugSidur, ref oSidur);
+                                                //if (!bSign)
+                                                //{
                                                 //תנאי 7
                                                 bSign = Condition7Saif11(drSugSidur, ref oSidur);
                                                 if (!bSign)
@@ -12533,41 +12537,46 @@ namespace KdsBatch
                                                 {
                                                     iKodSibaLoLetashlum = 15;
                                                 }
-                                            //}
-                                            //else
-                                            //{
-                                            //    iKodSibaLoLetashlum = 12;
-                                            //} 
+                                                //}
+                                                //else
+                                                //{
+                                                //    iKodSibaLoLetashlum = 12;
+                                                //} 
+                                            }
+                                            else
+                                            {
+                                                iKodSibaLoLetashlum = 13;
+                                            }
                                         }
                                         else
                                         {
-                                            iKodSibaLoLetashlum = 13;
+                                            iKodSibaLoLetashlum = 5;
                                         }
                                     }
                                     else
                                     {
-                                        iKodSibaLoLetashlum = 5;
+                                        iKodSibaLoLetashlum = 4;
                                     }
                                 }
                                 else
                                 {
-                                    iKodSibaLoLetashlum = 4;
+                                    iKodSibaLoLetashlum = 3;
                                 }
                             }
                             else
                             {
-                                iKodSibaLoLetashlum = 3;
+                                iKodSibaLoLetashlum = 14;
                             }
+
                         }
                         else
                         {
-                            iKodSibaLoLetashlum = 14;
+                            iKodSibaLoLetashlum = 2;
                         }
-
                     }
                     else
-                    { 
-                        iKodSibaLoLetashlum = 2;
+                    {
+                        iKodSibaLoLetashlum = 21;
                     }
 
                     //if ((iKodSibaLoLetashlum == 4 || iKodSibaLoLetashlum == 5 || iKodSibaLoLetashlum == 10) && CheckApprovalStatus("211,2,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
