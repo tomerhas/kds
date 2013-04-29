@@ -168,7 +168,7 @@
         if (document.getElementById("clnEndDateHeadrut").value != "__/__/____")
     {
         //        if (Page_ClientValidate()) {
-        debugger;
+       // debugger;
             ValidatorEnable(document.all("vldStartTime"), false);
             ValidatorEnable(document.all("vldEndTime"), false);
 
