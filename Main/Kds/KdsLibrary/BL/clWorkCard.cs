@@ -357,7 +357,7 @@ namespace KdsLibrary.BL
             int iSectorIsuk,sug_yom,meafyen56; 
             try
             {
-                iSectorIsuk = 0; meafyen56 = 0;
+               
                 oDal.TxBegin();
                 InsUpdSidurimOvdim(ref oDal,iMisparIshi, dTaarich,iMisparSidur,dShatHatchala,dShatSiyum,iUserId);
                 pirteyOved = oclOvd.GetPirteyOvedLetkufa(iMisparIshi, dTaarich, dAdTaarich);
@@ -365,13 +365,14 @@ namespace KdsLibrary.BL
                 dTemp=dTaarich.AddDays(1);
                 do
                 {
+                    iSectorIsuk = 0; meafyen56 = 0;
                     dShatHatchalaDef = dShatHatchalaDef.AddDays(1);
                     dShatSiyumDef = dShatSiyumDef.AddDays(1);
                     drResults = pirteyOved.Select("Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
                     if (drResults.Length>0)
                         iSectorIsuk=int.Parse(drResults[0]["kod_sector_isuk"].ToString());
                     drMeafyen = meafyenim.Select("Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime') <= AD_TAARICH and Kod_meafyen='56'");
-                    if (drResults.Length > 0)
+                    if (drMeafyen.Length > 0)
                         meafyen56 = int.Parse(drMeafyen[0]["value_erech_ishi"].ToString());
                     
                     sug_yom = clGeneral.GetSugYom(iMisparIshi, dTemp, clGeneral.GetYamimMeyuchadim(), iSectorIsuk, clGeneral.GetSugeyYamimMeyuchadim(), meafyen56);

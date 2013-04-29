@@ -8837,7 +8837,7 @@ namespace KdsBatch
                                 iTempTime = oPeilut.iMazanTashlum;
                             }
 
-                            if (iTempTime < dZmanLekizuz)
+                            if (iTempTime <= dZmanLekizuz)
                             {
                                 dShatHatchalaNew = dShatHatchalaNew.AddMinutes(iTempTime);
 
