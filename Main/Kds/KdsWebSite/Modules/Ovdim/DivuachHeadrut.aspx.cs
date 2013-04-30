@@ -227,8 +227,9 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
         clWorkCard oWorkCard = new clWorkCard();
         int iSugHeadrut;
         string sMessage, sTaarichim = "" ;
-        DateTime dShatHatchala, dShatSiyum;
+        DateTime dShatHatchala, dShatSiyum,dTaarichMachala;
         DataTable dtYamim = new DataTable();
+        clUtils oUtils=new clUtils();
         try
         {
             iSugHeadrut = ddlHeadrutType.SelectedIndex; 
@@ -270,19 +271,27 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                 }
                 else
                 {
-                    if (CheckChafifa())
+                    dTaarichMachala = oUtils.GetMachalaLeloIshurDay(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
+                    if (dTaarichMachala != DateTime.MinValue)
                     {
-                        sMessage = "סידור ההיעדרות חופף בשעות עם סידור קיים";
-                        ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "err", "HideShaotRow(document.all('ddlHeadrutType').options[document.all('ddlHeadrutType').selectedIndex]);alert('" + sMessage + "');", true);
-                    }
-                    else
-                    {
-                        dShatHatchala = clGeneral.GetDateTimeFromStringHour(txtStartTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
-                        dShatSiyum = clGeneral.GetDateTimeFromStringHour(txtEndTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
 
-                        oWorkCard.InsUpdSidurimOvdim(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()), int.Parse(ddlHeadrutType.SelectedValue), dShatHatchala, dShatSiyum, int.Parse(LoginUser.UserInfo.EmployeeNumber));
-                        ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "Close", "window.returnValue=1;window.close();", true);
+                        sMessage = "ניתן לדווח סידור זה אחת לרבעון. כבר קיים דיווח בתאריך " + dTaarichMachala.ToShortDateString();
+                        ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "err", "HideShaotRow(document.all('ddlHeadrutType').options[document.all('ddlHeadrutType').selectedIndex]);alert('" + sMessage + "');", true);
+
                     }
+                    else  if (CheckChafifa())
+                        {
+                            sMessage = "סידור ההיעדרות חופף בשעות עם סידור קיים";
+                            ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "err", "HideShaotRow(document.all('ddlHeadrutType').options[document.all('ddlHeadrutType').selectedIndex]);alert('" + sMessage + "');", true);
+                        }
+                        else
+                        {
+                            dShatHatchala = clGeneral.GetDateTimeFromStringHour(txtStartTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
+                            dShatSiyum = clGeneral.GetDateTimeFromStringHour(txtEndTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
+
+                            oWorkCard.InsUpdSidurimOvdim(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()), int.Parse(ddlHeadrutType.SelectedValue), dShatHatchala, dShatSiyum, int.Parse(LoginUser.UserInfo.EmployeeNumber));
+                            ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "Close", "window.returnValue=1;window.close();", true);
+                        }
                 }
 
             }

@@ -553,7 +553,9 @@
 
                         if (flagEnd && !(mafil)) {
                             StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param1.split(':')[0], Param1.split(':')[1], '00');
-                            if (document.getElementById("txtShatGmar").attributes("SugGmar").value == "5") {//נהגות
+                            sugGmar = document.getElementById("txtShatGmar").attributes("SugGmar").value;
+
+                            if (sugGmar == "5" || sugGmar == "4") {//נהגות
                                 EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param80.split(':')[0], Param80.split(':')[1], '00');
                                 if (IsShatGmarInNextDay(Param80))
                                     EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));

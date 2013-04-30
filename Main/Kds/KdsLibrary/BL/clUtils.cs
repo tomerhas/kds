@@ -1194,6 +1194,28 @@ namespace KdsLibrary.BL
 
              return dt;
          }
+         public DateTime GetMachalaLeloIshurDay(int p_mispar_ishi,DateTime p_taarich)
+         {
+             DataTable dt = new DataTable();
+
+             try
+             {
+                 clDal dal = new clDal();
+                 dal.AddParameter("p_result", ParameterType.ntOracleVarchar, null, ParameterDir.pdReturnValue,20);
+                 dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, p_mispar_ishi, ParameterDir.pdInput);
+                 dal.AddParameter("p_taarich", ParameterType.ntOracleDate, p_taarich, ParameterDir.pdInput);               
+                 dal.ExecuteSP(clGeneral.cFnChekYomMachala);
+
+                 if (dal.GetValParam("p_result").ToString() != "")
+                     return DateTime.Parse(dal.GetValParam("p_result").ToString());
+                 else return DateTime.MinValue;
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+
+         }
 
         /**************************************/
 

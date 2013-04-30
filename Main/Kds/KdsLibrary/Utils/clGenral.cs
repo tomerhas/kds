@@ -378,6 +378,9 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         #endregion
 
 
+#region PKG_DEMANDS
+        public const string cFnChekYomMachala = "PKG_DEMANDS.fn_chek_yom_machala";
+#endregion 
         public static string[] arrCalcType = new string[] { "רגיל", "הפרשים", "חודש פתוח" };
         public static string[] arrDays = new string[] { "א", "ב", "ג", "ד", "ה", "ו", "ש" };
         public const int cYearNull = 1900;

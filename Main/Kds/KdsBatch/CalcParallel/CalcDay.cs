@@ -3224,6 +3224,11 @@ namespace KdsBatch
                                         fErechRechiv = (objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit;    
                                     }
                                 }
+
+                            if (HaveRechivimInDay(objOved.Taarich, "60,61,65,69,70,71,68") && fErechRechiv==1)
+                            {
+                                fErechRechiv = 0;
+                            }
                         }
                         else
                         {
@@ -7778,6 +7783,24 @@ namespace KdsBatch
             }
         }
 
+        private bool HaveRechivimInDay(DateTime taarich, string lst_rechivim)
+        {
+            DataRow[] dr;
+            try
+            {
+                dr = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV in (" + lst_rechivim + ") and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
+
+                if (dr.Length==0)
+                {
+                    return false;
+                } 
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
         private bool HaveRechivimInDay(DateTime taarich)
         {
             float fYomMachala, fYomMachalaBoded, fYomMachalatYeled, fYomMachaltHorim, fYomMachalaBenZug, fYomShmiratHerayon, fYomMiluim;
