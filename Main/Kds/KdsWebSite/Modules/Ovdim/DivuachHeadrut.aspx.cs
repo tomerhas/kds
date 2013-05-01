@@ -271,15 +271,16 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                 }
                 else
                 {
-                    dTaarichMachala = oUtils.GetMachalaLeloIshurDay(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
-                    if (dTaarichMachala != DateTime.MinValue)
-                    {
+                    //dTaarichMachala = oUtils.GetMachalaLeloIshurDay(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
+                    //if (dTaarichMachala != DateTime.MinValue)
+                    //{
 
-                        sMessage = "ניתן לדווח סידור זה אחת לרבעון. כבר קיים דיווח בתאריך " + dTaarichMachala.ToShortDateString();
-                        ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "err", "HideShaotRow(document.all('ddlHeadrutType').options[document.all('ddlHeadrutType').selectedIndex]);alert('" + sMessage + "');", true);
+                    //    sMessage = "ניתן לדווח סידור זה אחת לרבעון. כבר קיים דיווח בתאריך " + dTaarichMachala.ToShortDateString();
+                    //    ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "err", "HideShaotRow(document.all('ddlHeadrutType').options[document.all('ddlHeadrutType').selectedIndex]);alert('" + sMessage + "');", true);
 
-                    }
-                    else  if (CheckChafifa())
+                    //}
+                    //else 
+                        if (CheckChafifa())
                         {
                             sMessage = "סידור ההיעדרות חופף בשעות עם סידור קיים";
                             ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "err", "HideShaotRow(document.all('ddlHeadrutType').options[document.all('ddlHeadrutType').selectedIndex]);alert('" + sMessage + "');", true);

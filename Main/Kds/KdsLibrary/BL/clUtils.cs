@@ -1206,7 +1206,7 @@ namespace KdsLibrary.BL
                  dal.AddParameter("p_taarich", ParameterType.ntOracleDate, p_taarich, ParameterDir.pdInput);               
                  dal.ExecuteSP(clGeneral.cFnChekYomMachala);
 
-                 if (dal.GetValParam("p_result").ToString() != "")
+                 if (dal.GetValParam("p_result").ToString() != "" && dal.GetValParam("p_result").ToString() != "null")
                      return DateTime.Parse(dal.GetValParam("p_result").ToString());
                  else return DateTime.MinValue;
              }
