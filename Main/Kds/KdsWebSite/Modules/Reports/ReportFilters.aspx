@@ -102,6 +102,25 @@
                 args.IsValid = false;
             }
         }
+
+
+        function IsEmptyPresence(sender, args) {
+           // debugger;
+            var CurrentObj = sender.controltovalidate;
+            var objCheckBoxList = document.getElementById("ctl00_KdsContent_P_SNIF");
+            var OptionsChecked = false;
+            if (objCheckBoxList != null) {
+                for (var i = 0; i <= objCheckBoxList.length - 1; i++)
+                    if (objCheckBoxList.options[i].selected==true){
+                   // if (objCheckBoxList.children[0].checked == true) {
+                        OptionsChecked = true;
+                        break;
+                    }
+            }
+            if (!OptionsChecked && document.getElementById(CurrentObj).value == "") {
+                args.IsValid = false;
+            }
+        }
         function IsAlowedPeriod(sender, args) {
             //   debugger
             var CurrentObj = sender.controltovalidate;

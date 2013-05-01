@@ -379,7 +379,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
 
 #region PKG_DEMANDS
-        public const string cFnChekYomMachala = "PKG_DEMANDS.fn_chek_yom_machala";
+        public const string cProGetMachalaDays = "PKG_DEMANDS.pro_get_machala_days_rivon";
 #endregion 
         public static string[] arrCalcType = new string[] { "רגיל", "הפרשים", "חודש פתוח" };
         public static string[] arrDays = new string[] { "א", "ב", "ג", "ד", "ה", "ו", "ש" };

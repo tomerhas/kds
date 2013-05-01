@@ -1194,27 +1194,29 @@ namespace KdsLibrary.BL
 
              return dt;
          }
-         public DateTime GetMachalaLeloIshurDay(int p_mispar_ishi,DateTime p_taarich)
+         public DataTable GetMachalaLeloIshurDay(int p_mispar_ishi, DateTime p_taarich)
          {
              DataTable dt = new DataTable();
 
              try
              {
                  clDal dal = new clDal();
-                 dal.AddParameter("p_result", ParameterType.ntOracleVarchar, null, ParameterDir.pdReturnValue,20);
+                 //dal.AddParameter("p_result", ParameterType.ntOracleVarchar, null, ParameterDir.pdReturnValue,20);
                  dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, p_mispar_ishi, ParameterDir.pdInput);
-                 dal.AddParameter("p_taarich", ParameterType.ntOracleDate, p_taarich, ParameterDir.pdInput);               
-                 dal.ExecuteSP(clGeneral.cFnChekYomMachala);
+                 dal.AddParameter("p_taarich", ParameterType.ntOracleDate, p_taarich, ParameterDir.pdInput);
+                 dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+            
+                 dal.ExecuteSP(clGeneral.cProGetMachalaDays, ref dt);
 
-                 if (dal.GetValParam("p_result").ToString() != "" && dal.GetValParam("p_result").ToString() != "null")
-                     return DateTime.Parse(dal.GetValParam("p_result").ToString());
-                 else return DateTime.MinValue;
+                 //if (dal.GetValParam("p_result").ToString() != "" && dal.GetValParam("p_result").ToString() != "null")
+                 //    return DateTime.Parse(dal.GetValParam("p_result").ToString());
+                 //else return DateTime.MinValue;
              }
              catch (Exception ex)
              {
                  throw ex;
              }
-
+             return dt;
          }
 
         /**************************************/
