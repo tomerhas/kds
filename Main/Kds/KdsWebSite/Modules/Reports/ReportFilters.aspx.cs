@@ -140,6 +140,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         CtrlEndDate = DateTime.Now.ToString("dd/MM/yyyy");// DateTime.Parse("01/" + DateTime.Now.AddMonths(1).ToString("MM/yyyy")).AddDays(-1).ToString("dd/MM/yyyy");
                     }
                     SetWorkerViewLevel();
+                    
                     break;
                 case ReportName.IshurimLerashemet:
                     if (!Page.IsPostBack)
@@ -218,6 +219,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         {
             WorkerViewLevel.Style.Add("Display", "none");
             WorkerViewLevelLabel.Style.Add("Display", "none");
+            Snif.Style.Add("Display", "none");
+            SnifLabel.Style.Add("Display", "none");
         }
     }
     private void ddlRitza_SelectedIndexChanged(object sender, EventArgs e)
@@ -592,6 +595,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     private ListBox Snif
     {
         get { return (ListBox)TdFilter.FindControl("P_SNIF"); }
+    }
+    private Label SnifLabel
+    {
+        get { return (Label)TdFilter.FindControl("LBL_P_SNIF"); }
     }
     private DropDownList Region
     {
