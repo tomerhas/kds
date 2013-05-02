@@ -272,16 +272,19 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                 else
                 {
 
-                    dtYamim = oUtils.GetMachalaLeloIshurDay(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
-                    if (dtYamim.Rows.Count > 0)
+                    if (int.Parse(ddlHeadrutType.SelectedValue)==99186)
                     {
-                        foreach (DataRow dr in dtYamim.Rows)
+                        dtYamim = oUtils.GetMachalaLeloIshurDay(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
+                        if (dtYamim.Rows.Count > 0)
                         {
-                            sTaarichim += DateTime.Parse(dr["taarich"].ToString()).ToShortDateString() + ',';
+                            foreach (DataRow dr in dtYamim.Rows)
+                            {
+                                sTaarichim += DateTime.Parse(dr["taarich"].ToString()).ToShortDateString() + ',';
+                            }
+                            sTaarichim = sTaarichim.Substring(0, sTaarichim.Length - 1);
+                            sMessage = "ניתן לדווח סידור זה אחת לרבעון. כבר קיים דיווח בתאריך " + sTaarichim;
+                            ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "err", "HideShaotRow(document.all('ddlHeadrutType').options[document.all('ddlHeadrutType').selectedIndex]);alert('" + sMessage + "');", true);
                         }
-                        sTaarichim = sTaarichim.Substring(0, sTaarichim.Length - 1);
-                        sMessage = "ניתן לדווח סידור זה אחת לרבעון. כבר קיים דיווח בתאריך " + sTaarichim;
-                        ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "err", "HideShaotRow(document.all('ddlHeadrutType').options[document.all('ddlHeadrutType').selectedIndex]);alert('" + sMessage + "');", true);
                     }
                     else if (CheckChafifa())
                         {
