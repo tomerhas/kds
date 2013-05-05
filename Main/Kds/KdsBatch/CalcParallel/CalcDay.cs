@@ -3163,6 +3163,7 @@ namespace KdsBatch
             DataRow[] rowSidur ;
             string sRechivim;
             bool flag = false;
+           //int matzav=0;
             try
             {
                 fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich); 
@@ -3301,8 +3302,10 @@ namespace KdsBatch
                         
                         if (rowSidur.Length == 0)
                         {
+                           // int.TryParse(objOved.objMatzavOved.sKod_Matzav,ref matzav );
                             if (((objOved.SugYom >= 11 && objOved.SugYom <= 16) || objOved.SugYom == 18) ||
                                     ((objOved.SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode()) && objOved.objMeafyeneyOved.iMeafyen85 == 1))
+                              //  (clGeneral.GetIntegerValue(objOved.objMatzavOved.sKod_Matzav) >= 30 || clGeneral.GetIntegerValue(objOved.objMatzavOved.sKod_Matzav)==9)) 
                                 flag = true;
 
                             if (!flag && objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())

@@ -230,6 +230,7 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
         DateTime dShatHatchala, dShatSiyum,dTaarichMachala;
         DataTable dtYamim = new DataTable();
         clUtils oUtils=new clUtils();
+        bool flag = false;
         try
         {
             iSugHeadrut = ddlHeadrutType.SelectedIndex; 
@@ -272,11 +273,12 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                 else
                 {
 
-                    if (int.Parse(ddlHeadrutType.SelectedValue)==99186)
+                    if (int.Parse(ddlHeadrutType.SelectedValue)==99816)
                     {
                         dtYamim = oUtils.GetMachalaLeloIshurDay(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
                         if (dtYamim.Rows.Count > 0)
                         {
+                            flag = true;
                             foreach (DataRow dr in dtYamim.Rows)
                             {
                                 sTaarichim += DateTime.Parse(dr["taarich"].ToString()).ToShortDateString() + ',';
@@ -286,7 +288,9 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                             ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "err", "HideShaotRow(document.all('ddlHeadrutType').options[document.all('ddlHeadrutType').selectedIndex]);alert('" + sMessage + "');", true);
                         }
                     }
-                    else if (CheckChafifa())
+                    if (!flag)
+                    {
+                        if (CheckChafifa())
                         {
                             sMessage = "סידור ההיעדרות חופף בשעות עם סידור קיים";
                             ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "err", "HideShaotRow(document.all('ddlHeadrutType').options[document.all('ddlHeadrutType').selectedIndex]);alert('" + sMessage + "');", true);
@@ -299,6 +303,7 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                             oWorkCard.InsUpdSidurimOvdim(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()), int.Parse(ddlHeadrutType.SelectedValue), dShatHatchala, dShatSiyum, int.Parse(LoginUser.UserInfo.EmployeeNumber));
                             ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "Close", "window.returnValue=1;window.close();", true);
                         }
+                    }
                 }
 
             }

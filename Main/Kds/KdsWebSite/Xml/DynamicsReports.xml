@@ -102,9 +102,9 @@
         <ParameterOfFunction Name="p_ProfilFilter" Type="ByReference" ReferenceType="Function" Value="KdsLibrary.clGeneral.GetProfilesOfUser" DataType="System.String" ParameterType="ntOracleVarchar"/>
       </DropDownList>
     </Filter>
-      <Filter ParameterName="P_SNIF" Caption="סניף אב" BoxeType="ListBox" DataType="System.Int32">
+      <!--<Filter ParameterName="P_SNIF" Caption="סניף אב" BoxeType="ListBox" DataType="System.Int32">
         <DropDownList QueryType="Select"  Select="select KOD_SNIF_AV,teur_snif_av from ctb_snif_av ORDER BY teur_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" />
-      </Filter>
+      </Filter>-->
     
   </Report>
   <Report  RdlName="DriverWithoutTacograph" Roles="kds_administrators" FilterByLine="3" PageHeader="נהגים ללא טכוגרף" ProductionType="Heavy">

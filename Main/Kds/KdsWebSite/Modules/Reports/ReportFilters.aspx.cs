@@ -219,8 +219,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         {
             WorkerViewLevel.Style.Add("Display", "none");
             WorkerViewLevelLabel.Style.Add("Display", "none");
-            Snif.Style.Add("Display", "none");
-            SnifLabel.Style.Add("Display", "none");
+            ////Snif.Style.Add("Display", "none");
+            ////SnifLabel.Style.Add("Display", "none");
         }
     }
     private void ddlRitza_SelectedIndexChanged(object sender, EventArgs e)
