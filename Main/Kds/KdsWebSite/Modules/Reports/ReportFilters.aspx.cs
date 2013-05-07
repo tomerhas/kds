@@ -139,13 +139,14 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         CtrlStartDate = "01/" + DateTime.Now.ToString("MM/yyyy");
                         CtrlEndDate = DateTime.Now.ToString("dd/MM/yyyy");// DateTime.Parse("01/" + DateTime.Now.AddMonths(1).ToString("MM/yyyy")).AddDays(-1).ToString("dd/MM/yyyy");
                     }
-                    SetWorkerViewLevel();
-                    
+                    Snif.Style.Add("Display", "none");
+                    SnifLabel.Style.Add("Display", "none");
+                    SetWorkerViewLevel(ReportName.Presence);
                     break;
                 case ReportName.IshurimLerashemet:
                     if (!Page.IsPostBack)
                         CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
-                    SetWorkerViewLevel();
+                    SetWorkerViewLevel(ReportName.IshurimLerashemet);
                     break;
                 case ReportName.FindWorkerCard:
                     if (!Page.IsPostBack)
@@ -211,16 +212,29 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         }
     }
 
-    private void SetWorkerViewLevel()
+    private void SetWorkerViewLevel(ReportName p_report_name)
     {
-        if (!Page.IsPostBack)
+        if (!Page.IsPostBack)  
             WorkerViewLevel.Items[0].Selected = true;
         if (WorkerViewLevel.Items.Count < 2)
         {
             WorkerViewLevel.Style.Add("Display", "none");
             WorkerViewLevelLabel.Style.Add("Display", "none");
-            ////Snif.Style.Add("Display", "none");
-            ////SnifLabel.Style.Add("Display", "none");
+        }
+        else
+        {
+            if (p_report_name == ReportName.Presence)
+            {
+                foreach (ListItem item in WorkerViewLevel.Items)
+                {
+                    if (item.Value == "1")
+                    {
+                        Snif.Style.Add("Display", "inline");
+                        SnifLabel.Style.Add("Display", "inline");
+                        break;
+                    }
+                }
+            }
         }
     }
     private void ddlRitza_SelectedIndexChanged(object sender, EventArgs e)

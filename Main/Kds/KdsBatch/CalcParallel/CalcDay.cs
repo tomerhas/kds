@@ -4617,7 +4617,7 @@ namespace KdsBatch
             {
                 fSumDakotRechiv = 0;
 
-                if (objOved.SugYom == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode() && (objOved.objMeafyeneyOved.sMeafyen63 != "" || objOved.objMeafyeneyOved.sMeafyen63 != "0"))
+                if (objOved.SugYom == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode() && (objOved.objMeafyeneyOved.sMeafyen63 != "" && objOved.objMeafyeneyOved.sMeafyen63 != "0"))
                 {
                     fSumDakotRechiv = 1;
                 }
@@ -7865,8 +7865,8 @@ namespace KdsBatch
                     if (bBefore)
                         taarich_me = objOved.dTchilatAvoda;
                     else taarich_me = objOved.Month;
-                    
-                    while (fMichsatYom == 0)
+
+                    while (fMichsatYom == 0 && taarich_me < objOved.Month.AddMonths(1))
                     {
                          sug_yom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, taarich_me, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
                         if (sug_yom != clGeneral.enSugYom.Shishi.GetHashCode() &&
