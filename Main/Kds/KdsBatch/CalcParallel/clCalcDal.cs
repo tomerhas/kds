@@ -38,6 +38,7 @@ namespace KdsBatch
 
         private const string cGetNetunryChishuv = "Pkg_Calc_worker.pro_get_netunim_lechishuv";
         private const string cGetNetunimLeprocess = "Pkg_Calculation.pro_get_netunim_leprocess";
+        private const string cFunGetTaarichHefreshim = "Pkg_Calc_worker.fun_get_taarich_hefreshim";
         public DataTable GetOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet)
         {
             DataTable dt = new DataTable();
@@ -601,5 +602,24 @@ namespace KdsBatch
             dal.ExecuteSP(clDefinitions.cProUpdateChishuvPremia);
 
         }
+
+        public DateTime GetTaarichHefreshim(DateTime Taarich, int mis_ishi)
+        {
+            clDal dal = new clDal();
+            try
+            {
+                dal.AddParameter("p_Result", ParameterType.ntOracleVarchar, null, ParameterDir.pdReturnValue, 25);
+                dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, mis_ishi, ParameterDir.pdInput);
+                dal.AddParameter("p_taarich", ParameterType.ntOracleDate, Taarich, ParameterDir.pdInput);
+                dal.ExecuteSP(cFunGetTaarichHefreshim);
+                if (dal.GetValParam("p_Result").Length > 0 && dal.GetValParam("p_Result") !="null")
+                    return DateTime.Parse(dal.GetValParam("p_Result"));
+                else return DateTime.MinValue;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+       }
     }
 }

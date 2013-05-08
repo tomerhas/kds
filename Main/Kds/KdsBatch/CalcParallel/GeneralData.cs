@@ -50,7 +50,7 @@ namespace KdsBatch
 
     public class GeneralData 
     {
-        public DateTime _TarMe, _TarAd;
+        public DateTime _TarMe, _TarAd, _dTaarichHefreshim;
         public DataSet dsNetuneyChishuv;
 
         public DataTable dtYamimMeyuchadim { get; set; }
@@ -97,6 +97,17 @@ namespace KdsBatch
                  }
              }
 
+
+             if (mis_ishi > 0)
+             {
+                 _dTaarichHefreshim = GetTaarichHefreshim(_TarMe, mis_ishi);
+                 if (_dTaarichHefreshim == DateTime.MinValue)
+                     _dTaarichHefreshim = DateTime.Parse("01/" + (_TarAd.Date.ToString("MM/yyyy")));
+                 else _dTaarichHefreshim = _dTaarichHefreshim.AddDays(1);
+             }
+             else
+                 _dTaarichHefreshim = DateTime.Parse("01/" + (_TarAd.Date.ToString("MM/yyyy")));
+                
             InitGeneralData();
         }
         private void InitGeneralData()
@@ -180,5 +191,23 @@ namespace KdsBatch
                 oCalcDal = null;
             }
         }
+
+        private DateTime GetTaarichHefreshim(DateTime Taarich, int mis_ishi)
+        {
+            clCalcDal oCalcDal = new clCalcDal();
+            try
+            {
+                return(oCalcDal.GetTaarichHefreshim(Taarich, mis_ishi));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                oCalcDal = null;
+            }
+        }
+        
     }
 }
