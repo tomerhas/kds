@@ -201,6 +201,7 @@ namespace KdsBatch
         public float fHighPremya; //245- פרמיה גבוהה
         public int iValidDays;//252 -(מספר ימים בתוקף (45
         public DateTime dChodeshTakanonSoziali;//265 - חודש הפעלת שינוי תקנון סוציאלי 
+      //  public DateTime dChodeshTakanonSozialiFrinds;//268 - חודש הפעלת שינוי תקנון סוציאלי לחברים 
         public DateTime dStartAruchatTzaharayim246;//246 - תחילת ארוחת צהריים
         public DateTime dEndAruchatTzaharayim247;//247 - סיום ארוחת צהריים
         public int iVisutMustRechevWC; //261 - ויסות דורש רכב בכרטיס עבוד
@@ -976,6 +977,11 @@ namespace KdsBatch
                 //265 - חודש הפעלת שינוי תקנון סוציאלי
                 sTmp = GetOneParam(265, dCardDate);
                 dChodeshTakanonSoziali = String.IsNullOrEmpty(sTmp) ? DateTime.MaxValue : DateTime.Parse(sTmp);
+
+                
+                //268 - חודש הפעלת שינוי תקנון סוציאלי לחברים
+                //sTmp = GetOneParam(268, dCardDate);
+                //dChodeshTakanonSozialiFrinds = String.IsNullOrEmpty(sTmp) ? DateTime.MaxValue : DateTime.Parse(sTmp);
 
 
                 //247 - תחילת ארוחת צהריים

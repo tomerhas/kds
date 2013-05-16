@@ -11286,13 +11286,15 @@ namespace KdsBatch
                 oPeilut = (clPeilut)oSidur.htPeilut[iPeilutNesiaIndex];
                 InsertToObjPeilutOvdimForInsert(ref oSidur, ref oObjPeilutOvdimIns);
 
-                if (iMeshechHachanotMechona < oParam.iPrepareAllMechineTotalMaxTimeInDay && 
-                    iNumHachanotMechonaForSidur < oParam.iPrepareAllMechineTotalMaxTimeForSidur &&
-                    iMeshechHachanotMechonaNosafot < oParam.iPrepareOtherMechineTotalMaxTime)
-                {
-                    oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711", oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
-                }
-                else oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711", "000" , "00"));
+                ////if (iMeshechHachanotMechona < oParam.iPrepareAllMechineTotalMaxTimeInDay && 
+                ////    iNumHachanotMechonaForSidur < oParam.iPrepareAllMechineTotalMaxTimeForSidur &&
+                ////    iMeshechHachanotMechonaNosafot < oParam.iPrepareOtherMechineTotalMaxTime)
+                ////{
+                ////    oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711", oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
+                ////}
+                ////else oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711", "000" , "00"));
+
+                oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711", oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
                 oObjPeilutOvdimIns.OTO_NO = oPeilut.lOtoNo;
 
                 clPeilut oPeilutNew = new clPeilut(_iMisparIshi, _dCardDate, oObjPeilutOvdimIns, dtTmpMeafyeneyElements);
