@@ -117,6 +117,8 @@
             document.getElementById("divHourglass").style.display = 'block'; 
             var ReturnWin=window.showModalDialog('../Ovdim/WorkCard.aspx' + sQuryString , window , "dialogHeight:680px; dialogWidth: 1010px;scroll:no;");
             if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
+            //   debugger;
+            document.getElementById("ctl00_KdsContent_btnRefresh").click();  
             document.getElementById("divHourglass").style.display = 'none';
             return ReturnWin;
         }

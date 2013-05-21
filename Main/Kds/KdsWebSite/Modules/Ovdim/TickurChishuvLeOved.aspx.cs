@@ -95,7 +95,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
          }
          else { ddlMonth.Enabled = false; }
          LoadDdlRitzotChishuv();
-       
+         Session["dtRikuz1To10"] = null;
     }
 
      void LoadDdlRitzotChishuv()

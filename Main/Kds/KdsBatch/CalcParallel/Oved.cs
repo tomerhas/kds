@@ -18,6 +18,7 @@ namespace KdsBatch
         public long iBakashaId;
         public bool bChishuvYom { get; set; }
         public DateTime _dDay { get; set; }
+        public DateTime dtaarichHakpaa { get; set; }
 
         public List<clPirteyOved> PirteyOved { get; set; }
         public List<clMatzavOvdim> MatzavOved { get; set; }
@@ -477,7 +478,7 @@ namespace KdsBatch
         {
             DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
             DataRow[] rows;
-
+            string sKodMatzav = "0";
             try
             {
                 oGeneralData.dtMatzavOvdim.Select(null, "mispar_ishi");
@@ -486,6 +487,16 @@ namespace KdsBatch
                 if (rows.Length > 0)
                 {
                     dtMatzavOved = rows.CopyToDataTable();
+                    dtaarichHakpaa = DateTime.MinValue;
+                    for (int i = rows.Length-1; i >= 0; i--)
+                    {
+                        sKodMatzav = rows[i]["kod_matzav"].ToString();
+                        if (clGeneral.GetIntegerValue(sKodMatzav) >= 40 || clGeneral.GetIntegerValue(sKodMatzav) == 9 || clGeneral.GetIntegerValue(sKodMatzav) == 0)
+                        {
+                            dtaarichHakpaa = DateTime.Parse(rows[i]["TAARICH_ME"].ToString());
+                            break;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
