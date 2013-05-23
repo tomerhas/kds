@@ -2873,8 +2873,10 @@ namespace KdsBatch
                             fSumDakotRechiv = fSumDakotRechiv - (fSachKizuzMeheadrut / objOved.fmichsatYom);
                         }
                         else
-                            fSumDakotRechiv = 0;
-
+                        {
+                            fKizuzYamim = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "ERECH_EZER>0 AND KOD_RECHIV=" + clGeneral.enRechivim.YomChofesh.GetHashCode().ToString()));
+                            fSumDakotRechiv = fSumDakotRechiv - fKizuzYamim;
+                        }
                         IpusRechivim();
                     }
                 }

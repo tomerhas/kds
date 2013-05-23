@@ -376,7 +376,7 @@ namespace KdsBatch
                 //•	עבור סידורי ויזה "תיירות פנים": 
                 if (!string.IsNullOrEmpty(drSidur["sidur_namlak_visa"].ToString()))
                 {
-                    if (int.Parse(drSidur["sidur_namlak_visa"].ToString()) == 2) // && drSidur["sidur_rak_lechevrot_banot"].ToString()=="")
+                    if (int.Parse(drSidur["sidur_namlak_visa"].ToString()) == 2 && (drSidur["sidur_rak_lechevrot_banot"].ToString() == "" || objOved.Taarich>=DateTime.Parse("01/05/2013")))
                     {
                         if (int.Parse(drSidur["yom_VISA"].ToString()) == 4)
                         {
