@@ -23,8 +23,7 @@
   <Metadata>
     <MetadataFile FileName="BatchService.wsdl" MetadataType="Wsdl" ID="db55c1e0-5e07-4470-941b-7171bb5b7ec0" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?wsdl" />
     <MetadataFile FileName="KdsLocalService.xsd" MetadataType="Schema" ID="b4b909de-59a5-4ea6-a5ac-f0a1e2272bea" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?xsd=xsd2" />
-    <MetadataFile FileName="KdsLocalService1.xsd" MetadataType="Schema" ID="b660a7a3-3c81-4a60-b731-46c7d328e4d9" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?xsd=xsd1" />
-    <MetadataFile FileName="KdsLocalService2.xsd" MetadataType="Schema" ID="8d25f9cb-be07-4c84-a63b-273bf0e86d45" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?xsd=xsd0" />
+    
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
