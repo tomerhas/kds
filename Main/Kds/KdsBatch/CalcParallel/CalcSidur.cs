@@ -8516,7 +8516,7 @@ namespace KdsBatch
                         for (int I = 0; I < _drSidurim.Length; I++)
                         {
                             iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
-                            if (iMisparSidur != 99006)
+                            if (iMisparSidur != 99006 && iMisparSidur != 99801)
                             {
                                 dShatSiyum = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
                                 dShatHatchala = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());

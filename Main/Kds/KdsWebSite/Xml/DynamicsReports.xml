@@ -580,7 +580,7 @@
     </Filter>
   </Report>
 
-  <Report  RdlName="RdlPrecenceOvdeyMeshekShishiShabat" Roles="kds_administrators" FilterByLine="3" PageHeader="נוכחות עובדי משק שישי-שבת" >
+  <Report  RdlName="RdlPrecenceOvdeyMeshekShishiShabat" Roles="kds_administrators" FilterByLine="3" PageHeader="נוכחות עובדי משק שישי ושבתון" >
     <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
