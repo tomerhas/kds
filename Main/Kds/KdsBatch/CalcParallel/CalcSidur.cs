@@ -7660,6 +7660,9 @@ namespace KdsBatch
                             fDakotNochehut = Math.Min(fMichsaYomit, float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString()));
 
                         fErech += fDakotNochehut;
+                        if (iKodRechiv ==56)
+                            addRowToTable(iKodRechiv, dShatHatchalaSidur, iMisparSidur, fDakotNochehut);
+
                     }
                 }
                 return fErech;
