@@ -392,10 +392,10 @@
                                 <asp:Button Text="עדכן כרטיס" ID="btnUpdateCard" runat="server"   Style="width: 150px; height: 33px;" CausesValidation="false" OnClientClick="return ChkCardVld();" OnClick="btnPopUpd_click"  />
                             </td>   
                             <td style="width: 90px;">                                            
-                               <input type="button"  value="מאשר" ID="btnApprove" runat="server" onclientclick="SetStyle(1);" onclick="btnMeasherOrMistayeg_onclick(1);" />
+                               <input type="button"  value="מאשר" ID="btnApprove" runat="server" onclick="btnMeasherOrMistayeg_onclick(1);" />
                             </td>
                             <td style="width: 197px;" align="right">
-                               <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server" onclientclick="SetStyle(0);" onclick="btnMeasherOrMistayeg_onclick(0);"/>   
+                               <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server"  onclick="btnMeasherOrMistayeg_onclick(0);"/>   
                             </td>                                                                               
                             <td align="right" style="display:none"><asp:Button ID="btnResonOutIn" runat="server"  CausesValidation="false" OnClick="btnResonOutIn_Click"/></td>                                    
                         </tr>
