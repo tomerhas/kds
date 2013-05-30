@@ -475,7 +475,7 @@
                                         <tr class="WorkCardPanelMessageHeader">
                                             <td width="380px" align="left">
                                                  <asp:Button ID="btnUpdatePrint" runat="server" Text="עדכון שינויים בכרטיס" CssClass="btnWorkCardLong"
-                                                    Width="150px" OnClick="btnUpdatePrint_click" CausesValidation="false" OnClientClick= 'return ChkCardVld();'/>
+                                                    Width="150px" OnClick="btnUpdatePrint_click" CausesValidation="false" OnClientClick= 'return PageValidity();'/>
                                             </td>
                                             <td align="left">
                                                  <asp:Button runat="server" ID="btnPrintWithoutUpdate" Text="הדפס ללא עדכון" CssClass="btnWorkCardLong" Width="150px" CausesValidation="false" OnClick="btnPrintWithoutUpdate_click" />                                
@@ -855,6 +855,14 @@
              $get("ddlHalbasha").value = $get("hidPrevHalbasha").value;
            else
              $get("hidPrevHalbasha").value=$get("ddlHalbasha").value;
+        }
+        function PageValidity()
+        {
+            var t=setTimeout(function(){$('[id$=btnUpdatePrint]').attr('disabled', 'true');$('[id$=btnPrintWithoutUpdate]').attr('disabled', 'true')},300);
+            
+            ChkCardVld();
+            
+            return true;
         }
     </script>
 </body>

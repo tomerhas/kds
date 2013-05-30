@@ -406,6 +406,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          btnRefreshOvedDetails.Attributes.Add("onfocusout","onButtonFocusOut(" + btnRefreshOvedDetails.ID + ")");        
          btnUpdateCard.Attributes.Add("onfocus", "onButtonFocusIn(" + btnUpdateCard.ID + ")");
          btnUpdateCard.Attributes.Add("onfocusout", "onButtonFocusOut(" + btnUpdateCard.ID + ")");
+        
          clnDate.Attributes.Add("onclick", "SetRefreshBtn(true);");
          clnDate.Attributes.Add("OnChangeCalScript", "SetRefreshBtn(true);");
 
@@ -643,7 +644,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              bRashemet = LoginUser.IsRashemetProfile(LoginUser);
             
              SetRashemetVars(bRashemet);
-             hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
+             hidFromEmda.Value =  (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
              iMisparIshiIdkunRashemet = ((int.Parse)(LoginUser.UserInfo.EmployeeNumber)).Equals(iMisparIshi) ? iMisparIshi : 0;
 
              oBatchManager.iLoginUserId =int.Parse(LoginUser.UserInfo.EmployeeNumber);
