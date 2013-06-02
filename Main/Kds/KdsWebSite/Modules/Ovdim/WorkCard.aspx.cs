@@ -644,7 +644,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              bRashemet = LoginUser.IsRashemetProfile(LoginUser);
             
              SetRashemetVars(bRashemet);
-             hidFromEmda.Value =  (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
+             hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
              iMisparIshiIdkunRashemet = ((int.Parse)(LoginUser.UserInfo.EmployeeNumber)).Equals(iMisparIshi) ? iMisparIshi : 0;
 
              oBatchManager.iLoginUserId =int.Parse(LoginUser.UserInfo.EmployeeNumber);
@@ -2227,7 +2227,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     strImageUrlNotApprove = "ImgButtonDisApprovalRegular";
                     break;
             }
-            Session["MeasherMistyeg"] = oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
+            if (!Page.IsPostBack) 
+                Session["MeasherMistyeg"] = oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
         }
         else
         {

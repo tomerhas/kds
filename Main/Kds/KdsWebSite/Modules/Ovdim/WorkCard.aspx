@@ -416,7 +416,7 @@
                                 <asp:Button Text="שגיאות לעובד" ID="btnDrvErrors" runat="server" CssClass="btnWorkCardAddMap" Style="width: 102px; " OnClientClick="return ShowDrvErr();"  CausesValidation="false" />                                                                           
                                 <asp:Button ID="btnShowMessage" runat="server" OnClick="btnShowMessage_Click" Style="display: none;" />
                                 <cc1:ModalPopupExtender ID="ModalPopupEx" DropShadow="false" X="300" Y="200" PopupControlID="paCloseMsg"
-                                    TargetControlID="btnHidClose" CancelControlID="btnCancel"  OnCancelScript="CloseWindow();" runat="server" BehaviorID="MPClose">
+                                    TargetControlID="btnHidClose" CancelControlID="btnCancel"  OnCancelScript="CloseWindow();" runat="server" BehaviorID="MPClose" backgroundcssclass="modalBackground">
                                 </cc1:ModalPopupExtender>
                                 <asp:Panel runat="server" Style="display: none" ID="paCloseMsg" CssClass="WorkCardPanelMessage" Width="480px" Height="180px" > 
                                     <table width="480px">
@@ -440,10 +440,10 @@
                                         <tr class="WorkCardPanelMessageHeader">
                                             <td width="380px" align="left">
                                                 <asp:Button ID="btnConfirm" runat="server" Text="עדכון שינויים בכרטיס" CssClass="btnWorkCardLongUpdate"
-                                                    Width="170px" OnClick="btnConfirm_click" CausesValidation="false" OnClientClick= 'return ChkCardVld();'/>
+                                                    Width="170px" OnClick="btnConfirm_click" CausesValidation="false" OnClientClick= 'return PageValidity();'/>
                                             </td>
                                             <td align="left">
-                                                 <asp:Button runat="server" ID="btnCancel" Text="סגור ללא עדכון" CssClass="btnWorkCardUpdate" CausesValidation="false" OnClientClick="CloseWindow();return false;" />                                    
+                                                 <asp:Button runat="server" ID="btnCancel" Text="סגור ללא עדכון" CssClass="btnWorkCardUpdate" CausesValidation="false" OnClientClick="DisabledButtons(); CloseWindow();return false;" />                                    
                                             </td>
                                         </tr>
                                     </table>                                                                                                  
@@ -451,7 +451,7 @@
                                     
                                 <asp:Button ID="btnShowPrintMsg" runat="server" OnClick="btnShowPrintMsg_Click" Style="display: none;" />
                                 <cc1:ModalPopupExtender ID="MPEPrintMsg" DropShadow="false" X="300" Y="200" PopupControlID="pnlPrint"
-                                    TargetControlID="btnShowPrintMsg" CancelControlID="btnCancel"  OnCancelScript="CloseWindow();" runat="server" BehaviorID="MPPrint">
+                                    TargetControlID="btnShowPrintMsg" CancelControlID="btnCancel"  OnCancelScript="CloseWindow();" runat="server" BehaviorID="MPPrint" backgroundcssclass="modalBackground">
                                 </cc1:ModalPopupExtender>
                                 <asp:Panel runat="server" Style="display: none" ID="pnlPrint" CssClass="WorkCardPanelMessage" Width="480px" Height="175px"> 
                                     <table width="480px">
@@ -478,7 +478,7 @@
                                                     Width="150px" OnClick="btnUpdatePrint_click" CausesValidation="false" OnClientClick= 'return PageValidity();'/>
                                             </td>
                                             <td align="left">
-                                                 <asp:Button runat="server" ID="btnPrintWithoutUpdate" Text="הדפס ללא עדכון" CssClass="btnWorkCardLong" Width="150px" CausesValidation="false" OnClick="btnPrintWithoutUpdate_click" />                                
+                                                 <asp:Button runat="server" ID="btnPrintWithoutUpdate" Text="הדפס ללא עדכון" CssClass="btnWorkCardLong" Width="150px" CausesValidation="false" OnClick="btnPrintWithoutUpdate_click" onClientClick='return DisabledButtons();'/>                                
                                             </td>
                                         </tr>
                                     </table>                                            
@@ -858,10 +858,16 @@
         }
         function PageValidity()
         {
-            var t=setTimeout(function(){$('[id$=btnUpdatePrint]').attr('disabled', 'true');$('[id$=btnPrintWithoutUpdate]').attr('disabled', 'true')},300);
-            
-            ChkCardVld();
-            
+            DisabledButtons();            
+            ChkCardVld();            
+            return true;
+        }
+        function DisabledButtons(){
+            var t=setTimeout(function()
+                            {
+                             $('[id$=btnUpdatePrint]').attr('disabled', 'true');
+                             $('[id$=btnPrintWithoutUpdate]').attr('disabled', 'true');
+                            },300);
             return true;
         }
     </script>
