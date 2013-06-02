@@ -440,10 +440,10 @@
                                         <tr class="WorkCardPanelMessageHeader">
                                             <td width="380px" align="left">
                                                 <asp:Button ID="btnConfirm" runat="server" Text="עדכון שינויים בכרטיס" CssClass="btnWorkCardLongUpdate"
-                                                    Width="170px" OnClick="btnConfirm_click" CausesValidation="false" OnClientClick= 'return PageValidity();'/>
+                                                    Width="170px" OnClick="btnConfirm_click" CausesValidation="false" OnClientClick= 'return PageValidity(2);'/>
                                             </td>
                                             <td align="left">
-                                                 <asp:Button runat="server" ID="btnCancel" Text="סגור ללא עדכון" CssClass="btnWorkCardUpdate" CausesValidation="false" OnClientClick="DisabledButtons(); CloseWindow();return false;" />                                    
+                                                 <asp:Button runat="server" ID="btnCancel" Text="סגור ללא עדכון" CssClass="btnWorkCardUpdate" CausesValidation="false" OnClientClick="DisabledButtons(2); CloseWindow();return false;" />                                    
                                             </td>
                                         </tr>
                                     </table>                                                                                                  
@@ -475,10 +475,10 @@
                                         <tr class="WorkCardPanelMessageHeader">
                                             <td width="380px" align="left">
                                                  <asp:Button ID="btnUpdatePrint" runat="server" Text="עדכון שינויים בכרטיס" CssClass="btnWorkCardLong"
-                                                    Width="150px" OnClick="btnUpdatePrint_click" CausesValidation="false" OnClientClick= 'return PageValidity();'/>
+                                                    Width="150px" OnClick="btnUpdatePrint_click" CausesValidation="false" OnClientClick= 'return PageValidity(1);'/>
                                             </td>
                                             <td align="left">
-                                                 <asp:Button runat="server" ID="btnPrintWithoutUpdate" Text="הדפס ללא עדכון" CssClass="btnWorkCardLong" Width="150px" CausesValidation="false" OnClick="btnPrintWithoutUpdate_click" onClientClick='return DisabledButtons();'/>                                
+                                                 <asp:Button runat="server" ID="btnPrintWithoutUpdate" Text="הדפס ללא עדכון" CssClass="btnWorkCardLong" Width="150px" CausesValidation="false" OnClick="btnPrintWithoutUpdate_click" onClientClick='return DisabledButtons(1);'/>                                
                                             </td>
                                         </tr>
                                     </table>                                            
@@ -856,17 +856,24 @@
            else
              $get("hidPrevHalbasha").value=$get("ddlHalbasha").value;
         }
-        function PageValidity()
+        function PageValidity(MsgType)
         {
-            DisabledButtons();            
+            DisabledButtons(MsgType);            
             ChkCardVld();            
             return true;
         }
-        function DisabledButtons(){
+        function DisabledButtons(MsgType){
             var t=setTimeout(function()
                             {
-                             $('[id$=btnUpdatePrint]').attr('disabled', 'true');
-                             $('[id$=btnPrintWithoutUpdate]').attr('disabled', 'true');
+                             if (MsgType==1)
+                             {
+                                 $('[id$=btnUpdatePrint]').attr('disabled', 'true');
+                                 $('[id$=btnPrintWithoutUpdate]').attr('disabled', 'true');
+                             }
+                             else{
+                                  $('[id$=btnConfirm]').attr('disabled', 'true');
+                                  $('[id$=btnCancel]').attr('disabled', 'true');
+                             }
                             },300);
             return true;
         }
