@@ -605,15 +605,29 @@
     </Filter>
   </Report>
   
-  <Report  RdlName="RdlReportMushalimDetails" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח מושאלים"   ProductionType="Heavy">
-    <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
+  <Report  RdlName="RdlReportMushalimDetails" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח מושאלי אגד תעבורה"   ProductionType="Heavy">
+    <Filter ParameterName="P_STARTDATE" Caption="חודש" BoxeType="DropDown" DataType="System.String">
+      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
+        <ParameterOfFunction Type="ByValue" Value="RdlReportMushalimDetails" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
+        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
+      </DropDownList>
+    </Filter>
+    <Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String">
+      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
+        <ParameterOfFunction Type="ByValue" Value="RdlReportMushalimDetails" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
+        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
+      </DropDownList>
+    </Filter>
+    <!--<Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
     </Filter>
     <Filter   ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" RunAtServer="true"  >
       <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
-      <!--<FilterValidator ValidatorName="ValidIshurimAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
-    </Filter>
+      --><!--<FilterValidator ValidatorName="ValidIshurimAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>--><!--
+    </Filter>-->
    
   </Report>
 </DynamicReport>

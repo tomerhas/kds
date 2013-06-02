@@ -23,9 +23,10 @@
         </tr>
         <tr>
             <td colspan="2">
+         <%--   <div id="divGrid" runat="server" dir="rtl" style="vertical-align:middle">--%>
              <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" 
-                    AllowPaging="true" AllowSorting="true" 
-                    EmptyDataText="לא נמצאו נתונים!" 
+                    AllowPaging="true" AllowSorting="true"   HorizontalAlign="Right"
+                    EmptyDataText="לא נמצאו נתונים!"  
                     CssClass="Grid" 
                     HeaderStyle-CssClass="GridHeader"
                     HeaderStyle-ForeColor="White" 
@@ -66,10 +67,11 @@
                     </PagerTemplate>
                     <EmptyDataRowStyle CssClass="GridEmptyData" height="20px" Wrap="False"/> 
              </asp:GridView>
-            
+            <%--</div>--%>
             </td>
         </tr>
     </table>
+     <input type="button" ID="btnRefreshPrint"  runat="server"  onserverclick="btnRefreshPrint_click"  style="display:none" CausesValidation="false" />
     </ContentTemplate></asp:UpdatePanel>
     <script type="text/javascript">
         function refresh(){
@@ -79,6 +81,38 @@
         function success(){
             return true;
         }
+
+        function PrintGridData() {
+////            var prtGrid = document.getElementById('<%=GridView1.ClientID %>');
+////            // prtGrid.border = 0;
+////            //   prtGrid.attributes["dir"] = "rtl";
+////            var prtwin = window.open('', 'PrintGridViewData', 'left=100,top=100,width=100,height=100,tollbar=0,scrollbars=1,status=0,resizable=1');
+////            prtwin.document.write(prtGrid.outerHTML);
+////            prtwin.document.close();
+////            prtwin.focus();
+////            prtwin.print();
+////            prtwin.close();
+////         //   debugger;
+////            document.getElementById("ctl00_KdsContent_btnRefreshPrint").click();
+////        }
+
+////function TableToExcel()
+            ////{
+            $("#<%=GridView1.ClientID %> A").removeAttr("href");
+            $("#<%=GridView1.ClientID %> A").css("COLOR", "black");
+
+            var strCopy = document.getElementById('<%=GridView1.ClientID %>').outerHTML;
+            window.clipboardData.setData("Text", strCopy);
+            var objExcel = new ActiveXObject ("Excel.Application");
+            objExcel.visible = true;
+
+            var objWorkbook = objExcel.Workbooks.Add;
+            var objWorksheet = objWorkbook.Worksheets(1);
+            objWorksheet.Paste;
+            document.getElementById("ctl00_KdsContent_btnRefreshPrint").click();
+}
+
+
     </script>
 </asp:Content>
 

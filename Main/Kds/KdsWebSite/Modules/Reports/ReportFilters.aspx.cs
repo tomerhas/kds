@@ -655,6 +655,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 ReportParameters.Add(NameId, (string)clGeneral.GetControlValue(FilterControl));
             });
             AddSpecificReportParameters(Report, ref ReportParameters);
+            ChangeReportParameters(Report, ref ReportParameters);
             Session["ReportParameters"] = ReportParameters;
         }
         catch (Exception ex)
@@ -683,6 +684,20 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 
         }
     }
+
+    private void ChangeReportParameters(KdsReport rpt, ref Dictionary<string, string> Params)
+    {
+        switch (rpt.NameReport)
+        {
+            case ReportName.RdlReportMushalimDetails:
+                Params["P_STARTDATE"] = StartMonth.ToShortDateString();
+                Params["P_ENDDATE"] = EndMonth.ToShortDateString();
+                break;
+           
+
+        }
+    }
+
     private void FillChildControls()
     {
         _PanelFilters = (PanelFilters)Session["PanelFilters"];

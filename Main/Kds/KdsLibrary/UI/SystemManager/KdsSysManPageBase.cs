@@ -346,6 +346,31 @@ namespace KdsLibrary.UI.SystemManager
             return newSortDirection;
         }
 
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            string sScript = "PrintGridData()";
+
+            _gridView.AllowPaging = false;
+            //_gridView.AllowSorting = false;
+         //   _gridView.Attributes.Add("dir", "rtl");
+            BindGridDataControl();
+            //GridView1.BottomPagerRow.Visible = false;
+            ////  _gridView.FooterRow.Font.Bold = true;
+            //  Response.Write("<script>PrintGridData();</script>");
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "PrintPdf", sScript, true);
+
+            
+            //_gridView.AllowSorting = true;
+          //  BindGridDataControl();
+          //  _gridView.AllowPaging = true;
+          
+        }
+
+        public void RefreshAftePrint()
+        {
+            _gridView.AllowPaging = true;
+            BindGridDataControl();  
+        }
         private string GetCombinedTitle()
         {
             DataTable dtSource = _gridView.DataSource as DataTable;
