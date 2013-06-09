@@ -2109,7 +2109,7 @@ public class wsGeneral : System.Web.Services.WebService
             //אם סידור נהגות או ניהול ושעת ההתחלה היא בין 0 ל- פרמרטר 244, נעלה הודעה של היום הבא
             if ((dSidurStartHour >= dStartHour) && (dSidurStartHour <= dEndHour) && ((!sNewStartHour.Equals(string.Empty))))
             {
-                sResult = "0,1";
+                sResult = "0,0";
                 dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOrgStartHour).ToShortTimeString() + "'");
                 if (dr.Length > 0)
                 {

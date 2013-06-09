@@ -1687,7 +1687,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 }
             }
             else
-            {
+            {//up
                 _CurrSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
                 _CurrPeilutUp = _CurrSidur.Rows[iPeilutIndexOrg];
                 sShatYetiza = ((TextBox)_CurrPeilutUp.Cells[_COL_SHAT_YETIZA].Controls[0]).Text;
@@ -1697,11 +1697,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 {
                     if (((TextBox)_CurrPeilutUp.Cells[_COL_DAY_TO_ADD].Controls[0]).Text.Equals("1"))
                         dPeilutDate = dPeilutDate.AddDays(1);
+                    
                     dKisuyTor = CalcTimeDiffMinuts(dPeilutDate, sShatYetiza, ((TextBox)_CurrPeilutUp.Cells[_COL_KISUY_TOR].Controls[0]).Text);
                     dPeilutShatYetiza = DateTime.Parse(dPeilutDate.ToShortDateString() + " " + sShatYetiza);
                     dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(-dKisuyTor);
                     iMazanTichnun = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["mazantichnun"].ToString()) ? 0 : int.Parse(_NesiaDetails.Rows[0]["mazantichnun"].ToString());
                     dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(-iMazanTichnun);
+
+                    if (((TextBox)_CurrPeilutUp.Cells[_COL_DAY_TO_ADD].Controls[0]).Text.Equals("1"))
+                        UpdateNewRekaDate(_CurrPeilutUp,  ref  dPeilutShatYetiza);
                 }
             }
 
@@ -1761,6 +1765,25 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         }
 
     }
+    private void UpdateNewRekaDate(GridViewRow prevPeilut, ref DateTime dPeilutShatYetiza)
+    {
+
+       
+        DateTime _NewPeilutDate = new DateTime();
+        //string _PrevHour="";
+
+       //_PrevHour = ((TextBox)(prevPeilut.Cells[_COL_SHAT_YETIZA].Controls[0])).ToString();
+        //תאריך פעילות קודמת _ שעת חצות
+        DateTime _prevPeilutDate = new DateTime(_CardDate.Year, _CardDate.Month, _CardDate.Day, 0,0,0);
+        _prevPeilutDate = _CardDate.AddDays(1);
+
+        //פעילות חדשה
+        _NewPeilutDate = DateTime.Parse(_CardDate.ToShortDateString() + " " + dPeilutShatYetiza.Hour + ":" + dPeilutShatYetiza.Minute);
+        if (_NewPeilutDate < _prevPeilutDate)
+            dPeilutShatYetiza = dPeilutShatYetiza.AddDays(-1);
+                
+    }
+
     private void ChangePeiluyotIndex(int iPos, ref OrderedDictionary htPeilyout, ref clPeilut oPeilutNew)
     {
         clPeilut _Peilut;
@@ -2689,11 +2712,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
        // hCell.Style.Add("border-left", "solid 1px gray");        
     }
-    protected void CreateOutMichsaCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive, DataRow[] drSugSidur)
+    protected void CreateOutMichsaCell(clSidur oSidur, ref HtmlTableCell hCell,ref HtmlTableCell hErrCell, int iIndex, bool bSidurActive, DataRow[] drSugSidur)
     {
         bool bEnabled;
-       
-        hCell = CreateTableCell("64px", "", "");
+
+        Image imgErr = new Image();
+        imgErr.ID = "imgOutMichsa" + iIndex;
+        hErrCell = CreateTableCell("10px", "WorkCardSidur", "");
+
+        hCell = CreateTableCell("34px", "", "");
         HtmlInputCheckBox chkBox = new HtmlInputCheckBox();
         chkBox.ID = "chkOutMichsa" + iIndex;
         chkBox.Checked = (oSidur.sOutMichsa == "1");
@@ -2701,10 +2728,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         chkBox.Disabled = (!((bEnabled) && (bSidurActive)));
         chkBox.Attributes.Add("cssClass", "WorkCardCheckBox");
         chkBox.Attributes.Add("OrgEnabled", bEnabled ? "1" : "0");
-         if (EnabledValidator())
-         {
-            chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
-         }
+        if (EnabledValidator())       
+           chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
+        
         
         //AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
 
@@ -2715,8 +2741,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             case clGeneral.enCardStatus.Error:
                 //שגיאות לשדה
-                if (!SetOneError(chkBox, hCell, "Out_michsa", ref oSidur, iIndex.ToString(), ""))
-                {
+                //if (!SetOneError(chkBox, hCell, "Out_michsa", ref oSidur, iIndex.ToString(), ""))
+                //{
                     //vered 29/4/2012
                     //if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref sAllApprovalDescription, ref bEnableApproval))
                     //{
@@ -2728,7 +2754,24 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     //    lDummy.Text = " ";
                     //    hCell.Controls.Add(lDummy);
                     //}
+                //}
+
+                if (SetOneError(chkBox, hErrCell, "out_michsa", ref oSidur, iIndex.ToString(), "SD_" + imgErr.ID))
+                {
+                    imgErr.ImageUrl = "../../Images/!.png";
+                    imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+                    imgErr.Attributes.Add("ondblClick", "GetErrorMessage(SD_" + chkBox.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
+
+                    hErrCell.Controls.Add(imgErr);
+                    hErrCell.Style.Add("background-color", "#d1e4f2");
+
                 }
+                else
+                {
+                    hErrCell = CreateTableCell("23px", "WorkCardSidurErr", "");
+                    // CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell); vered 29/4/2012
+                }
+                
                 break;
             case clGeneral.enCardStatus.Valid:
                 //string sAllApprovalDescription = "";
@@ -4329,9 +4372,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 hTable.Rows[0].Cells.Add(hCell);
 
                 //מחוץ למכסה
-                CreateOutMichsaCell(oSidur, ref hCell, iIndex, bSidurActive, drSugSidur);
+                CreateOutMichsaCell(oSidur, ref hCell, ref hErrCell, iIndex, bSidurActive, drSugSidur);
                 hTable.Rows[0].Cells.Add(hCell);
-
+                hTable.Rows[0].Cells.Add(hErrCell);
                 //לא לתשלום
                 CreateLoLetashlumCell(oSidur, ref hCell, iIndex, bSidurActive);               
                 hTable.Rows[0].Cells.Add(hCell);
@@ -5173,6 +5216,18 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     ((CheckBox)oObj).Attributes.Add("ondblClick", "GetErrorMessage(this," + iLevel + ",'" + sPeilutKey + "')");
                     ((CheckBox)oObj).Attributes.Add("FName", sFieldName);
                     ((CheckBox)oObj).Attributes.Add("ImgId", sImgId);
+                }
+                break;
+            case "System.Web.UI.HtmlControls.HtmlInputCheckBox":
+                //((HtmlInputCheckBox)oObj).Style.Add("background-color", sBackColor);
+                //((HtmlInputCheckBox)oObj).Style.Add("color", sColor);
+
+                if (iErrorCount > 0)
+                {
+                    ((HtmlInputCheckBox)oObj).Attributes.Add("ErrCnt", iErrorCount.ToString());
+                    ((HtmlInputCheckBox)oObj).Attributes.Add("ondblClick", "GetErrorMessage(this," + iLevel + ",'" + sPeilutKey + "')");
+                    ((HtmlInputCheckBox)oObj).Attributes.Add("FName", sFieldName);
+                    ((HtmlInputCheckBox)oObj).Attributes.Add("ImgId", sImgId);
                 }
                 break;
             case "System.Web.UI.WebControls.Label":

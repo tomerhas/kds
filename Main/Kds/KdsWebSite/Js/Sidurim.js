@@ -804,9 +804,10 @@ function chkMkt(oRow) {
                   if (utcSidurSG == utcCardDate)
                       dSidurDate.setDate(dSidurDate.getDate() + Number(iSDayToAdd));
                   else
-                      if (Number(iSDayToAdd) == 0)
+                      if (Number(iSDayToAdd) == 0) {
                           dSidurDate.setDate(dSidurDate.getDate() - 1);
-
+                          $get("SD_lblDate".concat(iCollpaseHeaderIndex)).innerHTML = sCardDate;
+                      }
                   dShatYetiza = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), sActualShatYetiza.substr(0, 2), sActualShatYetiza.substr(sActualShatYetiza.length - 2, 2));
 
                   sParamNxtDay = $get("SD_hidParam242").value;                 

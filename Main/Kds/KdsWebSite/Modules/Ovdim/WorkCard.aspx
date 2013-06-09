@@ -874,7 +874,7 @@
                                   $('[id$=btnConfirm]').attr('disabled', 'true');
                                   $('[id$=btnCancel]').attr('disabled', 'true');
                              }
-                            },300);
+                            },150);
             return true;
         }
     </script>
