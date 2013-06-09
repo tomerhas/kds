@@ -1493,6 +1493,13 @@ function chkMkt(oRow) {
               else
                   if (($get("SD_txtDayAdd".concat(arrItems[2])).value == "1") || (dItemDate > dParamDate))
                       $get("SD_btnShowMessage").click();
+                  else
+                  //נבדוק ששעת גמר לא השתנתה, אם שעת גמר של הסידור היא של היום הנוכחי נשנה גם את התאריך של שעת היציאה - שינוי שעת יציאה
+                  {
+                      if ($get("SD_txtDayAdd".concat(arrItems[2])).value == "0"){
+                          $get(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = "0";
+                      }
+                  }
           }
           else
               if (arrItems[0] == '2')//יציאה    
