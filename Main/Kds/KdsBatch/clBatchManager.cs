@@ -4640,7 +4640,7 @@ namespace KdsBatch
             try
             {
                 //שגיאה חדשה - היום נבדק רק בחישוב !!! לעובד מגיע זמן נסיעה משתנה (מאפיין 61 במאפייני עובדים) עפ"י מקום החתמת השעון. נבנתה טבלה המכילה את זמני הנסיעה ממקום מגוריו של העובד (נקבע עפ"י מרכז הארוע - קוד נתון 10 בטבלת פרטי עובדים) אל מיקום שעון כניסה וממיקום שעון יציאה הביתה. לעיתים חסר נתון בטבלה וזאת השגיאה.  כדי לדעת מה הערך הרלוונטי לעובד יש להפעיל את "הפרוצדורה של שרי"
-                if (oMeafyeneyOved.Meafyen61Exists) // אם קיים מאפיין 61, לעובד מגיע זמן נסיעה משתנה
+                if (oMeafyeneyOved.Meafyen61Exists && int.Parse(oMeafyeneyOved.sMeafyen61)>0) // אם קיים מאפיין 61, לעובד מגיע זמן נסיעה משתנה
                 {
                     if (oOvedYomAvodaDetails.bMercazEruaExists)
                     {
@@ -6638,7 +6638,7 @@ namespace KdsBatch
                         oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
                         if (!CheckIdkunRashemet("LO_LETASHLUM", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                         {
-                            if (oSidur.iLoLetashlum == 1 && !(oSidur.iKodSibaLoLetashlum == 1 || oSidur.iKodSibaLoLetashlum == 11 || oSidur.iKodSibaLoLetashlum == 20))
+                            if (oSidur.iLoLetashlum == 1 && !(oSidur.iKodSibaLoLetashlum == 1 || oSidur.iKodSibaLoLetashlum == 11 || oSidur.iKodSibaLoLetashlum == 20 || oSidur.iKodSibaLoLetashlum == 19))
                             {
                                 oSidur.iLoLetashlum = 0;
                                 oSidur.iKodSibaLoLetashlum = 0;

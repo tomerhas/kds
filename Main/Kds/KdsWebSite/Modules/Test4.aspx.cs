@@ -9,22 +9,22 @@ public partial class Modules_Test4 : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        string callBackStr =
-        ClientScript.GetCallbackEventReference(this,
-                                                "GetArgs()",
-                                                "onSuccess",
-                                                null,
-                                                "onFailed",
-                                                true);
+        //string callBackStr =
+        //ClientScript.GetCallbackEventReference(this,
+        //                                        "GetArgs()",
+        //                                        "onSuccess",
+        //                                        null,
+        //                                        "onFailed",
+        //                                        true);
 
 
-        btnAdd.Attributes["onclick"] = callBackStr;
+        //btnAdd.Attributes["onclick"] = callBackStr;
 
-        btnSub.Attributes["onclick"] = callBackStr;
+        //btnSub.Attributes["onclick"] = callBackStr;
 
-        btnMulti.Attributes["onclick"] = callBackStr;
+        //btnMulti.Attributes["onclick"] = callBackStr;
 
-        btnDiv.Attributes["onclick"] = callBackStr;
+        //btnDiv.Attributes["onclick"] = callBackStr;
     }
     int num1, num2;
 

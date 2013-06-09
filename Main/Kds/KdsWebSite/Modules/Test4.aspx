@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <script src='../../js/jquery.js' type='text/javascript'></script>
+    <script src='../js/jquery.js' type='text/javascript'></script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -21,12 +21,14 @@
 
         <input type="button" value="Multi" id="btnMulti" runat="server" />
 
-        <input type="button" value="Div" id="btnDiv" runat="server" />
+        <input type="button" value="Div" id="btnDiv" onclick="clicDiv();" runat="server" />
  
         <span id="sp"></span>
 
 
     </div>
+
+     <div id="yellowDiv">    jQuery Tutorial  </div>
     </form>
     <script language="javascript" type="text/javascript">
         function GetArgs() {
@@ -45,8 +47,20 @@
         function onFailed(res) {
             alert(res);
         }
-       
 
+        function clicDiv() {
+            $("#yellowDiv").css({ "background-color": "yellow" });
+        }
+        
+         $(document).ready(function () {
+             var divElements = $("div");
+             if (divElements.length > 0)
+             { $("#yellowDiv").css({ "background-color": "blue" }); }
+             else
+             { $("#yellowDiv").css({ "background-color": "red" }); }
+
+
+         });
     </script>
 </body>
 </html>
