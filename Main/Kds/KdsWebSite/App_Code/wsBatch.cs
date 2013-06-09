@@ -20,7 +20,7 @@ delegate void InputDataAndErrorsDelegate(long lRequestNum);
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
- [System.Web.Script.Services.ScriptService]
+[System.Web.Script.Services.ScriptService]
 public class wsBatch : System.Web.Services.WebService
 {
 
@@ -61,7 +61,7 @@ public class wsBatch : System.Web.Services.WebService
         client.Close();
         return "OK";
     }
-    
+
     [WebMethod(EnableSession = true)]
     public string CalcBatchPremiyot(long lRequestNum)
     {
@@ -85,7 +85,7 @@ public class wsBatch : System.Web.Services.WebService
     public string TransferToHilan(long lRequestNum, long lRequestNumToTransfer)
     {
         KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
-            client.TransferToHilan(lRequestNum, lRequestNumToTransfer);
+        client.TransferToHilan(lRequestNum, lRequestNumToTransfer);
         client.Close();
         return "OK";
     }
@@ -109,52 +109,52 @@ public class wsBatch : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public string OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType btchType, 
+    public string OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType btchType,
         int userId, string Description)
     {
         return KdsLibrary.clGeneral.OpenBatchRequest(btchType,
                String.Concat(Description, " ", btchType.ToString()), userId).ToString();
     }
 
-    [WebMethod]
-    public string RunPremiaRoutine(KdsLibrary.clGeneral.enGeneralBatchType btchType,
-        long lRequestNum, string periodMonth, int userId, long processBtchNumber)
-    {
+    //[WebMethod]
+    //public string RunPremiaRoutine(KdsLibrary.clGeneral.enGeneralBatchType btchType,
+    //    long lRequestNum, string periodMonth, int userId, long processBtchNumber)
+    //{
 
-        KdsLocalServiceProxy.BatchServiceClient client = new KdsLocalServiceProxy.BatchServiceClient();
-        string result = null;
-        clGeneral.InsertBakashaParam(processBtchNumber, 1, lRequestNum.ToString());
-        clGeneral.InsertBakashaParam(processBtchNumber, 2, periodMonth);
-        try
-        {
-            DateTime period = GetPeriodFirstDate(periodMonth);
-            switch (btchType)
-            {
-                case clGeneral.enGeneralBatchType.CreatePremiaExcelInput:
-                    result = client.CreatePremiaInputFile(lRequestNum, period, userId, processBtchNumber);
-                    break;
-                case clGeneral.enGeneralBatchType.ExecutePremiaCalculationMacro:
-                    result = client.RunPremiaCalculation(period, userId, processBtchNumber);
-                    break;
-                case clGeneral.enGeneralBatchType.StorePremiaCalculationOutput:
-                    result = client.StorePremiaCalculationOutput(lRequestNum, period, userId,
-                         processBtchNumber);
-                    break;
-                default:
-                    result = "Invalid Request Type";
-                    break;
+    //    KdsLocalServiceProxy.BatchServiceClient client = new KdsLocalServiceProxy.BatchServiceClient();
+    //    string result = null;
+    //    clGeneral.InsertBakashaParam(processBtchNumber, 1, lRequestNum.ToString());
+    //    clGeneral.InsertBakashaParam(processBtchNumber, 2, periodMonth);
+    //    try
+    //    {
+    //        DateTime period = GetPeriodFirstDate(periodMonth);
+    //        switch (btchType)
+    //        {
+    //            case clGeneral.enGeneralBatchType.CreatePremiaExcelInput:
+    //                result = client.CreatePremiaInputFile(lRequestNum, period, userId, processBtchNumber);
+    //                break;
+    //            case clGeneral.enGeneralBatchType.ExecutePremiaCalculationMacro:
+    //                result = client.RunPremiaCalculation(period, userId, processBtchNumber);
+    //                break;
+    //            case clGeneral.enGeneralBatchType.StorePremiaCalculationOutput:
+    //                result = client.StorePremiaCalculationOutput(lRequestNum, period, userId,
+    //                     processBtchNumber);
+    //                break;
+    //            default:
+    //                result = "Invalid Request Type";
+    //                break;
 
-            }
-        }
-        catch (Exception ex)
-        {
-            result = ex.Message;
-        }
-        if (!String.IsNullOrEmpty(result))
-            result += String.Concat(" מס' בקשה ", processBtchNumber);
-        client.Close();
-        return result;
-    }
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        result = ex.Message;
+    //    }
+    //    if (!String.IsNullOrEmpty(result))
+    //        result += String.Concat(" מס' בקשה ", processBtchNumber);
+    //    client.Close();
+    //    return result;
+    //}
 
     private DateTime GetPeriodFirstDate(string periodMonth)
     {
@@ -168,7 +168,7 @@ public class wsBatch : System.Web.Services.WebService
         KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
         client.RefreshMatzavOvdim();
         client.Close();
-       
+
     }
 
     [WebMethod(EnableSession = true)]
@@ -181,14 +181,14 @@ public class wsBatch : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void RunTahalichSadran(string taarich )
+    public void RunTahalichSadran(string taarich)
     {
         KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
         client.TahalichSadran(taarich);
         client.Close();
-     
+
     }
-    
+
     [WebMethod(EnableSession = true)]
     public void RunRefreshMeafyenim()
     {
@@ -235,7 +235,7 @@ public class wsBatch : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public string RunShinuimVeShguim(long lRequestNum, DateTime dTaarich,int TypeShguim ,int ExecutionType)
+    public string RunShinuimVeShguim(long lRequestNum, DateTime dTaarich, int TypeShguim, int ExecutionType)
     {
         KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
         //client.TahalichHarazatShguimBatch(lRequestNum, dTaarich, TypeShguim, ExecutionType);
@@ -245,9 +245,9 @@ public class wsBatch : System.Web.Services.WebService
 
 
     [WebMethod(EnableSession = true)]
-    public string RunTkinutMakatim( DateTime dTaarich)
+    public string RunTkinutMakatim(DateTime dTaarich)
     {
-        KdsLocalServiceProxy.BatchServiceClient client = new KdsLocalServiceProxy.BatchServiceClient();
+        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
         client.TkinutMakatimBatch(dTaarich);
         client.Close();
         return "OK";
