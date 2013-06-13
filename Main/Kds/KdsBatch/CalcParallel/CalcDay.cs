@@ -3009,6 +3009,7 @@ namespace KdsBatch
             float fErechRechiv=0, fMichsaYomit, fDakotNochehut, fKizuzMeheadrut,fMichsatMutamBitachon,fErech60;
             DataRow[] rowSidur;
             string sRechivim;
+            bool bflag = false;
            // clPirteyOved oEzerPratim; 
             try
             {
@@ -3129,11 +3130,12 @@ namespace KdsBatch
                                 && objOved.objMeafyeneyOved.iMeafyen85 == 1 && !oCalcBL.CheckOvedPutar(objOved) && fMichsaYomit > 0 && fErechRechiv > 0)
                             {
                                 fErechRechiv = fErechRechiv * float.Parse("0.6");
+                                bflag = true;
                             }
 
                             if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
                             {
-                                if (fErechRechiv == 1 && objOved.objMatzavOved.iKod_Headrut == 1)
+                                if ((fErechRechiv == 1 || (bflag && fErechRechiv==float.Parse("0.6"))) && objOved.objMatzavOved.iKod_Headrut == 1)
                                 {
                                     fErechRechiv = 0;
                                     addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), 1);
