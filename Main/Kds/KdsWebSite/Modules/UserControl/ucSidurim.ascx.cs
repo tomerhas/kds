@@ -369,7 +369,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         DateTime dDateA = DateTime.Parse(dDate.ToShortDateString() + " " + sHourA);
         DateTime dDateB = DateTime.Parse(dDate.ToShortDateString() + " " + sHourB);
         if ((!sHourA.Equals("")) &&  (!sHourB.Equals("")))
-            return (dDateA - dDateB).TotalMinutes;
+            if ((dDateA - dDateB).TotalMinutes>=0)
+                return (dDateA - dDateB).TotalMinutes;
+            else
+                return 1440 + ((dDateA - dDateB).TotalMinutes);
         else
            return 0;
     }
@@ -1704,8 +1707,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     iMazanTichnun = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["mazantichnun"].ToString()) ? 0 : int.Parse(_NesiaDetails.Rows[0]["mazantichnun"].ToString());
                     dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(-iMazanTichnun);
 
-                    if (((TextBox)_CurrPeilutUp.Cells[_COL_DAY_TO_ADD].Controls[0]).Text.Equals("1"))
-                        UpdateNewRekaDate(_CurrPeilutUp,  ref  dPeilutShatYetiza);
+                   
                 }
             }
 
@@ -1765,24 +1767,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         }
 
     }
-    private void UpdateNewRekaDate(GridViewRow prevPeilut, ref DateTime dPeilutShatYetiza)
-    {
-
-       
-        DateTime _NewPeilutDate = new DateTime();
-        //string _PrevHour="";
-
-       //_PrevHour = ((TextBox)(prevPeilut.Cells[_COL_SHAT_YETIZA].Controls[0])).ToString();
-        //תאריך פעילות קודמת _ שעת חצות
-        DateTime _prevPeilutDate = new DateTime(_CardDate.Year, _CardDate.Month, _CardDate.Day, 0,0,0);
-        _prevPeilutDate = _CardDate.AddDays(1);
-
-        //פעילות חדשה
-        _NewPeilutDate = DateTime.Parse(_CardDate.ToShortDateString() + " " + dPeilutShatYetiza.Hour + ":" + dPeilutShatYetiza.Minute);
-        if (_NewPeilutDate < _prevPeilutDate)
-            dPeilutShatYetiza = dPeilutShatYetiza.AddDays(-1);
-                
-    }
+    
 
     private void ChangePeiluyotIndex(int iPos, ref OrderedDictionary htPeilyout, ref clPeilut oPeilutNew)
     {
