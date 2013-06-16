@@ -525,6 +525,7 @@ namespace KdsBatch
                                         if (fSumDakotNichehut >= float.Parse(drSidur[J]["Michsat_shaot_chodshit"].ToString()))
                                         {
                                             drSidur[J]["Lo_letashlum"] = 1;
+                                            drSidur[J]["KOD_SIBA_LO_LETASHLUM"] = 19;
                                         }
                                         else
                                         {
@@ -555,6 +556,7 @@ namespace KdsBatch
                                             if (fSumDakotNichehut >= float.Parse(drSidur[J]["Michsat_shaot_chodshit"].ToString()))
                                             {
                                                 drSidur[J]["Lo_letashlum"] = 1;
+                                                drSidur[J]["KOD_SIBA_LO_LETASHLUM"] = 19;
                                             }
                                             else
                                             {

@@ -3135,10 +3135,12 @@ namespace KdsBatch
 
                             if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
                             {
-                                if ((fErechRechiv == 1 || (bflag && fErechRechiv==float.Parse("0.6"))) && objOved.objMatzavOved.iKod_Headrut == 1)
+                                if ((fErechRechiv == 1 || (bflag && fErechRechiv==float.Parse("0.6")) ||
+                                    (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() && fErechRechiv == (1 * objOved.fMekademNipuach)))
+                                    && objOved.objMatzavOved.iKod_Headrut == 1)
                                 {
                                     fErechRechiv = 0;
-                                    addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), 1);
+                                    addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), fErechRechiv);
                                 }
                             }
                             fErechRechiv = float.Parse(Math.Round(fErechRechiv,2).ToString());
