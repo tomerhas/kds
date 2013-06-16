@@ -2252,7 +2252,7 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>= " תאריך הדפסה "   +  Format(Globals!ExecutionTime,"dd/MM/yyyy")  + " " +   Format(Globals!ExecutionTime,"HH:mm") + " "</Value>
+                                  <Value>= " תאריך הדפסה "   +  Format(Globals!ExecutionTime,"dd/MM/yyyy")  + " " +   Format(Globals!ExecutionTime,"HH:mm:ss") + " "</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -2267,9 +2267,8 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                           </Paragraphs>
                           <rd:DefaultName>Textbox12</rd:DefaultName>
                           <Top>2.35402cm</Top>
-                          <Left>0.24176in</Left>
                           <Height>0.22425cm</Height>
-                          <Width>4.65931cm</Width>
+                          <Width>6.20753cm</Width>
                           <ZIndex>12</ZIndex>
                           <Style>
                             <Border>

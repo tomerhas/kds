@@ -1938,6 +1938,10 @@
           <QueryParameter Name="P_ENDDATE">
             <Value>=Parameters!P_ENDDATE.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="P_SNIF">
+            <Value>=Parameters!P_SNIF.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
         <CommandText>PKG_REPORTS.PRO_GET_PRESENCE</CommandText>
@@ -2057,7 +2061,7 @@ iif(
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>=CDate("01/05/2011")</Value>
+          <Value>=CDate("01/04/2013")</Value>
         </Values>
       </DefaultValue>
       <Prompt>P STARTDATE</Prompt>
@@ -2067,7 +2071,7 @@ iif(
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>=CDate("31/05/2011")</Value>
+          <Value>=CDate("30/04/2013")</Value>
         </Values>
       </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
@@ -2089,6 +2093,12 @@ iif(
     <ReportParameter Name="P_MISPAR_ISHI">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>75757</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
       <Prompt>Mispar_Ishi</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_WORKERVIEWLEVEL">
@@ -2100,6 +2110,12 @@ iif(
         </Values>
       </DefaultValue>
       <Prompt>P WORKERVIEWLEVEL</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_SNIF">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_SNIF</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Code>    Public Function GetFormatedTime(ByVal dblSeconds As Double) As String

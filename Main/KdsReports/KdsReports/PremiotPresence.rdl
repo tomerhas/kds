@@ -758,7 +758,7 @@
                           <Top>1.49937cm</Top>
                           <Left>0.13066cm</Left>
                           <Height>1.62334cm</Height>
-                          <Width>20.25975cm</Width>
+                          <Width>20.25974cm</Width>
                           <Visibility>
                             <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,false ,true)</Hidden>
                           </Visibility>
@@ -1463,10 +1463,7 @@
                                             <TextRuns>
                                               <TextRun>
                                                 <Value>=iif(Fields!STATUS.Value=0 ,"כרטיס שגוי",
-iif(Fields!MICHSA_YOMIT.Value&gt;0 and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) ,"חסר דיווח",
-iif((Fields!SHAT_HATCHALA.Value&lt;&gt;nothing or Fields!SHAT_GMAR.Value&lt;&gt;nothing) and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) ,"לא לחישוב",
-iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אין דיווח" , 
- iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing ,"חסר דיווח","")))))</Value>
+iif(Fields!MICHSA_YOMIT.Value&gt;0 and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) ,"חסר דיווח",""))</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -2432,7 +2429,6 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
-                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -2516,8 +2512,8 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                           <DataSetName>DsPremiotPresence</DataSetName>
                           <Top>3.15536cm</Top>
                           <Left>0.13066cm</Left>
-                          <Height>2.62021cm</Height>
-                          <Width>20.28055cm</Width>
+                          <Height>2.62022cm</Height>
+                          <Width>20.28056cm</Width>
                           <ZIndex>1</ZIndex>
                           <Visibility>
                             <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,false ,true)</Hidden>
@@ -2669,7 +2665,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.53528cm</Height>
+              <Height>2.57055cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2710,7 +2706,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox2</rd:DefaultName>
-                          <Top>1.49937cm</Top>
+                          <Top>1.53464cm</Top>
                           <Left>2.22836cm</Left>
                           <Height>0.89104cm</Height>
                           <Width>10.00911cm</Width>
@@ -2755,7 +2751,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
         <DataSetName>DsPirteyPremiya</DataSetName>
         <Top>5.98724cm</Top>
         <Left>0.50359cm</Left>
-        <Height>2.53528cm</Height>
+        <Height>2.57055cm</Height>
         <Width>15.35953cm</Width>
         <ZIndex>1</ZIndex>
         <Visibility>
@@ -2768,7 +2764,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.35532in</Height>
+    <Height>3.36921in</Height>
     <Style />
   </Body>
   <Width>8.03591in</Width>
@@ -2828,7 +2824,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="DsKds">
-      <DataSourceReference>KdsProd</DataSourceReference>
+      <DataSourceReference>KdsCon</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>22c64c23-8242-48d8-ba94-2daafa8d273c</rd:DataSourceID>
     </DataSource>
@@ -2841,15 +2837,19 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
           <QueryParameter Name="P_KOD_PREMIA">
             <Value>=Parameters!P_KOD_PREMIA.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="P_PERIOD">
             <Value>=Parameters!P_PERIOD.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="P_EZOR">
+            <Value>=Parameters!P_EZOR.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_PREMIOTPRESENCE</CommandText>
+        <CommandText>=iif(Parameters!P_KOD_PREMIA.Value&lt;&gt;103, "PKG_REPORTS.PRO_GET_PREMIOTPRESENCE", "PKG_REPORTS.PRO_PREMIOTPRESENCE_TENDERIM")</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -3036,12 +3036,6 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
       </DefaultValue>
       <Prompt>P KOD PREMIA</Prompt>
     </ReportParameter>
-    <ReportParameter Name="P_MISPAR_ISHI">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>P MISPAR ISHI</Prompt>
-    </ReportParameter>
     <ReportParameter Name="P_PERIOD">
       <DataType>String</DataType>
       <DefaultValue>
@@ -3050,6 +3044,18 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
         </Values>
       </DefaultValue>
       <Prompt>P PERIOD</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_EZOR">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_EZOR</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_MISPAR_ISHI">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P MISPAR ISHI</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>

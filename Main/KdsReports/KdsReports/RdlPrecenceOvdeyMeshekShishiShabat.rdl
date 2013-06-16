@@ -844,7 +844,6 @@
                         <Direction>RTL</Direction>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1338,6 +1337,10 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <RepeatRowHeaders>true</RepeatRowHeaders>
+        <FixedColumnHeaders>true</FixedColumnHeaders>
+        <FixedRowHeaders>true</FixedRowHeaders>
         <KeepTogether>true</KeepTogether>
         <DataSetName>DsPresenceMeshek</DataSetName>
         <Top>0.03085cm</Top>
@@ -1471,6 +1474,7 @@
     <ReportParameter Name="P_EZOR">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
       <Prompt>P EZOR</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">

@@ -9,6 +9,9 @@
               <Width>2.5cm</Width>
             </TablixColumn>
             <TablixColumn>
+              <Width>1.23cm</Width>
+            </TablixColumn>
+            <TablixColumn>
               <Width>1.52103cm</Width>
             </TablixColumn>
             <TablixColumn>
@@ -28,7 +31,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FormatNumber(round(Code.GetErech(Fields!KOD_RECHIV.Value,avg(Fields!ERECH_RECHIV.Value)),2),1,0)</Value>
+                              <Value>=FormatNumber(round(sum(Fields!ERECH_RECHIV.Value)/Fields!NUM.Value ,2),1,0)</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -50,7 +53,39 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="NUM">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!NUM.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>NUM</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>4pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -61,7 +96,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(not isnothing(Fields!ERECH_RECHIV.Value) ,FormatNumber(round(Code.GetErech(Fields!KOD_RECHIV.Value,Fields!ERECH_RECHIV.Value),2),1,0),"")</Value>
+                              <Value>=iif(not isnothing(Fields!ERECH_RECHIV.Value) ,FormatNumber(round(Fields!ERECH_RECHIV.Value,2),1,0),0)</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -159,6 +194,46 @@
                   </Textbox>
                 </CellContents>
               </TablixHeader>
+            </TablixMember>
+            <TablixMember>
+              <TablixHeader>
+                <Size>0.62645cm</Size>
+                <CellContents>
+                  <Textbox Name="Textbox37">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>NUM</Value>
+                            <Style>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Right</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox37</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>LightGrey</BackgroundColor>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixHeader>
+              <Visibility>
+                <Hidden>true</Hidden>
+              </Visibility>
             </TablixMember>
             <TablixMember>
               <Group Name="TAARICH">
@@ -275,6 +350,11 @@
                   <GroupExpression>=Fields!KOD_RECHIV.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!MIYUN_MEMUZAIM.Value</Value>
+                </SortExpression>
+              </SortExpressions>
               <TablixMembers>
                 <TablixMember />
               </TablixMembers>
@@ -287,13 +367,8 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <KeepTogether>true</KeepTogether>
         <DataSetName>DsRechivim</DataSetName>
-        <SortExpressions>
-          <SortExpression>
-            <Value>=Fields!TEUR_RECHIV.Value</Value>
-          </SortExpression>
-        </SortExpressions>
         <Height>1.09417cm</Height>
-        <Width>8.45756cm</Width>
+        <Width>9.68756cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -302,10 +377,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.44792in</Height>
+    <Height>0.43078in</Height>
     <Style />
   </Body>
-  <Width>3.32975in</Width>
+  <Width>3.814in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>19cm</PageWidth>
@@ -331,9 +406,11 @@
         <QueryParameters>
           <QueryParameter Name="P_START_DATE">
             <Value>=Parameters!P_START_DATE.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="P_END_DATE">
             <Value>=Parameters!P_END_DATE.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="P_MISPAR_ISHI">
             <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
@@ -351,12 +428,20 @@
           <DataField>KOD_RECHIV</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="NUM">
+          <DataField>NUM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="TEUR_RECHIV">
           <DataField>TEUR_RECHIV</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ERECH_RECHIV">
           <DataField>ERECH_RECHIV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MIYUN_MEMUZAIM">
+          <DataField>MIYUN_MEMUZAIM</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
@@ -367,7 +452,7 @@
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>08/01/2010 00:00:00</Value>
+          <Value>01/11/2012 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P START DATE</Prompt>
@@ -376,7 +461,7 @@
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>07/01/2012 00:00:00</Value>
+          <Value>01/05/2013 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P END DATE</Prompt>
@@ -385,7 +470,7 @@
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>=65621</Value>
+          <Value>=44318</Value>
         </Values>
       </DefaultValue>
       <Prompt>P MISPAR ISHI</Prompt>

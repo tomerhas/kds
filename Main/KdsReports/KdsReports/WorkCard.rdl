@@ -3085,7 +3085,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>= " תאריך הדפסה "   +  Format(Globals!ExecutionTime,"dd/MM/yyyy")  + " " +   Format(Globals!ExecutionTime,"HH:mm") + " "</Value>
+                    <Value>= " תאריך הדפסה "   +  Format(Globals!ExecutionTime,"dd/MM/yyyy")  + " " +   Format(Globals!ExecutionTime,"HH:mm:ss") + " "</Value>
                     <Style>
                       <FontSize>9pt</FontSize>
                     </Style>
@@ -3100,9 +3100,8 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
             <Top>2.42833cm</Top>
-            <Left>0.06381in</Left>
             <Height>0.22425cm</Height>
-            <Width>4.65931cm</Width>
+            <Width>5.20945cm</Width>
             <ZIndex>17</ZIndex>
             <Style>
               <Border>

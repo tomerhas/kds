@@ -1211,28 +1211,28 @@
               <Width>1.15255cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.83571cm</Width>
+              <Width>1.00567cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.92603cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.85001cm</Width>
+              <Width>0.91001cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.83198cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.83571cm</Width>
+              <Width>0.92603cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.92603cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.82cm</Width>
+              <Width>0.92603cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.92067cm</Width>
+              <Width>0.92603cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.40848cm</Width>
@@ -1745,7 +1745,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>פרמיה גרירה</Value>
+                              <Value>=iif(ReportItems!TbPremExists.Value="0","פרמיה גרירה","*" &amp; "פרמיה גרירה")</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1779,7 +1779,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>פרמיה משק</Value>
+                              <Value>=iif(ReportItems!TbPremExists.Value="0","פרמיה משק", "*" &amp; "פרמיה משק")</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1813,7 +1813,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>פרמיה מחסן</Value>
+                              <Value>=iif(ReportItems!TbPremExists.Value="0","פרמיה מחסן", "*" &amp; "פרמיה מחסן")</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1881,7 +1881,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>פרמיה מנ''ס</Value>
+                              <Value>=iif(ReportItems!TbPremExists.Value="0","פרמיה מנ''ס", "*" &amp; "פרמיה מנ''ס")</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1915,7 +1915,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>פרמיה רכז</Value>
+                              <Value>=iif(ReportItems!TbPremExists.Value="0","פרמיה רכז", "*" &amp; "פרמיה רכז")</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1949,7 +1949,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>פרמיה פקח</Value>
+                              <Value>=iif(ReportItems!TbPremExists.Value="0","פרמיה פקח", "*" &amp; "פרמיה פקח")</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1984,7 +1984,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>פרמיה סדרן</Value>
+                              <Value>=iif(ReportItems!TbPremExists.Value="0","פרמיה סדרן", "*" &amp; "פרמיה סדרן")</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -2711,7 +2711,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R114.Value</Value>
+                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R114.Value, "dsRechiveyPremyot"),Fields!R114.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -2745,7 +2745,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R118.Value</Value>
+                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R118.Value, "dsRechiveyPremyot"),Fields!R118.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -2779,7 +2779,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R117.Value</Value>
+                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R117.Value, "dsRechiveyPremyot"),Fields!R117.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -2814,7 +2814,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R116.Value</Value>
+                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R116.Value, "dsRechiveyPremyot"),Fields!R116.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -3066,22 +3066,22 @@
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R114.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2 and First(Fields!R114.Value, "dsRechiveyPremyot")&lt;&gt;Nothing,False,iif(Fields!R114.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R118.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2 and First(Fields!R118.Value, "dsRechiveyPremyot")&lt;&gt;Nothing,False,iif(Fields!R118.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R117.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2 and First(Fields!R117.Value, "dsRechiveyPremyot")&lt;&gt;Nothing,False,iif(Fields!R117.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R116.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2 and First(Fields!R116.Value, "dsRechiveyPremyot")&lt;&gt;Nothing,False,iif(Fields!R116.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -3118,10 +3118,10 @@
         <FixedColumnHeaders>true</FixedColumnHeaders>
         <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>dsRechiveyShonot</DataSetName>
-        <Top>5.89024cm</Top>
+        <Top>5.91539cm</Top>
         <Left>0.29147cm</Left>
         <Height>1.24282cm</Height>
-        <Width>22.8713cm</Width>
+        <Width>23.30297cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -4739,7 +4739,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsHeadruyot</DataSetName>
         <Top>5.90213cm</Top>
-        <Left>8.33647cm</Left>
+        <Left>10.29045cm</Left>
         <Height>1.24282cm</Height>
         <Width>18.94294cm</Width>
         <ZIndex>8</ZIndex>
@@ -8937,7 +8937,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(FormatNumber(Sum(Fields!R121.Value)/60,1)="0.0","", FormatNumber(Sum(Fields!R121.Value)/60,1) ))</Value>
+                              <Value>=iif(FormatNumber(Sum(Fields!R121.Value)/60,1)="0.0","", FormatNumber(Sum(Fields!R121.Value)/60,1) )
+'iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(FormatNumber(Sum(Fields!R121.Value)/60,1)="0.0","", FormatNumber(Sum(Fields!R121.Value)/60,1) ))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0.0;(0.0);''</Format>
@@ -9748,7 +9749,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(Round(Fields!R103.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R103.Value/60,1,System.MidpointRounding.AwayFromZero),""))</Value>
+                              <Value>=iif(Round(Fields!R103.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R103.Value/60,1,System.MidpointRounding.AwayFromZero),"")
+'iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(Round(Fields!R103.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R103.Value/60,1,System.MidpointRounding.AwayFromZero),""))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -9771,6 +9773,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -10288,7 +10291,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <Width>4.38998in</Width>
         <ZIndex>11</ZIndex>
         <Visibility>
-          <Hidden>=iif(CountRows("dsKizuz")&gt;0,false,true)</Hidden>
+          <Hidden>=iif(CountRows("dsKizuz")&gt;0 and Sum(Fields!R108.Value, "dsRechivimChodshiym")&gt;0 ,false,true)</Hidden>
         </Visibility>
         <Style>
           <Border>
@@ -10549,7 +10552,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!TCHILAT_AVODA.Value</Value>
+                              <Value>=Format(Fields!TCHILAT_AVODA.Value,"dd/MM/yyyy")</Value>
                               <Style>
                                 <Format>d</Format>
                               </Style>
@@ -10672,15 +10675,84 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </Border>
         </Style>
       </Tablix>
+      <Textbox Name="TbPremExists">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2 and CountRows("dsRechiveyPremyot")&gt;0,"1","0")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <Top>3.22733in</Top>
+        <Left>0.48801in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>13</ZIndex>
+        <Visibility>
+          <Hidden>true</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox84">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=" שולם לחודש " &amp; Format(First(Fields!TAARICH.Value, "dsRechiveyPremyot"),"MM/yyyy") &amp; " * "</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox84</rd:DefaultName>
+        <Top>2.83208in</Top>
+        <Left>0.48801in</Left>
+        <Height>0.11458in</Height>
+        <Width>1.79731in</Width>
+        <ZIndex>14</ZIndex>
+        <Visibility>
+          <Hidden>=iif(ReportItems!TbPremExists.Value="0" ,true ,false)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>4.2426in</Height>
+    <Height>4.19718in</Height>
     <Style>
       <Border>
         <Style>None</Style>
       </Border>
     </Style>
   </Body>
-  <Width>10.77487in</Width>
+  <Width>11.55612in</Width>
   <Page>
     <PageHeight>13in</PageHeight>
     <PageWidth>9in</PageWidth>
@@ -10699,7 +10771,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
       <rd:DataSourceID>e3207af7-39ca-4f13-8b63-9386e49c4b90</rd:DataSourceID>
     </DataSource>
     <DataSource Name="DataSource1">
-      <DataSourceReference>KdsCon</DataSourceReference>
+      <DataSourceReference>KdsProd</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>09b064c9-d467-4bf7-8d63-813f97849376</rd:DataSourceID>
     </DataSource>
@@ -11260,9 +11332,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </QueryParameter>
           <QueryParameter Name="P_TAARICH">
             <Value>=Parameters!P_TAARICH.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_BAKASHA_ID">
-            <Value>=Parameters!P_BAKASHA_ID.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
@@ -11273,12 +11343,32 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <DataField>R112</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
         <Field Name="R113">
           <DataField>R113</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="R115">
           <DataField>R115</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R114">
+          <DataField>R114</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R116">
+          <DataField>R116</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R117">
+          <DataField>R117</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R118">
+          <DataField>R118</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
@@ -11436,7 +11526,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>75661</Value>
+          <Value>46525 </Value>
         </Values>
       </DefaultValue>
       <Prompt>P MISPAR ISHI</Prompt>
@@ -11445,7 +11535,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>08/31/2010 00:00:00</Value>
+          <Value>03/31/2013 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P TAARICH</Prompt>
@@ -11454,7 +11544,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>7106</Value>
+          <Value>10380</Value>
         </Values>
       </DefaultValue>
       <Prompt>P BAKASHA ID</Prompt>

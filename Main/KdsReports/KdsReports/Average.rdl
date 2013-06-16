@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>17.4192cm</Width>
+              <Width>17.81267cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>6.50198cm</Height>
+              <Height>4.3324cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -393,8 +393,8 @@
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
-                          <Top>2.33533cm</Top>
-                          <Left>4.25439cm</Left>
+                          <Top>1.79189cm</Top>
+                          <Left>4.64786cm</Left>
                           <Height>1.2cm</Height>
                           <Width>11.04474cm</Width>
                           <Style>
@@ -416,8 +416,7 @@
                               <Value>=reportitems!mI.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <Top>3.87614cm</Top>
-                          <Left>1.35278cm</Left>
+                          <Top>3.16828cm</Top>
                           <Height>1.01188cm</Height>
                           <Width>16.06642cm</Width>
                           <ZIndex>1</ZIndex>
@@ -440,8 +439,8 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <Top>2.97656cm</Top>
-                          <Left>0.82362cm</Left>
+                          <Top>2.39189cm</Top>
+                          <Left>1.40229cm</Left>
                           <Height>0.55877cm</Height>
                           <Width>2.59292cm</Width>
                           <ZIndex>2</ZIndex>
@@ -468,8 +467,8 @@
 " לחודש " &amp; DateAdd("m",-6,Parameters!P_ENDDATE.Value).ToShortDateString() &amp; " - " &amp; Parameters!P_ENDDATE.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <Left>1.35278cm</Left>
-                          <Height>1.80071cm</Height>
+                          <Left>1.74625cm</Left>
+                          <Height>1.6155cm</Height>
                           <Width>16.06642cm</Width>
                           <ZIndex>3</ZIndex>
                           <Style>
@@ -507,9 +506,10 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <KeepTogether>true</KeepTogether>
         <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
-        <Height>6.50198cm</Height>
-        <Width>17.4192cm</Width>
+        <Height>4.3324cm</Height>
+        <Width>17.81267cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -517,10 +517,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.55983in</Height>
+    <Height>1.76817in</Height>
     <Style />
   </Body>
-  <Width>6.85795in</Width>
+  <Width>7.01286in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

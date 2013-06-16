@@ -26,6 +26,10 @@
       <FullPath>Average.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>AverageLeOved.rdl</Name>
+      <FullPath>AverageLeOved.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>AverageRechivim.rdl</Name>
       <FullPath>AverageRechivim.rdl</FullPath>
     </ProjectItem>
@@ -148,6 +152,22 @@
     <ProjectItem>
       <Name>Query4.rdl</Name>
       <FullPath>Query4.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RdlCountOvdeyMeshekShabat.rdl</Name>
+      <FullPath>RdlCountOvdeyMeshekShabat.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RdlPrecenceOvdeyMeshekShishiShabat.rdl</Name>
+      <FullPath>RdlPrecenceOvdeyMeshekShishiShabat.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RdlReportMushalimDetails.rdl</Name>
+      <FullPath>RdlReportMushalimDetails.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Report1.rdl</Name>
+      <FullPath>Report1.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>ReportNesiotKfulot.rdl</Name>
