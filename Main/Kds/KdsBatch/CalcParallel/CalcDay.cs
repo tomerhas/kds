@@ -3139,8 +3139,8 @@ namespace KdsBatch
                                     (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() && fErechRechiv == (1 * objOved.fMekademNipuach)))
                                     && objOved.objMatzavOved.iKod_Headrut == 1)
                                 {
-                                    fErechRechiv = 0;
                                     addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), fErechRechiv);
+                                    fErechRechiv = 0;
                                 }
                             }
                             fErechRechiv = float.Parse(Math.Round(fErechRechiv,2).ToString());
