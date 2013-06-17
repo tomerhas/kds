@@ -9773,7 +9773,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -10744,8 +10743,81 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Textbox Name="Textbox34">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>."הריכוז מציג נתונים נכון לתאריך המוצג בתחתית הריכוז לצד המילים "תאריך חישוב</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>.בשל תהליך איחוד המשכורות, חישוב סופי ומלא של כל ההפרשים להם אתה זכאי ישולם במשכורת אוגוסט 2013</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>.החל מאוגוסט, משכורות החברים ישולמו ביום ה-9 לכל חודש</Value>
+                <Style>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <RightIndent>0cm</RightIndent>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox6</rd:DefaultName>
+        <Top>11.53917cm</Top>
+        <Left>3.23592cm</Left>
+        <Height>1.52604cm</Height>
+        <Width>15.42424cm</Width>
+        <ZIndex>15</ZIndex>
+        <Visibility>
+          <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 1 And (First(Fields!MONTH_YEAR.Value, "dsPirteyOved") = "05/2013" Or First(Fields!MONTH_YEAR.Value, "dsPirteyOved") = "06/2013"), False, True)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>Dashed</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>4.19718in</Height>
+    <Height>5.35343in</Height>
     <Style>
       <Border>
         <Style>None</Style>
