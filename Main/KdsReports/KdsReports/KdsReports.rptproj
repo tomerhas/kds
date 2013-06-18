@@ -215,6 +215,10 @@
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>KamutIdkuneyRashemet.rdl</Name>
+      <FullPath>KamutIdkuneyRashemet.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
