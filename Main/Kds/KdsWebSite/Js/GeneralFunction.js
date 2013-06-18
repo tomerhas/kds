@@ -199,7 +199,8 @@ function GetDateDDMMYYYY(dDate){
         xpdf.forceMono = true;
         xpdf.printer = sPrinterName;
         xpdf.expandSmallPages = true;
-        alert(sPrinterName + sFileName);
+        
+               
         xpdf.printPDF4();
    }
 

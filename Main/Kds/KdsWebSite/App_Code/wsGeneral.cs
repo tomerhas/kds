@@ -2179,6 +2179,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public string IsExecptionAllowed(int iSidurIndex)
     {
+       
         clParameters _parameters = (clParameters)Session["Parameters"];
         OrderedDictionary odSidurim;
         clSidur _Sidur = new clSidur();
@@ -2187,7 +2188,14 @@ public class wsGeneral : System.Web.Services.WebService
         if (odSidurim.Count > 0)
         {
             _Sidur = (clSidur)(odSidurim[iSidurIndex]);
-            return clDefinitions.IsExceptionAllowed(ref _Sidur,ref sCharigaType, _parameters) ? "1" : "0";
+            if (_Sidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+            {
+               
+                clMeafyenyOved _MeafyenyOved = (clMeafyenyOved)Session["MeafyenyOved"];
+                return clDefinitions.IsExceptionAllowedForSidurMyuchad(ref _Sidur, ref sCharigaType, ref _MeafyenyOved, ref _parameters) ? "1" : "0";
+            }
+            else
+                return clDefinitions.IsExceptionAllowed(ref _Sidur, ref sCharigaType, _parameters) ? "1" : "0";
         }
         else
             return "0";
