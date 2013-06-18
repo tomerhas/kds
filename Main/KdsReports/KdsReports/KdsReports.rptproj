@@ -26,10 +26,6 @@
       <FullPath>Average.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>AverageLeOved.rdl</Name>
-      <FullPath>AverageLeOved.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>AverageRechivim.rdl</Name>
       <FullPath>AverageRechivim.rdl</FullPath>
     </ProjectItem>
@@ -126,6 +122,10 @@
       <FullPath>IshurimLerashemet.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>KamutIdkuneyRashemet.rdl</Name>
+      <FullPath>KamutIdkuneyRashemet.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>NetuneyOved.rdl</Name>
       <FullPath>NetuneyOved.rdl</FullPath>
     </ProjectItem>
@@ -214,10 +214,6 @@
     <ProjectItem>
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>KamutIdkuneyRashemet.rdl</Name>
-      <FullPath>KamutIdkuneyRashemet.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
