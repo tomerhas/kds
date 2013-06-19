@@ -166,10 +166,6 @@
       <FullPath>RdlReportMushalimDetails.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Report1.rdl</Name>
-      <FullPath>Report1.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>ReportNesiotKfulot.rdl</Name>
       <FullPath>ReportNesiotKfulot.rdl</FullPath>
     </ProjectItem>
