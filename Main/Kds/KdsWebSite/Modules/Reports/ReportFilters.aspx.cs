@@ -148,6 +148,12 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
                     SetWorkerViewLevel(ReportName.IshurimLerashemet);
                     break;
+                case ReportName.KamutIdkuneyRashemet:
+                    MisRashemet.ContextKey = "6,0133," + DateTime.Now;
+                    //if (!Page.IsPostBack)
+                    //    CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
+                    SetTezuga(ReportName.KamutIdkuneyRashemet);
+                    break;
                 case ReportName.FindWorkerCard:
                     if (!Page.IsPostBack)
                         CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
@@ -234,6 +240,34 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         break;
                     }
                 }
+            }
+        }
+    }
+    private void SetTezuga(ReportName p_report_name)
+    {
+        
+        if (!Page.IsPostBack)
+        {
+            Snif.Attributes.Add("Disabled", "Disabled");
+            Ezor2.Attributes.Add("Disabled", "Disabled");
+            MisRashemet.Attributes.Add("Disabled", "Disabled");
+            MisRashemet.TextBoxe.Attributes.Add("Disabled", "Disabled");
+        }
+        else
+        {
+            if (Tezuga.SelectedValue == "1")
+            {
+                MisRashemet.Attributes.Remove("Disabled");
+                Snif.Attributes.Add("Disabled", "Disabled");
+                Ezor2.Attributes.Add("Disabled", "Disabled");
+                MisRashemet.TextBoxe.Attributes.Remove("Disabled");
+            }
+            else
+            {
+                MisRashemet.Attributes.Add("Disabled", "Disabled");
+                Snif.Attributes.Remove("Disabled");
+                Ezor2.Attributes.Remove("Disabled");
+                MisRashemet.TextBoxe.Attributes.Add("Disabled", "Disabled");
             }
         }
     }
@@ -638,6 +672,21 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get { return (AjaxControlToolkit.AutoCompleteExtender)TdFilter.FindControl("AutoComplete_P_MIS_RASHEMET"); }
     }
+
+
+    private RadioButtonList Tezuga
+    {
+        get { return (RadioButtonList)TdFilter.FindControl("P_tezuga"); }
+    }
+    private ListBoxExtended MisRashemet
+    {
+        get { return (ListBoxExtended)TdFilter.FindControl("P_MIS_RASHEMET"); }
+    }
+    private DropDownList Ezor2
+    {
+        get { return (DropDownList)TdFilter.FindControl("P_EZOR"); }
+    }
+  //  ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete
     #endregion
 
     private void PrepareReportParameters()

@@ -8,10 +8,33 @@
     <script src="../../Js/GeneralFunction.js" type="text/javascript"></script>
     <script src="../../Js/ListBoxExtended.js" type="text/javascript"></script>
     <script type="text/javascript">
-
         $(document).ready(function () {
             EnlargeFieldSetsForIE8(null, "DriverWithoutSignature,DriverWithoutTacograph", 100);
+
+//            debugger;
+//            var snif = $('#ctl00_KdsContent_P_SNIF');
+//            var ezor = $('#ctl00_KdsContent_P_EZOR');
+//            var rashemrt = $('#ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete');
+//            rashemrt.attr('disabled', 'disabled');
+//            ezor.attr('disabled', 'disabled');
+//            snif.attr('disabled', 'disabled');
+//            $("input[name='ctl00$KdsContent$P_TEZUGA'").click(function () {
+//                debugger;
+//                if ($(this).val() == "1") {
+//                    rashemrt.removeAttr('disabled', 'disabled');
+//                    ezor.attr('disabled', 'disabled');
+//                    snif.attr('disabled', 'disabled');
+//                }
+//                else {
+//                    rashemrt.attr('disabled', 'disabled');
+//                    ezor.removeAttr('disabled', 'disabled');
+//                    snif.removeAttr('disabled', 'disabled');
+//                }
+//                return false;
+//            });
         });
+
+    
     </script>
 </asp:Content>
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="KdsContent">
@@ -246,5 +269,7 @@
                 args.IsValid = true;
             }
         }
+     
+     
     </script>
 </asp:Content>

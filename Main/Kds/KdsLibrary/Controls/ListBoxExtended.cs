@@ -153,6 +153,17 @@ namespace KdsLibrary.Controls
         {
             get { return _List; }
         }
+        public TextBox TextBoxe
+        {
+            get
+            {
+                return _TextBoxAutoComplete.Textboxe;
+            }
+            //set
+            //{
+            //    _TextBoxAutoComplete.Textboxe.Attributes.Add("Disabled", "Disabled");
+            //}
+        }
         #endregion 
 
     }

@@ -79,7 +79,7 @@
                                  <td style="width:3px"><br /></td>
                                  <td style="width:100%" align="center"><a class="HeaderLink" href="<%# (string.IsNullOrEmpty((String)Eval("NavigateUrl"))) ? "#" : Eval("NavigateUrl")%>"><%# Eval("Text")%></a></td>
                                 <td style="width:3px"><br /></td>
-                                <td><asp:Image runat="server" ID="imgHelp" ImageUrl="~/Images/space-menu.png"  ImageAlign="Top"/>
+                                <td><asp:Image class="spaceMenu" runat="server" ID="imgHelp" ImageUrl="~/Images/space-menu.png"  ImageAlign="Top"/>
                                  
                                 </td>
                                 </tr>
@@ -213,10 +213,10 @@
     </form>
 </body>
  <script language="javascript" type="text/javascript">
-    if (document.getElementsByName("MainLevel0").length>0)
-        document.getElementsByName("MainLevel0").item(document.getElementsByName("MainLevel0").length - 1).lastChild.lastChild.lastChild.style.display = "none";
+//    if (document.getElementsByName("MainLevel0").length>0)
+     //        document.getElementsByName("MainLevel0").item(document.getElementsById("MainLevel0").length - 1).lastChild.lastChild.lastChild.style.display = "none";
+//    $($("Image[name='spaceMenu']")[$("Image[name='spaceMenu']").size()-1]).css('display','none');
+     $(".spaceMenu:last").css('display', 'none');
 
-  
-   
  </script>
 </html>

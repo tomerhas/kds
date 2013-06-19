@@ -550,7 +550,9 @@ namespace KdsLibrary.Utils.Reports
         ProfitOfLinesGroup,
         RdlPrecenceOvdeyMeshekShishiShabat,
         RdlCountOvdeyMeshekShabat,
-        RdlReportMushalimDetails
+        RdlReportMushalimDetails,
+        KamutIdkuneyRashemet
+
     }
     public enum Orientation
     {
