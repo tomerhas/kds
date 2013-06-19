@@ -188,6 +188,18 @@
             else checkRashemet(mis, args);
 
         }
+        function IsValidRashemetByTezuga(sender, args) {
+            debugger;
+
+            if (($('#ctl00_KdsContent_P_TEZUGA_0').is(':checked')) || (!($('#ctl00_KdsContent_P_TEZUGA_0').is(':checked')) && !($('#ctl00_KdsContent_P_TEZUGA_1').is(':checked')))) {
+                var CurrentObj = sender.controltovalidate;
+                var mis = document.getElementById(CurrentObj).value;
+                if (mis == "") {
+                    args.IsValid = false;
+                }
+                else checkRashemet(mis, args);
+            }
+        }
         function checkRashemet(mis, args) {
             if (document.getElementById("ctl00_KdsContent_MisRashamot").value.indexOf("," + mis + ",") == -1) {
                 alert("מספר אישי של רשמת לא קיים או לא פעיל לתאריך הנבחר");

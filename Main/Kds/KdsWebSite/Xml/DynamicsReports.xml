@@ -645,7 +645,8 @@
         <DropDownList QueryType="Select"  Select="select 1 id, 'רשמת'dec from dual union select 2 id, 'סניף' dec from dual " ValueField="id" TextField="dec" />
       </Filter>
 
-      <Filter ParameterName="P_MIS_RASHEMET" Caption="מ.א רשמת" BoxeType="ListBoxExtended" DataType="System.Int32">
+      <Filter ParameterName="P_MIS_RASHEMET" Caption="מ.א רשמת" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
+        <FilterValidator ValidatorName="ValidMisRashemetByTezuga" ErrorMessageValidator="לא ניתן להוציא דוח כל עוד לא נבחר מספר אישי של רשמת" ValidationFunction="IsValidRashemetByTezuga"/>-->
         <DropDownList QueryType="AjaxAutoComplete" Select="getMispareiRashamot" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
       </Filter>
       <!--<Filter ParameterName="P_MIS_RASHEMET" Caption="מ.א רשמת" BoxeType="TextBox" DataType="System.Int32" Required="true">
