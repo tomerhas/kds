@@ -233,7 +233,9 @@ namespace KdsBatch
             errDivuachSidurLoMatimLeisuk420 = 193,
             errDivuachSidurLoMatimLeisuk422 = 194,
             errFirstDayShlilatRishayon195 = 195,
-            errkupaiLeloHachtama = 196
+            errkupaiLeloHachtama = 196,
+            errHachtamatKnisaLoBmakomHasaka197 =197,
+            errHachtamatYetziaLoBmakomHasaka198 = 198
         }
 
         private enum errNesiaMeshtana
@@ -1289,6 +1291,8 @@ namespace KdsBatch
                     if (CheckErrorActive(191)) IsukNahagImSidurTafkidNoMefyen191(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(193)) DivuachSidurLoMatimLeisuk193(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(194)) DivuachSidurLoMatimLeisuk194(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(197)) HachtamatKnisaLoBmakomHasaka197(ref oSidur,  ref dtErrors);
+                    if (CheckErrorActive(198)) HachtamatYetziaLoBmakomHasaka198(ref oSidur, ref dtErrors);
 
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
@@ -1331,7 +1335,6 @@ namespace KdsBatch
                         if (CheckErrorActive(151)) IsDuplicateTravel151(ref  oSidur, ref oPeilut, ref dtErrors);
                         if (CheckErrorActive(179)) HightValueDakotBefoal179(oSidur, oPeilut, ref dtErrors);
                         if (CheckErrorActive(189)) KisuyTorLifneyHatchalatSidur189(oSidur, oPeilut, ref dtErrors);
-
                     }
                     if (CheckErrorActive(185)) ErrMisparElementimMealHamutar185(dCardDate, ref oSidur, ref dtErrors);
 
@@ -1712,6 +1715,84 @@ namespace KdsBatch
             return isValid;
         }
 
+
+        private bool HachtamatKnisaLoBmakomHasaka197(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            bool isValid = true;
+            bool bError = false;
+            try
+            {
+                if (!oMeafyeneyOved.Meafyen61Exists)
+                {
+                    if (oSidur.bSidurMyuhad && !string.IsNullOrEmpty(oSidur.sShaonNochachut) && oSidur.iMisparSidur != 99200 && oSidur.iMisparSidur != 99214)
+                    {
+                        if (!String.IsNullOrEmpty(oSidur.sMikumShaonKnisa) && int.Parse(oSidur.sMikumShaonKnisa) > 0)
+                        {
+                            bError = true;
+                            if (oOvedYomAvodaDetails.iMikumYechida == int.Parse(oSidur.sMikumShaonKnisa.ToString().Substring(0, 3)))
+                                bError = false;
+                            else if (oSidur.iMikumAvKnisa == oOvedYomAvodaDetails.iMikumYechidaLenochechut)
+                                bError = false;
+                        }
+                    }
+                }
+                if (bError)  // && !CheckApproval("2,211,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "החתמת כניסה לא במקום העסקה", enErrors.errHachtamatKnisaLoBmakomHasaka197.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHachtamatKnisaLoBmakomHasaka197.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+
+        private bool HachtamatYetziaLoBmakomHasaka198(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            bool isValid = true;
+            bool bError = false;
+            try
+            {
+                if (!oMeafyeneyOved.Meafyen61Exists)
+                {
+                    if (oSidur.bSidurMyuhad && !string.IsNullOrEmpty(oSidur.sShaonNochachut) && oSidur.iMisparSidur != 99200 && oSidur.iMisparSidur != 99214)
+                    {
+                        if (!String.IsNullOrEmpty(oSidur.sMikumShaonYetzia) && int.Parse(oSidur.sMikumShaonYetzia) > 0)
+                        {
+                            bError = true;
+                            if (oOvedYomAvodaDetails.iMikumYechida == int.Parse(oSidur.sMikumShaonYetzia.ToString().Substring(0, 3)))
+                                bError = false;
+                            else if (oSidur.iMikumAvYetzia == oOvedYomAvodaDetails.iMikumYechidaLenochechut && oSidur.iMikumAvYetzia !=0  && oOvedYomAvodaDetails.iMikumYechidaLenochechut != 0 ) 
+                                bError = false;
+                        }
+                    }
+                }
+                if (bError)  // && !CheckApproval("2,211,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "החתמת יציאה לא במקום העסקה", enErrors.errHachtamatYetziaLoBmakomHasaka198.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHachtamatYetziaLoBmakomHasaka198.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
         private bool IsSidurLina30(DateTime dCardDate, ref DataTable dtErrors)
         {                 
             DataRow drNew;

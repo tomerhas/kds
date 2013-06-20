@@ -146,6 +146,8 @@ namespace KdsBatch
         public long lMeadkenAcharon;
         public string sHeara;
         public DateTime dTaarichIdkunAcharon;
+        public int iMikumAvKnisa;
+        public int iMikumAvYetzia;
         //נתוני עובד
         //public int iLina;
         //public int iHalbasha;
@@ -366,6 +368,8 @@ namespace KdsBatch
             bHovaMisparMachsan = !(String.IsNullOrEmpty(dr["hova_ledaveach_mispar_machsan"].ToString()));
             sSidurDescription = dr["teur_sidur_meychad"].ToString();
             iMenahelMusachMeadken = System.Convert.IsDBNull(dr["MENAHEL_MUSACH_MEADKEN"]) ? 0 : int.Parse(dr["MENAHEL_MUSACH_MEADKEN"].ToString());
+            iMikumAvKnisa = int.Parse(dr["mikum_av_knisa"].ToString());
+            iMikumAvYetzia = int.Parse(dr["mikum_av_yatzia"].ToString());
             if (bSidurMyuhad)
             {
                 bSidurRetizfut = IsSidurRetzifut(iMisparSidur);

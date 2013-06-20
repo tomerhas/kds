@@ -42,6 +42,8 @@ namespace KdsBatch
         public int iMisparIshi;
         public int iIsuk;
         public int iSnifAv;
+        public int iMikumYechida;
+        public int iMikumYechidaLenochechut;
         public int iKodSectorIsuk;
         public string sSidurDay;
         public string sShabaton;
@@ -132,6 +134,8 @@ namespace KdsBatch
                 iKodSectorIsuk = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["KOD_SECTOR_ISUK"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["KOD_SECTOR_ISUK"].ToString());
                 iSnifTnua = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["Snif_Tnua"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["Snif_Tnua"].ToString());
                 iBechishuvSachar = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["BECHISHUV_SACHAR"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["BECHISHUV_SACHAR"].ToString());
+                iMikumYechida = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["mikum_yechida"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["mikum_yechida"].ToString());
+                iMikumYechidaLenochechut = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["KOD_MIKUM_YECHIDA_AV_LENOCH"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["KOD_MIKUM_YECHIDA_AV_LENOCH"].ToString());
                 dTaarichMe = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["me_tarich"]) ? DateTime.MinValue : DateTime.Parse(dtOvedCardDetails.Rows[0]["me_tarich"].ToString());
                 dTaarichAd = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["ad_tarich"]) ? DateTime.MinValue : DateTime.Parse(dtOvedCardDetails.Rows[0]["ad_tarich"].ToString());
             }
