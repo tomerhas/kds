@@ -189,9 +189,7 @@
 
         }
         function IsValidRashemetByTezuga(sender, args) {
-            debugger;
-
-            if (($('#ctl00_KdsContent_P_TEZUGA_0').is(':checked')) || (!($('#ctl00_KdsContent_P_TEZUGA_0').is(':checked')) && !($('#ctl00_KdsContent_P_TEZUGA_1').is(':checked')))) {
+            if (!($('#ctl00_KdsContent_P_TEZUGA_0').is(':checked')) || (!($('#ctl00_KdsContent_P_TEZUGA_0').is(':checked')) && !($('#ctl00_KdsContent_P_TEZUGA_1').is(':checked')))) {
                 var CurrentObj = sender.controltovalidate;
                 var mis = document.getElementById(CurrentObj).value;
                 if (mis == "") {
