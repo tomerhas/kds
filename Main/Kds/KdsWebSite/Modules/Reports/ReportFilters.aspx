@@ -179,7 +179,7 @@
             args.IsValid = (result > 0);
         }
         function IsValidRashemet1(sender, args) {
-            //  debugger
+            //  debugger 
             var CurrentObj = sender.controltovalidate;
             var mis = document.getElementById(CurrentObj).value;
             if (mis == "") {
