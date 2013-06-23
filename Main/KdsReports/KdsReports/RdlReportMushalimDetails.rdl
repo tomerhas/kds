@@ -2652,14 +2652,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SHAOT_100_BAFOAL3">
+                        <Textbox Name="SHAOT_200">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SHAOT_100_BAFOAL.Value</Value>
+                                  <Value>=Fields!SHAOT_200.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Language>he-IL</Language>
@@ -2671,7 +2671,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SHAOT_100_BAFOAL3</rd:DefaultName>
+                          <rd:DefaultName>SHAOT_200</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -2683,6 +2683,7 @@
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2980,7 +2981,6 @@
             </PageBreak>
             <PageName>=First(Fields!TAARICH.Value, "DtMushalim")</PageName>
             <Top>0.00616cm</Top>
-            <Left>0cm</Left>
             <Height>1.076cm</Height>
             <Width>90cm</Width>
             <Style>
