@@ -310,7 +310,10 @@ namespace KdsBatch
                 else if (!string.IsNullOrEmpty(drSidur["realy_veod_yom"].ToString()) && fMichsaYomit > 0)
                 { //•	סידור עם מאפיין ריאלי ועד מכסה:
                     //אם לסידור מאפיין 91 שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 91) וגם מכסה יומית מחושבת (רכיב 126) > 0 ערך הרכיב = הנמוך מבין (דקות נוכחות לתשלום (רכיב 1) שחושבו עד כה, מכסה יומית מחושבת (רכיב 126) ) 
-                    fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit); 
+                    if (iMisparSidur == 99011 && objOved.objPirteyOved.iGil == clGeneral.enKodGil.enTzair.GetHashCode() && fErechRechiv >= 480)
+                        fErechRechiv = fMichsaYomit;
+                    else
+                        fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit); 
                 }
                 //else if (iMisparSidur == 99207 || iMisparSidur == 99011 || iMisparSidur == 99007)
                 //{

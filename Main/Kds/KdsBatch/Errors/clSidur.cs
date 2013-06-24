@@ -170,6 +170,8 @@ namespace KdsBatch
         public string sZakayMichutzLamichsa; //מאפיין 25
         private const int SIDUR_RETIZVUT99500 = 99500;
         private const int SIDUR_RETIZVUT99501 = 99501;
+        public bool bIsKnisaTkina_err197;
+        public bool bIsYetziaTkina_err198;
         //public int iPremium=0;
         public enSidurStatus oSidurStatus;
         public string sTokefHatchala, sTokefSiyum; 
@@ -370,6 +372,8 @@ namespace KdsBatch
             iMenahelMusachMeadken = System.Convert.IsDBNull(dr["MENAHEL_MUSACH_MEADKEN"]) ? 0 : int.Parse(dr["MENAHEL_MUSACH_MEADKEN"].ToString());
             iMikumAvKnisa = int.Parse(dr["mikum_av_knisa"].ToString());
             iMikumAvYetzia = int.Parse(dr["mikum_av_yatzia"].ToString());
+            bIsKnisaTkina_err197 = bool.Parse(dr["knisa_tkina_err197"].ToString());
+            bIsYetziaTkina_err198 = bool.Parse(dr["yatzia_tkina_err198"].ToString());
             if (bSidurMyuhad)
             {
                 bSidurRetizfut = IsSidurRetzifut(iMisparSidur);

@@ -1723,21 +1723,9 @@ namespace KdsBatch
             bool bError = false;
             try
             {
-                if (!oMeafyeneyOved.Meafyen61Exists)
-                {
-                    if (oSidur.bSidurMyuhad && !string.IsNullOrEmpty(oSidur.sShaonNochachut) && oSidur.iMisparSidur != 99200 && oSidur.iMisparSidur != 99214)
-                    {
-                        if (!String.IsNullOrEmpty(oSidur.sMikumShaonKnisa) && int.Parse(oSidur.sMikumShaonKnisa) > 0)
-                        {
-                            bError = true;
-                            if (oOvedYomAvodaDetails.iMikumYechida == int.Parse(oSidur.sMikumShaonKnisa.ToString().Substring(0, 3)))
-                                bError = false;
-                            else if (oSidur.iMikumAvKnisa == oOvedYomAvodaDetails.iMikumYechidaLenochechut)
-                                bError = false;
-                        }
-                    }
-                }
-                if (bError)  // && !CheckApproval("2,211,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                bError = !(oSidur.bIsKnisaTkina_err197);
+            
+                if (bError)  
                 {
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "החתמת כניסה לא במקום העסקה", enErrors.errHachtamatKnisaLoBmakomHasaka197.GetHashCode());
@@ -1762,21 +1750,9 @@ namespace KdsBatch
             bool bError = false;
             try
             {
-                if (!oMeafyeneyOved.Meafyen61Exists)
-                {
-                    if (oSidur.bSidurMyuhad && !string.IsNullOrEmpty(oSidur.sShaonNochachut) && oSidur.iMisparSidur != 99200 && oSidur.iMisparSidur != 99214)
-                    {
-                        if (!String.IsNullOrEmpty(oSidur.sMikumShaonYetzia) && int.Parse(oSidur.sMikumShaonYetzia) > 0)
-                        {
-                            bError = true;
-                            if (oOvedYomAvodaDetails.iMikumYechida == int.Parse(oSidur.sMikumShaonYetzia.ToString().Substring(0, 3)))
-                                bError = false;
-                            else if (oSidur.iMikumAvYetzia == oOvedYomAvodaDetails.iMikumYechidaLenochechut && oSidur.iMikumAvYetzia !=0  && oOvedYomAvodaDetails.iMikumYechidaLenochechut != 0 ) 
-                                bError = false;
-                        }
-                    }
-                }
-                if (bError)  // && !CheckApproval("2,211,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                bError = !(oSidur.bIsYetziaTkina_err198);
+              
+                if (bError) 
                 {
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "החתמת יציאה לא במקום העסקה", enErrors.errHachtamatYetziaLoBmakomHasaka198.GetHashCode());
