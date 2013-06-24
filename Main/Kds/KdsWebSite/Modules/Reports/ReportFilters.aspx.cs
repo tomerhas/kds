@@ -152,7 +152,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     MisRashemet.ContextKey = "6,0133," + DateTime.Now;
                     //if (!Page.IsPostBack)
                     //    CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
-                    SetTezuga(ReportName.KamutIdkuneyRashemet);
+                   // SetTezuga(ReportName.KamutIdkuneyRashemet);
+
                     break;
                 case ReportName.FindWorkerCard:
                     if (!Page.IsPostBack)
@@ -194,7 +195,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     //}
                     ////Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
 
-                    break;
+               //     break;
                 //case ReportName.IdkuneyRashemetMasach4:
                 //    Auto_P_MIS_RASHEMET.ContextKey = "6,0133," + CtrlTaarichCa.ToShortDateString(); //kod_natun=6; Erech=0133=רשם
                 //    Shaa.Items[0].Text = "00:01";

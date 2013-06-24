@@ -11,26 +11,33 @@
         $(document).ready(function () {
             EnlargeFieldSetsForIE8(null, "DriverWithoutSignature,DriverWithoutTacograph", 100);
 
-//            debugger;
-//            var snif = $('#ctl00_KdsContent_P_SNIF');
-//            var ezor = $('#ctl00_KdsContent_P_EZOR');
-//            var rashemrt = $('#ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete');
-//            rashemrt.attr('disabled', 'disabled');
-//            ezor.attr('disabled', 'disabled');
-//            snif.attr('disabled', 'disabled');
+            var snif = $('#ctl00_KdsContent_P_SNIF');
+            var ezor = $('#ctl00_KdsContent_P_EZOR');
+            var rashemrt = $('#ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete');
+            rashemrt.attr('disabled', 'disabled');
+            ezor.attr('disabled', 'disabled');
+            snif.attr('disabled', 'disabled');
+
+            $("#ctl00_KdsContent_P_TEZUGA_0").click(function () {
+                debugger;
+            });
+
 //            $("input[name='ctl00$KdsContent$P_TEZUGA'").click(function () {
 //                debugger;
 //                if ($(this).val() == "1") {
 //                    rashemrt.removeAttr('disabled', 'disabled');
 //                    ezor.attr('disabled', 'disabled');
 //                    snif.attr('disabled', 'disabled');
+//                    $("#ctl00_KdsContent_P_SNIF option:selected").val('');
 //                }
 //                else {
 //                    rashemrt.attr('disabled', 'disabled');
 //                    ezor.removeAttr('disabled', 'disabled');
 //                    snif.removeAttr('disabled', 'disabled');
+//                    rashemrt.val('');
+//                    $('#ctl00_KdsContent_PMISRASHEMETListBoxExtended').empty();
 //                }
-//                return false;
+//                //return false;
 //            });
         });
 
@@ -189,7 +196,7 @@
 
         }
         function IsValidRashemetByTezuga(sender, args) {
-            if (!($('#ctl00_KdsContent_P_TEZUGA_0').is(':checked')) || (!($('#ctl00_KdsContent_P_TEZUGA_0').is(':checked')) && !($('#ctl00_KdsContent_P_TEZUGA_1').is(':checked')))) {
+            if (($('#ctl00_KdsContent_P_TEZUGA_0').is(':checked')) || (!($('#ctl00_KdsContent_P_TEZUGA_0').is(':checked')) && !($('#ctl00_KdsContent_P_TEZUGA_1').is(':checked')))) {
                 var CurrentObj = sender.controltovalidate;
                 var mis = document.getElementById(CurrentObj).value;
                 if (mis == "") {

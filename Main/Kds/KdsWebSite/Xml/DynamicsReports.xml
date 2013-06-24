@@ -641,7 +641,7 @@
         <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
         <!--<FilterValidator ValidatorName="ValidIshurimAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
       </Filter>
-      <Filter ParameterName="P_TEZUGA" Caption="רמת תצוגה" BoxeType="RadioButtonList" DataType="System.Int32" RunAtServer="true">
+      <Filter ParameterName="P_TEZUGA" Caption="רמת תצוגה" BoxeType="RadioButtonList" DataType="System.Int32" RunAtServer="false">
         <DropDownList QueryType="Select"  Select="select 1 id, 'רשמת'dec from dual union select 2 id, 'סניף' dec from dual " ValueField="id" TextField="dec" />
       </Filter>
 
@@ -663,7 +663,7 @@
       </Filter>
   </Report>
 
-  <Report  RdlName="Tigburim" Roles="kds_administrators" FilterByLine="2" PageHeader="תגבורים">
+  <Report  RdlName="Tigburim" Roles="kds_administrators" FilterByLine="2" PageHeader="תגבורים" ProductionType="Heavy">
     <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
