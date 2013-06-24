@@ -1057,7 +1057,7 @@ function chkMkt(oRow) {
                 HasSidurHashlama();
         } //חריגה       
         if (($get("SD_ddlException" + iSidurIndex)) != null) {
-            $get("SD_ddlException" + iSidurIndex).disabled = (result[1] == '0');           
+            $get("SD_ddlException" + iSidurIndex).disabled = ((result[1] == '0') || (result[1])==undefined);           
         }
     }
 
