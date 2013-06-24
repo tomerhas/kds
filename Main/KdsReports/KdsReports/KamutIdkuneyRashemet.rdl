@@ -47,7 +47,6 @@
                       </Style>
                     </Subreport>
                     <ColSpan>7</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -592,11 +591,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
-            <TablixMember>
-              <Visibility>
-                <Hidden>=Parameters!P_TEZUGA.Value=2</Hidden>
-              </Visibility>
-            </TablixMember>
+            <TablixMember />
             <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
