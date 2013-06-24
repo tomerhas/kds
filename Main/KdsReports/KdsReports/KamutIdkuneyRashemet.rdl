@@ -527,7 +527,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!SNIF_AV.Value</Value>
+                              <Value>=Fields!TEUR_SNIF_AV.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
