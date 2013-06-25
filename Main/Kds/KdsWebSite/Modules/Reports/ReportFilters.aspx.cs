@@ -69,7 +69,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     ListBoxExtended CurrentControl = (ListBoxExtended)TdFilter.FindControl(Filter.ParameterName);
                     CurrentControl.AddAttributes();
                     if ((!Page.IsPostBack) && ((Report.NameReport == ReportName.Presence) ||
-                                               (Report.NameReport == ReportName.IshurimLerashemet)))
+                                               (Report.NameReport == ReportName.IshurimLerashemet) ||
+                                               (Report.NameReport == ReportName.Average)))
                         CurrentControl.SetDefaultValue(LoginUser.UserInfo.EmployeeNumber.ToString());
                     if (CurrentControl.ListOfValues != "")
                     {
@@ -154,6 +155,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     //    CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
                    // SetTezuga(ReportName.KamutIdkuneyRashemet);
 
+                    break;
+                case ReportName.Average:
+                    SetWorkerViewLevel(ReportName.Average);
                     break;
                 case ReportName.FindWorkerCard:
                     if (!Page.IsPostBack)
@@ -460,9 +464,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                                                                  (string)clGeneral.GetControlValue(Isuk);
                     break;
                 case ReportName.Average:
-                    MisparIshi.ContextKey = DateTime.Parse(EndMonth.ToString("dd/MM/yyyy")).AddDays(1).AddMonths(-6).ToShortDateString() + ";" + // StartMonth.ToString("dd/MM/yyyy") + ";" +
-                                                                 EndMonth.ToString("dd/MM/yyyy") + ";" +
-                                                                    clGeneral.GetControlValue(CompanyId);
+                    MisparIshi.ContextKey = WorkerViewLevel.SelectedValue + "," + LoginUser.UserInfo.EmployeeNumber + "," +
+                                             DateTime.Parse(EndMonth.ToString("dd/MM/yyyy")).AddDays(1).AddMonths(-6).ToShortDateString() + "," +
+                                             EndMonth.ToString("dd/MM/yyyy");
                     break;
                 case ReportName.HityazvutBePundakimTlunot:
                 case ReportName.HityazvutBePundakimKalkalit:
@@ -731,6 +735,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 Params.Add("P_PAGE_ADDRESS", PureUrlRoot + "/Modules/Ovdim/WorkCard.aspx?");
                 Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
                 break;
+            case ReportName.Average:
             case ReportName.Presence:
 //                Params.Add("P_WORKERVIEWLEVEL", ((int)PageModule.SecurityLevel).ToString());
                 Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());

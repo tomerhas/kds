@@ -305,9 +305,16 @@
       <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
     </Filter>
     <Filter ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
-    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
-      <!--<FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>-->
+
+    <Filter   ParameterName="P_WORKERVIEWLEVEL" Caption="רמת תצוגה" BoxeType="RadioButtonList" DataType="System.Int32" RunAtServer="true">
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_ProfilToDisplay" ValueField="KOD_PROFIL" TextField="TEUR_PROFIL_HEB">
+        <ParameterOfFunction Name="p_ProfilFilter" Type="ByReference" ReferenceType="Function" Value="KdsLibrary.clGeneral.GetProfilesOfUser" DataType="System.String" ParameterType="ntOracleVarchar"/>
+      </DropDownList>
     </Filter>
+    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
+      <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdimForPresence" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
+    </Filter>
+    
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
