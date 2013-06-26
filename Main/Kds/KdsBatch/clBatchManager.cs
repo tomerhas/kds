@@ -235,7 +235,10 @@ namespace KdsBatch
             errFirstDayShlilatRishayon195 = 195,
             errkupaiLeloHachtama = 196,
             errHachtamatKnisaLoBmakomHasaka197 =197,
-            errHachtamatYetziaLoBmakomHasaka198 = 198
+            errHachtamatYetziaLoBmakomHasaka198 = 198,
+            errAvodaByemeyTeuna199=199,
+            errAvodaByemeyEvel200=200,
+            errAvodaByemeyMachala201=201
         }
 
         private enum errNesiaMeshtana
@@ -1294,6 +1297,10 @@ namespace KdsBatch
                     if (CheckErrorActive(197)) HachtamatKnisaLoBmakomHasaka197(ref oSidur,  ref dtErrors);
                     if (CheckErrorActive(198)) HachtamatYetziaLoBmakomHasaka198(ref oSidur, ref dtErrors);
 
+                    if (CheckErrorActive(199)) AvodaByemeyTeuna199(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(200)) AvodaByemeyEvel200(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(201)) AvodaByemeyMachala201(ref oSidur, ref dtErrors);
+                 
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
                     int numPrev;
@@ -1769,6 +1776,142 @@ namespace KdsBatch
             }
             return isValid;
         }
+
+
+        private bool AvodaByemeyTeuna199(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            bool isValid = true;
+            bool bError = false;
+            DataTable dtSidurim;
+            clWorkCard oWorkCard = new clWorkCard();
+            DataRow[] dr;
+            try
+            {
+                if (oSidur.bSidurMyuhad)
+                {//סידור מיוחד
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enTeuna.ToString())
+                    {
+                        dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi,_dCardDate.AddDays(-1));
+                        dr = dtSidurim.Select("mispar_sidur="+ oSidur.iMisparSidur );
+                        if (dr.Length > 0 && CheckAnozerSidurExsits(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oSidur.sHeadrutTypeKod))
+                            bError = true;
+                    }
+                }
+              
+                if (bError) 
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "לא יום ראשון של תאונה - עבודה ותאונה באותו יום", enErrors.errAvodaByemeyTeuna199.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errAvodaByemeyTeuna199.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+
+        private bool AvodaByemeyEvel200(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            bool isValid = true;
+            bool bError = false;
+            DataTable dtSidurim;
+            clWorkCard oWorkCard = new clWorkCard();
+            DataRow[] dr;
+            try
+            {
+                if (oSidur.bSidurMyuhad)
+                {//סידור מיוחד
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enEvel.ToString())
+                    {
+                        dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, _dCardDate.AddDays(-1));
+                        dr = dtSidurim.Select("mispar_sidur=" + oSidur.iMisparSidur);
+                        if (dr.Length > 0 && CheckAnozerSidurExsits(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oSidur.sHeadrutTypeKod))
+                            bError = true;
+                    }
+                }
+
+                if (bError)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "לא יום ראשון של  אבל - עבודה ואבל באותו יום", enErrors.errAvodaByemeyEvel200.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errAvodaByemeyTeuna199.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+
+        private bool AvodaByemeyMachala201(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            bool isValid = true;
+            bool bError = false;
+            DataTable dtSidurim;
+            clWorkCard oWorkCard = new clWorkCard();
+            DataRow[] dr;
+            try
+            {
+                if (oSidur.bSidurMyuhad)
+                {//סידור מיוחד
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.iMisparSidur ==99810 && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.ToString())
+                    {
+                        dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, _dCardDate.AddDays(-1));
+                        dr = dtSidurim.Select("mispar_sidur=" + oSidur.iMisparSidur);
+                        if (dr.Length > 0 && CheckAnozerSidurExsits(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oSidur.sHeadrutTypeKod))
+                            bError = true;
+                    }
+                }
+
+                if (bError)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "לא יום ראשון של  מחלת עובד - עבודה ומחלת עובד באותו יום", enErrors.errAvodaByemeyMachala201.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errAvodaByemeyTeuna199.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+        private bool CheckAnozerSidurExsits(int iMispar_sidur, DateTime dShat_hatchala, string sug_headrut)
+        {
+            try
+            {
+                foreach (clSidur oSidur in htEmployeeDetails.Values)
+                {
+                    if (oSidur.iMisparSidur != iMispar_sidur && oSidur.dFullShatHatchala != dShat_hatchala && oSidur.iLoLetashlum == 0)
+                        if (!oSidur.bHeadrutTypeKodExists || (oSidur.bHeadrutTypeKodExists && oSidur.sHeadrutTypeKod !=sug_headrut))
+                            return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         private bool IsSidurLina30(DateTime dCardDate, ref DataTable dtErrors)
         {                 
             DataRow drNew;

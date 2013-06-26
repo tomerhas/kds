@@ -38,7 +38,7 @@ namespace KdsBatch
             //שעת גמר לתשלום של סידור פחות שעת התחלה לתשלום של סידור.
             //[TB_Sidurim_Ovedim.Shat_gmar_Letashlum] פחות [TB_Sidurim_Ovedim.Shat_hatchala_Letashlum]
             // לפתוח רכיב לכל הסידורים הרגילים וכן לפתוח רשומה עבור כל הסידורים המיוחדים (מספר סידור מתחיל ב- "99") הנסכמים לרכיב על פי [שליפת סידורים מיוחדים לרכיב (קוד רכיב = 1)].
-            int iMisparSidur, iSugSidur;
+            int iMisparSidur, iSugSidur,iMeafyen53;
             float fErechRechiv, fMichsaYomit;
             string sSidurim;
             float fSumErechRechiv = 0;
@@ -47,6 +47,7 @@ namespace KdsBatch
             iMisparSidur = 0;
             dShatHatchalaSidur = DateTime.MinValue;
             float fZmanAruhatZharayim;
+
             try
             {
                 // סידורים רגילים
@@ -123,15 +124,20 @@ namespace KdsBatch
 
                     for (int I = 0; I < _drSidurMeyuchad.Length; I++)
                     {
-                        dShatHatchalaSidur = DateTime.Parse(_drSidurMeyuchad[I]["shat_hatchala_sidur"].ToString());
+                        iMeafyen53= int.Parse(_drSidurMeyuchad[I]["sidur_misug_headrut"].ToString());
                         iMisparSidur = int.Parse(_drSidurMeyuchad[I]["mispar_sidur"].ToString());
-                        fZmanAruhatZharayim = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(),objOved.Taarich);
-                        if (fSumErechRechiv < (fMichsaYomit + fZmanAruhatZharayim))
+                        if ((iMeafyen53 == 2 && iMisparSidur != 99816) || iMeafyen53 == 4 || iMeafyen53 == 6)
                         {
-                            fErechRechiv = CalcRechiv1BySidur(_drSidurMeyuchad[I], fMichsaYomit, oPeilut);
-                            fErechRechiv = Math.Min(fErechRechiv, (fMichsaYomit + fZmanAruhatZharayim - fSumErechRechiv));
-                            fSumErechRechiv += fErechRechiv;
-                            addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErechRechiv);
+                            dShatHatchalaSidur = DateTime.Parse(_drSidurMeyuchad[I]["shat_hatchala_sidur"].ToString());
+                          
+                            fZmanAruhatZharayim = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), objOved.Taarich);
+                            if (fSumErechRechiv>0 && fSumErechRechiv < (fMichsaYomit + fZmanAruhatZharayim))
+                            {
+                                fErechRechiv = CalcRechiv1BySidur(_drSidurMeyuchad[I], fMichsaYomit, oPeilut);
+                                fErechRechiv = Math.Min(fErechRechiv, (fMichsaYomit + fZmanAruhatZharayim - fSumErechRechiv));
+                                fSumErechRechiv += fErechRechiv;
+                                addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErechRechiv);
+                            }
                         }
                     }
 

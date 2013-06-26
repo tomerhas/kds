@@ -557,6 +557,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             enMachala = 2,
             enMilueim = 3,
             enTeuna = 4,
+            enEvel =6,
             enHeadrutWithPayment = 8
         }
         public enum enMeafyenSidur54
