@@ -1791,7 +1791,7 @@ namespace KdsBatch
             {
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enTeuna.ToString())
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enTeuna.GetHashCode().ToString())
                     {
                         dTaarichKodem = _dCardDate.AddDays(-1);
                         if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
@@ -1837,7 +1837,7 @@ namespace KdsBatch
             {
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enEvel.ToString())
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString())
                     {
                         dTaarichKodem = _dCardDate.AddDays(-1);
                         if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
@@ -1883,7 +1883,7 @@ namespace KdsBatch
             {
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.iMisparSidur ==99810 && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.ToString())
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.iMisparSidur ==99810 && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode().ToString())
                     {
                         dTaarichKodem=_dCardDate.AddDays(-1);
                         if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))

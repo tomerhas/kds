@@ -2942,46 +2942,16 @@ namespace KdsBatch
 
         private void CalcRechiv64()
         {
-            float fErechRechiv, fMichsaYomit, fTempX, fTempW;
-            int icount;
-            string sSidurimMeyuchadim;
-            DataRow[] drSidurim;
+            float fErechRechiv;
+
             try
             {
-                //א.	אם TB_Yamey_Avoda_Ovdim.Hashlama_Leyom = 1 אין לפתוח רשומה לרכיב ליום עבודה זה.
-
-                fErechRechiv = 0; fTempX = 0;
-                sSidurimMeyuchadim = oSidur.GetSidurimMeyuchRechiv(clGeneral.enRechivim.YomTeuna.GetHashCode());
-                drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0");
-                icount = drSidurim.Length;
-                drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and SUBSTRING(convert(mispar_sidur,'System.String'),1,2)=99 and MISPAR_SIDUR IN(" + sSidurimMeyuchadim + ")");
-                if (icount == 1 && drSidurim.Length > 0)
-                {
-                    fTempX = 1;
-                }
-                else if (icount > 1 && drSidurim.Length > 0)
-                {
-                        fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
-                        if (fMichsaYomit > 0)
-                        {
-                            fTempX = oSidur.CalcYemeyHeadrut(clGeneral.enRechivim.YomTeuna.GetHashCode(), fMichsaYomit);
-                            fTempX = fTempX / fMichsaYomit;
-                            if (fTempX > 1) { fTempX = 0; }
-                        }
-                }
-
-                fTempW = 1;
-                if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
-                {
-                    fTempW = objOved.fMekademNipuach; 
-                }
-
-                fErechRechiv = float.Parse(Math.Round(fTempW * fTempX, 2, MidpointRounding.AwayFromZero).ToString());
-                addRowToTable(clGeneral.enRechivim.YomTeuna.GetHashCode(), fErechRechiv);
+                    fErechRechiv = CalcHeadruyot(clGeneral.enRechivim.YomTeuna.GetHashCode());
+                    addRowToTable(clGeneral.enRechivim.YomTeuna.GetHashCode(), fErechRechiv);
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomTeuna.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: "+ ex.Message);
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomTeuna.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: " + ex.Message);
                 throw (ex);
             }
         }
