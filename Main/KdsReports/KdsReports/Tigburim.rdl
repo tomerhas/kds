@@ -63,9 +63,6 @@
               <Width>1.22999cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.73271cm</Width>
-            </TablixColumn>
-            <TablixColumn>
               <Width>1.60042cm</Width>
             </TablixColumn>
             <TablixColumn>
@@ -760,39 +757,6 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox2</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox12">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>שדה תאריך במבנה לשכר</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                                <FontWeight>SemiBold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox12</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1664,37 +1628,6 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox14">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!TAARICH_LASACHAR.Value</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox14</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>1pt</PaddingLeft>
-                        <PaddingRight>1pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
                     <Textbox Name="Textbox10">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -1974,7 +1907,6 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
-            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -1991,7 +1923,7 @@
         <Top>1.92299cm</Top>
         <Left>0.12912cm</Left>
         <Height>2.04048cm</Height>
-        <Width>37.3187cm</Width>
+        <Width>35.58599cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2132,10 +2064,6 @@
           <DataField>NAME_SIDUR</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="TAARICH_LASACHAR">
-          <DataField>TAARICH_LASACHAR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="MIKUM_YECHIDA">
           <DataField>MIKUM_YECHIDA</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -2158,7 +2086,7 @@
         </Field>
         <Field Name="SNIF_METUGBAR">
           <DataField>SNIF_METUGBAR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="MISPAR_VISA">
           <DataField>MISPAR_VISA</DataField>
