@@ -215,7 +215,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //    break;
                 case ReportName.Tigburim:
                     {
-                        CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
+                        if (!Page.IsPostBack)
+                        {
+                            CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
+                        }
                     }
                     break;
             }
