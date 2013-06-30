@@ -1783,6 +1783,7 @@ namespace KdsBatch
             //בדיקה ברמת סידור         
             bool isValid = true;
             bool bError = false;
+            DateTime dTaarichKodem;
             DataTable dtSidurim;
             clWorkCard oWorkCard = new clWorkCard();
             DataRow[] dr;
@@ -1792,7 +1793,13 @@ namespace KdsBatch
                 {//סידור מיוחד
                     if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enTeuna.ToString())
                     {
-                        dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi,_dCardDate.AddDays(-1));
+                        dTaarichKodem = _dCardDate.AddDays(-1);
+                        if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
+                            dTaarichKodem = dTaarichKodem.AddDays(-1);
+                        if (((oSidur.sErevShishiChag == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())) &&
+                            (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                            dTaarichKodem = dTaarichKodem.AddDays(-1);
+                        dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
                         dr = dtSidurim.Select("mispar_sidur="+ oSidur.iMisparSidur );
                         if (dr.Length > 0 && CheckAnozerSidurExsits(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oSidur.sHeadrutTypeKod))
                             bError = true;
@@ -1823,6 +1830,7 @@ namespace KdsBatch
             bool isValid = true;
             bool bError = false;
             DataTable dtSidurim;
+            DateTime dTaarichKodem;
             clWorkCard oWorkCard = new clWorkCard();
             DataRow[] dr;
             try
@@ -1831,7 +1839,13 @@ namespace KdsBatch
                 {//סידור מיוחד
                     if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enEvel.ToString())
                     {
-                        dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, _dCardDate.AddDays(-1));
+                        dTaarichKodem = _dCardDate.AddDays(-1);
+                        if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
+                            dTaarichKodem = dTaarichKodem.AddDays(-1);
+                        if (((oSidur.sErevShishiChag == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())) &&
+                            (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                            dTaarichKodem = dTaarichKodem.AddDays(-1);
+                        dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
                         dr = dtSidurim.Select("mispar_sidur=" + oSidur.iMisparSidur);
                         if (dr.Length > 0 && CheckAnozerSidurExsits(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oSidur.sHeadrutTypeKod))
                             bError = true;
@@ -1862,6 +1876,7 @@ namespace KdsBatch
             bool isValid = true;
             bool bError = false;
             DataTable dtSidurim;
+            DateTime dTaarichKodem;
             clWorkCard oWorkCard = new clWorkCard();
             DataRow[] dr;
             try
@@ -1870,7 +1885,13 @@ namespace KdsBatch
                 {//סידור מיוחד
                     if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.iMisparSidur ==99810 && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.ToString())
                     {
-                        dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, _dCardDate.AddDays(-1));
+                        dTaarichKodem=_dCardDate.AddDays(-1);
+                        if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
+                            dTaarichKodem = dTaarichKodem.AddDays(-1);
+                        if ( ((oSidur.sErevShishiChag == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())) &&
+                            (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) )
+                            dTaarichKodem = dTaarichKodem.AddDays(-1);
+                        dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
                         dr = dtSidurim.Select("mispar_sidur=" + oSidur.iMisparSidur);
                         if (dr.Length > 0 && CheckAnozerSidurExsits(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oSidur.sHeadrutTypeKod))
                             bError = true;

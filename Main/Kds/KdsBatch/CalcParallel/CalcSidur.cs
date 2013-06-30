@@ -7640,6 +7640,7 @@ namespace KdsBatch
         public float CalcYemeyHeadrut(int iKodRechiv, out int iCountSidurim, float fMichsaYomit)
         {
             DataRow[] drSidurim;
+            DataRow[] drAnotherSidurim;
             int iMisparSidur;
             float fErech, fDakotNochehut;
             string sSidurimMeyuchadim;
@@ -7665,7 +7666,8 @@ namespace KdsBatch
                         dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
                         dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
 
-                        if (fDakotNochehut == 0)
+                        drAnotherSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and MISPAR_SIDUR not IN(" + sSidurimMeyuchadim + ")");
+                        if (fDakotNochehut == 0 && drAnotherSidurim.Length==0)
                             fDakotNochehut = Math.Min(fMichsaYomit, float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString()));
 
                         fErech += fDakotNochehut;

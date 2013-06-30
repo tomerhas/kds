@@ -97,6 +97,7 @@ namespace KdsBatch
                         {
                             objOved.Taarich = dTaarich;
                             objOved.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
+                            objOved.bMeafyen85YomMeyuchad = oCalcBL.IsOvedWithMeafyen85YomMeyuchad(objOved);
                             objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                             objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
                             objOved.objMatzavOved = objOved.MatzavOved.Find(Matzav => (Matzav._TaarichMe <= dTaarich && Matzav._TaarichAd >= dTaarich));

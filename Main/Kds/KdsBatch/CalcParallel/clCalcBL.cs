@@ -636,5 +636,27 @@ namespace KdsBatch
             }
         }
 
+        public bool IsOvedWithMeafyen85YomMeyuchad(Oved objOved)
+        {
+            bool bflag = false;
+            try
+            {
+                if ((objOved.SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() ||
+                                    objOved.SugYom == clGeneral.enSugYom.ErevRoshHashna.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.ErevYomKipur.GetHashCode() ||
+                                    objOved.SugYom == clGeneral.enSugYom.ErevSukot.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.ErevSimchatTora.GetHashCode() ||
+                                    objOved.SugYom == clGeneral.enSugYom.ErevPesach.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.ErevPesachSheni.GetHashCode() ||
+                                    objOved.SugYom == clGeneral.enSugYom.ErevShavuot.GetHashCode())
+                                   && objOved.objMeafyeneyOved.iMeafyen85 == 1)
+                {
+                    bflag = true;
+                }
+
+                return bflag;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -3047,7 +3047,7 @@ namespace KdsBatch
                                 if (((objOved.Taarich < objOved.objParameters.dChodeshTakanonSoziali && 
                                     (objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8 || objOved.objPirteyOved.iMutamut == 1 ||
                                     objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8) && fMichsaYomit > 0) ||
-                                     (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iMutamBitachon == 6)) 
+                                     (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iMutamBitachon == 6 )) //&& !objOved.bMeafyen85YomMeyuchad)) 
                                      && (objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 ||  objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)))
                                 {
                                     if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
@@ -3125,12 +3125,7 @@ namespace KdsBatch
 
                                 }
                                 //חישוב עבור חוה"מ וערבי חג כאשר התשלום הוא 60:40
-                                if ((objOved.SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() ||
-                                     objOved.SugYom == clGeneral.enSugYom.ErevRoshHashna.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.ErevYomKipur.GetHashCode() ||
-                                     objOved.SugYom == clGeneral.enSugYom.ErevSukot.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.ErevSimchatTora.GetHashCode() ||
-                                     objOved.SugYom == clGeneral.enSugYom.ErevPesach.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.ErevPesachSheni.GetHashCode() ||
-                                     objOved.SugYom == clGeneral.enSugYom.ErevShavuot.GetHashCode()) 
-                                    && objOved.objMeafyeneyOved.iMeafyen85 == 1 && !oCalcBL.CheckOvedPutar(objOved) && fMichsaYomit > 0 && fErechRechiv > 0)
+                                if (objOved.bMeafyen85YomMeyuchad && !oCalcBL.CheckOvedPutar(objOved) && fMichsaYomit > 0 && fErechRechiv > 0)
                                 {
                                     fErechRechiv = fErechRechiv * float.Parse("0.6");
                                     bflag = true;
@@ -3210,7 +3205,7 @@ namespace KdsBatch
                              //         (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iMutamBitachon == 6)) && objOved.objPirteyOved.iZmanMutamut > 0)
                              if ((objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8 || objOved.objPirteyOved.iMutamut == 1 ||
                                      objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8)
-                                     && fMichsaYomit > 0 && (objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)))
+                                     && fMichsaYomit > 0 && (objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)) ) //&& !objOved.bMeafyen85YomMeyuchad)
                              {
                                  if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode() &&
                                      ((objOved.objPirteyOved.iMutamBitachon == 6) ||
@@ -3300,12 +3295,7 @@ namespace KdsBatch
                              }
 
                              //	חישוב עבור חוה"מ וערבי חג כאשר התשלום הוא 60:40 
-                             if ((objOved.SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() ||
-                                  objOved.SugYom == clGeneral.enSugYom.ErevRoshHashna.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.ErevYomKipur.GetHashCode() ||
-                                  objOved.SugYom == clGeneral.enSugYom.ErevSukot.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.ErevSimchatTora.GetHashCode() ||
-                                  objOved.SugYom == clGeneral.enSugYom.ErevPesach.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.ErevPesachSheni.GetHashCode() ||
-                                  objOved.SugYom == clGeneral.enSugYom.ErevShavuot.GetHashCode())
-                                    && objOved.objMeafyeneyOved.iMeafyen85 == 1 && !oCalcBL.CheckOvedPutar(objOved) && fMichsaYomit > 0 && fErechRechiv > 0)
+                             if (objOved.bMeafyen85YomMeyuchad && !oCalcBL.CheckOvedPutar(objOved) && fMichsaYomit > 0 && fErechRechiv > 0)
                              {
                                  fErechRechiv = fErechRechiv * float.Parse("0.6");
                              }

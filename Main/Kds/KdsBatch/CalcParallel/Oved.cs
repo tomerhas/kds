@@ -52,6 +52,7 @@ namespace KdsBatch
 
         public DateTime Taarich { get; set; }
         public int SugYom { get; set; }
+        public bool bMeafyen85YomMeyuchad { get; set; }
 
         public DataTable DtYemeyAvodaYomi { set; get; }
         public DataTable DtPeiluyotYomi { set; get; }
