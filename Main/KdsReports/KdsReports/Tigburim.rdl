@@ -1984,7 +1984,7 @@
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.pro_get_tigburim_details</CommandText>
+        <CommandText>PKG_REPORTS.PRO_GET_TIGBURIM_DETAILS</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
