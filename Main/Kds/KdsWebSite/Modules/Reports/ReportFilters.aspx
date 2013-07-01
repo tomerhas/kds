@@ -12,7 +12,7 @@
             EnlargeFieldSetsForIE8(null, "DriverWithoutSignature,DriverWithoutTacograph", 100);
 
             var snif = $('#ctl00_KdsContent_P_SNIF');
-            var ezor = $('#ctl00_KdsContent_P_EZOR');
+            var ezor = $('#ctl00_KdsContent_P_EZOR_TIG');
             var rashemrt = $('#ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete');
             rashemrt.attr('disabled', 'disabled');
             ezor.attr('disabled', 'disabled');

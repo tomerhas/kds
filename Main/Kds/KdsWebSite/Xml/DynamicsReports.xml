@@ -314,7 +314,7 @@
     <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
       <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdimForPresence" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
     </Filter>
-    
+
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
@@ -660,12 +660,12 @@
         --><!--<FilterValidator ValidatorName="ValidMisRashemet1" ErrorMessageValidator="לא ניתן להוציא דוח כל עוד לא נבחר מספר אישי של רשמת" ValidationFunction="IsValidRashemet1"/>--><!--
         <DropDownList QueryType="AjaxAutoComplete"  Select="getMispareiRashamot" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
       </Filter>-->  
-      <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown"   RunAtServer="true"  DataType="System.Int32"  IsParent="true">
+      <Filter ParameterName="P_EZOR_TIG" Caption="איזור" BoxeType="DropDown"   RunAtServer="true"  DataType="System.Int32"  IsParent="true">
         <DropDownList QueryType="Select"  Select="select -1 kod_ezor,'הכל' teur_ezor from dual union select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
       </Filter>
       <Filter ParameterName="P_SNIF" Caption="סניף" BoxeType="ListBox" DataType="System.Int32">
         <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_kod_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av">
-          <Condition Name="P_KOD_EZOR" ParameterType="ntOracleInteger" ControlReference="P_EZOR"></Condition>
+          <Condition Name="P_KOD_EZOR" ParameterType="ntOracleInteger" ControlReference="P_EZOR_TIG"></Condition>
         </DropDownList>
       </Filter>
   </Report>

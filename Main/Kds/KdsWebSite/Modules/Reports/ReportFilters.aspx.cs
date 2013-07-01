@@ -261,7 +261,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         if (!Page.IsPostBack)
         {
             Snif.Attributes.Add("Disabled", "Disabled");
-            Ezor2.Attributes.Add("Disabled", "Disabled");
+            EzorTig.Attributes.Add("Disabled", "Disabled");
             MisRashemet.Attributes.Add("Disabled", "Disabled");
             MisRashemet.TextBoxe.Attributes.Add("Disabled", "Disabled");
         }
@@ -271,14 +271,14 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             {
                 MisRashemet.Attributes.Remove("Disabled");
                 Snif.Attributes.Add("Disabled", "Disabled");
-                Ezor2.Attributes.Add("Disabled", "Disabled");
+                EzorTig.Attributes.Add("Disabled", "Disabled");
                 MisRashemet.TextBoxe.Attributes.Remove("Disabled");
             }
             else
             {
                 MisRashemet.Attributes.Add("Disabled", "Disabled");
                 Snif.Attributes.Remove("Disabled");
-                Ezor2.Attributes.Remove("Disabled");
+                EzorTig.Attributes.Remove("Disabled");
                 MisRashemet.TextBoxe.Attributes.Add("Disabled", "Disabled");
             }
         }
@@ -694,9 +694,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get { return (ListBoxExtended)TdFilter.FindControl("P_MIS_RASHEMET"); }
     }
-    private DropDownList Ezor2
+    private DropDownList EzorTig
     {
-        get { return (DropDownList)TdFilter.FindControl("P_EZOR"); }
+        get { return (DropDownList)TdFilter.FindControl("P_EZOR_TIG"); }
     }
   //  ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete
     #endregion
