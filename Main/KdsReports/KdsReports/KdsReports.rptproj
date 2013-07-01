@@ -189,6 +189,10 @@
       <Name>SpecificAverage.rdl</Name>
       <FullPath>SpecificAverage.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>Tigburim.rdl</Name>
+      <FullPath>Tigburim.rdl</FullPath>
+    </ProjectItem>
     <ResourceProjectItem>
       <Name>Tiuta.bmp</Name>
       <FullPath>Tiuta.bmp</FullPath>
@@ -211,10 +215,6 @@
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
-    <ProjectItem>
-      <Name>Tigburim.rdl</Name>
-      <FullPath>Tigburim.rdl</FullPath>
-    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
@@ -223,7 +223,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://kdstst02/reportserver</TargetServerURL>
+        <TargetServerURL>http://kdsappl02/reportserver</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>

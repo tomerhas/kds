@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>17.81267cm</Width>
+              <Width>15.93413cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>4.3324cm</Height>
+              <Height>3.1571cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -393,8 +393,8 @@
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
-                          <Top>1.79189cm</Top>
-                          <Left>4.64786cm</Left>
+                          <Top>0.89231cm</Top>
+                          <Left>3.83107cm</Left>
                           <Height>1.2cm</Height>
                           <Width>11.04474cm</Width>
                           <Style>
@@ -416,9 +416,10 @@
                               <Value>=reportitems!mI.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <Top>3.16828cm</Top>
-                          <Height>1.01188cm</Height>
-                          <Width>16.06642cm</Width>
+                          <Top>2.26869cm</Top>
+                          <Left>0.71439cm</Left>
+                          <Height>0.77376cm</Height>
+                          <Width>13.36767cm</Width>
                           <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
@@ -439,8 +440,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <Top>2.39189cm</Top>
-                          <Left>1.40229cm</Left>
+                          <Top>1.3421cm</Top>
                           <Height>0.55877cm</Height>
                           <Width>2.59292cm</Width>
                           <ZIndex>2</ZIndex>
@@ -467,9 +467,8 @@
 " לחודש " &amp; DateAdd("m",-6,Parameters!P_ENDDATE.Value).ToShortDateString() &amp; " - " &amp; Parameters!P_ENDDATE.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <Left>1.74625cm</Left>
-                          <Height>1.6155cm</Height>
-                          <Width>16.06642cm</Width>
+                          <Height>0.82175cm</Height>
+                          <Width>15.93413cm</Width>
                           <ZIndex>3</ZIndex>
                           <Style>
                             <Border>
@@ -502,14 +501,17 @@
                 <GroupExpressions>
                   <GroupExpression>=Fields!MISPAR_ISHI.Value</GroupExpression>
                 </GroupExpressions>
+                <PageBreak>
+                  <BreakLocation>Between</BreakLocation>
+                </PageBreak>
               </Group>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <KeepTogether>true</KeepTogether>
         <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
-        <Height>4.3324cm</Height>
-        <Width>17.81267cm</Width>
+        <Height>3.1571cm</Height>
+        <Width>15.93413cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -517,17 +519,17 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.76817in</Height>
+    <Height>1.24295in</Height>
     <Style />
   </Body>
-  <Width>7.01286in</Width>
+  <Width>6.27328in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>0.5cm</LeftMargin>
+    <LeftMargin>0cm</LeftMargin>
     <RightMargin>0cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0.5cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
@@ -574,6 +576,14 @@
           <QueryParameter Name="P_SECTORISUK">
             <Value>=Parameters!P_SECTORISUK.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="P_WORKERID">
+            <Value>=Parameters!P_WORKERID.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="P_WORKERVIEWLEVEL">
+            <Value>=Parameters!P_WORKERVIEWLEVEL.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
         <CommandText>PKG_REPORTS.PRO_GETMAINDETAILSAVERAGE</CommandText>
@@ -608,10 +618,43 @@
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>01/08/2010 00:00:00</Value>
+          <Value>05/01/2013 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P_ENDDATE</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_WORKERVIEWLEVEL">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_WORKERVIEWLEVEL</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_MISPAR_ISHI">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>201</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>MISPAR_ISHI</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_EZOR">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P EZOR</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_COMPANYID">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P COMPANYID</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_SNIF">
       <DataType>String</DataType>
@@ -631,38 +674,6 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>P ISUK</Prompt>
     </ReportParameter>
-    <ReportParameter Name="P_EZOR">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>P EZOR</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_COMPANYID">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>P COMPANYID</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_MISPAR_ISHI">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>71323,75290,78856,48410,75437</Value>
-        </Values>
-      </DefaultValue>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>MISPAR_ISHI</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_DT">
-      <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>=Globals!ExecutionTime</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>P_DT</Prompt>
-    </ReportParameter>
     <ReportParameter Name="P_KOD_YECHIDA">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
@@ -673,6 +684,24 @@
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <Prompt>P SECTORISUK</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_WORKERID">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>75757</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_WORKERID</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_DT">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Globals!ExecutionTime</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
   <EmbeddedImages>

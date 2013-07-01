@@ -15,6 +15,9 @@
               <Width>1.52103cm</Width>
             </TablixColumn>
             <TablixColumn>
+              <Width>1.73271cm</Width>
+            </TablixColumn>
+            <TablixColumn>
               <Width>4.43653cm</Width>
             </TablixColumn>
           </TablixColumns>
@@ -108,6 +111,39 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>ERECH_RECHIV</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>4pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="TEUR_SUG_ERECH">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!TEUR_SUG_ERECH.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>TEUR_SUG_ERECH</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -294,6 +330,55 @@
               <TablixHeader>
                 <Size>0.62645cm</Size>
                 <CellContents>
+                  <Textbox Name="Textbox1">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>סוג ערך</Value>
+                            <Style>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Right</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox1</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Style>None</Style>
+                      </Border>
+                      <TopBorder>
+                        <Style>Solid</Style>
+                      </TopBorder>
+                      <BottomBorder>
+                        <Style>Solid</Style>
+                      </BottomBorder>
+                      <LeftBorder>
+                        <Style>None</Style>
+                      </LeftBorder>
+                      <RightBorder>
+                        <Style>Solid</Style>
+                      </RightBorder>
+                      <BackgroundColor>LightGrey</BackgroundColor>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixHeader>
+            </TablixMember>
+            <TablixMember>
+              <TablixHeader>
+                <Size>0.62645cm</Size>
+                <CellContents>
                   <Textbox Name="Textbox36">
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -368,7 +453,7 @@
         <KeepTogether>true</KeepTogether>
         <DataSetName>DsRechivim</DataSetName>
         <Height>1.09417cm</Height>
-        <Width>9.68756cm</Width>
+        <Width>11.42027cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -380,7 +465,7 @@
     <Height>0.43078in</Height>
     <Style />
   </Body>
-  <Width>3.814in</Width>
+  <Width>4.49617in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>19cm</PageWidth>
@@ -434,6 +519,10 @@
         </Field>
         <Field Name="TEUR_RECHIV">
           <DataField>TEUR_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SUG_ERECH">
+          <DataField>TEUR_SUG_ERECH</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ERECH_RECHIV">

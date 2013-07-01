@@ -23,7 +23,7 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>2.47505cm</Width>
+                                    <Width>2.28686cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>2.28686cm</Width>
@@ -491,7 +491,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!CLOCKEXIT.Value</Value>
+                                                    <Value>=iif( Fields!YATZIA_TKINA_ERR198.Value="false", Fields!CLOCKEXIT.Value  &amp; vbcrlf &amp;  " החתמה באתר לא מורשה ",Fields!CLOCKEXIT.Value)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -524,7 +524,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!CLOCKENTRY.Value</Value>
+                                                    <Value>=iif( Fields!KNISA_TKINA_ERR197.Value="false", Fields!CLOCKENTRY.Value  &amp; vbcrlf &amp;  " החתמה באתר לא מורשה ",Fields!CLOCKENTRY.Value)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -733,6 +733,7 @@
                                                     <Value>=iif(Fields!SHAT_GMAR.Value = nothing ,"",FormatDateTime(Fields!SHAT_GMAR.Value,4))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
+                                                      <Color>=iif( Fields!YATZIA_TKINA_ERR198.Value="false","Red", "Black")</Color>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -766,6 +767,7 @@
                                                     <Value>=iif(Fields!SHAT_HATCHALA.Value = nothing or Year(Fields!SHAT_HATCHALA.Value)=1,"", FormatDateTime(Fields!SHAT_HATCHALA.Value,4))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
+                                                      <Color>=iif( Fields!KNISA_TKINA_ERR197.Value="false","Red", "Black")</Color>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -1116,7 +1118,7 @@
                               <Top>1.66688cm</Top>
                               <Left>0.00812in</Left>
                               <Height>2.17042cm</Height>
-                              <Width>19.7209cm</Width>
+                              <Width>19.53271cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1923,6 +1925,10 @@
       <Query>
         <DataSourceName>KdsConnection</DataSourceName>
         <QueryParameters>
+          <QueryParameter Name="P_SNIF">
+            <Value>=Parameters!P_SNIF.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
           <QueryParameter Name="P_WORKERVIEWLEVEL">
             <Value>=Parameters!P_WORKERVIEWLEVEL.Value</Value>
           </QueryParameter>
@@ -1938,10 +1944,6 @@
           <QueryParameter Name="P_ENDDATE">
             <Value>=Parameters!P_ENDDATE.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="P_SNIF">
-            <Value>=Parameters!P_SNIF.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
         <CommandText>PKG_REPORTS.PRO_GET_PRESENCE</CommandText>
@@ -1952,20 +1954,20 @@
           <DataField>MISPAR_ISHI</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="KOD_HEVRA">
-          <DataField>KOD_HEVRA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+        <Field Name="DIFFERENCE_HOUR">
+          <Value>=
+iif(
+	(Fields!SHAT_HATCHALA.Value = nothing) or 	(Fields!SHAT_GMAR.Value = nothing) ,
+	nothing,
+	CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value))
+   )</Value>
         </Field>
-        <Field Name="START_TIME_ALLOWED">
-          <DataField>START_TIME_ALLOWED</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="END_TIME_ALLOWED">
-          <DataField>END_TIME_ALLOWED</DataField>
+        <Field Name="DAYOFWEEK">
+          <DataField>DAYOFWEEK</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CHARIGA">
@@ -1984,14 +1986,6 @@
           <DataField>MISPAR_SIDUR</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="TEUR_SIDUR_MEYCHAD">
-          <DataField>TEUR_SIDUR_MEYCHAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="SHAT_HATCHALA">
           <DataField>SHAT_HATCHALA</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
@@ -2000,16 +1994,52 @@
           <DataField>SHAT_GMAR</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+        <Field Name="CLOCKENTRY">
+          <DataField>CLOCKENTRY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CLOCKEXIT">
+          <DataField>CLOCKEXIT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SIDUR_MEYCHAD">
+          <DataField>TEUR_SIDUR_MEYCHAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LO_LETASHLUM">
+          <DataField>LO_LETASHLUM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KNISA_TKINA_ERR197">
+          <DataField>KNISA_TKINA_ERR197</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="MEAFYEN_53">
           <DataField>MEAFYEN_53</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="DAYOFWEEK">
-          <DataField>DAYOFWEEK</DataField>
+        <Field Name="YATZIA_TKINA_ERR198">
+          <DataField>YATZIA_TKINA_ERR198</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_HEVRA">
+          <DataField>KOD_HEVRA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="START_TIME_ALLOWED">
+          <DataField>START_TIME_ALLOWED</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="END_TIME_ALLOWED">
+          <DataField>END_TIME_ALLOWED</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_ISUK">
+          <DataField>TEUR_ISUK</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TEUR_EZOR">
@@ -2020,21 +2050,9 @@
           <DataField>TEUR_MAAMAD_HR</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="TEUR_ISUK">
-          <DataField>TEUR_ISUK</DataField>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
           <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CLOCKENTRY">
-          <DataField>CLOCKENTRY</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CLOCKEXIT">
-          <DataField>CLOCKEXIT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="LO_LETASHLUM">
-          <DataField>LO_LETASHLUM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="KOD_HEADRUT">
           <DataField>KOD_HEADRUT</DataField>
@@ -2043,14 +2061,6 @@
         <Field Name="HEARA">
           <DataField>HEARA</DataField>
           <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DIFFERENCE_HOUR">
-          <Value>=
-iif(
-	(Fields!SHAT_HATCHALA.Value = nothing) or 	(Fields!SHAT_GMAR.Value = nothing) ,
-	nothing,
-	CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value))
-   )</Value>
         </Field>
       </Fields>
     </DataSet>
@@ -2061,7 +2071,7 @@ iif(
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>=CDate("01/04/2013")</Value>
+          <Value>=CDate("01/05/2013")</Value>
         </Values>
       </DefaultValue>
       <Prompt>P STARTDATE</Prompt>
@@ -2071,7 +2081,7 @@ iif(
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>=CDate("30/04/2013")</Value>
+          <Value>=CDate("31/05/2013")</Value>
         </Values>
       </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
@@ -2095,7 +2105,7 @@ iif(
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>75757</Value>
+          <Value>31077</Value>
         </Values>
       </DefaultValue>
       <AllowBlank>true</AllowBlank>
