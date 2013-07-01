@@ -696,7 +696,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     }
     private DropDownList EzorTig
     {
-        get { return (DropDownList)TdFilter.FindControl("P_EZOR_TIG"); }
+        get { return (DropDownList)TdFilter.FindControl("P_EZOR"); }
     }
   //  ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete
     #endregion
