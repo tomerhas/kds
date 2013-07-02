@@ -1796,7 +1796,7 @@ namespace KdsBatch
                         dTaarichKodem = _dCardDate.AddDays(-1);
                         if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
-                        if (((oSidur.sErevShishiChag == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())) &&
+                        if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
                             (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
                         dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
@@ -1842,7 +1842,7 @@ namespace KdsBatch
                         dTaarichKodem = _dCardDate.AddDays(-1);
                         if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
-                        if (((oSidur.sErevShishiChag == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())) &&
+                        if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
                             (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
                         dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
@@ -1888,7 +1888,7 @@ namespace KdsBatch
                         dTaarichKodem=_dCardDate.AddDays(-1);
                         if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
-                        if ( ((oSidur.sErevShishiChag == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())) &&
+                        if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
                             (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) )
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
                         dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
