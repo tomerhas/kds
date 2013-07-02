@@ -738,6 +738,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 Params.Add("P_PAGE_ADDRESS", PureUrlRoot + "/Modules/Ovdim/WorkCard.aspx?");
                 Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
                 break;
+            case ReportName.AverageSnifEzor:
             case ReportName.Average:
             case ReportName.Presence:
 //                Params.Add("P_WORKERVIEWLEVEL", ((int)PageModule.SecurityLevel).ToString());
@@ -751,6 +752,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         switch (rpt.NameReport)
         {
+            case ReportName.AverageSnifEzor:
             case ReportName.RdlReportMushalimDetails:
                 Params["P_STARTDATE"] = StartMonth.ToShortDateString();
                 Params["P_ENDDATE"] = EndMonth.ToShortDateString();
