@@ -10,43 +10,56 @@
     <script type="text/javascript">
         $(document).ready(function () {
             EnlargeFieldSetsForIE8(null, "DriverWithoutSignature,DriverWithoutTacograph", 100);
+
+
+    var KamutIdkuneyRashemet = {
+              type :"KamutIdkuneyRashemet",
+              snif : $('#ctl00_KdsContent_P_SNIF'),
+              ezor : $('#ctl00_KdsContent_P_EZOR'),
+              rashemet : $('#ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete'),
+              Init: function () {
+                     this.rashemet.attr('disabled', 'disabled');
+                    this.ezor.attr('disabled', 'disabled');
+                    this.snif.attr('disabled', 'disabled');
+                    var k = this;
+                    $("input[name='ctl00$KdsContent$P_TEZUGA'").click(function () {
+                        if (queries['RdlName'] == 'KamutIdkuneyRashemet') {
+                            if ($(this).val() == "1") {
+                                k.rashemet.removeAttr('disabled', 'disabled');
+                                k.ezor.attr('disabled', 'disabled');
+                                k.snif.attr('disabled', 'disabled');
+                                $("#ctl00_KdsContent_P_SNIF option:selected").val('');
+                            }
+                            else {
+                                k.rashemet.attr('disabled', 'disabled');
+                                k.ezor.removeAttr('disabled', 'disabled');
+                                k.snif.removeAttr('disabled', 'disabled');
+                                k.rashemet.val('');
+                                $('#ctl00_KdsContent_PMISRASHEMETListBoxExtended').empty();
+                            }
+                        }
+                    });
+                }
+            }
+
+
             var queries = {};
             $.each(document.location.search.substr(1).split('&'), function (c, q) {
                 var i = q.split('=');
                 queries[i[0].toString()] = i[1].toString();
             });
-            if (queries['RdlName'] == 'KamutIdkuneyRashemet') {
-                var snif = $('#ctl00_KdsContent_P_SNIF');
-                var ezor = $('#ctl00_KdsContent_P_EZOR');
-                var rashemrt = $('#ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete');
-                rashemrt.attr('disabled', 'disabled');
-                ezor.attr('disabled', 'disabled');
-                snif.attr('disabled', 'disabled');
+
+            switch (queries['RdlName']) {
+                case 'KamutIdkuneyRashemet':
+                    {
+                        KamutIdkuneyRashemet.Init();
+                    }
+                    break;
             }
-
-            //            $("#ctl00_KdsContent_P_TEZUGA_0").click(function () {
-            //                debugger;
-            //            });
-
-            $("input[name='ctl00$KdsContent$P_TEZUGA'").click(function () {
-                if (queries['RdlName'] == 'KamutIdkuneyRashemet') {
-                    if ($(this).val() == "1") {
-                        rashemrt.removeAttr('disabled', 'disabled');
-                        ezor.attr('disabled', 'disabled');
-                        snif.attr('disabled', 'disabled');
-                        $("#ctl00_KdsContent_P_SNIF option:selected").val('');
-                    }
-                    else {
-                        rashemrt.attr('disabled', 'disabled');
-                        ezor.removeAttr('disabled', 'disabled');
-                        snif.removeAttr('disabled', 'disabled');
-                        rashemrt.val('');
-                        $('#ctl00_KdsContent_PMISRASHEMETListBoxExtended').empty();
-                    }
-                    //return false;
-                }
-            });
         });
+
+
+      
     
     </script>
 </asp:Content>
