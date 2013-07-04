@@ -553,7 +553,8 @@ namespace KdsLibrary.Utils.Reports
         RdlReportMushalimDetails,
         KamutIdkuneyRashemet,
         Tigburim,
-        AverageSnifEzor
+        AverageSnifEzor,
+        AverageSnifInEzor
 
     }
     public enum Orientation

@@ -159,6 +159,12 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.Average:
                     SetWorkerViewLevel(ReportName.Average);
                     break;
+                case ReportName.AverageSnifEzor:
+                    SetWorkerViewLevel(ReportName.AverageSnifEzor);
+                    break;
+                case ReportName.AverageSnifInEzor:
+                    SetWorkerViewLevel(ReportName.AverageSnifInEzor);
+                    break;
                 case ReportName.FindWorkerCard:
                     if (!Page.IsPostBack)
                         CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
@@ -232,8 +238,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 
     private void SetWorkerViewLevel(ReportName p_report_name)
     {
-        if (!Page.IsPostBack)  
-            WorkerViewLevel.Items[0].Selected = true;
+       
         if (WorkerViewLevel.Items.Count < 2)
         {
             WorkerViewLevel.Style.Add("Display", "none");
@@ -241,19 +246,28 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         }
         else
         {
-            if (p_report_name == ReportName.Presence)
+            switch (Report.NameReport)
             {
-                foreach (ListItem item in WorkerViewLevel.Items)
-                {
-                    if (item.Value == "1")
+                case ReportName.Presence:
+                    foreach (ListItem item in WorkerViewLevel.Items)
                     {
-                        Snif.Style.Add("Display", "inline");
-                        SnifLabel.Style.Add("Display", "inline");
-                        break;
+                        if (item.Value == "1")
+                        {
+                            Snif.Style.Add("Display", "inline");
+                            SnifLabel.Style.Add("Display", "inline");
+                            break;
+                        }
                     }
-                }
+                    break;
+                case ReportName.AverageSnifEzor:
+                case ReportName.AverageSnifInEzor:
+                    WorkerViewLevel.Items.RemoveAt(0);
+                break;
             }
         }
+
+        if (!Page.IsPostBack)
+            WorkerViewLevel.Items[0].Selected = true;
     }
     private void SetTezuga(ReportName p_report_name)
     {
@@ -738,6 +752,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 Params.Add("P_PAGE_ADDRESS", PureUrlRoot + "/Modules/Ovdim/WorkCard.aspx?");
                 Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
                 break;
+            case ReportName.AverageSnifInEzor:
             case ReportName.AverageSnifEzor:
             case ReportName.Average:
             case ReportName.Presence:
@@ -753,6 +768,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         switch (rpt.NameReport)
         {
             case ReportName.AverageSnifEzor:
+            case ReportName.AverageSnifInEzor:
             case ReportName.RdlReportMushalimDetails:
                 Params["P_STARTDATE"] = StartMonth.ToShortDateString();
                 Params["P_ENDDATE"] = EndMonth.ToShortDateString();
