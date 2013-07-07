@@ -239,7 +239,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     private void SetWorkerViewLevel(ReportName p_report_name)
     {
        
-        if (WorkerViewLevel.Items.Count < 2)
+        if ( (!Page.IsPostBack) && WorkerViewLevel.Items.Count < 2)
         {
             WorkerViewLevel.Style.Add("Display", "none");
             WorkerViewLevelLabel.Style.Add("Display", "none");
@@ -261,7 +261,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     break;
                 case ReportName.AverageSnifEzor:
                 case ReportName.AverageSnifInEzor:
-                    WorkerViewLevel.Items.RemoveAt(0);
+                    if (!Page.IsPostBack)
+                        WorkerViewLevel.Items.RemoveAt(0);
                 break;
             }
         }
