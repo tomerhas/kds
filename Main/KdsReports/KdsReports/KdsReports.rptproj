@@ -34,6 +34,14 @@
       <FullPath>AverageRechivValues.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>AverageSnifEzor.rdl</Name>
+      <FullPath>AverageSnifEzor.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>AverageSnifInEzor.rdl</Name>
+      <FullPath>AverageSnifInEzor.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>AverageSpecificRechivim.rdl</Name>
       <FullPath>AverageSpecificRechivim.rdl</FullPath>
     </ProjectItem>
@@ -214,14 +222,6 @@
     <ProjectItem>
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>AverageSnifEzor.rdl</Name>
-      <FullPath>AverageSnifEzor.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>AverageSnifInEzor.rdl</Name>
-      <FullPath>AverageSnifInEzor.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

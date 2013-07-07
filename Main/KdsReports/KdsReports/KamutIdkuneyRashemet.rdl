@@ -24,6 +24,9 @@
               <Width>2.5cm</Width>
             </TablixColumn>
             <TablixColumn>
+              <Width>2.5cm</Width>
+            </TablixColumn>
+            <TablixColumn>
               <Width>4.45349cm</Width>
             </TablixColumn>
           </TablixColumns>
@@ -37,7 +40,7 @@
                       <ReportName>GeneralHeader</ReportName>
                       <Parameters>
                         <Parameter Name="P_Title">
-                          <Value>= "כמות כרטיסי עבודה שעודכנו ע''י רשמת לפי חברים\שכירים"</Value>
+                          <Value>= "כמות כרטיסי עבודה שעודכנו ע''י רשמת לפי חברים\שכירים " &amp; "מתאריך - "&amp; Parameters!P_STARTDATE.Value &amp; " עד תאריך - " &amp;Parameters!P_ENDDATE.Value</Value>
                         </Parameter>
                       </Parameters>
                       <Style>
@@ -46,9 +49,10 @@
                         </Border>
                       </Style>
                     </Subreport>
-                    <ColSpan>7</ColSpan>
+                    <ColSpan>8</ColSpan>
                   </CellContents>
                 </TablixCell>
+                <TablixCell />
                 <TablixCell />
                 <TablixCell />
                 <TablixCell />
@@ -93,9 +97,10 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>7</ColSpan>
+                    <ColSpan>8</ColSpan>
                   </CellContents>
                 </TablixCell>
+                <TablixCell />
                 <TablixCell />
                 <TablixCell />
                 <TablixCell />
@@ -251,6 +256,41 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Textbox5">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>מספר עובדים בסניף</Value>
+                              <Style>
+                                <FontSize>11pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox5</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="Textbox16">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -293,7 +333,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>סניף</Value>
+                              <Value>=iif(Parameters!P_TEZUGA.Value=1,"שם הסניף" ,"שם הרשמת")</Value>
                               <Style>
                                 <FontSize>11pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -330,7 +370,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>שם רשמת</Value>
+                              <Value>=iif(Parameters!P_TEZUGA.Value=1,"שם הרשמת" ,"שם הסניף")</Value>
                               <Style>
                                 <FontSize>11pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -489,6 +529,37 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Textbox11">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!EMPLOEECOUNT.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox11</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="Textbox17">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -527,7 +598,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+                              <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!TEUR_SNIF_AV.Value,Fields!NAME_RASHEMET.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -558,7 +629,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!NAME_RASHEMET.Value</Value>
+                              <Value>=iif(Parameters!P_TEZUGA.Value=1,Fields!NAME_RASHEMET.Value ,Fields!TEUR_SNIF_AV.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -590,6 +661,11 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember>
+              <Visibility>
+                <Hidden>=Parameters!P_TEZUGA.Value=1</Hidden>
+              </Visibility>
+            </TablixMember>
             <TablixMember />
             <TablixMember />
             <TablixMember />
@@ -628,7 +704,7 @@
         </SortExpressions>
         <Top>0.47625cm</Top>
         <Height>4.3cm</Height>
-        <Width>20.17807cm</Width>
+        <Width>22.67807cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -640,7 +716,7 @@
     <Height>2.01294in</Height>
     <Style />
   </Body>
-  <Width>8.03788in</Width>
+  <Width>8.92837in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -708,8 +784,16 @@
           <DataField>FRIEND</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="EZOR">
+          <DataField>EZOR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="SALARIED">
           <DataField>SALARIED</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="EMPLOEECOUNT">
+          <DataField>EMPLOEECOUNT</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="MEASHER">
