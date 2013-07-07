@@ -216,8 +216,12 @@
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Report3.rdl</Name>
-      <FullPath>Report3.rdl</FullPath>
+      <Name>AverageSnifEzor.rdl</Name>
+      <FullPath>AverageSnifEzor.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>AverageSnifInEzor.rdl</Name>
+      <FullPath>AverageSnifInEzor.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
@@ -227,7 +231,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://kdsappl02/reportserver</TargetServerURL>
+        <TargetServerURL>http://kdstst02/reportserver</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>
