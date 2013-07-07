@@ -40,7 +40,7 @@
                       <ReportName>GeneralHeader</ReportName>
                       <Parameters>
                         <Parameter Name="P_Title">
-                          <Value>= "כמות כרטיסי עבודה שעודכנו ע''י רשמת לפי חברים\שכירים " &amp; "מתאריך - "&amp; Parameters!P_STARTDATE.Value &amp; " עד תאריך - " &amp;Parameters!P_ENDDATE.Value</Value>
+                          <Value>= "כמות כרטיסי עבודה שעודכנו ע''י רשמת לפי חברים\שכירים " &amp; "מתאריך - "&amp; Parameters!P_STARTDATE.Value &amp; " עד תאריך - " &amp;Parameters!P_ENDDATE.Value &amp; iif(Parameters!P_TEZUGA.Value=1, "רשמת לפי סניפים","בחלוקה לפי סניפים")</Value>
                         </Parameter>
                       </Parameters>
                       <Style>
