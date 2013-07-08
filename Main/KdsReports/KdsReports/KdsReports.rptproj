@@ -223,6 +223,10 @@
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>AverageOvdimBeSnif.rdl</Name>
+      <FullPath>AverageOvdimBeSnif.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
