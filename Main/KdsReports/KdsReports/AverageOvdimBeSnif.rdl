@@ -6,18 +6,35 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>15.93413cm</Width>
+              <Width>17.81267cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>3.4946cm</Height>
+              <Height>3.4246cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
                     <Rectangle Name="Rectangle2">
                       <ReportItems>
-                        <Tablix Name="TbMatrix">
+                        <Subreport Name="SubReportHeader2">
+                          <ReportName>GeneralHeader</ReportName>
+                          <Parameters>
+                            <Parameter Name="P_Title">
+                              <Value>="דוח ממוצעי שעות לעובדים בסניף "  &amp; Replace(First(Fields!TEUR_SNIF_AV.Value), "סניף", "") &amp; 
+ " מחודש " &amp; Format(Cdate(Parameters!P_STARTDATE.Value), "MM/yyyy") &amp; " עד חודש " &amp; Format(Cdate(Parameters!P_ENDDATE.Value), "MM/yyyy")</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Top>0.03528cm</Top>
+                          <Height>0.82175cm</Height>
+                          <Width>17.81267cm</Width>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                        <Tablix Name="TbMatrix2">
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
@@ -42,7 +59,7 @@
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="TEUR_SUG_ERECH">
+                                      <Textbox Name="TEUR_SUG_ERECH2">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -75,7 +92,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox18">
+                                      <Textbox Name="Textbox30">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -93,7 +110,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox18</rd:DefaultName>
+                                        <rd:DefaultName>Textbox30</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -108,7 +125,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox14">
+                                      <Textbox Name="Textbox26">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -126,7 +143,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox14</rd:DefaultName>
+                                        <rd:DefaultName>Textbox26</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -141,7 +158,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox50">
+                                      <Textbox Name="Textbox52">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -174,7 +191,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox51">
+                                      <Textbox Name="Textbox53">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -213,13 +230,13 @@
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="ERECH_RECHIV">
+                                      <Textbox Name="ERECH_RECHIV2">
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(not isnothing(Fields!ERECH_RECHIV.Value) ,FormatNumber(round(Fields!ERECH_RECHIV.Value,2),1,0),0)</Value>
+                                                <Value>=iif(Not isnothing(Fields!ERECH_RECHIV.Value), FormatNumber(round(Fields!ERECH_RECHIV.Value/Fields!NUM.Value, 2), 1, 0), 0)</Value>
                                                 <Style>
                                                   <FontSize>9pt</FontSize>
                                                 </Style>
@@ -245,7 +262,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="TEUR_ISUK">
+                                      <Textbox Name="TEUR_ISUK1">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -263,7 +280,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>TEUR_ISUK</rd:DefaultName>
+                                        <rd:DefaultName>TEUR_ISUK1</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -278,7 +295,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="TEUR_KOD_GIL">
+                                      <Textbox Name="TEUR_KOD_GIL1">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -296,7 +313,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>TEUR_KOD_GIL</rd:DefaultName>
+                                        <rd:DefaultName>TEUR_KOD_GIL1</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -311,7 +328,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="OVED_NAME">
+                                      <Textbox Name="OVED_NAME1">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -329,7 +346,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>OVED_NAME</rd:DefaultName>
+                                        <rd:DefaultName>OVED_NAME1</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -344,7 +361,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="TEUR_RECHIV">
+                                      <Textbox Name="TEUR_RECHIV2">
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
@@ -381,14 +398,14 @@
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox55">
+                                      <Textbox Name="Textbox58">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=FormatNumber(round(sum(Fields!ERECH_RECHIV.Value)/Fields!NUM.Value ,2),1,0)</Value>
+                                                <Value>=FormatNumber(round(Sum(Fields!ERECH_RECHIV.Value) / CountDistinct(Fields!MISPAR_ISHI.Value ) , 2), 1, 0)</Value>
                                                 <Style>
                                                   <FontSize>9pt</FontSize>
                                                 </Style>
@@ -414,7 +431,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox20">
+                                      <Textbox Name="Textbox32">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -432,7 +449,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox20</rd:DefaultName>
+                                        <rd:DefaultName>Textbox32</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -447,7 +464,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox16">
+                                      <Textbox Name="Textbox28">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -465,7 +482,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox16</rd:DefaultName>
+                                        <rd:DefaultName>Textbox28</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -480,7 +497,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox56">
+                                      <Textbox Name="Textbox59">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -513,14 +530,14 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox57">
+                                      <Textbox Name="Textbox60">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>ממוצע</Value>
+                                                <Value>ממוצע </Value>
                                                 <Style>
                                                   <FontSize>9pt</FontSize>
                                                   <FontWeight>Bold</FontWeight>
@@ -552,7 +569,7 @@
                           <TablixColumnHierarchy>
                             <TablixMembers>
                               <TablixMember>
-                                <Group Name="TEUR_RECHIV">
+                                <Group Name="TEUR_RECHIV2">
                                   <GroupExpressions>
                                     <GroupExpression>=Fields!TEUR_RECHIV.Value</GroupExpression>
                                   </GroupExpressions>
@@ -568,7 +585,7 @@
                                     <TablixHeader>
                                       <Size>0.62645cm</Size>
                                       <CellContents>
-                                        <Textbox Name="Textbox9">
+                                        <Textbox Name="Textbox10">
                                           <CanGrow>true</CanGrow>
                                           <KeepTogether>true</KeepTogether>
                                           <Paragraphs>
@@ -610,7 +627,7 @@
                                 <TablixHeader>
                                   <Size>0.62645cm</Size>
                                   <CellContents>
-                                    <Textbox Name="Textbox17">
+                                    <Textbox Name="Textbox29">
                                       <CanGrow>true</CanGrow>
                                       <KeepTogether>true</KeepTogether>
                                       <Paragraphs>
@@ -628,7 +645,7 @@
                                           </Style>
                                         </Paragraph>
                                       </Paragraphs>
-                                      <rd:DefaultName>Textbox17</rd:DefaultName>
+                                      <rd:DefaultName>Textbox29</rd:DefaultName>
                                       <Style>
                                         <Border>
                                           <Style>None</Style>
@@ -659,7 +676,7 @@
                                 <TablixHeader>
                                   <Size>0.62645cm</Size>
                                   <CellContents>
-                                    <Textbox Name="Textbox13">
+                                    <Textbox Name="Textbox25">
                                       <CanGrow>true</CanGrow>
                                       <KeepTogether>true</KeepTogether>
                                       <Paragraphs>
@@ -677,7 +694,7 @@
                                           </Style>
                                         </Paragraph>
                                       </Paragraphs>
-                                      <rd:DefaultName>Textbox13</rd:DefaultName>
+                                      <rd:DefaultName>Textbox25</rd:DefaultName>
                                       <Style>
                                         <Border>
                                           <Style>None</Style>
@@ -708,7 +725,7 @@
                                 <TablixHeader>
                                   <Size>0.62645cm</Size>
                                   <CellContents>
-                                    <Textbox Name="Textbox39">
+                                    <Textbox Name="Textbox40">
                                       <CanGrow>true</CanGrow>
                                       <KeepTogether>true</KeepTogether>
                                       <Paragraphs>
@@ -757,7 +774,7 @@
                                 <TablixHeader>
                                   <Size>0.62645cm</Size>
                                   <CellContents>
-                                    <Textbox Name="Textbox36">
+                                    <Textbox Name="Textbox37">
                                       <KeepTogether>true</KeepTogether>
                                       <Paragraphs>
                                         <Paragraph>
@@ -807,9 +824,25 @@
                           </TablixColumnHierarchy>
                           <TablixRowHierarchy>
                             <TablixMembers>
-                              <TablixMember />
-                              <TablixMember />
-                              <TablixMember />
+                              <TablixMember>
+                                <KeepWithGroup>After</KeepWithGroup>
+                              </TablixMember>
+                              <TablixMember>
+                                <Group Name="Group1">
+                                  <GroupExpressions>
+                                    <GroupExpression>=Fields!MISPAR_ISHI.Value</GroupExpression>
+                                  </GroupExpressions>
+                                </Group>
+                                <TablixMembers>
+                                  <TablixMember />
+                                </TablixMembers>
+                                <Visibility>
+                                  <Hidden>=len(Fields!TEUR_RECHIV.Value) = 0</Hidden>
+                                </Visibility>
+                              </TablixMember>
+                              <TablixMember>
+                                <KeepWithGroup>Before</KeepWithGroup>
+                              </TablixMember>
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <RepeatColumnHeaders>true</RepeatColumnHeaders>
@@ -820,10 +853,11 @@
                               <Value>=Fields!MIYUN_MEMUZAIM.Value</Value>
                             </SortExpression>
                           </SortExpressions>
-                          <Top>1.03342cm</Top>
-                          <Left>1.95792cm</Left>
+                          <Top>1.04147cm</Top>
+                          <Left>2.04774cm</Left>
                           <Height>2.29417cm</Height>
                           <Width>12.74319cm</Width>
+                          <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -831,24 +865,6 @@
                             <TextAlign>Right</TextAlign>
                           </Style>
                         </Tablix>
-                        <Subreport Name="SubReportHeader2">
-                          <ReportName>GeneralHeader</ReportName>
-                          <Parameters>
-                            <Parameter Name="P_Title">
-                              <Value>="דוח ממוצעי שעות לעובדים בסניף "  &amp; Replace(First(Fields!TEUR_SNIF_AV.Value), "סניף", "") &amp; 
- " מחודש " &amp; Format(Cdate(Parameters!P_STARTDATE.Value), "MM/yyyy") &amp; " עד חודש " &amp; Format(Cdate(Parameters!P_ENDDATE.Value), "MM/yyyy")</Value>
-                            </Parameter>
-                          </Parameters>
-                          <Top>0.03528cm</Top>
-                          <Height>0.82175cm</Height>
-                          <Width>15.93413cm</Width>
-                          <ZIndex>1</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                          </Style>
-                        </Subreport>
                       </ReportItems>
                       <KeepTogether>true</KeepTogether>
                       <Style>
@@ -889,10 +905,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsAverage</DataSetName>
-        <Top>0.86375cm</Top>
-        <Left>0.28794cm</Left>
-        <Height>3.4946cm</Height>
-        <Width>15.93413cm</Width>
+        <Top>0.05286cm</Top>
+        <Height>3.4246cm</Height>
+        <Width>17.81267cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -900,10 +915,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.86172in</Height>
+    <Height>1.36908in</Height>
     <Style />
   </Body>
-  <Width>6.5in</Width>
+  <Width>7.01286in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -1020,6 +1035,7 @@
     </ReportParameter>
     <ReportParameter Name="P_SNIF">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
       <Prompt>P SNIF</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_WORKERID">
