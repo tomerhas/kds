@@ -334,7 +334,38 @@
       <DropDownList QueryType="Select"  Select="Select Kod_Yechida, Teur_Yechida From CTB_Yechida order by 2" ValueField="Kod_Yechida" TextField="Teur_Yechida" />
     </Filter>
   </Report>
-
+  
+  <Report  RdlName="AverageOvdimBeSnif" Roles="kds_administrators" FilterByLine="3" PageHeader="ממוצעים - עבור עובדים בסניף" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy">
+    <Filter ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
+      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
+      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
+        <ParameterOfFunction Type="ByValue" Value="DescriptionAllComponents" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
+        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
+      </DropDownList>
+    </Filter>
+    <Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String"  >
+      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
+        <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
+        <ParameterOfFunction Type="ByValue" Value="הכל" DataType="System.String" />
+      </DropDownList>
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
+    </Filter>
+    <Filter   ParameterName="P_WORKERVIEWLEVEL" Caption="רמת תצוגה" BoxeType="RadioButtonList" DataType="System.Int32" RunAtServer="true">
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_ProfilToDisplay" ValueField="KOD_PROFIL" TextField="TEUR_PROFIL_HEB">
+        <ParameterOfFunction Name="p_ProfilFilter" Type="ByReference" ReferenceType="Function" Value="KdsLibrary.clGeneral.GetProfilesOfUser" DataType="System.String" ParameterType="ntOracleVarchar"/>
+      </DropDownList>
+    </Filter>
+    <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown"   RunAtServer="true"  DataType="System.Int32"  IsParent="true">
+      <DropDownList QueryType="Select"  Select="select -1 kod_ezor,'הכל' teur_ezor from dual union select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
+    </Filter>
+    <Filter ParameterName="P_SNIF" Caption="סניף" BoxeType="ListBox" DataType="System.Int32">
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_kod_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av">
+        <Condition Name="P_KOD_EZOR" ParameterType="ntOracleInteger" ControlReference="P_EZOR"></Condition>
+      </DropDownList>
+    </Filter>
+  </Report>
   <Report  RdlName="AverageSnifInEzor" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ממוצעים - עבור סניפים באיזור" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
@@ -362,8 +393,6 @@
     </Filter>
    
   </Report>
-
-
   <Report  RdlName="AverageSnifEzor" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ממוצעים וסיכומים" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
@@ -395,8 +424,6 @@
       </DropDownList>
     </Filter>
   </Report>
-
-
   <Report  RdlName="SpecificAverage" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ממוצעים על פי רכיבים" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy" >
     <Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String"  >
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
