@@ -165,6 +165,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.AverageSnifInEzor:
                     SetWorkerViewLevel(ReportName.AverageSnifInEzor);
                     break;
+                case ReportName.AverageOvdimBeSnif:
+                    SetWorkerViewLevel(ReportName.AverageOvdimBeSnif);
+                    break;
                 case ReportName.FindWorkerCard:
                     if (!Page.IsPostBack)
                         CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
@@ -261,6 +264,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     break;
                 case ReportName.AverageSnifEzor:
                 case ReportName.AverageSnifInEzor:
+                case ReportName.AverageOvdimBeSnif:
                     if (!Page.IsPostBack)
                         WorkerViewLevel.Items.RemoveAt(0);
                 break;
@@ -753,6 +757,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 Params.Add("P_PAGE_ADDRESS", PureUrlRoot + "/Modules/Ovdim/WorkCard.aspx?");
                 Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
                 break;
+            case ReportName.AverageOvdimBeSnif:
             case ReportName.AverageSnifInEzor:
             case ReportName.AverageSnifEzor:
             case ReportName.Average:
@@ -770,6 +775,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         {
             case ReportName.AverageSnifEzor:
             case ReportName.AverageSnifInEzor:
+            case ReportName.AverageOvdimBeSnif:
             case ReportName.RdlReportMushalimDetails:
                 Params["P_STARTDATE"] = StartMonth.ToShortDateString();
                 Params["P_ENDDATE"] = EndMonth.ToShortDateString();
