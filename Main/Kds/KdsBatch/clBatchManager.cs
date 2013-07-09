@@ -238,7 +238,8 @@ namespace KdsBatch
             errHachtamatYetziaLoBmakomHasaka198 = 198,
             errAvodaByemeyTeuna199=199,
             errAvodaByemeyEvel200=200,
-            errAvodaByemeyMachala201=201
+            errAvodaByemeyMachala201=201,
+            errMachalaLeloIshur202 = 202
         }
 
         private enum errNesiaMeshtana
@@ -1300,6 +1301,7 @@ namespace KdsBatch
                     if (CheckErrorActive(199)) AvodaByemeyTeuna199(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(200)) AvodaByemeyEvel200(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(201)) AvodaByemeyMachala201(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(202)) MachalaLeloIshurwithSidurLetashlum202(ref oSidur, ref dtErrors);
                  
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
@@ -1925,6 +1927,47 @@ namespace KdsBatch
             }
             return isValid;
         }
+
+        private bool MachalaLeloIshurwithSidurLetashlum202(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            bool isValid = true;
+            bool bError = false;
+            try
+            {
+                if (oSidur.iMisparSidur==99816)
+                {
+                    if (htEmployeeDetails.Count > 0)
+                    {
+                        foreach (clSidur oSidurElse in htEmployeeDetails.Values)
+                        {
+                            if (oSidur != oSidurElse && oSidurElse.iLoLetashlum == 0)
+                            {
+                                 bError = true;
+                                 break;
+                            }
+                        }
+                    }
+                }
+
+                if (bError)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "לא ניתן לדווח סידור מחלה ללא אישור בשילוב עם סידור נוסף ", enErrors.errMachalaLeloIshur202.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errAvodaByemeyMachala201.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+
         private bool CheckAnozerSidurExsits(int iMispar_sidur, DateTime dShat_hatchala, string sug_headrut)
         {
             try

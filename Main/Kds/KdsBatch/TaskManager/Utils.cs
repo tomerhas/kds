@@ -229,6 +229,7 @@ namespace KdsBatch.TaskManager
             clBatch oBatch = new clBatch();
             premyot.wsPremyot wsPremyot = new premyot.wsPremyot();
             long lRequestNum = 0;
+             KdsLibrary.TaskManager.Utils oUtilsTask = new KdsLibrary.TaskManager.Utils();
             try
             {
 
@@ -249,6 +250,8 @@ namespace KdsBatch.TaskManager
                     clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
                 }
                 else clGeneral.LogError(ex);
+                oUtilsTask.SendNotice(13, 10, "CreateNetuneyPremiyot Failed: " + ex.Message);
+               
                 throw (ex);
             }
 			
@@ -302,6 +305,7 @@ namespace KdsBatch.TaskManager
 			clBatch oBatch = new clBatch();
 			premyot.wsPremyot wsPremyot = new premyot.wsPremyot();
 			long lRequestNum = 0;
+            KdsLibrary.TaskManager.Utils oUtilsTask = new KdsLibrary.TaskManager.Utils();
 			try
 			{
 				
@@ -324,6 +328,9 @@ namespace KdsBatch.TaskManager
 					clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
 				}
 				else clGeneral.LogError(ex);
+
+                oUtilsTask.SendNotice(13, 11, "RunCalculationPremyot Failed: " + ex.Message);
+               
 				throw (ex);
 			}
 			
