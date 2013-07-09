@@ -223,6 +223,7 @@ namespace KdsBatch
            }
            catch (Exception ex)
            {
+               clLogBakashot.InsertErrorToLog(_lBakashaId, mispar_ishi, "E", 0, null,"SetSugChishuvUDT: " + ex.Message);
                throw (ex);
           }
        }

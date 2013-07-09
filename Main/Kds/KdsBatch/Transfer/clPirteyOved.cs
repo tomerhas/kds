@@ -40,20 +40,26 @@ namespace KdsBatch
         private DataTable _dtRechiveyPrem;
         public PirteyOved(  long BakashaId,long lRequestNumToTransfer, DataRow drPirteyOved)
         {
-            iBakashaId = BakashaId;
-           
-            iMaamad = int.Parse(drPirteyOved["maamad"].ToString());
-            iMaamadRashi = int.Parse(drPirteyOved["maamad_rashi"].ToString());
-            iDirug = int.Parse(drPirteyOved["dirug"].ToString());
-            iDarga = int.Parse(drPirteyOved["darga"].ToString());
-            dChodeshChishuv = DateTime.Parse(drPirteyOved["taarich"].ToString());
-            iMakorNetunim = int.Parse(drPirteyOved["makor"].ToString());
+            try
+            {
+                iBakashaId = BakashaId;
 
-            _drPirteyOved = drPirteyOved;
-            
-            iBakashaIdRizatChishuv = lRequestNumToTransfer;
-          //  iGil =int.Parse(drPirteyOved["gil"].ToString());
-         //   InitializeErueyOved();
+                iMaamad = int.Parse(drPirteyOved["maamad"].ToString());
+                iMaamadRashi = int.Parse(drPirteyOved["maamad_rashi"].ToString());
+                iDirug = int.Parse(drPirteyOved["dirug"].ToString());
+                iDarga = int.Parse(drPirteyOved["darga"].ToString());
+                dChodeshChishuv = DateTime.Parse(drPirteyOved["taarich"].ToString());
+                iMakorNetunim = int.Parse(drPirteyOved["makor"].ToString());
+
+                _drPirteyOved = drPirteyOved;
+
+                iBakashaIdRizatChishuv = lRequestNumToTransfer;
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(iBakashaId, int.Parse(_drPirteyOved["mispar_ishi"].ToString()), "E", 0, null, "PirteyOved ctor: " + ex.Message);
+                throw (ex);
+            }
         }
 
         public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtRechivimYomiim)
