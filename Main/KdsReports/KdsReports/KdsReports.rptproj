@@ -227,6 +227,14 @@
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>test.rdl</Name>
+      <FullPath>test.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>test2.rdl</Name>
+      <FullPath>test2.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
