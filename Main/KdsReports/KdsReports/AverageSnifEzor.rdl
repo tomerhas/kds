@@ -594,6 +594,12 @@
           <QueryParameter Name="P_SNIF">
             <Value>=Parameters!P_SNIF.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="P_MAMAD">
+            <Value>=Parameters!P_MAMAD.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_ISUK">
+            <Value>=Parameters!P_ISUK.Value</Value>
+          </QueryParameter>
           <QueryParameter Name="P_WORKERID">
             <Value>=Parameters!P_WORKERID.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
@@ -694,6 +700,12 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>P_SNIF</Prompt>
     </ReportParameter>
+    <ReportParameter Name="P_MAMAD">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_MAMAD</Prompt>
+    </ReportParameter>
     <ReportParameter Name="P_WORKERID">
       <DataType>Integer</DataType>
       <DefaultValue>
@@ -702,6 +714,12 @@
         </Values>
       </DefaultValue>
       <Prompt>P_WORKERID</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_ISUK">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_ISUK</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
