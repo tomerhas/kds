@@ -440,7 +440,8 @@ function chkMkt(oRow) {
     function SetKnisaActualMin(oRow){
         arrKnisa = $get(oRow.id).cells[_COL_KNISA].childNodes[0].nodeValue.split(',');
         if ((Number(arrKnisa[0]) > 0) && ($get(oRow.id).cells[_COL_CANCEL].childNodes[0].className == 'ImgKnisaS')) {//אם כניסה לפי צורך
-            if (KnisaLefiZorech($get(oRow.id).cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue)){
+            if (KnisaLefiZorech($get(oRow.id).cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue,
+                                    parseInt($get(oRow.id).cells[_COL_KNISA].firstChild.nodeValue.split(',')[0]))) {
                 var lMakat = $get(oRow.id).cells[_COL_MAKAT].childNodes[0].value;
                 var iSidurIndex = Number(String(oRow.id).substr(String('SD_').length, 3));
                 var sSidurDate = $get("SD_lblDate".concat(iSidurIndex)).innerHTML;
@@ -501,7 +502,8 @@ function chkMkt(oRow) {
                  if (FirstMkt != 0) //אם כניסה בעקבות שינוי רשומת אב, נעביר את רשומת האב
                      SetPeilutStatus(Row.id, true, iSidur, -1, PeilutAv);
                  else {
-                     if (KnisaLefiZorech($get(Row.id).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue))
+                     if (KnisaLefiZorech($get(Row.id).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue,
+                                            parseInt($get(Row.id).cells[_COL_KNISA].childNodes[0].nodeValue.split(',')[0])))
                          SetPeilutStatus(Row.id, false, iSidur, -1);
                      else
                          SetPeilutStatus(Row.id, true, iSidur, -1);
@@ -611,7 +613,8 @@ function chkMkt(oRow) {
                 else {
                     if (oColCancel.getAttribute("OrgEnabled") == "1") {
                         if (oRow.cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue != null) {
-                            if (KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue))
+                            if (KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue,
+                                                    parseInt($get(oRow.id).cells[_COL_KNISA].firstChild.nodeValue.split(',')[0])))
                             {
                                 if (PeilutAv != null) {
                                     if (PeilutAv.cells[_COL_CANCEL].childNodes[0].className == "ImgCancel")
@@ -646,7 +649,8 @@ function chkMkt(oRow) {
                         if (PeilutAv.cells[_COL_CANCEL].childNodes[0].className == "ImgCancel")                        
                           {oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1"; }
                         else {
-                            if (KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue))
+                            if (KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue,
+                                                parseInt($get(oRow.id).cells[_COL_KNISA].firstChild.nodeValue.split(',')[0])))
                             {
                                 if ((oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == 0) || (oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == '')) {
                                     oColCancel.className = "ImgKnisaS";
@@ -661,7 +665,8 @@ function chkMkt(oRow) {
                          }//****
                     }
                     else {
-                        if ((KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].innerHTML)) && (oColCancel.className != "ImgKnisaS")) {
+                        if ((KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].innerHTML,
+                                parseInt(oRow.cells[_COL_KNISA].innerHTML.split(',')[0]))) && (oColCancel.className != "ImgKnisaS")) {
                             {
                                 oColCancel.className = "ImgKnisaS";
                                 oColPeilutCancel.value = "0";
@@ -678,11 +683,11 @@ function chkMkt(oRow) {
             }                       
         }       
     }
-    function KnisaLefiZorech(sText) {
+    function KnisaLefiZorech(sText, iKnisa) {
         if (sText == null)
             return 0;
         else
-            return ((sText.indexOf('לפי צורך') > 0) || (sText.indexOf('לפי-צורך') > 0));       
+            return (((sText.indexOf('לפי צורך') > 0) || (sText.indexOf('לפי-צורך') > 0)) && iKnisa>0);       
     }
     function SetLabelColor(sCtl,iIndex, sColor){        
         $get(sCtl.concat(iIndex)).style.color=sColor;  
@@ -1827,7 +1832,8 @@ function chkMkt(oRow) {
                if (_imgCancelPeilut.firstChild.disabled){
                  if(_imgCancelPeilut.firstChild.className!=undefined){
                      if ((String(_imgCancelPeilut.firstChild.className).indexOf("ImgCheckedPeilut")) > -1) {
-                         if ((KnisaLefiZorech(_Peilut.firstChild.childNodes[j].cells[_COL_LINE_DESCRIPTION].innerHTML))
+                         if ((KnisaLefiZorech(_Peilut.firstChild.childNodes[j].cells[_COL_LINE_DESCRIPTION].innerHTML,
+                                                parseInt(_Peilut.firstChild.childNodes[j].cells[_COL_KNISA].innerHTML.split(',')[0])))
                           && (_Peilut.firstChild.childNodes[j].cells[_COL_ACTUAL_MINUTES].children[0].getAttribute("idkunRashemet") != 'True')
                           &&  (Number(arrKnisa[0]) > 0)) //אם כניסה לפי צורך)         
                              _imgCancelPeilut.firstChild.disabled = false;
