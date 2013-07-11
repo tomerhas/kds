@@ -28,6 +28,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     private KdsReport _Report;
     private PanelFilters _PanelFilters;
     private List<string> _ControlsList;
+    private string _sProfilUser="0";
     protected void Page_Load(object sender, EventArgs e)
     {
         DataTable dtParametrim = new DataTable();
@@ -44,12 +45,42 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 Param100.Value = dtParametrim.Rows[0]["ERECH_PARAM"].ToString();
 
             }
+            SetProfilUser();
             FillFilterToForm();
             FillEnabledFilter();
             BtControlChanged.Style.Add("Display", "none");
             SetSecurityLevel();
             InitializeEvents();
 
+        }
+        catch (Exception ex)
+        {
+            KdsLibrary.clGeneral.BuildError(Page, ex.Message, true);
+        }
+    }
+    private void SetProfilUser()
+    {
+        clReport oReports = new clReport();
+        DataTable dtProfils = new DataTable();
+        int profil;
+        try
+        {
+            dtProfils = oReports.GetProfilToDisplay(clGeneral.GetProfilesOfUser());
+            if (dtProfils.Rows.Count > 0)
+            {
+                dtProfils.Rows.Remove(dtProfils.Rows[0]);//remove profil boded
+                foreach (DataRow drProfil in dtProfils.Rows)
+                {
+                    profil = int.Parse(drProfil["KOD_PROFIL"].ToString());
+                    if (profil == clGeneral.enProfile.enSystemAdmin.GetHashCode() || profil == clGeneral.enProfile.enRashemet.GetHashCode() || profil == clGeneral.enProfile.enRashemetAll.GetHashCode())
+                    {
+                        _sProfilUser= profil.ToString();
+                        break;
+                    }
+                    else if (profil == clGeneral.enProfile.enMenahelImKfufim.GetHashCode())
+                        _sProfilUser=  profil.ToString();
+                }
+            }                    
         }
         catch (Exception ex)
         {
@@ -142,7 +173,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     }
                     Snif.Style.Add("Display", "none");
                     SnifLabel.Style.Add("Display", "none");
-                    SetWorkerViewLevel(ReportName.Presence);
+                    if (_sProfilUser =="0")
+                       MisparIshi.Attributes.Add("Disabled", "Disabled");
+                    //SetWorkerViewLevel(ReportName.Presence);
                     break;
                 case ReportName.IshurimLerashemet:
                     if (!Page.IsPostBack)
@@ -156,18 +189,18 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                    // SetTezuga(ReportName.KamutIdkuneyRashemet);
 
                     break;
-                case ReportName.Average:
-                    SetWorkerViewLevel(ReportName.Average);
-                    break;
-                case ReportName.AverageSnifEzor:
-                    SetWorkerViewLevel(ReportName.AverageSnifEzor);
-                    break;
-                case ReportName.AverageSnifInEzor:
-                    SetWorkerViewLevel(ReportName.AverageSnifInEzor);
-                    break;
-                case ReportName.AverageOvdimBeSnif:
-                    SetWorkerViewLevel(ReportName.AverageOvdimBeSnif);
-                    break;
+                //case ReportName.Average:
+                //    SetWorkerViewLevel(ReportName.Average);
+                //    break;
+                //case ReportName.AverageSnifEzor:
+                //    SetWorkerViewLevel(ReportName.AverageSnifEzor);
+                //    break;
+                //case ReportName.AverageSnifInEzor:
+                //    SetWorkerViewLevel(ReportName.AverageSnifInEzor);
+                //    break;
+                //case ReportName.AverageOvdimBeSnif:
+                //    SetWorkerViewLevel(ReportName.AverageOvdimBeSnif);
+                //    break;
                 case ReportName.FindWorkerCard:
                     if (!Page.IsPostBack)
                         CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
@@ -262,14 +295,14 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         }
                     }
                     break;
-                case ReportName.AverageSnifEzor:
-                case ReportName.AverageSnifInEzor:
-                case ReportName.AverageOvdimBeSnif:
-                    if (!Page.IsPostBack)
-                        WorkerViewLevel.Items.RemoveAt(0);
-                      WorkerViewLevel.Style.Add("Display", "none");
-                      WorkerViewLevelLabel.Style.Add("Display", "none");
-                break;
+            //    case ReportName.AverageSnifEzor:
+            //    case ReportName.AverageSnifInEzor:
+            ////    case ReportName.AverageOvdimBeSnif:
+            //        if (!Page.IsPostBack)
+            //            WorkerViewLevel.Items.RemoveAt(0);
+            //          WorkerViewLevel.Style.Add("Display", "none");
+            //          WorkerViewLevelLabel.Style.Add("Display", "none");
+            //    break;
             }
         }
 
@@ -476,7 +509,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     break;
                 case ReportName.Presence:
                 case ReportName.IshurimLerashemet:
-                    MisparIshi.ContextKey = WorkerViewLevel.SelectedValue + "," + LoginUser.UserInfo.EmployeeNumber + ","
+                    MisparIshi.ContextKey = _sProfilUser + "," + LoginUser.UserInfo.EmployeeNumber + ","
                         + CtrlStartDate + "," + CtrlEndDate;
                     break;
                 case ReportName.PremiotPresence:
@@ -488,7 +521,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                                                                  (string)clGeneral.GetControlValue(Isuk);
                     break;
                 case ReportName.Average:
-                    MisparIshi.ContextKey = WorkerViewLevel.SelectedValue + "," + LoginUser.UserInfo.EmployeeNumber + "," +
+                    MisparIshi.ContextKey = _sProfilUser + "," + LoginUser.UserInfo.EmployeeNumber + "," +
                                              DateTime.Parse(EndMonth.ToString("dd/MM/yyyy")).AddDays(1).AddMonths(-6).ToShortDateString() + "," +
                                              EndMonth.ToString("dd/MM/yyyy");
                     break;
@@ -747,55 +780,61 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     }
     private void AddSpecificReportParameters(KdsReport rpt, ref Dictionary<string, string> Params)
     {
-        switch (rpt.NameReport)
+        clReport oReports = new clReport();
+        DataTable dtProfils = new DataTable();
+        int profil;
+        try{
+            switch (rpt.NameReport)
+            {
+                case ReportName.DisregardDrivers:
+                    Params.Add("P_DISREGARDTYPE", "-1");
+                    break;
+                case ReportName.DisregardDriversVisot:
+                    Params.Add("P_DISREGARDTYPE", "0");
+                    break;
+                case ReportName.IshurimLerashemet:
+                    Params.Add("P_PAGE_ADDRESS", PureUrlRoot + "/Modules/Ovdim/WorkCard.aspx?");
+                    Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
+                    break;
+                case ReportName.AverageOvdimBeSnif:
+                case ReportName.AverageSnifInEzor:
+                case ReportName.AverageSnifEzor:
+                case ReportName.Average:
+                case ReportName.Presence:
+                    //                Params.Add("P_WORKERVIEWLEVEL", ((int)PageModule.SecurityLevel).ToString());
+                    Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
+                    Params.Add("P_WORKERVIEWLEVEL", _sProfilUser); 
+                   break;
+            }
+        }
+        catch (Exception ex)
         {
-            case ReportName.DisregardDrivers:
-                Params.Add("P_DISREGARDTYPE", "-1");
-                break;
-            case ReportName.DisregardDriversVisot:
-                Params.Add("P_DISREGARDTYPE", "0" );
-                break;
-            case ReportName.IshurimLerashemet:
-                Params.Add("P_PAGE_ADDRESS", PureUrlRoot + "/Modules/Ovdim/WorkCard.aspx?");
-                Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
-                break;
-            case ReportName.AverageOvdimBeSnif:
-            case ReportName.AverageSnifInEzor:
-            case ReportName.AverageSnifEzor:
-            case ReportName.Average:
-            case ReportName.Presence:
-//                Params.Add("P_WORKERVIEWLEVEL", ((int)PageModule.SecurityLevel).ToString());
-                Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
-                break; 
-
+            KdsLibrary.clGeneral.BuildError(Page, ex.Message, true);
         }
     }
 
     private void ChangeReportParameters(KdsReport rpt, ref Dictionary<string, string> Params)
     {
-        switch (rpt.NameReport)
+     
+        try
         {
-            case ReportName.RdlReportMushalimDetails:
-                Params["P_STARTDATE"] = StartMonth.ToShortDateString();
-                Params["P_ENDDATE"] = EndMonth.ToShortDateString();
-                break;
-            case ReportName.AverageSnifEzor:
-            case ReportName.AverageSnifInEzor:
-            case ReportName.AverageOvdimBeSnif:
-                Params["P_STARTDATE"] = StartMonth.ToShortDateString();
-                Params["P_ENDDATE"] = EndMonth.ToShortDateString();
-                if (WorkerViewLevel.Items.Count > 1)
-                {
-                    for (int i = 0; i < WorkerViewLevel.Items.Count; i++)
-                    {
-                        if (WorkerViewLevel.Items[i].Value != "5")
-                        {
-                            Params["P_WORKERVIEWLEVEL"] = WorkerViewLevel.Items[i].Value;
-                            break;
-                        }
-                    }
-                }
-                break;
+            switch (rpt.NameReport)
+            {
+                case ReportName.RdlReportMushalimDetails:
+                    Params["P_STARTDATE"] = StartMonth.ToShortDateString();
+                    Params["P_ENDDATE"] = EndMonth.ToShortDateString();
+                    break;
+                case ReportName.AverageSnifEzor:
+                case ReportName.AverageSnifInEzor:
+                case ReportName.AverageOvdimBeSnif:
+                    Params["P_STARTDATE"] = StartMonth.ToShortDateString();
+                    Params["P_ENDDATE"] = EndMonth.ToShortDateString();
+                 break;  
+            }
+        }
+        catch (Exception ex)
+        {
+            KdsLibrary.clGeneral.BuildError(Page, ex.Message, true);
         }
     }
 
