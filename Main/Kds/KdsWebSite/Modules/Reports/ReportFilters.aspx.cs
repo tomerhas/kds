@@ -267,6 +267,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.AverageOvdimBeSnif:
                     if (!Page.IsPostBack)
                         WorkerViewLevel.Items.RemoveAt(0);
+                      WorkerViewLevel.Style.Add("Display", "none");
+                      WorkerViewLevelLabel.Style.Add("Display", "none");
                 break;
             }
         }
@@ -773,15 +775,27 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         switch (rpt.NameReport)
         {
-            case ReportName.AverageSnifEzor:
-            case ReportName.AverageSnifInEzor:
-            case ReportName.AverageOvdimBeSnif:
             case ReportName.RdlReportMushalimDetails:
                 Params["P_STARTDATE"] = StartMonth.ToShortDateString();
                 Params["P_ENDDATE"] = EndMonth.ToShortDateString();
                 break;
-           
-
+            case ReportName.AverageSnifEzor:
+            case ReportName.AverageSnifInEzor:
+            case ReportName.AverageOvdimBeSnif:
+                Params["P_STARTDATE"] = StartMonth.ToShortDateString();
+                Params["P_ENDDATE"] = EndMonth.ToShortDateString();
+                if (WorkerViewLevel.Items.Count > 1)
+                {
+                    for (int i = 0; i < WorkerViewLevel.Items.Count; i++)
+                    {
+                        if (WorkerViewLevel.Items[i].Value != "5")
+                        {
+                            Params["P_WORKERVIEWLEVEL"] = WorkerViewLevel.Items[i].Value;
+                            break;
+                        }
+                    }
+                }
+                break;
         }
     }
 
