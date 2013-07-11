@@ -584,10 +584,6 @@
             <Value>=Parameters!P_ENDDATE.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
-          <QueryParameter Name="P_WORKERVIEWLEVEL">
-            <Value>=Parameters!P_WORKERVIEWLEVEL.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
           <QueryParameter Name="P_EZOR">
             <Value>=Parameters!P_EZOR.Value</Value>
           </QueryParameter>
@@ -599,6 +595,10 @@
           </QueryParameter>
           <QueryParameter Name="P_ISUK">
             <Value>=Parameters!P_ISUK.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_WORKERVIEWLEVEL">
+            <Value>=Parameters!P_WORKERVIEWLEVEL.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="P_WORKERID">
             <Value>=Parameters!P_WORKERID.Value</Value>
@@ -670,15 +670,6 @@
       <DataType>DateTime</DataType>
       <Prompt>P_ENDDATE</Prompt>
     </ReportParameter>
-    <ReportParameter Name="P_WORKERVIEWLEVEL">
-      <DataType>Integer</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>1</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>P_WORKERVIEWLEVEL</Prompt>
-    </ReportParameter>
     <ReportParameter Name="P_EZOR">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
@@ -706,6 +697,16 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>P_MAMAD</Prompt>
     </ReportParameter>
+    <ReportParameter Name="P_ISUK">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_ISUK</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_WORKERVIEWLEVEL">
+      <DataType>Integer</DataType>
+      <Prompt>P_WORKERVIEWLEVEL</Prompt>
+    </ReportParameter>
     <ReportParameter Name="P_WORKERID">
       <DataType>Integer</DataType>
       <DefaultValue>
@@ -714,12 +715,6 @@
         </Values>
       </DefaultValue>
       <Prompt>P_WORKERID</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_ISUK">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>P_ISUK</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>

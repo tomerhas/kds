@@ -1099,14 +1099,15 @@
           <QueryParameter Name="P_ENDDATE">
             <Value>=Parameters!P_ENDDATE.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="P_WORKERVIEWLEVEL">
-            <Value>=Parameters!P_WORKERVIEWLEVEL.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="P_EZOR">
             <Value>=Parameters!P_EZOR.Value</Value>
           </QueryParameter>
           <QueryParameter Name="P_SNIF">
             <Value>=Parameters!P_SNIF.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_WORKERVIEWLEVEL">
+            <Value>=Parameters!P_WORKERVIEWLEVEL.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="P_WORKERID">
             <Value>=Parameters!P_WORKERID.Value</Value>
@@ -1180,10 +1181,6 @@
       <DataType>DateTime</DataType>
       <Prompt>P ENDDATE</Prompt>
     </ReportParameter>
-    <ReportParameter Name="P_WORKERVIEWLEVEL">
-      <DataType>String</DataType>
-      <Prompt>P WORKERVIEWLEVEL</Prompt>
-    </ReportParameter>
     <ReportParameter Name="P_EZOR">
       <DataType>String</DataType>
       <Prompt>P EZOR</Prompt>
@@ -1193,6 +1190,10 @@
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
       <Prompt>P SNIF</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_WORKERVIEWLEVEL">
+      <DataType>Integer</DataType>
+      <Prompt>P_WORKERVIEWLEVEL</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_WORKERID">
       <DataType>String</DataType>
