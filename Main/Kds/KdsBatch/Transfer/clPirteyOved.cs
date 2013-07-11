@@ -57,7 +57,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(iBakashaId, int.Parse(_drPirteyOved["mispar_ishi"].ToString()), "E", 0, null, "PirteyOved ctor: " + ex.Message);
+                clLogBakashot.SetError(iBakashaId, int.Parse(drPirteyOved["mispar_ishi"].ToString()), "E", 0, null, "PirteyOved ctor: " + ex.Message);
                 throw (ex);
             }
         }
