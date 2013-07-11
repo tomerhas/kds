@@ -580,8 +580,8 @@
             <Value>=Parameters!P_WORKERID.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
-          <QueryParameter Name="P_WORKERVIEWLEVEL">
-            <Value>=Parameters!P_WORKERVIEWLEVEL.Value</Value>
+          <QueryParameter Name="P_WorkerViewLevel">
+            <Value>=Parameters!P_WorkerViewLevel.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
@@ -622,16 +622,6 @@
         </Values>
       </DefaultValue>
       <Prompt>P_ENDDATE</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_WORKERVIEWLEVEL">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>1</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>P_WORKERVIEWLEVEL</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_MISPAR_ISHI">
       <DataType>String</DataType>
@@ -693,6 +683,10 @@
         </Values>
       </DefaultValue>
       <Prompt>P_WORKERID</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_WorkerViewLevel">
+      <DataType>Integer</DataType>
+      <Prompt>P_WorkerViewLevel</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
