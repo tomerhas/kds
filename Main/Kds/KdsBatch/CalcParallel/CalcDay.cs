@@ -181,6 +181,10 @@ namespace KdsBatch
                 //יום מחלת ילד (רכיב 71) :
                 CalcRechiv71();
 
+                //מחלת ילד חד הורי   (רכיב 280) : 
+                CalcRechiv280();
+
+
                 // מכסת שעות נוספות תפקיד חול (רכיב 143
                 CalcRechiv143();
 
@@ -3235,13 +3239,13 @@ namespace KdsBatch
                              if (rowSidur.Length == 0)
                              {
                                  // int.TryParse(objOved.objMatzavOved.sKod_Matzav,ref matzav);
-                                 if ((objOved.bMeafyen85YomMeyuchad &&  objOved.objMeafyeneyOved.iMeafyen85 == 1) ||
-                                       objOved.Taarich < objOved.dtaarichHakpaa)
+                                 if (objOved.bMeafyen85YomMeyuchad ||
+                                     (objOved.objMatzavOved.sKod_Matzav == "10" && objOved.Taarich.Month == objOved.oGeneralData._dTaarichHefreshim.Month && objOved.Taarich.Year == objOved.oGeneralData._dTaarichHefreshim.Year))
                                      flag = true;
 
                                  if (!flag && objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
                                  {
-                                     if (fErechRechiv == 1 && objOved.objMatzavOved.iKod_Headrut == 0 && objOved.Taarich < objOved.oGeneralData._dTaarichHefreshim)
+                                     if (fErechRechiv == 1 && objOved.objMatzavOved.iKod_Headrut == 0 )
                                      {
                                          fErechRechiv = 0;
                                          addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), 1);
@@ -3339,6 +3343,23 @@ namespace KdsBatch
             }
         }
 
+
+        private void CalcRechiv280()
+        {
+            float fErechRechiv;
+
+            try
+            {
+                fErechRechiv = CalcHeadruyot(clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode(), fErechRechiv);
+
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
         private void CalcRechiv72()
         {
             float fErechRechiv;

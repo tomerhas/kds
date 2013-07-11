@@ -777,6 +777,8 @@ namespace KdsBatch
                 //יום תאונה  (רכיב 64) : 
                 CalcRechiv64();
 
+                //מחלת ילד חד הורי   (רכיב 280) : 
+                CalcRechiv280();
                 //יום שמירת הריון בת-זוג  (רכיב 65):
                 CalcRechiv65();
 
@@ -2461,6 +2463,22 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomTeuna.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                throw (ex);
+            }
+        }
+
+
+        private void CalcRechiv280()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }

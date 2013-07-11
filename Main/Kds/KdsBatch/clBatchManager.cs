@@ -2515,7 +2515,7 @@ namespace KdsBatch
             {
                 //בדיקה ברמת יום עבודה
 
-                if (!IsOvedInMatzav("1,3,4,5,6,7,8"))
+                if (!IsOvedInMatzav("1,3,4,5,6,7,8,10"))
                 {
                     drNew = dtErrors.NewRow();
                     drNew["mispar_ishi"] = iMisparIshi;
