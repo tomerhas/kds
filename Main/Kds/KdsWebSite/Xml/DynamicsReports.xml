@@ -291,6 +291,14 @@
 
   <Report  RdlName="Average" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ממוצעים לעובד" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy">
 
+    <Filter ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
+      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
+      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
+        <ParameterOfFunction Type="ByValue" Value="DescriptionAllComponents" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
+        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
+      </DropDownList>
+    </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String"  >
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
         <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
@@ -299,7 +307,15 @@
       </DropDownList>
       <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
     </Filter>
-    <Filter ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
+    <!--<Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String"  >
+      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
+        <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
+        <ParameterOfFunction Type="ByValue" Value="הכל" DataType="System.String" />
+      </DropDownList>
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
+    </Filter>
+    <Filter ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />-->
 
     <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
       <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdimForPresence" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
