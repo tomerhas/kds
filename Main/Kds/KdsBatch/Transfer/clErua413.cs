@@ -72,7 +72,7 @@ namespace KdsBatch
 
               if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               {
-                  CreateData413("303", clGeneral.enRechivim.PremiaMachsenaim.GetHashCode(), "erech_rechiv_a", 7, 2);
+                  CreatePremiyaData413("303", clGeneral.enRechivim.PremiaMachsenaim.GetHashCode(), 7, 2);
                   CreateData413("310", clGeneral.enRechivim.PremiaLariushum.GetHashCode(),"erech_rechiv", 7, 2);
                   //CreateData413("311", clGeneral.enRechivim.DakotPremiaYomit.GetHashCode() +
                   //               ',' + clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode(),"erech_rechiv", 7, 2);
@@ -83,7 +83,7 @@ namespace KdsBatch
                 //  CreateData413("315", clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "erech_rechiv_a", 7, 2);
                 //  CreateData413("316", clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a", 7, 2);
                 //  CreateData413("317", clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a", 7, 2);
-                  CreateData413("321", clGeneral.enRechivim.PremiaManasim.GetHashCode(), "erech_rechiv_a", 7, 2);
+                  CreatePremiyaData413("321", clGeneral.enRechivim.PremiaManasim.GetHashCode(), 7, 2);
                   //CreateData413("330", clGeneral.enRechivim.PremiaGrira.GetHashCode(), "erech_rechiv_a", 7, 2);
                //   CreateData413("331", clGeneral.enRechivim.PremiaMeshek.GetHashCode(), "erech_rechiv_a", 7, 2);
                   CreateData413("339", clGeneral.enRechivim.PremiaMachsanKatisim.GetHashCode(),"erech_rechiv", 7, 2);
@@ -159,14 +159,14 @@ namespace KdsBatch
           float fErech=0;
           try
           {
-              if ((iKodRechiv == clGeneral.enRechivim.PremiaMachsenaim.GetHashCode() || iKodRechiv == clGeneral.enRechivim.PremiaManasim.GetHashCode()) && _iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
-              {
-                 fErech = GetErechRechivPremiyaFriends(iKodRechiv);
-              }
-              else
-              {
+              //if ((iKodRechiv == clGeneral.enRechivim.PremiaMachsenaim.GetHashCode() || iKodRechiv == clGeneral.enRechivim.PremiaManasim.GetHashCode()) && _iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+              //{
+              //   fErech = GetErechRechivPremiyaFriends(iKodRechiv);
+              //}
+              //else
+              //{
                   fErech = GetErechRechiv(iKodRechiv, col);
-              }
+              //}
 
               if (sSaifHilan == "223")
               { fErech = fErech / 60; }
@@ -179,7 +179,7 @@ namespace KdsBatch
           }
           catch (Exception ex)
           {
-              WriteError("CreateData413: " + ex.Message);
+              WriteError("CreateData413: " + ex.Message); 
              // throw ex;
           }
       }

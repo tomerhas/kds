@@ -100,8 +100,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     ListBoxExtended CurrentControl = (ListBoxExtended)TdFilter.FindControl(Filter.ParameterName);
                     CurrentControl.AddAttributes();
                     if ((!Page.IsPostBack) && ((Report.NameReport == ReportName.Presence) ||
-                                               (Report.NameReport == ReportName.IshurimLerashemet) ||
-                                               (Report.NameReport == ReportName.Average)))
+                                               (Report.NameReport == ReportName.IshurimLerashemet) ))
                         CurrentControl.SetDefaultValue(LoginUser.UserInfo.EmployeeNumber.ToString());
                     if (CurrentControl.ListOfValues != "")
                     {

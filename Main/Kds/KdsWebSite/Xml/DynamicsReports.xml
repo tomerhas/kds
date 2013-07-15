@@ -51,7 +51,7 @@
       <DropDownList QueryType="StoredProcedure" Select="PKG_REPORTS.pro_get_Factors_Confirm" ValueField="mispar_ishi" TextField="FullName" />
     </Filter>
   </Report>
-  <Report  RdlName="FindWorkerCard" Roles="kds_administrators" FilterByLine="5" PageHeader="איתור כרטיס עבודה" Orientation="Landscape" ProductionType="Heavy">
+  <Report  RdlName="FindWorkerCard" Roles="kds_administrators" FilterByLine="5" PageHeader="איתורים" Orientation="Landscape" ProductionType="Heavy">
     <Filter ClassName="כללי" ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" RunAtServer="true" Required="true">
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidFindMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
@@ -102,7 +102,7 @@
       </Filter>
     
   </Report>
-  <Report  RdlName="DriverWithoutTacograph" Roles="kds_administrators" FilterByLine="3" PageHeader="נהגים ללא טכוגרף" ProductionType="Heavy">
+  <Report  RdlName="DriverWithoutTacograph" Roles="kds_administrators" FilterByLine="3" PageHeader="נהגים שלא צרפו טכוגרף" ProductionType="Heavy">
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
@@ -528,7 +528,7 @@
 
   </Report>-->
 
-  <Report  RdlName="HityazvutBePundakimHitchashbenut" Roles="kds_administrators" FilterByLine="2" PageHeader="התייצבות בפונדקים - התחשבנות" ProductionType="Heavy">
+  <Report  RdlName="HityazvutBePundakimHitchashbenut" Roles="kds_administrators" FilterByLine="2" PageHeader="פונדקים-התחשבנות (סך התייצבויות) למחלקת לקוחות" ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  RunAtServer="true"  Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
       <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
@@ -541,7 +541,7 @@
     </Filter>
   </Report>
 
-  <Report  RdlName="HityazvutBePundakimTlunot" Roles="kds_administrators" FilterByLine="3" PageHeader="התייצבות בפונדקים - תלונות" ProductionType="Heavy">
+  <Report  RdlName="HityazvutBePundakimTlunot" Roles="kds_administrators" FilterByLine="3" PageHeader="פונדקים-תלונות אי התייצבות נהגים" ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  RunAtServer="true" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="יש להזין תאריך מ קטן מתאריך עד" ValidationFunction="ValidateTvachChodashim"/>
@@ -557,7 +557,7 @@
       <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdim" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
     </Filter>
   </Report>
-  <Report  RdlName="HityazvutBePundakimKalkalit" Roles="kds_administrators" FilterByLine="3" PageHeader="התייצבות בפונדקים - כלכלית" ProductionType="Heavy">
+  <Report  RdlName="HityazvutBePundakimKalkalit" Roles="kds_administrators" FilterByLine="3" PageHeader="פונדקים-סך נסיעות והתייצבות למחלקה כלכלית" ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime"  RunAtServer="true" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="יש להזין תאריך מ קטן מתאריך עד" ValidationFunction="ValidateTvachChodashim"/>

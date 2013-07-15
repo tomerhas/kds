@@ -14230,6 +14230,7 @@ namespace KdsBatch
             bool bSidurMisugShaonim = false;
             int iSidurZakaiLehalbashaKnisa = -1;
             int iSidurZakaiLehalbashaYetzia = -1;
+            int iMutamut;
             bool bSidurLoZakaiLHalbash = false;
             DataRow[] drSugSidur;
             clSidur oSidur;
@@ -14366,10 +14367,15 @@ namespace KdsBatch
                                 else
                                 {
                                     //3. עובד אשר ענה על תנאי זכאות (אחד מהערכים 1-3), אולם הוא מותאם ליום קצר (יודעים שעובד הוא מותאם ליום עבודה קצר לפי שני פרמטרים – העובד מותאם (לפי קיום ערך בפרמטר 8 (קוד עובד מותאם) בטבלת פרטי עובדים ולפי קיום ערך בפרמטר 20 (זמן מותאמות) בטבלת פרטי עובדים) וזמן המותאמות שלו (לפי ערך בפרמטר 20 (זמן מותאמות) בטבלת פרטי עובדים קטן מהערך בפרמטר 0167 (כרגע 300).
-                                    if ((!CheckIdkunRashemet("HALBASHA")) && (oOvedYomAvodaDetails.bMutamutExists) && (oOvedYomAvodaDetails.iZmanMutamut < oParam.iMinDakotLemutamLeHalbasha) && (oOvedYomAvodaDetails.iZmanMutamut > 0))
+                                    if ((!CheckIdkunRashemet("HALBASHA")) && (oOvedYomAvodaDetails.bMutamutExists) && (oOvedYomAvodaDetails.iZmanMutamut < oParam.iMinDakotLemutamLeHalbasha) &&
+                                        (oOvedYomAvodaDetails.iZmanMutamut > 0))
                                     {
-                                        oObjYameyAvodaUpd.HALBASHA = ZmanHalbashaType.LoZakai.GetHashCode();
-                                        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                                        iMutamut = int.Parse(oOvedYomAvodaDetails.sMutamut);
+                                        if ((iMutamut == 1 || iMutamut == 5 || iMutamut == 7))
+                                        {
+                                            oObjYameyAvodaUpd.HALBASHA = ZmanHalbashaType.LoZakai.GetHashCode();
+                                            oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                                        }
                                     }
                                 }
 
