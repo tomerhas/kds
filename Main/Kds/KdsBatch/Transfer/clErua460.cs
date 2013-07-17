@@ -45,11 +45,6 @@ namespace KdsBatch
               }
               else sErua460.Append(GetBlank(4));
 
-              if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
-                  sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode()), 4, 2));
-              else sErua460.Append(GetBlank(4));
-             
-
               if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
               {
                   fErech = GetErechRechiv(clGeneral.enRechivim.YomMiluim.GetHashCode());

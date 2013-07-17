@@ -14282,12 +14282,24 @@ namespace KdsBatch
                                 }
                                 else if (oSidur.iLoLetashlum == 0 && bSidurMisugShaonim && oSidur.sHalbashKod == "1")
                                 {
-                                    bKnisaValid = IsKnisaValid( oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
-                                    if (bKnisaValid && iSidurZakaiLehalbashaKnisa == -1) 
+                                    if (iSidurZakaiLehalbashaKnisa == -1)
                                         iSidurZakaiLehalbashaKnisa = i;
-                                    bYetizaValid = IsYetizaValid( oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
-                                    if (bYetizaValid)
-                                        iSidurZakaiLehalbashaYetzia = i;
+                                    iSidurZakaiLehalbashaYetzia = i;
+
+                                    if (iSidurZakaiLehalbashaKnisa > -1 && iSidurZakaiLehalbashaKnisa == i)
+                                    {
+                                        bKnisaValid = IsKnisaValid(oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
+                                        if (!bKnisaValid)
+                                            iSidurZakaiLehalbashaKnisa = -1;
+                                        //if (bKnisaValid && iSidurZakaiLehalbashaKnisa == -1)
+                                        //    iSidurZakaiLehalbashaKnisa = i;
+                                    }
+                                    if (iSidurZakaiLehalbashaYetzia > -1 && iSidurZakaiLehalbashaYetzia == i)
+                                    {
+                                        bYetizaValid = IsYetizaValid(oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
+                                        if (!bYetizaValid)
+                                            iSidurZakaiLehalbashaYetzia = -1;
+                                    }
                                 }
                                 else if (!bSidurLoZakaiLHalbash)
                                 { bSidurLoZakaiLHalbash = IsNotSidurHalbasha(oSidur); }
