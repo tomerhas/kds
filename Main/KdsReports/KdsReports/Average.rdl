@@ -524,12 +524,12 @@
   </Body>
   <Width>6.27328in</Width>
   <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>0cm</LeftMargin>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
+    <LeftMargin>0.5cm</LeftMargin>
     <RightMargin>0cm</RightMargin>
     <TopMargin>0cm</TopMargin>
-    <BottomMargin>0.5cm</BottomMargin>
+    <BottomMargin>0cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
@@ -547,7 +547,7 @@
         <DataSourceName>DsConnection</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="P_STARTDATE">
-            <Value>=DateAdd("m",-6,Parameters!P_ENDDATE.Value)</Value>
+            <Value>=Parameters!P_STARTDATE.Value</Value>
           </QueryParameter>
           <QueryParameter Name="P_ENDDATE">
             <Value>=Parameters!P_ENDDATE.Value</Value>
@@ -580,8 +580,8 @@
             <Value>=Parameters!P_WORKERID.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
-          <QueryParameter Name="P_WorkerViewLevel">
-            <Value>=Parameters!P_WorkerViewLevel.Value</Value>
+          <QueryParameter Name="P_WORKERVIEWLEVEL">
+            <Value>=Parameters!P_WORKERVIEWLEVEL.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
@@ -614,6 +614,10 @@
     </DataSet>
   </DataSets>
   <ReportParameters>
+    <ReportParameter Name="P_STARTDATE">
+      <DataType>DateTime</DataType>
+      <Prompt>P_STARTDATE</Prompt>
+    </ReportParameter>
     <ReportParameter Name="P_ENDDATE">
       <DataType>DateTime</DataType>
       <DefaultValue>
@@ -684,9 +688,9 @@
       </DefaultValue>
       <Prompt>P_WORKERID</Prompt>
     </ReportParameter>
-    <ReportParameter Name="P_WorkerViewLevel">
+    <ReportParameter Name="P_WORKERVIEWLEVEL">
       <DataType>Integer</DataType>
-      <Prompt>P_WorkerViewLevel</Prompt>
+      <Prompt>P_WORKERVIEWLEVEL</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
