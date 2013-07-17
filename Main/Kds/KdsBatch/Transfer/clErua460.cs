@@ -33,13 +33,16 @@ namespace KdsBatch
               //    sErua460.Append(FormatNumber(GetErechRechivPremiyaFriends(clGeneral.enRechivim.PremiaGrira.GetHashCode()), 4, 0));
               //}
               //else 
-              if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+              if (_iMaamadRashi != clGeneral.enMaamad.Friends.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
               {
                   sErua460.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaGrira.GetHashCode(), _dtPrem), 4, 0));
               }
               else sErua460.Append(GetBlank(4));
 
-              sErua460.Append(GetBlank(4));
+              if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+                  sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode()), 4, 2));
+              else sErua460.Append(GetBlank(4));
+             
 
               if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
               {

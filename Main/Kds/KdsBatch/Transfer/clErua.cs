@@ -375,7 +375,7 @@ namespace KdsBatch
         {
             int iLastDigit;
             string sErua="";
-            if (bKayamEfreshBErua || (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode() && _iKodErua != 413 && _iKodErua != 462) )
+            if (bKayamEfreshBErua) // || (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode() && _iKodErua != 413 && _iKodErua != 462) )
             {
                 iLastDigit = int.Parse(_sFooter.Substring(_sFooter.Trim().Length - 1, 1));
                 _sFooter = _sFooter.Substring(0, _sFooter.Trim().Length - 1) + GetSimanEfresh(iLastDigit) + _sFooter.Substring(_sFooter.Trim().Length, _sFooter.Length - _sFooter.Trim().Length);

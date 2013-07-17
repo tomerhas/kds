@@ -120,13 +120,13 @@ namespace KdsBatch
                     //אם X >= ממכסה יומית מחושבת (רכיב 126) אזי אין לפתוח רשומה לרכיב זה לסידור.
                     //אחרת, ערך הרכיב = הנמוך מבין (נוכחות מחושבת, מכסה יומית מחושבת (רכיב 126) פחות X)
                     _drSidurMeyuchad = null;
-                    _drSidurMeyuchad = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and sidur_misug_headrut is not null and sidur_misug_headrut<>3 AND MISPAR_SIDUR IN(" + sSidurim + ")", "taarich asc");
+                    _drSidurMeyuchad = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and sidur_misug_headrut is not null AND MISPAR_SIDUR IN(" + sSidurim + ")", "taarich asc");
 
                     for (int I = 0; I < _drSidurMeyuchad.Length; I++)
                     {
                         iMeafyen53= int.Parse(_drSidurMeyuchad[I]["sidur_misug_headrut"].ToString());
                         iMisparSidur = int.Parse(_drSidurMeyuchad[I]["mispar_sidur"].ToString());
-                        if ((iMeafyen53 == 2 && iMisparSidur != 99816) || iMeafyen53 == 4 || iMeafyen53 == 6)
+                        if ((iMeafyen53 == 2 && iMisparSidur != 99816) || iMeafyen53 == 4 || iMeafyen53 == 6 || (iMeafyen53 == 3 && iMisparSidur == 99832))
                         {
                             dShatHatchalaSidur = DateTime.Parse(_drSidurMeyuchad[I]["shat_hatchala_sidur"].ToString());
                           
@@ -134,7 +134,13 @@ namespace KdsBatch
                             if (fSumErechRechiv>0 && fSumErechRechiv < (fMichsaYomit + fZmanAruhatZharayim))
                             {
                                 fErechRechiv = CalcRechiv1BySidur(_drSidurMeyuchad[I], fMichsaYomit, oPeilut);
-                                fErechRechiv = Math.Min(fErechRechiv, (fMichsaYomit + fZmanAruhatZharayim - fSumErechRechiv));
+                                if (iMisparSidur == 99832)
+                                {
+                                    fErechRechiv = Math.Min(fErechRechiv, (fMichsaYomit + fZmanAruhatZharayim - fSumErechRechiv));
+                                    fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit/2);
+                                }
+                                else
+                                    fErechRechiv = Math.Min(fErechRechiv, (fMichsaYomit + fZmanAruhatZharayim - fSumErechRechiv));
                                 fSumErechRechiv += fErechRechiv;
                                 addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErechRechiv);
                             }
