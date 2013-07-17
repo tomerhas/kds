@@ -1187,7 +1187,10 @@
               <Width>0.9cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.43154cm</Width>
+              <Width>1.3cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.48952cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.4811cm</Width>
@@ -1272,9 +1275,10 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>20</ColSpan>
+                    <ColSpan>21</ColSpan>
                   </CellContents>
                 </TablixCell>
+                <TablixCell />
                 <TablixCell />
                 <TablixCell />
                 <TablixCell />
@@ -1423,6 +1427,40 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox297</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox8">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>מחלת ילד לחד-הורי</Value>
+                              <Style>
+                                <FontSize>7pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox8</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1761,20 +1799,6 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>ימי </Value>
-                              <Style>
-                                <FontSize>7pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
                               <Value>מחלה</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
@@ -1809,7 +1833,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>יום </Value>
+                              <Value>מחלה</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1823,7 +1847,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>מחלה</Value>
+                              <Value>ללא אישור</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1857,7 +1881,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>ימי מילואים</Value>
+                              <Value>מילואים</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1891,7 +1915,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>יום מילואים</Value>
+                              <Value>חצי יום מילואים</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -2145,6 +2169,39 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox298</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox9">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=iif(Round(Fields!R280.Value,2)&gt;0,Round(Fields!R280.Value,2),"")</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox9</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -2714,6 +2771,11 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
             </TablixMember>
             <TablixMember>
               <Visibility>
+                <Hidden>=iif(Fields!R280.Value &lt;&gt; Nothing, False, True)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
                 <Hidden>=iif(Fields!R65.Value &lt;&gt; Nothing, False, True)</Hidden>
               </Visibility>
             </TablixMember>
@@ -2781,9 +2843,9 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsHeadruyot</DataSetName>
         <Top>5.89053cm</Top>
-        <Left>10.06655cm</Left>
+        <Left>8.38116cm</Left>
         <Height>1.24282cm</Height>
-        <Width>18.94294cm</Width>
+        <Width>20.30092cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -10806,10 +10868,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>5.44134in</Height>
+    <Height>5.12358in</Height>
     <Style />
   </Body>
-  <Width>11.4651in</Width>
+  <Width>11.29216in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -11331,6 +11393,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Field>
         <Field Name="R266">
           <DataField>R266</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R280">
+          <DataField>R280</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
