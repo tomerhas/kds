@@ -14278,7 +14278,7 @@ namespace KdsBatch
                                 {
                                     if (iSidurZakaiLehalbashaKnisa == -1)
                                         iSidurZakaiLehalbashaKnisa = i;
-                                    iSidurZakaiLehalbashaKnisa = i;
+                                    iSidurZakaiLehalbashaYetzia = i;
                                 }
                                 else if (oSidur.iLoLetashlum == 0 && bSidurMisugShaonim && oSidur.sHalbashKod == "1")
                                 {
