@@ -13870,7 +13870,7 @@ namespace KdsBatch
                                            DateTime dCardDate)
         {
             int iZmanNesia = 0;
-            bool bSidurZakaiLnesiot = false;
+            bool bSidurZakaiLnesiot = false, bSidurMezake = false; 
             DataRow[] drSugSidur;
             clSidur oSidur;
             bool bKnisaValid = false;
@@ -13988,12 +13988,20 @@ namespace KdsBatch
 
                              if (!bSidurZakaiLnesiot && sMefyen14 == "1" && oSidur.iLoLetashlum == 0)
                              {
-                                 if (iFirstMezake == -1) { iFirstMezake = i; }
+                                 if (!(bSidurMezake))
+                                 { 
+                                     iFirstMezake = i;
+                                     bSidurMezake = true;
+                                 }
                                  iLastMezake = i;
                              }
                              else if (bSidurZakaiLnesiot && sMefyen14 == "1")
                              {
-                                 if (iFirstMezake == -1) { iFirstMezake = i; }
+                                 if (!(bSidurMezake))
+                                 { 
+                                     iFirstMezake = i;
+                                     bSidurMezake = true;
+                                 }
                                  iLastMezake = i;
 
                                  if (iFirstMezake > -1 && iFirstMezake==i)
@@ -14226,7 +14234,7 @@ namespace KdsBatch
         {
             //float fDakotInTafkid = 0;
             // bool bStatusChishuv=false;
-            bool bSidurZakaiLHalbash = false;
+            bool bSidurZakaiLHalbash = false, bSidurMezake=false;
             bool bSidurMisugShaonim = false;
             int iSidurZakaiLehalbashaKnisa = -1;
             int iSidurZakaiLehalbashaYetzia = -1;
@@ -14276,14 +14284,21 @@ namespace KdsBatch
 
                                 if (oSidur.iLoLetashlum == 0 && !bSidurMisugShaonim && oSidur.sHalbashKod == "1")
                                 {
-                                    if (iSidurZakaiLehalbashaKnisa == -1)
+                                    if (!(bSidurMezake))
+                                    {
                                         iSidurZakaiLehalbashaKnisa = i;
+                                        bSidurMezake = true;
+                                    }
+                                   
                                     iSidurZakaiLehalbashaYetzia = i;
                                 }
                                 else if (oSidur.iLoLetashlum == 0 && bSidurMisugShaonim && oSidur.sHalbashKod == "1")
                                 {
-                                    if (iSidurZakaiLehalbashaKnisa == -1)
+                                    if (!(bSidurMezake))
+                                    {
                                         iSidurZakaiLehalbashaKnisa = i;
+                                        bSidurMezake = true;
+                                    }
                                     iSidurZakaiLehalbashaYetzia = i;
 
                                     if (iSidurZakaiLehalbashaKnisa > -1 && iSidurZakaiLehalbashaKnisa == i)
