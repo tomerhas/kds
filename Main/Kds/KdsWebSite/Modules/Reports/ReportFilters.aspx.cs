@@ -183,6 +183,13 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     break;
                 case ReportName.KamutIdkuneyRashemet:
                     MisRashemet.ContextKey = "6,0133," + DateTime.Now;
+                    dtMisRashemet = oUtils.getMispareiRashamot(6, "0133", DateTime.Now, "");
+                    if (dtMisRashemet.Rows.Count > 0)
+                    {
+                        MisRashamot.Value = ",";
+                        for (int i = 0; i < dtMisRashemet.Rows.Count; i++)
+                            MisRashamot.Value = MisRashamot.Value + dtMisRashemet.Rows[i]["MISPAR_ISHI"].ToString() + ",";
+                    }
                     //if (!Page.IsPostBack)
                     //    CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
                    // SetTezuga(ReportName.KamutIdkuneyRashemet);
