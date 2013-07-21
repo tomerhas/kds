@@ -1085,7 +1085,7 @@
         <DataSetName>DsIdkuneyRashemet</DataSetName>
         <Top>3.72745cm</Top>
         <Height>1.8cm</Height>
-        <Width>27.40771cm</Width>
+        <Width>27.40772cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1096,7 +1096,7 @@
         <ReportName>GeneralHeader</ReportName>
         <Parameters>
           <Parameter Name="P_Title">
-            <Value>= iif(Parameters!P_TEZUGA.Value=1, "מספר כרטיסים שעודכנו ע''י רשמת לתקופה ","מספר כרטיסים שעודכנו לסניף לתקופה ") &amp; Parameters!P_STARTDATE.Value &amp; " עד " &amp;Parameters!P_ENDDATE.Value &amp;" "&amp; iif(Parameters!P_TEZUGA.Value=1, "בחלוקה לפי רשמת","בחלוקה לפי סניפים")</Value>
+            <Value>= iif(Parameters!P_TEZUGA.Value=1, "מספר כרטיסים שעודכנו ע''י רשמת לתקופה ","מספר כרטיסים שעודכנו לסניף לתקופה ") &amp; formatdatetime(cdate(Parameters!P_STARTDATE.Value),2) &amp; " עד " &amp;formatdatetime(cdate(Parameters!P_ENDDATE.Value),2) &amp;" "&amp; iif(Parameters!P_TEZUGA.Value=1, "בחלוקה לפי רשמת","בחלוקה לפי סניפים")</Value>
           </Parameter>
         </Parameters>
         <Top>0.51208cm</Top>
