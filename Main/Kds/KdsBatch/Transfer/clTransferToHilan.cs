@@ -1563,6 +1563,10 @@ namespace KdsBatch
                
                 throw ex;
             }
+            finally
+            {
+                oDal = null;
+            }
         }
 
         private DataTable GetRechivimYomiim(long lBakashaId)
@@ -1584,6 +1588,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(_lBakashaId, 0, "E", 0, null, "GetRechivimYomiim: " + ex.Message);
                 throw ex;
+            }
+            finally
+            {
+                oDal = null;
             }
         }
 
