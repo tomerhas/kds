@@ -1220,7 +1220,7 @@
               <Width>0.95166cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95166cm</Width>
+              <Width>1.18979cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.00457cm</Width>
@@ -2843,9 +2843,9 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsHeadruyot</DataSetName>
         <Top>5.89053cm</Top>
-        <Left>8.38116cm</Left>
+        <Left>10.26067cm</Left>
         <Height>1.24282cm</Height>
-        <Width>20.30092cm</Width>
+        <Width>20.53905cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -10871,7 +10871,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
     <Height>5.12358in</Height>
     <Style />
   </Body>
-  <Width>11.29216in</Width>
+  <Width>12.12587in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

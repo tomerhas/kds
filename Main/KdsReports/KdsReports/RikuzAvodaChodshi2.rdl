@@ -3178,7 +3178,7 @@
               <Width>0.95166cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95166cm</Width>
+              <Width>1.21624cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.00457cm</Width>
@@ -4801,9 +4801,9 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsHeadruyot</DataSetName>
         <Top>5.92859cm</Top>
-        <Left>8.78466cm</Left>
+        <Left>10.29045cm</Left>
         <Height>1.24282cm</Height>
-        <Width>20.14294cm</Width>
+        <Width>20.40752cm</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -10347,7 +10347,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsKizuz</DataSetName>
         <Top>3.67872in</Top>
-        <Left>3.83154in</Left>
+        <Left>3.58459in</Left>
         <Height>0.47013in</Height>
         <Width>4.38998in</Width>
         <ZIndex>11</ZIndex>
@@ -10726,7 +10726,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsPirteyOved</DataSetName>
         <Top>3.0072in</Top>
-        <Left>3.81286in</Left>
+        <Left>4.58318in</Left>
         <Height>0.47013in</Height>
         <Width>4.40866in</Width>
         <ZIndex>12</ZIndex>
@@ -10860,8 +10860,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>11.53917cm</Top>
-        <Left>3.23592cm</Left>
+        <Top>11.08938cm</Top>
+        <Left>4.83116cm</Left>
         <Height>1.52604cm</Height>
         <Width>15.42424cm</Width>
         <ZIndex>15</ZIndex>
@@ -10879,14 +10879,14 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>5.20881in</Height>
+    <Height>5.19587in</Height>
     <Style>
       <Border>
         <Style>None</Style>
       </Border>
     </Style>
   </Body>
-  <Width>11.4075in</Width>
+  <Width>12.12205in</Width>
   <Page>
     <PageHeight>13in</PageHeight>
     <PageWidth>9in</PageWidth>
