@@ -22,10 +22,6 @@
       <FullPath>AbsentWorkers.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Average.rdl</Name>
-      <FullPath>Average.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>AverageOvdimBeSnif.rdl</Name>
       <FullPath>AverageOvdimBeSnif.rdl</FullPath>
     </ProjectItem>
