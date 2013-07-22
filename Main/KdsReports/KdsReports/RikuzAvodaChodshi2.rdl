@@ -2575,7 +2575,8 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R112.Value, "dsRechiveyPremyot"),Fields!R112.Value)</Value>
+                              <Value>=First(Fields!R112.Value, "dsRechiveyPremyot")
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R112.Value, "dsRechiveyPremyot"),Fields!R112.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -2609,7 +2610,8 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R115.Value, "dsRechiveyPremyot"),Fields!R115.Value)</Value>
+                              <Value>=First(Fields!R115.Value, "dsRechiveyPremyot")
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R115.Value, "dsRechiveyPremyot"),Fields!R115.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -2643,7 +2645,8 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R113.Value, "dsRechiveyPremyot"),Fields!R113.Value)</Value>
+                              <Value>=First(Fields!R113.Value, "dsRechiveyPremyot")
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R113.Value, "dsRechiveyPremyot"),Fields!R113.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -2711,7 +2714,8 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R114.Value, "dsRechiveyPremyot"),Fields!R114.Value)</Value>
+                              <Value>=First(Fields!R114.Value, "dsRechiveyPremyot")
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R114.Value, "dsRechiveyPremyot"),Fields!R114.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -2745,7 +2749,8 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R118.Value, "dsRechiveyPremyot"),Fields!R118.Value)</Value>
+                              <Value>=First(Fields!R118.Value, "dsRechiveyPremyot")
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R118.Value, "dsRechiveyPremyot"),Fields!R118.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -2779,7 +2784,8 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R117.Value, "dsRechiveyPremyot"),Fields!R117.Value)</Value>
+                              <Value>=First(Fields!R117.Value, "dsRechiveyPremyot")
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R117.Value, "dsRechiveyPremyot"),Fields!R117.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -2814,7 +2820,8 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R116.Value, "dsRechiveyPremyot"),Fields!R116.Value)</Value>
+                              <Value>=First(Fields!R116.Value, "dsRechiveyPremyot")
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R116.Value, "dsRechiveyPremyot"),Fields!R116.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -3119,7 +3126,7 @@
         <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>dsRechiveyShonot</DataSetName>
         <Top>5.91539cm</Top>
-        <Left>0.29147cm</Left>
+        <Left>0.33116cm</Left>
         <Height>1.24282cm</Height>
         <Width>23.30297cm</Width>
         <ZIndex>7</ZIndex>
@@ -10879,7 +10886,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>5.19587in</Height>
+    <Height>5.03586in</Height>
     <Style>
       <Border>
         <Style>None</Style>
