@@ -407,7 +407,7 @@
                           <ReportName>AverageRechivim</ReportName>
                           <Parameters>
                             <Parameter Name="P_START_DATE">
-                              <Value>=DateAdd("m",-6,Parameters!P_ENDDATE.Value)</Value>
+                              <Value>=Parameters!P_STARTDATE.Value</Value>
                             </Parameter>
                             <Parameter Name="P_END_DATE">
                               <Value>=Parameters!P_ENDDATE.Value</Value>
@@ -464,7 +464,7 @@
                           <Parameters>
                             <Parameter Name="P_Title">
                               <Value>= "פירוט תקופתי  לעובד" &amp; Chr(10) &amp; 
-" לחודש " &amp; DateAdd("m",-6,Parameters!P_ENDDATE.Value).ToShortDateString() &amp; " - " &amp; Parameters!P_ENDDATE.Value</Value>
+" לחודש " &amp; Parameters!P_STARTDATE.Value &amp; " - " &amp; Parameters!P_ENDDATE.Value</Value>
                             </Parameter>
                           </Parameters>
                           <Height>0.82175cm</Height>
@@ -620,35 +620,7 @@
     </ReportParameter>
     <ReportParameter Name="P_ENDDATE">
       <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>05/01/2013 00:00:00</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>P_ENDDATE</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_MISPAR_ISHI">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>201</Value>
-        </Values>
-      </DefaultValue>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>MISPAR_ISHI</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_EZOR">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>P EZOR</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_COMPANYID">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>P COMPANYID</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_SNIF">
       <DataType>String</DataType>
@@ -668,11 +640,34 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>P ISUK</Prompt>
     </ReportParameter>
+    <ReportParameter Name="P_EZOR">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P EZOR</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_COMPANYID">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P COMPANYID</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_MISPAR_ISHI">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>201</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>MISPAR_ISHI</Prompt>
+    </ReportParameter>
     <ReportParameter Name="P_KOD_YECHIDA">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
-      <Prompt>יחידה ארגונית</Prompt>
+      <Prompt>P_KOD_YECHIDA</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_SECTORISUK">
       <DataType>String</DataType>
