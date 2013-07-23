@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>20.17644cm</Width>
+              <Width>22.1356cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>6.26234cm</Height>
+              <Height>7.0262cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1732,11 +1732,84 @@
                                 </Border>
                               </Style>
                             </Rectangle>
+                            <Textbox Name="Textbox15">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>**במידה ומתחת למיקום שעון כניסה/יציאה מוצג "החתמה באתר לא מורשה" - לא יועבר לתשלום**</Value>
+                                      <Style>
+                                        <FontSize>9pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                        <TextDecoration>None</TextDecoration>
+                                        <Color>Red</Color>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox15</rd:DefaultName>
+                              <Top>3.90786cm</Top>
+                              <Left>7.02455cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>12.52878cm</Width>
+                              <ZIndex>2</ZIndex>
+                              <Visibility>
+                                <Hidden>=iif(ReportItems!Textbox16.Value&gt;0 ,false ,true)</Hidden>
+                              </Visibility>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox16">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Sum(iif(Fields!KNISA_TKINA_ERR197.Value="false",1,0))+ Sum(iif(Fields!YATZIA_TKINA_ERR198.Value="false",1,0))</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox16</rd:DefaultName>
+                              <Top>4.01369cm</Top>
+                              <Left>4.21233cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>2.5cm</Width>
+                              <ZIndex>3</ZIndex>
+                              <Visibility>
+                                <Hidden>true</Hidden>
+                              </Visibility>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
                           </ReportItems>
                           <Top>2.02751cm</Top>
                           <Left>0.08227cm</Left>
-                          <Height>4.07542cm</Height>
-                          <Width>20.09417cm</Width>
+                          <Height>4.99869cm</Height>
+                          <Width>22.05333cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1844,8 +1917,8 @@
         </TablixRowHierarchy>
         <DataSetName>DsPresence</DataSetName>
         <Left>0.20014cm</Left>
-        <Height>6.26234cm</Height>
-        <Width>20.17644cm</Width>
+        <Height>7.0262cm</Height>
+        <Width>22.1356cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1856,10 +1929,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.60091in</Height>
+    <Height>2.76622in</Height>
     <Style />
   </Body>
-  <Width>8.02969in</Width>
+  <Width>8.7936in</Width>
   <Page>
     <PageFooter>
       <Height>0.84667cm</Height>
