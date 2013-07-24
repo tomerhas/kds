@@ -1512,7 +1512,6 @@
                       <Direction>RTL</Direction>
                     </Style>
                   </Textbox>
-                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <TablixMembers>
@@ -1732,7 +1731,7 @@
         </Parameters>
         <Top>0.51208cm</Top>
         <Height>2.5cm</Height>
-        <Width>27.40771cm</Width>
+        <Width>32.40772cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -1744,7 +1743,7 @@
     <Height>2.50949in</Height>
     <Style />
   </Body>
-  <Width>13.7432in</Width>
+  <Width>12.81611in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
