@@ -1642,7 +1642,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Sum(Fields!TICKETS.Value)/First(Fields!RECHIV_109.Value, "DsIdkuneyRashemet")</Value>
+                                <Value>=FormatNumber(Sum(Fields!TICKETS.Value)/First(Fields!RECHIV_109.Value, "DsIdkuneyRashemet"),1)</Value>
                                 <Style />
                               </TextRun>
                             </TextRuns>
@@ -1715,7 +1715,7 @@
         <DataSetName>DsIdkuneyRashemet</DataSetName>
         <Top>3.72745cm</Top>
         <Height>2.4cm</Height>
-        <Width>32.40772cm</Width>
+        <Width>32.40771cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
