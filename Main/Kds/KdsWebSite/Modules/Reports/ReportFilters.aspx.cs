@@ -174,7 +174,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     SnifLabel.Style.Add("Display", "none");
                     if (_sProfilUser == "0")
                         MisparIshi.Attributes.Add("Disabled", "Disabled");
-                    else
+                    else if(_sProfilUser == "1")
                     {
                         Snif.Style.Add("Display", "inline");
                         SnifLabel.Style.Add("Display", "inline");
