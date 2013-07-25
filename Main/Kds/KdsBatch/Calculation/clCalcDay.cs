@@ -2169,7 +2169,7 @@ namespace KdsBatch
 
             try
             {
-                if (_oGeneralData.objPirteyOved.iKodMaamdMishni!=clGeneral.enKodMaamad.Shtachim.GetHashCode())
+                if (_oGeneralData.objPirteyOved.iKodMaamdMishni!=clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode())
                 {
                 fErechRechiv = CalcHeadruyot(clGeneral.enRechivim.YomEvel.GetHashCode());
                 addRowToTable(clGeneral.enRechivim.YomEvel.GetHashCode(), fErechRechiv);

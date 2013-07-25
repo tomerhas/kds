@@ -172,9 +172,14 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     }
                     Snif.Style.Add("Display", "none");
                     SnifLabel.Style.Add("Display", "none");
-                    if (_sProfilUser =="0")
-                       MisparIshi.Attributes.Add("Disabled", "Disabled");
-                    //SetWorkerViewLevel(ReportName.Presence);
+                    if (_sProfilUser == "0")
+                        MisparIshi.Attributes.Add("Disabled", "Disabled");
+                    else
+                    {
+                        Snif.Style.Add("Display", "inline");
+                        SnifLabel.Style.Add("Display", "inline");
+                    }
+                    //f(ReportName.Presence);
                     break;
                 case ReportName.IshurimLerashemet:
                     if (!Page.IsPostBack)
@@ -696,9 +701,14 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get { return (Label)TdFilter.FindControl("LBL_P_MIS_RITZA_LEHASVAA"); }
     }
-    private ListBox Maamad
+    private DropDownList Maamad
     {
-        get { return (ListBox)TdFilter.FindControl("P_MAMAD"); }
+        get { return (DropDownList)TdFilter.FindControl("P_MAMAD"); }
+    }
+    
+    private ListBox MaamadHr
+    {
+        get { return (ListBox)TdFilter.FindControl("P_MAMAD_HR"); }
     }
     private ListBox Isuk
     {

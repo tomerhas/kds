@@ -50,7 +50,7 @@ namespace KdsBatch
 
                     sErua416.Append(FormatNumber(fErech, 4, 2));
                 }
-                else if (_iMaamad == clGeneral.enKodMaamad.Shtachim.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Aray.GetHashCode())
+                else if (_iMaamad == clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Aray.GetHashCode())
                 {
                     fErech = GetErechRechiv(clGeneral.enRechivim.YomHeadrut.GetHashCode());
                     fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaBoded.GetHashCode());
@@ -81,12 +81,12 @@ namespace KdsBatch
                 }
                 //סעיף 4
                 if ((_iMaamadRashi != clGeneral.enMaamad.Friends.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode() &&
-                      _iMaamad != clGeneral.enKodMaamad.OvedBechoze.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Aray.GetHashCode()) || 
+                      _iMaamad != clGeneral.enKodMaamad.OvedBechoze.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Aray.GetHashCode()) || 
                     (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode() && _dMonth >= dTakanonSoziali))
                 {
                     sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode()), 4, 2));
                 }
-                else if ((_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.OvedBechoze.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Shtachim.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Aray.GetHashCode() ) && _dMonth >= dTakanonSoziali)
+                else if ((_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.OvedBechoze.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Aray.GetHashCode()) && _dMonth >= dTakanonSoziali)
                     sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode()), 4, 2));
                 else sErua416.Append(GetBlank(4));
 

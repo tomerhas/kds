@@ -555,7 +555,8 @@ namespace KdsLibrary.Utils.Reports
         Tigburim,
         AverageSnifEzor,
         AverageSnifInEzor, 
-        AverageOvdimBeSnif
+        AverageOvdimBeSnif,
+        Keytanot
 
     }
     public enum Orientation

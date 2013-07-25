@@ -136,7 +136,7 @@ namespace KdsBatch
 
                   if (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode() && _dMonth < dTakanonSoziali)
                       CreateData413Seif435("435", "erech_rechiv", 7, 2);
-                  if ((_iMaamad == clGeneral.enKodMaamad.OvedBechoze.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Shtachim.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Aray.GetHashCode() ) && _dMonth < dTakanonSoziali)
+                  if ((_iMaamad == clGeneral.enKodMaamad.OvedBechoze.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Aray.GetHashCode()) && _dMonth < dTakanonSoziali)
                       CreateData413("438", clGeneral.enRechivim.YomChofesh.GetHashCode(), "erech_rechiv", 7, 2);
 
 

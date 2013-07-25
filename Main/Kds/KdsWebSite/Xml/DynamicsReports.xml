@@ -289,7 +289,7 @@
     </Filter>
   </Report>
 
-  <Report  RdlName="Average" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ממוצעים לעובד" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy">
+  <Report  RdlName="Average" Roles="kds_administrators" FilterByLine="4" PageHeader="דוח ממוצעים לעובד" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy">
 
     <Filter ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
@@ -324,14 +324,18 @@
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
-    <Filter ParameterName="P_COMPANYID" Caption="קוד חברה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
+    <Filter ParameterName="P_COMPANYID" Caption="חברה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_CompanyId" ValueField="Kod_Hevra" TextField="Teur_Hevra" />
+    </Filter>
+
+    <Filter ParameterName="P_MAMAD" Caption="מעמד ראשי"  BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" Required="true" >
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_maamadot" ValueField="kod" TextField="description" />
+    </Filter>
+    <Filter ParameterName="P_MAMAD_HR" Caption="מעמד" BoxeType="ListBox" DataType="System.Int32">
+      <DropDownList QueryType="Select"  Select="Select Distinct Kod_Maamad_HR, Teur_Maamad_HR From CTB_Maamad order by 2 " ValueField="Kod_Maamad_HR" TextField="Teur_Maamad_HR" />
     </Filter>
     <Filter ParameterName="P_SNIF" Caption="סניף אב" BoxeType="ListBox" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="select KOD_SNIF_AV,teur_snif_av from ctb_snif_av ORDER BY teur_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" />
-    </Filter>
-    <Filter ParameterName="P_MAMAD" Caption="מעמד" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="Select Distinct Kod_Maamad_HR, Teur_Maamad_HR From CTB_Maamad order by 2 " ValueField="Kod_Maamad_HR" TextField="Teur_Maamad_HR" />
     </Filter>
     <Filter ParameterName="P_ISUK" Caption="עיסוק" BoxeType="ListBox" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="select distinct tb.TEUR_ISUK || ' (' || tb.KOD_ISUK  || ')' TEUR_ISUK, tb.KOD_ISUK from CTB_ISUK tb order by 1" ValueField="KOD_ISUK" TextField="TEUR_ISUK" />
@@ -416,7 +420,7 @@
         <Condition Name="P_KOD_EZOR" ParameterType="ntOracleInteger" ControlReference="P_EZOR"></Condition>
       </DropDownList>
     </Filter>
-    <Filter ParameterName="P_MAMAD" Caption="מעמד" BoxeType="ListBox" DataType="System.Int32">
+    <Filter ParameterName="P_MAMAD_HR" Caption="מעמד" BoxeType="ListBox" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="Select Distinct Kod_Maamad_HR, Teur_Maamad_HR From CTB_Maamad order by 2 " ValueField="Kod_Maamad_HR" TextField="Teur_Maamad_HR" />
     </Filter>
     <Filter ParameterName="P_ISUK" Caption="עיסוק" BoxeType="ListBox" DataType="System.Int32">
@@ -761,6 +765,16 @@
   </Report>
 
   <Report  RdlName="Tigburim" Roles="kds_administrators" FilterByLine="2" PageHeader="תגבורים" ProductionType="Heavy">
+    <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
+      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
+      <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
+    </Filter>
+    <Filter   ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" RunAtServer="true"  >
+      <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
+    </Filter>
+  </Report>
+
+  <Report  RdlName="Keytanot" Roles="kds_administrators" FilterByLine="2" PageHeader="קייטנות" ProductionType="Heavy">
     <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
