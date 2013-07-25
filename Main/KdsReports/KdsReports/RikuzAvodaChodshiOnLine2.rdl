@@ -26,7 +26,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox12</rd:DefaultName>
         <Top>0.54087cm</Top>
-        <Left>7.81587cm</Left>
+        <Left>7.50525cm</Left>
         <Height>0.50271cm</Height>
         <Width>5.05749cm</Width>
         <Style>
@@ -43,7 +43,7 @@
         <Source>Embedded</Source>
         <Value>logo1</Value>
         <Sizing>FitProportional</Sizing>
-        <Left>19.58104cm</Left>
+        <Left>19.27042cm</Left>
         <Height>1.15604cm</Height>
         <Width>1.26188cm</Width>
         <ZIndex>1</ZIndex>
@@ -86,7 +86,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
         <Top>0.15254cm</Top>
-        <Left>14.32177cm</Left>
+        <Left>14.01115cm</Left>
         <Height>0.89104cm</Height>
         <Width>4.72895cm</Width>
         <ZIndex>2</ZIndex>
@@ -330,7 +330,7 @@
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>5.18705cm</Top>
-        <Left>2.79784cm</Left>
+        <Left>2.48722cm</Left>
         <Height>0.46373cm</Height>
         <Width>16.92904cm</Width>
         <ZIndex>3</ZIndex>
@@ -1095,7 +1095,7 @@
         </TablixRowHierarchy>
         <DataSetName>dsPirteyOved</DataSetName>
         <Top>1.48497cm</Top>
-        <Left>0.37826cm</Left>
+        <Left>0.06764cm</Left>
         <Height>0.79611cm</Height>
         <Width>20.46462cm</Width>
         <ZIndex>4</ZIndex>
@@ -1122,7 +1122,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>5.31219cm</Top>
-        <Left>0.61661cm</Left>
+        <Left>0.30599cm</Left>
         <Height>0.29819cm</Height>
         <Width>1.26948cm</Width>
         <ZIndex>5</ZIndex>
@@ -1154,7 +1154,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>5.266cm</Top>
-        <Left>19.90327cm</Left>
+        <Left>19.59265cm</Left>
         <Height>0.24807cm</Height>
         <Width>0.97887cm</Width>
         <ZIndex>6</ZIndex>
@@ -1174,9 +1174,6 @@
       <Tablix Name="Tablix7">
         <TablixBody>
           <TablixColumns>
-            <TablixColumn>
-              <Width>0.9cm</Width>
-            </TablixColumn>
             <TablixColumn>
               <Width>0.9cm</Width>
             </TablixColumn>
@@ -1275,10 +1272,9 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>21</ColSpan>
+                    <ColSpan>20</ColSpan>
                   </CellContents>
                 </TablixCell>
-                <TablixCell />
                 <TablixCell />
                 <TablixCell />
                 <TablixCell />
@@ -1325,40 +1321,6 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox48</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox303">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>7pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox303</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -2083,40 +2045,6 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox304">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value EvaluationMode="Constant" />
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox304</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
                     <Textbox Name="Textbox301">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -2751,11 +2679,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <TablixMembers>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(ReportItems!CNT_HEADRUT.Value &lt; 4, False, True)</Hidden>
-              </Visibility>
-            </TablixMember>
-            <TablixMember>
-              <Visibility>
                 <Hidden>=iif(ReportItems!CNT_HEADRUT.Value &lt; 3, False, True)</Hidden>
               </Visibility>
             </TablixMember>
@@ -2842,10 +2765,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsHeadruyot</DataSetName>
-        <Top>5.89053cm</Top>
-        <Left>10.26067cm</Left>
+        <Top>5.96108cm</Top>
+        <Left>9.70887cm</Left>
         <Height>1.24282cm</Height>
-        <Width>20.53905cm</Width>
+        <Width>19.63905cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -4825,7 +4748,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>DsRechivim</DataSetName>
         <Top>2.36297cm</Top>
-        <Left>0.3777cm</Left>
+        <Left>0.06708cm</Left>
         <Height>1.05506cm</Height>
         <Width>20.46992cm</Width>
         <ZIndex>8</ZIndex>
@@ -8143,7 +8066,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsRechivimChodshiym</DataSetName>
         <Top>3.41802cm</Top>
-        <Left>0.37826cm</Left>
+        <Left>0.06764cm</Left>
         <Height>1.49815cm</Height>
         <Width>20.46981cm</Width>
         <ZIndex>9</ZIndex>
@@ -8518,8 +8441,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsPirteyOved</DataSetName>
-        <Top>2.97573in</Top>
-        <Left>3.81265in</Left>
+        <Top>3.06902in</Top>
+        <Left>3.67695in</Left>
         <Height>0.47013in</Height>
         <Width>4.40866in</Width>
         <ZIndex>10</ZIndex>
@@ -8754,7 +8677,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsKizuz</DataSetName>
         <Top>3.61947in</Top>
-        <Left>3.81265in</Left>
+        <Left>3.67695in</Left>
         <Height>0.47013in</Height>
         <Width>4.42199in</Width>
         <ZIndex>11</ZIndex>
@@ -8770,12 +8693,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
       <Tablix Name="Tablix11">
         <TablixBody>
           <TablixColumns>
-            <TablixColumn>
-              <Width>0.9cm</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.9cm</Width>
-            </TablixColumn>
             <TablixColumn>
               <Width>0.9cm</Width>
             </TablixColumn>
@@ -8881,11 +8798,9 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>24</ColSpan>
+                    <ColSpan>22</ColSpan>
                   </CellContents>
                 </TablixCell>
-                <TablixCell />
-                <TablixCell />
                 <TablixCell />
                 <TablixCell />
                 <TablixCell />
@@ -8935,76 +8850,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox286</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox282">
-                      <CanGrow>true</CanGrow>
-                      <CanShrink>true</CanShrink>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>7pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox280</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox279">
-                      <CanGrow>true</CanGrow>
-                      <CanShrink>true</CanShrink>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>7pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox277</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -9787,74 +9632,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox283">
-                      <CanGrow>true</CanGrow>
-                      <CanShrink>true</CanShrink>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox281</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox284">
-                      <CanGrow>true</CanGrow>
-                      <CanShrink>true</CanShrink>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox278</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
                     <Textbox Name="Textbox291">
                       <CanGrow>true</CanGrow>
                       <CanShrink>true</CanShrink>
@@ -10589,17 +10366,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <TablixMembers>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(ReportItems!CNT_SHONOT.Value &lt; 7, False, True)</Hidden>
-              </Visibility>
-            </TablixMember>
-            <TablixMember>
-              <Visibility>
-                <Hidden>=iif(ReportItems!CNT_SHONOT.Value &lt; 6, False, True)</Hidden>
-              </Visibility>
-            </TablixMember>
-            <TablixMember>
-              <Visibility>
-                <Hidden>=iif(ReportItems!CNT_SHONOT.Value &lt; 5, False, True)</Hidden>
+                <Hidden>=iif(ReportItems!CNT_SHONOT.Value &lt;5, False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -10649,17 +10416,20 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R112.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R112.Value &lt;&gt; Nothing, False, True))</Hidden>
+                <Hidden>=iif(First(Fields!R112.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, false,true)
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R112.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R112.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R115.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R115.Value &lt;&gt; Nothing, False, True))</Hidden>
+                <Hidden>=iif(First(Fields!R115.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, false,true)
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R115.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R115.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R113.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R113.Value &lt;&gt; Nothing, False, True))</Hidden>
+                <Hidden>=iif(First(Fields!R113.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, false,true)
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R113.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R113.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -10669,22 +10439,26 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R114.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R114.Value &lt;&gt; Nothing, False, True))</Hidden>
+                <Hidden>=iif(First(Fields!R114.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, false,true)
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R114.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R114.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R118.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R118.Value &lt;&gt; Nothing, False, True))</Hidden>
+                <Hidden>=iif(First(Fields!R118.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, false,true)
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R118.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R118.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R117.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R117.Value &lt;&gt; Nothing, False, True))</Hidden>
+                <Hidden>=iif(First(Fields!R117.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, false,true)
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R117.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R117.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R116.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R116.Value &lt;&gt; Nothing, False, True))</Hidden>
+                <Hidden>=iif(First(Fields!R116.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, false,true)
+'iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved") = 2 And First(Fields!R116.Value, "dsRechiveyPremyot") &lt;&gt; Nothing, False, iif(Fields!R116.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -10721,10 +10495,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <FixedColumnHeaders>true</FixedColumnHeaders>
         <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>dsRechiveyShonot</DataSetName>
-        <Top>5.89053cm</Top>
-        <Left>0.39565cm</Left>
+        <Top>5.96108cm</Top>
+        <Left>0.26458cm</Left>
         <Height>1.24282cm</Height>
-        <Width>23.30297cm</Width>
+        <Width>21.50297cm</Width>
         <ZIndex>12</ZIndex>
         <Style>
           <Border>
@@ -10739,7 +10513,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2 and CountRows("dsRechiveyPremyot")&gt;0,"1","0")</Value>
+                <Value>=iif(CountRows("dsRechiveyPremyot")&gt;0,"1","0")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -10747,7 +10521,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </Paragraph>
         </Paragraphs>
         <Top>3.28915in</Top>
-        <Left>0.64378in</Left>
+        <Left>0.52149in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
         <ZIndex>13</ZIndex>
@@ -10783,10 +10557,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox84</rd:DefaultName>
-        <Top>2.87785in</Top>
-        <Left>0.52263in</Left>
+        <Top>2.90563in</Top>
+        <Left>0.12047in</Left>
         <Height>0.11458in</Height>
-        <Width>1.79731in</Width>
+        <Width>1.58763in</Width>
         <ZIndex>14</ZIndex>
         <Visibility>
           <Hidden>=iif(ReportItems!TbPremExists.Value = "0", True, False)</Hidden>
@@ -10801,84 +10575,11 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="Textbox6">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>."הריכוז מציג נתונים נכון לתאריך המוצג בתחתית הריכוז לצד המילים "תאריך חישוב</Value>
-                <Style>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>.בשל תהליך איחוד המשכורות, חישוב סופי ומלא של כל ההפרשים להם אתה זכאי ישולם במשכורת אוגוסט 2013</Value>
-                <Style>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <LeftIndent>0cm</LeftIndent>
-            <RightIndent>0cm</RightIndent>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>.החל מאוגוסט, משכורות החברים ישולמו ביום ה-9 לכל חודש</Value>
-                <Style>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>None</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <LeftIndent>0cm</LeftIndent>
-            <RightIndent>0cm</RightIndent>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>11.37391cm</Top>
-        <Left>3.09565cm</Left>
-        <Height>1.52604cm</Height>
-        <Width>15.42424cm</Width>
-        <ZIndex>15</ZIndex>
-        <Visibility>
-          <Hidden>=iif( First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=1 and (First(Fields!MONTH_YEAR.Value, "dsPirteyOved")="05/2013" or First(Fields!MONTH_YEAR.Value, "dsPirteyOved") ="06/2013" ), False, True)</Hidden>
-        </Visibility>
-        <Style>
-          <Border>
-            <Style>Dashed</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
     </ReportItems>
-    <Height>5.12039in</Height>
+    <Height>4.0896in</Height>
     <Style />
   </Body>
-  <Width>12.12587in</Width>
+  <Width>11.5543in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

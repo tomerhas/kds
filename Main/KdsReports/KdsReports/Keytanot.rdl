@@ -6,46 +6,46 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.09771cm</Width>
+              <Width>0.80667cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.47701cm</Width>
+              <Width>1.2918cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.54781cm</Width>
+              <Width>1.41552cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.4018cm</Width>
+              <Width>2.0843cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.34876cm</Width>
+              <Width>1.0048cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.89334cm</Width>
+              <Width>1.86689cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.12137cm</Width>
+              <Width>1.83033cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.13917cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.57691cm</Width>
+              <Width>1.49754cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.64552cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.82531cm</Width>
+              <Width>2.14281cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.03698cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.40896cm</Width>
+              <Width>2.30312cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.65333cm</Width>
+              <Width>1.49458cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.45489cm</Width>
@@ -1124,7 +1124,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>1.18739cm</Top>
         <Height>1.59688cm</Height>
-        <Width>26.62887cm</Width>
+        <Width>25.01491cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1149,10 +1149,10 @@
         </Style>
       </Subreport>
     </ReportItems>
-    <Height>1.18992in</Height>
+    <Height>1.09617in</Height>
     <Style />
   </Body>
-  <Width>10.61922in</Width>
+  <Width>9.84839in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

@@ -22,6 +22,10 @@
       <FullPath>AbsentWorkers.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>Average.rdl</Name>
+      <FullPath>Average.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>AverageOvdimBeSnif.rdl</Name>
       <FullPath>AverageOvdimBeSnif.rdl</FullPath>
     </ProjectItem>
@@ -134,6 +138,10 @@
       <FullPath>KamutIdkuneyRashemet.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>Keytanot.rdl</Name>
+      <FullPath>Keytanot.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>NetuneyOved.rdl</Name>
       <FullPath>NetuneyOved.rdl</FullPath>
     </ProjectItem>
@@ -222,6 +230,10 @@
     <ProjectItem>
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Report2.rdl</Name>
+      <FullPath>Report2.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

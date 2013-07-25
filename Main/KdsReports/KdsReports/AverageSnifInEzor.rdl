@@ -649,8 +649,8 @@
           <QueryParameter Name="P_SNIF">
             <Value>=Parameters!P_SNIF.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="P_MAMAD">
-            <Value>=Parameters!P_MAMAD.Value</Value>
+          <QueryParameter Name="P_MAMAD_HR">
+            <Value>=Parameters!P_MAMAD_HR.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="P_ISUK">
@@ -744,11 +744,11 @@
       <Nullable>true</Nullable>
       <Prompt>P_SNIF</Prompt>
     </ReportParameter>
-    <ReportParameter Name="P_MAMAD">
+    <ReportParameter Name="P_MAMAD_HR">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
-      <Prompt>P_MAMAD</Prompt>
+      <Prompt>P_MAMAD_HR</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_ISUK">
       <DataType>String</DataType>
