@@ -311,6 +311,34 @@ namespace KdsService
 
         }
 
+        private void RunBdikatChufshaRezifaThread(object param)
+        {
+            object[] args = param as object[];
+            long lRequestNum = (long)args[0];
+            int iUserId = (int)args[1];
+            int iStatus = 0;
+            clBatch oBatch = new clBatch();
+            try
+            {
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                oBatch.BdikatChufshaRezifa(lRequestNum, iUserId);
+                iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+                iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunBdikatChufshaRezifaThread: " + ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, iStatus);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "END");
+            }
+            LogThreadEnd("BdikatChufshaRezifa", lRequestNum);
+        }
+
         private void RunYeziratRikuzimThread(object param)
         {
             object[] args = param as object[];
@@ -619,6 +647,14 @@ namespace KdsService
                 new ParameterizedThreadStart(RunTransferToHilanThread));
             LogThreadStart("TransferToHilan", lRequestNum);
             runThread.Start(new object[] { lRequestNum, lRequestNumToTransfer });
+        }
+
+        public void BdikatChufshaRezifa(long lRequestNum, int iUserId)
+        {
+            Thread runThread = new Thread(
+                new ParameterizedThreadStart(RunBdikatChufshaRezifaThread));
+            LogThreadStart("BdikatChufshaRezifa", lRequestNum);
+            runThread.Start(new object[] { lRequestNum, iUserId });
         }
 
         public void YeziratRikuzim(long lRequestNum, long iRequestIdForRikuzim)

@@ -1346,7 +1346,7 @@ namespace KdsBatch
                 // העובד חבר  (הספרה הראשונה של קוד מעמד = 1) 
                 //if (objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.Sachir12.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode()))
                 //{      
-                if ((objOved.oGeneralData._TarAd - objOved.dTchilatAvoda).Days > (5 * 365))
+                if ((objOved.Taarich - objOved.dTchilatAvoda).Days > (5 * 365))
                 {
                     if (objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.Sachir12.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode() ||
                         objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode()))
@@ -2314,7 +2314,7 @@ namespace KdsBatch
             {
 
                 fTempY = 0;
-                if ((objOved.oGeneralData._TarAd - objOved.dTchilatAvoda).Days > (5 * 365))
+                if ((objOved.Taarich - objOved.dTchilatAvoda).Days > (5 * 365))
                 {
                     if (objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.Sachir12.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode() ||
                         objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode()))

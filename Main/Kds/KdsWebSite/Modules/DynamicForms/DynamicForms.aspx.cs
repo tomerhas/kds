@@ -47,6 +47,9 @@ public partial class DataEntryView : KdsLibrary.UI.SystemManager.KdsSysManPageBa
         SetFilterKodDescription();
         EnableButtons();
         EnableRefreshTable();
+        
+        mp.ImagePrintClick.Click += new ImageClickEventHandler(ImagePrintClick_Click);
+
         if (!Page.IsPostBack)
         {
             clGeneral.LoadDateCombo(ddlMonth, 15);
@@ -57,6 +60,15 @@ public partial class DataEntryView : KdsLibrary.UI.SystemManager.KdsSysManPageBa
             if ((CurrentFormType == clGeneral.enDynamicFormType.ComponentSidurim) || (CurrentFormType == clGeneral.enDynamicFormType.ComponentTypeSidur))
                 PnlKodDescription.Visible = false;
         }
+    }
+    void ImagePrintClick_Click(object sender, ImageClickEventArgs e)
+    {
+        btnPrint_Click(sender, e);
+    }
+
+    protected void btnRefreshPrint_click(object sender, EventArgs e)
+    {
+        RefreshAftePrint();
     }
     private void EnableButtons()
     {

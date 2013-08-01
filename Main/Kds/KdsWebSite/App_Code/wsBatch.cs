@@ -208,6 +208,15 @@ public class wsBatch : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
+    public string BdikatChufshaRezifa(long lRequestNum, int iUserId)
+    {
+        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+        client.BdikatChufshaRezifa(lRequestNum, iUserId);
+        client.Close();
+        return "OK";
+    }
+
+    [WebMethod(EnableSession = true)]
     public string YeziratRikuzim(long lRequestNum, long iRequestIdForRikuzim)
     {
         KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();

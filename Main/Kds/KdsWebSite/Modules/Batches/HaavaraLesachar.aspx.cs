@@ -22,6 +22,8 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
         tkufa,
         tkufa_date,
         ritza_gorfet,
+        ////status_chufsha_rezifa,
+        ////btn_chufsha_rezifa,
         HUAVRA_LESACHAR,
         ISHUR_HILAN,
         btns_kvazim,
@@ -147,12 +149,13 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
  protected void grdRitzot_RowDataBound(object sender, GridViewRowEventArgs e)
  {
      int iColSort;
-     string huavara_lesachar, status_haavara_lesachar;
+     string huavara_lesachar, status_haavara_lesachar;//, status_chufsha_rezifa;
      if (e.Row.RowType == DataControlRowType.Header)
      {
          System.Web.UI.WebControls.Label lbl = new System.Web.UI.WebControls.Label();
          e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Style.Add("display", "none");
+       //  e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
@@ -194,6 +197,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      {
          e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Style.Add("display", "none");
+         ////e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
@@ -203,6 +207,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
 
          huavara_lesachar =e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text.Trim() ;
          status_haavara_lesachar = e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Text.Trim();
+         ////status_chufsha_rezifa = e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Text;
          switch (status_haavara_lesachar)
          {
              case "1": e.Row.Cells[enGrdRitzot.status.GetHashCode()].Text ="ממתין";
@@ -213,13 +218,16 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
                  break;
          }
 
-         if (huavara_lesachar == "0" || huavara_lesachar =="&nbsp;")
+         //if (status_chufsha_rezifa == "1")
+         //    ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).Enabled = false;
+
+         if (huavara_lesachar == "0" || huavara_lesachar =="&nbsp;" )
          {
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Style["display"] = "inline";
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Style["display"] = "none";
-             if (status_haavara_lesachar == "1")
+             if (status_haavara_lesachar == "1" )////|| status_chufsha_rezifa != "2")
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = false;
-             else
+             else//// if (status_chufsha_rezifa == "2") 
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = true;
          }
          else
@@ -228,10 +236,11 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Style["display"] = "inline";
              if (e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Text == "1" || huavara_lesachar == "2")
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Enabled = false;
-             else
+             else 
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Enabled = true;
          }
-         
+
+       
          //if (e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text == "1")
          //((Button)e.Row.Cells[enGrdRitzot.btn_Rikuzim.GetHashCode()].Controls[1]).Enabled = true;
 
@@ -253,6 +262,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).Enabled = false;
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).Enabled = false;  
          }
+        //// ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
          ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Text ;
          ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
          ((Button)e.Row.Cells[enGrdRitzot.btn_Rikuzim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
@@ -319,6 +329,39 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      ModalPopupEx.Show();
  }
 
+ protected void BdikatChufshaRezifa(object sender, EventArgs e)
+ {
+     long iRequestId, iRequestToTransfer;
+     string sMessage;
+     int iUserId;
+     clBatch objBatch = new clBatch();
+     wsBatch obach = new wsBatch();
+     try
+     {
+         iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+         iRequestToTransfer = long.Parse(((Button)sender).CommandArgument);  // long.Parse(((Button)sender).CommandArgument);
+         iRequestId = objBatch.InsBakashatChufshaRezifa(clGeneral.enGeneralBatchType.BdikatChufshaRezifa, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestToTransfer);
+         ViewState["iRequestId"] = iRequestId;
+
+         obach.BdikatChufshaRezifa(iRequestId, iUserId);
+
+         btnConfirm.Style.Add("Display", "inline");
+         btnYesTransfer.Style.Add("Display", "none");
+         btnNoTransfer.Style.Add("Display", "none");
+         btnYesHilan.Style.Add("Display", "None");
+         paMessage.Style["Width"] = "220px";
+         paMessage.Style["Height"] = "115px";
+         ModalPopupEx.X = 400;
+         sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
+         lblMessage.Text = sMessage;
+         btnShowMessage_Click(this, new EventArgs());
+
+     }
+     catch (Exception ex)
+     {
+         clGeneral.BuildError(Page, ex.Message);
+     }
+ }
  protected void TransferRitza(object sender, EventArgs e)
  {
      string RizotZehot;

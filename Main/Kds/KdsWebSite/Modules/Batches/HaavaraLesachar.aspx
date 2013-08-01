@@ -59,10 +59,20 @@
                          <asp:BoundField DataField="ZMAN_HATCHALA" HeaderText="תאריך הרצה" SortExpression="ZMAN_HATCHALA" ItemStyle-Width="70px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  DataFormatString="{0:dd/MM/yyyy}" HtmlEncodeFormatString="true"/>
                         <asp:BoundField DataField="bakasha_id" HeaderText="מספר ריצת חישוב" SortExpression="bakasha_id" ItemStyle-Width="70px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
                         <asp:BoundField DataField="TEUR" HeaderText="תאור" SortExpression="TEUR" ItemStyle-CssClass="ItemRow" ItemStyle-Width="260px" HeaderStyle-CssClass="GridHeader" />
-                        <asp:BoundField DataField="auchlusia" HeaderText="אוכלוסיה לריצה" SortExpression="auchlusia" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  ItemStyle-Width="120px" />
+                        <asp:BoundField DataField="auchlusia" HeaderText="אוכלוסיה לריצה" SortExpression="auchlusia" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  ItemStyle-Width="85px" />
                         <asp:BoundField DataField="tkufa" HeaderText="תקופת הריצה - עד חודש (כולל)" SortExpression="tkufa_date" ItemStyle-Width="130px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
                         <asp:BoundField DataField="tkufa_date" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"  DataFormatString="{0:dd/MM/yyyy}" HtmlEncodeFormatString="true"/>
                         <asp:BoundField DataField="ritza_gorfet" HeaderText="ריצה גורפת" SortExpression="ritza_gorfet" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  ItemStyle-Width="35px"/>
+
+                     <%--    <asp:BoundField DataField="status_chufsha_rezifa" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
+                         <asp:TemplateField  HeaderText="בדיקת חופשה רציפה">
+                            <HeaderStyle CssClass="GridHeader" />
+                            <ItemStyle CssClass="ItemRow" Width="35px" />
+                           <ItemTemplate>
+                                       <asp:button ID="btn_Chufsha_rezifa" runat="server" text="הפעל" CssClass ="ImgButtonSearch"  OnClick="BdikatChufshaRezifa" />
+                           </ItemTemplate>
+                        </asp:TemplateField>--%>
+
                         <asp:BoundField DataField="HUAVRA_LESACHAR" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
                         <asp:BoundField DataField="ISHUR_HILAN" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
                         <asp:TemplateField  HeaderText="יצירת קבצים לשכר">

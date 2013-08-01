@@ -62,7 +62,7 @@ namespace KdsBatch
             }
         }
 
-        public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtRechivimYomiim)
+        public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtRechivimYomiim)//**, DataTable dtChufshaRezufa)**/
         //public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem)
         {
             _dtRechivim = dtDetailsChishuv;
@@ -91,7 +91,7 @@ namespace KdsBatch
                     
                     oErua416 = new clErua416(iBakashaId, _drPirteyOved, _dtRechivim);
                     oErua417 = new clErua417(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem);
-                    oErua460 = new clErua460(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem);
+                    oErua460 = new clErua460(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem);//**, dtChufshaRezufa);
 
                     if (iMaamadRashi != clGeneral.enMaamad.Salarieds.GetHashCode())
                     {

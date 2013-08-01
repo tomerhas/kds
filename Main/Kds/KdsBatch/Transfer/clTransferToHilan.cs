@@ -44,7 +44,7 @@ namespace KdsBatch
        {
 
            int iMisparIshi, i, iMaamad, iMaamadRashi;
-           DataTable dtOvdim, dtRechivim, dtPrem, dtRechivimYomi;
+           DataTable dtOvdim, dtRechivim, dtPrem, dtRechivimYomi,dtChufshaRezufa;
            DataSet dsNetunim;
            int iStatus = 0;
            string bDelete = ConfigurationSettings.AppSettings["DeleteTablesAfterTransfer"];
@@ -79,7 +79,7 @@ namespace KdsBatch
                    dsNetunim = GetOvdimToTransfer(lRequestNumToTransfer);
 
                    dtRechivimYomi = GetRechivimYomiim(lRequestNumToTransfer);
-
+                  //** dtChufshaRezufa = GetOvdimWithChufshaRezufa(lRequestNumToTransfer);**/
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after GetOvdimToTransfer");
                   
                    dtOvdim = dsNetunim.Tables[0];
@@ -110,7 +110,7 @@ namespace KdsBatch
                        //עובדי קייטנה 
                        //לא מבצעים להם העברה לשכר
 
-                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem, dtRechivimYomi);
+                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem, dtRechivimYomi);/**, dtChufshaRezufa);**/
                       // oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem);
 
                        _PirteyOved.Add(oPirteyOved);
@@ -1595,6 +1595,32 @@ namespace KdsBatch
             }
         }
 
+   
+        private DataTable GetOvdimWithChufshaRezufa(long lBakashaId)
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lBakashaId, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+
+
+                oDal.ExecuteSP(clDefinitions.cProGetOvdimChufshaRezifa, ref  dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(_lBakashaId, 0, "E", 0, null, "GetRechivimYomiim: " + ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                oDal = null;
+            }
+        }
         private DataTable GetChishuvYomiToOved(long lBakashaId,int iMisparIshi)
         {
             DataTable dt = new DataTable();

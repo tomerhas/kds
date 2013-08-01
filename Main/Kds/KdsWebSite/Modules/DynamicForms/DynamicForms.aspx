@@ -218,7 +218,7 @@
            </asp:UpdatePanel>        
       </div>
       </td></tr></table>
-   
+   <input type="button" ID="btnRefreshPrint"  runat="server"  onserverclick="btnRefreshPrint_click"  style="display:none" CausesValidation="false" />
     </ContentTemplate>
     <Triggers>
         <asp:AsyncPostBackTrigger ControlID="btnDisplay"  />
@@ -228,6 +228,23 @@
         function refresh(){
             $get("<%=btnRefresh.ClientID %>").click();
         }
+
+        function PrintGridData() { 
+            $("#<%=GridView1.ClientID %> A").removeAttr("href");
+            $("#<%=GridView1.ClientID %> A").css("COLOR", "black");
+
+            var strCopy = document.getElementById('<%=GridView1.ClientID %>').outerHTML;
+            window.clipboardData.setData("Text", strCopy);
+            var objExcel = new ActiveXObject("Excel.Application");
+            objExcel.visible = true;
+
+            var objWorkbook = objExcel.Workbooks.Add;
+            var objWorksheet = objWorkbook.Worksheets(1);
+            objWorksheet.Paste;
+            document.getElementById("ctl00_KdsContent_btnRefreshPrint").click();
+        }
+
+
 
         function InitTextBox() {
 

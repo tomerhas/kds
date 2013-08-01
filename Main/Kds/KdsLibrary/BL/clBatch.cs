@@ -113,6 +113,30 @@ namespace KdsLibrary.BL
             return iRequestId;
         }
 
+        public long InsBakashatChufshaRezifa(clGeneral.enGeneralBatchType iTypeRequest, string sDescription, clGeneral.enStatusRequest iStatus, int iUserId, long iRequestToSachar)
+        {
+            long iRequestId;
+
+            clTxDal objDal = new clTxDal();
+            try
+            {
+                objDal.TxBegin();
+                iRequestId = InsertBakasha(ref objDal, iTypeRequest, sDescription, iStatus, iUserId);
+
+                objDal.ClearCommand();
+                InsertBakashaParam(ref objDal, iRequestId, 1, iRequestToSachar.ToString());
+
+                objDal.TxCommit();
+            }
+            catch (Exception ex)
+            {
+                objDal.TxRollBack();
+                throw ex;
+            }
+
+            return iRequestId;
+        }
+
         public long RunTransferToSachar(clGeneral.enGeneralBatchType iTypeRequest, string sDescription, clGeneral.enStatusRequest iStatus, int iUserId, long iRequestToSachar)
         {
             long iRequestId;
@@ -681,6 +705,25 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+
+
+        public void BdikatChufshaRezifa(long lRequestId, int iUserId)
+        {
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestId, ParameterDir.pdInput);
+                oDal.AddParameter("p_user_id", ParameterType.ntOracleInteger, iUserId, ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cProBdikatChufshaRezifa);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
     public enum RecordStatus
     {

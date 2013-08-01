@@ -10,10 +10,12 @@ namespace KdsBatch
   public  class clErua460:clErua
     {
       private DataTable _dtPrem;
-      public clErua460(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, DataTable dtPrem)
+     //** private DataTable _dtChufsha;**/
+      public clErua460(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, DataTable dtPrem)/**, DataTable dtChufshaRezufa)**/
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,460)
       {
           _dtPrem = dtPrem;
+         //** _dtChufsha = dtChufshaRezufa;**/
           _sBody = SetBody();
           if (_sBody != null)
              PrepareLines();
@@ -24,9 +26,17 @@ namespace KdsBatch
           List<string> ListErua=new List<string>();
           StringBuilder sErua460 = new StringBuilder();
           float fErech;
+        //**  DataRow[] dr;**/
           try
           {
+            /**  dr = _dtChufsha.Select("mispar_ishi = "+ _iMisparIshi);
+              if (dr.Length>0)
+                  sErua460.Append(FormatNumber(1, 4, 2));
+              else sErua460.Append(GetBlank(4));
+
+              sErua460.Append(GetBlank(4));**/
               sErua460.Append(GetBlank(8));
+
               //if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               //{
               //  //  sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaGrira.GetHashCode(), "erech_rechiv_a"), 4, 0));

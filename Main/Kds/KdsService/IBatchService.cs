@@ -36,6 +36,9 @@ namespace KdsService
         void TransferToHilan(long lRequestNum, long lRequestNumToTransfer);
 
         [OperationContract]
+        void BdikatChufshaRezifa(long lRequestNum, int iUserId);
+
+        [OperationContract]
         void YeziratRikuzim(long lRequestNum, long iRequestIdForRikuzim);
 
         [OperationContract]
