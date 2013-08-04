@@ -6460,7 +6460,7 @@ namespace KdsBatch
                 objOved.DtYemeyAvodaYomi.Select(null, "TACHOGRAF");
                 if (objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0  and TACHOGRAF=1", "shat_hatchala_sidur ASC").Length == 0)
                 {
-                    if (oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom) && oCalcBL.CheckYomShishi(objOved.SugYom))
+                    if (oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom) || oCalcBL.CheckYomShishi(objOved.SugYom))
                     {
                         oSidur.CalcRechiv203();
 
