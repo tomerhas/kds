@@ -79,7 +79,7 @@ namespace KdsBatch
                    dsNetunim = GetOvdimToTransfer(lRequestNumToTransfer);
 
                    dtRechivimYomi = GetRechivimYomiim(lRequestNumToTransfer);
-                  //** dtChufshaRezufa = GetOvdimWithChufshaRezufa(lRequestNumToTransfer);**/
+                   dtChufshaRezufa = GetOvdimWithChufshaRezufa(lRequestNumToTransfer);
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after GetOvdimToTransfer");
                   
                    dtOvdim = dsNetunim.Tables[0];
@@ -110,7 +110,7 @@ namespace KdsBatch
                        //עובדי קייטנה 
                        //לא מבצעים להם העברה לשכר
 
-                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem, dtRechivimYomi);/**, dtChufshaRezufa);**/
+                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem, dtRechivimYomi, dtChufshaRezufa);
                       // oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem);
 
                        _PirteyOved.Add(oPirteyOved);

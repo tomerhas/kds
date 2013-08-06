@@ -22,8 +22,8 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
         tkufa,
         tkufa_date,
         ritza_gorfet,
-        ////status_chufsha_rezifa,
-        ////btn_chufsha_rezifa,
+        status_chufsha_rezifa,
+        btn_chufsha_rezifa,
         HUAVRA_LESACHAR,
         ISHUR_HILAN,
         btns_kvazim,
@@ -149,13 +149,13 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
  protected void grdRitzot_RowDataBound(object sender, GridViewRowEventArgs e)
  {
      int iColSort;
-     string huavara_lesachar, status_haavara_lesachar;//, status_chufsha_rezifa;
+     string huavara_lesachar, status_haavara_lesachar, status_chufsha_rezifa;
      if (e.Row.RowType == DataControlRowType.Header)
      {
          System.Web.UI.WebControls.Label lbl = new System.Web.UI.WebControls.Label();
          e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Style.Add("display", "none");
-       //  e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
@@ -197,7 +197,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      {
          e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Style.Add("display", "none");
-         ////e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
@@ -207,7 +207,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
 
          huavara_lesachar =e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text.Trim() ;
          status_haavara_lesachar = e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Text.Trim();
-         ////status_chufsha_rezifa = e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Text;
+         status_chufsha_rezifa = e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Text;
          switch (status_haavara_lesachar)
          {
              case "1": e.Row.Cells[enGrdRitzot.status.GetHashCode()].Text ="ממתין";
@@ -218,16 +218,16 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
                  break;
          }
 
-         //if (status_chufsha_rezifa == "1")
-         //    ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).Enabled = false;
+         if (status_chufsha_rezifa == "1")
+             ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).Enabled = false;
 
          if (huavara_lesachar == "0" || huavara_lesachar =="&nbsp;" )
          {
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Style["display"] = "inline";
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Style["display"] = "none";
-             if (status_haavara_lesachar == "1" )////|| status_chufsha_rezifa != "2")
+             if (status_haavara_lesachar == "1" || status_chufsha_rezifa != "2")
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = false;
-             else//// if (status_chufsha_rezifa == "2") 
+             else if (status_chufsha_rezifa == "2") 
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = true;
          }
          else

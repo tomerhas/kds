@@ -64,14 +64,14 @@
                         <asp:BoundField DataField="tkufa_date" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"  DataFormatString="{0:dd/MM/yyyy}" HtmlEncodeFormatString="true"/>
                         <asp:BoundField DataField="ritza_gorfet" HeaderText="ריצה גורפת" SortExpression="ritza_gorfet" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  ItemStyle-Width="35px"/>
 
-                     <%--    <asp:BoundField DataField="status_chufsha_rezifa" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
+                         <asp:BoundField DataField="status_chufsha_rezifa" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
                          <asp:TemplateField  HeaderText="בדיקת חופשה רציפה">
                             <HeaderStyle CssClass="GridHeader" />
                             <ItemStyle CssClass="ItemRow" Width="35px" />
                            <ItemTemplate>
                                        <asp:button ID="btn_Chufsha_rezifa" runat="server" text="הפעל" CssClass ="ImgButtonSearch"  OnClick="BdikatChufshaRezifa" />
                            </ItemTemplate>
-                        </asp:TemplateField>--%>
+                        </asp:TemplateField>
 
                         <asp:BoundField DataField="HUAVRA_LESACHAR" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
                         <asp:BoundField DataField="ISHUR_HILAN" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
