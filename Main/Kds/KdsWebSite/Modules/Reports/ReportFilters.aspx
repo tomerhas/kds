@@ -22,9 +22,9 @@
                     this.ezor.attr('disabled', 'disabled');
                     this.snif.attr('disabled', 'disabled');
                     var k = this;
-                    //                    if ($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val() != "undefined") {
-                    //                        DisabledRashemetOrSnif($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val(), k);
-                    //                    }
+                                        if ($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val() != undefined) {
+                                            DisabledRashemetOrSnif($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val(), k);
+                                        }
 
                     $("input[name='ctl00$KdsContent$P_TEZUGA'").click(function () {
                         if (queries['RdlName'] == 'KamutIdkuneyRashemet') {
