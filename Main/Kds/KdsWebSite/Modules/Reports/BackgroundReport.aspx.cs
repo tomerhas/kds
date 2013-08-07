@@ -44,10 +44,15 @@ public partial class Modules_Reports_BackgroundReport : System.Web.UI.Page
         Dictionary<string, string> ControlsList = (Dictionary<string, string>)Session["ReportParameters"];
         try
         {
+            _Extension = (rdPdfType.Checked) ? (int)eFormat.PDF : (int)eFormat.EXCEL;
+            if (ControlsList.ContainsKey("p_type_rpt")) 
+            {
+                ControlsList["p_type_rpt"] = _Extension.ToString();
+            }
+            
             foreach (KeyValuePair<string, string> Control in ControlsList)
                 ColUdt.Add(new OBJ_REPORT_PARAM(Control.Key, Control.Value));
 
-            _Extension = (rdPdfType.Checked) ? (int)eFormat.PDF : (int)eFormat.EXCEL;
             _SendToMail = CkSendInEmail.Checked;
             _BakashaId = objBatch.RunReportsBatch(clGeneral.enGeneralBatchType.CreateHeavyReports, PageHeader + ":" + TxtDescription.Text, clGeneral.enStatusRequest.InProcess, UserId, ColUdt, ReportName, _Extension, _DestinationFolder, _SendToMail);
             sMessage = " בקשתך נשלחה לביצוע ומספרה הוא: " + _BakashaId;

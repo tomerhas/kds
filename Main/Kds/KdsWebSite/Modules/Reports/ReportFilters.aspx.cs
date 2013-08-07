@@ -200,9 +200,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                    // SetTezuga(ReportName.KamutIdkuneyRashemet);
 
                     break;
-                //case ReportName.Average:
-                //    SetWorkerViewLevel(ReportName.Average);
-                //    break;
+                case ReportName.Average:
+                    fsFilter.Style["width"] = "1105px";
+                    //SetWorkerViewLevel(ReportName.Average);
+                    break;
                 //case ReportName.AverageSnifEzor:
                 //    SetWorkerViewLevel(ReportName.AverageSnifEzor);
                 //    break;
@@ -819,7 +820,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.Presence:
                     //                Params.Add("P_WORKERVIEWLEVEL", ((int)PageModule.SecurityLevel).ToString());
                     Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
-                    Params.Add("P_WORKERVIEWLEVEL", _sProfilUser); 
+                    Params.Add("P_WORKERVIEWLEVEL", _sProfilUser);
+                    if (rpt.NameReport == ReportName.Average)
+                        Params.Add("p_type_rpt", null); 
                    break;
             }
         }
@@ -845,7 +848,13 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.AverageOvdimBeSnif:
                     Params["P_STARTDATE"] = StartMonth.ToShortDateString();
                     Params["P_ENDDATE"] = EndMonth.ToShortDateString();
-                 break;  
+                 break;
+                case ReportName.Presence:
+                 if (Params["P_MISPAR_ISHI"] != "")
+                      Report.ProductionType = ProductionType.Normal;
+                 else 
+                     Report.ProductionType = ProductionType.Heavy;
+                 break;
             }
         }
         catch (Exception ex)

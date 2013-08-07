@@ -78,7 +78,7 @@
                     <td>
                         <asp:TextBox ID="UserId" runat="server" Style="display: none" />
                         <div id="DivDynamicFilter" runat="server">
-                            <fieldset class="FilterFieldSet">
+                            <fieldset id="fsFilter" runat="server"  class="FilterFieldSet">
                                 <legend id="LegendFilter" style="background-color: White">סינון </legend>
                                 <table width="100%" class="FilterTable">
                                     <tr>
