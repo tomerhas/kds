@@ -262,7 +262,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).Enabled = false;
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).Enabled = false;  
          }
-        //// ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
+         ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
          ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Text ;
          ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
          ((Button)e.Row.Cells[enGrdRitzot.btn_Rikuzim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
