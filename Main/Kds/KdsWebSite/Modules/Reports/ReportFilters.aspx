@@ -12,31 +12,23 @@
             EnlargeFieldSetsForIE8(null, "DriverWithoutSignature,DriverWithoutTacograph", 100);
 
 
-    var KamutIdkuneyRashemet = {
-              type :"KamutIdkuneyRashemet",
-              snif : $('#ctl00_KdsContent_P_SNIF'),
-              ezor : $('#ctl00_KdsContent_P_EZOR'),
-              rashemet : $('#ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete'),
-              Init: function () {
-                     this.rashemet.attr('disabled', 'disabled');
+            var KamutIdkuneyRashemet = {
+                type: "KamutIdkuneyRashemet",
+                snif: $('#ctl00_KdsContent_P_SNIF'),
+                ezor: $('#ctl00_KdsContent_P_EZOR'),
+                rashemet: $('#ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete'),
+                Init: function () {
+                    this.rashemet.attr('disabled', 'disabled');
                     this.ezor.attr('disabled', 'disabled');
                     this.snif.attr('disabled', 'disabled');
                     var k = this;
+                    //                    if ($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val() != "undefined") {
+                    //                        DisabledRashemetOrSnif($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val(), k);
+                    //                    }
+
                     $("input[name='ctl00$KdsContent$P_TEZUGA'").click(function () {
                         if (queries['RdlName'] == 'KamutIdkuneyRashemet') {
-                            if ($(this).val() == "1") {
-                                k.rashemet.removeAttr('disabled', 'disabled');
-                                k.ezor.attr('disabled', 'disabled');
-                                k.snif.attr('disabled', 'disabled');
-                                $("#ctl00_KdsContent_P_SNIF option:selected").val('');
-                            }
-                            else {
-                                k.rashemet.attr('disabled', 'disabled');
-                                k.ezor.removeAttr('disabled', 'disabled');
-                                k.snif.removeAttr('disabled', 'disabled');
-                                k.rashemet.val('');
-                                $('#ctl00_KdsContent_PMISRASHEMETListBoxExtended').empty();
-                            }
+                            DisabledRashemetOrSnif($(this).val(), k);
                         }
                     });
                 }
@@ -58,7 +50,22 @@
             }
         });
 
+        function DisabledRashemetOrSnif(val, k) {
+            if (val == "1") {
+                k.rashemet.removeAttr('disabled', 'disabled');
+                k.ezor.attr('disabled', 'disabled');
+                k.snif.attr('disabled', 'disabled');
+                $("#ctl00_KdsContent_P_SNIF option:selected").val('');
 
+            }
+            else {
+                k.rashemet.attr('disabled', 'disabled');
+                k.ezor.removeAttr('disabled', 'disabled');
+                k.snif.removeAttr('disabled', 'disabled');
+                k.rashemet.val('');
+                $('#ctl00_KdsContent_PMISRASHEMETListBoxExtended').empty();
+            }
+        }
       
     
     </script>
@@ -98,6 +105,9 @@
             <input type="hidden" id="Param100" name="Param100" runat="server" />
             <input type="hidden" id="MisRashamot" name="MisRashamot" runat="server" />
         </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="btnDisplay" />
+        </Triggers> 
     </asp:UpdatePanel>
     <script language="javascript" type="text/javascript">
         function CancelAllSelectedItems() {
