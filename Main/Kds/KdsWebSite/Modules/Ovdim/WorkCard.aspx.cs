@@ -141,9 +141,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected bool IsSidurimLoLetashlumAndLoHitychasut()
     {
-        //כל סידורי המפה והסידורים המיוחדים (שמקורם במטלה) מסומנים כלא לתשלום עם קוד סיבה 16
+        //לא קיים סידור המפה או סידור מיוחד שמקורו במטלה שמסומנים כלא לתשלום עם קוד סיבה 16
         //במידה והפונקציה מחזירה אמת, נאפשר מאשר מסתייג
-        bool bAllSidurimLoLetashlum = true;
+        //bool bAllSidurimLoLetashlum = true;
         
         clSidur _Sidur;
         if (oBatchManager.htFullEmployeeDetails != null)
@@ -151,35 +151,44 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             for (int i = 0; i < oBatchManager.htFullEmployeeDetails.Count; i++)
             {
                 _Sidur = ((clSidur)oBatchManager.htFullEmployeeDetails[i]);
-                if (_Sidur.bSidurMyuhad)
-                //אם סידור מיוחד, נבדוק שאם מקורו במטלה, אז הוא מסומן כלא לתשלום
+
+                if ((_Sidur.bSidurMyuhad && IsSidurMatala(ref _Sidur)) || _Sidur.iSugSidurRagil != clGeneral.enSugSidur.SugSidur73.GetHashCode())//אם סידור מיוחד שמקורו במטלה או סידור מפה
                 {
-                    if (!IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))
+                    if (IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))// סידור לא לתשלום עם סיבה 16
                     {
-                        //אם סידור התגלה כסידור לתשלום או לא לתשלום אבל לא בגלל סיבה 16, נבדוק שמקור הסידור הוא לא במטלה
-                        //במידה ומקורו במטלה נחזיר שגוי
-                        if (IsSidurMatala(ref _Sidur))
-                        {
-                            bAllSidurimLoLetashlum = false;
-                            break;
-                        }
+                          return true;
                     }
                 }
-                else
-                {
-                    //אם סידור מפה נבדוק שהוא מסומן כלא לתשלום
-                    if (_Sidur.iSugSidurRagil != clGeneral.enSugSidur.SugSidur73.GetHashCode())
-                    {
-                        if (!IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))
-                        {
-                            bAllSidurimLoLetashlum = false;
-                            break;
-                        }
-                    }
-                }
+        
+                //if (_Sidur.bSidurMyuhad)
+                ////אם סידור מיוחד, נבדוק שאם מקורו במטלה, אז הוא מסומן כלא לתשלום
+                //{
+                //    if (!IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))
+                //    {
+                //        //אם סידור התגלה כסידור לתשלום או לא לתשלום אבל לא בגלל סיבה 16, נבדוק שמקור הסידור הוא לא במטלה
+                //        //במידה ומקורו במטלה נחזיר שגוי
+                //        if (IsSidurMatala(ref _Sidur))
+                //        {
+                //            bAllSidurimLoLetashlum = false;
+                //            break;
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    //אם סידור מפה נבדוק שהוא מסומן כלא לתשלום
+                //    if (_Sidur.iSugSidurRagil != clGeneral.enSugSidur.SugSidur73.GetHashCode())
+                //    {
+                //        if (!IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))
+                //        {
+                //            bAllSidurimLoLetashlum = false;
+                //            break;
+                //        }
+                //    }
+                //}
             }
         }
-        return bAllSidurimLoLetashlum;
+        return false;
      }
     protected bool IsSidurMatalaNotValidExists()
     {
