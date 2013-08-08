@@ -182,6 +182,10 @@
       <FullPath>RdlReportMushalimDetails.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>Report2.rdl</Name>
+      <FullPath>Report2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>ReportNesiotKfulot.rdl</Name>
       <FullPath>ReportNesiotKfulot.rdl</FullPath>
     </ProjectItem>
@@ -230,10 +234,6 @@
     <ProjectItem>
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Report2.rdl</Name>
-      <FullPath>Report2.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

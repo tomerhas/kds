@@ -34,9 +34,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FormatNumber(round(sum(Fields!ERECH_RECHIV.Value)/Fields!NUM.Value ,2),1,0)</Value>
+                              <Value>=round(sum(Fields!ERECH_RECHIV.Value)/Fields!NUM.Value,2)
+'=iif(not isnothing(Fields!ERECH_RECHIV.Value) ,FormatNumber(round(Fields!ERECH_RECHIV.Value,2),1,0),0)</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
+                                <Format>f1</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -99,9 +101,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(not isnothing(Fields!ERECH_RECHIV.Value) ,FormatNumber(round(Fields!ERECH_RECHIV.Value,2),1,0),0)</Value>
+                              <Value>=iif(not isnothing(Fields!ERECH_RECHIV.Value) ,Fields!ERECH_RECHIV.Value,0)</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
+                                <Format>0.0;(0.0)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -439,6 +442,9 @@
                 <SortExpression>
                   <Value>=Fields!MIYUN_MEMUZAIM.Value</Value>
                 </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!TEUR_RECHIV.Value</Value>
+                </SortExpression>
               </SortExpressions>
               <TablixMembers>
                 <TablixMember />
@@ -452,6 +458,7 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <KeepTogether>true</KeepTogether>
         <DataSetName>DsRechivim</DataSetName>
+        <Left>0cm</Left>
         <Height>1.09417cm</Height>
         <Width>11.42027cm</Width>
         <Style>
@@ -541,7 +548,7 @@
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>01/11/2012 00:00:00</Value>
+          <Value>04/01/2013 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P START DATE</Prompt>
@@ -550,7 +557,7 @@
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>01/05/2013 00:00:00</Value>
+          <Value>05/01/2013 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P END DATE</Prompt>
@@ -559,7 +566,7 @@
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>=44318</Value>
+          <Value>87903</Value>
         </Values>
       </DefaultValue>
       <Prompt>P MISPAR ISHI</Prompt>
