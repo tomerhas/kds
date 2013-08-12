@@ -218,7 +218,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
                  break;
          }
 
-         if (status_chufsha_rezifa == "1")
+         if (status_chufsha_rezifa == "1" || huavara_lesachar == "1" || huavara_lesachar == "2")
              ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).Enabled = false;
 
          if (huavara_lesachar == "0" || huavara_lesachar =="&nbsp;" )
@@ -262,7 +262,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).Enabled = false;
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).Enabled = false;  
          }
-         ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
+         ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + status_chufsha_rezifa;
          ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Text ;
          ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
          ((Button)e.Row.Cells[enGrdRitzot.btn_Rikuzim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
@@ -331,15 +331,61 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
 
  protected void BdikatChufshaRezifa(object sender, EventArgs e)
  {
+     long  iRequestToTransfer;
+     string[] commandArgsAccept;
+     string sHaveChufsha;
+     clBatch objBatch = new clBatch();
+     wsBatch obach = new wsBatch();
+     try
+     {
+       
+         commandArgsAccept = ((Button)sender).CommandArgument.ToString().Split(new char[] { ',' });
+         inputHiddenBakasha.Value = commandArgsAccept[0];
+         sHaveChufsha = commandArgsAccept[1].ToString();
+         
+       
+         iRequestToTransfer = long.Parse(inputHiddenBakasha.Value);
+         if (sHaveChufsha !="2")
+         {
+             HafelChufshaRezufa(sender, e);
+         }
+         else if (sHaveChufsha == "2")
+         {
+            
+                 btnConfirm.Style.Add("Display", "None");
+                 btnYesHilan.Style.Add("Display", "None");
+                 btnYesTransfer.Style.Add("Display", "None");
+                 btnNoTransfer.Style.Add("Display", "inline");
+                 btnYesChufsha.Style.Add("Display", "inline");
+                 paMessage.Style["Width"] = "450px";
+                 paMessage.Style["Height"] = "150px";
+                 ModalPopupEx.X = 250;
+                 //sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
+                 lblMessage.Text = "קיימת בקשה לבדיקת חופשה רצופה, האם ליצור בקשה חדשה?";
+
+                 btnShowMessage_Click(this, new EventArgs());
+
+                 // ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessage('" + RizotZehot + "');", true);
+         }
+
+     }
+     catch (Exception ex)
+     {
+         clGeneral.BuildError(Page, ex.Message);
+     }
+ }
+
+ public void HafelChufshaRezufa(object sender, EventArgs e)
+ {
      long iRequestId, iRequestToTransfer;
-     string sMessage;
+     string sMessage, sHaveChufsha = "0";
      int iUserId;
      clBatch objBatch = new clBatch();
      wsBatch obach = new wsBatch();
      try
      {
          iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
-         iRequestToTransfer = long.Parse(((Button)sender).CommandArgument);  // long.Parse(((Button)sender).CommandArgument);
+         iRequestToTransfer = long.Parse( inputHiddenBakasha.Value); //((Button)sender).CommandArgument);  // long.Parse(((Button)sender).CommandArgument);
          iRequestId = objBatch.InsBakashatChufshaRezifa(clGeneral.enGeneralBatchType.BdikatChufshaRezifa, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestToTransfer);
          ViewState["iRequestId"] = iRequestId;
 
@@ -349,13 +395,13 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          btnYesTransfer.Style.Add("Display", "none");
          btnNoTransfer.Style.Add("Display", "none");
          btnYesHilan.Style.Add("Display", "None");
+         btnYesChufsha.Style.Add("Display", "none");
          paMessage.Style["Width"] = "220px";
          paMessage.Style["Height"] = "115px";
          ModalPopupEx.X = 400;
          sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
          lblMessage.Text = sMessage;
          btnShowMessage_Click(this, new EventArgs());
-
      }
      catch (Exception ex)
      {

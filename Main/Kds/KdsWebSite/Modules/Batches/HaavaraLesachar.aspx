@@ -118,6 +118,7 @@
         </div>
        <input type="hidden" id="inputHiddenBakasha" name="inputHiddenBakasha" runat="server" />
        <input type="hidden" id="inputSourceBtnHilan" name="inputSourceBtnHilan" runat="server" />
+    
       <%--  <asp:Button  ID="btnHiddenTransfer" runat="server" onclick="Transfer_Click"  style="display:none;"/> --%>
         <%--<asp:Button  ID="btnHiddenIshurHilan" runat="server" onclick="IshurHilan_Click"  style="display:none;"/>       --%>
     </ContentTemplate>
@@ -136,6 +137,7 @@
 
         <input type="button" id="btnConfirm" value="אישור" class="ImgButtonMake" name="btnConfirm" onserverclick="btnConfirm_Click" runat="server" />
         <input type="button" id="btnYesTransfer" value="כן" class="ImgButtonMake" name="btnYesTransfer" onserverclick="Transfer_Click" runat="server" />
+        <input type="button" id="btnYesChufsha" value="כן" class="ImgButtonMake" name="btnYesChufsha" onserverclick="HafelChufshaRezufa" runat="server" />
         <input type="button" id="btnYesHilan" value="כן" class="ImgButtonMake" name="btnYesHilan" onserverclick="IshurHilan_Click" runat="server" />
         <input type="button" id="btnNoTransfer" value="לא" class="ImgButtonMake" name="btnNoTransfer" runat="server" onclick="CloseMessage();" />
 
