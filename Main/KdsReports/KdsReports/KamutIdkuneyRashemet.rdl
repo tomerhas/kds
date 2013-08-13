@@ -462,7 +462,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!OVDIMCOUNT.Value)</Value>
+                              <Value>=First(Fields!OVDIMCOUNT.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
