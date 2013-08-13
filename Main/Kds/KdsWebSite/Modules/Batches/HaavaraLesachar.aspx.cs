@@ -218,7 +218,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
                  break;
          }
 
-         if (status_chufsha_rezifa == "1" || huavara_lesachar == "1" || huavara_lesachar == "2")
+         if (status_chufsha_rezifa == "1" || status_haavara_lesachar == "1" || status_haavara_lesachar == "2")
              ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).Enabled = false;
 
          if (huavara_lesachar == "0" || huavara_lesachar =="&nbsp;" )
@@ -426,6 +426,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              btnYesHilan.Style.Add("Display", "inline");
              btnYesTransfer.Style.Add("Display", "none");
              btnNoTransfer.Style.Add("Display", "inline");
+             btnYesChufsha.Style.Add("Display", "none");
              paMessage.Style["Width"] = "450px";
              paMessage.Style["Height"] = "100px";
              ModalPopupEx.X = 250;
@@ -442,6 +443,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              btnYesHilan.Style.Add("Display", "inline");
              btnYesTransfer.Style.Add("Display", "none");
              btnNoTransfer.Style.Add("Display", "inline");
+             btnYesChufsha.Style.Add("Display", "none");
              paMessage.Style["Width"] = "450px";
              paMessage.Style["Height"] = "100px";
              ModalPopupEx.X = 380;
@@ -468,6 +470,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
                  btnYesHilan.Style.Add("Display", "None");
                  btnYesTransfer.Style.Add("Display", "inline");
                  btnNoTransfer.Style.Add("Display", "inline");
+                 btnYesChufsha.Style.Add("Display", "none");
                  paMessage.Style["Width"] = "450px";
                  paMessage.Style["Height"] = "150px";
                  ModalPopupEx.X = 250;
@@ -537,6 +540,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          btnYesTransfer.Style.Add("Display", "none");
          btnNoTransfer.Style.Add("Display", "none");
          btnYesHilan.Style.Add("Display", "None");
+         btnYesChufsha.Style.Add("Display", "none");
          paMessage.Style["Width"] ="220px";
          paMessage.Style["Height"] = "115px";
          ModalPopupEx.X = 400;
@@ -588,6 +592,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          btnYesTransfer.Style.Add("Display", "none");
          btnNoTransfer.Style.Add("Display", "none");
          btnYesHilan.Style.Add("Display", "None");
+         btnYesChufsha.Style.Add("Display", "none");
          paMessage.Style["Width"] = "220px";
          paMessage.Style["Height"] = "115px";
          ModalPopupEx.X = 400;
@@ -622,6 +627,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          btnNoTransfer.Style.Add("Display", "none");
          btnConfirm.Style.Add("Display", "inline");
          btnYesHilan.Style.Add("Display", "None");
+         btnYesChufsha.Style.Add("Display", "none");
          paMessage.Style["Width"] = "220px";
          paMessage.Style["Height"] = "115px";
          ModalPopupEx.X = 400;

@@ -100,7 +100,7 @@ namespace KdsBatch
                 sSidurim = GetSidurimMeyuchRechiv(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode());
                 if (sSidurim.Length > 0)
                 {
-                    _drSidurMeyuchad = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and (sidur_misug_headrut is null or sidur_misug_headrut=3) AND MISPAR_SIDUR IN(" + sSidurim + ")", "taarich asc");
+                    _drSidurMeyuchad = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and sidur_misug_headrut is null AND MISPAR_SIDUR IN(" + sSidurim + ")", "taarich asc");
                     fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString()));
 
                     for (int I = 0; I < _drSidurMeyuchad.Length; I++)
@@ -126,12 +126,12 @@ namespace KdsBatch
                     {
                         iMeafyen53= int.Parse(_drSidurMeyuchad[I]["sidur_misug_headrut"].ToString());
                         iMisparSidur = int.Parse(_drSidurMeyuchad[I]["mispar_sidur"].ToString());
-                        if ((iMeafyen53 == 2 && iMisparSidur != 99816) || iMeafyen53 == 4 || iMeafyen53 == 6 || (iMeafyen53 == 3 && iMisparSidur == 99832))
+                        if ((iMeafyen53 == 2 && iMisparSidur != 99816) || iMeafyen53 == 4 || iMeafyen53 == 6 || (iMeafyen53 == 3 && iMisparSidur == 99832) || iMeafyen53 == 8)
                         {
                             dShatHatchalaSidur = DateTime.Parse(_drSidurMeyuchad[I]["shat_hatchala_sidur"].ToString());
                           
                             fZmanAruhatZharayim = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), objOved.Taarich);
-                            if (fSumErechRechiv>0 && fSumErechRechiv < (fMichsaYomit + fZmanAruhatZharayim))
+                            if ((fSumErechRechiv>0 ||iMisparSidur == 99801) && fSumErechRechiv < (fMichsaYomit + fZmanAruhatZharayim))
                             {
                                 fErechRechiv = CalcRechiv1BySidur(_drSidurMeyuchad[I], fMichsaYomit, oPeilut);
                                 if (iMisparSidur == 99832)
