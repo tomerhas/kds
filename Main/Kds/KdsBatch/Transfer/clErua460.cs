@@ -29,7 +29,7 @@ namespace KdsBatch
           DataRow[] dr;
           try
           {
-             dr = _dtChufsha.Select("mispar_ishi = "+ _iMisparIshi);
+              dr = _dtChufsha.Select("mispar_ishi = " + _iMisparIshi + " AND bakasha_id=" + _lBakashaId + " AND TAARICH=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
               if (dr.Length>0)
                   sErua460.Append(FormatNumber(1, 4, 2));
               else sErua460.Append(GetBlank(4));
