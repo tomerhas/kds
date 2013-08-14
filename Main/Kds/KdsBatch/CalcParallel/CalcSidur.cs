@@ -131,7 +131,7 @@ namespace KdsBatch
                             dShatHatchalaSidur = DateTime.Parse(_drSidurMeyuchad[I]["shat_hatchala_sidur"].ToString());
                           
                             fZmanAruhatZharayim = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), objOved.Taarich);
-                            if ((fSumErechRechiv>0 ||iMisparSidur == 99801) && fSumErechRechiv < (fMichsaYomit + fZmanAruhatZharayim))
+                            if ((fSumErechRechiv>0 || iMisparSidur == 99801) && fSumErechRechiv < (fMichsaYomit + fZmanAruhatZharayim))
                             {
                                 fErechRechiv = CalcRechiv1BySidur(_drSidurMeyuchad[I], fMichsaYomit, oPeilut);
                                 if (iMisparSidur == 99832)
