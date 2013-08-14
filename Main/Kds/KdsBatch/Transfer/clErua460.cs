@@ -11,11 +11,13 @@ namespace KdsBatch
     {
       private DataTable _dtPrem;
       private DataTable _dtChufsha;
+      private DateTime dChodeshIbud;
       public clErua460(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtChufshaRezufa)
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,460)
       {
           _dtPrem = dtPrem;
          _dtChufsha = dtChufshaRezufa;
+         dChodeshIbud = DateTime.Parse(drPirteyOved["chodesh_ibud"].ToString());
           _sBody = SetBody();
           if (_sBody != null)
              PrepareLines();
@@ -29,8 +31,8 @@ namespace KdsBatch
           DataRow[] dr;
           try
           {
-              dr = _dtChufsha.Select("mispar_ishi = " + _iMisparIshi + " AND bakasha_id=" + _lBakashaId + " AND TAARICH=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
-              if (dr.Length>0)
+              dr = _dtChufsha.Select("mispar_ishi = " + _iMisparIshi);
+              if (dr.Length > 0 && dChodeshIbud == _dMonth)
                   sErua460.Append(FormatNumber(1, 4, 2));
               else sErua460.Append(GetBlank(4));
 
