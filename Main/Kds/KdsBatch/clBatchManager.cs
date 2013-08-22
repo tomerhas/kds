@@ -12786,39 +12786,48 @@ namespace KdsBatch
                                             bSign = Condition6Saif11(ref oSidur);
                                             if (!bSign)
                                             {
-                                                //אגד תעבורה 
-                                                //bSign =  Saif5EggedTaavura(drSugSidur, ref oSidur);
-                                                //if (!bSign)
-                                                //{
-                                                //תנאי 7
-                                                bSign = Condition7Saif11(drSugSidur, ref oSidur);
+                                                bSign = ConditionSidurHeadrut(ref oSidur);
                                                 if (!bSign)
                                                 {
-                                                    //תנאי 8
-                                                    bSign = Condition8Saif11(drSugSidur, ref oSidur);
+                                                    //אגד תעבורה 
+                                                    //bSign =  Saif5EggedTaavura(drSugSidur, ref oSidur);
+                                                    //if (!bSign)
+                                                    //{
+                                                    //תנאי 7
+                                                    bSign = Condition7Saif11(drSugSidur, ref oSidur);
                                                     if (!bSign)
                                                     {
-                                                        //תנאי 9
-                                                        bSign = Condition9Saif11(drSugSidur, ref oSidur);
-                                                        if (bSign)
+                                                        //תנאי 8
+                                                        bSign = Condition8Saif11(drSugSidur, ref oSidur);
+                                                        if (!bSign)
                                                         {
-                                                            iKodSibaLoLetashlum = 10;
+                                                            //תנאי 9
+                                                            bSign = Condition9Saif11(drSugSidur, ref oSidur);
+                                                            if (bSign)
+                                                            {
+                                                                iKodSibaLoLetashlum = 10;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            iKodSibaLoLetashlum = 17;
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        iKodSibaLoLetashlum = 17;
+                                                        iKodSibaLoLetashlum = 15;
                                                     }
+                                                    //}
+                                                    //else
+                                                    //{
+                                                    //    iKodSibaLoLetashlum = 12;
+                                                    //} 
                                                 }
                                                 else
                                                 {
-                                                    iKodSibaLoLetashlum = 15;
+                                                    iKodSibaLoLetashlum = 22;
                                                 }
-                                                //}
-                                                //else
-                                                //{
-                                                //    iKodSibaLoLetashlum = 12;
-                                                //} 
+                                                
                                             }
                                             else
                                             {
@@ -13000,6 +13009,31 @@ namespace KdsBatch
             return bSign;
         }
 
+
+        private bool ConditionSidurHeadrut(ref clSidur oSidur)
+        {
+            bool bLoLetashlumAutomati = false;
+            if (iSugYom > 19 ||(iSugYom==10 && (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() )))
+            {
+                if (oSidur.bSidurMyuhad)
+                {//סידור מיוחד
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod))
+                    {
+                        if ((oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode().ToString()) ||
+                            (oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMilueim.GetHashCode().ToString()) ||
+                            (oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enTeuna.GetHashCode().ToString()) ||
+                            (oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString()))
+                        {
+                            bLoLetashlumAutomati = true;
+                        }
+                    }
+                }
+
+            }
+            //תנאי שביעי לסעיף 11
+          
+            return bLoLetashlumAutomati;
+        }
         private bool Condition7Saif11(DataRow[] drSugSidur, ref clSidur oSidur)
         {
             bool bLoLetashlumAutomati;

@@ -106,8 +106,8 @@
                             <HeaderStyle CssClass="GridHeader" />
                             <ItemStyle CssClass="ItemRow" Width="90px" />
                            <ItemTemplate>
-                                       <asp:button ID="btnYes"  runat="server"  Width="30px" text="כן" Enabled="true" CssClass ="ImgButtonSearch"  OnClick="TransferRitza" />
-                                       <asp:button ID="btnNo"  runat="server"  Width="30px" text="לא" Enabled="true" CssClass ="ImgButtonSearch"  OnClick="TransferRitza" />
+                                       <asp:button ID="btnYes"  runat="server"  Width="28px" text="כן" Enabled="true" CssClass ="ImgButtonSearch"  OnClick="TransferRitza" />
+                                       <asp:button ID="btnNo"  runat="server"  Width="28px" text="לא" Enabled="true" CssClass ="ImgButtonSearch"  OnClick="TransferRitza" />
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:BoundField DataField="PARAM1" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>

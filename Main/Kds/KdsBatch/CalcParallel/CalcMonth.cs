@@ -4040,12 +4040,12 @@ namespace KdsBatch
             try
             {
                 //יש לבצע את חישוב הרכיב רק עבור עובדים עם [שליפת מאפיין ביצוע (קוד מאפיין = 42, מ.א., תאריך)] עם ערך 1, אחרת אין לפתוח רשומה לרכיב זה בשום רמה.
-                if (objOved.objMeafyeneyOved.sMeafyen42 == "1")
-                {
+                //if (objOved.objMeafyeneyOved.sMeafyen42 == "1")
+                //{
                     //ערך הרכיב = סכימת ערך הרכיב לכל הימים בחודש  
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode());
                     addRowToTable(clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode(), fSumDakotRechiv);
-                }
+                //}
             }
             catch (Exception ex)
             {
