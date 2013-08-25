@@ -13013,7 +13013,7 @@ namespace KdsBatch
         private bool ConditionSidurHeadrut(ref clSidur oSidur)
         {
             bool bLoLetashlumAutomati = false;
-            if (iSugYom > 19 ||(iSugYom==10 && (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() )))
+            if (iSugYom > 19 ||(iSugYom==10 && (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() )))
             {
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
