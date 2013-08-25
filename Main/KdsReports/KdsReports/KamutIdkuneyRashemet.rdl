@@ -123,7 +123,7 @@
               <Width>2.5cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.64521cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.5cm</Width>
@@ -187,7 +187,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!OVDIMCOUNT.Value)</Value>
+                              <Value>=First(Fields!OVDIMCOUNT.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -390,21 +390,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="TICKETS">
+                    <Textbox Name="UPDATE_TICKETS">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!TICKETS.Value)</Value>
+                              <Value>=Sum(Fields!UPDATE_TICKETS.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>TICKETS</rd:DefaultName>
+                      <rd:DefaultName>UPDATE_TICKETS</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -665,21 +665,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="TICKETS2">
+                    <Textbox Name="UPDATE_TICKETS1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!TICKETS.Value)</Value>
+                              <Value>=Sum(Fields!UPDATE_TICKETS.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>TICKETS2</rd:DefaultName>
+                      <rd:DefaultName>UPDATE_TICKETS1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1371,6 +1371,11 @@
                   <GroupExpression>=iif(Parameters!P_TEZUGA.Value=1, Fields!TEUR_SNIF_AV.Value, Fields!NAME_RASHEMET.Value)</GroupExpression>
                 </GroupExpressions>
               </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+                </SortExpression>
+              </SortExpressions>
               <TablixHeader>
                 <Size>3.18792cm</Size>
                 <CellContents>
@@ -1715,7 +1720,7 @@
         <DataSetName>DsIdkuneyRashemet</DataSetName>
         <Top>3.72745cm</Top>
         <Height>2.4cm</Height>
-        <Width>32.40771cm</Width>
+        <Width>32.55292cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1787,7 +1792,7 @@
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.pro_get_updated_tickets</CommandText>
+        <CommandText>PKG_REPORTS.PRO_GET_UPDATED_TICKETS</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -1849,6 +1854,10 @@
         </Field>
         <Field Name="TICKETS">
           <DataField>TICKETS</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="UPDATE_TICKETS">
+          <DataField>UPDATE_TICKETS</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
