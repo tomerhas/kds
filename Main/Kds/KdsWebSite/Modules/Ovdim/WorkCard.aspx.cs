@@ -144,7 +144,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //לא קיים סידור המפה או סידור מיוחד שמקורו במטלה שמסומנים כלא לתשלום עם קוד סיבה 16
         //במידה והפונקציה מחזירה אמת, נאפשר מאשר מסתייג
         //bool bAllSidurimLoLetashlum = true;
-        
+
         clSidur _Sidur;
         if (oBatchManager.htFullEmployeeDetails != null)
         {
@@ -156,10 +156,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 {
                     if (IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))// סידור לא לתשלום עם סיבה 16
                     {
-                          return true;
+                        return true;
                     }
                 }
-        
+
                 //if (_Sidur.bSidurMyuhad)
                 ////אם סידור מיוחד, נבדוק שאם מקורו במטלה, אז הוא מסומן כלא לתשלום
                 //{
