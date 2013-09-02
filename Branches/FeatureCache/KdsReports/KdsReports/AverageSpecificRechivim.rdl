@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Tablix Name="TbMatrix">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>1.15062cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.30934cm</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.67939cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox2">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Format(Fields!TAARICH.Value,"MM/yy")</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox2</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="ERECH_RECHIV">
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=iif(not isnothing(Fields!ERECH_RECHIV.Value) ,FormatNumber(round(Code.GetErech(Fields!KOD_RECHIV.Value,Fields!ERECH_RECHIV.Value),2),1,0),"")</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>ERECH_RECHIV</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <TablixHeader>
+                <Size>1.56836cm</Size>
+                <CellContents>
+                  <Textbox Name="Textbox1">
+                    <CanGrow>true</CanGrow>
+                    <KeepTogether>true</KeepTogether>
+                    <Paragraphs>
+                      <Paragraph>
+                        <TextRuns>
+                          <TextRun>
+                            <Value>חודש</Value>
+                            <Style>
+                              <FontSize>8pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
+                          </TextRun>
+                        </TextRuns>
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
+                      </Paragraph>
+                    </Paragraphs>
+                    <rd:DefaultName>Textbox1</rd:DefaultName>
+                    <Style>
+                      <Border>
+                        <Style>Solid</Style>
+                      </Border>
+                      <BackgroundColor>LightGrey</BackgroundColor>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                  </Textbox>
+                </CellContents>
+              </TablixHeader>
+            </TablixMember>
+            <TablixMember>
+              <Group Name="Teur">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!TEUR_RECHIV.Value</GroupExpression>
+                </GroupExpressions>
+              </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!TAARICH.Value</Value>
+                  <Direction>Descending</Direction>
+                </SortExpression>
+              </SortExpressions>
+              <TablixMembers>
+                <TablixMember>
+                  <TablixHeader>
+                    <Size>1.56836cm</Size>
+                    <CellContents>
+                      <Textbox Name="Textbox9">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=trim(Fields!TEUR_RECHIV.Value)</Value>
+                                <Style>
+                                  <FontSize>8pt</FontSize>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Center</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox9</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Style>Solid</Style>
+                          </Border>
+                          <BackgroundColor>LightGrey</BackgroundColor>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <TablixMembers>
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixMember>
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="Group1">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!TAARICH.Value</GroupExpression>
+                </GroupExpressions>
+              </Group>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+              <Visibility>
+                <Hidden>=len(Fields!TEUR_RECHIV.Value)=0</Hidden>
+              </Visibility>
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <KeepTogether>true</KeepTogether>
+        <DataSetName>DsRechivim</DataSetName>
+        <Filters>
+          <Filter>
+            <FilterExpression>=CInt(Code.IsExistIn(Fields!KOD_RECHIV.Value,Parameters!p_SpecificRechivs.Value))</FilterExpression>
+            <Operator>Equal</Operator>
+            <FilterValues>
+              <FilterValue DataType="Integer">1</FilterValue>
+            </FilterValues>
+          </Filter>
+        </Filters>
+        <SortExpressions>
+          <SortExpression>
+            <Value>=Fields!TEUR_RECHIV.Value</Value>
+          </SortExpression>
+        </SortExpressions>
+        <Height>2.24775cm</Height>
+        <Width>2.45996cm</Width>
+        <Visibility>
+          <Hidden>=iif(CInt(Code.IsExistIn(Fields!KOD_RECHIV.Value,Parameters!p_SpecificRechivs.Value))=0,true,false)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
+          <TextAlign>Center</TextAlign>
+        </Style>
+      </Tablix>
+      <Textbox Name="Textbox3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=iif(CInt(Code.IsExistIn(Fields!KOD_RECHIV.Value,Parameters!p_SpecificRechivs.Value))=0,"לא נמצאו נתונים","")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>0.81703cm</Top>
+        <Left>0.27517cm</Left>
+        <Height>0.6cm</Height>
+        <Width>3.16887cm</Width>
+        <ZIndex>1</ZIndex>
+        <Visibility>
+          <Hidden>=iif(CInt(Code.IsExistIn(Fields!KOD_RECHIV.Value,Parameters!p_SpecificRechivs.Value))=0,false,true)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+    </ReportItems>
+    <Height>0.94744in</Height>
+    <Style />
+  </Body>
+  <Width>1.608in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>19cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsCon">
+      <DataSourceReference>KdsProd</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>a4db09e9-a331-46db-b57a-d8091ab6c86d</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsRechivim">
+      <Query>
+        <DataSourceName>DsCon</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_START_DATE">
+            <Value>=Parameters!P_START_DATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_END_DATE">
+            <Value>=Parameters!P_END_DATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_RECHIVIM_TO_AVERAGE</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="KOD_RECHIV">
+          <DataField>KOD_RECHIV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_RECHIV">
+          <DataField>TEUR_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ERECH_RECHIV">
+          <DataField>ERECH_RECHIV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="P_START_DATE">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>01/01/2013 00:00:00</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P START DATE</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_END_DATE">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>02/01/2013 00:00:00</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P END DATE</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_MISPAR_ISHI">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=77787</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P MISPAR ISHI</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="p_SpecificRechivs">
+      <DataType>String</DataType>
+      <Prompt>SpecificRechivs</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <Code>function GetErech(byVal iKodRechiiv as integer,byVal dErech as Decimal)  As Decimal
+        select  iKodRechiiv
+	case  269, 129,126,118,117,1,115,114,113,112,78,77,76,54,33,30,28,26,7,1
+		Return (dErech /60)
+	case else
+		 Return dErech 
+        end select
+end function
+
+    Function IsExistIn(ByVal p1 As Integer, ByVal s1 As String) As Integer
+      Dim s As String() = s1.Split(",")
+        For Each item As String In s
+            If item = p1.ToString() Then
+                Return 1
+            End If
+        Next
+        Return 0
+
+    End Function
+</Code>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>aa34a6fa-e2e7-4477-b1b3-02ab5cf63f1e</rd:ReportID>
+</Report>
