@@ -37,6 +37,7 @@ public partial class Modules_Reports_BackgroundReport : System.Web.UI.Page
 
     protected void btnSend_Click(object sender, EventArgs e)
     {
+        KdsReport _Report = (KdsReport)Session["Report"];
         string sMessage = string.Empty;
         clBatch objBatch = new clBatch();
         KdsLibrary.BL.clReport oReport = KdsLibrary.BL.clReport.GetInstance();
@@ -44,7 +45,7 @@ public partial class Modules_Reports_BackgroundReport : System.Web.UI.Page
         Dictionary<string, string> ControlsList = (Dictionary<string, string>)Session["ReportParameters"];
         try
         {
-            _Extension = (rdPdfType.Checked) ? (int)eFormat.PDF : (int)eFormat.EXCEL;
+            _Extension = (rdPdfType.Checked) ? (int)eFormat.PDF : (_Report.EXTENSION == "EXCEL" ? (int)eFormat.EXCEL : (int)eFormat.EXCELOPENXML);
             if (ControlsList.ContainsKey("p_type_rpt")) 
             {
                 ControlsList["p_type_rpt"] = _Extension.ToString();

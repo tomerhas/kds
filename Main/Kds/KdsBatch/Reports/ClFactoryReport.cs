@@ -73,7 +73,7 @@ namespace KdsBatch.Reports
                     _RptModule.AddParameter(Report.ReportParams[i].Name, Report.ReportParams[i].Value);
                 }
                 //                clGeneral.LogMessage("Create" + Report.Extension.ToString() + " file:" + nameFolderKds + Report.RdlName +ParamForLog , System.Diagnostics.EventLogEntryType.Information);
-                fileReport = _RptModule.CreateReport(nameFolderKds + Report.RdlName, Report.Extension);
+                fileReport = _RptModule.CreateReport(nameFolderKds + Report.RdlName, Report.Extension, Report.RSVersion, Report.ServiceUrlConfigKey);
                 return fileReport;
 
             }

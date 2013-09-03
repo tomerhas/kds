@@ -76,6 +76,79 @@ namespace KdsLibrary.Utils.Reports
                 parameters = null;
             }
         }
+
+        public Byte[] CreateReport(String rptName, eFormat sFormat, string sVersion, string ServiceUrlConfigKey)
+        {
+            switch (sVersion)
+            {
+                case "RS2012":
+                    return CreateReport2012(rptName, sFormat, ServiceUrlConfigKey);
+                case "RS2008":
+                    return CreateReport2008(rptName, sFormat, ServiceUrlConfigKey);
+                default:
+                    return CreateReport2008(rptName, sFormat, ServiceUrlConfigKey);
+            }
+        }
+         public Byte[] CreateReport2008(String rptName, eFormat sFormat, string ServiceUrlConfigKey)
+        {
+            format = sFormat.ToString();
+            ReportExecutionService rs = new ReportExecutionService();
+         
+            try
+            {
+                rs.Credentials = new System.Net.NetworkCredential(ConfigurationSettings.AppSettings["RSUserName"], ConfigurationSettings.AppSettings["RSPassword"], ConfigurationSettings.AppSettings["RSDomain"]);
+                rs.Url = ConfigurationSettings.AppSettings[ServiceUrlConfigKey];
+                ExecutionInfo execInfo = new ExecutionInfo();
+                ExecutionHeader execHeader = new ExecutionHeader();
+
+                rs.ExecutionHeaderValue = execHeader;
+                rs.Timeout = 1000000000;
+                execInfo = rs.LoadReport(rptName, historyID);
+                rs.SetExecutionParameters(parameters, "he-IL");
+                String SessionId = rs.ExecutionHeaderValue.ExecutionID;
+                CurrentReportByte = rs.Render(format, devInfo, out extension, out encoding, out mimeType, out warnings, out streamIDs);
+                return CurrentReportByte;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                rs.Dispose();
+                parameters = null;
+            }
+        }
+          public Byte[] CreateReport2012(String rptName, eFormat sFormat, string ServiceUrlConfigKey)
+        {
+            format = sFormat.ToString();
+            KdsLibrary.ReportingServices2012.ReportExecutionService rs = new KdsLibrary.ReportingServices2012.ReportExecutionService();
+            KdsLibrary.ReportingServices2012.Warning[] warnings2012 = null;
+            try
+            {
+                rs.Credentials = new System.Net.NetworkCredential(ConfigurationSettings.AppSettings["RSUserName"], ConfigurationSettings.AppSettings["RSPassword"], ConfigurationSettings.AppSettings["RSDomain"]);
+                rs.Url = ConfigurationSettings.AppSettings[ServiceUrlConfigKey];
+                KdsLibrary.ReportingServices2012.ExecutionInfo execInfo = new KdsLibrary.ReportingServices2012.ExecutionInfo();
+                KdsLibrary.ReportingServices2012.ExecutionHeader execHeader = new KdsLibrary.ReportingServices2012.ExecutionHeader();
+
+                rs.ExecutionHeaderValue = execHeader;
+                rs.Timeout = 1000000000;
+                execInfo = rs.LoadReport (rptName, historyID);
+                //rs.SetExecutionParameters(parameters, "he-IL");
+                String SessionId = rs.ExecutionHeaderValue.ExecutionID;
+                CurrentReportByte = rs.Render(format, devInfo, out extension, out mimeType, out encoding, out warnings2012, out streamIDs);
+                return CurrentReportByte;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                rs.Dispose();
+                parameters = null;
+            }
+        }
         public FileInfo CreateOutputFile(string path, string filename)
         {
             try
@@ -159,6 +232,9 @@ namespace KdsLibrary.Utils.Reports
                     case eFormat.EXCEL: 
                         Ext = ".xls";
                         break;
+                    case eFormat.EXCELOPENXML:
+                        Ext = ".xlsx";
+                        break;
                     case eFormat.PDF: 
                         Ext = ".pdf";
                         break;
@@ -172,7 +248,8 @@ namespace KdsLibrary.Utils.Reports
     public enum eFormat
     {
         EXCEL,
-        PDF
+        PDF,
+        EXCELOPENXML
     }
 
 }

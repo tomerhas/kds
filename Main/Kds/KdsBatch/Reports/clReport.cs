@@ -16,6 +16,9 @@ namespace KdsBatch.Reports
         private eFormat _Extension;
         private long _BakashaId;
         private int _MisparIshi;
+        private string _sRSVersion;
+        private string _sUrlConfigKey;
+        private string _sServiceUrlConfigKey;
 
         //private DateTime _Month; //for rikuzim
         //private int _sug_chishuv;
@@ -81,11 +84,21 @@ namespace KdsBatch.Reports
         {
             get { return _BakashaId; }
         }
-
-
         public int MisparIshi
         {
             get { return _MisparIshi; }
+        }
+        public string RSVersion
+        {
+            get { return _sRSVersion; }
+        }
+        public string UrlConfigKey
+        {
+            get { return _sUrlConfigKey; }
+        }
+        public string ServiceUrlConfigKey
+        {
+            get { return _sServiceUrlConfigKey; }
         }
         public List<clReportParam> ReportParams
         {
@@ -118,7 +131,25 @@ namespace KdsBatch.Reports
             _MisparIshi = MisparIshi;
             _iKodReport = KodReport;
         }
-
+        public clReport(string name, int kod, string teur, long BakashaId, eFormat Extension, int MisparIshi, string sRSVersion, string sUrlRSConfig, string sServiceUrlConfig)
+        {
+            _ReportParams = new List<clReportParam>();
+            _sRdlName = name;
+            _iKodReport = kod;
+            _sTeur = " דו''ח " + teur;
+            _Extension = Extension;
+            _BakashaId = BakashaId;
+            _MisparIshi = MisparIshi;
+            _sRSVersion = sRSVersion;
+            _sUrlConfigKey = sUrlRSConfig;
+            _sServiceUrlConfigKey = sServiceUrlConfig;
+        }
+        public clReport(string name, int kod, string teur, int HasPeriodParameters, int MisparIshi, string sRSVersion, string sUrlRSConfig, string sServiceUrlConfig)
+            : this(name, kod, teur, 0, eFormat.EXCEL, MisparIshi, sRSVersion, sUrlRSConfig, sServiceUrlConfig)
+        {
+            _MisparIshi = MisparIshi;
+            _HasPeriodParameters = (HasPeriodParameters == 1) ? true : false;
+        }
 
         //public clReport(long BakashaId, int MisparIshi, DateTime Month, int sug_chishuv, int iEzor, int iMaamad, int iHevra, DateTime dTarChishuv)//for rikuzim
         //{

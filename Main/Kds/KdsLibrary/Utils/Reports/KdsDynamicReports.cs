@@ -74,7 +74,11 @@ namespace KdsLibrary.Utils.Reports
         private List<KdsUserControl> _UserControls;
         private Orientation _Orientation;
         private ProductionType _ProductionType;
+        private string _RSVersion;
         private int _ZoomPercent = 90 ;
+        private string _SERVICE_URL_CONFIG_KEY;
+        private string _URL_CONFIG_KEY;
+        private string _EXTENSION;
 
         public KdsReport() { }
 
@@ -141,6 +145,30 @@ namespace KdsLibrary.Utils.Reports
             set { _UserControls = value; }
         }
 
+        [XmlAttribute("RSVersion")]
+        public string RSVersion
+        {
+            get { return _RSVersion; }
+            set { _RSVersion = value; }
+        }
+        [XmlAttribute("URL_CONFIG_KEY")]
+        public string URL_CONFIG_KEY
+        {
+            get { return _URL_CONFIG_KEY; }
+            set { _URL_CONFIG_KEY = value; }
+        }
+        [XmlAttribute("SERVICE_URL_CONFIG_KEY")]
+        public string SERVICE_URL_CONFIG_KEY
+        {
+            get { return _SERVICE_URL_CONFIG_KEY; }
+            set { _SERVICE_URL_CONFIG_KEY = value; }
+        }
+        [XmlAttribute("EXTENSION")]
+        public string EXTENSION
+        {
+            get { return _EXTENSION; }
+            set { _EXTENSION = value; }
+        }
         [XmlIgnore]
         public ReportName NameReport
         {
@@ -554,7 +582,7 @@ namespace KdsLibrary.Utils.Reports
         KamutIdkuneyRashemet,
         Tigburim,
         AverageSnifEzor,
-        AverageSnifInEzor, 
+        AverageSnifInEzor,
         AverageOvdimBeSnif,
         Keytanot
 
@@ -569,6 +597,4 @@ namespace KdsLibrary.Utils.Reports
         Normal,
         Heavy
     }
-
-
 }

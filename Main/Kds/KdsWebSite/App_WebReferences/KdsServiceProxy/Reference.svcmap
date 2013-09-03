@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="fb062f4f-aecc-4844-a9c5-02f5fd8ad120" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="68f9a7b8-9258-4f95-94db-9b5505677497" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -21,11 +21,11 @@
     <MetadataSource Address="http://localhost:8731/KdsLocalService" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="KdsLocalService.xsd" MetadataType="Schema" ID="c5f7a101-928f-4e6f-8b70-a84d1c76dc50" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?xsd=xsd1" />
-    <MetadataFile FileName="KdsLocalService1.xsd" MetadataType="Schema" ID="3174b91c-8a72-4f10-a319-abecd8216d61" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?xsd=xsd2" />
-    <MetadataFile FileName="KdsLocalService2.xsd" MetadataType="Schema" ID="ba37ad6c-006d-48fc-a517-d0b8e0e33ad6" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?xsd=xsd0" />
-    <MetadataFile FileName="KdsLocalService.disco" MetadataType="Disco" ID="7b665ebb-9850-4545-b324-e2501cbfa2d0" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?disco" />
-    <MetadataFile FileName="BatchService.wsdl" MetadataType="Wsdl" ID="d3ef2821-c5e0-4100-ba5f-0db1ce8bf279" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?wsdl" />
+    <MetadataFile FileName="KdsLocalService.xsd" MetadataType="Schema" ID="c7a640fa-bc85-4960-acce-929cb0fca701" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?xsd=xsd1" />
+    <MetadataFile FileName="KdsLocalService1.xsd" MetadataType="Schema" ID="c057f2bf-7a1a-45b1-94a5-459564a8786c" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?xsd=xsd2" />
+    <MetadataFile FileName="KdsLocalService2.xsd" MetadataType="Schema" ID="6a0582b2-c450-4c61-86a3-da7a5d3ae7f5" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?xsd=xsd0" />
+    <MetadataFile FileName="KdsLocalService.disco" MetadataType="Disco" ID="98542d31-0be5-45b6-b799-96afbc1b6709" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?disco" />
+    <MetadataFile FileName="BatchService.wsdl" MetadataType="Wsdl" ID="95bede36-e57c-4754-a314-221dea9b0a81" SourceId="1" SourceUrl="http://localhost:8731/KdsLocalService?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

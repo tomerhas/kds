@@ -26,6 +26,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 {
     private KdsDynamicReport _KdsDynamicReport;
     private KdsReport _Report;
+    private KdsDynamicReport _ConstDynamicReportParam;
+    private KdsReport _ConstReportParam;
     private PanelFilters _PanelFilters;
     private List<string> _ControlsList;
     private string _sProfilUser="0";
@@ -481,11 +483,18 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     private void LoadKdsDynamicReport()
     {
         _KdsDynamicReport = KdsDynamicReport.GetKdsReport();
+        _ConstDynamicReportParam = (KdsDynamicReport)Session["ConstDynamicReportParam"];
+        _ConstReportParam = _ConstDynamicReportParam.FindReport(RdlName);
         _Report = new KdsReport();
         _Report = _KdsDynamicReport.FindReport(RdlName);
+        _Report.PageHeader = _ConstReportParam.PageHeader;
+        _Report.RSVersion = _ConstReportParam.RSVersion;
+        _Report.URL_CONFIG_KEY = _ConstReportParam.URL_CONFIG_KEY;
+        _Report.SERVICE_URL_CONFIG_KEY = _ConstReportParam.SERVICE_URL_CONFIG_KEY;
+        _Report.EXTENSION = _ConstReportParam.EXTENSION;
+        _Report.RdlName = _ConstReportParam.RdlName;
         Session["Report"] = _Report;
         Session["Resources"] = (KdsSysManResources)_KdsDynamicReport.Resources;
-        
     }
     private KdsReport Report
     {
