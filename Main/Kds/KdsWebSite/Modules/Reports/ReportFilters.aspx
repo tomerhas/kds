@@ -105,9 +105,9 @@
             <input type="hidden" id="Param100" name="Param100" runat="server" />
             <input type="hidden" id="MisRashamot" name="MisRashamot" runat="server" />
         </ContentTemplate>
-       <%-- <Triggers>
+        <Triggers>
             <asp:PostBackTrigger ControlID="btnDisplay" />
-        </Triggers> --%>
+        </Triggers> 
     </asp:UpdatePanel>
     <script language="javascript" type="text/javascript">
         function CancelAllSelectedItems() {
