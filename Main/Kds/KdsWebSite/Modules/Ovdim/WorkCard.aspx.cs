@@ -144,7 +144,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //לא קיים סידור המפה או סידור מיוחד שמקורו במטלה שמסומנים כלא לתשלום עם קוד סיבה 16
         //במידה והפונקציה מחזירה אמת, נאפשר מאשר מסתייג
         //bool bAllSidurimLoLetashlum = true;
-
+        bool isOk = true;
         clSidur _Sidur;
         if (oBatchManager.htFullEmployeeDetails != null)
         {
@@ -152,8 +152,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             {
                 _Sidur = ((clSidur)oBatchManager.htFullEmployeeDetails[i]);
 
-                if ((_Sidur.bSidurMyuhad && IsSidurMatala(ref _Sidur)) || _Sidur.iSugSidurRagil != clGeneral.enSugSidur.SugSidur73.GetHashCode())//אם סידור מיוחד שמקורו במטלה או סידור מפה
+                if ((_Sidur.bSidurMyuhad && IsSidurMatala(ref _Sidur)) || (!_Sidur.bSidurMyuhad && _Sidur.iSugSidurRagil != clGeneral.enSugSidur.SugSidur73.GetHashCode()))//אם סידור מיוחד שמקורו במטלה או סידור מפה
                 {
+                    isOk = false;
                     if (IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))// סידור לא לתשלום עם סיבה 16
                     {
                         return true;
@@ -188,7 +189,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //}
             }
         }
-        return false;
+        return isOk;
      }
     protected bool IsSidurMatalaNotValidExists()
     {
@@ -237,7 +238,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              {                                   
                  //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                  //רק במידה ולא נעשה שינוי בכרטיס    
-                 //או שנעשה שינוי בכרטיס וגם כל סידורי המפה והסידורים המיוחדים (שמקורם במטלה) מסומנים כלא לתשלום עם קוד סיבה 16             
+                 // או שנעשה שינוי בכרטיס וקיים סידור מפה או סידורים המיוחדים (שמקורם במטלה) מסומנים כלא לתשלום עם קוד סיבה 16 או שלא קיים כלל סידור מפה או מיוחד (שמקורו במטלה             
                  bool bSidurimLoLetashlum = IsSidurimLoLetashlumAndLoHitychasut();
                  btnApprove.Disabled = (bWorkCardWasUpdate) && (!bSidurimLoLetashlum);
                  btnNotApprove.Disabled = (bWorkCardWasUpdate) && (!bSidurimLoLetashlum);
@@ -471,11 +472,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              clOvedYomAvoda oOvedYomAvodaDetails = new clOvedYomAvoda(iMisparIshi, dDateCard);
              if (ViewState["LoadNewCard"] != null)
                  bLoadNewCard = (bool.Parse(ViewState["LoadNewCard"].ToString()) == true);
-             if ( (hidChanges.Value.ToLower() != "true")  && 
-                 (((oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()) && (!Page.IsPostBack) && (Request.QueryString["WCardUpdate"] == null))
-                 || ((Request.QueryString["WCardUpdate"]==null) && (oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()))
+             if ( (hidChanges.Value.ToLower() != "true")  &&
+                 (((oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()) && (!Page.IsPostBack) && (Request.QueryString["WCardUpdate"] == null))
+                 || ((Request.QueryString["WCardUpdate"] == null) && (oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
                  ))     
-                       
+                  // || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()     
              {       
                  oBatchManager.InitGeneralData();
                  oBatchManager.CardStatus = clGeneral.enCardStatus.Calculate;

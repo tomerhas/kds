@@ -21,15 +21,17 @@
                     this.rashemet.attr('disabled', 'disabled');
                     this.ezor.attr('disabled', 'disabled');
                     this.snif.attr('disabled', 'disabled');
-                    var k = this;
-                                        if ($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val() != undefined) {
-                                            DisabledRashemetOrSnif($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val(), k);
-                                        }
+                    var k = this; 
+                    $("#ctl00_KdsContent_P_TEZUGA_0").attr('checked', true);
+                    if ($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val() != undefined) {
+                        DisabledRashemetOrSnif($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val(), k);
+                    }
+                   
 
                     $("input[name='ctl00$KdsContent$P_TEZUGA'").click(function () {
-                        if (queries['RdlName'] == 'KamutIdkuneyRashemet') {
+                       // if (queries['RdlName'] == 'KamutIdkuneyRashemet') {
                             DisabledRashemetOrSnif($(this).val(), k);
-                        }
+                       // }
                     });
                 }
             }
@@ -105,9 +107,6 @@
             <input type="hidden" id="Param100" name="Param100" runat="server" />
             <input type="hidden" id="MisRashamot" name="MisRashamot" runat="server" />
         </ContentTemplate>
-        <Triggers>
-            <asp:PostBackTrigger ControlID="btnDisplay" />
-        </Triggers> 
     </asp:UpdatePanel>
     <script language="javascript" type="text/javascript">
         function CancelAllSelectedItems() {
@@ -231,12 +230,18 @@
                 if (mis == "") {
                     args.IsValid = false;
                 }
-                else checkRashemet(mis, args);
+                else {
+                    var str = mis.split(',');
+                    for (i = 0; i < str.length; i++) {
+                        if(str[i].length>0)
+                            checkRashemet(str[i], args);
+                    }
+                }
             }
         }
         function checkRashemet(mis, args) {
             if (document.getElementById("ctl00_KdsContent_MisRashamot").value.indexOf("," + mis + ",") == -1) {
-                alert("מספר אישי של רשמת לא קיים או לא פעיל לתאריך הנבחר");
+                alert("מספר אישי של רשמת " + mis + " לא קיים או לא פעיל לתאריך הנבחר");
                 document.getElementById("ctl00_KdsContent_P_MIS_RASHEMET").value = "";
                 args.IsValid = false;
             }
