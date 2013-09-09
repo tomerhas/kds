@@ -472,43 +472,47 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              clOvedYomAvoda oOvedYomAvodaDetails = new clOvedYomAvoda(iMisparIshi, dDateCard);
              if (ViewState["LoadNewCard"] != null)
                  bLoadNewCard = (bool.Parse(ViewState["LoadNewCard"].ToString()) == true);
-             if ( (hidChanges.Value.ToLower() != "true")  &&
+             if ((hidChanges.Value.ToLower() != "true") &&
                  (((oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()) && (!Page.IsPostBack) && (Request.QueryString["WCardUpdate"] == null))
                  || ((Request.QueryString["WCardUpdate"] == null) && (oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
-                 ))     
-                  // || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()     
-             {       
+                 ))
+             // || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()     
+             {      
                  oBatchManager.InitGeneralData();
-                 oBatchManager.CardStatus = clGeneral.enCardStatus.Calculate;
-                 ViewState["CardStatus"] = clGeneral.enCardStatus.Calculate;
+                 oBatchManager.CardStatus = (clGeneral.enCardStatus)oOvedYomAvodaDetails.iStatus;
+                 ViewState["CardStatus"] = (clGeneral.enCardStatus)oOvedYomAvodaDetails.iStatus;
                  bInpuDataResult = true;
                  bResult = true;
              }
              else
              {
-                 //שינויי קלט
-                 if (!(hidExecInputChg.Value.Equals("0")))
+                 if (oOvedYomAvodaDetails.iBechishuvSachar != clGeneral.enBechishuvSachar.bsActive.GetHashCode())
                  {
-                     bInpuDataResult = oBatchManager.MainInputData(iMisparIshi, dDateCard);
-                     if (!bInpuDataResult)
-                         //שינויי קלט
-                         bResult = false;
-                 }
-                 else { hidExecInputChg.Value = ""; }
-                 if (bResult)
-                 {
-                     //שגויים
-                     if ((hidErrChg.Value.Equals("")) || ((hidErrChg.Value.Equals("0"))))
+                     //שינויי קלט
+                     if (!(hidExecInputChg.Value.Equals("0")))
                      {
-                         bInpuDataResult = oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
-                         bResult = bInpuDataResult;
-                         ViewState["CardStatus"] = oBatchManager.CardStatus;
-                         Session["Errors"] = oBatchManager.dtErrors;
+                         bInpuDataResult = oBatchManager.MainInputData(iMisparIshi, dDateCard);
+                         if (!bInpuDataResult)
+                             //שינויי קלט
+                             bResult = false;
                      }
-                     else { 
-                         hidErrChg.Value = "0";
-                         oBatchManager.CardStatus = (clGeneral.enCardStatus)ViewState["CardStatus"];
-                     } //נחזיר את הדגל כך שיקראו לשגויים בפעם הבאה }
+                     else { hidExecInputChg.Value = ""; }
+                     if (bResult)
+                     {
+                         //שגויים
+                         if ((hidErrChg.Value.Equals("")) || ((hidErrChg.Value.Equals("0"))))
+                         {
+                             bInpuDataResult = oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
+                             bResult = bInpuDataResult;
+                             ViewState["CardStatus"] = oBatchManager.CardStatus;
+                             Session["Errors"] = oBatchManager.dtErrors;
+                         }
+                         else
+                         {
+                             hidErrChg.Value = "0";
+                             oBatchManager.CardStatus = (clGeneral.enCardStatus)ViewState["CardStatus"];
+                         } //נחזיר את הדגל כך שיקראו לשגויים בפעם הבאה }
+                     }
                  }
              }
              if (!bResult)
