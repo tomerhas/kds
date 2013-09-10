@@ -16,6 +16,7 @@ namespace KdsBatch
         protected int _iKodErua;
         protected int _iMisparIshi;
         protected DateTime _dMonth;
+        protected DateTime _dChodeshIbud;
         protected int _iMaamad;
         protected int _iMaamadRashi;
         protected int _iMushhe;
@@ -41,6 +42,7 @@ namespace KdsBatch
              _dtDetailsChishuv = dtDetailsChishuv;
              _iKodErua = iKodErua;
 
+             _dChodeshIbud = DateTime.Parse(drPirteyOved["chodesh_ibud"].ToString());
              _iMisparIshi = int.Parse(drPirteyOved["mispar_ishi"].ToString());
              _dMonth = DateTime.Parse(drPirteyOved["taarich"].ToString());
              _iMaamad = int.Parse(drPirteyOved["maamad"].ToString());
@@ -259,8 +261,12 @@ namespace KdsBatch
             if (dtPrem.Rows.Count>0)
             {
                 dr = dtPrem.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + iKodRechiv + " AND TAARICH=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
-                if (dr.Length>0)
+                if (dr.Length > 0)
+                {
                     erech = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
+                    if (_dChodeshIbud != _dMonth)
+                        bKayamEfreshBErua = true;
+                }
             }
             return erech;
         }

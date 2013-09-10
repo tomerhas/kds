@@ -207,6 +207,7 @@ namespace KdsBatch
         public int iVisutMustRechevWC; //261 - ויסות דורש רכב בכרטיס עבוד
         public int iDaysToViewWorkCard;//263 - מספר הימים שניתן לראות כרטיס עבודה ללא סידורים (נהג או משתמש רגיל)
         public DateTime dTaarichTokefShgiotHachtamatShaon;//272 - תאריך תוקף לבדיקת שגיאות החתמת שעון
+        public DateTime dTaarichBitulTamrizNahagut;//273 - תאריך ביטול תמריץ נהגות
         public float fBasisLechishuvPremia; //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
         public float fMichsatSaotChodshitET; //503 -אגד תעבורה- מכסת שעות חודשית 
         public float fMaxPremiatNehiga; //505 - אגד תעבורה - מקסימום פרמיית נהיגה
@@ -994,6 +995,11 @@ namespace KdsBatch
                 //252 - מספר ימים בתוקף 45 יום                
                 sTmp = GetOneParam(252, dCardDate);
                 iValidDays = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                // תאריך ביטול תמריץ נהגות
+                sTmp = GetOneParam(273, dCardDate);
+                dTaarichBitulTamrizNahagut = String.IsNullOrEmpty(sTmp) ? DateTime.MaxValue : DateTime.Parse(sTmp);
+
 
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);

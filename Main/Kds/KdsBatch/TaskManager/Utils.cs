@@ -393,6 +393,7 @@ namespace KdsBatch.TaskManager
             {
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.RetroSpectSDRN, "RunRetroSpectSDRN", -12);
                // iStatus = clGeneral.enStatusRequest.InProcess.GetHashCode();
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
                 Num = oUtils.GetTbParametrim(252, DateTime.Today);
                 Taarich = Taarich.AddDays(-Num);
 
@@ -401,6 +402,7 @@ namespace KdsBatch.TaskManager
                     sdrnDt = oTask.GetStausSdrn(Taarich.ToString("yyyyMMdd"));
                     if (sdrnDt.Rows.Count == 0)
                     {
+                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "RunSdrnWithDate TAARICH=" + Taarich.ToShortDateString());
                         oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
                         CheckStatusAgain(Taarich,"RunRetroSpectSDRN");
                     }
@@ -408,11 +410,13 @@ namespace KdsBatch.TaskManager
                     {
                         if (sdrnDt.Rows[0]["STATUS"].ToString() == "1" || sdrnDt.Rows[0]["STATUS"].ToString() == "2")
                         {
+                            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "CompleteSdrn TAARICH=" + Taarich.ToShortDateString());
                             CompleteSdrn(Taarich);
                             oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn=" + sdrnDt.Rows[0]["STATUS"].ToString() + " , 'RunRetrospectSdrn' + 'RefreshKnisot' run to date=" + Taarich.ToShortDateString());
                         }
                         else if (sdrnDt.Rows[0]["STATUS"].ToString() == "")
                         {
+                            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "RunSdrnWithDate TAARICH=" + Taarich.ToShortDateString());
                             oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
                             CheckStatusAgain(Taarich,"RunRetroSpectSDRN");
                           //  oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn=null , 'RunSdrnWithDate' run to date=" + Taarich.ToShortDateString());
