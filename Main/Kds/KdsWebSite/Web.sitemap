@@ -22,7 +22,7 @@
       <siteMapNode url="~/Modules/Ovdim/MonthlyQuotaVaadatPnim.aspx" title="מחוץ למכסה החלטת ועדת פנים"  description="" roles="*"/>
     </siteMapNode>
     <siteMapNode  title="הפעלת מהלכים"  description="" roles="*">
-      <siteMapNode url="~/Modules/Batches/RunErrorsBatch.aspx" title="ריצה גורפת לשגויים"  description="" roles="*"/>
+      <!--<siteMapNode url="~/Modules/Batches/RunErrorsBatch.aspx" title="ריצה גורפת לשגויים"  description="" roles="*"/>-->
       <siteMapNode url="~/Modules/Batches/RunCalcBatch.aspx" title="הרצת חישוב"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Batches/HaavaraLesachar.aspx" title="העברה לשכר"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Batches/CreateConstantReports.aspx" title=" הפקת דו''חות קבועים"  description="" roles="*"/>
