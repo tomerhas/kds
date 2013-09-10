@@ -67,12 +67,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\KdsWebSite\ExternalDlls\Interop.Excel.dll</HintPath>
     </Reference>
-    <Reference Include="KdsLibrary">
-      <HintPath>..\KdsLibrary\bin\Debug\KdsLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="KdsWorkFlow">
-      <HintPath>..\KdsWorkFlow\bin\Debug\KdsWorkFlow.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Oracle.DataAccess, Version=4.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -294,6 +288,16 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\KdsServiceProxy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
+      <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
+      <Name>KdsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsWorkFlow\KdsWorkFlow.csproj">
+      <Project>{8979010C-FE5C-4652-8027-FFF2378353E3}</Project>
+      <Name>KdsWorkFlow</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
