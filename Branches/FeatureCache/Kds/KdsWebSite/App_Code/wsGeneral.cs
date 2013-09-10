@@ -2095,7 +2095,7 @@ public class wsGeneral : System.Web.Services.WebService
             DateTime dSidurStartHour;
             DateTime dStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
 
-            string sParam244 = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
+            string sParam244 = ((clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
             if (!sNewStartHour.Equals(string.Empty))
                 dSidurStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sNewStartHour.Substring(0, 2)), int.Parse(sNewStartHour.Substring(3, 2)), 0);
             else

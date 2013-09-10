@@ -74,6 +74,12 @@
       <HintPath>..\KdsWorkFlow\bin\Debug\KdsWorkFlow.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\SharedLib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\SharedLib\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.DataAccess, Version=4.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\KdsWebSite\ExternalDlls\Oracle.DataAccess.dll</HintPath>
@@ -294,6 +300,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\KdsServiceProxy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\KDSCache\KDSCache.csproj">
+      <Project>{F2F12CC6-7B61-4B62-A364-CF1E132D2BF9}</Project>
+      <Name>KDSCache</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

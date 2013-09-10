@@ -5,7 +5,7 @@
     void Application_Start(object sender, EventArgs e) 
     {
         Bootstrapper bootStrapper = new Bootstrapper();
-        bootStrapper.Run();
+        bootStrapper.Init();
     }
     
     void Application_End(object sender, EventArgs e) 

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using CacheInfra.Interfaces;
 using System.Runtime.Caching;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.ServiceLocation;
 
 namespace CacheInfra.Implement
 {
@@ -13,6 +15,7 @@ namespace CacheInfra.Implement
         public SimpleCacheManager()
         {
             _cache = MemoryCache.Default;
+            //var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
         }
 
         public object GetCacheItemObject(TKey key)

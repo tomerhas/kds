@@ -12,6 +12,9 @@ using KdsLibrary.Utils;
 using KdsLibrary;
 using KdsWorkFlow.Approvals;
 using System.Web;
+using Microsoft.Practices.ServiceLocation;
+using KDSCache.Interfaces;
+using KDSCache.Enums;
 
 namespace KdsBatch
 {
@@ -289,8 +292,10 @@ namespace KdsBatch
 
                 //Get Parameters Table
                 //dtParameters = GetKdsParametrs();
-                dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
-                _dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
+                var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+                dtYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim);
+
+                _dtSugeyYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim);
 
                 //Get Meafyeny Ovdim
                 GetMeafyeneyOvdim(_iMisparIshi, _dCardDate);
@@ -674,8 +679,10 @@ namespace KdsBatch
 
                     //Get Parameters Table
                     //dtParameters = GetKdsParametrs();
-                    dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
-                    _dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
+                    var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+                    dtYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim);
+
+                    _dtSugeyYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim);
                     _dtIdkuneyRashemet = clDefinitions.GetIdkuneyRashemet(iMisparIshi, dCardDate);
                     _dtIdkuneyRashemet.Columns.Add("update_machine", System.Type.GetType("System.Int32"));
                     //Get Meafyeny Ovdim
@@ -1017,16 +1024,19 @@ namespace KdsBatch
 
         private void SetParameters(DateTime dCardDate, int iSugYom)
         {
-            try{
-              // oParam = clDefinitions.GetParamInstance(dCardDate, iSugYom);    
-            oParam = new clParameters(dCardDate, iSugYom);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+              var cache=  ServiceLocator.Current.GetInstance<IKDSAgedQueueParameters>();
+              var param=cache.GetItem(dCardDate);
+              if (param != null)
+                  oParam = param;
+              else
+              {
+                   oParam = new clParameters(dCardDate, iSugYom);
+                   cache.Add(oParam, dCardDate);
+              }
+       
         }
 
+     
         
 
         private void BuildErrorDataTable(ref DataTable dtErrors)
@@ -6760,8 +6770,10 @@ namespace KdsBatch
 
                 //Get Parameters Table
                 //dtParameters = GetKdsParametrs();
-                dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
-                _dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
+                var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+                dtYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim);
+
+                _dtSugeyYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim);
 
                 //Get Meafyeny Ovdim
                 oMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dCardDate);
@@ -6771,7 +6783,7 @@ namespace KdsBatch
                 iSugYom = clGeneral.GetSugYom(dtYamimMeyuchadim, dCardDate, _dtSugeyYamimMeyuchadim);//, _oMeafyeneyOved.iMeafyen56);
 
                 //Set global variable with parameters
-                oParam = new clParameters(dCardDate, iSugYom);
+                SetParameters(dCardDate, iSugYom);
                //oParam = clDefinitions.GetParamInstance(dCardDate, iSugYom);           
 
                 //Get Meafyeney Sug Sidur

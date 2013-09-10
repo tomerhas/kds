@@ -106,6 +106,7 @@
     <Compile Include="BL\clRequest.cs" />
     <Compile Include="BL\clTaskManager.cs" />
     <Compile Include="BL\clWorkCard.cs" />
+    <Compile Include="clParameters.cs" />
     <Compile Include="Controls\KdsCalendar.cs" />
     <Compile Include="Controls\KdsPanel.cs" />
     <Compile Include="Controls\ListBoxExtended.cs" />
