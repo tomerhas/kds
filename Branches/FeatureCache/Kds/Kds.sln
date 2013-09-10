@@ -50,6 +50,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{56E88C99-35ED-4A9C-A22D-6B3DA98EDA4A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedLib", "SharedLib", "{D593F9A4-F613-4334-87A4-EF44EBF1A196}"
+	ProjectSection(SolutionItems) = preProject
+		..\SharedLib\Microsoft.Practices.ServiceLocation.dll = ..\SharedLib\Microsoft.Practices.ServiceLocation.dll
+		..\SharedLib\Microsoft.Practices.Unity.dll = ..\SharedLib\Microsoft.Practices.Unity.dll
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{4DA23671-7C5A-4FF7-86B8-A22FE56F5D5B}"
 EndProject
