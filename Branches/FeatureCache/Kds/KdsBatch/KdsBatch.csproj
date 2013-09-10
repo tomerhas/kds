@@ -67,9 +67,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\KdsWebSite\ExternalDlls\Interop.Excel.dll</HintPath>
     </Reference>
-    <Reference Include="KdsLibrary">
-      <HintPath>..\KdsLibrary\bin\Debug\KdsLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="KdsWorkFlow">
       <HintPath>..\KdsWorkFlow\bin\Debug\KdsWorkFlow.dll</HintPath>
     </Reference>
@@ -305,6 +302,10 @@
     <ProjectReference Include="..\Common\KDSCache\KDSCache.csproj">
       <Project>{F2F12CC6-7B61-4B62-A364-CF1E132D2BF9}</Project>
       <Name>KDSCache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
+      <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
+      <Name>KdsLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
