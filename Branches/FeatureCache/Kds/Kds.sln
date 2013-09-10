@@ -25,7 +25,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "KdsWebSite", "KdsWebSite", 
 		SccLocalPath = "SAK"
 		SccProvider = "SAK"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{D4A152EC-27EB-4C8C-BDAB-4012680DA683}|KdsDataImport.dll;{8979010C-FE5C-4652-8027-FFF2378353E3}|KdsWorkFlow.dll;{B3E759EC-2A7B-4C38-9013-730C3A628AA8}|KdsLibrary.dll;{482BDA70-9AF2-4498-9627-E9C43EE44FDF}|KdsBatch.dll;"
+		ProjectReferences = "{D4A152EC-27EB-4C8C-BDAB-4012680DA683}|KdsDataImport.dll;{8979010C-FE5C-4652-8027-FFF2378353E3}|KdsWorkFlow.dll;{B3E759EC-2A7B-4C38-9013-730C3A628AA8}|KdsLibrary.dll;{482BDA70-9AF2-4498-9627-E9C43EE44FDF}|KdsBatch.dll;{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}|CacheInfra.dll;{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}|KDSCommon.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/KdsWebSite"
 		Debug.AspNetCompiler.PhysicalPath = "KdsWebSite\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\KdsWebSite\"
@@ -40,7 +40,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "KdsWebSite", "KdsWebSite", 
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "25415"
+		VWDPort = "14300"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsTaskManager", "KdsTaskManager\KdsTaskManager.csproj", "{438301FD-7CC1-40FB-A426-EBC716082965}"
@@ -49,9 +49,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsCalcul", "KdsCalcul\KdsC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{56E88C99-35ED-4A9C-A22D-6B3DA98EDA4A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedLib", "SharedLib", "{D593F9A4-F613-4334-87A4-EF44EBF1A196}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{4DA23671-7C5A-4FF7-86B8-A22FE56F5D5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheInfra", "Infrastructure\CacheInfra\CacheInfra.csproj", "{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8F942FC4-D956-4D17-9756-F4E9B2446E64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KDSCommon", "Common\KDSCommon\KDSCommon.csproj", "{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 11
+		SccNumberOfProjects = 13
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
 		SccLocalPath0 = .
@@ -73,20 +83,27 @@ Global
 		SccProjectUniqueName6 = KdsService\\KdsService.csproj
 		SccProjectName6 = KdsService
 		SccLocalPath6 = KdsService
-		SccWebProject7 = true
-		SccProjectUniqueName7 = KdsWebSite
-		SccProjectName7 = KdsWebSite
-		SccLocalPath7 = KdsWebSite
-		SccProjectEnlistmentChoice7 = 2
-		SccProjectUniqueName8 = KdsTaskManager\\KdsTaskManager.csproj
-		SccProjectName8 = KdsTaskManager
-		SccLocalPath8 = KdsTaskManager
-		SccProjectUniqueName9 = KdsCalcul\\KdsCalcul.csproj
-		SccProjectName9 = KdsCalcul
-		SccLocalPath9 = KdsCalcul
-		SccProjectUniqueName10 = KdsScheduler\\KdsScheduler.vbproj
-		SccProjectName10 = KdsScheduler
-		SccLocalPath10 = KdsScheduler
+		SccProjectUniqueName7 = KdsTaskManager\\KdsTaskManager.csproj
+		SccProjectName7 = KdsTaskManager
+		SccLocalPath7 = KdsTaskManager
+		SccProjectUniqueName8 = KdsCalcul\\KdsCalcul.csproj
+		SccProjectName8 = KdsCalcul
+		SccLocalPath8 = KdsCalcul
+		SccProjectUniqueName9 = KdsScheduler\\KdsScheduler.vbproj
+		SccProjectName9 = KdsScheduler
+		SccLocalPath9 = KdsScheduler
+		SccWebProject10 = true
+		SccProjectUniqueName10 = KdsWebSite
+		SccProjectName10 = KdsWebSite
+		SccLocalPath10 = KdsWebSite
+		SccProjectEnlistmentChoice10 = 2
+		SccProjectUniqueName11 = Infrastructure\\CacheInfra\\CacheInfra.csproj
+		SccProjectTopLevelParentUniqueName11 = Kds.sln
+		SccProjectName11 = Infrastructure/CacheInfra
+		SccLocalPath11 = Infrastructure\\CacheInfra
+		SccProjectUniqueName12 = Common\\KDSCommon\\KDSCommon.csproj
+		SccProjectName12 = Common/KDSCommon
+		SccLocalPath12 = Common\\KDSCommon
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -235,8 +252,35 @@ Global
 		{48EFB3DB-EAD6-43A8-ACED-C5C8340FE244}.Release|Mixed Platforms.Build.0 = Release|x86
 		{48EFB3DB-EAD6-43A8-ACED-C5C8340FE244}.Release|x86.ActiveCfg = Release|x86
 		{48EFB3DB-EAD6-43A8-ACED-C5C8340FE244}.Release|x86.Build.0 = Release|x86
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Release|.NET.ActiveCfg = Release|Any CPU
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02}.Release|x86.ActiveCfg = Release|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Release|.NET.ActiveCfg = Release|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02} = {4DA23671-7C5A-4FF7-86B8-A22FE56F5D5B}
 	EndGlobalSection
 EndGlobal

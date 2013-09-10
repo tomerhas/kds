@@ -84,7 +84,7 @@ namespace KdsBatch
    
        // private ApprovalRequest[] arrEmployeeApproval; vered 22/05/2012
        // private bool bHasShaonIsurInMaxLevel;
-        private clCalculation objCalc = new clCalculation();
+       // private clCalculation objCalc = new clCalculation();
         private const int SIDUR_NESIA = 99300;
         private const int SIDUR_MATALA = 99301;
         private const int SIDUR_HEADRUT_BETASHLUM = 99801;

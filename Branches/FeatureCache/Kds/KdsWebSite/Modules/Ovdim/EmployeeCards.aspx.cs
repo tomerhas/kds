@@ -23,7 +23,6 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
     private const int Coll_lelo_divuach = 2;
     private const int Coll_status = 1;
     private string[] arrParams;
-  
     protected override void CreateUser()
     {
         if (!Page.IsPostBack && Request.QueryString["EmpId"] == null)
