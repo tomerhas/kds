@@ -24,7 +24,7 @@ public partial class Modules_Reports_ReportsList : KdsPage
             if (!Page.IsPostBack)
             {
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
-                PageHeader = "רשימת דוחו''ת";
+                PageHeader = "רשימת דו''חות";
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
 
                 MasterPage mp = (MasterPage)Page.Master;

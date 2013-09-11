@@ -6,15 +6,15 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" runat="Server">
     <div id="divNetunim" runat="server" style="text-align: right;">
         <br />
-        <div runat="server" id="pnlgrdReports" style="height: 350px; width: 320px; overflow-y:scroll;
+        <div runat="server" id="pnlgrdReports" style="height: 350px; width: 550px; overflow-y:scroll;
             direction: ltr;">
             <asp:GridView ID="grdReports" runat="server" GridLines="None" ShowHeader="true" CssClass="Grid"
-                AllowPaging="false" AutoGenerateColumns="false" AllowSorting="true" Width="300px"
+                AllowPaging="false" AutoGenerateColumns="false" AllowSorting="true" Width="500px"
                 EmptyDataText="לא נמצאו נתונים!" EmptyDataRowStyle-CssClass="GridHeader" OnRowDataBound="grdReports_RowDataBound">
                 <Columns>
                     <asp:BoundField DataField="SHEM_DOCH_BAKOD" />
                     <asp:HyperLinkField DataTextField="TEUR_DOCH" NavigateUrl="#" HeaderStyle-HorizontalAlign="Right"
-                        HeaderText="שם דו''ח" ItemStyle-Width="300px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" />
+                        HeaderText="שם דו''ח" ItemStyle-Width="500px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" />
                 </Columns>
                 <AlternatingRowStyle CssClass="GridAltRow" />
                 <RowStyle CssClass="GridRow" />
