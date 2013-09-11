@@ -271,6 +271,7 @@ namespace KdsLibrary
         public const string cProGetHeavyReportsToDelete = "PKG_REPORTS.pro_get_HeavyReportsToDelete";
         public const string cProGetProfilToDisplay = "PKG_REPORTS.pro_get_ProfilToDisplay";
         public const string cProGetSnifeyTnuaByEzor = "PKG_REPORTS.pro_GetSnifeyTnuaByEzor";
+        public const string cProGetReportDetails = "PKG_REPORTS.pro_get_Report_Details";
 #endregion
 
 #region PKG_SIDURIM constants

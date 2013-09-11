@@ -47,7 +47,7 @@ public partial class Modules_Reports_ShowReport : System.Web.UI.Page
 
             RptViewer.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote;
             //RptViewer.ServerReport.ReportServerUrl = new System.Uri(ConfigurationSettings.AppSettings["ServerReports"]);
-            RptViewer.ServerReport.ReportServerUrl = new System.Uri(ConfigurationSettings.AppSettings[_Report.URL_CONFIG_KEY]);
+            RptViewer.ServerReport.ReportServerUrl = _Report.URL_CONFIG_KEY != null ? new System.Uri(ConfigurationSettings.AppSettings[_Report.URL_CONFIG_KEY]) : new System.Uri(ConfigurationSettings.AppSettings["url_2008"]);
             RptViewer.ServerReport.ReportServerCredentials = new ReportServerCredentials(ConfigurationSettings.AppSettings["RSUserName"], ConfigurationSettings.AppSettings["RSPassword"], ConfigurationSettings.AppSettings["RSDomain"]);
             RptViewer.ServerReport.ReportPath = ConfigurationSettings.AppSettings["RSFolderApplication"] + RdlName;
             RptViewer.SizeToReportContent = false;

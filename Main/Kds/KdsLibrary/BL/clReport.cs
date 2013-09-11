@@ -510,6 +510,23 @@ namespace KdsLibrary.BL
             {
                 throw ex;
             }
+
+        }
+        public DataTable GetReportDetails(string repCode)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                clDal dal = new clDal();
+                dal.AddParameter("p_shem_doch", ParameterType.ntOracleVarchar, repCode, ParameterDir.pdInput);
+                dal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                dal.ExecuteSP(clGeneral.cProGetReportDetails, ref dt);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
         }
     }
 }

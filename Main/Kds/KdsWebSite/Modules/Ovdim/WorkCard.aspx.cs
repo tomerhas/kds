@@ -4981,8 +4981,21 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         _KdsDynamicReport = KdsDynamicReport.GetKdsReport();
         _Report = new KdsReport();
         _Report = _KdsDynamicReport.FindReport(sRdlName);
-        Session["Report"] = _Report;
 
+       clReport rep = new clReport();
+        DataTable dt = rep.GetReportDetails(sRdlName);
+        if(dt!=null && dt.Rows.Count>0)
+        {
+            DataRow dr = dt.Rows[0];
+            //_Report.PageHeader = dr["PageHeader"].ToString();
+            _Report.RSVersion = dr["RS_VERSION"].ToString();
+            _Report.URL_CONFIG_KEY = dr["URL_CONFIG_KEY"].ToString();
+            _Report.SERVICE_URL_CONFIG_KEY = dr["SERVICE_URL_CONFIG_KEY"].ToString();
+            _Report.EXTENSION = dr["EXTENSION"].ToString();
+            //_Report.RdlName = RdlName;
+        }
+
+        Session["Report"] = _Report;
         Session["ReportParameters"] = ReportParameters;
 
         sDomain = clGeneral.AsDomain(Request.UrlReferrer.ToString()) + Request.ApplicationPath;
