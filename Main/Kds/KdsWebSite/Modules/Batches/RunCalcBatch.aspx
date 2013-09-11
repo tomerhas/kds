@@ -48,7 +48,7 @@
          <asp:TextBox ID="txtDescription" runat="server"  MaxLength="100"   TextMode="MultiLine" Width="320" Height="100px" ></asp:TextBox></td>
      </tr>
       <tr>
-        <td colspan="3"><asp:CheckBox ID="chkRunAll" runat="server"  />&nbsp; ריצה גורפת</td>
+        <td colspan="3"><div id="divRizaGorefet" runat="server"><asp:CheckBox ID="chkRunAll" runat="server"  />&nbsp; ריצה גורפת</div></td>
          <td></td>
          <td align="left"> 
             <asp:UpdatePanel ID="upButton" runat="server">

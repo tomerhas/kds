@@ -25,7 +25,7 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
             {
                 ServicePath = "~/Modules/WebServices/wsBatch.asmx";
                 PageHeader = "ריצת חישוב";
-               
+                divRizaGorefet.Style.Add("display", "none");
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
                 clGeneral.LoadDateCombo(ddlToMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
            //  clGeneral.LoadDateCombo(ddlToMonth,11);
