@@ -27,6 +27,7 @@
             </tr>
         </table>
         <div style="left:40px;top:10px;position:absolute; z-index:1000">
+        <asp:Label ID="lblRsVersion" runat="server" />
           <asp:Button ID="CloseWindow" CssClass="ImgButtonSearch" runat="server" Text="סגור" OnClientClick="window.close()" />
         </div>
     </form>
