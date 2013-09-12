@@ -2510,12 +2510,15 @@ namespace KdsBatch
         private bool IsHrStatusValid01(DateTime dCardDate, int iMisparIshi, ref DataTable dtErrors)
         {                      
             bool isValid = true;
-
+            string lstStatus;
             try
             {
                 //בדיקה ברמת יום עבודה
+                if (dCardDate < DateTime.Parse("12/09/2013"))
+                    lstStatus = "1,3,4,5,6,7,8,10";
+                else lstStatus ="1,3,4,5,6,7,10";
 
-                if (!IsOvedInMatzav("1,3,4,5,6,7,8,10"))
+                if (!IsOvedInMatzav(lstStatus))
                 {
                     drNew = dtErrors.NewRow();
                     drNew["mispar_ishi"] = iMisparIshi;
