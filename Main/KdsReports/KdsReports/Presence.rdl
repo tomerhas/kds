@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>22.1356cm</Width>
+              <Width>19.82382cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1725,7 +1725,7 @@
                               <KeepTogether>true</KeepTogether>
                               <Left>0.08227cm</Left>
                               <Height>1.36951cm</Height>
-                              <Width>20.09417cm</Width>
+                              <Width>19.74155cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -1809,7 +1809,7 @@
                           </ReportItems>
                           <Top>2.02751cm</Top>
                           <Height>4.61369cm</Height>
-                          <Width>22.1356cm</Width>
+                          <Width>19.82382cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1916,9 +1916,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsPresence</DataSetName>
-        <Left>0.20014cm</Left>
         <Height>6.6412cm</Height>
-        <Width>22.1356cm</Width>
+        <Width>19.82382cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1932,10 +1931,10 @@
     <Height>2.61465in</Height>
     <Style />
   </Body>
-  <Width>8.7936in</Width>
+  <Width>7.80465in</Width>
   <Page>
     <PageFooter>
-      <Height>0.635cm</Height>
+      <Height>0.68791cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1958,7 +1957,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox12</rd:DefaultName>
-          <Top>0.07056cm</Top>
+          <Top>0.03528cm</Top>
           <Height>0.56444cm</Height>
           <Width>5.6801cm</Width>
           <Style>
@@ -2141,37 +2140,16 @@ iif(
   <ReportParameters>
     <ReportParameter Name="P_STARTDATE">
       <DataType>DateTime</DataType>
-      <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>=CDate("01/05/2013")</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>P STARTDATE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_ENDDATE">
       <DataType>DateTime</DataType>
-      <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>=CDate("31/05/2013")</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_WORKERID">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <Prompt>P WORKERID</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_DT">
-      <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>=Globals!ExecutionTime</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>P_DT</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_MISPAR_ISHI">
       <DataType>String</DataType>
@@ -2199,6 +2177,15 @@ iif(
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
       <Prompt>P_SNIF</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_DT">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Globals!ExecutionTime</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Code>    Public Function GetFormatedTime(ByVal dblSeconds As Double) As String
