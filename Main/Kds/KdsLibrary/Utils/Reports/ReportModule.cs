@@ -29,6 +29,9 @@ namespace KdsLibrary.Utils.Reports
             return _Instance;
         }
         private ReportingServices.ParameterValue[] parameters = new ReportingServices.ParameterValue[0];
+
+        private KdsLibrary.ReportingServices2012.ParameterValue[] parameters2012 = new KdsLibrary.ReportingServices2012.ParameterValue[0];
+
         /// <summary>
         /// This Function add automaticly a param  named P_DT with Now() value to cause an auto refresh of the report created .
         /// in this case, this P_DT param has to be defined in the reporting service .
@@ -134,7 +137,7 @@ namespace KdsLibrary.Utils.Reports
                 rs.ExecutionHeaderValue = execHeader;
                 rs.Timeout = 1000000000;
                 execInfo = rs.LoadReport (rptName, historyID);
-                //rs.SetExecutionParameters(parameters, "he-IL");
+                rs.SetExecutionParameters(parameters2012, "he-IL");
                 String SessionId = rs.ExecutionHeaderValue.ExecutionID;
                 CurrentReportByte = rs.Render(format, devInfo, out extension, out mimeType, out encoding, out warnings2012, out streamIDs);
                 return CurrentReportByte;
@@ -146,7 +149,7 @@ namespace KdsLibrary.Utils.Reports
             finally
             {
                 rs.Dispose();
-                parameters = null;
+                parameters2012 = null;
             }
         }
         public FileInfo CreateOutputFile(string path, string filename)
@@ -181,6 +184,25 @@ namespace KdsLibrary.Utils.Reports
                 parameters[LengthParam] = new ReportingServices.ParameterValue();
                 parameters[LengthParam].Name = sName;
                 parameters[LengthParam].Value = sValue;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        public void AddParameter2012(string sName, string sValue)
+        {
+            try
+            {
+                if (parameters2012 == null)
+                { parameters2012 = new KdsLibrary.ReportingServices2012.ParameterValue[0]; }
+                int LengthParam2012;
+                LengthParam2012 = parameters2012.Length;
+                Array.Resize(ref parameters2012, LengthParam2012 + 1);
+                parameters2012[LengthParam2012] = new KdsLibrary.ReportingServices2012.ParameterValue();
+                parameters2012[LengthParam2012].Name = sName;
+                parameters2012[LengthParam2012].Value = sValue;
             }
             catch (Exception ex)
             {

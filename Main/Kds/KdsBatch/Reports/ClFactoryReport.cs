@@ -70,7 +70,10 @@ namespace KdsBatch.Reports
                 for (int i = 0; i < Report.ReportParams.Count; i++)
                 {
                     //                    ParamForLog +=  "param:" + Report.ReportParams[i].Name + "=" + Report.ReportParams[i].Value + "\n";
-                    _RptModule.AddParameter(Report.ReportParams[i].Name, Report.ReportParams[i].Value);
+                    if (Report.RSVersion=="RS2012")
+                        _RptModule.AddParameter2012(Report.ReportParams[i].Name, Report.ReportParams[i].Value);
+                    else
+                         _RptModule.AddParameter(Report.ReportParams[i].Name, Report.ReportParams[i].Value);
                 }
                 //                clGeneral.LogMessage("Create" + Report.Extension.ToString() + " file:" + nameFolderKds + Report.RdlName +ParamForLog , System.Diagnostics.EventLogEntryType.Information);
                 fileReport = _RptModule.CreateReport(nameFolderKds + Report.RdlName, Report.Extension, Report.RSVersion, Report.ServiceUrlConfigKey);
