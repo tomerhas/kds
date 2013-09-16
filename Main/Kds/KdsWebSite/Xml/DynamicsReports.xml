@@ -792,4 +792,11 @@
       <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
     </Filter>
   </Report>
+
+  <Report  RdlName="RptRitzatChishuv" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ריצת חישוב" ProductionType="Heavy">
+    <Filter ParameterName="p_BakashaId" Caption="מספר בקשה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Bakashot_details" ValueField="bakasha_id" TextField="teur" />
+    </Filter>
+  </Report>
+
 </DynamicReport>
