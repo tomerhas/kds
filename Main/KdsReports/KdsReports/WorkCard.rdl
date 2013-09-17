@@ -2690,8 +2690,19 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                               <TextRuns>
                                 <TextRun>
                                   <Value>=iif(Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToString() &amp; 00000000,3)="700",Fields!TEUR_NEKUDAT_TIFUL.Value,
-iif((Fields!MAKAT_NESIA.Value=0 or IsNothing(Fields!MAKAT_NESIA.Value))  and Fields!MISPAR_SIDUR.Value &lt; 1000,Fields!TEUR.Value,
-iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 70000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 80000000), Fields!TEUR_ELEMENT.Value,Fields!TEUR_NESIA.Value)))</Value>
+     iif((Fields!MAKAT_NESIA.Value=0 or IsNothing(Fields!MAKAT_NESIA.Value))  and Fields!MISPAR_SIDUR.Value &lt; 1000,Fields!TEUR.Value,
+        iif ((CInt(Fields!MAKAT_NESIA.Value)&gt;= 80000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 99999999 ) and Len( trim(Fields!MISPAR_MATALA.Value) )= 6  ,("ויזה נמ''ק: " &amp; Fields!TEUR_NESIA.Value),
+           iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 70000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 80000000), Fields!TEUR_ELEMENT.Value,Fields!TEUR_NESIA.Value))))
+'iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 70000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 80000000), Fields!TEUR_ELEMENT.Value,Fields!TEUR_NESIA.Value)))
+
+
+  ' iif (((CInt(Fields!MAKAT_NESIA.Value)&gt;= 80000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 99999999) and Len( Fields!MISPAR_MATALA )= 6 ),"ויזה נמ''ק " &amp; Fields!TEUR.Value,Fields!TEUR.Value),
+'iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 80000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 99999999),"נמ''ק"
+
+
+'=iif(Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToString() &amp; 00000000,3)="700",Fields!TEUR_NEKUDAT_TIFUL.Value,
+'iif((Fields!MAKAT_NESIA.Value=0 or IsNothing(Fields!MAKAT_NESIA.Value))  and Fields!MISPAR_SIDUR.Value &lt; 1000,Fields!TEUR.Value,
+'iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 70000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 80000000), Fields!TEUR_ELEMENT.Value,Fields!TEUR_NESIA.Value)))</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2721,6 +2732,7 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 70000000 and  CInt(Fields!MAKAT_NESIA.V
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -3966,7 +3978,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
       <DataType>Integer</DataType>
       <DefaultValue>
         <Values>
-          <Value>65099</Value>
+          <Value>29035</Value>
         </Values>
       </DefaultValue>
       <Prompt>P_MISPAR_ISHI</Prompt>
@@ -3975,7 +3987,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>03/08/2010 00:00:00</Value>
+          <Value>08/29/2013 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P_TAARICH</Prompt>

@@ -206,6 +206,10 @@
       <FullPath>RikuzAvodaChodshiOnLine2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RptRitzatChishuv.rdl</Name>
+      <FullPath>RptRitzatChishuv.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>SpecificAverage.rdl</Name>
       <FullPath>SpecificAverage.rdl</FullPath>
     </ProjectItem>
@@ -235,6 +239,10 @@
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>RptSidureyVaadOvdim.rdl</Name>
+      <FullPath>RptSidureyVaadOvdim.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
@@ -243,7 +251,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://sql2012tst.egged.intra/REPORTSERVER</TargetServerURL>
+        <TargetServerURL>http://kdstst02/reportserver</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>
