@@ -485,19 +485,36 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 
     private void LoadKdsDynamicReport()
     {
+        //_KdsDynamicReport = KdsDynamicReport.GetKdsReport();
+        //_ConstDynamicReportParam = (KdsDynamicReport)Session["ConstDynamicReportParam"];
+        //_ConstReportParam = _ConstDynamicReportParam.FindReport(RdlName);
+        //_Report = new KdsReport();
+        //_Report = _KdsDynamicReport.FindReport(RdlName);
+        //_Report.PageHeader = _ConstReportParam.PageHeader;
+        //_Report.RSVersion = _ConstReportParam.RSVersion;
+        //_Report.URL_CONFIG_KEY = _ConstReportParam.URL_CONFIG_KEY;
+        //_Report.SERVICE_URL_CONFIG_KEY = _ConstReportParam.SERVICE_URL_CONFIG_KEY;
+        //_Report.EXTENSION = _ConstReportParam.EXTENSION;
+        //_Report.RdlName = _ConstReportParam.RdlName;
+        //Session["Report"] = _Report;
+        //Session["Resources"] = (KdsSysManResources)_KdsDynamicReport.Resources;
+
+
+
         _KdsDynamicReport = KdsDynamicReport.GetKdsReport();
-        _ConstDynamicReportParam = (KdsDynamicReport)Session["ConstDynamicReportParam"];
-        _ConstReportParam = _ConstDynamicReportParam.FindReport(RdlName);
         _Report = new KdsReport();
         _Report = _KdsDynamicReport.FindReport(RdlName);
-        _Report.PageHeader = _ConstReportParam.PageHeader;
-        _Report.RSVersion = _ConstReportParam.RSVersion;
-        _Report.URL_CONFIG_KEY = _ConstReportParam.URL_CONFIG_KEY;
-        _Report.SERVICE_URL_CONFIG_KEY = _ConstReportParam.SERVICE_URL_CONFIG_KEY;
-        _Report.EXTENSION = _ConstReportParam.EXTENSION;
-        _Report.RdlName = _ConstReportParam.RdlName;
+        clReport rep = new clReport();
+        DataTable dt = rep.GetReportDetails(RdlName);
+        _Report.PageHeader = dt.Rows[0]["PageHeader"].ToString() ;
+        _Report.RSVersion = dt.Rows[0]["RS_VERSION"].ToString();
+        _Report.URL_CONFIG_KEY = dt.Rows[0]["URL_CONFIG_KEY"].ToString();
+        _Report.SERVICE_URL_CONFIG_KEY = dt.Rows[0]["SERVICE_URL_CONFIG_KEY"].ToString();
+        _Report.EXTENSION = dt.Rows[0]["EXTENSION"].ToString();
+        _Report.RdlName = RdlName;
         Session["Report"] = _Report;
         Session["Resources"] = (KdsSysManResources)_KdsDynamicReport.Resources;
+        
     }
     private KdsReport Report
     {
