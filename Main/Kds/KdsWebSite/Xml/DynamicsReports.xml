@@ -799,4 +799,13 @@
     </Filter>
   </Report>
 
+  <Report  RdlName="RptSidureyVaadOvdim" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח עבודה בסידור ועד עובדים" ProductionType="Heavy">
+    <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
+      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
+      <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
+    </Filter>
+    <Filter   ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" RunAtServer="true"  >
+      <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
+    </Filter>
+  </Report>
 </DynamicReport>
