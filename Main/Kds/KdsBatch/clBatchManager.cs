@@ -2516,7 +2516,7 @@ namespace KdsBatch
             int iCountSidurim = 0;
             try
             {
-                iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => Sidur.iMisparSidur == 99220 && Sidur.iLoLetashlum==0);
+                iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => Sidur.iSugSidurRagil == 69 && Sidur.iLoLetashlum==0);
                    
                 //בדיקה ברמת יום עבודה
                 if (iCountSidurim>1)
