@@ -239,7 +239,8 @@ namespace KdsBatch
             errAvodaByemeyTeuna199=199,
             errAvodaByemeyEvel200=200,
             errAvodaByemeyMachala201=201,
-            errMachalaLeloIshur202 = 202
+            errMachalaLeloIshur202 = 202,
+            errConenutGriraMealHamutar=203
         }
 
         private enum errNesiaMeshtana
@@ -1172,7 +1173,7 @@ namespace KdsBatch
                 // Check172
                 if (CheckErrorActive(172)) IsOvedPeilutValid172(dCardDate, iMisparIshi, ref dtErrors);
 
-                
+                if (CheckErrorActive(203)) CheckNumGririotInDay203(dCardDate, iMisparIshi, ref dtErrors);
                 
 
                 for (int i = 0; i < htEmployeeDetails.Count; i++)
@@ -2507,6 +2508,37 @@ namespace KdsBatch
             return isValid;
         }
 
+
+
+        private bool CheckNumGririotInDay203(DateTime dCardDate, int iMisparIshi, ref DataTable dtErrors)
+        {
+            bool isValid = true;
+            int iCountSidurim = 0;
+            try
+            {
+                iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => Sidur.iMisparSidur == 99220 && Sidur.iLoLetashlum==0);
+                   
+                //בדיקה ברמת יום עבודה
+                if (iCountSidurim>1)
+                {
+                    drNew = dtErrors.NewRow();
+                    drNew["mispar_ishi"] = iMisparIshi;
+                    drNew["check_num"] = enErrors.errConenutGriraMealHamutar.GetHashCode();
+                    drNew["taarich"] = dCardDate.ToShortDateString();
+                   
+                    dtErrors.Rows.Add(drNew);
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errConenutGriraMealHamutar.GetHashCode(), dCardDate, "CheckNumGririotInDay203: " + ex.Message);
+                isValid = false;
+                _bSuccsess = false;
+            }
+
+            return isValid;
+        }
         private bool IsHrStatusValid01(DateTime dCardDate, int iMisparIshi, ref DataTable dtErrors)
         {                      
             bool isValid = true;
