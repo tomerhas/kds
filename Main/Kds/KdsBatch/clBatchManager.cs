@@ -10381,7 +10381,7 @@ namespace KdsBatch
                                         }
                                         if (iTypeGrira == 1)
                                         {
-                                            SetBitulZmanNesiot(ref oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
+                                           // SetBitulZmanNesiot(ref oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
 
                                             SetZmanHashlama(ref oObjSidurGriraUpd, oSidurKonenutGrira, iGriraNum, oSidurGrira);
                                         }
@@ -10423,7 +10423,7 @@ namespace KdsBatch
                                                     SetShatGmarGrira(ref oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
                                                 if (iTypeGrira == 1)
                                                 {
-                                                    SetBitulZmanNesiot(ref oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
+                                                    //SetBitulZmanNesiot(ref oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
 
                                                     SetZmanHashlama(ref oObjSidurGriraUpd, oSidurKonenutGrira, iGriraNum, oSidurGrira);
                                                 }
@@ -10446,7 +10446,7 @@ namespace KdsBatch
                             Minutes = float.Parse((oSidurKonenutGrira.dFullShatGmar - oSidurKonenutGrira.dFullShatHatchala).TotalMinutes.ToString());
                             if (Minutes > _oParameters.iMinZmanGriraDarom)
                             {
-                                if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().Substring(0, 2)) >= 25)
+                                if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().PadLeft(5, '0').Substring(0, 2)) >= 25)
                                 {
                                     oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
                                     oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala.AddMinutes(_oParameters.iMinZmanGriraDarom);
@@ -10459,7 +10459,7 @@ namespace KdsBatch
                             }
                             else if (Minutes > _oParameters.iMinZmanGriraTzafon && Minutes < _oParameters.iMinZmanGriraDarom)
                             {
-                                if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().Substring(0, 2)) >= 25)
+                                if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().PadLeft(5, '0').Substring(0, 2)) >= 25)
                                 {
                                     oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
                                     oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatGmar;
@@ -12064,7 +12064,7 @@ namespace KdsBatch
 
                 if (!CheckIdkunRashemet("HASHLAMA", oSidurGrira.iMisparSidur, oSidurGrira.dFullShatHatchala))
                 {
-                    iMerchav = int.Parse((oSidurKonenutGrira.iMisparSidur).ToString().Substring(0, 2));
+                    iMerchav = int.Parse((oSidurKonenutGrira.iMisparSidur).ToString().PadLeft(5, '0').Substring(0, 2));
 
                     fSidurTime = float.Parse((oSidurGrira.dFullShatGmar - oSidurGrira.dFullShatHatchala).TotalMinutes.ToString());
 
@@ -12149,7 +12149,7 @@ namespace KdsBatch
             try
             {
 
-                iMerchav = int.Parse((oSidurKonenutGrira.iMisparSidur).ToString().Substring(0, 2));
+                iMerchav = int.Parse((oSidurKonenutGrira.iMisparSidur).ToString().PadLeft(5,'0').Substring(0, 2));
 
                 fTime = float.Parse((oSidurGrira.dFullShatGmar-oSidurKonenutGrira.dFullShatHatchala).TotalMinutes.ToString());
 
