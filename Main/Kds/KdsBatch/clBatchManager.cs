@@ -240,7 +240,8 @@ namespace KdsBatch
             errAvodaByemeyEvel200=200,
             errAvodaByemeyMachala201=201,
             errMachalaLeloIshur202 = 202,
-            errConenutGriraMealHamutar=203
+            errConenutGriraMealHamutar=203,
+            errSidurAsurBeyomShishiLeoved5Yamim204=204
         }
 
         private enum errNesiaMeshtana
@@ -1303,7 +1304,8 @@ namespace KdsBatch
                     if (CheckErrorActive(200)) AvodaByemeyEvel200(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(201)) AvodaByemeyMachala201(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(202)) MachalaLeloIshurwithSidurLetashlum202(ref oSidur, ref dtErrors);
-                 
+                    if (CheckErrorActive(204)) SidurAsurBeShisiLeoved5Yamim204(ref oSidur, ref dtErrors);
+
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
                     int numPrev;
@@ -1969,6 +1971,42 @@ namespace KdsBatch
             return isValid;
         }
 
+
+        private bool SidurAsurBeShisiLeoved5Yamim204(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            bool isValid = true;
+            bool bError = false;
+            try
+            {
+                if (iSugYom == clGeneral.enSugYom.Shishi.GetHashCode())
+                {
+                    if (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
+                    {
+                        if (oSidur.bSidurAsurBeyomShishi)
+                        {
+                            bError = true;
+                        }
+                    }
+                }
+
+                if (bError)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "סידור אסור בשישי לעובד 5 ימים", enErrors.errSidurAsurBeyomShishiLeoved5Yamim204.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurAsurBeyomShishiLeoved5Yamim204.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "errSidurAsurBeyomShishiLeoved5Yamim204: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
         private bool CheckAnozerSidurExsits(int iMispar_sidur, DateTime dShat_hatchala, string sug_headrut)
         {
             try
@@ -12317,7 +12355,7 @@ namespace KdsBatch
                         // . גרירה בפועל מתחילה אחרי כוננות הגרירה ומסתיימת אחרי סיום הכוננות  
                         //ש.התחלה גרירה בפועל >=  ש.התחלה כוננות גרירה וגם  
                         //ש.גמר גרירה בפועל >  ש.גמר כוננות גרירה. 
-                        else if ((dGriraShatHatchala >= dKonenutShatHatchala) && (dGriraShatGmar > dKonenutShatGmar))
+                        else if ((dGriraShatHatchala >= dKonenutShatHatchala) && (dGriraShatHatchala < dKonenutShatGmar )&& (dGriraShatGmar > dKonenutShatGmar))
                         {
                             bSidurActualGrira = true;
                             iTypeGrira = 3;
@@ -12798,9 +12836,9 @@ namespace KdsBatch
                     bSign = IsOvedMatzavExists("6");
                     if (!bSign)
                     {
-                        bSign = Condition1Saif11(ref oSidur);
-                        if (!bSign)
-                        {
+                        //bSign = Condition1Saif11(ref oSidur);
+                        //if (!bSign)
+                        //{
                             //תנאי 2
                             bSign = Condition2Saif11(ref oSidur);
                             if (!bSign)
@@ -12889,11 +12927,11 @@ namespace KdsBatch
                                 iKodSibaLoLetashlum = 14;
                             }
 
-                        }
-                        else
-                        {
-                            iKodSibaLoLetashlum = 2;
-                        }
+                        //}
+                        //else
+                        //{
+                        //    iKodSibaLoLetashlum = 2;
+                        //}
                     }
                     else
                     {

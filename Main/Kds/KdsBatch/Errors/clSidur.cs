@@ -111,6 +111,7 @@ namespace KdsBatch
         public bool bElement1HovaExists; //מאפיין 93
         public bool bElement2HovaExists; //מאפיין 94
         public bool bElement3HovaExists; //מאפיין 95
+        public bool bSidurAsurBeyomShishi;
         public int iNitanLedaveachBemachalaAruca;
         public int iShayahLeyomKodem;
        // public bool bSidurRagilExists;
@@ -374,6 +375,7 @@ namespace KdsBatch
             iMikumAvYetzia = int.Parse(dr["mikum_av_yatzia"].ToString());
             bIsKnisaTkina_err197 = bool.Parse(dr["knisa_tkina_err197"].ToString());
             bIsYetziaTkina_err198 = bool.Parse(dr["yatzia_tkina_err198"].ToString());
+            bSidurAsurBeyomShishi = !(String.IsNullOrEmpty(dr["sidur_asur_beyom_shishi"].ToString()));
             if (bSidurMyuhad)
             {
                 bSidurRetizfut = IsSidurRetzifut(iMisparSidur);
@@ -732,8 +734,8 @@ namespace KdsBatch
                 sKizuzAlPiHatchalaGmar = dr["kizuz_al_pi_hatchala_gmar"].ToString();
                 bKizuzAlPiHatchalaGmarExists = !(String.IsNullOrEmpty(dr["kizuz_al_pi_hatchala_gmar"].ToString()));
                 sHovatHityatzvut = dr["hovat_hityazvut"].ToString();
-                bHovaMisparMachsan = !(String.IsNullOrEmpty(dr["hova_ledaveach_mispar_machsan"].ToString())); 
-           
+                bHovaMisparMachsan = !(String.IsNullOrEmpty(dr["hova_ledaveach_mispar_machsan"].ToString()));
+                bSidurAsurBeyomShishi = !(String.IsNullOrEmpty(dr["sidur_asur_beyom_shishi"].ToString()));
                 bSidurRetizfut = IsSidurRetzifut(iMisparSidur);
                 bSidurNahagut = IsSidurNahagut();
                 if (!bSidurNahagut)
@@ -831,7 +833,7 @@ namespace KdsBatch
             sSidurNotInShabtonKod = dr["sidur_not_in_shabton_kod"].ToString();
             bSidurNotInShabtonKodExists = !(String.IsNullOrEmpty(dr["sidur_not_in_shabton_kod"].ToString()));
             iNitanLedaveachBemachalaAruca = System.Convert.IsDBNull(dr["nitan_ledaveach_bmachala_aruc"]) ? 0 : int.Parse(dr["nitan_ledaveach_bmachala_aruc"].ToString());
-            
+            bSidurAsurBeyomShishi = !(String.IsNullOrEmpty(dr["sidur_asur_beyom_shishi"].ToString()));
             sZakayMichutzLamichsa = dr["zakay_michutz_lamichsa"].ToString(); //מאפיין 25
                sKizuzAlPiHatchalaGmar = dr["kizuz_al_pi_hatchala_gmar"].ToString();
             bKizuzAlPiHatchalaGmarExists = !(String.IsNullOrEmpty(dr["kizuz_al_pi_hatchala_gmar"].ToString()));
