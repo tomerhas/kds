@@ -512,13 +512,13 @@ namespace KdsLibrary.BL
             }
 
         }
-        public DataTable GetReportDetails(string reportName)
+        public DataTable GetReportDetails(int report_kod)
         {
             DataTable dt = new DataTable();
             try{
                 clDal dal = new clDal();
-              
-                dal.AddParameter("p_shem_doch", ParameterType.ntOracleVarchar, reportName, ParameterDir.pdInput);
+
+                dal.AddParameter("p_kod_doch", ParameterType.ntOracleInteger, report_kod, ParameterDir.pdInput);
                 dal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 dal.ExecuteSP(clGeneral.cProGetReportDetails, ref dt);
             }
