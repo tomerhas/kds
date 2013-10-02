@@ -978,11 +978,16 @@ public partial class Modules_Test :Page
 
     protected void btnRefreshMakatim_Click(object sender, EventArgs e)
     {
-       
-        KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
-        clUtils.RunBakaratSDRN();
-        clUtils.RunRetroSpectSDRN();
-        clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
+        clKavim oKavim = new clKavim();
+        int iResult = 0;
+        DataSet dsKavim = new DataSet();
+        //KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
+        //clUtils.RunBakaratSDRN();
+        //clUtils.RunRetroSpectSDRN();
+        //clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
+
+        dsKavim = oKavim.GetKavimDetailsFromTnuaDS(46719134, DateTime.Parse(clnFromDate.Text), out iResult, 1);
+                   
         //clTkinutMakatim objMakat = new clTkinutMakatim();
         // objMakat.(DateTime.Parse(clnFromDate.Text));
 
