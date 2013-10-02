@@ -505,7 +505,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         _Report = new KdsReport();
         _Report = _KdsDynamicReport.FindReport(RdlName);
         clReport rep = new clReport();
-        DataTable dt = rep.GetReportDetails(RdlName);
+        DataTable dt = rep.GetReportDetails(((ReportName)Enum.Parse(typeof(ReportName), RdlName)).GetHashCode());
         _Report.PageHeader = dt.Rows[0]["PageHeader"].ToString() ;
         _Report.RSVersion = dt.Rows[0]["RS_VERSION"].ToString();
         _Report.URL_CONFIG_KEY = dt.Rows[0]["URL_CONFIG_KEY"].ToString();

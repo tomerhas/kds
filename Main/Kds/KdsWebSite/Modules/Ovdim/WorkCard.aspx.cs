@@ -4983,7 +4983,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         _Report = _KdsDynamicReport.FindReport(sRdlName);
 
        clReport rep = new clReport();
-        DataTable dt = rep.GetReportDetails(sRdlName);
+       DataTable dt = rep.GetReportDetails(((ReportName)Enum.Parse(typeof(ReportName), sRdlName)).GetHashCode());
         if(dt!=null && dt.Rows.Count>0)
         {
             DataRow dr = dt.Rows[0];
