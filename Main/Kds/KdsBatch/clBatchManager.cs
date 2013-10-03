@@ -273,6 +273,11 @@ namespace KdsBatch
             _iUserId = -2;
         }
 
+        public clBatchManager(long? btchRequest, int iUserId)
+        {
+            _btchRequest = btchRequest;
+            _iUserId = iUserId;
+        }
         public clBatchManager()
         {
 
