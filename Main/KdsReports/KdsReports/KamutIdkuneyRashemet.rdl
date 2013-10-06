@@ -157,7 +157,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!SNIFOVDIMCOUNT.Value)</Value>
+                              <Value>=Fields!SNIFOVDIMCOUNT.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -432,7 +432,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!SNIFOVDIMCOUNT.Value)</Value>
+                              <Value>=IIF(Parameters!P_TEZUGA.Value=2,"", Sum(Fields!SNIFOVDIMCOUNT.Value).ToString())</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -462,7 +462,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=First(Fields!OVDIMCOUNT.Value)</Value>
+                              <Value>=Sum(Fields!OVDIMCOUNT.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -1373,7 +1373,19 @@
               </Group>
               <SortExpressions>
                 <SortExpression>
-                  <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!ID_RASHEMET.Value, Fields!EZOR.Value)</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!NAME_RASHEMET.Value, Fields!SNIF_AV.Value)</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!EZOR.Value, Fields!TEUR_SNIF_AV.Value)</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!SNIF_AV.Value, Fields!ID_RASHEMET.Value)</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!TEUR_SNIF_AV.Value, Fields!NAME_RASHEMET.Value)</Value>
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
@@ -1901,11 +1913,6 @@
     </ReportParameter>
     <ReportParameter Name="P_TEZUGA">
       <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>1</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>P_TEZUGA</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_SNIF">
