@@ -89,7 +89,7 @@ namespace KdsLibrary.Utils.Reports
                 case "RS2008":
                     return CreateReport2008(rptName, sFormat, ServiceUrlConfigKey);
                 default:
-                    return CreateReport2008(rptName, sFormat, ServiceUrlConfigKey);
+                    return CreateReport(rptName, sFormat);//, ServiceUrlConfigKey);
             }
         }
          public Byte[] CreateReport2008(String rptName, eFormat sFormat, string ServiceUrlConfigKey)
