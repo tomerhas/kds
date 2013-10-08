@@ -142,10 +142,12 @@ namespace KdsBatch
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
                   // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after WriteEruimToFile");
-                   
-                   UpdateStatusYameyAvoda(lRequestNumToTransfer);
-                   InserIntoTableSugChishuv(objCollMisparIshiSugChishuv, lRequestNumToTransfer);
 
+                   InserIntoTableSugChishuv(objCollMisparIshiSugChishuv, lRequestNumToTransfer);
+                   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after InserIntoTableSugChishuv");
+                   UpdateStatusYameyAvoda(lRequestNumToTransfer);
+
+                   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after UpdateStatusYameyAvoda");
                    if (bDelete == "true")
                        DeleteChishuvAfterTransfer(lRequestNumToTransfer);
                    //UpdateOvdimImShinuyHr(lBakashaId,lRequestNumToTransfer);

@@ -593,6 +593,16 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             All = 3
         }
 
+        public enum enSugeyMeadkenShinuyim
+        {
+            WorkCard = -2,
+            MasachChishuvBatch = -3,
+            MasachTichkurChishuvOnLine = -4,
+            ShnuyimShguimBatchPrem = -5,
+            ShnuyimShguimBatchHR = -6,
+            ShnuyimShguimBatchSdrn = -7,
+            Default=-9
+        }
         public enum enVehicleType
         {
             NoTachograph = 1064

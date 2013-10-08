@@ -86,11 +86,16 @@ public partial class Modules_Reports_ShowHeavyReportsList : KdsPage
                 ((HyperLink)e.Row.Cells[COL_KOVEZ].Controls[1]).ImageUrl = "../../Images/icon-excel.jpg";
                 url = url + "xls";
             }
-            else
-            {
-                ((HyperLink)e.Row.Cells[COL_KOVEZ].Controls[1]).ImageUrl = "../../Images/icon-pdf.jpg";
-                url = url + "pdf";
-            }
+            else if ((KdsLibrary.Utils.Reports.eFormat)int.Parse(e.Row.Cells[COL_EXTENSION_TYPE].Text) == KdsLibrary.Utils.Reports.eFormat.EXCELOPENXML)
+                {
+                    ((HyperLink)e.Row.Cells[COL_KOVEZ].Controls[1]).ImageUrl = "../../Images/icon-excel.jpg";
+                    url = url + "xlsx";
+                }
+                else 
+                    {
+                        ((HyperLink)e.Row.Cells[COL_KOVEZ].Controls[1]).ImageUrl = "../../Images/icon-pdf.jpg";
+                        url = url + "pdf";
+                    }
             string sScript = "window.showModalDialog('" + url + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
             sScript = "window.open('"+url +"')";
             ((HyperLink)e.Row.Cells[COL_KOVEZ].Controls[1]).Attributes.Add("OnClick", sScript);  

@@ -73,7 +73,7 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
             dt = objOvdim.GetWorkCardNoShaotLetashlum(dFrom, dTo, sMaamad);
             for (i = 0; i < dt.Rows.Count; i++)
             {
-                clBatchManager btchMan = new clBatchManager(0,-3);
+                clBatchManager btchMan = new clBatchManager(0, clGeneral.enSugeyMeadkenShinuyim.MasachChishuvBatch.GetHashCode());
 
                 try
                 {

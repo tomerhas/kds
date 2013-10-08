@@ -278,7 +278,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 
                 while (dTaarich <= dTarAd)
                 {
-                    clBatchManager btchMan = new clBatchManager(0,-4);
+                    clBatchManager btchMan = new clBatchManager(0, clGeneral.enSugeyMeadkenShinuyim.MasachTichkurChishuvOnLine.GetHashCode());
 
                     try
                     {
