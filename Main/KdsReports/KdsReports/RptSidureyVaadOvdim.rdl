@@ -6,7 +6,7 @@
         <ReportName>GeneralHeader</ReportName>
         <Parameters>
           <Parameter Name="P_Title">
-            <Value>=" דוח עבודה בסידור ועד עובדים מ "  &amp; Parameters!P_STARTDATE.Value &amp; " עד " &amp;  Parameters!P_ENDDATE.Value</Value>
+            <Value>=" דוח עבודה בסידור ועד עובדים מ "  &amp; Format(Cdate(Parameters!P_STARTDATE.Value),"dd/MM/yyyy") &amp; " עד " &amp; Format(Cdate(Parameters!P_ENDDATE.Value),"dd/MM/yyyy")</Value>
           </Parameter>
         </Parameters>
         <Top>0.03424cm</Top>
@@ -1306,7 +1306,7 @@
                           <Top>2.31328cm</Top>
                           <Left>0.68474cm</Left>
                           <Height>1.2cm</Height>
-                          <Width>8.65125cm</Width>
+                          <Width>8.65126cm</Width>
                           <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
