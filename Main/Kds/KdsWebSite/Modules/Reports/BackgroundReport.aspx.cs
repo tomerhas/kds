@@ -45,7 +45,7 @@ public partial class Modules_Reports_BackgroundReport : System.Web.UI.Page
         Dictionary<string, string> ControlsList = (Dictionary<string, string>)Session["ReportParameters"];
         try
         {
-            _Extension = (rdPdfType.Checked) ? (int)eFormat.PDF : (_Report.EXTENSION == "EXCEL" ? (_Report.RSVersion == "RS2012" ? (int)eFormat.EXCELOPENXML : (int)eFormat.EXCEL) : (int)eFormat.EXCEL);
+            _Extension = (rdPdfType.Checked) ? (int)eFormat.PDF : (_Report.EXTENSION == "EXCELOPENXML" ? (int)eFormat.EXCELOPENXML : (int)eFormat.EXCEL);
             if (ControlsList.ContainsKey("p_type_rpt")) 
             {
                 ControlsList["p_type_rpt"] = _Extension.ToString();
