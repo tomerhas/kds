@@ -43,6 +43,7 @@ namespace KdsLibrary
         public const string cProGetAllYameiAvoda = "pkg_batch.pro_get_all_yamei_avoda";
         public const string cProGetYameiAvodaShinuiHR = "pkg_batch.pro_get_yamei_avoda_shinui_hr";
         public const string cProInsertDebugBathcPopulation = "pkg_batch.pro_insert_debug_maatefet";
+        public const string cProInsertLogMaatefet = "pkg_batch.pro_insert_log_maatefet";
         public const string cProGetShinuyMatsavOvdim = "pkg_batch.pro_get_shinuy_matsav_ovdim";
         public const string cProGetShinuyMeafyeneyBizua = "pkg_batch.pro_get_Shinuy_meafyeney_bizua";
         public const string cProGetShinuyPireyOved = "pkg_batch.pro_get_shinuy_pirey_oved";
@@ -1624,6 +1625,12 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                 throw ex;
             }
         }
+        //public static void LogBatchPopulation(int employeeID, DateTime date, DateTime btchExecutionDate,
+        // long btchRequest,  clGeneral.enSugeyMeadkenShinuyim enMeadken)
+        //{
+        //    LogBatchPopulation(employeeID, date, btchExecutionDate, btchRequest,null ,null, enMeadken);
+        //}
+
         public static void LogBatchPopulation(int employeeID, DateTime date, DateTime btchExecutionDate,
            long btchRequest, enGeneralBatchType batchType)
         {
