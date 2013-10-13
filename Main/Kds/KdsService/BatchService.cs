@@ -23,27 +23,58 @@ namespace KdsService
 {
     public class BatchService : IBatchService
     {
-       //// System.Windows.Forms.Timer _timer = null;
-       // public BatchService()
-       // {
-       //     _timer = new System.Windows.Forms.Timer();
-       //     _timer.Interval = 5000;
-       //     _timer.Tick += OnTimerAwake;
-       // }
+        System.Timers.Timer _timer = null; // new System.Timers.Timer(5000); 
+        private int _sug_bakasha;
+        //// System.Windows.Forms.Timer _timer = null;
+        //public BatchService()
+        //{
+        //    _timer = new System.Windows.Forms.Timer();
+        //    _timer.Interval = 5000;
+        //    _timer.Tick += OnTimerAwake;
+        //}
 
-       // void OnTimerAwake(object sender, EventArgs e)
-       // {
-       //     _timer.Stop();
-       //     List = Process.GetProcessesByName(FileToRun.Name.Split('.')[0]);
-       //     if (List.Count() == 0)
-       //     {
-       //         clLogBakashot.InsertErrorToLog(BakashaID, "I", 0, "END");
-       //         clDefinitions.UpdateLogBakasha(BakashaID, DateTime.Now, Status);
-       //         break;
-       //     }
-       //     _timer.Start();
-       // }
+        //void OnTimerAwake(object sender, EventArgs e)
+        //{
+        //    _timer.Stop();
+        //    List = Process.GetProcessesByName(FileToRun.Name.Split('.')[0]);
+        //    if (List.Count() == 0)
+        //    {
+        //        clLogBakashot.InsertErrorToLog(BakashaID, "I", 0, "END");
+        //        clDefinitions.UpdateLogBakasha(BakashaID, DateTime.Now, Status);
+        //        break;
+        //    }
+        //    _timer.Start();
+        //}
+        #region Sleep
+        protected void SleepUntillProccessEnd(int sug_bakasha)
+        {
+            _timer = new System.Timers.Timer(5000);
+            _timer.Enabled = true;
+            _timer.Elapsed += OnTimerAwake;
+            _sug_bakasha = sug_bakasha;
+            
+            _timer.Start();
+        }
 
+        void OnTimerAwake(object sender, EventArgs e)
+        {
+            clRequest oRequest = new clRequest();
+            try{
+            
+                _timer.Stop();
+
+                if (!oRequest.CheckTahalichEnd(_sug_bakasha))
+                {
+                    _timer.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+            }
+        }
+
+        #endregion
         #region Methods
         private void RunExecuteInputDataAndErrorsThread(object param)
         {

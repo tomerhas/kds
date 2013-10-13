@@ -250,6 +250,7 @@ namespace KdsLibrary
         public const string cProGetListOvdimFromLogBakashot = "PKG_REQUEST.pro_get_ovdim_log_bakashot";
         public const string cProGetTahalichKlita = "PKG_REQUEST.pro_get_tahalich_klita";
         public const string cProGetLogTahalich = "PKG_REQUEST.pro_get_log_tahalich";
+        public const string cFunCheckTahalichEnd = "PKG_REQUEST.fun_check_tahalich_beEnd";
 #endregion
 
 #region PKG_REPORTS constants

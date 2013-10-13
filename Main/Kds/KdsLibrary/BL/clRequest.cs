@@ -191,5 +191,28 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+
+        public bool CheckTahalichEnd(int sug_bakasha)
+        {
+            clDal _Dal = new clDal();
+            int count;
+
+            try
+            {
+                _Dal.AddParameter("p_count", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                _Dal.AddParameter("p_sug_bakasha", ParameterType.ntOracleInteger, sug_bakasha, ParameterDir.pdInput);
+
+                _Dal.ExecuteSP(clGeneral.cFunCheckTahalichEnd);
+
+                count = int.Parse(_Dal.GetValParam("p_count").ToString());
+                if (count > 0)
+                    return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
