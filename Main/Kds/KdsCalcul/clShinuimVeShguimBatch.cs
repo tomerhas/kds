@@ -141,7 +141,7 @@ namespace KdsCalcul
                     DateTime date = Convert.ToDateTime(dr["taarich"]);
                     if (ExecuteProcessForEmployee(employeeID, date, out isSuccessForCount, enMeadken))
                     {
-                        InsertLogMaatefet(employeeID, date, enMeadken);
+                      //  InsertLogMaatefet(employeeID, date, enMeadken);
                         successCount++;
                     }
                     if (!isSuccessForCount) notIncludeInTotal++;
