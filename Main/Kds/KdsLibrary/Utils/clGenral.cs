@@ -251,6 +251,7 @@ namespace KdsLibrary
         public const string cProGetTahalichKlita = "PKG_REQUEST.pro_get_tahalich_klita";
         public const string cProGetLogTahalich = "PKG_REQUEST.pro_get_log_tahalich";
         public const string cFunCheckTahalichEnd = "PKG_REQUEST.fun_check_tahalich_beEnd";
+        public const string cFunGetMaxBakasaBySug = "PKG_REQUEST.fun_get_max_bakasa_by_sug";
 #endregion
 
 #region PKG_REPORTS constants
@@ -1142,7 +1143,10 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             HasavatNetuniToOracle = 17,
             RetroSpectSDRN =18,
             LoadNetuneyMeshekForPremyot=19,
-            BdikatChufshaRezifa=20
+            BdikatChufshaRezifa=20,
+            ShguimOfPremiyotMusachimNihulTnuaYadaniyot=21,
+            ShguimOfHR=22,
+            Sleep=23
         }
         public enum enBechishuvSachar
         {

@@ -24,7 +24,7 @@ namespace KdsService
     public class BatchService : IBatchService
     {
         System.Timers.Timer _timer = null; // new System.Timers.Timer(5000); 
-        private int _sug_bakasha;
+        private long _bakasha_id;
         //// System.Windows.Forms.Timer _timer = null;
         //public BatchService()
         //{
@@ -46,12 +46,15 @@ namespace KdsService
         //    _timer.Start();
         //}
         #region Sleep
-        protected void SleepUntillProccessEnd(int sug_bakasha)
+
+        private void RunSleepUntillProccessEnd(object param)
         {
+            object[] args = param as object[];
+          
             _timer = new System.Timers.Timer(5000);
             _timer.Enabled = true;
             _timer.Elapsed += OnTimerAwake;
-            _sug_bakasha = sug_bakasha;
+            _bakasha_id = (long)args[0];
             
             _timer.Start();
         }
@@ -63,7 +66,7 @@ namespace KdsService
             
                 _timer.Stop();
 
-                if (!oRequest.CheckTahalichEnd(_sug_bakasha))
+                if (!oRequest.CheckTahalichEnd(_bakasha_id))
                 {
                     _timer.Start();
                 }
@@ -834,6 +837,12 @@ namespace KdsService
             runThread.Start(new object[] { dTaarich });
         }
 
+        public void SleepUntillProccessEnd(long lRequestNum)
+        {            
+            Thread runThread = new Thread(new ParameterizedThreadStart(RunSleepUntillProccessEnd));
+            runThread.Start(new object[] { lRequestNum });
+        }
+        
         #endregion
     }
 }

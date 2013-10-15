@@ -26,6 +26,7 @@ using System.IO;
 using System.Threading.Tasks;
 using KdsLibrary.Utils.Reports;
 using System.Collections.Generic;
+using System.Timers;
 
 
 public partial class Modules_Test :Page
@@ -54,20 +55,68 @@ public partial class Modules_Test :Page
     //private clBatchManager oBatchManager;
     public int iMisparIshi;
     public DateTime dDateCard;
+      public int _sug_bakasha;
+      System.Timers.Timer _timer = new System.Timers.Timer(5000); 
+     public void Test()
+     {
+        
+     }
+
+     void OnTimerAwake(object sender, EventArgs e)
+     {
+         //DataTable dt;
+         clRequest oRequest= new clRequest();
+         //try{
+             // dt= oRequest.
+             _timer.Stop();
+        
+       
+            if (!oRequest.CheckTahalichEnd(_sug_bakasha))
+            {
+                _timer.Start();
+            }
+
+          
+         //}
+        //catch
+        //{
+          
+        //    throw ex;
+        //}
+     }
+
+    protected void SleepUntillProccessEnd(int sug_bakasha)
+    {
+
+        _sug_bakasha = sug_bakasha;
+        
+        _timer.Start();
+
+    }
     protected void Page_PreRender(object sender, EventArgs e)
     {
 
     }
     protected void Page_Init(object sender, EventArgs e)
     {
-
+      
     }
     protected void Page_Load(object sender, EventArgs e)
     {
         long dateNumber = 1297380023295;
         long beginTicks = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks;
 
-       
+      //  _timer = new System.Timers.Timer(5000); 
+      //  //_timer.Interval = 5000;
+      ////  _timer.Tick += OnTimerAwake;
+      //  _timer.Enabled = true;
+      //  _timer.Elapsed += OnTimerAwake;
+      //    //SleepUntillProccessEnd(1);
+      //  _sug_bakasha = 1;
+      //  _timer.Start();
+    //      OnTimerAwake(sender, e);
+     //   SleepUntillProccessEnd(1);
+
         //txtId.Attributes.Add("onfocus", "alert('')");
         //DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse("26/08/2011"), DateTimeKind.Utc); 
         //var kind = convertedDate.Kind; // will equal DateTimeKind.Utc Now, once the system knows its in UTC time, you can just call ToLocalTime:
@@ -978,15 +1027,16 @@ public partial class Modules_Test :Page
 
     protected void btnRefreshMakatim_Click(object sender, EventArgs e)
     {
-        clKavim oKavim = new clKavim();
-        int iResult = 0;
-        DataSet dsKavim = new DataSet();
-        //KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
+        //clKavim oKavim = new clKavim();
+        //int iResult = 0;
+        //DataSet dsKavim = new DataSet();
+        KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
+        clUtils.Sleep(5);
         //clUtils.RunBakaratSDRN();
         //clUtils.RunRetroSpectSDRN();
         //clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
 
-        dsKavim = oKavim.GetKavimDetailsFromTnuaDS(46719134, DateTime.Parse(clnFromDate.Text), out iResult, 1);
+       // dsKavim = oKavim.GetKavimDetailsFromTnuaDS(46719134, DateTime.Parse(clnFromDate.Text), out iResult, 1);
                    
         //clTkinutMakatim objMakat = new clTkinutMakatim();
         // objMakat.(DateTime.Parse(clnFromDate.Text));

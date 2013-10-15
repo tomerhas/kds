@@ -47,7 +47,7 @@ namespace KdsBatch.TaskManager
             }
             catch (Exception ex)
             {
-                throw new Exception("RunShguimOfSdrn:" + ex.Message);
+                throw new Exception("RunShguimOfRetroSpectSdrn:" + ex.Message);
             }
         }
 		public void RunShguimOfPremiyotMusachim()
@@ -58,7 +58,7 @@ namespace KdsBatch.TaskManager
 			try
 			{
 				KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
-                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfPremiyotMusachim&NihulTnua&Yadaniyot", -12);
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.ShguimOfPremiyotMusachimNihulTnuaYadaniyot, "RunShguimOfPremiyotMusachim&NihulTnua&Yadaniyot", -12);
 				client.ShinuyimVeShguimBatch(lRequestNum, DateTime.Now, clGeneral.enCalcType.ShinuyimVeSghuimPremiot, clGeneral.BatchExecutionType.All);
 			   // oUtils.RunSinuyimVeShguimBatch(lRequestNum, DateTime.Now, clGeneral.enCalcType.ShinuyimVeSghuimPremiot, clGeneral.BatchExecutionType.All);
 				// KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, clGeneral.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
@@ -121,7 +121,7 @@ namespace KdsBatch.TaskManager
 						long lRequestNum = 0;
 						iSeqNum = oBatch.InsertProcessLog(8, 4, KdsLibrary.BL.RecordStatus.Wait, "before OpenBatchRequest hr", 0);
 						//'**KdsWriteProcessLog(8, 3, 1, "before OpenBatchRequest")
-						lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "ShguimHrChanges", -12);
+                        lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.ShguimOfHR, "ShguimHrChanges", -12);
 						dTaarich = DateTime.Now.AddDays(-1);
 						oBatch.UpdateProcessLog(iSeqNum, KdsLibrary.BL.RecordStatus.Finish, "after OpenBatchRequest hr", 0);
 						//'** KdsWriteProcessLog(8, 3, 1, "after OpenBatchRequest before shguyim")
@@ -348,13 +348,15 @@ namespace KdsBatch.TaskManager
                 if (null == e.Error)
                 {
                      bSuccess = e.Result;
-                    if (bSuccess)
-                        clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
-                    else
-                    {
-                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "הפעולה נכשלה - בדוק רשומות בקובץ לוג");
-                        clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
-                    }
+                     if (bSuccess)
+                     {
+                         clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
+                     }
+                     else
+                     {
+                         clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "הפעולה נכשלה - בדוק רשומות בקובץ לוג");
+                         clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
+                     }
                 }
                 else
                 {
@@ -376,6 +378,7 @@ namespace KdsBatch.TaskManager
             }
 			finally
 			{
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "End");
 				wsPremyot.Dispose();
 			}
 		}
@@ -391,9 +394,11 @@ namespace KdsBatch.TaskManager
 			KdsLibrary.TaskManager.Utils oUtilsTask = new KdsLibrary.TaskManager.Utils();
             try
             {
-                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.RetroSpectSDRN, "RunRetroSpectSDRN", -12);
+               // lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.RetroSpectSDRN, "RunRetroSpectSDRN", -12);
                // iStatus = clGeneral.enStatusRequest.InProcess.GetHashCode();
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+               // clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+
+               
                 Num = oUtils.GetTbParametrim(252, DateTime.Today);
                 Taarich = Taarich.AddDays(-Num);
 
@@ -402,6 +407,8 @@ namespace KdsBatch.TaskManager
                     sdrnDt = oTask.GetStausSdrn(Taarich.ToString("yyyyMMdd"));
                     if (sdrnDt.Rows.Count == 0)
                     {
+                        lRequestNum = OpenBakashaToRetroSpectSdrn();
+                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START RunRetroSpectSDRN To Date: " + Taarich.ToShortDateString());
                         clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "RunSdrnWithDate TAARICH=" + Taarich.ToShortDateString());
                         oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
                         CheckStatusAgain(Taarich,"RunRetroSpectSDRN");
@@ -410,12 +417,16 @@ namespace KdsBatch.TaskManager
                     {
                         if (sdrnDt.Rows[0]["STATUS"].ToString() == "1" || sdrnDt.Rows[0]["STATUS"].ToString() == "2")
                         {
+                            lRequestNum = OpenBakashaToRetroSpectSdrn();
+                            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START RunRetroSpectSDRN To Date: " + Taarich.ToShortDateString());
                             clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "CompleteSdrn TAARICH=" + Taarich.ToShortDateString());
                             CompleteSdrn(Taarich);
                             oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn=" + sdrnDt.Rows[0]["STATUS"].ToString() + " , 'RunRetrospectSdrn' + 'RefreshKnisot' run to date=" + Taarich.ToShortDateString());
                         }
                         else if (sdrnDt.Rows[0]["STATUS"].ToString() == "")
                         {
+                            lRequestNum = OpenBakashaToRetroSpectSdrn();
+                            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START RunRetroSpectSDRN To Date: " + Taarich.ToShortDateString());
                             clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "RunSdrnWithDate TAARICH=" + Taarich.ToShortDateString());
                             oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
                             CheckStatusAgain(Taarich,"RunRetroSpectSDRN");
@@ -437,6 +448,12 @@ namespace KdsBatch.TaskManager
             }
 		}
 
+        private long OpenBakashaToRetroSpectSdrn()
+        {
+            long lRequestNum = 0;
+            lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.RetroSpectSDRN, "RunRetroSpectSDRN", -12);
+            return lRequestNum;
+        }
         private void CompleteSdrn(DateTime Taarich)
         {
             clTaskManager oTask = new clTaskManager();
@@ -521,6 +538,31 @@ namespace KdsBatch.TaskManager
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+
+        public void Sleep(int p_sug_bakasha)
+        {
+            // clBatch oBatch = new clBatch();
+            clUtils oUtils = new clUtils();
+            long lRequestNum = 0, lTahalichBakasha;
+            clRequest oRequest = new clRequest();
+            try
+            {
+                
+                KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.Sleep, "Sleep :" + (Enum.Parse(typeof(clGeneral.enGeneralBatchType), p_sug_bakasha.ToString())).ToString(), -12);
+                lTahalichBakasha = oRequest.get_max_bakasha_id(p_sug_bakasha);
+                client.SleepUntillProccessEnd(lTahalichBakasha);
+               // client.ShinuyimVeShguimBatch(lRequestNum, DateTime.Now.AddDays(-1), clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
+                // oUtils.RunSinuyimVeShguimBatch(lRequestNum, DateTime.Now.AddDays(-1), clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
+                // KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, clGeneral.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Sleep:" + ex.Message);
             }
         }
 	}
