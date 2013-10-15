@@ -150,21 +150,21 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox44">
+                    <Textbox Name="SNIFOVDIMCOUNT">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!SNIFOVDIMCOUNT.Value</Value>
+                              <Value>=Sum(Fields!SNIFOVDIMCOUNT.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox44</rd:DefaultName>
+                      <rd:DefaultName>SNIFOVDIMCOUNT</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -187,7 +187,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=First(Fields!OVDIMCOUNT.Value)</Value>
+                              <Value>=Sum(Fields!OVDIMCOUNT.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -300,7 +300,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox115">
+                    <Textbox Name="MEASHER">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -314,7 +314,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox115</rd:DefaultName>
+                      <rd:DefaultName>MEASHER</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -330,7 +330,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox118">
+                    <Textbox Name="MISTAYEG">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -344,7 +344,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox118</rd:DefaultName>
+                      <rd:DefaultName>MISTAYEG</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -360,7 +360,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox121">
+                    <Textbox Name="NOFILL">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -374,7 +374,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox121</rd:DefaultName>
+                      <rd:DefaultName>NOFILL</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -492,7 +492,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!TICKETS.Value)</Value>
+                              <Value>=sum(Fields!TICKETS.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -790,7 +790,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox18">
+                    <Textbox Name="FRIEND">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -804,7 +804,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox18</rd:DefaultName>
+                      <rd:DefaultName>FRIEND</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1364,22 +1364,18 @@
             <TablixMember>
               <Group Name="RowGroup">
                 <GroupExpressions>
-                  <GroupExpression>=iif(Parameters!P_TEZUGA.Value=1, Fields!ID_RASHEMET.Value, Fields!EZOR.Value)</GroupExpression>
-                  <GroupExpression>=iif(Parameters!P_TEZUGA.Value=1, Fields!NAME_RASHEMET.Value, Fields!SNIF_AV.Value)</GroupExpression>
-                  <GroupExpression>=iif(Parameters!P_TEZUGA.Value=1, Fields!EZOR.Value, Fields!TEUR_SNIF_AV.Value)</GroupExpression>
+                  <GroupExpression>=iif(Parameters!P_TEZUGA.Value=1, Fields!ID_RASHEMET.Value, Fields!SNIF_AV.Value)</GroupExpression>
+                  <GroupExpression>=iif(Parameters!P_TEZUGA.Value=1, Fields!NAME_RASHEMET.Value, Fields!TEUR_SNIF_AV.Value)</GroupExpression>
                   <GroupExpression>=iif(Parameters!P_TEZUGA.Value=1, Fields!SNIF_AV.Value, Fields!ID_RASHEMET.Value)</GroupExpression>
                   <GroupExpression>=iif(Parameters!P_TEZUGA.Value=1, Fields!TEUR_SNIF_AV.Value, Fields!NAME_RASHEMET.Value)</GroupExpression>
                 </GroupExpressions>
               </Group>
               <SortExpressions>
                 <SortExpression>
-                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!ID_RASHEMET.Value, Fields!EZOR.Value)</Value>
+                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!ID_RASHEMET.Value, Fields!SNIF_AV.Value)</Value>
                 </SortExpression>
                 <SortExpression>
-                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!NAME_RASHEMET.Value, Fields!SNIF_AV.Value)</Value>
-                </SortExpression>
-                <SortExpression>
-                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!EZOR.Value, Fields!TEUR_SNIF_AV.Value)</Value>
+                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!NAME_RASHEMET.Value, Fields!TEUR_SNIF_AV.Value)</Value>
                 </SortExpression>
                 <SortExpression>
                   <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!SNIF_AV.Value, Fields!ID_RASHEMET.Value)</Value>
@@ -1731,6 +1727,7 @@
         <NoRowsMessage>לא נמצאו רשומות</NoRowsMessage>
         <DataSetName>DsIdkuneyRashemet</DataSetName>
         <Top>3.72745cm</Top>
+        <Left>0.3175cm</Left>
         <Height>2.4cm</Height>
         <Width>32.55292cm</Width>
         <Style>
@@ -1747,6 +1744,7 @@
           </Parameter>
         </Parameters>
         <Top>0.51208cm</Top>
+        <Left>0.3175cm</Left>
         <Height>2.5cm</Height>
         <Width>32.40772cm</Width>
         <ZIndex>1</ZIndex>
@@ -1757,10 +1755,10 @@
         </Style>
       </Subreport>
     </ReportItems>
-    <Height>2.50949in</Height>
+    <Height>5.29074in</Height>
     <Style />
   </Body>
-  <Width>12.81611in</Width>
+  <Width>13.06611in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -1828,10 +1826,6 @@
           <DataField>TEUR_SNIF_AV</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="EZOR">
-          <DataField>EZOR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
         <Field Name="SNIFOVDIMCOUNT">
           <DataField>SNIFOVDIMCOUNT</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -1880,7 +1874,7 @@
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>04/01/2013 00:00:00</Value>
+          <Value>09/01/2012 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P STARTDATE</Prompt>
@@ -1889,7 +1883,7 @@
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>04/07/2013 00:00:00</Value>
+          <Value>10/01/2013 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
@@ -1897,6 +1891,11 @@
     <ReportParameter Name="P_MIS_RASHEMET">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>11507</Value>
+        </Values>
+      </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>P_MIS_RASHEMET</Prompt>
     </ReportParameter>
@@ -1918,6 +1917,11 @@
     <ReportParameter Name="P_SNIF">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>90316</Value>
+        </Values>
+      </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>P SNIF</Prompt>
     </ReportParameter>
