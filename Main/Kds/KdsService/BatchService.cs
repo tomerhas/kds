@@ -25,6 +25,7 @@ namespace KdsService
     {
         System.Timers.Timer _timer = null; // new System.Timers.Timer(5000); 
         private long _bakasha_id;
+        private long _lReqestId;
         //// System.Windows.Forms.Timer _timer = null;
         //public BatchService()
         //{
@@ -54,7 +55,8 @@ namespace KdsService
             _timer = new System.Timers.Timer(5000);
             _timer.Enabled = true;
             _timer.Elapsed += OnTimerAwake;
-            _bakasha_id = (long)args[0];
+            _lReqestId = (long)args[0];
+            _bakasha_id = (long)args[1];
             
             _timer.Start();
         }
@@ -69,6 +71,11 @@ namespace KdsService
                 if (!oRequest.CheckTahalichEnd(_bakasha_id))
                 {
                     _timer.Start();
+                }
+                else
+                {
+                    clLogBakashot.InsertErrorToLog(_lReqestId, "I", 0, "END");
+                    clDefinitions.UpdateLogBakasha(_lReqestId, DateTime.Now, clGeneral.enStatusRequest.ToBeEnded.GetHashCode());
                 }
             }
             catch (Exception ex)
@@ -837,10 +844,10 @@ namespace KdsService
             runThread.Start(new object[] { dTaarich });
         }
 
-        public void SleepUntillProccessEnd(long lRequestNum)
+        public void SleepUntillProccessEnd(long lRequestNumTahalic,long lRequestNum)
         {            
             Thread runThread = new Thread(new ParameterizedThreadStart(RunSleepUntillProccessEnd));
-            runThread.Start(new object[] { lRequestNum });
+            runThread.Start(new object[] { lRequestNumTahalic,lRequestNum });
         }
         
         #endregion

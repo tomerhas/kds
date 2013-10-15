@@ -210,6 +210,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\ReportMail.xsl" />
+    <None Include="Service References\KdsServiceProxy\KdsLocalService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\KdsServiceProxy\KdsLocalService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\KdsServiceProxy\KdsLocalService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\KdsServiceProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

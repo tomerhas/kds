@@ -554,7 +554,8 @@ namespace KdsBatch.TaskManager
                 KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.Sleep, "Sleep :" + (Enum.Parse(typeof(clGeneral.enGeneralBatchType), p_sug_bakasha.ToString())).ToString(), -12);
                 lTahalichBakasha = oRequest.get_max_bakasha_id(p_sug_bakasha);
-                client.SleepUntillProccessEnd(lTahalichBakasha);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Start Sleep wait to " + lTahalichBakasha);
+                client.SleepUntillProccessEnd(lRequestNum,lTahalichBakasha);
                // client.ShinuyimVeShguimBatch(lRequestNum, DateTime.Now.AddDays(-1), clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
                 // oUtils.RunSinuyimVeShguimBatch(lRequestNum, DateTime.Now.AddDays(-1), clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
                 // KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, clGeneral.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
