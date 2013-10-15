@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8731/KdsLocalService?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/KdsLibrary" />
+  <xs:element name="ExecuteInputDataAndErrors">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="requestSource" type="xs:int" />
+        <xs:element minOccurs="0" name="execType" type="xs:int" />
+        <xs:element minOccurs="0" name="workDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="btchRequest" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExecuteInputDataAndErrorsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CalcBatchParallel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="dAdChodesh" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="sMaamad" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="bRitzatTest" type="xs:boolean" />
+        <xs:element minOccurs="0" name="bRitzaGorefet" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CalcBatchParallelResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ShinuyimVeShguimBatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="dTaarich" type="xs:dateTime" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/KdsLibrary" minOccurs="0" name="TypeShguyim" type="q1:clGeneral.enCalcType" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/KdsLibrary" minOccurs="0" name="ExecutionTypeShguim" type="q2:clGeneral.BatchExecutionType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ShinuyimVeShguimBatchResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CalcBatchPremiyot">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CalcBatchPremiyotResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsetRecordsToHistory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsetRecordsToHistoryResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CalcBatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="dAdChodesh" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="sMaamad" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="bRitzatTest" type="xs:boolean" />
+        <xs:element minOccurs="0" name="bRitzaGorefet" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CalcBatchResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransferToHilan">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="lRequestNumToTransfer" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransferToHilanResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BdikatChufshaRezifa">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="iUserId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BdikatChufshaRezifaResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="YeziratRikuzim">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="iRequestIdForRikuzim" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="YeziratRikuzimResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransferTekenNehagim">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="iRequestIdForTransfer" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransferTekenNehagimResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ShlichatRikuzimMail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="iRequestIdForRikuzim" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ShlichatRikuzimMailResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateConstantsReports">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="sMonth" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="iUserId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateConstantsReportsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateHeavyReports">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateHeavyReportsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreatePremiaInputFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="btchRequest" type="xs:long" />
+        <xs:element minOccurs="0" name="period" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+        <xs:element minOccurs="0" name="processBtchNumber" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreatePremiaInputFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreatePremiaInputFileResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RunPremiaCalculation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="period" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+        <xs:element minOccurs="0" name="processBtchNumber" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RunPremiaCalculationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RunPremiaCalculationResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StorePremiaCalculationOutput">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="btchRequest" type="xs:long" />
+        <xs:element minOccurs="0" name="period" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
+        <xs:element minOccurs="0" name="processBtchNumber" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StorePremiaCalculationOutputResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StorePremiaCalculationOutputResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RefreshMatzavOvdim">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RefreshMatzavOvdimResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TahalichHrChanges">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="iseq" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TahalichHrChangesResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TahalichSadran">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="taarich" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TahalichSadranResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RefreshMeafyenim">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RefreshMeafyenimResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RefreshPirteyOvdim">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RefreshPirteyOvdimResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TkinutMakatimBatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="dTaarich" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TkinutMakatimBatchResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SleepUntillProccessEnd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SleepUntillProccessEndResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
