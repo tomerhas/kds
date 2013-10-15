@@ -1031,7 +1031,7 @@ public partial class Modules_Test :Page
         //int iResult = 0;
         //DataSet dsKavim = new DataSet();
         KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
-        clUtils.Sleep(5);
+        clUtils.wait4process2end(5);
         //clUtils.RunBakaratSDRN();
         //clUtils.RunRetroSpectSDRN();
         //clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
