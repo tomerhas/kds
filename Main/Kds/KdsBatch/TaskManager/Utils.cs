@@ -542,7 +542,7 @@ namespace KdsBatch.TaskManager
         }
 
 
-        public void Sleep(int p_sug_bakasha)
+        public void wait4process2end(int p_sug_bakasha)
         {
             // clBatch oBatch = new clBatch();
             clUtils oUtils = new clUtils();
