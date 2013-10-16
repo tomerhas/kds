@@ -80,9 +80,6 @@ namespace KdsBatch.KdsServiceProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBatchService/TkinutMakatimBatch", ReplyAction="http://tempuri.org/IBatchService/TkinutMakatimBatchResponse")]
         void TkinutMakatimBatch(System.DateTime dTaarich);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBatchService/SleepUntillProccessEnd", ReplyAction="http://tempuri.org/IBatchService/SleepUntillProccessEndResponse")]
-        void SleepUntillProccessEnd(long lRequestNumTahalic, long lRequestNum);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -198,10 +195,6 @@ namespace KdsBatch.KdsServiceProxy {
         
         public void TkinutMakatimBatch(System.DateTime dTaarich) {
             base.Channel.TkinutMakatimBatch(dTaarich);
-        }
-        
-        public void SleepUntillProccessEnd(long lRequestNumTahalic, long lRequestNum) {
-            base.Channel.SleepUntillProccessEnd(lRequestNumTahalic, lRequestNum);
         }
     }
 }

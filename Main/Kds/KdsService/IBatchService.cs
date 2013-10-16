@@ -85,7 +85,7 @@ namespace KdsService
         [OperationContract]
         void TkinutMakatimBatch(DateTime dTaarich);
 
-        [OperationContract]
-        void SleepUntillProccessEnd(long lRequestNumTahalic ,long lRequestNum);
+        //[OperationContract]
+        //void SleepUntillProccessEnd(long lRequestNumTahalic ,long lRequestNum);
     }
 }

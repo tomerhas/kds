@@ -294,17 +294,4 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SleepUntillProccessEnd">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="lRequestNumTahalic" type="xs:long" />
-        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="SleepUntillProccessEndResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
 </xs:schema>

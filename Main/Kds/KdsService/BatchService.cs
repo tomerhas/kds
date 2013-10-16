@@ -23,68 +23,7 @@ namespace KdsService
 {
     public class BatchService : IBatchService
     {
-        System.Timers.Timer _timer = null; // new System.Timers.Timer(5000); 
-        private long _bakasha_id;
-        private long _lReqestId;
-        //// System.Windows.Forms.Timer _timer = null;
-        //public BatchService()
-        //{
-        //    _timer = new System.Windows.Forms.Timer();
-        //    _timer.Interval = 5000;
-        //    _timer.Tick += OnTimerAwake;
-        //}
-
-        //void OnTimerAwake(object sender, EventArgs e)
-        //{
-        //    _timer.Stop();
-        //    List = Process.GetProcessesByName(FileToRun.Name.Split('.')[0]);
-        //    if (List.Count() == 0)
-        //    {
-        //        clLogBakashot.InsertErrorToLog(BakashaID, "I", 0, "END");
-        //        clDefinitions.UpdateLogBakasha(BakashaID, DateTime.Now, Status);
-        //        break;
-        //    }
-        //    _timer.Start();
-        //}
-        #region Sleep
-
-        private void RunSleepUntillProccessEnd(object param)
-        {
-            object[] args = param as object[];
-          
-            _timer = new System.Timers.Timer(5000);
-            _timer.Enabled = true;
-            _timer.Elapsed += OnTimerAwake;
-            _lReqestId = (long)args[0];
-            _bakasha_id = (long)args[1];
-            
-            _timer.Start();
-        }
-
-        void OnTimerAwake(object sender, EventArgs e)
-        {
-            clRequest oRequest = new clRequest();
-            try{
-            
-                _timer.Stop();
-
-                if (!oRequest.CheckTahalichEnd(_bakasha_id))
-                {
-                    _timer.Start();
-                }
-                else
-                {
-                    clLogBakashot.InsertErrorToLog(_lReqestId, "I", 0, "END");
-                    clDefinitions.UpdateLogBakasha(_lReqestId, DateTime.Now, clGeneral.enStatusRequest.ToBeEnded.GetHashCode());
-                }
-            }
-            catch (Exception ex)
-            {
-                clGeneral.LogError(ex);
-            }
-        }
-
-        #endregion
+      
         #region Methods
         private void RunExecuteInputDataAndErrorsThread(object param)
         {
@@ -844,11 +783,11 @@ namespace KdsService
             runThread.Start(new object[] { dTaarich });
         }
 
-        public void SleepUntillProccessEnd(long lRequestNumTahalic,long lRequestNum)
-        {            
-            Thread runThread = new Thread(new ParameterizedThreadStart(RunSleepUntillProccessEnd));
-            runThread.Start(new object[] { lRequestNumTahalic,lRequestNum });
-        }
+        //public void SleepUntillProccessEnd(long lRequestNumTahalic,long lRequestNum)
+        //{            
+        //    Thread runThread = new Thread(new ParameterizedThreadStart(RunSleepUntillProccessEnd));
+        //    runThread.Start(new object[] { lRequestNumTahalic,lRequestNum });
+        //}
         
         #endregion
     }

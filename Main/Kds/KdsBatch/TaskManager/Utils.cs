@@ -13,6 +13,47 @@ namespace KdsBatch.TaskManager
 {
 	public class Utils
 	{
+        System.Timers.Timer _timer = null; // new System.Timers.Timer(5000); 
+        private long _bakasha_id;
+        private long _lReqestId;
+        //private void RunSleepUntillProccessEnd(object param)
+        //{
+        //    object[] args = param as object[];
+
+        //    _timer = new System.Timers.Timer(5000);
+        //    _timer.Enabled = true;
+        //    _timer.Elapsed += OnTimerAwake;
+        //    _lReqestId = (long)args[0];
+        //    _bakasha_id = (long)args[1];
+
+        //    _timer.Start();
+        //}
+
+        void OnTimerAwake(object sender, EventArgs e)
+        {
+            clRequest oRequest = new clRequest();
+            try
+            {
+
+                _timer.Stop();
+
+                if (!oRequest.CheckTahalichEnd(_bakasha_id))
+                {
+                    _timer.Start();
+                }
+                else
+                {
+                    _timer = null;
+                    clLogBakashot.InsertErrorToLog(_lReqestId, "I", 0, "END");
+                    clDefinitions.UpdateLogBakasha(_lReqestId, DateTime.Now, clGeneral.enStatusRequest.ToBeEnded.GetHashCode());
+                }
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+            }
+        }
+
 		public void RunShguimOfSdrn()
 		{
 		   // clBatch oBatch = new clBatch();
@@ -550,12 +591,18 @@ namespace KdsBatch.TaskManager
             clRequest oRequest = new clRequest();
             try
             {
-                
-                KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+                _timer = new System.Timers.Timer(5000);
+                _timer.Enabled = true;
+                _timer.Elapsed += OnTimerAwake;
+
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.Sleep, "Sleep :" + (Enum.Parse(typeof(clGeneral.enGeneralBatchType), p_sug_bakasha.ToString())).ToString(), -12);
                 lTahalichBakasha = oRequest.get_max_bakasha_id(p_sug_bakasha);
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Start Sleep wait to " + lTahalichBakasha);
-                client.SleepUntillProccessEnd(lRequestNum,lTahalichBakasha);
+                
+                _timer.Start();
+
+                //KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+                //client.SleepUntillProccessEnd(lRequestNum, lTahalichBakasha);
                // client.ShinuyimVeShguimBatch(lRequestNum, DateTime.Now.AddDays(-1), clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
                 // oUtils.RunSinuyimVeShguimBatch(lRequestNum, DateTime.Now.AddDays(-1), clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
                 // KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, clGeneral.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
