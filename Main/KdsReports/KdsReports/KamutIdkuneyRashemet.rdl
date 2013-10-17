@@ -120,31 +120,31 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.15603cm</Width>
+              <Width>1.8793cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.89146cm</Width>
+              <Width>1.93223cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.95729cm</Width>
+              <Width>1.60118cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.97083cm</Width>
+              <Width>1.61473cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.02375cm</Width>
+              <Width>1.64119cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.5475cm</Width>
+              <Width>1.56181cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.49458cm</Width>
+              <Width>1.53535cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.36771cm</Width>
+              <Width>2.06452cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.62688cm</Width>
+              <Width>1.56182cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1420,7 +1420,6 @@
                       <Direction>RTL</Direction>
                     </Style>
                   </Textbox>
-                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
             </TablixMember>
@@ -1446,7 +1445,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>2.16959cm</Size>
+                <Size>1.97223cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox12">
                     <CanGrow>true</CanGrow>
@@ -1482,7 +1481,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.91792cm</Size>
+                    <Size>1.90577cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox35">
                         <CanGrow>true</CanGrow>
@@ -1518,7 +1517,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.865cm</Size>
+                        <Size>1.90577cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox37">
                             <CanGrow>true</CanGrow>
@@ -1561,7 +1560,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>2.16959cm</Size>
+                <Size>1.97223cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox38">
                     <CanGrow>true</CanGrow>
@@ -1577,7 +1576,7 @@
                           </TextRun>
                         </TextRuns>
                         <Style>
-                          <TextAlign>Left</TextAlign>
+                          <TextAlign>Center</TextAlign>
                         </Style>
                       </Paragraph>
                     </Paragraphs>
@@ -1598,7 +1597,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.91792cm</Size>
+                    <Size>1.90577cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox63">
                         <CanGrow>true</CanGrow>
@@ -1635,7 +1634,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.865cm</Size>
+                        <Size>1.90577cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox2">
                             <CanGrow>true</CanGrow>
@@ -1673,7 +1672,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>2.16959cm</Size>
+                <Size>1.97223cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox11">
                     <CanGrow>true</CanGrow>
@@ -1693,7 +1692,7 @@
                           </TextRun>
                         </TextRuns>
                         <Style>
-                          <TextAlign>Right</TextAlign>
+                          <TextAlign>Center</TextAlign>
                         </Style>
                       </Paragraph>
                     </Paragraphs>
@@ -1714,7 +1713,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.91792cm</Size>
+                    <Size>1.90577cm</Size>
                     <CellContents>
                       <Textbox Name="TICKETS1">
                         <CanGrow>true</CanGrow>
@@ -1750,7 +1749,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.865cm</Size>
+                        <Size>1.90577cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox41">
                             <CanGrow>true</CanGrow>
@@ -1797,10 +1796,9 @@
         <LayoutDirection>RTL</LayoutDirection>
         <NoRowsMessage>לא נמצאו רשומות</NoRowsMessage>
         <DataSetName>DsIdkuneyRashemet</DataSetName>
-        <Top>3.72745cm</Top>
-        <Left>0.635cm</Left>
+        <Top>2.2987cm</Top>
         <Height>2.4cm</Height>
-        <Width>22.98855cm</Width>
+        <Width>21.17585cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1814,10 +1812,9 @@
             <Value>= iif(Parameters!P_TEZUGA.Value=1, "מספר כרטיסים שעודכנו ע''י רשמת לתקופה ","מספר כרטיסים שעודכנו לסניף לתקופה ") &amp; Day(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Month(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Year(Parameters!P_STARTDATE.Value) &amp; " עד " &amp;Day(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Month(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Year(Parameters!P_ENDDATE.Value) &amp;" "&amp; iif(Parameters!P_TEZUGA.Value=1, "בחלוקה לפי רשמת","בחלוקה לפי סניפים")</Value>
           </Parameter>
         </Parameters>
-        <Top>0.51208cm</Top>
-        <Left>0.3175cm</Left>
-        <Height>2.5cm</Height>
-        <Width>32.40772cm</Width>
+        <Left>3.43958cm</Left>
+        <Height>1.97083cm</Height>
+        <Width>11.3598cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -1826,15 +1823,15 @@
         </Style>
       </Subreport>
     </ReportItems>
-    <Height>5.29074in</Height>
+    <Height>1.85324in</Height>
     <Style />
   </Body>
-  <Width>13.06611in</Width>
+  <Width>8.33695in</Width>
   <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
+    <LeftMargin>0.5cm</LeftMargin>
+    <RightMargin>0.5cm</RightMargin>
     <TopMargin>2cm</TopMargin>
     <BottomMargin>2cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
