@@ -747,7 +747,7 @@
         <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
         <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
       </Filter>
-      <Filter   ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" RunAtServer="true"  >
+      <Filter   ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" RunAtServer="false"  >
         <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
         <!--<FilterValidator ValidatorName="ValidIshurimAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
       </Filter>
@@ -766,7 +766,7 @@
       <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown"   RunAtServer="true"  DataType="System.Int32"  IsParent="true">
         <DropDownList QueryType="Select"  Select="select -1 kod_ezor,'הכל' teur_ezor from dual union select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
       </Filter>
-      <Filter ParameterName="P_SNIF" Caption="סניף" BoxeType="ListBox" DataType="System.Int32">
+      <Filter ParameterName="P_SNIF" Caption="סניף" BoxeType="ListBox" DataType="System.Int32" RunAtServer="false">
         <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_kod_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av">
           <Condition Name="P_KOD_EZOR" ParameterType="ntOracleInteger" ControlReference="P_EZOR"></Condition>
         </DropDownList>

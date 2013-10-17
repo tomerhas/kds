@@ -197,9 +197,23 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         for (int i = 0; i < dtMisRashemet.Rows.Count; i++)
                             MisRashamot.Value = MisRashamot.Value + dtMisRashemet.Rows[i]["MISPAR_ISHI"].ToString() + ",";
                     }
-                     var trigger = new PostBackTrigger();
-                     trigger.ControlID = btnDisplay.UniqueID.ToString();
-                     PnlFilter.Triggers.Add(trigger);
+                    if (!Page.IsPostBack)
+                    {
+                        //var trigger = new PostBackTrigger();
+                        //trigger.ControlID = "ctl00_KdsContent_btnDisplay";
+                        //PnlFilter.Triggers.Add(trigger);
+
+                        //var trigger = new AsyncPostBackTrigger();
+
+                        //trigger.ControlID = "ctl00_KdsContent_btnDisplay";
+
+                        //trigger.EventName = "Click";
+
+                        //this.PnlFilter.Triggers.Add(trigger);
+                        ScriptManager.GetCurrent(Page).RegisterPostBackControl(btnDisplay);
+
+
+                    }
                     //if (!Page.IsPostBack)
                     //    CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
                    // SetTezuga(ReportName.KamutIdkuneyRashemet);

@@ -21,17 +21,21 @@
                     this.rashemet.attr('disabled', 'disabled');
                     this.ezor.attr('disabled', 'disabled');
                     this.snif.attr('disabled', 'disabled');
-                    var k = this; 
-                    $("#ctl00_KdsContent_P_TEZUGA_0").attr('checked', true);
+                    var k = this;
+
                     if ($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val() != undefined) {
                         DisabledRashemetOrSnif($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val(), k);
                     }
-                   
+                    else {
+                        $("#ctl00_KdsContent_P_TEZUGA_0").attr('checked', true);
+                        DisabledRashemetOrSnif($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val(), k);
+                    }
+
 
                     $("input[name='ctl00$KdsContent$P_TEZUGA'").click(function () {
-                       // if (queries['RdlName'] == 'KamutIdkuneyRashemet') {
-                            DisabledRashemetOrSnif($(this).val(), k);
-                       // }
+                        // if (queries['RdlName'] == 'KamutIdkuneyRashemet') {
+                        DisabledRashemetOrSnif($(this).val(), k);
+                        // }
                     });
                 }
             }
@@ -107,6 +111,7 @@
             <input type="hidden" id="Param100" name="Param100" runat="server" />
             <input type="hidden" id="MisRashamot" name="MisRashamot" runat="server" />
         </ContentTemplate>
+   <%--  <Triggers><asp:PostBackTrigger ControlID="btnDisplay"  /></Triggers>--%>
     </asp:UpdatePanel>
     <script language="javascript" type="text/javascript">
         function CancelAllSelectedItems() {
