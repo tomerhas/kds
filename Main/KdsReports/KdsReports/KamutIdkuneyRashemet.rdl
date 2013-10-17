@@ -1372,13 +1372,7 @@
               </Group>
               <SortExpressions>
                 <SortExpression>
-                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!ID_RASHEMET.Value, Fields!SNIF_AV.Value)</Value>
-                </SortExpression>
-                <SortExpression>
                   <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!NAME_RASHEMET.Value, Fields!TEUR_SNIF_AV.Value)</Value>
-                </SortExpression>
-                <SortExpression>
-                  <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!SNIF_AV.Value, Fields!ID_RASHEMET.Value)</Value>
                 </SortExpression>
                 <SortExpression>
                   <Value>=iif(Parameters!P_TEZUGA.Value=1, Fields!TEUR_SNIF_AV.Value, Fields!NAME_RASHEMET.Value)</Value>
@@ -1399,7 +1393,7 @@
                           </TextRun>
                         </TextRuns>
                         <Style>
-                          <TextAlign>Right</TextAlign>
+                          <TextAlign>Center</TextAlign>
                         </Style>
                       </Paragraph>
                     </Paragraphs>
@@ -1408,6 +1402,7 @@
                       <Border>
                         <Style>Solid</Style>
                       </Border>
+                      <VerticalAlign>Middle</VerticalAlign>
                       <PaddingLeft>2pt</PaddingLeft>
                       <PaddingRight>2pt</PaddingRight>
                       <PaddingTop>2pt</PaddingTop>
@@ -1415,6 +1410,7 @@
                       <Direction>RTL</Direction>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <TablixMembers>
