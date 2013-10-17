@@ -741,7 +741,7 @@
     </Filter>-->
 
   </Report>
-    <Report  RdlName="KamutIdkuneyRashemet" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח כמות כרטיסי עבודה שעודכנו ע''י רשמת">
+    <Report  RdlName="KamutIdkuneyRashemet" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח כמות כרטיסי עבודה שעודכנו ע''י רשמת" ProductionType="Heavy">
       
       <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
         <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
