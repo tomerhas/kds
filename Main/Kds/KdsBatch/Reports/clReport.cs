@@ -90,14 +90,17 @@ namespace KdsBatch.Reports
         }
         public string RSVersion
         {
+            set { _sRSVersion = value; }
             get { return _sRSVersion; }
         }
         public string UrlConfigKey
         {
+            set { _sUrlConfigKey = value; }
             get { return _sUrlConfigKey; }
         }
         public string ServiceUrlConfigKey
         {
+            set { _sServiceUrlConfigKey = value; }
             get { return _sServiceUrlConfigKey; }
         }
         public List<clReportParam> ReportParams

@@ -62,6 +62,7 @@ namespace KdsBatch.Reports
 
         protected override void CreateReports()
         {
+
             try
             {
                 foreach (DataRow dr in _dtDetailsReport.Rows)
@@ -70,7 +71,12 @@ namespace KdsBatch.Reports
                                 clGeneral.GetIntegerValue(dr["MISPAR_ISHI"].ToString()),
                                 DateTime.Parse(dr["TAARICH"].ToString()),
                                 (dr["sug_chishuv"].ToString() != "" ? int.Parse(dr["sug_chishuv"].ToString()) : -1),
-                                clGeneral.GetIntegerValue(dr["EZOR"].ToString()), clGeneral.GetIntegerValue(dr["MAAMAD"].ToString()), clGeneral.GetIntegerValue(dr["KOD_HEVRA"].ToString()), DateTime.Parse(dr["ZMAN_HATCHALA"].ToString())));
+                                clGeneral.GetIntegerValue(dr["EZOR"].ToString()), clGeneral.GetIntegerValue(dr["MAAMAD"].ToString()), clGeneral.GetIntegerValue(dr["KOD_HEVRA"].ToString()), DateTime.Parse(dr["ZMAN_HATCHALA"].ToString()),
+                                   dr["RS_VERSION"].ToString(),
+                                              dr["URL_CONFIG_KEY"].ToString(),
+                                              dr["SERVICE_URL_CONFIG_KEY"].ToString()
+                                )
+                            );
 
                     //    _Reports.Add(new clReport(_lBakashaIdForRikuzim,
                     //                 clGeneral.GetIntegerValue(dr["MISPAR_ISHI"].ToString()),
@@ -91,6 +97,8 @@ namespace KdsBatch.Reports
         {
             _dtDetailsReport = _BlReport.getDetailsOvdimLeRikuzim(_lBakashaIdForRikuzim,_NumOfProcess);
         }
+
+
 
         protected override void FillReports()
         {
