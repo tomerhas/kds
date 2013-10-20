@@ -1146,7 +1146,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             BdikatChufshaRezifa=20,
             ShguimOfPremiyotMusachimNihulTnuaYadaniyot=21,
             ShguimOfHR=22,
-            Sleep=23
+            Sleep=23,
+            ShguimOfRetroSpaectSdrn = 24
         }
         public enum enBechishuvSachar
         {
