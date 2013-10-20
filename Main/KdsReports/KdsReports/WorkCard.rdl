@@ -2732,7 +2732,6 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -3324,13 +3323,15 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                               <TextRuns>
                                 <TextRun>
                                   <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25,Fields!PUBLIC_COMPLAINTS.Value,"")</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontWeight>ExtraBold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <LeftIndent>0cm</LeftIndent>
                               <HangingIndent>0cm</HangingIndent>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -3357,13 +3358,15 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                               <TextRuns>
                                 <TextRun>
                                   <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25 and CStr(Fields!NOT_ON_TIME.Value) &lt;&gt; "" and CStr(Fields!NOT_ON_TIME.Value) &lt;&gt; "0", Fields!NOT_ON_TIME.Value &amp; "%","")</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontWeight>ExtraBold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <LeftIndent>0cm</LeftIndent>
                               <HangingIndent>0cm</HangingIndent>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -3390,7 +3393,9 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                               <TextRuns>
                                 <TextRun>
                                   <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25 and CStr(Fields!F5.Value) &lt;&gt; "" and CStr(Fields!F5.Value) &lt;&gt; "0", Fields!F5.Value &amp; "%","")</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontWeight>ExtraBold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <LeftIndent>0cm</LeftIndent>
@@ -3411,6 +3416,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
