@@ -62,28 +62,28 @@ public partial class Modules_Test :Page
         
      }
 
-     void OnTimerAwake(object sender, EventArgs e)
-     {
-         //DataTable dt;
-         clRequest oRequest= new clRequest();
-         //try{
-             // dt= oRequest.
-             _timer.Stop();
+     //void OnTimerAwake(object sender, EventArgs e)
+     //{
+     //    //DataTable dt;
+     //    clRequest oRequest= new clRequest();
+     //    //try{
+     //        // dt= oRequest.
+     //        _timer.Stop();
         
        
-            if (!oRequest.CheckTahalichEnd(_sug_bakasha))
-            {
-                _timer.Start();
-            }
+     //       if (!oRequest.CheckTahalichEnd(_sug_bakasha))
+     //       {
+     //           _timer.Start();
+     //       }
 
           
-         //}
-        //catch
-        //{
+     //    //}
+     //   //catch
+     //   //{
           
-        //    throw ex;
-        //}
-     }
+     //   //    throw ex;
+     //   //}
+     //}
 
     protected void SleepUntillProccessEnd(int sug_bakasha)
     {
@@ -103,19 +103,19 @@ public partial class Modules_Test :Page
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        long dateNumber = 1297380023295;
-        long beginTicks = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks;
+        //long dateNumber = 1297380023295;
+        //long beginTicks = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks;
 
-      //  _timer = new System.Timers.Timer(5000); 
-      //  //_timer.Interval = 5000;
-      ////  _timer.Tick += OnTimerAwake;
-      //  _timer.Enabled = true;
-      //  _timer.Elapsed += OnTimerAwake;
-      //    //SleepUntillProccessEnd(1);
-      //  _sug_bakasha = 1;
-      //  _timer.Start();
-    //      OnTimerAwake(sender, e);
-     //   SleepUntillProccessEnd(1);
+        //_timer = new System.Timers.Timer(5000);
+        //_timer.Interval = 5000;
+        //_timer.Tick += OnTimerAwake;
+        //_timer.Enabled = true;
+        //_timer.Elapsed += OnTimerAwake;
+        //SleepUntillProccessEnd(1);
+        //_sug_bakasha = 1;
+        //_timer.Start();
+    //    OnTimerAwake(sender, e);
+      //  SleepUntillProccessEnd(1);
 
         //txtId.Attributes.Add("onfocus", "alert('')");
         //DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse("26/08/2011"), DateTimeKind.Utc); 

@@ -6997,12 +6997,13 @@ namespace KdsBatch
                                 oObjSidurimOvdimUpd.LO_LETASHLUM = 0;
                                 oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 0;                              
                             }
-                            if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
-                            {
-                                oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 0;
-                                oSidur.sPitzulHafsaka = "0";
-                            }
-                       }     
+                            //if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                            //{
+                            //    oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 0;
+                            //    oSidur.sPitzulHafsaka = "0";
+                            //}
+                       }
+                       oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 0;
                        oObjSidurimOvdimUpd.MEZAKE_NESIOT = 0;
                        oObjSidurimOvdimUpd.MEZAKE_HALBASHA = 0;
                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;

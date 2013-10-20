@@ -77,7 +77,7 @@ namespace KdsBatch.TaskManager
                 KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfRetroSpectSdrn", -12);
                 client.ShinuyimVeShguimBatch(lRequestNum, dTaarich, clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
-               
+                wait4process2end(KdsLibrary.clGeneral.enGeneralBatchType.ShguimOfRetroSpaectSdrn.GetHashCode());
             }
             catch (Exception ex)
             {
@@ -376,7 +376,7 @@ namespace KdsBatch.TaskManager
 			bool bSuccess = false;
 			clBatch oBatch = new clBatch();
 			premyot.wsPremyot wsPremyot = (premyot.wsPremyot)sender;
-
+            string sStatus = "";
             try
             {
                 if (null == e.Error)
@@ -385,15 +385,18 @@ namespace KdsBatch.TaskManager
                      if (bSuccess)
                      {
                          clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
+                         sStatus = "End";
                      }
                      else
                      {
                          clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "הפעולה נכשלה - בדוק רשומות בקובץ לוג");
                          clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
+                         sStatus = "Failed";
                      }
                 }
                 else
                 {
+                    sStatus = "Failed";
                     wsPremyot.Abort();
                     clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, e.Error.Message);
                     clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
@@ -401,6 +404,7 @@ namespace KdsBatch.TaskManager
             }
             catch (Exception ex)
             {
+                sStatus = "Failed";
                 wsPremyot.Abort();
                 if (lRequestNum > 0)
                 {
@@ -412,7 +416,7 @@ namespace KdsBatch.TaskManager
             }
 			finally
 			{
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "End");
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, sStatus);
 				wsPremyot.Dispose();
 			}
 		}
@@ -456,6 +460,7 @@ namespace KdsBatch.TaskManager
                             clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "CompleteSdrn TAARICH=" + Taarich.ToShortDateString());
                             CompleteSdrn(Taarich);
                             oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn=" + sdrnDt.Rows[0]["STATUS"].ToString() + " , 'RunRetrospectSdrn' + 'RefreshKnisot' run to date=" + Taarich.ToShortDateString());
+
                         }
                         else if (sdrnDt.Rows[0]["STATUS"].ToString() == "")
                         {
