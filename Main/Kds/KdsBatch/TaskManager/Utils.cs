@@ -75,7 +75,7 @@ namespace KdsBatch.TaskManager
             try
             {
                 KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
-                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfRetroSpectSdrn", -12);
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.ShguimOfRetroSpaectSdrn, "RunShguimOfRetroSpectSdrn", -12);
                 client.ShinuyimVeShguimBatch(lRequestNum, dTaarich, clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
                 wait4process2end(KdsLibrary.clGeneral.enGeneralBatchType.ShguimOfRetroSpaectSdrn.GetHashCode());
             }
@@ -585,6 +585,7 @@ namespace KdsBatch.TaskManager
         {
             clUtils oUtils = new clUtils();
             clRequest oRequest = new clRequest();
+            KdsLibrary.TaskManager.Utils oUtilsTask = new KdsLibrary.TaskManager.Utils();
             try
             {
                 //_timer = new System.Timers.Timer(5000);
@@ -593,11 +594,19 @@ namespace KdsBatch.TaskManager
 
                 _lReqestId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.Sleep, "Sleep :" + (Enum.Parse(typeof(clGeneral.enGeneralBatchType), p_sug_bakasha.ToString())).ToString(), -12);
                 _bakasha_id = oRequest.get_max_bakasha_id(p_sug_bakasha);
-                clLogBakashot.InsertErrorToLog(_lReqestId, "I", 0, "Start Sleep wait to " + _bakasha_id);
-                
-              
-                while (!oRequest.CheckTahalichEnd(_bakasha_id))
-                     Thread.Sleep(5000);
+                if (_bakasha_id != 0)
+                {
+                    oUtilsTask.SendNotice(23, 1, "Sleep: bakasha not found, sug:" + p_sug_bakasha);
+                    clLogBakashot.InsertErrorToLog(_lReqestId, "I", 0, "Sleep: bakasha not found, sug:" + p_sug_bakasha);
+                }
+                else
+                {
+                    clLogBakashot.InsertErrorToLog(_lReqestId, "I", 0, "Start Sleep wait to " + _bakasha_id);
+
+                    while (!oRequest.CheckTahalichEnd(_bakasha_id))
+                        Thread.Sleep(5000);
+                }
+               
                 // if (!oRequest.CheckTahalichEnd(_bakasha_id))
                 //{
                 //    _timer.Start();
@@ -613,6 +622,7 @@ namespace KdsBatch.TaskManager
             }
             catch (Exception ex)
             {
+                clLogBakashot.InsertErrorToLog(_lReqestId, "I", 0, "Sleep Faild:" + ex.Message);
                 throw new Exception("Sleep:" + ex.Message);
             }
         }
