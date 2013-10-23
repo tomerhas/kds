@@ -594,7 +594,7 @@ namespace KdsBatch.TaskManager
 
                 _lReqestId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.Sleep, "Sleep :" + (Enum.Parse(typeof(clGeneral.enGeneralBatchType), p_sug_bakasha.ToString())).ToString(), -12);
                 _bakasha_id = oRequest.get_max_bakasha_id(p_sug_bakasha);
-                if (_bakasha_id != 0)
+                if (_bakasha_id == 0)
                 {
                     oUtilsTask.SendNotice(23, 1, "Sleep: bakasha not found, sug:" + p_sug_bakasha);
                     clLogBakashot.InsertErrorToLog(_lReqestId, "I", 0, "Sleep: bakasha not found, sug:" + p_sug_bakasha);
