@@ -1723,7 +1723,9 @@
                             <TextRuns>
                               <TextRun>
                                 <Value>=FormatNumber(Sum(Fields!TICKETS.Value)/First(Fields!RECHIV_109.Value, "DsIdkuneyRashemet"),1)</Value>
-                                <Style />
+                                <Style>
+                                  <Color>= iif(First(Fields!RECHIV_109.Value, "DsIdkuneyRashemet") =0 ,"White","Black")</Color>
+                                </Style>
                               </TextRun>
                             </TextRuns>
                             <Style>
@@ -1798,7 +1800,7 @@
         <DataSetName>DsIdkuneyRashemet</DataSetName>
         <Top>2.2987cm</Top>
         <Height>2.4cm</Height>
-        <Width>21.17585cm</Width>
+        <Width>21.1759cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1826,7 +1828,7 @@
     <Height>1.85324in</Height>
     <Style />
   </Body>
-  <Width>8.33695in</Width>
+  <Width>8.33697in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
@@ -1961,7 +1963,7 @@
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>11507</Value>
+          <Value>47182</Value>
         </Values>
       </DefaultValue>
       <AllowBlank>true</AllowBlank>
@@ -1980,16 +1982,16 @@
     </ReportParameter>
     <ReportParameter Name="P_TEZUGA">
       <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
       <Prompt>P_TEZUGA</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_SNIF">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>90316</Value>
-        </Values>
-      </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>P SNIF</Prompt>
     </ReportParameter>
