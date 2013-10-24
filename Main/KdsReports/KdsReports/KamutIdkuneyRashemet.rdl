@@ -1798,7 +1798,7 @@
         <LayoutDirection>RTL</LayoutDirection>
         <NoRowsMessage>לא נמצאו רשומות</NoRowsMessage>
         <DataSetName>DsIdkuneyRashemet</DataSetName>
-        <Top>2.2987cm</Top>
+        <Top>2.65875cm</Top>
         <Height>2.4cm</Height>
         <Width>21.1759cm</Width>
         <Style>
@@ -1814,9 +1814,9 @@
             <Value>= iif(Parameters!P_TEZUGA.Value=1, "מספר כרטיסים שעודכנו ע''י רשמת לתקופה ","מספר כרטיסים שעודכנו לסניף לתקופה ") &amp; Day(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Month(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Year(Parameters!P_STARTDATE.Value) &amp; " עד " &amp;Day(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Month(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Year(Parameters!P_ENDDATE.Value) &amp;" "&amp; iif(Parameters!P_TEZUGA.Value=1, "בחלוקה לפי רשמת","בחלוקה לפי סניפים")</Value>
           </Parameter>
         </Parameters>
-        <Left>3.43958cm</Left>
-        <Height>1.97083cm</Height>
-        <Width>11.3598cm</Width>
+        <Left>2.35479cm</Left>
+        <Height>2.55291cm</Height>
+        <Width>17.25929cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -1825,7 +1825,7 @@
         </Style>
       </Subreport>
     </ReportItems>
-    <Height>1.85324in</Height>
+    <Height>1.99163in</Height>
     <Style />
   </Body>
   <Width>8.33697in</Width>
