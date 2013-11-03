@@ -76,6 +76,7 @@ namespace KdsLibrary
         public const string cProDeleteBakashotYeziratRikuzim = "pkg_batch.DeleteBakashotYeziratRikuzim";
         public const string cProRefreshTable = "PKG_BATCH.pro_RefreshMv";
         public const string cProGetMakatimLeTkinut = "PKG_BATCH.pro_Get_Makatim_LeTkinut";
+        public const string cProInsMachalotLoMeturgamot = "PKG_BATCH.pro_ins_machalot_lo_meturgamot";
 
         public const string cProInsYameyAvodaHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Yamim";
         public const string cProInsSidurimOvdimHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Sidurim";
@@ -83,6 +84,7 @@ namespace KdsLibrary
         public const string cProInsNetuneyHistoryHodshi= "PKG_MF_HISTORY.Pro_Ins_historiya_chodshi";
         public const string cProInsNetuneyHistoryYomi = "PKG_MF_HISTORY.Pro_Ins_historiya_yomi";
         public const string cProInsNetuneyHistoryCatalog = "PKG_MF_HISTORY.Ins_netuney_historiya_Catalog";
+      
 #endregion 
         #region pkg_sdrn constants
         public const string cProGetKnisotToRefresh = "PKG_sdrn.pro_get_Knisot_sdrm";
@@ -337,7 +339,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const string cCheckHityatzvutNehag = "kds.KdsVerifyDriverCheckIn";
         public const string cProInsTekenDriversToTnua = "KDSADMIN.pro_ins_amount_of_drivers_tnua";          
 #endregion
-        public const string cProBdikatChufshaRezifa = "KDSADMIN.pro_bdikat_chufsha_rezifa"; 
+        public const string cProBdikatChufshaRezifa = "KDSADMIN.pro_bdikat_chufsha_rezifa";
+        public const string cProIdkunMachalotOvdim = "KDSADMIN.pro_idkun_machalot_ovdim"; 
         #region pkg_task_Manager 
         public const string cGetStuckGroup = "pkg_task_Manager.GetStuckGroup";
         public const string cGetLogKvuzotByKod = "pkg_task_Manager.GetLogKvuzotByKod";
@@ -1147,7 +1150,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ShguimOfPremiyotMusachimNihulTnuaYadaniyot=21,
             ShguimOfHR=22,
             Sleep=23,
-            ShguimOfRetroSpaectSdrn = 24
+            ShguimOfRetroSpaectSdrn = 24,
+            IdkunMachalotOvdim=25
         }
         public enum enBechishuvSachar
         {

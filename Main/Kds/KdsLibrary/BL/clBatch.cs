@@ -724,6 +724,41 @@ namespace KdsLibrary.BL
             }
         }
 
+        public void IdkunMachalotOvdim()
+        {
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.ExecuteSP(clGeneral.cProIdkunMachalotOvdim);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool InsMachalotLoMeturgamot(long p_bakasha_id)
+        {
+            clDal oDal = new clDal();
+            int iNum = 0;
+            try
+            {
+
+                oDal.AddParameter("p_return_value", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, p_bakasha_id, ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cProInsMachalotLoMeturgamot);
+
+                iNum = Int32.Parse(oDal.GetValParam("p_return_value"));
+                if (iNum > 0)
+                    return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
     public enum RecordStatus
     {

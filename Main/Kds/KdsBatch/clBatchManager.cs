@@ -5196,7 +5196,7 @@ namespace KdsBatch
             try
             {
                 //לעובד בדרוג 085 (אגד תעבורה) אסור לבצע את הסידור (לפי מאפיין 31 אסור לדיווח לחברות בת בטבלת מאפייני סידורים מיוחדים). יש סימון בטבלת סידורים מיוחדים שהסידור אסור לעובדי שאינם אגד. עבור סידורים רגילים, אין לבדוק את השגיאה כי מראש הם לא ישובצו לסידורים אלו. מזהים אגד תעבורה לפי קוד חברה של העובד. 
-                if (enEmployeeType ==clGeneral.enEmployeeType.enEggedTaavora)
+                if (oOvedYomAvodaDetails.iDirug == 85 && oOvedYomAvodaDetails.iDarga==30)
                 {
                     if ((oSidur.bSidurMyuhad) && (oSidur.bSidurNotValidKodExists))
                     {
@@ -6990,7 +6990,7 @@ namespace KdsBatch
                         oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
                         if (!CheckIdkunRashemet("LO_LETASHLUM", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                         {
-                            if (oSidur.iLoLetashlum == 1 && !(oSidur.iKodSibaLoLetashlum == 1 || oSidur.iKodSibaLoLetashlum == 11 || oSidur.iKodSibaLoLetashlum == 20 || oSidur.iKodSibaLoLetashlum == 19))
+                            if (oSidur.iLoLetashlum == 1 && !(oSidur.iKodSibaLoLetashlum == 1 || oSidur.iKodSibaLoLetashlum == 11 || oSidur.iKodSibaLoLetashlum == 20 || oSidur.iKodSibaLoLetashlum == 19 || oSidur.iKodSibaLoLetashlum == 23))
                             {
                                 oSidur.iLoLetashlum = 0;
                                 oSidur.iKodSibaLoLetashlum = 0;

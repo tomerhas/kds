@@ -626,5 +626,34 @@ namespace KdsBatch.TaskManager
                 throw new Exception("Sleep:" + ex.Message);
             }
         }
-	}
+	
+
+         public void IdkunMachalotOvdim()
+        {
+            clBatch oBatch = new clBatch();
+            long lRequestNum = 0;
+            KdsLibrary.TaskManager.Utils oUtilsTask = new KdsLibrary.TaskManager.Utils();
+            try
+            {
+
+                lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.IdkunMachalotOvdim, "IdkunMachalotOvdim", -12);
+                if (oBatch.InsMachalotLoMeturgamot(lRequestNum))
+                    oUtilsTask.SendNotice(16, 4, "machalot lo meturgamot exists to bakasha id = " + lRequestNum);
+                oBatch.IdkunMachalotOvdim();
+                clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
+            }
+            catch (Exception ex)
+            {
+                if (lRequestNum > 0)
+                {
+                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, ex.Message);
+                    clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
+                }
+                else clGeneral.LogError(ex);
+                
+                throw (ex);
+            }
+			
+        }
+    }
 }

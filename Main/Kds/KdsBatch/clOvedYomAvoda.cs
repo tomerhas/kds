@@ -24,6 +24,8 @@ namespace KdsBatch
         public int iZmanNesiaHaloch;
         public int iZmanNesiaHazor;
         public int iStatus;
+        public int iDirug;
+        public int iDarga;
         public int iStatusTipul;
         public string sStatusCardDesc;
         public string sDayTypeDesc; //תאור סוג יום
@@ -123,6 +125,8 @@ namespace KdsBatch
                 sErevShishiChag = dtOvedCardDetails.Rows[0]["erev_shishi_chag"].ToString();
                 sRishyonAutobus = dtOvedCardDetails.Rows[0]["rishyon_autobus"].ToString().Trim();
                 sShlilatRishayon = dtOvedCardDetails.Rows[0]["shlilat_rishayon"].ToString();
+                iDirug = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["dirug"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["dirug"].ToString());
+                iDarga = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["darga"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["darga"].ToString());
                 iZmanNesiaHaloch = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["zman_nesia_haloch"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["zman_nesia_haloch"].ToString());
                 iZmanNesiaHazor = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["zman_nesia_hazor"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["zman_nesia_hazor"].ToString());
                 iStatus = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["Status"]) ? -1 : int.Parse(dtOvedCardDetails.Rows[0]["Status"].ToString());
