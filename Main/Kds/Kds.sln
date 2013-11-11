@@ -35,7 +35,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "KdsWebSite", "KdsWebSite", 
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "49140"
+		VWDPort = "34984"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsTaskManager", "KdsTaskManager\KdsTaskManager.csproj", "{438301FD-7CC1-40FB-A426-EBC716082965}"

@@ -12333,7 +12333,7 @@ namespace KdsBatch
                 iTypeGrira = 0;
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    if (oSidur.sSugAvoda == clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString())
+                    if (oSidur.sSugAvoda == clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString() && oSidur.iLoLetashlum == 0)
                     {
                         oSidurKonenutGrira = (clSidur)htEmployeeDetails[iSidurKonnutGrira];
                         dKonenutShatHatchala = oSidurKonenutGrira.dFullShatHatchala;
@@ -12532,7 +12532,7 @@ namespace KdsBatch
                     //נקרא את נתוני הסידור הקודם
                     oSidurPrev = (clSidur)htEmployeeDetails[i - 1];
 
-                    if (oSidur.iLoLetashlum == 0 && oSidurPrev.iLoLetashlum == 0)
+                    if (oSidur.iLoLetashlum == 0 && oSidurPrev.iLoLetashlum == 0 && !oSidur.bSidurMyuhad && !oSidurPrev.bSidurMyuhad)
                     {
                         oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
                         oPrevObjSidurimOvdimUpd = GetSidurOvdimObject(oSidurPrev.iMisparSidur, oSidurPrev.dFullShatHatchala);
@@ -13992,6 +13992,7 @@ namespace KdsBatch
             int iSidurZakaiLenesiaYetzia = -1;
             int iFirstMezake = -1, iLastMezake = -1;
             string sMefyen14 = "";
+            bool bSidurRelevanti = true;
             //עדכון שדה ביטול זמן נסיעות ברמת יום עבודה
             try
             {
@@ -14099,7 +14100,15 @@ namespace KdsBatch
                              sMefyen14=oSidur.sZakayLezamanNesia;
                              if (!oSidur.bSidurMyuhad && drSugSidur.Length>0) sMefyen14 = drSugSidur[0]["zakay_leaman_nesia"].ToString();
 
-                             if (!bSidurZakaiLnesiot && sMefyen14 == "1" && oSidur.iLoLetashlum == 0)
+                             bSidurRelevanti = true;
+                             if(IsSidurNihulTnua(drSugSidur, oSidur))
+                             {
+                                 if(oOvedYomAvodaDetails.iIsuk==401 || oOvedYomAvodaDetails.iIsuk==402 ||  oOvedYomAvodaDetails.iIsuk==403 || 
+                                     oOvedYomAvodaDetails.iIsuk==404 || oOvedYomAvodaDetails.iIsuk==421 || oOvedYomAvodaDetails.iIsuk==422)
+                                      bSidurRelevanti = true;
+                                 else bSidurRelevanti = false;
+                             }
+                             if (!bSidurZakaiLnesiot && sMefyen14 == "1" && oSidur.iLoLetashlum == 0 && bSidurRelevanti)
                              {
                                  if (!(bSidurMezake))
                                  { 

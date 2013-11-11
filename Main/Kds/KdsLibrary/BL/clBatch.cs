@@ -724,12 +724,13 @@ namespace KdsLibrary.BL
             }
         }
 
-        public void IdkunMachalotOvdim()
+        public void IdkunMachalotOvdim(long lRequestNum)
         {
             clDal oDal = new clDal();
 
             try
             {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
                 oDal.ExecuteSP(clGeneral.cProIdkunMachalotOvdim);
             }
             catch (Exception ex)

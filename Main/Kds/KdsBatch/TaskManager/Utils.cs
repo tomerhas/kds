@@ -639,7 +639,7 @@ namespace KdsBatch.TaskManager
                 lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.IdkunMachalotOvdim, "IdkunMachalotOvdim", -12);
                 if (oBatch.InsMachalotLoMeturgamot(lRequestNum))
                     oUtilsTask.SendNotice(16, 4, "machalot lo meturgamot exists to bakasha id = " + lRequestNum);
-                oBatch.IdkunMachalotOvdim();
+                oBatch.IdkunMachalotOvdim(lRequestNum);
                 clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
             }
             catch (Exception ex)
