@@ -13550,8 +13550,8 @@ namespace KdsBatch
                 {//סידור מיוחד
                     bSidurNihulTnua = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
                     if (!bSidurNihulTnua)
-                        if (oSidur.bMatalaKlalitLeloRechev)
-                        {
+                        if (oSidur.iMisparSidur == 99301)
+                        { // oSidur.bMatalaKlalitLeloRechev
                     
                         clPeilut oPeilut = null;
                         for (int i = 0; i < oSidur.htPeilut.Count; i++)
