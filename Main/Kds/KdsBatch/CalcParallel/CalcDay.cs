@@ -1414,7 +1414,7 @@ namespace KdsBatch
 
                                     if (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 3 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)
                                     {
-                                        if (fTempX >= 240 || (objOved.objPirteyOved.iZmanMutamut < 240 && objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and Hashlama_Leyom =1").Length > 0))
+                                        if (fTempX >= 240 || (objOved.objPirteyOved.iZmanMutamut >= 240 && objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and Hashlama_Leyom =1").Length > 0))
                                             fErechRechiv = 1;
                                         //if (fNochechtLeTashlum>0 && fTempX >= fMichsatMutam)
                                         //    fErechRechiv = 1;
