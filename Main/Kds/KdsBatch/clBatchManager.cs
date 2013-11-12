@@ -13550,7 +13550,8 @@ namespace KdsBatch
                 {//סידור מיוחד
                     bSidurNihulTnua = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
                     if (!bSidurNihulTnua)
-                       if (oSidur.iMisparSidur == 99301){
+                        if (oSidur.bMatalaKlalitLeloRechev)
+                        {
                     
                         clPeilut oPeilut = null;
                         for (int i = 0; i < oSidur.htPeilut.Count; i++)
@@ -14103,8 +14104,8 @@ namespace KdsBatch
                              bSidurRelevanti = true;
                              if(IsSidurNihulTnua(drSugSidur, oSidur))
                              {
-                                 if(oOvedYomAvodaDetails.iIsuk==401 || oOvedYomAvodaDetails.iIsuk==402 ||  oOvedYomAvodaDetails.iIsuk==403 || 
-                                     oOvedYomAvodaDetails.iIsuk==404 || oOvedYomAvodaDetails.iIsuk==421 || oOvedYomAvodaDetails.iIsuk==422)
+                                 if(oOvedYomAvodaDetails.iIsuk==401 || oOvedYomAvodaDetails.iIsuk==402 ||  oOvedYomAvodaDetails.iIsuk==403 ||
+                                     oOvedYomAvodaDetails.iIsuk == 404 || oOvedYomAvodaDetails.iIsuk == 421 || oOvedYomAvodaDetails.iIsuk == 422 || oOvedYomAvodaDetails.iIsuk == 17)
                                       bSidurRelevanti = true;
                                  else bSidurRelevanti = false;
                              }
