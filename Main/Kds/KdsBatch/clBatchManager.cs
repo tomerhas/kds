@@ -12532,7 +12532,9 @@ namespace KdsBatch
                     //נקרא את נתוני הסידור הקודם
                     oSidurPrev = (clSidur)htEmployeeDetails[i - 1];
 
-                    if (oSidur.iLoLetashlum == 0 && oSidurPrev.iLoLetashlum == 0 && !oSidur.bSidurMyuhad && !oSidurPrev.bSidurMyuhad)
+                    if (oSidur.iLoLetashlum == 0 && oSidurPrev.iLoLetashlum == 0 &&
+                        (!oSidur.bSidurMyuhad || (oSidur.bSidurMyuhad && IsMatala(oSidur))) && 
+                         (!oSidurPrev.bSidurMyuhad || (oSidurPrev.bSidurMyuhad && IsMatala(oSidurPrev))) )
                     {
                         oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
                         oPrevObjSidurimOvdimUpd = GetSidurOvdimObject(oSidurPrev.iMisparSidur, oSidurPrev.dFullShatHatchala);
@@ -12619,6 +12621,23 @@ namespace KdsBatch
             }
         }
 
+        private bool IsMatala(clSidur oSidur)
+        {
+            clPeilut oPeilut;
+            if (oSidur.bSidurMyuhad)
+            {
+                for (int j = 0; j < oSidur.htPeilut.Count; j++)
+                {
+                    oPeilut = (clPeilut)oSidur.htPeilut[j];
+
+                    if (oPeilut.lMisparMatala > 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         private void SidurNetzer17(ref clSidur oSidur,ref OBJ_SIDURIM_OVDIM  oObjSidurimOvdimUpd)
         {
             //אם סידור הוא סידור נצר (99203) (לפי ערך 11 (נ.צ.ר) במאפיין 52 (סוג עבודה) בטבלת סידורים מיוחדים)  ולעובד קיים מאפיין 64 והסידור אינו מסומן "לא לתשלום" 
