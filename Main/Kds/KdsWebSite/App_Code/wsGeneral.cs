@@ -2145,7 +2145,7 @@ public class wsGeneral : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public string UpdateShatGmar(int iSidurIndex, string sCardDate, string sShatGmar, int iAddDay)
+    public string UpdateShatGmar(int iSidurIndex, string sCardDate, string sShatGmar, int iAddDay)    
     {
         OrderedDictionary odSidurim;
         clSidur _Sidur = new clSidur();

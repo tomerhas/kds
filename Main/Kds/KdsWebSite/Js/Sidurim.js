@@ -568,7 +568,8 @@ function chkMkt(oRow) {
         SetSidurStatus(iIndex,false);       
         $get(id).className = "ImgChecked";
         $get("SD_lblSidurCanceled".concat(iIndex)).value="0";
-     }
+    }
+   
      return false;
     }
     function SetPeilutStatus(RowId, bFlag, iSidur, iSidurIndex, PeilutAv)
@@ -1046,13 +1047,15 @@ function chkMkt(oRow) {
         }
     }
     function SetHashlama(iSidurIndex) {
-        var sCardDate = $get("clnDate").value;
+        var sCardDate = $get("clnDate").value;        
         var sShatGmar = $get("SD_txtSG".concat(iSidurIndex)).value;
         var iAddDay = $get("SD_txtDayAdd".concat(iSidurIndex)).value;
         if ((sShatGmar == '') || (sShatGmar == "__:__"))
             $get("SD_ddlHashlama" + iSidurIndex).disabled = true;
-        else
-            wsGeneral.UpdateShatGmar(iSidurIndex, sCardDate, sShatGmar, iAddDay, callBackHashlama, null, iSidurIndex);
+        else {
+            //if (sShatGmar.indexOf("_") == -1)
+                wsGeneral.UpdateShatGmar(iSidurIndex, sCardDate, sShatGmar, iAddDay, callBackHashlama, null, iSidurIndex);
+        }
     }
     function callBackHashlama(result, iSidurIndex) {
         result = result.split(",");
@@ -1577,7 +1580,7 @@ function chkMkt(oRow) {
         }        
     }
    function SidurTimeChanged(id)
-   {//שעת התחלה השתנתה, נבדוק שוב את התנאים לשדה השלמה
+   { //שעת התחלה השתנתה, נבדוק שוב את התנאים לשדה השלמה
     var sSidurDate = $get("SD_lblDate".concat(id)).innerHTML; 
     var ddlChariga = $get("SD_ddlException".concat(id));          
     var sYear = Number(sSidurDate.substr(6,4));
@@ -1649,8 +1652,10 @@ function chkMkt(oRow) {
             var dEndHour = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(oSG.substr(0, 2)), Number(oSG.substr(3, 2)));
            
             dEndHour.setDate(dEndHour.getDate() + Number(iSDayToAdd));
-            $get("SD_lblSidur".concat(id)).title = "  משך הסידור: " + GetTimeInMinuts(dStartHour, dEndHour) + " דקות";          
-        }}}    
+            $get("SD_lblSidur".concat(id)).title = "  משך הסידור: " + GetTimeInMinuts(dStartHour, dEndHour) + " דקות";
+        } 
+    } 
+}    
    function GetSidurTime(dStartHour,dEndHour)
    {
      var diff= new Date();     
