@@ -1219,6 +1219,31 @@ namespace KdsLibrary.BL
              return dt;
          }
 
+         public float getMeshechSidur(int iMisparIshi, int iMisparSidur, DateTime taarich_me, DateTime taarich_ad)
+         {
+             clDal oDal = new clDal();
+             float iMeshechSidur = 0;
+             try
+             {
+                 //מחזיר את סטטוס קוד האישור ברמה הגבוהה ביותר
+                 oDal.AddParameter("p_return_value", ParameterType.ntOracleDecimal, null, ParameterDir.pdReturnValue);
+
+                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                 oDal.AddParameter("p_mispar_sidur", ParameterType.ntOracleInteger, iMisparSidur, ParameterDir.pdInput);
+                 oDal.AddParameter("p_taarich_me", ParameterType.ntOracleDate, taarich_me, ParameterDir.pdInput);
+                 oDal.AddParameter("p_taarich_ad", ParameterType.ntOracleDate, taarich_ad, ParameterDir.pdInput);
+
+                 oDal.ExecuteSP(clGeneral.cFunGetMeshechSidurForPeriod);
+
+                 iMeshechSidur = float.Parse(oDal.GetValParam("p_return_value"));
+
+                 return iMeshechSidur;
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+         }
         /**************************************/
 
          //public void RunSinuyimVeShguimBatch(long lRequestNum, DateTime dTaarich, clGeneral.enCalcType TypeShguyim, clGeneral.BatchExecutionType ExecutionTypeShguim)

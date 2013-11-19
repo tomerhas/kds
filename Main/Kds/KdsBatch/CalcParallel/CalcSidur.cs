@@ -4056,7 +4056,7 @@ namespace KdsBatch
             float fErech, fTempX, fTempY, fTempDakot;
             string sSidurimMeyuchadim;
             dShatHatchalaSidur = DateTime.MinValue;
-            DateTime dShaa = objOved.Taarich;
+            DateTime dShaa = DateTime.MaxValue;
             iMisparSidur = 0;
             bool bConenutGrira, bGriraInConenutGrira;
             int iMikumKnisa = 0;
@@ -4083,14 +4083,18 @@ namespace KdsBatch
                             dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
                             bGriraInConenutGrira = cheakSidurGrirainConenutGrira(dShatHatchalaLetashlum, dShatGmarLetashlum, drConenutGrira);
 
-                            dShaa = DateTime.Parse(objOved.Taarich.ToShortDateString() + " 15:30:00");
+                            if (objOved.SugYom < clGeneral.enSugYom.Shishi.GetHashCode())
+                                dShaa = objOved.objParameters.dShaaGrirotChol;// DateTime.Parse(objOved.Taarich.ToShortDateString() + " 15:30:00");
+                            else if (oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom) || oCalcBL.CheckYomShishi(objOved.SugYom))
+                                dShaa = objOved.objParameters.dShaaGrirotErevChagShishi ;
 
                             if (drSidurim[I]["MIKUM_SHAON_KNISA"].ToString() != "")
                                 iMikumKnisa = int.Parse(drSidurim[I]["MIKUM_SHAON_KNISA"].ToString());
                             if (drSidurim[I]["MIKUM_SHAON_YETZIA"].ToString() != "")
                                 iMikumYetzia = int.Parse(drSidurim[I]["MIKUM_SHAON_YETZIA"].ToString());
 
-                            if (dShatHatchalaSidur >= dShaa && bGriraInConenutGrira && (iMikumKnisa > 0 || iMikumYetzia > 0))
+                            if ((dShatHatchalaSidur >= dShaa || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
+                                 && bGriraInConenutGrira && (iMikumKnisa > 0 || iMikumYetzia > 0))
                             {
                                 drSidurimLeyom = null;
                                 drSidurimLeyom = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0  and mispar_sidur is not null", "shat_hatchala_sidur asc");

@@ -241,7 +241,8 @@ namespace KdsBatch
             errAvodaByemeyMachala201=201,
             errMachalaLeloIshur202 = 202,
             errConenutGriraMealHamutar=203,
-            errSidurAsurBeyomShishiLeoved5Yamim204=204
+            errSidurAsurBeyomShishiLeoved5Yamim204=204,
+            errTipatChalavMealMichsa205=205
         }
 
         private enum errNesiaMeshtana
@@ -1310,6 +1311,7 @@ namespace KdsBatch
                     if (CheckErrorActive(201)) AvodaByemeyMachala201(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(202)) MachalaLeloIshurwithSidurLetashlum202(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(204)) SidurAsurBeShisiLeoved5Yamim204(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(205)) CheckMichsatTipatChalav205(ref oSidur, ref dtErrors);  
 
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
@@ -2007,6 +2009,43 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurAsurBeyomShishiLeoved5Yamim204.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "errSidurAsurBeyomShishiLeoved5Yamim204: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+
+         
+        private bool CheckMichsatTipatChalav205(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            bool isValid = true;
+            bool bError = false;
+            DateTime taarich_me;
+            clUtils oUtils = new clUtils();
+            float p_meshech;
+            try
+            {
+                if (oSidur.iMisparSidur == 99814)
+                {
+                    taarich_me = DateTime.Now.AddMonths(-(oParam.iMaxMonthToDisplay-1));
+                    p_meshech = oUtils.getMeshechSidur(oSidur.iMisparIshi, oSidur.iMisparSidur,taarich_me, DateTime.Now);
+                    if (p_meshech>40)
+                        bError = true;;
+                }
+
+                if (bError)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "טיפת חלב - מיצוי מעל 40 שעות", enErrors.errTipatChalavMealMichsa205.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errTipatChalavMealMichsa205.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "errTipatChalavMealMichsa205: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
