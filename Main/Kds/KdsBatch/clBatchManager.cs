@@ -2026,12 +2026,15 @@ namespace KdsBatch
             float p_meshech;
             try
             {
-                if (oSidur.iMisparSidur == 99814)
+                if (oSidur.iMisparSidur == 99814 )
                 {
-                    taarich_me = DateTime.Now.AddMonths(-(oParam.iMaxMonthToDisplay-1));
-                    p_meshech = oUtils.getMeshechSidur(oSidur.iMisparIshi, oSidur.iMisparSidur,taarich_me, DateTime.Now);
-                    if (p_meshech>40)
-                        bError = true;;
+                    taarich_me = DateTime.Parse("01/" + (DateTime.Now.AddMonths(-(oParam.iMaxMonthToDisplay-1))).ToString("MM/yyyy"));
+                    if (oSidur.dSidurDate >= taarich_me)
+                    {
+                        p_meshech = oUtils.getMeshechSidur(oSidur.iMisparIshi, oSidur.iMisparSidur, taarich_me, DateTime.Now);
+                        if (p_meshech > 40)
+                            bError = true;
+                    }
                 }
 
                 if (bError)
