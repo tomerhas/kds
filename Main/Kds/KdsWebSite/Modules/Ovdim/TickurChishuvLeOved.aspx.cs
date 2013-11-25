@@ -162,6 +162,8 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                      Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
                      Report.AddParameter("P_SIKUM_CHODSHI", "0");
                       Report.AddParameter("P_DT_RIKUZ", ((DataSet)Session["dsRikuz"]));
+                      Report.AddParameter("P_USER", KdsLibrary.Security.LoginUser.GetLoginUser().UserInfo.EmployeeFullName);
+
 
                      s = Report.CreateReport("/KdsReports/RikuzAvodaChodshiOnLine2", eFormat.PDF, true);
 
@@ -223,6 +225,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                      Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
                      Report.AddParameter("P_SIKUM_CHODSHI", "0");
                      Report.AddParameter("P_DT_RIKUZ", ((DataSet)Session["dsRikuz"]));
+                     Report.AddParameter("P_USER", KdsLibrary.Security.LoginUser.GetLoginUser().UserInfo.EmployeeFullName);
 
                      s = Report.CreateReport("/KdsReports/RikuzAvodaChodshiOnLine2", eFormat.EXCEL, true);
 
