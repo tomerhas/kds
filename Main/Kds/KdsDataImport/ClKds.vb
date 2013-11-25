@@ -3893,6 +3893,7 @@ Public Class ClKds
         Dim oDal As KdsLibrary.DAL.clDal
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Dim sr As StreamReader
+        Dim dt As DataTable
         Dim ErrFileName As String
         Dim line As String
         Dim InPathNFile As String
@@ -3903,6 +3904,7 @@ Public Class ClKds
         Dim Restline As String
         Dim Outline As String
         Dim i As Integer
+        Dim previousday As String
 
         Try
 
@@ -3918,24 +3920,45 @@ Public Class ClKds
             While Not ((Trim(line) Is Nothing) Or (Trim(line) = ""))
                 Try
                     SRV_D_MIKUM_KNISA = Mid(line, 1, 3)
-                    SRV_D_TAARICH = "20" & Mid(line, 16, 2) & Mid(line, 14, 2) & Mid(line, 12, 2) 'convert from format=ddmmyy
+                    If Not CInt(SRV_D_MIKUM_KNISA) = 147 Then
+                        SRV_D_TAARICH = "20" & Mid(line, 16, 2) & Mid(line, 14, 2) & Mid(line, 12, 2)  'convert from format=ddmmyy 
+                        previousday = SRV_D_TAARICH
 
-                    i = 0
-                    Restline = Mid(line, 18 + 14 * i, 14)
-                    While Not ((Trim(Restline) Is Nothing) Or (Trim(Restline) = "") Or i > 7)
-                        'prepare line for old pundakim:
-                        '7769062013111846100074902106115180000000000000000000000000000000000000000        99001000000000100  
-                        Outline = ""
-                        SRV_D_ISHI = Mid(Restline, 5, 5)
-                        SRV_D_KNISA_X = Mid(Restline, 11, 4) 'format=hhmm
-                        Outline = SRV_D_ISHI & Mid(Restline, 10, 1) & SRV_D_TAARICH & "00000"
-                        Outline = Outline & SRV_D_KNISA_X & "00000000" & SRV_D_MIKUM_KNISA & "00"
-                        Outline = Outline & "000000000000000000000000000000000000000        "
-                        Outline = Outline & "99214" & "000000000100  "
-                        LoadPundakim(Outline)
-                        i = i + 1
+                        dt = Nothing
+                        dt = New DataTable
+                        oDal.ClearCommand()
+                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                        oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                        oDal.ExecuteSP("PKG_BATCH.pro_GetRowDt", dt)
+                        previousday = dt.Rows(0).Item("previousday").ToString
+
+                        i = 0
                         Restline = Mid(line, 18 + 14 * i, 14)
-                    End While
+                        While Not ((Trim(Restline) Is Nothing) Or (Trim(Restline) = "") Or i > 7)
+                            'prepare line for old pundakim:
+                            '7769062013111846100074902106115180000000000000000000000000000000000000000        99001000000000100  
+                            Outline = ""
+                            SRV_D_ISHI = Mid(Restline, 5, 5)
+                            SRV_D_KNISA_X = Mid(Restline, 11, 4) 'format=hhmm
+                            Outline = SRV_D_ISHI & Mid(Restline, 10, 1)
+                            If CInt(Mid(Restline, 11, 2)) < 5 Then
+                                Outline = Outline & previousday & "00000"
+                                Outline = Outline & (CInt(SRV_D_KNISA_X) + 2400).ToString & "00000000"
+                            Else
+                                Outline = Outline & SRV_D_TAARICH & "00000"
+                                Outline = Outline & SRV_D_KNISA_X & "00000000"
+                            End If
+                            Outline = Outline & SRV_D_MIKUM_KNISA & "00"
+                            Outline = Outline & "000000000000000000000000000000000000000        "
+                            'Outline = Outline & "99214" & "000000000" & Mid(line, 5, 1) & "00  "
+                            Outline = Outline & "99214" & "000000000100  "
+                            LoadPundakim(Outline)
+                            i = i + 1
+                            Restline = Mid(line, 18 + 14 * i, 14)
+                        End While
+                    Else
+                        'todo: send the record to sidur hityazvut 99200
+                    End If
 
                 Catch ex As Exception
                     oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Pundakim aborted" & ex.Message, 3)
