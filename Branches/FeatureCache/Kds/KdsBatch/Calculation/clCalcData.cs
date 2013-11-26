@@ -6,6 +6,9 @@ using System.Data;
 using KdsLibrary;
 using KdsLibrary.DAL;
 using KdsLibrary.BL;
+using KDSCommon.DataModels;
+using KDSCommon.Interfaces;
+using Microsoft.Practices.ServiceLocation;
 
 namespace KdsBatch
 {
@@ -26,7 +29,7 @@ namespace KdsBatch
         private static DataTable _dtPeiluyotOved;
         private static DataTable _dtPirteyOvedForMonth;
         private static DataTable _dtParameters;
-        private static List<clParameters> _listParametersMonth;
+        private static List<clParametersDM> _listParametersMonth;
         private static DataTable _dtMeafyenyOvedMonth;
         private static List<clMeafyenyOved> _listMeafyeneyOvedMonth;
 
@@ -107,7 +110,7 @@ namespace KdsBatch
             get { return _dtParameters; }
         }
 
-        public static List<clParameters> ListParametersMonth
+        public static List<clParametersDM> ListParametersMonth
         {
             set { _listParametersMonth = value; }
             get { return _listParametersMonth; }
@@ -421,16 +424,17 @@ namespace KdsBatch
         public static void InitListParamObject(DateTime dTarMe, DateTime dTarAd)
         {
             clUtils oUtils = new clUtils();
-            clParameters itemParams;
+            clParametersDM itemParams;
             int sugYom;
             try
             {
                 DtParameters = oUtils.GetKdsParametrs();
-                ListParametersMonth = new List<clParameters>();
+                ListParametersMonth = new List<clParametersDM>();
                 while (dTarMe <= dTarAd)
                 {
                     sugYom = clGeneral.GetSugYom(DtYamimMeyuchadim, dTarMe, DtSugeyYamimMeyuchadim);
-                    itemParams = new clParameters(dTarMe, sugYom, "Calc");
+                    IParametersManager paramManager = ServiceLocator.Current.GetInstance<IParametersManager>();
+                    itemParams = paramManager.CreateClsParametrs(dTarMe, sugYom, "Calc");
                     ListParametersMonth.Add(itemParams);
                     dTarMe = dTarMe.AddDays(1);
                 }

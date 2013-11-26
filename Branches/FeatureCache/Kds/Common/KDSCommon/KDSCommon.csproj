@@ -44,7 +44,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModels\clParametersDM.cs" />
+    <Compile Include="Enums\ErrorTypes.cs" />
+    <Compile Include="DataModels\Errors\ErrorInputData.cs" />
+    <Compile Include="DataModels\OvedYomAvodaDetailsDM.cs" />
     <Compile Include="Enums\CachedItems.cs" />
+    <Compile Include="Interfaces\Cache\ICacheBuilder.cs" />
+    <Compile Include="Interfaces\DAL\IOvedDAL.cs" />
+    <Compile Include="Interfaces\Errors\ICardError.cs" />
+    <Compile Include="Interfaces\Managers\FlowManagers\IDayErrorFlowManager.cs" />
+    <Compile Include="Interfaces\Managers\ICardErrorContainer.cs" />
+    <Compile Include="Interfaces\Managers\IOvedManager.cs" />
+    <Compile Include="Interfaces\Managers\IParametersManager.cs" />
+    <Compile Include="Interfaces\Queue\IKDSAgedQueueParameters.cs" />
+    <Compile Include="Interfaces\Cache\IKDSCacheManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

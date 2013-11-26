@@ -17,14 +17,15 @@ using KdsLibrary.BL;
 using KdsLibrary.UDT;
 using KdsWorkFlow.Approvals;
 using KdsLibrary.Security;
+using KDSCommon.DataModels;
 public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//, System.Web.UI.ICallbackEventHandler
 {
     
     private OrderedDictionary _DataSource;
     private OrderedDictionary _CancledSidurim;
     private clMeafyenyOved _MeafyenyOved;
-    private clParameters _KdsParameters;
-    private clOvedYomAvoda _oOvedYomAvoda;
+    private clParametersDM _KdsParameters;
+    private OvedYomAvodaDetailsDM _oOvedYomAvoda;
     //private DataView _dvPeilut;
     private DataView _dvChariga;
     private DataView _dvSibotLedivuch;
@@ -6721,7 +6722,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         }         
     }
 
-    public clParameters KdsParameters
+    public clParametersDM KdsParameters
     {
         set
         {
@@ -6732,7 +6733,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             return _KdsParameters;
         }
     }
-    public clOvedYomAvoda OvedYomAvoda
+    public OvedYomAvodaDetailsDM OvedYomAvoda
     {
         set
         {

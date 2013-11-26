@@ -6,12 +6,13 @@ using KdsLibrary;
 using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using System.Data;
+using KDSCommon.DataModels;
 
 namespace KdsBatch
 {
     public class clCalcGeneral
     {
-        public  clParameters objParameters;
+        public  clParametersDM objParameters;
         public  clMeafyenyOved objMeafyeneyOved;
         public  clPirteyOved objPirteyOved;
        

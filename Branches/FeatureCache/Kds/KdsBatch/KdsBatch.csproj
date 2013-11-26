@@ -109,15 +109,15 @@
     <Compile Include="CalcParallel\GeneralData.cs" />
     <Compile Include="CalcParallel\MainCalc.cs" />
     <Compile Include="CalcParallel\Meafyen.cs" />
-    <Compile Include="Calculation\Ovdim.cs" />
     <Compile Include="CalcParallel\Oved.cs" />
     <Compile Include="Calculation\clCalcData.cs" />
     <Compile Include="Calculation\clCalcDay.cs" />
     <Compile Include="Calculation\clCalcGeneral.cs" />
-    <Compile Include="Calculation\clCalcPeilut.cs" />
-    <Compile Include="Calculation\clCalculation.cs" />
     <Compile Include="Calculation\clCalcMonth.cs" />
+    <Compile Include="Calculation\clCalcPeilut.cs" />
     <Compile Include="Calculation\clCalcSidur.cs" />
+    <Compile Include="Calculation\clCalculation.cs" />
+    <Compile Include="Calculation\Ovdim.cs" />
     <Compile Include="clBatchFactory.cs" />
     <Compile Include="clBatchManager.cs" />
     <Compile Include="clMatzavOvdim.cs" />
@@ -129,6 +129,12 @@
     <Compile Include="Errors\BasicError.cs" />
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\EntitiesDal.cs" />
+    <Compile Include="Errors\BasicErrorsLib\CardErrorBase.cs" />
+    <Compile Include="Errors\BasicErrorsLib\CardErrorContainer.cs" />
+    <Compile Include="Errors\BasicErrorsLib\ErrosrImpl\DayErrors\DayErrorDuplicateShatYetiza103.cs" />
+    <Compile Include="Errors\BasicErrorsLib\ErrosrImpl\DayErrors\DayErrorHrStatusValid01.cs" />
+    <Compile Include="Errors\BasicErrorsLib\ErrosrImpl\DayErrors\DayErrorIsSimunNesiaValid27.cs" />
+    <Compile Include="Errors\BasicErrorsLib\FlowManagers\DayErrorFlowManager.cs" />
     <Compile Include="Errors\DayErrors.cs" />
     <Compile Include="Errors\FactoryChecker.cs" />
     <Compile Include="Errors\GlobalData.cs" />
@@ -138,7 +144,6 @@
     <Compile Include="Errors\clCardErrors.cs" />
     <Compile Include="clDefinitions.cs" />
     <Compile Include="clMeafyenyOved.cs" />
-    <Compile Include="clOvedYomAvoda.cs" />
     <Compile Include="clParameters.cs" />
     <Compile Include="Errors\clPeilut.cs" />
     <Compile Include="Errors\clSidur.cs" />
@@ -303,11 +308,16 @@
       <Project>{F2F12CC6-7B61-4B62-A364-CF1E132D2BF9}</Project>
       <Name>KDSCache</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\KDSCommon\KDSCommon.csproj">
+      <Project>{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}</Project>
+      <Name>KDSCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
       <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
       <Name>KdsLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

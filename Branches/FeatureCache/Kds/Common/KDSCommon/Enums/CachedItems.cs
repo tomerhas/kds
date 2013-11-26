@@ -7,6 +7,12 @@ namespace KDSCommon.Enums
 {
     public enum CachedItems
     {
-        YamimMeyuhadim
+        YamimMeyuhadim,
+        SugeyYamimMeyuchadim,
+        LookUpTables,
+        SugeySidur,
+        Mutamut,
+        SibotLedivuchYadani,
+        ErrorTable
     }
 }

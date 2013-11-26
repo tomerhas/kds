@@ -7,8 +7,16 @@ using Microsoft.Practices.ServiceLocation;
 using CacheInfra.Interfaces;
 using CacheInfra.Implement;
 using KDSCommon.Enums;
-using KDSCache.Interfaces;
 using KDSCache.Implement;
+using KDSCommon.Interfaces;
+using KdsLibrary;
+using KDSCommon.Interfaces.Managers;
+using KdsBatch;
+using KDSCommon.Interfaces.DAL;
+using KdsLibrary.KDSLogic.DAL;
+using KDSCommon.Interfaces.Managers.FlowManagers;
+using KdsBatch.Errors.BasicErrorsLib.FlowManagers;
+using KdsBatch.Errors.BasicErrorsLib;
 
 
 /// <summary>
@@ -27,13 +35,26 @@ public class Bootstrapper
         //Register interfaces
 
         //container.RegisterInstance<ISimpleCacheManager<CachedItems>>(new SimpleCacheManager<CachedItems>());//the object will be singelton
-        container.RegisterInstance<IKDSCacheManager>(new KDSCacheManager());
-        var manager= new KDSAgedQueueParameters();
-        manager.Init(3);
-        container.RegisterInstance<IKDSAgedQueueParameters>(manager);
+        IKDSCacheManager kdsManager = container.Resolve<KDSCacheManager>();
 
-        container.RegisterType<ICacheBuilder,CacheBuilder>();
-        
+        //container.RegisterInstance<IKDSCacheManager>(new KDSCacheManager());
+        container.RegisterInstance<IKDSCacheManager>(kdsManager);
+        var manager= new KDSAgedQueueParameters();
+        manager.Init(20);
+        container.RegisterInstance<IKDSAgedQueueParameters>(manager);
+        //container.RegisterInstance<ICacheBuilder>(container.Resolve<CacheBuilder>());
+
+        //Managers
+        container.RegisterType<IParametersManager, ParametersManager>();
+        container.RegisterType<IOvedManager, OvedManager>();
+
+        container.RegisterType<IDayErrorFlowManager, DayErrorFlowManager>();
+        //Containers
+        ICardErrorContainer cardErrorContainer = container.Resolve<CardErrorContainer>();
+        container.RegisterInstance<ICardErrorContainer>(cardErrorContainer);
+        cardErrorContainer.Init();
+        //DAL
+        container.RegisterType<IOvedDAL, OvedDAL>();
         
         //var manager = container.Resolve<ISimpleCacheManager<int>>();
         //var item = container.Resolve<ISimpleCacheManager<string>>();
@@ -44,7 +65,7 @@ public class Bootstrapper
 
     private void InitCacheItems(IUnityContainer container)
     {
-        var builder = container.Resolve<ICacheBuilder>();
+        var builder = container.Resolve<CacheBuilder>();
         builder.Init();
     }
 

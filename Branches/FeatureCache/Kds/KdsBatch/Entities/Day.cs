@@ -8,6 +8,9 @@ using KdsLibrary.Utils;
 using KdsLibrary;
 using KdsBatch.Errors;
 using KdsLibrary.BL;
+using KDSCommon.DataModels;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces;
 
 namespace KdsBatch.Entities
 {
@@ -44,7 +47,7 @@ namespace KdsBatch.Entities
         public long btchRequest;
         public bool IsExecuteErrors = false;
 
-        public clParameters oParameters;
+        public clParametersDM oParameters;
         public List<Sidur> Sidurim;
     //    public DataTable dtTmpMeafyeneyElements;
         public Oved oOved;
@@ -104,7 +107,8 @@ namespace KdsBatch.Entities
                 sDayTypeDesc = oOved.dtOvedDetails.Rows[0]["teur_yom"].ToString();
                 iMeasherOMistayeg = String.IsNullOrEmpty(oOved.dtOvedDetails.Rows[0]["measher_o_mistayeg"].ToString()) ? -1 : int.Parse(oOved.dtOvedDetails.Rows[0]["measher_o_mistayeg"].ToString());
                 iSugYom = clGeneral.GetSugYom(GlobalData.dtYamimMeyuchadim, dCardDate, GlobalData.dtSugeyYamimMeyuchadim);
-                oParameters = new clParameters(dCardDate, iSugYom);
+                IParametersManager paramManager = ServiceLocator.Current.GetInstance<IParametersManager>();
+                oParameters = paramManager.CreateClsParametrs(dCardDate, iSugYom);
             }
             catch (Exception ex)
             {

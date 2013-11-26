@@ -23,7 +23,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using KdsLibrary.Utils;
-
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.DataModels;
+using KDSCommon.Interfaces;
+using KDSCommon.Enums;
+using KDSCommon.Interfaces.Managers;
 
 public partial class Modules_Ovdim_WorkCard : KdsPage
 {
@@ -468,7 +472,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
          try
          {
-             clOvedYomAvoda oOvedYomAvodaDetails = new clOvedYomAvoda(iMisparIshi, dDateCard);
+             IOvedManager ovedManager = ServiceLocator.Current.GetInstance<IOvedManager>();
+             var oOvedYomAvodaDetails = ovedManager.CreateOvedDetails(iMisparIshi, dDateCard);
+
              if (ViewState["LoadNewCard"] != null)
                  bLoadNewCard = (bool.Parse(ViewState["LoadNewCard"].ToString()) == true);
              if ( (hidChanges.Value.ToLower() != "true")  && 
@@ -753,7 +759,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                      SD.Mashar = (DataTable)Session["Mashar"];
                     
                      oBatchManager.dtErrors = (DataTable)Session["Errors"];
-                     oBatchManager.oParam = (clParameters)Session["Parameters"];
+                     oBatchManager.oParam = (clParametersDM)Session["Parameters"];
                      dtPakadim = (DataTable)Session["Pakadim"];
                      SD.ErrorsList = (DataTable)Session["Errors"];
                      SD.SadotNosafim = (DataTable)Session["SadotNosafim"];
@@ -2003,12 +2009,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         try
         {
+              var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
             //חריגה
             dv.RowFilter = string.Concat("table_name='", clGeneral.cCtbDivuchHarigaMeshaot, "'");
             SD.DDLChariga = dv;
 
             //סיבות לדיווח ידני
-            dvSibotLedivuch = new DataView(oUtils.GetCtbSibotLedivuchYadani());
+            dvSibotLedivuch = new DataView(cache.GetCacheItem<DataTable>(CachedItems.SibotLedivuchYadani));
             SD.DDLSibotLedivuch = dvSibotLedivuch;
 
 
@@ -2136,7 +2143,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             DataView dv;
             //string strImageUrl = "";        
             // btnCardStatus.Text = oBatchManager.oOvedYomAvodaDetails.sStatusCardDesc;
-            if (oBatchManager.oOvedYomAvodaDetails.OvedDetailsExists)
+            if (oBatchManager.oOvedYomAvodaDetails!=null)
             {
                 _StatusCard = oBatchManager.CardStatus;
                 if (bRashemet)
@@ -2214,7 +2221,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         string strImageUrlNotApprove = "";
         clGeneral.enMeasherOMistayeg oMasherOMistayeg;
       
-        if (oBatchManager.oOvedYomAvodaDetails.OvedDetailsExists)
+        if (oBatchManager.oOvedYomAvodaDetails!=null)
         {
             oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
             switch (oMasherOMistayeg)
@@ -2319,7 +2326,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         //סטטוס טיפול כרטיס
         SetCardStatus();
-        if (oBatchManager.oOvedYomAvodaDetails.OvedDetailsExists){
+        if (oBatchManager.oOvedYomAvodaDetails!=null){
         //DDL
         ddlTachograph.SelectedValue = oBatchManager.oOvedYomAvodaDetails.sTachograf;//String.IsNullOrEmpty(oBatchManager.oOvedYomAvodaDetails.sTachograf) ? "-1" : oBatchManager.oOvedYomAvodaDetails.sTachograf;
         ddlHalbasha.SelectedValue = oBatchManager.oOvedYomAvodaDetails.sHalbasha;//String.IsNullOrEmpty(oBatchManager.oOvedYomAvodaDetails.sHalbasha) ? "-1" : oBatchManager.oOvedYomAvodaDetails.sHalbasha;

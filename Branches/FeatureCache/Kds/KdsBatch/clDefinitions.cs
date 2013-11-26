@@ -12,6 +12,7 @@ using KdsLibrary.BL;
 using System.Web;
 using System.Configuration;
 using KdsLibrary.Utils;
+using KDSCommon.DataModels;
 
 namespace KdsBatch
 {
@@ -658,7 +659,7 @@ namespace KdsBatch
             }
         }
 
-        public static int GetSugMishmeret(int iMisparIshi,DateTime Taarich,int  iSugYom,DateTime dShatHatchalaSidur,DateTime dShatGmarSidur,clParameters oParameters)
+        public static int GetSugMishmeret(int iMisparIshi,DateTime Taarich,int  iSugYom,DateTime dShatHatchalaSidur,DateTime dShatGmarSidur,clParametersDM oParameters)
         {
             int iSugMishmeret;
             DateTime dTemp1,dTemp2;
@@ -1062,7 +1063,7 @@ namespace KdsBatch
             }
         }
 
-        public static bool IsExceptionAllowedForSidurMyuchad(ref clSidur oSidur, ref string sCharigaType, ref clMeafyenyOved oMeafyenyOved, ref clParameters KdsParameters)
+        public static bool IsExceptionAllowedForSidurMyuchad(ref clSidur oSidur, ref string sCharigaType, ref clMeafyenyOved oMeafyenyOved, ref clParametersDM KdsParameters)
         {
             bool bExceptionAllowed = false;
             
@@ -1141,7 +1142,7 @@ namespace KdsBatch
             return bExceptionAllowed;
         }
 
-        public static bool IsExceptionAllowed(ref clSidur oSidur, ref string sCharigaType, clParameters KdsParameters)
+        public static bool IsExceptionAllowed(ref clSidur oSidur, ref string sCharigaType, clParametersDM KdsParameters)
         {
             bool bExceptionAllowed = false;
 
@@ -1236,7 +1237,7 @@ namespace KdsBatch
             }
         }
 
-        public static bool IsHashlamaAllowed(ref clSidur oSidur, DataRow[] drSugSidur, clOvedYomAvoda OvedYomAvoda)
+        public static bool IsHashlamaAllowed(ref clSidur oSidur, DataRow[] drSugSidur, OvedYomAvodaDetailsDM OvedYomAvoda)
         {
             bool bHashlamaAllowed = true;
 

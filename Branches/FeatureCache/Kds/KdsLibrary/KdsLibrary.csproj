@@ -65,6 +65,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\KdsWebSite\ExternalDlls\AjaxControlToolkit.DLL</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SharedLib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SharedLib\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.DataAccess, Version=4.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\KdsWebSite\ExternalDlls\Oracle.DataAccess.dll</HintPath>
@@ -106,7 +114,9 @@
     <Compile Include="BL\clRequest.cs" />
     <Compile Include="BL\clTaskManager.cs" />
     <Compile Include="BL\clWorkCard.cs" />
-    <Compile Include="clParameters.cs" />
+    <Compile Include="KDSLogic\DAL\OvedDAL.cs" />
+    <Compile Include="KDSLogic\Managers\OvedManager.cs" />
+    <Compile Include="KDSLogic\Managers\ParametersManager.cs" />
     <Compile Include="Controls\KdsCalendar.cs" />
     <Compile Include="Controls\KdsPanel.cs" />
     <Compile Include="Controls\ListBoxExtended.cs" />
@@ -301,6 +311,13 @@
   <ItemGroup>
     <None Include="Web References\Barcode\wsBarcode.disco" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\KDSCommon\KDSCommon.csproj">
+      <Project>{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}</Project>
+      <Name>KDSCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

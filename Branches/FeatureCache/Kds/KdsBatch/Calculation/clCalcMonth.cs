@@ -7,6 +7,7 @@ using KdsLibrary.UDT;
 using KdsLibrary;
 using KdsLibrary.DAL;
 using KdsLibrary.BL;
+using KDSCommon.DataModels;
 
 namespace KdsBatch
 {
@@ -95,7 +96,7 @@ namespace KdsBatch
                  //   iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.iMeafyen56);
                     
                     _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich,"Calc");
-                    _oGeneralData.objParameters = clCalcData.ListParametersMonth.Find(delegate(clParameters Params)
+                    _oGeneralData.objParameters = clCalcData.ListParametersMonth.Find(delegate(clParametersDM Params)
                                                                                     {
                                                                                         return (Params._Taarich == dTaarich);
                                                                                     });
@@ -126,7 +127,7 @@ namespace KdsBatch
                          });
                         // _oGeneralData.objMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dTaarich);
                        //  iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.iMeafyen56);
-                         _oGeneralData.objParameters = clCalcData.ListParametersMonth.Find(delegate(clParameters Params)
+                         _oGeneralData.objParameters = clCalcData.ListParametersMonth.Find(delegate(clParametersDM Params)
                          {
                              return (Params._Taarich == dTaarich);
                          });

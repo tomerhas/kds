@@ -6,6 +6,9 @@ using KdsLibrary.DAL;
 using KdsLibrary.UDT;
 using System.Data;
 using System.Reflection;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces;
+using KDSCommon.Enums;
 
 namespace KdsLibrary.BL
 {
@@ -374,8 +377,12 @@ namespace KdsLibrary.BL
                     drMeafyen = meafyenim.Select("Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime') <= AD_TAARICH and Kod_meafyen='56'");
                     if (drMeafyen.Length > 0)
                         meafyen56 = int.Parse(drMeafyen[0]["value_erech_ishi"].ToString());
-                    
-                    sug_yom = clGeneral.GetSugYom(iMisparIshi, dTemp, clGeneral.GetYamimMeyuchadim(), iSectorIsuk, clGeneral.GetSugeyYamimMeyuchadim(), meafyen56);
+
+                    var cacheManager = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+                    var yamimMeyuhadim =  cacheManager.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim);
+                    var sugeyYamimMeyuhadim = cacheManager.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim);
+
+                    sug_yom = clGeneral.GetSugYom(iMisparIshi, dTemp, yamimMeyuhadim, iSectorIsuk, sugeyYamimMeyuhadim, meafyen56);
                     if ((iMisparSidur==99006) || (sug_yom < 19 && !((meafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || meafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && sug_yom == 10)))
                     {
                         InsYemeyAvodaLeoved(ref oDal, iMisparIshi, dTemp, clGeneral.enStatusTipul.Betipul.GetHashCode(), null, iUserId);

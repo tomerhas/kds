@@ -7,6 +7,10 @@ using KdsLibrary.DAL;
 using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.DataModels;
+using KDSCommon.Interfaces;
+using KDSCommon.Enums;
 namespace KdsBatch
 {
     public class SingleGeneralData  
@@ -57,7 +61,7 @@ namespace KdsBatch
         public DataTable dtSugeyYamimMeyuchadim { get; set; }
         public DataTable dtParameters { get; set; }
 
-        public List<clParameters> ListParameters{ get; set; }
+        public List<clParametersDM> ListParameters{ get; set; }
         //Me>Ad
         public DataTable dtOvdimLechishuv { get; set; }
         public DataTable dtMichsaYomitAll { get; set; }
@@ -117,8 +121,10 @@ namespace KdsBatch
             clUtils oUtils = new clUtils();
             try
             {
-                dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
-                dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
+                var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+
+                dtYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim);// clGeneral.GetYamimMeyuchadim();
+                dtSugeyYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim);// clGeneral.GetSugeyYamimMeyuchadim();
                 dtParameters = oUtils.GetKdsParametrs();
                 InitListParamObject();
                 
@@ -154,16 +160,18 @@ namespace KdsBatch
 
         private  void InitListParamObject()
         {
-            clParameters itemParams;
+            clParametersDM itemParams;
             int sugYom;
             DateTime dTarMe = _TarMe;
             try
             { 
-                ListParameters  = new List<clParameters>();
+                ListParameters  = new List<clParametersDM>();
                 while (dTarMe <= _TarAd)
                 {
                     sugYom = clGeneral.GetSugYom(dtYamimMeyuchadim, dTarMe, dtSugeyYamimMeyuchadim);
-                    itemParams = new clParameters(dTarMe, sugYom,"Calc", dtParameters);
+                    //itemParams = new clParameters(dTarMe, sugYom,"Calc", dtParameters);
+                    IParametersManager clPramsManager = ServiceLocator.Current.GetInstance<IParametersManager>();
+                    itemParams = clPramsManager.CreateClsParametrs(dTarMe, sugYom, "Calc", dtParameters);
                     ListParameters.Add(itemParams);
                     dTarMe = dTarMe.AddDays(1);
                     itemParams = null;

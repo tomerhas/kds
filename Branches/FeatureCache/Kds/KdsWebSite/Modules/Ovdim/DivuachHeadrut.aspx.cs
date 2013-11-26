@@ -10,9 +10,13 @@ using KdsLibrary.BL;
 using System.Data;
 using KdsBatch;
 using KdsLibrary.Security;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.DataModels;
+using KDSCommon.Enums;
+using KDSCommon.Interfaces;
 public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
 {
-    public  clParameters _objParameters;
+    public  clParametersDM _objParameters;
     public clMeafyenyOved _MeafyeneyOved;
     public string sDateCard; 
     private string[] arrParams;
@@ -42,6 +46,7 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
     {
         try 
         {
+            var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
           ////  pnlEndDateHeadrut.ScriptManagerObj = ScriptManagerKds;
           //  clnEndDateHeadrut.OnChangeScript = "EnableButton();";
             clnEndDateHeadrut.OnChangeCalScript = "EnableButton();";
@@ -50,7 +55,8 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
             ViewState["DateCard"] = DateTime.Parse(Request.QueryString["DateCard"].ToString());
 
              _MeafyeneyOved = new clMeafyenyOved(int.Parse(Request.QueryString["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
-             _objParameters = new clParameters(DateTime.Parse(ViewState["DateCard"].ToString()), clGeneral.GetSugYom(clGeneral.GetYamimMeyuchadim(), DateTime.Parse(ViewState["DateCard"].ToString()), clGeneral.GetSugeyYamimMeyuchadim()));//, _MeafyeneyOved.iMeafyen56));
+             IParametersManager paramManager = ServiceLocator.Current.GetInstance<IParametersManager>();
+             _objParameters = paramManager.CreateClsParametrs(DateTime.Parse(ViewState["DateCard"].ToString()), clGeneral.GetSugYom(cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim), DateTime.Parse(ViewState["DateCard"].ToString()), cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim)));//, _MeafyeneyOved.iMeafyen56));
            
             if (!Page.IsPostBack)
             {

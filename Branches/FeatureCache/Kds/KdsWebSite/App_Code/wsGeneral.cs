@@ -18,6 +18,11 @@ using System.Xml.XPath;
 using System.IO;
 using KdsLibrary.Security;
 using System.Collections.Specialized;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.DataModels;
+using KDSCommon.Interfaces;
+using KDSCommon.Enums;
+using KDSCommon.Interfaces.Managers;
 
 //using System.Web.UI;
 //using System.IO;
@@ -56,7 +61,7 @@ public class wsGeneral : System.Web.Services.WebService
             //1. אם החודש שנבחר נמצא בטווח של פרמטר 100
             //2. במידה ואחד מתקיים נבדוק אם קיים כרטיס לתאריך זה
             dWorkCard = DateTime.Parse(sWorkCard);
-            int iMaxMonthToDisplay = ((clParameters)Session["Parameters"]).iMaxMonthToDisplay;
+            int iMaxMonthToDisplay = ((clParametersDM)Session["Parameters"]).iMaxMonthToDisplay;
             
             if ((Math.Abs((DateTime.Now.Month - dWorkCard.Month) + 12 * ((DateTime.Now.Year - dWorkCard.Year))) + 1 <= iMaxMonthToDisplay))
             {
@@ -298,7 +303,7 @@ public class wsGeneral : System.Web.Services.WebService
                                 if (dr[0]["erech"].ToString().Equals("1"))
                                 {
                                     iDefMinForElemenTWithoutFactor = int.Parse(lNewMakat.ToString().Substring(3, 3));
-                                    iDefMinutesForElement = (int)(System.Math.Round(((clParameters)Session["Parameters"]).fFactorNesiotRekot * iDefMinForElemenTWithoutFactor));
+                                    iDefMinutesForElement = (int)(System.Math.Round(((clParametersDM)Session["Parameters"]).fFactorNesiotRekot * iDefMinForElemenTWithoutFactor));
                                     sXML.Append(string.Concat("<DAKOT_DEF>", iDefMinutesForElement.ToString(), "</DAKOT_DEF>"));
                                     sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + iDefMinForElemenTWithoutFactor.ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
                                 }
@@ -485,7 +490,8 @@ public class wsGeneral : System.Web.Services.WebService
     private string BuildOvedDetailsXml(DataTable dtOvedDetails, int iMisparIshi, DateTime dCardDate)
     {
         StringBuilder sXML = new StringBuilder();
-        clOvedYomAvoda oOvedYomAvodaDetails = new clOvedYomAvoda(iMisparIshi, dCardDate);
+        IOvedManager ovedManager = ServiceLocator.Current.GetInstance<IOvedManager>();
+        OvedYomAvodaDetailsDM ovedDetails = ovedManager.CreateOvedDetails(iMisparIshi, dCardDate);
         try
         {
             sXML.Append("<OVED>");
@@ -499,12 +505,12 @@ public class wsGeneral : System.Web.Services.WebService
                 sXML.Append(string.Concat("<NAME>", dtOvedDetails.Rows[0]["full_name"].ToString(), "</NAME>"));
 
             }
-            if (oOvedYomAvodaDetails.OvedDetailsExists)
+            if (ovedDetails != null)
             {
-                sXML.Append(string.Concat("<TACHOGRAPH>", oOvedYomAvodaDetails.sTachograf, "</TACHOGRAPH>"));
-                sXML.Append(string.Concat("<HALBASHA>", oOvedYomAvodaDetails.sHalbasha, "</HALBASHA>"));
-                sXML.Append(string.Concat("<LINA>", oOvedYomAvodaDetails.sLina, "</LINA>"));
-                sXML.Append(string.Concat("<BITUL_ZMAN_NESIOT>", oOvedYomAvodaDetails.sBitulZmanNesiot, "</BITUL_ZMAN_NESIOT>"));
+                sXML.Append(string.Concat("<TACHOGRAPH>", ovedDetails.sTachograf, "</TACHOGRAPH>"));
+                sXML.Append(string.Concat("<HALBASHA>", ovedDetails.sHalbasha, "</HALBASHA>"));
+                sXML.Append(string.Concat("<LINA>", ovedDetails.sLina, "</LINA>"));
+                sXML.Append(string.Concat("<BITUL_ZMAN_NESIOT>", ovedDetails.sBitulZmanNesiot, "</BITUL_ZMAN_NESIOT>"));
             }
 
             sXML.Append("</OVED>");
@@ -1845,7 +1851,7 @@ public class wsGeneral : System.Web.Services.WebService
     {        
         //נשווה לפרמטר 100 שאומר כמה חודשים אחורה ניתן להציג
         //למשל אם הפרמטר מציין 2 וכרגע אנחנו בחודש 7, אז ניתן לראות כרטיסים של חודש 7 ו6
-        int iMaxMonthToDisplay = ((clParameters)Session["Parameters"]).iMaxMonthToDisplay;
+        int iMaxMonthToDisplay = ((clParametersDM)Session["Parameters"]).iMaxMonthToDisplay;
         if ((DateTime.Now.Month - DateTime.Parse(sCardDate).Month)+1 <= iMaxMonthToDisplay)
            return "1";
          else
@@ -2095,7 +2101,7 @@ public class wsGeneral : System.Web.Services.WebService
             DateTime dSidurStartHour;
             DateTime dStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
 
-            string sParam244 = ((clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
+            string sParam244 = ((clParametersDM)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
             if (!sNewStartHour.Equals(string.Empty))
                 dSidurStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sNewStartHour.Substring(0, 2)), int.Parse(sNewStartHour.Substring(3, 2)), 0);
             else
@@ -2161,15 +2167,15 @@ public class wsGeneral : System.Web.Services.WebService
     {       
         DataTable dtSugSidur;
         DataRow[] drSugSidur;
-        clOvedYomAvoda OvedYomAvoda = (clOvedYomAvoda)Session["OvedYomAvodaDetails"];
+        OvedYomAvodaDetailsDM OvedYomAvoda = (OvedYomAvodaDetailsDM)Session["OvedYomAvodaDetails"];
         OrderedDictionary odSidurim;
         clSidur _Sidur = new clSidur();
-
+        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
         odSidurim = (OrderedDictionary)Session["Sidurim"];
         if (odSidurim.Count > 0)
         {
             _Sidur = (clSidur)(odSidurim[iSidurIndex]);
-            dtSugSidur = clDefinitions.GetSugeySidur();
+            dtSugSidur = cache.GetCacheItem<DataTable>(CachedItems.SugeySidur);
             drSugSidur = clDefinitions.GetOneSugSidurMeafyen(_Sidur.iSugSidurRagil, DateTime.Parse(sCardDate), dtSugSidur);
             return clDefinitions.IsHashlamaAllowed(ref _Sidur, drSugSidur, OvedYomAvoda) ? "1" : "0";
         }
@@ -2180,7 +2186,7 @@ public class wsGeneral : System.Web.Services.WebService
     public string IsExecptionAllowed(int iSidurIndex)
     {
        
-        clParameters _parameters = (clParameters)Session["Parameters"];
+        clParametersDM _parameters = (clParametersDM)Session["Parameters"];
         OrderedDictionary odSidurim;
         clSidur _Sidur = new clSidur();
         string sCharigaType="";
@@ -2370,7 +2376,7 @@ public class wsGeneral : System.Web.Services.WebService
         string sReturnCode = "0";
         DataTable dtMeafyenim= new DataTable();
         DataRow[] dr;
-        clParameters _parameters = (clParameters)Session["Parameters"];
+        clParametersDM _parameters = (clParametersDM)Session["Parameters"];
                 
         if ((iSidurNumber.Equals(SIDUR_HITYAZVUT_A)) || (iSidurNumber.Equals(SIDUR_HITYAZVUT_B)))
             sReturnCode = "1|לא ניתן לדווח סידור התייצבות";
@@ -2415,7 +2421,7 @@ public class wsGeneral : System.Web.Services.WebService
     {
         StringBuilder sXML = new StringBuilder();
         DataRow[] dr;
-        clOvedYomAvoda OvedYomAvoda = (clOvedYomAvoda)Session["OvedYomAvodaDetails"];
+        OvedYomAvodaDetailsDM OvedYomAvoda = (OvedYomAvodaDetailsDM)Session["OvedYomAvodaDetails"];
         clMeafyenyOved _MeafyenyOved = (clMeafyenyOved)Session["MeafyenyOved"];
         clSidur _Sidur= (clSidur)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
       

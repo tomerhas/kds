@@ -13,20 +13,23 @@ using KdsLibrary;
 using KdsWorkFlow.Approvals;
 using System.Web;
 using Microsoft.Practices.ServiceLocation;
-using KDSCache.Interfaces;
-using KDSCache.Enums;
+using KDSCommon.DataModels;
+using KDSCommon.Interfaces;
+using KDSCommon.Enums;
+using KDSCommon.DataModels.Errors;
+using KDSCommon.Interfaces.Managers;
 
 namespace KdsBatch
 {
     public class clBatchManager : IDisposable
     {
         
-        private clParameters _oParameters;
+        private clParametersDM _oParameters;
         private DataTable _dtLookUp;
         private DataTable _dtYamimMeyuchadim;
         private DataTable _dtSugeyYamimMeyuchadim;
         private clMeafyenyOved _oMeafyeneyOved;
-        private clOvedYomAvoda _oOvedYomAvodaDetails;
+        private OvedYomAvodaDetailsDM _oOvedYomAvodaDetails;
         private DataTable _dtDetails;       
         private DataTable _dtMatzavOved;
         private DataTable _dtSugSidur;
@@ -126,124 +129,6 @@ namespace KdsBatch
             CardError = 5 //  שגוי סטטוס 
         }
          
-        public enum enErrors
-        {
-            errHrStatusNotValid = 1,
-            errSidurNotExists = 9,
-            errSidurNamlakWithoutNesiaCard = 13,
-            errSidurHourStartNotValid = 14,//לבדוק שינויים            
-            errStartHourMissing = 15,
-            errSidurimHoursNotValid = 16,
-            errPizulHafsakaValueNotValid = 20,
-            errPizulValueNotValid = 22, 
-            errShabatPizulValueNotValid = 23,
-            errPitzulSidurInShabat = 24,
-            errPitzulMuchadValueNotValid = 25,
-            errLoZakaiLeNesiot  = 26,
-            errSimunNesiaNotValid = 27,
-            errLinaValueNotValid = 30,
-            errLoZakaiLLina = 31,
-            errCharigaValueNotValid = 32,
-            errCharigaZmanHachtamatShaonNotValid = 33,
-            errZakaiLeCharigaValueNotValid = 34,  
-            errSidurExistsInShlila =35,//לקחת את הערך לפי עץ ניהולי
-            errHalbashaNotvalid = 36, 
-            errHalbashaInSidurNotValid = 37, 
-            errHamaraNotValid = 39,
-            errOutMichsaInSidurHeadrutNotValid = 40,
-            errHamaratShabatNotValid = 42,
-            errHamaratShabatNotAllowed=43,
-            errZakaiLehamaratShabat = 44,//להוסיף לסידורים רגילים
-            errHashlamaForComputerWorkerAndAccident = 45,            
-            errShbatHashlamaNotValid = 47,
-            errHashlamaForSidurNotValid = 48,
-            errHahlamatHazmanaNotValid = 49,
-            errSidurNotAllowedInShabaton = 50,
-            errTeoodatNesiaNotInVisa =52,
-            errSidurEilatNotValid = 55,
-            errYomVisaNotValid = 56,
-            errSimunVisaNotValid = 57,
-            errSidurVisaNotValid = 58,
-            //errOtoNoNotValid = 67,
-            errOtoNoExists = 68,//להוסיף לסידורים רגילים
-            errOtoNoNotExists = 69,//לבדוק באיפיון מה הכוונה מספר פעילות המתחילה ב7-
-            errKodNesiaNotExists = 81,
-            errPeilutForSidurNonValid = 84,
-            errTimeForPrepareMechineNotValid = 86,
-            errHighValueKisuyTor=87,
-            errNesiaTimeNotValid = 91,
-            errShatYetizaNotExist = 92,
-            errKmNotExists = 96,
-            //errKisuyTorNotValid = 117,
-            errDuplicateShatYetiza = 103,
-            errMissingSugVisa=106,
-            errHafifaBecauseOfHashlama = 108,
-            errPeilutShatYetizaNotValid = 113,
-            errOutMichsaNotValid = 118,
-            errShatPeilutSmallerThanShatHatchalaSidur = 121,
-            errShatPeilutBiggerThanShatGmarSidur = 122,
-            errElementInSpecialSidurNotAllowed=123,
-            errSidurNetzerNotValidForOved = 124,
-            errNesiaInSidurVisaNotAllowed = 125,
-            errAtLeastOnePeilutRequired = 127,
-            errElementTimeBiggerThanSidurTime = 129,
-            errOvdaInMachalaNotAllowed = 132,
-            errDriverLessonsNumberNotValid = 136,
-            errHashlamaNotValid = 137,
-            errMisparSiduriOtoNotExists = 139,  
-            errMisparSiduriOtoNotInSidurEilat = 140,
-            errNotAllowedKodsForEggedTaavora = 141,
-            errTotalHashlamotBiggerThanAllow = 142,
-            errMissingNumStore=143,
-            errSidurTafkidWithOutApprove = 145,
-            errNotAllowedSidurForEggedTaavora = 148,
-            errNesiaMeshtanaNotDefine  = 150,
-            errDuplicateTravle=151,
-            errChafifaBesidurNihulTnua = 152,
-            errHighPremya = 153,
-            errNegativePremya = 154,
-            errMiluimAndAvoda=156,
-            errSidurAvodaNotValidForMonth = 160,
-            errOvedNotAllowedToDoSidurNahagut = 161,
-            errCurrentPeilutInPrevPeilut = 162,
-            errHashlamaLeYomAvodaNotAllowed = 163,
-            errSidurSummerNotValidForOved = 164,
-            errAvodatNahagutNotValid = 165,
-            errHmtanaTimeNotValid = 166,
-            errHafifaBetweenSidurim = 167,
-            errCurrentSidurInPrevSidur = 168,
-            errOvedNotExists = 169,
-            errVisaNotValid = 170,
-            errHasBothSidurEilatAndSidurVisa = 171,
-            errOvedPeilutNotValid = 172,
-            errSidurHourEndNotValid = 173,
-            errEndHourMissing=174,
-            errHachtamaYadanitKnisa = 175,
-            errHachtamaYadanitYetzia = 176,
-            errSidurGriraNotValid=177,
-            errMissingKodMevatzaVisa=178,
-            errHightValueDakotBefoal=179,
-            IsShatHatchalaLetashlumNull = 180,
-            IsShatGmarLetashlumNull = 181,
-            ErrMisparElementimMealHamutar = 185,
-            errMutamLoBeNahagutBizeaNahagut = 186,
-            errKupaiWithNihulTnua = 187,
-            errChofeshAlCheshbonShaotNosafot = 188,
-            errKisuyTorLifneyHatchalatSidur =189,
-            errSidurLoTakefLetaarich=190,
-            errIsukNahagImSidurTafkidNoMefyen=191,
-            errMatzavOvedNotValidFirstDay =192,
-            errDivuachSidurLoMatimLeisuk420 = 193,
-            errDivuachSidurLoMatimLeisuk422 = 194,
-            errFirstDayShlilatRishayon195 = 195,
-            errkupaiLeloHachtama = 196,
-            errHachtamatKnisaLoBmakomHasaka197 =197,
-            errHachtamatYetziaLoBmakomHasaka198 = 198,
-            errAvodaByemeyTeuna199=199,
-            errAvodaByemeyEvel200=200,
-            errAvodaByemeyMachala201=201,
-            errMachalaLeloIshur202 = 202
-        }
 
         private enum errNesiaMeshtana
         {
@@ -288,11 +173,13 @@ namespace KdsBatch
             clDefinitions oDefinition = new clDefinitions();
             try
             {
-                dtLookUp = oUtils.GetLookUpTables();
+               
 
                 //Get Parameters Table
                 //dtParameters = GetKdsParametrs();
                 var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+
+                dtLookUp = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables);
                 dtYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim);
 
                 _dtSugeyYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim);
@@ -307,11 +194,11 @@ namespace KdsBatch
 
                 
                 //Get Meafyeney Sug Sidur
-                dtSugSidur = clDefinitions.GetSugeySidur();
+                dtSugSidur = cache.GetCacheItem<DataTable>(CachedItems.SugeySidur);
 
                 SetOvedYomAvodaDetails(_iMisparIshi, _dCardDate);
 
-                if (oOvedYomAvodaDetails.OvedDetailsExists)
+                if (oOvedYomAvodaDetails!=null)
                 {
                     //Get Oved Details
                     dtDetails = oDefinition.GetOvedDetails(_iMisparIshi, _dCardDate);
@@ -429,7 +316,10 @@ namespace KdsBatch
         private void SetOvedYomAvodaDetails(int iMisparIshi, DateTime dCardDate)
         {
             try{
-                  oOvedYomAvodaDetails = new clOvedYomAvoda(iMisparIshi, dCardDate);
+
+                IOvedManager ovedManager = ServiceLocator.Current.GetInstance<IOvedManager>();
+                OvedYomAvodaDetailsDM oOvedYomAvodaDetails = ovedManager.CreateOvedDetails(iMisparIshi, dCardDate);
+                   
                   _CardStatus =(clGeneral.enCardStatus)oOvedYomAvodaDetails.iStatus;
             }
             catch (Exception ex)
@@ -669,8 +559,9 @@ namespace KdsBatch
             _dCardDate = dCardDate;
             try
             {
+                var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
                 htFullEmployeeDetails = new OrderedDictionary();
-                dtLookUp = oUtils.GetLookUpTables();
+                dtLookUp = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables);
                 _dtErrorsNotActive = clDefinitions.GetErrorsNoActive();
 
                 //Get LookUp Tables
@@ -679,7 +570,7 @@ namespace KdsBatch
 
                     //Get Parameters Table
                     //dtParameters = GetKdsParametrs();
-                    var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+                    
                     dtYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim);
 
                     _dtSugeyYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim);
@@ -695,7 +586,7 @@ namespace KdsBatch
 
                  
                     //Get Meafyeney Sug Sidur
-                    dtSugSidur = clDefinitions.GetSugeySidur();
+                    dtSugSidur = cache.GetCacheItem<DataTable>(CachedItems.SugeySidur);
 
                     //Get Temp Meafyeney Elements
                     dtTmpMeafyeneyElements = clDefinitions.GetTmpMeafyeneyElements(dCardDate, dCardDate);
@@ -725,7 +616,7 @@ namespace KdsBatch
                 // dtOvedCardDetails = GetOvedYomAvodaDetails(iMisparIshi, dCardDate);
                 // SetOvedYomAvodaDetails(iMisparIshi, dCardDate);
                 //if (dtOvedCardDetails.Rows.Count>0)
-                if (oOvedYomAvodaDetails.OvedDetailsExists)
+                if (oOvedYomAvodaDetails!=null)
                 {
                     _oOvedYomAvodaDetails = oOvedYomAvodaDetails;
 
@@ -1010,6 +901,8 @@ namespace KdsBatch
             }
         }
 
+       
+
         private void GetMeafyeneyOvdim(int iMisparIshi, DateTime dCardDate)
         {
             //clOvdim oOvdim = new clOvdim();
@@ -1030,7 +923,8 @@ namespace KdsBatch
                   oParam = param;
               else
               {
-                   oParam = new clParameters(dCardDate, iSugYom);
+                  IParametersManager paramManager = ServiceLocator.Current.GetInstance<IParametersManager>();
+                   oParam = paramManager.CreateClsParametrs(dCardDate, iSugYom);
                    cache.Add(oParam, dCardDate);
               }
        
@@ -1410,7 +1304,7 @@ namespace KdsBatch
                 if (oSidur.dFullShatHatchala.Year < clGeneral.cYearNull)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "חסרה שעת התחלה", enErrors.errStartHourMissing.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "חסרה שעת התחלה", ErrorTypes.errStartHourMissing.GetHashCode());
                     dtErrors.Rows.Add(drNew);
 
                     isValid = false;
@@ -1419,7 +1313,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errStartHourMissing.GetHashCode(), oSidur.iMisparIshi, null, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsStartHourMissing15: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errStartHourMissing.GetHashCode(), oSidur.iMisparIshi, null, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsStartHourMissing15: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1437,7 +1331,7 @@ namespace KdsBatch
                 if (string.IsNullOrEmpty(oSidur.sShatGmar))
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "חסרה שעת גמר", enErrors.errEndHourMissing.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "חסרה שעת גמר", ErrorTypes.errEndHourMissing.GetHashCode());
                     dtErrors.Rows.Add(drNew);
 
                     isValid = false;
@@ -1445,7 +1339,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errEndHourMissing.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsEndHourMissing174: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errEndHourMissing.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsEndHourMissing174: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1464,7 +1358,7 @@ namespace KdsBatch
                     if (oSidur.bSidurMyuhad && !string.IsNullOrEmpty(oSidur.sShaonNochachut) && (string.IsNullOrEmpty(oSidur.sMikumShaonKnisa) || oSidur.sMikumShaonKnisa=="0") && CheckHourValid(oSidur.sShatHatchala))
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "חסרה סיבת אי החתמה ידנית כניסה", enErrors.errHachtamaYadanitKnisa.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "חסרה סיבת אי החתמה ידנית כניסה", ErrorTypes.errHachtamaYadanitKnisa.GetHashCode());
                         dtErrors.Rows.Add(drNew);
 
                         isValid = false;
@@ -1473,7 +1367,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHachtamaYadanitKnisa.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHachtamaYadanitKnisaMissing175: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHachtamaYadanitKnisa.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHachtamaYadanitKnisaMissing175: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1492,7 +1386,7 @@ namespace KdsBatch
                     if (oSidur.bSidurMyuhad && !string.IsNullOrEmpty(oSidur.sShaonNochachut) && (string.IsNullOrEmpty(oSidur.sMikumShaonYetzia) || oSidur.sMikumShaonYetzia=="0") && CheckHourValid(oSidur.sShatGmar))
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "חסרה סיבת אי החתמה ידנית יציאה", enErrors.errHachtamaYadanitYetzia.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "חסרה סיבת אי החתמה ידנית יציאה", ErrorTypes.errHachtamaYadanitYetzia.GetHashCode());
                         dtErrors.Rows.Add(drNew);
 
                         isValid = false;
@@ -1501,7 +1395,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHachtamaYadanitYetzia.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHachtamaYadanitYetziaMissing176: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHachtamaYadanitYetzia.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHachtamaYadanitYetziaMissing176: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1518,14 +1412,14 @@ namespace KdsBatch
                 if (oSidur.dFullShatHatchalaLetashlum == DateTime.MinValue || oSidur.dFullShatHatchalaLetashlum.Date == DateTime.MinValue.Date)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "חסרה שעת התחלה לתשלום", enErrors.IsShatHatchalaLetashlumNull.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "חסרה שעת התחלה לתשלום", ErrorTypes.IsShatHatchalaLetashlumNull.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.IsShatHatchalaLetashlumNull.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsShatHatchalaLetashlumNull180: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.IsShatHatchalaLetashlumNull.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsShatHatchalaLetashlumNull180: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1543,14 +1437,14 @@ namespace KdsBatch
                 if (oSidur.dFullShatGmarLetashlum == DateTime.MinValue || oSidur.dFullShatGmarLetashlum.Date == DateTime.MinValue.Date)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "חסרה שעת גמר לתשלום", enErrors.IsShatGmarLetashlumNull.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "חסרה שעת גמר לתשלום", ErrorTypes.IsShatGmarLetashlumNull.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.IsShatGmarLetashlumNull.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsShatGmarLetashlumNull181: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.IsShatGmarLetashlumNull.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsShatGmarLetashlumNull181: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1586,7 +1480,7 @@ namespace KdsBatch
                         if ((iNumElements730 > 0 && iNumElements740 > 0) || (iNumElements740 > 0 && iNumElements750 > 0) || (iNumElements730 > 0 && iNumElements750 > 0))
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "סידור ניהול תנועה מהמפה המכיל יותר מסוג אחד של אלמנט מסוג ניהול תנועה", enErrors.ErrMisparElementimMealHamutar.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "סידור ניהול תנועה מהמפה המכיל יותר מסוג אחד של אלמנט מסוג ניהול תנועה", ErrorTypes.ErrMisparElementimMealHamutar.GetHashCode());
                             dtErrors.Rows.Add(drNew);
                             isValid = false;
                         }
@@ -1595,7 +1489,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.ErrMisparElementimMealHamutar.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "ErrMisparElementimMealHamutar: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.ErrMisparElementimMealHamutar.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "ErrMisparElementimMealHamutar: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1613,14 +1507,14 @@ namespace KdsBatch
                 if (oSidur.sTokefHatchala.Length > 0 && oSidur.sTokefSiyum.Length > 0 && (_dCardDate < DateTime.Parse(oSidur.sTokefHatchala) || _dCardDate > DateTime.Parse(oSidur.sTokefSiyum)))
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "סידור לא תקף לתאריך", enErrors.errSidurLoTakefLetaarich.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "סידור לא תקף לתאריך", ErrorTypes.errSidurLoTakefLetaarich.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurLoTakefLetaarich.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "SidurLoTakefLetarich190: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurLoTakefLetaarich.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "SidurLoTakefLetarich190: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1637,14 +1531,14 @@ namespace KdsBatch
                 if (oOvedYomAvodaDetails.iIsuk >= 500 && oOvedYomAvodaDetails.iIsuk <= 600 && oSidur.iLoLetashlum == 1 && (oSidur.iKodSibaLoLetashlum == 4 || oSidur.iKodSibaLoLetashlum == 5 || oSidur.iKodSibaLoLetashlum == 17))
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "עיסוק נהג עם סידור תפקיד ללא מאפיינים", enErrors.errIsukNahagImSidurTafkidNoMefyen.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "עיסוק נהג עם סידור תפקיד ללא מאפיינים", ErrorTypes.errIsukNahagImSidurTafkidNoMefyen.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errIsukNahagImSidurTafkidNoMefyen.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsukNahagImSidurTafkidNoMefyen191: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errIsukNahagImSidurTafkidNoMefyen.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsukNahagImSidurTafkidNoMefyen191: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1668,7 +1562,7 @@ namespace KdsBatch
                     {
                         drNew = dtErrors.NewRow();
                         drNew["mispar_ishi"] = iMisparIshi;
-                        drNew["check_num"] = enErrors.errMatzavOvedNotValidFirstDay.GetHashCode();
+                        drNew["check_num"] = ErrorTypes.errMatzavOvedNotValidFirstDay.GetHashCode();
                         drNew["taarich"] = dCardDate.ToShortDateString();
                        
                         dtErrors.Rows.Add(drNew);
@@ -1678,7 +1572,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errMatzavOvedNotValidFirstDay.GetHashCode(), dCardDate, "IsMatzavOvedNoValidFirstDay192: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errMatzavOvedNotValidFirstDay.GetHashCode(), dCardDate, "IsMatzavOvedNoValidFirstDay192: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1696,14 +1590,14 @@ namespace KdsBatch
                 if (oOvedYomAvodaDetails.iIsuk == 420  && oSidur.iMisparSidur == 99001 && oSidur.iKodSibaLedivuchYadaniIn>0 &&  oSidur.iKodSibaLedivuchYadaniOut>0)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "עיסוק העובד מנס-סדרן ודווח סידור 99001. יש לדווח סידור 99224", enErrors.errDivuachSidurLoMatimLeisuk420.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "עיסוק העובד מנס-סדרן ודווח סידור 99001. יש לדווח סידור 99224", ErrorTypes.errDivuachSidurLoMatimLeisuk420.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errDivuachSidurLoMatimLeisuk420.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "DivuachSidurLoMatimLeisuk193: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errDivuachSidurLoMatimLeisuk420.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "DivuachSidurLoMatimLeisuk193: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1720,14 +1614,14 @@ namespace KdsBatch
                 if (oOvedYomAvodaDetails.iIsuk == 422 && oSidur.iMisparSidur == 99001 && oSidur.iKodSibaLedivuchYadaniIn > 0 && oSidur.iKodSibaLedivuchYadaniOut > 0)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "עיסוק העובד מנס-פקח ודווח סידור 99001. יש לדווח סידור 99225 ", enErrors.errDivuachSidurLoMatimLeisuk422.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "עיסוק העובד מנס-פקח ודווח סידור 99001. יש לדווח סידור 99225 ", ErrorTypes.errDivuachSidurLoMatimLeisuk422.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errDivuachSidurLoMatimLeisuk422.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "DivuachSidurLoMatimLeisuk194: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errDivuachSidurLoMatimLeisuk422.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "DivuachSidurLoMatimLeisuk194: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1747,7 +1641,7 @@ namespace KdsBatch
                 if (bError)  
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "החתמת כניסה לא במקום העסקה", enErrors.errHachtamatKnisaLoBmakomHasaka197.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "החתמת כניסה לא במקום העסקה", ErrorTypes.errHachtamatKnisaLoBmakomHasaka197.GetHashCode());
                     dtErrors.Rows.Add(drNew);
 
                     isValid = false;
@@ -1755,7 +1649,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHachtamatKnisaLoBmakomHasaka197.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHachtamatKnisaLoBmakomHasaka197.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1774,7 +1668,7 @@ namespace KdsBatch
                 if (bError) 
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "החתמת יציאה לא במקום העסקה", enErrors.errHachtamatYetziaLoBmakomHasaka198.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "החתמת יציאה לא במקום העסקה", ErrorTypes.errHachtamatYetziaLoBmakomHasaka198.GetHashCode());
                     dtErrors.Rows.Add(drNew);
 
                     isValid = false;
@@ -1782,7 +1676,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHachtamatYetziaLoBmakomHasaka198.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHachtamatYetziaLoBmakomHasaka198.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1824,7 +1718,7 @@ namespace KdsBatch
                     if (bError)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "לא יום ראשון של תאונה - עבודה ותאונה באותו יום", enErrors.errAvodaByemeyTeuna199.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "לא יום ראשון של תאונה - עבודה ותאונה באותו יום", ErrorTypes.errAvodaByemeyTeuna199.GetHashCode());
                         dtErrors.Rows.Add(drNew);
 
                         isValid = false;
@@ -1833,7 +1727,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errAvodaByemeyTeuna199.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errAvodaByemeyTeuna199.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1874,7 +1768,7 @@ namespace KdsBatch
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "לא יום ראשון של  אבל - עבודה ואבל באותו יום", enErrors.errAvodaByemeyEvel200.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "לא יום ראשון של  אבל - עבודה ואבל באותו יום", ErrorTypes.errAvodaByemeyEvel200.GetHashCode());
                     dtErrors.Rows.Add(drNew);
 
                     isValid = false;
@@ -1883,7 +1777,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errAvodaByemeyEvel200.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errAvodaByemeyEvel200.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1923,7 +1817,7 @@ namespace KdsBatch
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "לא יום ראשון של  מחלת עובד - עבודה ומחלת עובד באותו יום", enErrors.errAvodaByemeyMachala201.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "לא יום ראשון של  מחלת עובד - עבודה ומחלת עובד באותו יום", ErrorTypes.errAvodaByemeyMachala201.GetHashCode());
                     dtErrors.Rows.Add(drNew);
 
                     isValid = false;
@@ -1931,7 +1825,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errAvodaByemeyMachala201.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errAvodaByemeyMachala201.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -1963,7 +1857,7 @@ namespace KdsBatch
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "לא ניתן לדווח סידור מחלה ללא אישור בשילוב עם סידור נוסף ", enErrors.errMachalaLeloIshur202.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "לא ניתן לדווח סידור מחלה ללא אישור בשילוב עם סידור נוסף ", ErrorTypes.errMachalaLeloIshur202.GetHashCode());
                     dtErrors.Rows.Add(drNew);
 
                     isValid = false;
@@ -1971,7 +1865,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errAvodaByemeyMachala201.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errAvodaByemeyMachala201.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "HachtamatKnisaLoBmakomHasaka197: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2019,7 +1913,7 @@ namespace KdsBatch
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    drNew["check_num"] = enErrors.errLinaValueNotValid.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errLinaValueNotValid.GetHashCode();
                     drNew["mispar_ishi"] = oOvedYomAvodaDetails.iMisparIshi;
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["Lina"] = int.Parse(sLina);
@@ -2031,7 +1925,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", enErrors.errLinaValueNotValid.GetHashCode(), dCardDate, "IsSidurLina30: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", ErrorTypes.errLinaValueNotValid.GetHashCode(), dCardDate, "IsSidurLina30: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2159,7 +2053,7 @@ namespace KdsBatch
                            if (bError)  // && !CheckApproval("2,211,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                            {
                                drNew = dtErrors.NewRow();
-                               InsertErrorRow(oSidur, ref drNew, "זמן החתמת שעון לא מזכה בחריגה", enErrors.errCharigaZmanHachtamatShaonNotValid.GetHashCode());
+                               InsertErrorRow(oSidur, ref drNew, "זמן החתמת שעון לא מזכה בחריגה", ErrorTypes.errCharigaZmanHachtamatShaonNotValid.GetHashCode());
                                dtErrors.Rows.Add(drNew);
 
                                isValid = false;
@@ -2170,7 +2064,7 @@ namespace KdsBatch
            }
            catch (Exception ex)
            {
-               clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errCharigaZmanHachtamatShaonNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurChariga33: " + ex.Message, null);
+               clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errCharigaZmanHachtamatShaonNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurChariga33: " + ex.Message, null);
                isValid = false;
                _bSuccsess = false;
            }
@@ -2193,7 +2087,7 @@ namespace KdsBatch
                     if (!string.IsNullOrEmpty(oSidur.sPitzulHafsaka) && Int32.Parse(oSidur.sPitzulHafsaka) > 0 && Int32.Parse(oSidur.sPitzulHafsaka)!=3)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "פצול/הפסקה בסדור בודד אחרון", enErrors.errPizulValueNotValid.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "פצול/הפסקה בסדור בודד אחרון", ErrorTypes.errPizulValueNotValid.GetHashCode());
                         dtErrors.Rows.Add(drNew);
 
                         isValid = false;
@@ -2203,7 +2097,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errPizulValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOneSidurValid22: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errPizulValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOneSidurValid22: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2237,7 +2131,7 @@ namespace KdsBatch
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "ערך  פיצול/הפסקה שגוי", enErrors.errPizulHafsakaValueNotValid.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "ערך  פיצול/הפסקה שגוי", ErrorTypes.errPizulHafsakaValueNotValid.GetHashCode());
                     dtErrors.Rows.Add(drNew);
 
                     isValid = false;
@@ -2249,7 +2143,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errPizulHafsakaValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsPitzulHafsakaValid20: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errPizulHafsakaValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsPitzulHafsakaValid20: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2283,7 +2177,7 @@ namespace KdsBatch
                 }
                 if (bError)
                 {                    
-                    drNew["check_num"] = enErrors.errHalbashaNotvalid.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errHalbashaNotvalid.GetHashCode();
                     drNew["mispar_ishi"] = oOvedYomAvodaDetails.iMisparIshi;//int.Parse(dtOvedCardDetails.Rows[0]["mispar_ishi"].ToString());
                     drNew["taarich"] = dCardDate.ToShortDateString();                    
                     //drNew["error_desc"] = "ערך הלבשה שגוי";
@@ -2294,7 +2188,7 @@ namespace KdsBatch
             }            
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", enErrors.errHalbashaNotvalid.GetHashCode(), dCardDate, "IsHalbashValid36: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", ErrorTypes.errHalbashaNotvalid.GetHashCode(), dCardDate, "IsHalbashValid36: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2327,7 +2221,7 @@ namespace KdsBatch
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "ערך השלמה שגוי", enErrors.errHashlamaNotValid.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "ערך השלמה שגוי", ErrorTypes.errHashlamaNotValid.GetHashCode());
                     dtErrors.Rows.Add(drNew);
 
                     isValid = false;
@@ -2335,7 +2229,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHashlamaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHashlamaValid137: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHashlamaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHashlamaValid137: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2359,7 +2253,7 @@ namespace KdsBatch
                 if (string.IsNullOrEmpty(sShatYetzia))
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "ערך השלמה שגוי", enErrors.errShatYetizaNotExist.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "ערך השלמה שגוי", ErrorTypes.errShatYetizaNotExist.GetHashCode());
                     InsertPeilutErrorRow(oPeilut, ref drNew);
                     //drNew["Shat_Yetzia"] = sShatYetzia;
                     //drNew["makat_nesia"] = oPeilut.lMakatNesia;
@@ -2370,7 +2264,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errShatYetizaNotExist.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsShatYetizaExist92: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errShatYetizaNotExist.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsShatYetizaExist92: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2441,14 +2335,14 @@ namespace KdsBatch
                 if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate) && (!string.IsNullOrEmpty(oSidur.sPitzulHafsaka)) && oSidur.sPitzulHafsaka != "0")
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "ערך פיצול הפסקה ביום שבתון שגוי", enErrors.errShabatPizulValueNotValid.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "ערך פיצול הפסקה ביום שבתון שגוי", ErrorTypes.errShabatPizulValueNotValid.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }               
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errShabatPizulValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsShabatPizulValid23: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errShabatPizulValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsShabatPizulValid23: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2467,7 +2361,7 @@ namespace KdsBatch
                 if (oOvedYomAvodaDetails.sHashlamaLeyom == "1" && clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim,iSugYom,dCardDate))
                 {                   
                     drNew = dtErrors.NewRow();
-                    drNew["check_num"] = enErrors.errShbatHashlamaNotValid.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errShbatHashlamaNotValid.GetHashCode();
                     drNew["mispar_ishi"] = iMisparIshi;
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["error_desc"] = "ערך השלמה ביום שבתון שגוי";                   
@@ -2480,7 +2374,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errShbatHashlamaNotValid.GetHashCode(), dCardDate, "IsShbatHashlamaValid47: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errShbatHashlamaNotValid.GetHashCode(), dCardDate, "IsShbatHashlamaValid47: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2499,7 +2393,7 @@ namespace KdsBatch
                 {
                     drNew = dtErrors.NewRow();
                     drNew["mispar_ishi"] = iMisparIshi;
-                    drNew["check_num"] = enErrors.errOvedPeilutNotValid.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errOvedPeilutNotValid.GetHashCode();
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["error_desc"] = "עובד לא פעיל וקיימים עבורו סידורים שאינם היעדרות";
 
@@ -2509,7 +2403,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errOvedPeilutNotValid.GetHashCode(), dCardDate, "IsOvedPeilutValid172: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errOvedPeilutNotValid.GetHashCode(), dCardDate, "IsOvedPeilutValid172: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2529,7 +2423,7 @@ namespace KdsBatch
                 {
                     drNew = dtErrors.NewRow();
                     drNew["mispar_ishi"] = iMisparIshi;
-                    drNew["check_num"] = enErrors.errHrStatusNotValid.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errHrStatusNotValid.GetHashCode();
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["error_desc"] = "ערך כא שגוי";
 
@@ -2539,7 +2433,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errHrStatusNotValid.GetHashCode(), dCardDate, "IsHrStatusValid01: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errHrStatusNotValid.GetHashCode(), dCardDate, "IsHrStatusValid01: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2571,7 +2465,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHalbashaInSidurNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHalbashaInSidurValid37: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHalbashaInSidurNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHalbashaInSidurValid37: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2607,14 +2501,14 @@ namespace KdsBatch
                 if (!isValid)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "חסר קמ", enErrors.errKmNotExists.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "חסר קמ", ErrorTypes.errKmNotExists.GetHashCode());
                     drNew["sadot_nosafim"] = 1;
                     dtErrors.Rows.Add(drNew);
                 }
 	        }
 	        catch (Exception ex)
 	        {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errKmNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsKmExists96: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errKmNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsKmExists96: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
 	        }  
@@ -2697,7 +2591,7 @@ namespace KdsBatch
                     (!string.IsNullOrEmpty(oSidur.sShatHatchala) && dSidurStartHour > dEndLimitHour) && (dEndLimitHour.Year != clGeneral.cYearNull)) 
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "שעת ההתחלה לסידור מיוחד שגוי", enErrors.errSidurHourStartNotValid.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "שעת ההתחלה לסידור מיוחד שגוי", ErrorTypes.errSidurHourStartNotValid.GetHashCode());
                     //drNew["shat_hatchala"] = oSidur.sShatHatchala;
                     //drNew["hatchala_limit_hour"] = dStartLimitHour.ToString();                        
                     dtErrors.Rows.Add(drNew);
@@ -2706,7 +2600,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurHourStartNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurStartHourValid14: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurHourStartNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurStartHourValid14: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2772,7 +2666,7 @@ namespace KdsBatch
                     if (!isValid)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "שעת סיום לסידור מיוחד שגוי", enErrors.errSidurHourEndNotValid.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "שעת סיום לסידור מיוחד שגוי", ErrorTypes.errSidurHourEndNotValid.GetHashCode());
                         //drNew["shat_gmar"] = oSidur.sShatGmar;
                         //drNew["gmar_limit_hour"] = dEndLimitHour.ToString();
                         dtErrors.Rows.Add(drNew);
@@ -2781,7 +2675,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurHourEndNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurEndHourValid173: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurHourEndNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurEndHourValid173: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2810,14 +2704,14 @@ namespace KdsBatch
                 if (!isValid)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "קוד נסיעה לא קיים", enErrors.errKodNesiaNotExists.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "קוד נסיעה לא קיים", ErrorTypes.errKodNesiaNotExists.GetHashCode());
                     InsertPeilutErrorRow(oPeilut, ref drNew);
                     dtErrors.Rows.Add(drNew);
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errKodNesiaNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsKodNesiaExists81: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errKodNesiaNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsKodNesiaExists81: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2834,14 +2728,14 @@ namespace KdsBatch
                 if (oSidur.bSidurVisaKodExists && string.IsNullOrEmpty(oSidur.sVisa))
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "סידור ויזה ללא ערך בשדה סוג ויזה", enErrors.errVisaNotValid.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "סידור ויזה ללא ערך בשדה סוג ויזה", ErrorTypes.errVisaNotValid.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errVisaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsValidSidurVisa170: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errVisaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsValidSidurVisa170: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2855,17 +2749,17 @@ namespace KdsBatch
 
             try
             {
-                if (!oOvedYomAvodaDetails.OvedDetailsExists)
+                if (oOvedYomAvodaDetails==null)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "לא קיים בטבלת עובדים", enErrors.errOvedNotExists.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "לא קיים בטבלת עובדים", ErrorTypes.errOvedNotExists.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errOvedNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOvedExistsInWorkDay169: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errOvedNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOvedExistsInWorkDay169: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2923,7 +2817,7 @@ namespace KdsBatch
                     if (hasHafifa)
                     {
                         drNew = dtErrors.NewRow();
-                        drNew["check_num"] = enErrors.errHafifaBetweenSidurim.GetHashCode();
+                        drNew["check_num"] = ErrorTypes.errHafifaBetweenSidurim.GetHashCode();
                         drNew["taarich"] = dCardDate.ToShortDateString();
                         drNew["mispar_ishi"] = iMispar_Ishi;
                         //drNew["error_desc"] = string.Concat("קיימת חפיפה בין סידורים עבור ימים עוקבים", " - ", hafifaDescription);
@@ -2934,7 +2828,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMispar_Ishi, "E", enErrors.errHafifaBetweenSidurim.GetHashCode(), dCardDate, "HasHafifa167: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMispar_Ishi, "E", ErrorTypes.errHafifaBetweenSidurim.GetHashCode(), dCardDate, "HasHafifa167: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -2956,7 +2850,7 @@ namespace KdsBatch
                     if (!isSidurValid)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "מילואים ועבודה באותו יום", enErrors.errMiluimAndAvoda.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "מילואים ועבודה באותו יום", ErrorTypes.errMiluimAndAvoda.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                     }
                     
@@ -2964,7 +2858,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errMiluimAndAvoda.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurMiluimAndAvoda156: " + ex.Message, null);
+                 clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errMiluimAndAvoda.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurMiluimAndAvoda156: " + ex.Message, null);
                  _bSuccsess = false;
              }
 
@@ -3063,7 +2957,7 @@ namespace KdsBatch
                     if (!isSidurValid)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "פרמיה גבוהה", enErrors.errHighPremya.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "פרמיה גבוהה", ErrorTypes.errHighPremya.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -3071,7 +2965,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHighPremya.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHighPremya153: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHighPremya.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHighPremya153: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3133,7 +3027,7 @@ namespace KdsBatch
                          if (!isSidurValid)
                          {
                              drNew = dtErrors.NewRow();
-                             InsertErrorRow(oSidur, ref drNew, "פרמיה גבוהה", enErrors.errHighPremya.GetHashCode());
+                             InsertErrorRow(oSidur, ref drNew, "פרמיה גבוהה", ErrorTypes.errHighPremya.GetHashCode());
                              dtErrors.Rows.Add(drNew);
                              isValid = false;
                          }
@@ -3143,7 +3037,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHighPremya.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHighPremya153: " + ex.Message, null);
+                 clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHighPremya.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHighPremya153: " + ex.Message, null);
                  isValid = false;
                  _bSuccsess = false;
              }
@@ -3292,7 +3186,7 @@ namespace KdsBatch
                                 if (!isSidurValid)
                                 {
                                     DataRow drNew = dtErrors.NewRow();
-                                    InsertErrorRow(oSidur, ref drNew, "פרמיה שלילית", enErrors.errNegativePremya.GetHashCode());
+                                    InsertErrorRow(oSidur, ref drNew, "פרמיה שלילית", ErrorTypes.errNegativePremya.GetHashCode());
                                     dtErrors.Rows.Add(drNew);
                                     isValid = false;
                                 }
@@ -3302,7 +3196,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errNegativePremya.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsNegativePremya154: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errNegativePremya.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsNegativePremya154: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3322,14 +3216,14 @@ namespace KdsBatch
                     if (bSidurNahagut &&  (iMutamut ==4 || iMutamut == 5 || iMutamut ==9))
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "", enErrors.errMutamLoBeNahagutBizeaNahagut.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "", ErrorTypes.errMutamLoBeNahagutBizeaNahagut.GetHashCode());
                         dtErrors.Rows.Add(drNew);   
                     }
                 }
             }           
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", enErrors.errMutamLoBeNahagutBizeaNahagut.GetHashCode(), dCardDate, "MutamLoBeNahagut186: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", ErrorTypes.errMutamLoBeNahagutBizeaNahagut.GetHashCode(), dCardDate, "MutamLoBeNahagut186: " + ex.Message);
                 _bSuccsess = false;
             }
         }
@@ -3353,7 +3247,7 @@ namespace KdsBatch
                         if (oFirstPeilut != null)
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "", enErrors.errKupaiWithNihulTnua.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "", ErrorTypes.errKupaiWithNihulTnua.GetHashCode());
                             dtErrors.Rows.Add(drNew);
                         }
                     }
@@ -3361,7 +3255,7 @@ namespace KdsBatch
             }           
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", enErrors.errKupaiWithNihulTnua.GetHashCode(), dCardDate, "KupaiWithNihulTnua187: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", ErrorTypes.errKupaiWithNihulTnua.GetHashCode(), dCardDate, "KupaiWithNihulTnua187: " + ex.Message);
                 _bSuccsess = false;
             }
         }
@@ -3378,7 +3272,7 @@ namespace KdsBatch
                      if (iCountSidurim > 0 || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
                      {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "", enErrors.errChofeshAlCheshbonShaotNosafot.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "", ErrorTypes.errChofeshAlCheshbonShaotNosafot.GetHashCode());
                             dtErrors.Rows.Add(drNew);
                       }
                 }
@@ -3386,7 +3280,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", enErrors.errChofeshAlCheshbonShaotNosafot.GetHashCode(), dCardDate, "ChofeshAlCheshbonShaotNosafot188: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", ErrorTypes.errChofeshAlCheshbonShaotNosafot.GetHashCode(), dCardDate, "ChofeshAlCheshbonShaotNosafot188: " + ex.Message);
                 _bSuccsess = false;
             }
         }
@@ -3425,7 +3319,7 @@ namespace KdsBatch
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    drNew["check_num"] = enErrors.errSimunNesiaNotValid.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errSimunNesiaNotValid.GetHashCode();
                     drNew["mispar_ishi"] = oOvedYomAvodaDetails.iMisparIshi;
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["error_desc"] = "ערך ביטול נסיעות שגוי";
@@ -3436,7 +3330,7 @@ namespace KdsBatch
             }           
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", enErrors.errSimunNesiaNotValid.GetHashCode(), dCardDate, "IsSimunNesiaValid27: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", ErrorTypes.errSimunNesiaNotValid.GetHashCode(), dCardDate, "IsSimunNesiaValid27: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3455,14 +3349,14 @@ namespace KdsBatch
                 if (((oSidur.sOutMichsa != "0") && (oSidur.sOutMichsa != "1")) || (string.IsNullOrEmpty(oSidur.sOutMichsa)))
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "מחוץ למכסה שגוי", enErrors.errOutMichsaNotValid.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "מחוץ למכסה שגוי", ErrorTypes.errOutMichsaNotValid.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errOutMichsaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOutMichsaValid118: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errOutMichsaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOutMichsaValid118: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3481,14 +3375,14 @@ namespace KdsBatch
                 if ( oSidur.sOutMichsa == "1" && oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Headrut.GetHashCode().ToString())
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "מחוץ למכסה בסדור שאסור ", enErrors.errOutMichsaInSidurHeadrutNotValid.GetHashCode());                        
+                    InsertErrorRow(oSidur, ref drNew, "מחוץ למכסה בסדור שאסור ", ErrorTypes.errOutMichsaInSidurHeadrutNotValid.GetHashCode());                        
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }               
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errOutMichsaInSidurHeadrutNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOutMichsaValid40: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errOutMichsaInSidurHeadrutNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOutMichsaValid40: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3516,7 +3410,7 @@ namespace KdsBatch
                     if (iElementTime > (fSidurTime))
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "משך זמן האלמנט גדול ממשך זמן הסידור", enErrors.errElementTimeBiggerThanSidurTime.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "משך זמן האלמנט גדול ממשך זמן הסידור", ErrorTypes.errElementTimeBiggerThanSidurTime.GetHashCode());
                         InsertPeilutErrorRow(oPeilut, ref drNew);
                         //drNew["Shat_Yetzia"] = oPeilut.sShatYetzia;//htEmployeeDetails["ShatYetzia"].ToString();
                         //drNew["makat_nesia"] = oPeilut.lMakatNesia;//htEmployeeDetails["MakatNesia"].ToString();
@@ -3528,7 +3422,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errElementTimeBiggerThanSidurTime.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsElementTimeValid129: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errElementTimeBiggerThanSidurTime.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsElementTimeValid129: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3566,7 +3460,7 @@ namespace KdsBatch
                         if (CheckEggedHourValid(oPeilut.sShatYetzia))
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "  לא בפורמט אגד - שעת יציאה שגויה", enErrors.errPeilutShatYetizaNotValid.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "  לא בפורמט אגד - שעת יציאה שגויה", ErrorTypes.errPeilutShatYetizaNotValid.GetHashCode());
                             InsertPeilutErrorRow(oPeilut, ref drNew);
                             //drNew["Shat_Yetzia"] = oPeilut.sShatYetzia;
                             //drNew["makat_nesia"] = oPeilut.lMakatNesia;
@@ -3581,7 +3475,7 @@ namespace KdsBatch
                             if ((dPeilutShatYetiza < dStartHourForPeilut))
                             {
                                 drNew = dtErrors.NewRow();
-                                InsertErrorRow(oSidur, ref drNew, "שעת יציאה שגויה", enErrors.errPeilutShatYetizaNotValid.GetHashCode());
+                                InsertErrorRow(oSidur, ref drNew, "שעת יציאה שגויה", ErrorTypes.errPeilutShatYetizaNotValid.GetHashCode());
                                 InsertPeilutErrorRow(oPeilut, ref drNew);
                                 //drNew["Shat_Yetzia"] = oPeilut.sShatYetzia;
                                 //drNew["makat_nesia"] = oPeilut.lMakatNesia;
@@ -3595,7 +3489,7 @@ namespace KdsBatch
                             if (oPeilut.dFullShatYetzia > dEndHourForPeilut)
                             {
                                 drNew = dtErrors.NewRow();
-                                InsertErrorRow(oSidur, ref drNew, "שעת יציאה שגויה", enErrors.errPeilutShatYetizaNotValid.GetHashCode());
+                                InsertErrorRow(oSidur, ref drNew, "שעת יציאה שגויה", ErrorTypes.errPeilutShatYetizaNotValid.GetHashCode());
                                 InsertPeilutErrorRow(oPeilut, ref drNew);
                                 dtErrors.Rows.Add(drNew);
                                 isValid = false;
@@ -3606,7 +3500,7 @@ namespace KdsBatch
             }
             catch(Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errPeilutShatYetizaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsPeilutShatYeziaValid113: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errPeilutShatYetizaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsPeilutShatYeziaValid113: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3631,7 +3525,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHamaratShabatNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHamaraValid42: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHamaratShabatNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHamaraValid42: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3679,7 +3573,7 @@ namespace KdsBatch
             }          
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHamaraNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHamaratShabatValid39: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHamaraNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHamaratShabatValid39: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3702,7 +3596,7 @@ namespace KdsBatch
                     if ((oOvedYomAvodaDetails.sKodHaver == "1") && (oSidur.sPitzulHafsaka == "2")) //קוד מעמד שמתחיל ב- 1 - חבר
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "פצול מיוחד ולא זכאי", enErrors.errPitzulMuchadValueNotValid.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "פצול מיוחד ולא זכאי", ErrorTypes.errPitzulMuchadValueNotValid.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -3710,7 +3604,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errPitzulMuchadValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsPitzulAndNotZakai25: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errPitzulMuchadValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsPitzulAndNotZakai25: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3746,7 +3640,7 @@ namespace KdsBatch
                                 if (flag)
                                 {
                                     drNew = dtErrors.NewRow();
-                                    InsertErrorRow(oSidur, ref drNew, "פעילות אסורה בסדור תפקיד", enErrors.errPeilutForSidurNonValid.GetHashCode());
+                                    InsertErrorRow(oSidur, ref drNew, "פעילות אסורה בסדור תפקיד", ErrorTypes.errPeilutForSidurNonValid.GetHashCode());
                                     //drNew["shat_yetzia"] = oPeilut.sShatYetzia;
                                     InsertPeilutErrorRow(oPeilut, ref drNew);
                                     dtErrors.Rows.Add(drNew);
@@ -3760,7 +3654,7 @@ namespace KdsBatch
             //}
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errPeilutForSidurNonValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsPeilutInSidurValid84: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errPeilutForSidurNonValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsPeilutInSidurValid84: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3794,14 +3688,14 @@ namespace KdsBatch
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "חריגה שגוי", enErrors.errCharigaValueNotValid.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "חריגה שגוי", ErrorTypes.errCharigaValueNotValid.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errCharigaValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsCharigaValid32: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errCharigaValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsCharigaValid32: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3832,7 +3726,7 @@ namespace KdsBatch
                             if (((sLookUp.IndexOf(oSidur.sChariga)) != -1) && (!oSidur.bZakaiLeCharigaExists) && (iShatGmar < 28))  //לא קיים מאפיין 35
                             {
                                 drNew = dtErrors.NewRow();
-                                InsertErrorRow(oSidur, ref drNew, "סידור אינו זכאי לחריגה", enErrors.errZakaiLeCharigaValueNotValid.GetHashCode());
+                                InsertErrorRow(oSidur, ref drNew, "סידור אינו זכאי לחריגה", ErrorTypes.errZakaiLeCharigaValueNotValid.GetHashCode());
                                 dtErrors.Rows.Add(drNew);
                                 isValid = false;
                             }
@@ -3844,7 +3738,7 @@ namespace KdsBatch
                     if (!string.IsNullOrEmpty(oSidur.sChariga) && Int32.Parse(oSidur.sChariga) > 0)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "סידור אינו זכאי לחריגה", enErrors.errZakaiLeCharigaValueNotValid.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "סידור אינו זכאי לחריגה", ErrorTypes.errZakaiLeCharigaValueNotValid.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -3852,7 +3746,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errZakaiLeCharigaValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsZakaiLeChariga34: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errZakaiLeCharigaValueNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsZakaiLeChariga34: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3879,7 +3773,7 @@ namespace KdsBatch
                                 if (fSidurTime / 60 > int.Parse(oSidur.sHashlama))
                                 {
                                     drNew = dtErrors.NewRow();
-                                    InsertErrorRow(oSidur, ref drNew, "ערך השלמה לסידור שגוי", enErrors.errHashlamaForSidurNotValid.GetHashCode());
+                                    InsertErrorRow(oSidur, ref drNew, "ערך השלמה לסידור שגוי", ErrorTypes.errHashlamaForSidurNotValid.GetHashCode());
                                     //drNew["Hashlama"] = oSidur.sHashlama;
                                     dtErrors.Rows.Add(drNew);
                                     isValid = false;
@@ -3891,7 +3785,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHashlamaForSidurNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHashlamaForSidurValid48: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHashlamaForSidurNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHashlamaForSidurValid48: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3927,7 +3821,7 @@ namespace KdsBatch
                             if (oPeilut.dFullShatYetzia < oSidur.dFullShatHatchala)
                             {
                                 drNew = dtErrors.NewRow();
-                                InsertErrorRow(oSidur, ref drNew, "שעת פעילות נמוכה משעת התחלת הסידור", enErrors.errShatPeilutSmallerThanShatHatchalaSidur.GetHashCode());
+                                InsertErrorRow(oSidur, ref drNew, "שעת פעילות נמוכה משעת התחלת הסידור", ErrorTypes.errShatPeilutSmallerThanShatHatchalaSidur.GetHashCode());
                                 InsertPeilutErrorRow(oPeilut, ref drNew);
                                 dtErrors.Rows.Add(drNew);
                                 isValid = false;
@@ -3938,7 +3832,7 @@ namespace KdsBatch
                             if (oPeilut.dFullShatYetzia > oSidur.dFullShatGmar)
                             {
                                 drNew = dtErrors.NewRow();
-                                InsertErrorRow(oSidur, ref drNew, "שעת פעילות גדולה משעת סיום הסידור", enErrors.errShatPeilutBiggerThanShatGmarSidur.GetHashCode());
+                                InsertErrorRow(oSidur, ref drNew, "שעת פעילות גדולה משעת סיום הסידור", ErrorTypes.errShatPeilutBiggerThanShatGmarSidur.GetHashCode());
                                 InsertPeilutErrorRow(oPeilut, ref drNew);
                                 dtErrors.Rows.Add(drNew);
                                 isValid = false;
@@ -3949,7 +3843,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errShatPeilutBiggerThanShatGmarSidur.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsShatPeilutNotValid121: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errShatPeilutBiggerThanShatGmarSidur.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsShatPeilutNotValid121: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -3980,7 +3874,7 @@ namespace KdsBatch
                         if (dCurrTime < dPrevTime)
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "קיימת חפיפה בשעות סידורים", enErrors.errSidurimHoursNotValid.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "קיימת חפיפה בשעות סידורים", ErrorTypes.errSidurimHoursNotValid.GetHashCode());
                             dtErrors.Rows.Add(drNew);
                             isValid = false;
                         }
@@ -3989,7 +3883,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurimHoursNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurimHoursNotValid16: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurimHoursNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurimHoursNotValid16: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4011,7 +3905,7 @@ namespace KdsBatch
                 //if ((oMeafyeneyOved.Meafyen72Exists) && (htEmployeeDetails.Count > 0))
                 {
                     drNew = dtErrors.NewRow();
-                    drNew["check_num"] = enErrors.errSidurExistsInShlila.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errSidurExistsInShlila.GetHashCode();
                     drNew["mispar_ishi"] = iMisparIshi;
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["error_desc"] = "קיימים סידורים בזמן חופשת שלילה"; 
@@ -4022,7 +3916,7 @@ namespace KdsBatch
             }
             catch(Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errSidurExistsInShlila.GetHashCode(), dCardDate, "IsSidurExistsInShlila35: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errSidurExistsInShlila.GetHashCode(), dCardDate, "IsSidurExistsInShlila35: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4041,14 +3935,14 @@ namespace KdsBatch
                 if ((!oSidur.bSidurVisaKodExists) && (!String.IsNullOrEmpty(oSidur.sVisa)) && Int32.Parse(oSidur.sVisa) > 0 )
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "קיים סימון ויזה בסידור רגיל", enErrors.errSidurVisaNotValid.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "קיים סימון ויזה בסידור רגיל", ErrorTypes.errSidurVisaNotValid.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurVisaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsVisaInSidurRagil58: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurVisaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsVisaInSidurRagil58: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4114,7 +4008,7 @@ namespace KdsBatch
                         {
                            
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "סידור אילת ללא הפסקה כנדרש לפני הסידור ", enErrors.errSidurEilatNotValid.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "סידור אילת ללא הפסקה כנדרש לפני הסידור ", ErrorTypes.errSidurEilatNotValid.GetHashCode());
                             dtErrors.Rows.Add(drNew);
                             isValid = false;
                         }
@@ -4122,7 +4016,7 @@ namespace KdsBatch
                 }
                 catch (Exception ex)
                 {
-                    clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurEilatNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurEilatValid55: " + ex.Message, null);
+                    clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurEilatNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurEilatValid55: " + ex.Message, null);
                     isValid = false;
                     _bSuccsess = false;
                 }
@@ -4152,7 +4046,7 @@ namespace KdsBatch
                         if (!(oKavim.IsBusNumberValid(oPeilut.lOtoNo, dCardDate)))
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "מספר רכב לא תקין/חסר מספר רכב", enErrors.errOtoNoNotExists.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "מספר רכב לא תקין/חסר מספר רכב", ErrorTypes.errOtoNoNotExists.GetHashCode());
                             InsertPeilutErrorRow(oPeilut, ref drNew);
                             //drNew["oto_no"] = oPeilut.lOtoNo;
                             //drNew["makat_nesia"] = oPeilut.lMakatNesia;
@@ -4167,7 +4061,7 @@ namespace KdsBatch
                         //בודקים אם הפעילות דורשת מספר רכב ואם הוא קיים וחוקי (מול מש"ר). פעילות דורשת מספר רכב אם מרוטינת זיהוי מקט חזר פרמטר שונה מאלמנט. אם חזר מהרוטינה אלנמט יש לבדוק אם דורש מספר רכב. תהיה טבלה של מספר פעילות המתחילים ב- 7 ולכל רשומה יהיה מאפיין אם הוא דורש מספר רכב. בטבלת מאפייני אלמנטים (11 - חובה מספר רכב)
 
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "מספר רכב לא תקין/חסר מספר רכב", enErrors.errOtoNoNotExists.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "מספר רכב לא תקין/חסר מספר רכב", ErrorTypes.errOtoNoNotExists.GetHashCode());
                         InsertPeilutErrorRow(oPeilut, ref drNew);
                         //drNew["oto_no"] = oPeilut.lOtoNo;
                         // drNew["makat_nesia"] = oPeilut.lMakatNesia;
@@ -4178,7 +4072,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errOtoNoNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsOtoNoValid69: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errOtoNoNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsOtoNoValid69: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4199,7 +4093,7 @@ namespace KdsBatch
                     oPeilut.iOnatiyut == 71 && oPeilut.lMisparSiduriOto == 0 && oPeilut.bPeilutEilat)
                 {                    
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "  נסיעה ללא רכב סידורי ", enErrors.errMisparSiduriOtoNotExists.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "  נסיעה ללא רכב סידורי ", ErrorTypes.errMisparSiduriOtoNotExists.GetHashCode());
                     InsertPeilutErrorRow(oPeilut, ref drNew);
                     drNew["sadot_nosafim"] = 1;
                     dtErrors.Rows.Add(drNew);
@@ -4208,7 +4102,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errMisparSiduriOtoNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "MisparSiduriOtoNotExists139: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errMisparSiduriOtoNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "MisparSiduriOtoNotExists139: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4227,7 +4121,7 @@ namespace KdsBatch
                 if (!(oPeilut.bPeilutEilat) && (oPeilut.lMisparSiduriOto > 0))
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "רכב סידורי ללא נסיעת אילת", enErrors.errMisparSiduriOtoNotInSidurEilat.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "רכב סידורי ללא נסיעת אילת", ErrorTypes.errMisparSiduriOtoNotInSidurEilat.GetHashCode());
                     InsertPeilutErrorRow(oPeilut, ref drNew);
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
@@ -4235,7 +4129,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errMisparSiduriOtoNotInSidurEilat.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsMisparSidurEilatInRegularSidurExists140: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errMisparSiduriOtoNotInSidurEilat.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsMisparSidurEilatInRegularSidurExists140: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4313,7 +4207,7 @@ namespace KdsBatch
                 if (!isValid)
                 {
                     drNew = dtErrors.NewRow();
-                    drNew["check_num"] = enErrors.errDuplicateShatYetiza.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errDuplicateShatYetiza.GetHashCode();
                     drNew["mispar_ishi"] = iMisparIshi;
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["error_desc"] = "שעת יציאה זהה בשתי פעילויות לאותו עובד";                   
@@ -4323,7 +4217,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errDuplicateShatYetiza.GetHashCode(), dCardDate, "IsDuplicateShatYetiza103: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errDuplicateShatYetiza.GetHashCode(), dCardDate, "IsDuplicateShatYetiza103: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4345,7 +4239,7 @@ namespace KdsBatch
                     if ((oSidur.iMisparSidur == iLastMisaprSidur) && (int.Parse(oOvedYomAvodaDetails.sLina) > 0) && (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bElementHamtanaExists) && oPeilut.sHamtanaEilat == "1")
                     {
                         drNew = dtErrors.NewRow();
-                        drNew["check_num"] = enErrors.errLoZakaiLLina.GetHashCode();
+                        drNew["check_num"] = ErrorTypes.errLoZakaiLLina.GetHashCode();
                         drNew["mispar_ishi"] = oOvedYomAvodaDetails.iMisparIshi;
                         drNew["taarich"] = _dCardDate.ToShortDateString();
                         //drNew["Lina"] = int.Parse(sLina);
@@ -4358,7 +4252,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errLoZakaiLLina.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsZakaiLina31: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errLoZakaiLLina.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsZakaiLina31: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4383,7 +4277,7 @@ namespace KdsBatch
                         if ((oSidur.bNoOtoNoExists) && (oSidur.sNoOtoNo=="1"))
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "מספר רכב בסידור תפקיד", enErrors.errOtoNoExists.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "מספר רכב בסידור תפקיד", ErrorTypes.errOtoNoExists.GetHashCode());
                             //drNew["oto_no"] = oPeilut.lOtoNo;
                             InsertPeilutErrorRow(oPeilut, ref drNew);
                             //drNew["makat_nesia"] = oPeilut.lMakatNesia;
@@ -4398,7 +4292,7 @@ namespace KdsBatch
                             if ((!String.IsNullOrEmpty(drSugSidur[0]["asur_ledaveach_mispar_rechev"].ToString())) && (drSugSidur[0]["asur_ledaveach_mispar_rechev"].ToString() =="1"))
                             {
                                 drNew = dtErrors.NewRow();
-                                InsertErrorRow(oSidur, ref drNew, "מספר רכב בסידור תפקיד", enErrors.errOtoNoExists.GetHashCode());
+                                InsertErrorRow(oSidur, ref drNew, "מספר רכב בסידור תפקיד", ErrorTypes.errOtoNoExists.GetHashCode());
                                 //drNew["oto_no"] = oPeilut.lOtoNo;
                                 //drNew["makat_nesia"] = oPeilut.lMakatNesia;
                                 InsertPeilutErrorRow(oPeilut, ref drNew);
@@ -4411,7 +4305,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errOtoNoExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOtoNoExists68: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errOtoNoExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOtoNoExists68: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4444,7 +4338,7 @@ namespace KdsBatch
                         if (((100 + oParam.fFactor) / 100 * iElementTime) > (fSidurTime))
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "זמן נסיעה חריג", enErrors.errNesiaTimeNotValid.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "זמן נסיעה חריג", ErrorTypes.errNesiaTimeNotValid.GetHashCode());
                             //drNew["nesia_time"] = (100 + oParam.fFactor) / 100 * iElementTime;
                             //drNew["sidur_time"] = fSidurTime;
                             InsertPeilutErrorRow(oPeilut, ref drNew);
@@ -4457,7 +4351,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errNesiaTimeNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsNesiaTimeNotValid91: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errNesiaTimeNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsNesiaTimeNotValid91: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4477,7 +4371,7 @@ namespace KdsBatch
                 if ((!(oSidur.bSidurMyuhad && (oSidur.bSidurVisaKodExists))) && (oPeilut.lMisparVisa > 0))
                 {                                       
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "תעודת נסיעה לא בסדור ויזה", enErrors.errTeoodatNesiaNotInVisa.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "תעודת נסיעה לא בסדור ויזה", ErrorTypes.errTeoodatNesiaNotInVisa.GetHashCode());
                     //drNew["mispar_visa"] = oPeilut.lMisparVisa;
                     //drNew["makat_nesia"] = oPeilut.lMakatNesia;
                     InsertPeilutErrorRow(oPeilut, ref drNew);
@@ -4487,7 +4381,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errTeoodatNesiaNotInVisa.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsTeoodatNesiaValid52: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errTeoodatNesiaNotInVisa.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsTeoodatNesiaValid52: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4515,7 +4409,7 @@ namespace KdsBatch
                             if (int.Parse(oSidur.sHashlama) > 0)
                             {
                                 drNew = dtErrors.NewRow();
-                                InsertErrorRow(oSidur, ref drNew, "השלמת הזמנה אסורה", enErrors.errHahlamatHazmanaNotValid.GetHashCode());
+                                InsertErrorRow(oSidur, ref drNew, "השלמת הזמנה אסורה", ErrorTypes.errHahlamatHazmanaNotValid.GetHashCode());
                                 dtErrors.Rows.Add(drNew);
                                 isValid = false;
                             }
@@ -4544,7 +4438,7 @@ namespace KdsBatch
                         if (fSidurTime > iZmanMinimum)
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "השלמת הזמנה אסורה", enErrors.errHahlamatHazmanaNotValid.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "השלמת הזמנה אסורה", ErrorTypes.errHahlamatHazmanaNotValid.GetHashCode());
                             dtErrors.Rows.Add(drNew);
                             isValid = false;
                         }
@@ -4554,7 +4448,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHahlamatHazmanaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHashlamatHazmanaValid49: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHahlamatHazmanaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHashlamatHazmanaValid49: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4589,7 +4483,7 @@ namespace KdsBatch
                 if (iTotalHashlamotForSidur > iZmanMaximum)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "מספר השלמות גדול מהמותר ליום עבודה ", enErrors.errTotalHashlamotBiggerThanAllow.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "מספר השלמות גדול מהמותר ליום עבודה ", ErrorTypes.errTotalHashlamotBiggerThanAllow.GetHashCode());
                     //drNew["total_hashlamot"] = iTotalHashlamotForSidur;
                     //drNew["zman_maximum"] = iZmanMaximum;
                     dtErrors.Rows.Add(drNew);
@@ -4598,7 +4492,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errTotalHashlamotBiggerThanAllow.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsTotalHashlamotInCardValid142: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errTotalHashlamotBiggerThanAllow.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsTotalHashlamotInCardValid142: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4621,7 +4515,7 @@ namespace KdsBatch
                     if (!isSidurValid)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "חסר מספר מחסן", enErrors.errMissingNumStore.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "חסר מספר מחסן", ErrorTypes.errMissingNumStore.GetHashCode());
                         drNew["sadot_nosafim"] = 1;
                         dtErrors.Rows.Add(drNew);
                     }
@@ -4629,7 +4523,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errMissingNumStore.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurMissingNumStore143: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errMissingNumStore.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurMissingNumStore143: " + ex.Message, null);
                 _bSuccsess = false;
             }
 
@@ -4653,7 +4547,7 @@ namespace KdsBatch
                     if ((sLookUp.IndexOf(oSidur.sVisa) == -1) || (string.IsNullOrEmpty(oSidur.sVisa)) || tmpVisaCode == 0)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "סדור ויזה ללא סימון", enErrors.errSimunVisaNotValid.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "סדור ויזה ללא סימון", ErrorTypes.errSimunVisaNotValid.GetHashCode());
                         //drNew["visa"] = oSidur.sVisa;
                         drNew["sadot_nosafim"] = 1;
                         dtErrors.Rows.Add(drNew);
@@ -4663,7 +4557,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSimunVisaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurVisaValid57: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSimunVisaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurVisaValid57: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4686,7 +4580,7 @@ namespace KdsBatch
                     if ((sLookUp.IndexOf(oSidur.sVisa) == -1) || (string.IsNullOrEmpty(oSidur.sVisa)))
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "יום ויזה שגוי", enErrors.errYomVisaNotValid.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "יום ויזה שגוי", ErrorTypes.errYomVisaNotValid.GetHashCode());
                         //drNew["visa"] = oSidur.sVisa;                        
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
@@ -4695,7 +4589,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errYomVisaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsYomVisaValid56: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errYomVisaNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsYomVisaValid56: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4737,7 +4631,7 @@ namespace KdsBatch
                     if (bError)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "השלמה ליום עבודה בסידור היעדרות / סידור לא לתשלום", enErrors.errHashlamaForComputerWorkerAndAccident.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "השלמה ליום עבודה בסידור היעדרות / סידור לא לתשלום", ErrorTypes.errHashlamaForComputerWorkerAndAccident.GetHashCode());
                         //drNew["hashlama"] = oSidur.sHashlama;
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
@@ -4748,7 +4642,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHashlamaForComputerWorkerAndAccident.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHashlamaForComputerAndAccidentValid45: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHashlamaForComputerWorkerAndAccident.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHashlamaForComputerAndAccidentValid45: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4786,7 +4680,7 @@ namespace KdsBatch
                 if (hasSidurEilat && isLongNesiaToEilat && hasVisa)
                 {
                     drNew = dtErrors.NewRow();
-                    drNew["check_num"] = enErrors.errHasBothSidurEilatAndSidurVisa.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errHasBothSidurEilatAndSidurVisa.GetHashCode();
                     drNew["mispar_ishi"] =iMisparIshi;
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["error_desc"] = "סידור עם נסיעת אילת ארוכה וסידור ויזה באותו יום";
@@ -4796,7 +4690,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errHasBothSidurEilatAndSidurVisa.GetHashCode(), dCardDate, "HasBothSidurEilatAndSidurVisa171: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errHasBothSidurEilatAndSidurVisa.GetHashCode(), dCardDate, "HasBothSidurEilatAndSidurVisa171: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4850,7 +4744,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errZakaiLehamaratShabat.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsZakaiLehamara44: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errZakaiLehamaratShabat.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsZakaiLehamara44: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4895,7 +4789,7 @@ namespace KdsBatch
                     if (bError)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "המרת שבת לא ביום שבתון ", enErrors.errHamaratShabatNotAllowed.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "המרת שבת לא ביום שבתון ", ErrorTypes.errHamaratShabatNotAllowed.GetHashCode());
                         //drNew["hamarat_shabat"] = oSidur.sHamaratShabat;
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
@@ -4904,7 +4798,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHamaratShabatNotAllowed.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHamaratShabatAllowed43: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHamaratShabatNotAllowed.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHamaratShabatAllowed43: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4944,7 +4838,7 @@ namespace KdsBatch
                             drNew["mispar_ishi"] = _iMisparIshi;
                             drNew["taarich"] = dDateCard.ToShortDateString();
                             //drNew["error_desc"] = "חסרה הגדרה בטבלת זמן נסיעה משתנה ";
-                            drNew["check_num"] = enErrors.errNesiaMeshtanaNotDefine.GetHashCode();
+                            drNew["check_num"] = ErrorTypes.errNesiaMeshtanaNotDefine.GetHashCode();
                             dtErrors.Rows.Add(drNew);
                             isValid = false;
 
@@ -4955,7 +4849,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errNesiaMeshtanaNotDefine.GetHashCode(), _iMisparIshi, _dCardDate,null, null, null, null, "IsNesiaMeshtanaDefine150: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errNesiaMeshtanaNotDefine.GetHashCode(), _iMisparIshi, _dCardDate,null, null, null, null, "IsNesiaMeshtanaDefine150: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -4980,7 +4874,7 @@ namespace KdsBatch
                     if (oSidur.htPeilut.Count == 0)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "חובה לפחות פעילות אחת", enErrors.errAtLeastOnePeilutRequired.GetHashCode());                                                
+                        InsertErrorRow(oSidur, ref drNew, "חובה לפחות פעילות אחת", ErrorTypes.errAtLeastOnePeilutRequired.GetHashCode());                                                
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }                    
@@ -4988,7 +4882,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errAtLeastOnePeilutRequired.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOnePeilutExists127: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errAtLeastOnePeilutRequired.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOnePeilutExists127: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5009,7 +4903,7 @@ namespace KdsBatch
                     if (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && oPeilut.sDivuchInSidurMeyuchad == "1")
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "אלמנט אסור בסדור מיוחד", enErrors.errElementInSpecialSidurNotAllowed.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "אלמנט אסור בסדור מיוחד", ErrorTypes.errElementInSpecialSidurNotAllowed.GetHashCode());
                         InsertPeilutErrorRow(oPeilut, ref drNew);
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
@@ -5018,7 +4912,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errElementInSpecialSidurNotAllowed.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "ElementInSpecialSidurNotAllowed123: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errElementInSpecialSidurNotAllowed.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "ElementInSpecialSidurNotAllowed123: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5041,7 +4935,7 @@ namespace KdsBatch
                     if (!(oPeilut.iMakatType == clKavim.enMakatType.mVisa.GetHashCode() || (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && oPeilut.sDivuchInSidurVisa == "2")))
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "נסיעה אסורה בסידור ויזה", enErrors.errNesiaInSidurVisaNotAllowed.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "נסיעה אסורה בסידור ויזה", ErrorTypes.errNesiaInSidurVisaNotAllowed.GetHashCode());
                         InsertPeilutErrorRow(oPeilut, ref drNew);
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
@@ -5050,7 +4944,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errNesiaInSidurVisaNotAllowed.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsNesiaInSidurVisaAllowed125: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errNesiaInSidurVisaNotAllowed.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsNesiaInSidurVisaAllowed125: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5072,7 +4966,7 @@ namespace KdsBatch
                     {
                         drNew = dtErrors.NewRow();
                         //drNew["Bitul_Zman_Nesiot"] = oOvedYomAvodaDetails.sBitulZmanNesiot;
-                        InsertErrorRow(oSidur, ref drNew, "קוד אסור לעובד אגד תעבורה", enErrors.errNotAllowedKodsForEggedTaavora.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "קוד אסור לעובד אגד תעבורה", ErrorTypes.errNotAllowedKodsForEggedTaavora.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -5080,7 +4974,7 @@ namespace KdsBatch
                     {
                         drNew = dtErrors.NewRow();
                         //drNew["Halbasha"] = oOvedYomAvodaDetails.sHalbasha;
-                        InsertErrorRow(oSidur, ref drNew, "קוד אסור לעובד אגד תעבורה", enErrors.errNotAllowedKodsForEggedTaavora.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "קוד אסור לעובד אגד תעבורה", ErrorTypes.errNotAllowedKodsForEggedTaavora.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -5096,7 +4990,7 @@ namespace KdsBatch
                     {
                         drNew = dtErrors.NewRow();
                         //drNew["Hashlama"] = oSidur.sHashlama;
-                        InsertErrorRow(oSidur, ref drNew, "קוד אסור לעובד אגד תעבורה", enErrors.errNotAllowedKodsForEggedTaavora.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "קוד אסור לעובד אגד תעבורה", ErrorTypes.errNotAllowedKodsForEggedTaavora.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -5104,7 +4998,7 @@ namespace KdsBatch
                     {                        
                         drNew = dtErrors.NewRow();
                         //drNew["Out_Michsa"] = oSidur.sOutMichsa;
-                        InsertErrorRow(oSidur, ref drNew, "קוד אסור לעובד אגד תעבורה", enErrors.errNotAllowedKodsForEggedTaavora.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "קוד אסור לעובד אגד תעבורה", ErrorTypes.errNotAllowedKodsForEggedTaavora.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -5112,7 +5006,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errNotAllowedKodsForEggedTaavora.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOvedEggedTaavoraKodValid141: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errNotAllowedKodsForEggedTaavora.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsOvedEggedTaavoraKodValid141: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5133,7 +5027,7 @@ namespace KdsBatch
                     if ((oSidur.bSidurMyuhad) && (oSidur.bSidurNotValidKodExists))
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "סדור אסור לעובד בדרוג 85", enErrors.errNotAllowedSidurForEggedTaavora.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "סדור אסור לעובד בדרוג 85", ErrorTypes.errNotAllowedSidurForEggedTaavora.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -5141,7 +5035,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errNotAllowedSidurForEggedTaavora.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurAllowedForEggedTaavora148: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errNotAllowedSidurForEggedTaavora.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurAllowedForEggedTaavora148: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5160,14 +5054,14 @@ namespace KdsBatch
                 if ((oSidur.bSidurMyuhad) && (oSidur.sSugAvoda == clGeneral.enSugAvoda.Netzer.GetHashCode().ToString()) && (!oMeafyeneyOved.Meafyen64Exists))
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "לעובד אסור סידור נ.צ.ר", enErrors.errSidurNetzerNotValidForOved.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "לעובד אסור סידור נ.צ.ר", ErrorTypes.errSidurNetzerNotValidForOved.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurNetzerNotValidForOved.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNetzerNotValidForOved124: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurNetzerNotValidForOved.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNetzerNotValidForOved124: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5188,7 +5082,7 @@ namespace KdsBatch
                     if ((oPeilut.lMisparVisa == 0) && (oPeilut.lMakatNesia > 0) && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 1) == "5")  //אין תעודת נסיעה
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "סדור נמלק ללא תעודת נסיעה", enErrors.errSidurNamlakWithoutNesiaCard.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "סדור נמלק ללא תעודת נסיעה", ErrorTypes.errSidurNamlakWithoutNesiaCard.GetHashCode());
                         InsertPeilutErrorRow(oPeilut, ref drNew);
                         drNew["sadot_nosafim"] = 1;
                         dtErrors.Rows.Add(drNew);
@@ -5198,7 +5092,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurNamlakWithoutNesiaCard.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNamlakWithoutNesiaCard13: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurNamlakWithoutNesiaCard.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNamlakWithoutNesiaCard13: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5220,7 +5114,7 @@ namespace KdsBatch
                     if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim,iSugYom,oSidur.dSidurDate) && oSidur.bSidurNotInShabtonKodExists )
                     {//היום הוא יום שבתון ולסידור יש מאפיין אסור בשבתון, לכן נעלה שגיאה
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "סדור אסור בשבתון ", enErrors.errSidurNotAllowedInShabaton.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "סדור אסור בשבתון ", ErrorTypes.errSidurNotAllowedInShabaton.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -5228,7 +5122,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurNotAllowedInShabaton.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurValidInShabaton50: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurNotAllowedInShabaton.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurValidInShabaton50: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5264,7 +5158,7 @@ namespace KdsBatch
                         {
                             //נציג את הסידור השני כשגוי
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, " עבודה בערב שבת/חג לאחר פצול", enErrors.errPitzulSidurInShabat.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, " עבודה בערב שבת/חג לאחר פצול", ErrorTypes.errPitzulSidurInShabat.GetHashCode());
                             dtErrors.Rows.Add(drNew);
                             isValid = false;
                         }
@@ -5272,10 +5166,10 @@ namespace KdsBatch
                         {
                             //נציג את שני הסידורים כשגויים
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oPrevSidur, ref drNew, " עבודה בערב שבת/חג לאחר פצול", enErrors.errPitzulSidurInShabat.GetHashCode());
+                            InsertErrorRow(oPrevSidur, ref drNew, " עבודה בערב שבת/חג לאחר פצול", ErrorTypes.errPitzulSidurInShabat.GetHashCode());
                             dtErrors.Rows.Add(drNew);
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, " עבודה בערב שבת/חג לאחר פצול", enErrors.errPitzulSidurInShabat.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, " עבודה בערב שבת/חג לאחר פצול", ErrorTypes.errPitzulSidurInShabat.GetHashCode());
                             dtErrors.Rows.Add(drNew);
 
                             isValid = false;
@@ -5285,7 +5179,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errPitzulSidurInShabat.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsPitzulSidurInShabatValid24: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errPitzulSidurInShabat.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsPitzulSidurInShabatValid24: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5305,7 +5199,7 @@ namespace KdsBatch
                 if ((oSidur.bSidurMyuhad && oSidur.iMisparSidurMyuhad == 0) ||  oSidur.iMisparSidur.ToString().Length < 4)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "סידור לא קיים", enErrors.errSidurNotExists.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "סידור לא קיים", ErrorTypes.errSidurNotExists.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -5324,7 +5218,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurExists9: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurNotExists.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurExists9: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5343,7 +5237,7 @@ namespace KdsBatch
                 if ((!(string.IsNullOrEmpty(oOvedYomAvodaDetails.sBitulZmanNesiot))) && Int32.Parse(oOvedYomAvodaDetails.sBitulZmanNesiot) > 0 && (!oMeafyeneyOved.Meafyen51Exists) && (!oMeafyeneyOved.Meafyen61Exists))
                 {
                     drNew = dtErrors.NewRow();
-                    drNew["check_num"] = enErrors.errLoZakaiLeNesiot.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errLoZakaiLeNesiot.GetHashCode();
                     drNew["mispar_ishi"] =iMisparIshi;
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["error_desc"] = "לא זכאי לנסיעות";                    
@@ -5353,7 +5247,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errLoZakaiLeNesiot.GetHashCode(), dCardDate, "IsZakaiLeNesiot26: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errLoZakaiLeNesiot.GetHashCode(), dCardDate, "IsZakaiLeNesiot26: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5375,7 +5269,7 @@ namespace KdsBatch
                     if ((IsOvedMatzavExists("5")) && (iCountSidurim > 0))
                     {
                         drNew = dtErrors.NewRow();
-                        drNew["check_num"] = enErrors.errOvdaInMachalaNotAllowed.GetHashCode();
+                        drNew["check_num"] = ErrorTypes.errOvdaInMachalaNotAllowed.GetHashCode();
                         drNew["mispar_ishi"] = iMisparIshi;
                         drNew["taarich"] = dCardDate.ToShortDateString();
                         //drNew["error_desc"] = "עבודה אסורה במחלה ארוכה";
@@ -5386,7 +5280,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errOvdaInMachalaNotAllowed.GetHashCode(), dCardDate, "IsOvodaInMachalaAllowed132: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errOvdaInMachalaNotAllowed.GetHashCode(), dCardDate, "IsOvodaInMachalaAllowed132: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5406,14 +5300,14 @@ namespace KdsBatch
                 if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((!oMeafyeneyOved.Meafyen3Exists) || (!oMeafyeneyOved.Meafyen4Exists)))
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "סידור תפקיד ללא מאפיין התחלה/גמר", enErrors.errSidurTafkidWithOutApprove.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "סידור תפקיד ללא מאפיין התחלה/גמר", ErrorTypes.errSidurTafkidWithOutApprove.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurTafkidWithOutApprove.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurTafkidValid145: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurTafkidWithOutApprove.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurTafkidValid145: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5446,13 +5340,13 @@ namespace KdsBatch
                 if (!isValid)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "שיעור נהיגה לא בסידור הוראת נהיגה", enErrors.errDriverLessonsNumberNotValid.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "שיעור נהיגה לא בסידור הוראת נהיגה", ErrorTypes.errDriverLessonsNumberNotValid.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errDriverLessonsNumberNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsDriverLessonsNumberValid136: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errDriverLessonsNumberNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsDriverLessonsNumberValid136: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5495,7 +5389,7 @@ namespace KdsBatch
                         if (bError)
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "סידור עבודה לא חוקי לחודש זה", enErrors.errSidurAvodaNotValidForMonth.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "סידור עבודה לא חוקי לחודש זה", ErrorTypes.errSidurAvodaNotValidForMonth.GetHashCode());
                             dtErrors.Rows.Add(drNew);
                             isValid = false;
                         }
@@ -5504,7 +5398,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurAvodaNotValidForMonth.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurAvodaValidForTaarich160: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurAvodaNotValidForMonth.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurAvodaValidForTaarich160: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5553,14 +5447,14 @@ namespace KdsBatch
                 if (isError)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "סידור נבלעת בתוך סידור קודם ", enErrors.errCurrentSidurInPrevSidur.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "סידור נבלעת בתוך סידור קודם ", ErrorTypes.errCurrentSidurInPrevSidur.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errCurrentSidurInPrevSidur.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsCurrentSidurInPrevSidur168: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errCurrentSidurInPrevSidur.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsCurrentSidurInPrevSidur168: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5653,7 +5547,7 @@ namespace KdsBatch
                     if ((dCurrStartPeilut >= dPrevStartPeilut) && (dCurrEndPeilut < dPrevEndPeilut))
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "פעילות נבלעת בתוך פעילות קודמת ", enErrors.errCurrentPeilutInPrevPeilut.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "פעילות נבלעת בתוך פעילות קודמת ", ErrorTypes.errCurrentPeilutInPrevPeilut.GetHashCode());
                         InsertPeilutErrorRow(oPeilut, ref drNew);
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
@@ -5662,7 +5556,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errCurrentPeilutInPrevPeilut.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsCurrentPeilutInPrevPeilut162: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errCurrentPeilutInPrevPeilut.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsCurrentPeilutInPrevPeilut162: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5683,7 +5577,7 @@ namespace KdsBatch
                         || (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim,iSugYom,dCardDate) && (!oMeafyeneyOved.Meafyen7Exists)))
                     {                       
                         drNew = dtErrors.NewRow();
-                        drNew["check_num"] = enErrors.errHashlamaLeYomAvodaNotAllowed.GetHashCode();
+                        drNew["check_num"] = ErrorTypes.errHashlamaLeYomAvodaNotAllowed.GetHashCode();
                         drNew["mispar_ishi"] = iMisparIshi;
                         drNew["taarich"] = dCardDate.ToShortDateString();
                         //drNew["error_desc"] = "השלמה ליום עבודה אסורה";                   
@@ -5696,7 +5590,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errHashlamaLeYomAvodaNotAllowed.GetHashCode(), dCardDate, "IsHashlamaLeYomAvodaValid163: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errHashlamaLeYomAvodaNotAllowed.GetHashCode(), dCardDate, "IsHashlamaLeYomAvodaValid163: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5716,7 +5610,7 @@ namespace KdsBatch
                         if (IsDuplicateTravle(_iMisparIshi,_dCardDate,oPeilut.lMakatNesia,oPeilut.dFullShatYetzia,oPeilut.iMisparKnisa,ref dtDuplicate))
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "נסיעה כפולה בין עובדים שונים", enErrors.errDuplicateTravle.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "נסיעה כפולה בין עובדים שונים", ErrorTypes.errDuplicateTravle.GetHashCode());
                             InsertPeilutErrorRow(oPeilut, ref drNew);
                             dtErrors.Rows.Add(drNew);
 
@@ -5732,7 +5626,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errDuplicateTravle.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsDuplicateTravel151: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errDuplicateTravle.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsDuplicateTravel151: " + ex.Message, null);
                 _bSuccsess = false;
             }
         }
@@ -5749,7 +5643,7 @@ namespace KdsBatch
                         if (IsSidurChofef(_iMisparIshi, _dCardDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oSidur.dFullShatGmar, _oParameters.iMaxChafifaBeinSidureyNihulTnua, ref dtChafifa))
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "חפיפה בסידור ניהול תנועה", enErrors.errChafifaBesidurNihulTnua.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "חפיפה בסידור ניהול תנועה", ErrorTypes.errChafifaBesidurNihulTnua.GetHashCode());
                             dtErrors.Rows.Add(drNew);
 
                             for (int i = 0; i < dtChafifa.Rows.Count; i++)
@@ -5763,7 +5657,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errChafifaBesidurNihulTnua.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsChafifaBesidurNihulTnua152: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errChafifaBesidurNihulTnua.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsChafifaBesidurNihulTnua152: " + ex.Message, null);
                 _bSuccsess = false;
             }
         }
@@ -5837,7 +5731,7 @@ namespace KdsBatch
                         if (((!oMeafyeneyOved.Meafyen56Exists)) || ((oMeafyeneyOved.Meafyen56Exists) && (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "סידור של ארועי קיץ לעובד 5 ימים", enErrors.errSidurSummerNotValidForOved.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "סידור של ארועי קיץ לעובד 5 ימים", ErrorTypes.errSidurSummerNotValidForOved.GetHashCode());
                             dtErrors.Rows.Add(drNew);
                             isValid = false;
                         }
@@ -5846,7 +5740,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurSummerNotValidForOved.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurSummerValid164: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurSummerNotValidForOved.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurSummerValid164: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5886,14 +5780,14 @@ namespace KdsBatch
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "לעובד אסור לבצע סידור נהיגה", enErrors.errOvedNotAllowedToDoSidurNahagut.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "לעובד אסור לבצע סידור נהיגה", ErrorTypes.errOvedNotAllowedToDoSidurNahagut.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errOvedNotAllowedToDoSidurNahagut.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNAhagutValid161: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errOvedNotAllowedToDoSidurNahagut.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNAhagutValid161: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5937,7 +5831,7 @@ namespace KdsBatch
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    drNew["check_num"] = enErrors.errFirstDayShlilatRishayon195.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errFirstDayShlilatRishayon195.GetHashCode();
                     drNew["mispar_ishi"] = oSidur.iMisparIshi;
                     drNew["taarich"] =oSidur.dSidurDate.ToShortDateString();
                     //drNew["error_desc"] = "סידור עם נסיעת אילת ארוכה וסידור ויזה באותו יום";
@@ -5947,7 +5841,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errFirstDayShlilatRishayon195.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNAhagutValid161: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errFirstDayShlilatRishayon195.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNAhagutValid161: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -5986,7 +5880,7 @@ namespace KdsBatch
                     if (bError)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "", enErrors.errkupaiLeloHachtama.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "", ErrorTypes.errkupaiLeloHachtama.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -5994,7 +5888,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errFirstDayShlilatRishayon195.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNAhagutValid161: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errFirstDayShlilatRishayon195.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNAhagutValid161: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -6032,14 +5926,14 @@ namespace KdsBatch
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "לעובד אסור לבצע סידור גרירה בפועל", enErrors.errSidurGriraNotValid.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "לעובד אסור לבצע סידור גרירה בפועל", ErrorTypes.errSidurGriraNotValid.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurGriraNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurGriraValid177: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errSidurGriraNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurGriraValid177: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -6143,7 +6037,7 @@ namespace KdsBatch
                 if (bhaveHamtana && iTimeInMinutes > iParamHamtana)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "עיכוב ארוך מעל המותר ", enErrors.errHmtanaTimeNotValid.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "עיכוב ארוך מעל המותר ", ErrorTypes.errHmtanaTimeNotValid.GetHashCode());
                         InsertPeilutErrorRow(oPeilut, ref drNew);
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
@@ -6152,7 +6046,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHmtanaTimeNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsHmtanaTimeValid166: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHmtanaTimeNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsHmtanaTimeValid166: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -6175,7 +6069,7 @@ namespace KdsBatch
                     if (!isSidurValid)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "סדור ויזה מחייב סוג ויזה", enErrors.errMissingSugVisa.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "סדור ויזה מחייב סוג ויזה", ErrorTypes.errMissingSugVisa.GetHashCode());
                         drNew["sadot_nosafim"] = 1;
                         dtErrors.Rows.Add(drNew);
                     }
@@ -6183,7 +6077,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errMissingSugVisa.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurVisaMissingSugVisa106: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errMissingSugVisa.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurVisaMissingSugVisa106: " + ex.Message, null);
                 _bSuccsess = false;
             }
 
@@ -6205,7 +6099,7 @@ namespace KdsBatch
                     if (!isSidurValid)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "ויזה פנים מחייב קוד מבצע ויזה", enErrors.errMissingKodMevatzaVisa.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "ויזה פנים מחייב קוד מבצע ויזה", ErrorTypes.errMissingKodMevatzaVisa.GetHashCode());
                         drNew["sadot_nosafim"] = 1;
                         dtErrors.Rows.Add(drNew);
                     }
@@ -6213,7 +6107,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errMissingKodMevatzaVisa.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsMissingKodMevatzeaVisa178: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errMissingKodMevatzaVisa.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsMissingKodMevatzeaVisa178: " + ex.Message, null);
                 _bSuccsess = false;
             }
          }
@@ -6239,7 +6133,7 @@ namespace KdsBatch
                 if (!isValid)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "ערך דקות בפועל גבוה מזמן לגמר או מהזמן המותר לכניסה ", enErrors.errHightValueDakotBefoal.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "ערך דקות בפועל גבוה מזמן לגמר או מהזמן המותר לכניסה ", ErrorTypes.errHightValueDakotBefoal.GetHashCode());
                     InsertPeilutErrorRow(oPeilut, ref drNew);
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
@@ -6248,7 +6142,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHightValueDakotBefoal.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "HightValueDakotBefoal179: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHightValueDakotBefoal.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "HightValueDakotBefoal179: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -6267,7 +6161,7 @@ namespace KdsBatch
                     if (dShatKisuyTor < oSidur.dFullShatHatchala)
                     {
                         drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "כיסוי תור לפני תחילת סידור", enErrors.errKisuyTorLifneyHatchalatSidur.GetHashCode());
+                        InsertErrorRow(oSidur, ref drNew, "כיסוי תור לפני תחילת סידור", ErrorTypes.errKisuyTorLifneyHatchalatSidur.GetHashCode());
                         InsertPeilutErrorRow(oPeilut, ref drNew);
                         dtErrors.Rows.Add(drNew);
                     }
@@ -6275,7 +6169,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errKisuyTorLifneyHatchalatSidur.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "KisuyTorLifneyHatchalatSidur189: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errKisuyTorLifneyHatchalatSidur.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "KisuyTorLifneyHatchalatSidur189: " + ex.Message, null);
                 _bSuccsess = false;
             }
 
@@ -6308,14 +6202,14 @@ namespace KdsBatch
                 if (hasHafifa)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow((clSidur)htEmployeeDetails[index], ref drNew, "סדורים חופפים בשעות בהשלמה", enErrors.errHafifaBecauseOfHashlama.GetHashCode());
+                    InsertErrorRow((clSidur)htEmployeeDetails[index], ref drNew, "סדורים חופפים בשעות בהשלמה", ErrorTypes.errHafifaBecauseOfHashlama.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", enErrors.errHafifaBecauseOfHashlama.GetHashCode(), "HasHafifaBecauseOfHashlama108: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", ErrorTypes.errHafifaBecauseOfHashlama.GetHashCode(), "HasHafifaBecauseOfHashlama108: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -6343,7 +6237,7 @@ namespace KdsBatch
                         drNew["mispar_ishi"] = iMisparIshi;
                         drNew["taarich"] = dCardDate.ToShortDateString();
                         //drNew["error_desc"] = "עובד עם מאפיין זמן נסיעה וביצע עבודת נהיגה ";
-                        drNew["check_num"] = enErrors.errAvodatNahagutNotValid.GetHashCode();
+                        drNew["check_num"] = ErrorTypes.errAvodatNahagutNotValid.GetHashCode();
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
@@ -6351,7 +6245,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errAvodatNahagutNotValid.GetHashCode(), iMisparIshi, dCardDate,null,null,null,null, "IsAvodatNahagutValid165: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errAvodatNahagutNotValid.GetHashCode(), iMisparIshi, dCardDate,null,null,null,null, "IsAvodatNahagutValid165: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -6411,7 +6305,7 @@ namespace KdsBatch
                         if (bError)
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "הכנת מכונה מעל המותר ", enErrors.errTimeForPrepareMechineNotValid.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "הכנת מכונה מעל המותר ", ErrorTypes.errTimeForPrepareMechineNotValid.GetHashCode());
                             InsertPeilutErrorRow(oPeilut, ref drNew);
                             dtErrors.Rows.Add(drNew);
                             isValid = false;
@@ -6421,7 +6315,7 @@ namespace KdsBatch
             }
             catch(Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errTimeForPrepareMechineNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsTimeForPrepareMechineValid86: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errTimeForPrepareMechineNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "IsTimeForPrepareMechineValid86: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -6439,14 +6333,14 @@ namespace KdsBatch
                 if (iTotalTimePrepareMechineForSidur > oParam.iPrepareAllMechineTotalMaxTimeForSidur)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "הכנת מכונה מעל המותר ", enErrors.errTimeForPrepareMechineNotValid.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "הכנת מכונה מעל המותר ", ErrorTypes.errTimeForPrepareMechineNotValid.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errTimeForPrepareMechineNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "CheckPrepareMechineForSidurValidity86: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errTimeForPrepareMechineNotValid.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "CheckPrepareMechineForSidurValidity86: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -6467,14 +6361,14 @@ namespace KdsBatch
                     drNew["mispar_ishi"] = iMisparIshi;
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["error_desc"] = "הכנת מכונה מעל המותר ";
-                    drNew["check_num"] = enErrors.errTimeForPrepareMechineNotValid.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errTimeForPrepareMechineNotValid.GetHashCode();
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errTimeForPrepareMechineNotValid.GetHashCode(), dCardDate, "CheckPrepareMechineForDayValidity86: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errTimeForPrepareMechineNotValid.GetHashCode(), dCardDate, "CheckPrepareMechineForDayValidity86: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -6495,14 +6389,14 @@ namespace KdsBatch
                     drNew["mispar_ishi"] = iMisparIshi;
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["error_desc"] = "הכנת מכונה מעל המותר ";
-                    drNew["check_num"] = enErrors.errTimeForPrepareMechineNotValid.GetHashCode();
+                    drNew["check_num"] = ErrorTypes.errTimeForPrepareMechineNotValid.GetHashCode();
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errTimeForPrepareMechineNotValid.GetHashCode(), dCardDate, "CheckPrepareMechineOtherElementForDayValidity86: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", ErrorTypes.errTimeForPrepareMechineNotValid.GetHashCode(), dCardDate, "CheckPrepareMechineOtherElementForDayValidity86: " + ex.Message);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -6526,7 +6420,7 @@ namespace KdsBatch
                 if (!isValid)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "כסוי תור מעל המותר", enErrors.errHighValueKisuyTor.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "כסוי תור מעל המותר", ErrorTypes.errHighValueKisuyTor.GetHashCode());
                     InsertPeilutErrorRow(oPeilut, ref drNew);
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
@@ -6535,13 +6429,13 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHighValueKisuyTor.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "HighValueKisuyTor87: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, ErrorTypes.errHighValueKisuyTor.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "HighValueKisuyTor87: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
 
         }
-        public clParameters oParam
+        public clParametersDM oParam
         {
             set
             {
@@ -6576,7 +6470,7 @@ namespace KdsBatch
             }
         }
 
-        public clOvedYomAvoda oOvedYomAvodaDetails
+        public OvedYomAvodaDetailsDM oOvedYomAvodaDetails
         {
             set
             {
@@ -6778,7 +6672,7 @@ namespace KdsBatch
                 //Get Meafyeny Ovdim
                 oMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dCardDate);
 
-                dtSibotLedivuachYadani = oUtils.GetCtbSibotLedivuchYadani();
+                dtSibotLedivuachYadani = cache.GetCacheItem<DataTable>(CachedItems.SibotLedivuchYadani);
 
                 iSugYom = clGeneral.GetSugYom(dtYamimMeyuchadim, dCardDate, _dtSugeyYamimMeyuchadim);//, _oMeafyeneyOved.iMeafyen56);
 
@@ -6787,11 +6681,11 @@ namespace KdsBatch
                //oParam = clDefinitions.GetParamInstance(dCardDate, iSugYom);           
 
                 //Get Meafyeney Sug Sidur
-                dtSugSidur = clDefinitions.GetSugeySidur();
+                dtSugSidur = cache.GetCacheItem<DataTable>(CachedItems.SugeySidur);
 
                 dtMatzavOved = GetOvedMatzav(iMisparIshi, dCardDate);
                 //Get Mutamut
-                dtMutamut = oUtils.GetCtbMutamut();
+                dtMutamut = cache.GetCacheItem<DataTable>(CachedItems.Mutamut);
 
                 //Get Temp Sidurim Meyuchadim
                 dtTmpSidurimMeyuchadim = clDefinitions.GetTmpSidurimMeyuchadim(dCardDate, dCardDate);
@@ -6807,7 +6701,7 @@ namespace KdsBatch
                 // dtOvedCardDetails = GetOvedYomAvodaDetails(iMisparIshi, dCardDate);
                 SetOvedYomAvodaDetails(iMisparIshi, dCardDate);
                 //if (dtOvedCardDetails.Rows.Count>0)
-                if (oOvedYomAvodaDetails.OvedDetailsExists)
+                if (oOvedYomAvodaDetails!=null)
                 {
                     if ((oOvedYomAvodaDetails.sKodMaamd == "331") || (oOvedYomAvodaDetails.sKodMaamd == "332") || (oOvedYomAvodaDetails.sKodMaamd == "333") || (oOvedYomAvodaDetails.sKodMaamd == "334"))
                     {
@@ -10245,7 +10139,7 @@ namespace KdsBatch
                 throw ex;
             }
         }
-        private void InsertToYameyAvodaForUpdate(DateTime dCardDate, ref OBJ_YAMEY_AVODA_OVDIM oObjYameyAvodaUpd, ref clOvedYomAvoda oOvedYomAvodaDetails)
+        private void InsertToYameyAvodaForUpdate(DateTime dCardDate, ref OBJ_YAMEY_AVODA_OVDIM oObjYameyAvodaUpd, ref OvedYomAvodaDetailsDM oOvedYomAvodaDetails)
         {
             try
             {

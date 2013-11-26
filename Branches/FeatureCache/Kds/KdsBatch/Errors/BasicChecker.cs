@@ -100,4 +100,76 @@ namespace KdsBatch.Errors
 
      
     }
+
+    public class ErroData
+    {
+        public string Member1 { get; set; }
+    }
+
+    public interface IBaseError
+    {
+        bool IsCorrect(ErroData errData);
+    }
+
+    public class BaseError : IBaseError
+    {
+        public BaseError()
+        {
+        }
+        Func<ErroData, bool> _funcValidator;
+        public BaseError(Func<ErroData,bool> func)
+        {
+            _funcValidator = func;
+        }
+
+        public bool IsCorrect(ErroData errData)
+        {
+            return _funcValidator(errData);
+        }
+    }
+
+    public class ErrorNumber1 : IBaseError
+    {
+        public bool IsCorrect(ErroData errData)
+        {
+            if (errData.Member1 == "oded")
+                return true;
+            return false;
+        } 
+    }
+
+    public class StumErrorUser
+    {
+        public StumErrorUser()
+        {
+            
+
+            ErroData errData = new ErroData(){ Member1="oded"};
+            int id = 2;
+            //err.IsCorrect(errData);
+            //err.IsCorrect(new 
+
+            Dictionary<int, IBaseError> _dic = new Dictionary<int, IBaseError>();
+            _dic.Add(1, new ErrorNumber1());
+            BaseError err = new BaseError(obj =>
+            {
+                if (obj.Member1 == "oded")
+                    return true;
+                return false;
+            });
+            _dic.Add(2, err);
+
+            BaseError err2 = new BaseError(obj =>
+            {
+                if (obj.Member1 == "merav")
+                    return true;
+                return false;
+            });
+            _dic.Add(3, err2);
+            
+            _dic[2].IsCorrect(errData);
+        }
+
+        
+    }
 }

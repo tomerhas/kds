@@ -50,13 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\CachedItems.cs" />
     <Compile Include="Implement\CacheBuilder.cs" />
     <Compile Include="Implement\KDSAgedQueueParameters.cs" />
     <Compile Include="Implement\KDSCacheManager.cs" />
-    <Compile Include="Interfaces\ICacheBuilder.cs" />
-    <Compile Include="Interfaces\IKDSAgedQueueParameters.cs" />
-    <Compile Include="Interfaces\IKDSCacheManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +63,10 @@
     <ProjectReference Include="..\..\KdsLibrary\KdsLibrary.csproj">
       <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
       <Name>KdsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KDSCommon\KDSCommon.csproj">
+      <Project>{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}</Project>
+      <Name>KDSCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

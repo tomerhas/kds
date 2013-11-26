@@ -109,6 +109,7 @@ Global
 		SccProjectName11 = Infrastructure/CacheInfra
 		SccLocalPath11 = Infrastructure\\CacheInfra
 		SccProjectUniqueName12 = Common\\KDSCommon\\KDSCommon.csproj
+		SccProjectTopLevelParentUniqueName12 = Kds.sln
 		SccProjectName12 = Common/KDSCommon
 		SccLocalPath12 = Common\\KDSCommon
 		SccProjectUniqueName13 = Common\\KDSCache\\KDSCache.csproj
@@ -304,8 +305,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02} = {4DA23671-7C5A-4FF7-86B8-A22FE56F5D5B}
 		{B3E759EC-2A7B-4C38-9013-730C3A628AA8} = {8F942FC4-D956-4D17-9756-F4E9B2446E64}
 		{F2F12CC6-7B61-4B62-A364-CF1E132D2BF9} = {8F942FC4-D956-4D17-9756-F4E9B2446E64}
+		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C} = {8F942FC4-D956-4D17-9756-F4E9B2446E64}
+		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02} = {4DA23671-7C5A-4FF7-86B8-A22FE56F5D5B}
 	EndGlobalSection
 EndGlobal

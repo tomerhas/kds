@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using KdsLibrary.UDT;
 using KdsLibrary;
+using KDSCommon.DataModels;
 
 namespace KdsBatch
 {
@@ -15,7 +16,7 @@ namespace KdsBatch
         private clCalcSidur oSidur;
         private long _lBakashaId;
         private clMeafyenyOved _objMefyeneyOved;
-        private clParameters _objParameters;
+        private clParametersDM _objParameters;
         private DataTable _dtChishuvYom;
         private DataTable _dtYemeyAvodaOved;
         private clCalcGeneral _oGeneralData;

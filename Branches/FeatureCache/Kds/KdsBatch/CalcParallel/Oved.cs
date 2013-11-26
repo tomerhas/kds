@@ -7,6 +7,7 @@ using KdsLibrary.DAL;
 using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary;
+using KDSCommon.DataModels;
 
 namespace KdsBatch
 {
@@ -45,7 +46,7 @@ namespace KdsBatch
         public DateTime dSiyumAvoda;
         private float _fHashlamaAlCheshbonNosafotChofesh;
         private float _fHashlamaAlCheshbonNosafotHeadrut;
-        public clParameters objParameters { get; set; }
+        public clParametersDM objParameters { get; set; }
         public clPirteyOved objPirteyOved { get; set; }
         public clMatzavOvdim objMatzavOved { get; set; }
         public clMeafyenyOved objMeafyeneyOved { get; set; }
