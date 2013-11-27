@@ -877,7 +877,7 @@ namespace CodedUITestProject1
 
             // Type '09:12' in 'תאריך שעת היציאה הוא: 19/11/2013' text box
             uIתאריךשעתהיציאההוא191Edit.Text = this.עדכןשעתיציאהלאחתהפעילויותבמסךParams.UIתאריךשעתהיציאההוא191EditText;
-            Keyboard.SendKeys(uIתאריךשעתהיציאההוא191Edit, "0912");
+            Keyboard.SendKeys(uIתאריךשעתהיציאההוא191Edit,"0912");
         }
         
         /// <summary>
