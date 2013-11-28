@@ -31,6 +31,72 @@ namespace CodedUITestProject1
     {
         
         /// <summary>
+        /// Add_last_reka
+        /// </summary>
+        public void Add_last_reka()
+        {
+            #region Variable Declarations
+            HtmlInputButton uISD000ctl06AddRekaSD_Button = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument4.UISD000ctl06AddRekaSD_Button;
+            HtmlInputButton uISD000ctl07SD_000_ctlButton = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument4.UISD000ctl07SD_000_ctlButton;
+            #endregion
+
+            // Click 'SD$000$ctl06$AddRekaSD_000_ctl06' button
+            Mouse.Click(uISD000ctl06AddRekaSD_Button, new Point(7, 5));
+
+            // Click 'SD$000$ctl07$SD_000_ctl07CancelPeilut' button
+            Mouse.Click(uISD000ctl07SD_000_ctlButton, new Point(4, 14));
+        }
+        
+        /// <summary>
+        /// Cancel_peilut
+        /// </summary>
+        public void Cancel_peilut()
+        {
+            #region Variable Declarations
+            HtmlInputButton uISD000ctl04SD_000_ctlButton = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument2.UISD000ctl04SD_000_ctlButton;
+            #endregion
+
+            // Click 'SD$000$ctl04$SD_000_ctl04CancelPeilut' button
+            Mouse.Click(uISD000ctl04SD_000_ctlButton, new Point(8, 13));
+        }
+        
+        /// <summary>
+        /// Cancel_sidur
+        /// </summary>
+        public void Cancel_sidur()
+        {
+            #region Variable Declarations
+            HtmlInputButton uISDimgCancel1Button = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument5.UISDimgCancel1Button;
+            #endregion
+
+            // Click 'SD$imgCancel1' button
+            Mouse.Click(uISDimgCancel1Button, new Point(16, 11));
+        }
+        
+        /// <summary>
+        /// Go_to_web_page - Use 'Go_to_web_pageParams' to pass parameters into this method.
+        /// </summary>
+        public void Go_to_web_page()
+        {
+
+            // Go to web page 'http://kdstest/' using new browser instance
+            this.UIBlankPageWindowsInteWindow.LaunchUrl(new System.Uri(this.Go_to_web_pageParams.UIBlankPageWindowsInteWindowUrl));
+        }
+        
+        /// <summary>
+        /// Update_work_card
+        /// </summary>
+        public void Update_work_card()
+        {
+            #region Variable Declarations
+            HtmlInputButton uIעדכןכרטיסButton = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument8.UIעדכןכרטיסButton;
+            #endregion
+
+            // Click 'עדכן כרטיס' button
+            Mouse.Click(uIעדכןכרטיסButton, new Point(94, 21));
+        }
+        
+        /// <summary>
         /// בחרבקומבוהיעדרות - Test Case 729 - Use 'בחרבקומבוהיעדרותParams' to pass parameters into this method.
         /// </summary>
         public void בחרבקומבוהיעדרות()
@@ -145,32 +211,6 @@ namespace CodedUITestProject1
         }
         
         /// <summary>
-        /// הזןמספרסידורתקיןשעתהתחלהושעתגמר - Test Case 729 - Use 'הזןמספרסידורתקיןשעתהתחלהושעתגמרParams' to pass parameters into this method.
-        /// </summary>
-        public void הזןמספרסידורתקיןשעתהתחלהושעתגמר()
-        {
-            #region Variable Declarations
-            HtmlEdit uISDlblSidur1Edit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UISDlblSidur1Edit;
-            HtmlEdit uIתאריךתחילתהסידורהוא0Edit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךתחילתהסידורהוא0Edit;
-            HtmlEdit uIתאריךגמרהסידורהוא010Edit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךגמרהסידורהוא010Edit;
-            #endregion
-
-            // Type '99300' in 'SD$lblSidur1' text box
-            uISDlblSidur1Edit.Text = this.הזןמספרסידורתקיןשעתהתחלהושעתגמרParams.UISDlblSidur1EditText;
-
-            // Type '15:00' in 'תאריך תחילת הסידור הוא: 01/01/0001' text box
-           // uIתאריךתחילתהסידורהוא0Edit.Text = this.הזןמספרסידורתקיןשעתהתחלהושעתגמרParams.UIתאריךתחילתהסידורהוא0EditText;
-            Keyboard.SendKeys(uIתאריךתחילתהסידורהוא0Edit, "1500");
-
-            // Type '{Add}' in 'תאריך תחילת הסידור הוא: 01/01/0001' text box
-            Keyboard.SendKeys(uIתאריךתחילתהסידורהוא0Edit, this.הזןמספרסידורתקיןשעתהתחלהושעתגמרParams.UIתאריךתחילתהסידורהוא0EditSendKeys, ModifierKeys.None);
-
-            // Type '16:00' in 'תאריך גמר הסידור הוא: 01/01/0001' text box
-            //uIתאריךגמרהסידורהוא010Edit.Text = this.הזןמספרסידורתקיןשעתהתחלהושעתגמרParams.UIתאריךגמרהסידורהוא010EditText;
-            Keyboard.SendKeys(uIתאריךגמרהסידורהוא010Edit, "1600");
-        }
-        
-        /// <summary>
         /// הזןמספררכבבפעילותהראשונה - Test Case 729 - Use 'הזןמספררכבבפעילותהראשונהParams' to pass parameters into this method.
         /// </summary>
         public void הזןמספררכבבפעילותהראשונה()
@@ -222,49 +262,6 @@ namespace CodedUITestProject1
         }
         
         /// <summary>
-        /// הזןערךבשדהשעתגמר - Test Case 729 - Use 'הזןערךבשדהשעתגמרParams' to pass parameters into this method.
-        /// </summary>
-        public void הזןערךבשדהשעתגמר()
-        {
-            #region Variable Declarations
-            HtmlEdit uIתאריךגמרהסידורהוא171Edit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךגמרהסידורהוא171Edit;
-            #endregion
-
-            // Type '14:04' in 'תאריך גמר הסידור הוא: 17/11/2013' text box
-            //uIתאריךגמרהסידורהוא171Edit.Text = this.הזןערךבשדהשעתגמרParams.UIתאריךגמרהסידורהוא171EditText;
-            Keyboard.SendKeys(uIתאריךגמרהסידורהוא171Edit, "1404");
-
-        }
-        
-        /// <summary>
-        /// הזןערךבשדהשעתהתחלהsh_hat - Test Case 729 - Use 'הזןערךבשדהשעתהתחלהsh_hatParams' to pass parameters into this method.
-        /// </summary>
-        public void הזןערךבשדהשעתהתחלהsh_hat()
-        {
-            #region Variable Declarations
-            HtmlEdit uIתאריךתחילתהסידורהוא1Edit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךתחילתהסידורהוא1Edit;
-            #endregion
-
-            // Type '07:11' in 'תאריך תחילת הסידור הוא: 17/11/2013' text box
-            //uIתאריךתחילתהסידורהוא1Edit.Text = this.הזןערךבשדהשעתהתחלהsh_hatParams.UIתאריךתחילתהסידורהוא1EditText;
-            Keyboard.SendKeys(uIתאריךתחילתהסידורהוא1Edit, "0711");
-        }
-        
-        /// <summary>
-        /// הזןערךבשדהשעתיציאהלאחתהפעילויות - Test Case 729 - Use 'הזןערךבשדהשעתיציאהלאחתהפעילויותParams' to pass parameters into this method.
-        /// </summary>
-        public void הזןערךבשדהשעתיציאהלאחתהפעילויות()
-        {
-            #region Variable Declarations
-            HtmlEdit uIתאריךשעתהיציאההוא171Edit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךשעתהיציאההוא171Edit;
-            #endregion
-
-            // Type '11:51' in 'תאריך שעת היציאה הוא: 17/11/2013' text box
-            //uIתאריךשעתהיציאההוא171Edit.Text = this.הזןערךבשדהשעתיציאהלאחתהפעילויותParams.UIתאריךשעתהיציאההוא171EditText;
-            Keyboard.SendKeys(uIתאריךשעתהיציאההוא171Edit, "1151");
-        }
-        
-        /// <summary>
         /// הזןערכיםתקיניםבשדות - Test Case 729 - Use 'הזןערכיםתקיניםבשדותParams' to pass parameters into this method.
         /// </summary>
         public void הזןערכיםתקיניםבשדות()
@@ -276,7 +273,6 @@ namespace CodedUITestProject1
 
             // Type '13:28' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
             uIתאריךשעתהיציאההוא010Edit.Text = this.הזןערכיםתקיניםבשדותParams.UIתאריךשעתהיציאההוא010EditText;
-            Keyboard.SendKeys(uIתאריךשעתהיציאההוא010Edit, "1328");
 
             // Type '{Add}' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
             Keyboard.SendKeys(uIתאריךשעתהיציאההוא010Edit, this.הזןערכיםתקיניםבשדותParams.UIתאריךשעתהיציאההוא010EditSendKeys, ModifierKeys.None);
@@ -307,49 +303,6 @@ namespace CodedUITestProject1
 
             // Select 'בי"ס שוטף (8)' in 'Visa' combo box
             uIVisaComboBox.SelectedItem = this.הזןערכיםתקיניםבשדות1Params.UIVisaComboBoxSelectedItem;
-        }
-        
-        /// <summary>
-        /// הזןערכיםתקיניםבשדותשעתהתחלהושעתגמר - Test Case 729 - Use 'הזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams' to pass parameters into this method.
-        /// </summary>
-        public void הזןערכיםתקיניםבשדותשעתהתחלהושעתגמר()
-        {
-            #region Variable Declarations
-            HtmlEdit uITxtStartTimeEdit = this.UIמערכתקדםשכרWebpageDiWindow1.UIמערכתקדםשכרDocument2.UITxtStartTimeEdit;
-            HtmlEdit uITxtEndTimeEdit = this.UIמערכתקדםשכרWebpageDiWindow1.UIמערכתקדםשכרDocument2.UITxtEndTimeEdit;
-            #endregion
-
-            // Type '05:00' in 'txtStartTime' text box
-            //uITxtStartTimeEdit.Text = this.הזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams.UITxtStartTimeEditText;
-            Keyboard.SendKeys(uITxtStartTimeEdit, "0500");
-
-            // Type '{Add}' in 'txtStartTime' text box
-            Keyboard.SendKeys(uITxtStartTimeEdit, this.הזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams.UITxtStartTimeEditSendKeys, ModifierKeys.None);
-
-            // Type '23:59' in 'txtEndTime' text box
-            uITxtEndTimeEdit.Text = this.הזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams.UITxtEndTimeEditText;
-            Keyboard.SendKeys(uITxtEndTimeEdit, "23:59");
-        }
-        
-        /// <summary>
-        /// הזןשעתיציאהומקט - Test Case 729 - Use 'הזןשעתיציאהומקטParams' to pass parameters into this method.
-        /// </summary>
-        public void הזןשעתיציאהומקט()
-        {
-            #region Variable Declarations
-            HtmlEdit uIתאריךשעתהיציאההוא010Edit1 = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךשעתהיציאההוא010Edit1;
-            HtmlEdit uICtl02MakatNumberEdit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UICtl02MakatNumberEdit;
-            #endregion
-
-            // Type '15:00' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
-            uIתאריךשעתהיציאההוא010Edit1.Text = this.הזןשעתיציאהומקטParams.UIתאריךשעתהיציאההוא010Edit1Text;
-            Keyboard.SendKeys(uIתאריךשעתהיציאההוא010Edit1, "1500");
-
-            // Type '49036200' in 'ctl02MakatNumber' text box
-            uICtl02MakatNumberEdit.Text = this.הזןשעתיציאהומקטParams.UICtl02MakatNumberEditText;
-
-            // Type '{Add}' in 'ctl02MakatNumber' text box
-            Keyboard.SendKeys(uICtl02MakatNumberEdit, this.הזןשעתיציאהומקטParams.UICtl02MakatNumberEditSendKeys, ModifierKeys.None);
         }
         
         /// <summary>
@@ -866,44 +819,19 @@ namespace CodedUITestProject1
             Mouse.Click(uIשמורButton, new Point(73, 22));
         }
         
-        /// <summary>
-        /// עדכןשעתיציאהלאחתהפעילויותבמסך - Test Case 729 - Use 'עדכןשעתיציאהלאחתהפעילויותבמסךParams' to pass parameters into this method.
-        /// </summary>
-        public void עדכןשעתיציאהלאחתהפעילויותבמסך()
-        {
-            #region Variable Declarations
-            HtmlEdit uIתאריךשעתהיציאההוא191Edit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךשעתהיציאההוא191Edit;
-            #endregion
-
-            // Type '09:12' in 'תאריך שעת היציאה הוא: 19/11/2013' text box
-            uIתאריךשעתהיציאההוא191Edit.Text = this.עדכןשעתיציאהלאחתהפעילויותבמסךParams.UIתאריךשעתהיציאההוא191EditText;
-            Keyboard.SendKeys(uIתאריךשעתהיציאההוא191Edit,"0912");
-        }
-        
-        /// <summary>
-        /// Go_to_web_page - Use 'Go_to_web_pageParams' to pass parameters into this method.
-        /// </summary>
-        public void Go_to_web_page()
-        {
-
-            // Go to web page 'http://kdstest/' using new browser instance
-            this.UIBlankPageWindowsInteWindow.LaunchUrl(new System.Uri(this.Go_to_web_pageParams.UIBlankPageWindowsInteWindowUrl));
-        }
-        
-        /// <summary>
-        /// Cancel_peilut
-        /// </summary>
-        public void Cancel_peilut()
-        {
-            #region Variable Declarations
-            HtmlInputButton uISD000ctl04SD_000_ctlButton = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument2.UISD000ctl04SD_000_ctlButton;
-            #endregion
-
-            // Click 'SD$000$ctl04$SD_000_ctl04CancelPeilut' button
-            Mouse.Click(uISD000ctl04SD_000_ctlButton, new Point(8, 13));
-        }
-        
         #region Properties
+        public virtual Go_to_web_pageParams Go_to_web_pageParams
+        {
+            get
+            {
+                if ((this.mGo_to_web_pageParams == null))
+                {
+                    this.mGo_to_web_pageParams = new Go_to_web_pageParams();
+                }
+                return this.mGo_to_web_pageParams;
+            }
+        }
+        
         public virtual בחרבקומבוהיעדרותParams בחרבקומבוהיעדרותParams
         {
             get
@@ -976,18 +904,6 @@ namespace CodedUITestProject1
             }
         }
         
-        public virtual הזןמספרסידורתקיןשעתהתחלהושעתגמרParams הזןמספרסידורתקיןשעתהתחלהושעתגמרParams
-        {
-            get
-            {
-                if ((this.mהזןמספרסידורתקיןשעתהתחלהושעתגמרParams == null))
-                {
-                    this.mהזןמספרסידורתקיןשעתהתחלהושעתגמרParams = new הזןמספרסידורתקיןשעתהתחלהושעתגמרParams();
-                }
-                return this.mהזןמספרסידורתקיןשעתהתחלהושעתגמרParams;
-            }
-        }
-        
         public virtual הזןמספררכבבפעילותהראשונהParams הזןמספררכבבפעילותהראשונהParams
         {
             get
@@ -1024,42 +940,6 @@ namespace CodedUITestProject1
             }
         }
         
-        public virtual הזןערךבשדהשעתגמרParams הזןערךבשדהשעתגמרParams
-        {
-            get
-            {
-                if ((this.mהזןערךבשדהשעתגמרParams == null))
-                {
-                    this.mהזןערךבשדהשעתגמרParams = new הזןערךבשדהשעתגמרParams();
-                }
-                return this.mהזןערךבשדהשעתגמרParams;
-            }
-        }
-        
-        public virtual הזןערךבשדהשעתהתחלהsh_hatParams הזןערךבשדהשעתהתחלהsh_hatParams
-        {
-            get
-            {
-                if ((this.mהזןערךבשדהשעתהתחלהsh_hatParams == null))
-                {
-                    this.mהזןערךבשדהשעתהתחלהsh_hatParams = new הזןערךבשדהשעתהתחלהsh_hatParams();
-                }
-                return this.mהזןערךבשדהשעתהתחלהsh_hatParams;
-            }
-        }
-        
-        public virtual הזןערךבשדהשעתיציאהלאחתהפעילויותParams הזןערךבשדהשעתיציאהלאחתהפעילויותParams
-        {
-            get
-            {
-                if ((this.mהזןערךבשדהשעתיציאהלאחתהפעילויותParams == null))
-                {
-                    this.mהזןערךבשדהשעתיציאהלאחתהפעילויותParams = new הזןערךבשדהשעתיציאהלאחתהפעילויותParams();
-                }
-                return this.mהזןערךבשדהשעתיציאהלאחתהפעילויותParams;
-            }
-        }
-        
         public virtual הזןערכיםתקיניםבשדותParams הזןערכיםתקיניםבשדותParams
         {
             get
@@ -1084,30 +964,6 @@ namespace CodedUITestProject1
             }
         }
         
-        public virtual הזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams הזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams
-        {
-            get
-            {
-                if ((this.mהזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams == null))
-                {
-                    this.mהזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams = new הזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams();
-                }
-                return this.mהזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams;
-            }
-        }
-        
-        public virtual הזןשעתיציאהומקטParams הזןשעתיציאהומקטParams
-        {
-            get
-            {
-                if ((this.mהזןשעתיציאהומקטParams == null))
-                {
-                    this.mהזןשעתיציאהומקטParams = new הזןשעתיציאהומקטParams();
-                }
-                return this.mהזןשעתיציאהומקטParams;
-            }
-        }
-        
         public virtual הזןתאריךבשדהתאריךולחץעלהצגParams הזןתאריךבשדהתאריךולחץעלהצגParams
         {
             get
@@ -1117,30 +973,6 @@ namespace CodedUITestProject1
                     this.mהזןתאריךבשדהתאריךולחץעלהצגParams = new הזןתאריךבשדהתאריךולחץעלהצגParams();
                 }
                 return this.mהזןתאריךבשדהתאריךולחץעלהצגParams;
-            }
-        }
-        
-        public virtual עדכןשעתיציאהלאחתהפעילויותבמסךParams עדכןשעתיציאהלאחתהפעילויותבמסךParams
-        {
-            get
-            {
-                if ((this.mעדכןשעתיציאהלאחתהפעילויותבמסךParams == null))
-                {
-                    this.mעדכןשעתיציאהלאחתהפעילויותבמסךParams = new עדכןשעתיציאהלאחתהפעילויותבמסךParams();
-                }
-                return this.mעדכןשעתיציאהלאחתהפעילויותבמסךParams;
-            }
-        }
-        
-        public virtual Go_to_web_pageParams Go_to_web_pageParams
-        {
-            get
-            {
-                if ((this.mGo_to_web_pageParams == null))
-                {
-                    this.mGo_to_web_pageParams = new Go_to_web_pageParams();
-                }
-                return this.mGo_to_web_pageParams;
             }
         }
         
@@ -1206,6 +1038,8 @@ namespace CodedUITestProject1
         #endregion
         
         #region Fields
+        private Go_to_web_pageParams mGo_to_web_pageParams;
+        
         private בחרבקומבוהיעדרותParams mבחרבקומבוהיעדרותParams;
         
         private בחרמאוחודשParams mבחרמאוחודשParams;
@@ -1218,33 +1052,17 @@ namespace CodedUITestProject1
         
         private הזןמספרסידורולחץעלהצגParams mהזןמספרסידורולחץעלהצגParams;
         
-        private הזןמספרסידורתקיןשעתהתחלהושעתגמרParams mהזןמספרסידורתקיןשעתהתחלהושעתגמרParams;
-        
         private הזןמספררכבבפעילותהראשונהParams mהזןמספררכבבפעילותהראשונהParams;
         
         private הזןערךבשדהמספררכבלפעילותהראשונהבסידורששונהממספרהרכבהקייםoto_numParams mהזןערךבשדהמספררכבלפעילותהראשונהבסידורששונהממספרהרכבהקייםoto_numParams;
         
         private הזןערךבשדהמקטParams mהזןערךבשדהמקטParams;
         
-        private הזןערךבשדהשעתגמרParams mהזןערךבשדהשעתגמרParams;
-        
-        private הזןערךבשדהשעתהתחלהsh_hatParams mהזןערךבשדהשעתהתחלהsh_hatParams;
-        
-        private הזןערךבשדהשעתיציאהלאחתהפעילויותParams mהזןערךבשדהשעתיציאהלאחתהפעילויותParams;
-        
         private הזןערכיםתקיניםבשדותParams mהזןערכיםתקיניםבשדותParams;
         
         private הזןערכיםתקיניםבשדות1Params mהזןערכיםתקיניםבשדות1Params;
         
-        private הזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams mהזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams;
-        
-        private הזןשעתיציאהומקטParams mהזןשעתיציאהומקטParams;
-        
         private הזןתאריךבשדהתאריךולחץעלהצגParams mהזןתאריךבשדהתאריךולחץעלהצגParams;
-        
-        private עדכןשעתיציאהלאחתהפעילויותבמסךParams mעדכןשעתיציאהלאחתהפעילויותבמסךParams;
-        
-        private Go_to_web_pageParams mGo_to_web_pageParams;
         
         private UIמערכתקדםשכרWindowsInWindow mUIמערכתקדםשכרWindowsInWindow;
         
@@ -1255,6 +1073,21 @@ namespace CodedUITestProject1
         private UIStartmenuWindow mUIStartmenuWindow;
         
         private UIBlankPageWindowsInteWindow mUIBlankPageWindowsInteWindow;
+        #endregion
+    }
+    
+    /// <summary>
+    /// Parameters to be passed into 'Go_to_web_page'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class Go_to_web_pageParams
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Go to web page 'http://kdstest/' using new browser instance
+        /// </summary>
+        public string UIBlankPageWindowsInteWindowUrl = "http://kdstest/";
         #endregion
     }
     
@@ -1359,36 +1192,6 @@ namespace CodedUITestProject1
     }
     
     /// <summary>
-    /// Parameters to be passed into 'הזןמספרסידורתקיןשעתהתחלהושעתגמר'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class הזןמספרסידורתקיןשעתהתחלהושעתגמרParams
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Type '99300' in 'SD$lblSidur1' text box
-        /// </summary>
-        public string UISDlblSidur1EditText = "99300";
-        
-        /// <summary>
-        /// Type '15:00' in 'תאריך תחילת הסידור הוא: 01/01/0001' text box
-        /// </summary>
-        public string UIתאריךתחילתהסידורהוא0EditText = "15:00";
-        
-        /// <summary>
-        /// Type '{Add}' in 'תאריך תחילת הסידור הוא: 01/01/0001' text box
-        /// </summary>
-        public string UIתאריךתחילתהסידורהוא0EditSendKeys = "{Add}";
-        
-        /// <summary>
-        /// Type '16:00' in 'תאריך גמר הסידור הוא: 01/01/0001' text box
-        /// </summary>
-        public string UIתאריךגמרהסידורהוא010EditText = "16:00";
-        #endregion
-    }
-    
-    /// <summary>
     /// Parameters to be passed into 'הזןמספררכבבפעילותהראשונה'
     /// </summary>
     [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
@@ -1430,51 +1233,6 @@ namespace CodedUITestProject1
         /// Type '79100500' in 'ctl08MakatNumber' text box
         /// </summary>
         public string UICtl08MakatNumberEditText = "79100500";
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'הזןערךבשדהשעתגמר'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class הזןערךבשדהשעתגמרParams
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Type '14:04' in 'תאריך גמר הסידור הוא: 17/11/2013' text box
-        /// </summary>
-        public string UIתאריךגמרהסידורהוא171EditText = "14:04";
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'הזןערךבשדהשעתהתחלהsh_hat'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class הזןערךבשדהשעתהתחלהsh_hatParams
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Type '07:11' in 'תאריך תחילת הסידור הוא: 17/11/2013' text box
-        /// </summary>
-        public string UIתאריךתחילתהסידורהוא1EditText = "07:11";
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'הזןערךבשדהשעתיציאהלאחתהפעילויות'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class הזןערךבשדהשעתיציאהלאחתהפעילויותParams
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Type '11:51' in 'תאריך שעת היציאה הוא: 17/11/2013' text box
-        /// </summary>
-        public string UIתאריךשעתהיציאההוא171EditText = "11:51";
         #endregion
     }
     
@@ -1534,56 +1292,6 @@ namespace CodedUITestProject1
     }
     
     /// <summary>
-    /// Parameters to be passed into 'הזןערכיםתקיניםבשדותשעתהתחלהושעתגמר'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class הזןערכיםתקיניםבשדותשעתהתחלהושעתגמרParams
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Type '05:00' in 'txtStartTime' text box
-        /// </summary>
-        public string UITxtStartTimeEditText = "05:00";
-        
-        /// <summary>
-        /// Type '{Add}' in 'txtStartTime' text box
-        /// </summary>
-        public string UITxtStartTimeEditSendKeys = "{Add}";
-        
-        /// <summary>
-        /// Type '23:59' in 'txtEndTime' text box
-        /// </summary>
-        public string UITxtEndTimeEditText = "23:59";
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'הזןשעתיציאהומקט'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class הזןשעתיציאהומקטParams
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Type '15:00' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
-        /// </summary>
-        public string UIתאריךשעתהיציאההוא010Edit1Text = "15:00";
-        
-        /// <summary>
-        /// Type '49036200' in 'ctl02MakatNumber' text box
-        /// </summary>
-        public string UICtl02MakatNumberEditText = "49036200";
-        
-        /// <summary>
-        /// Type '{Add}' in 'ctl02MakatNumber' text box
-        /// </summary>
-        public string UICtl02MakatNumberEditSendKeys = "{Add}";
-        #endregion
-    }
-    
-    /// <summary>
     /// Parameters to be passed into 'הזןתאריךבשדהתאריךולחץעלהצג'
     /// </summary>
     [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
@@ -1600,36 +1308,6 @@ namespace CodedUITestProject1
         /// Type '20/11/2013' in 'clnDate' text box
         /// </summary>
         public string UIClnDateEditText1 = "20/11/2013";
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'עדכןשעתיציאהלאחתהפעילויותבמסך'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class עדכןשעתיציאהלאחתהפעילויותבמסךParams
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Type '09:12' in 'תאריך שעת היציאה הוא: 19/11/2013' text box
-        /// </summary>
-        public string UIתאריךשעתהיציאההוא191EditText = "09:12";
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'Go_to_web_page'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class Go_to_web_pageParams
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Go to web page 'http://kdstest/' using new browser instance
-        /// </summary>
-        public string UIBlankPageWindowsInteWindowUrl = "http://kdstest/";
         #endregion
     }
     
@@ -2121,6 +1799,78 @@ namespace CodedUITestProject1
                 return this.mUIמערכתקדםשכרDocument2;
             }
         }
+        
+        public UIמערכתקדםשכרDocument31 UIמערכתקדםשכרDocument3
+        {
+            get
+            {
+                if ((this.mUIמערכתקדםשכרDocument3 == null))
+                {
+                    this.mUIמערכתקדםשכרDocument3 = new UIמערכתקדםשכרDocument31(this);
+                }
+                return this.mUIמערכתקדםשכרDocument3;
+            }
+        }
+        
+        public UIמערכתקדםשכרDocument4 UIמערכתקדםשכרDocument4
+        {
+            get
+            {
+                if ((this.mUIמערכתקדםשכרDocument4 == null))
+                {
+                    this.mUIמערכתקדםשכרDocument4 = new UIמערכתקדםשכרDocument4(this);
+                }
+                return this.mUIמערכתקדםשכרDocument4;
+            }
+        }
+        
+        public UIמערכתקדםשכרDocument5 UIמערכתקדםשכרDocument5
+        {
+            get
+            {
+                if ((this.mUIמערכתקדםשכרDocument5 == null))
+                {
+                    this.mUIמערכתקדםשכרDocument5 = new UIמערכתקדםשכרDocument5(this);
+                }
+                return this.mUIמערכתקדםשכרDocument5;
+            }
+        }
+        
+        public UIמערכתקדםשכרDocument6 UIמערכתקדםשכרDocument6
+        {
+            get
+            {
+                if ((this.mUIמערכתקדםשכרDocument6 == null))
+                {
+                    this.mUIמערכתקדםשכרDocument6 = new UIמערכתקדםשכרDocument6(this);
+                }
+                return this.mUIמערכתקדםשכרDocument6;
+            }
+        }
+        
+        public UIמערכתקדםשכרDocument7 UIמערכתקדםשכרDocument7
+        {
+            get
+            {
+                if ((this.mUIמערכתקדםשכרDocument7 == null))
+                {
+                    this.mUIמערכתקדםשכרDocument7 = new UIמערכתקדםשכרDocument7(this);
+                }
+                return this.mUIמערכתקדםשכרDocument7;
+            }
+        }
+        
+        public UIמערכתקדםשכרDocument8 UIמערכתקדםשכרDocument8
+        {
+            get
+            {
+                if ((this.mUIמערכתקדםשכרDocument8 == null))
+                {
+                    this.mUIמערכתקדםשכרDocument8 = new UIמערכתקדםשכרDocument8(this);
+                }
+                return this.mUIמערכתקדםשכרDocument8;
+            }
+        }
         #endregion
         
         #region Fields
@@ -2129,6 +1879,18 @@ namespace CodedUITestProject1
         private UIמערכתקדםשכרDocument11 mUIמערכתקדםשכרDocument1;
         
         private UIמערכתקדםשכרDocument21 mUIמערכתקדםשכרDocument2;
+        
+        private UIמערכתקדםשכרDocument31 mUIמערכתקדםשכרDocument3;
+        
+        private UIמערכתקדםשכרDocument4 mUIמערכתקדםשכרDocument4;
+        
+        private UIמערכתקדםשכרDocument5 mUIמערכתקדםשכרDocument5;
+        
+        private UIמערכתקדםשכרDocument6 mUIמערכתקדםשכרDocument6;
+        
+        private UIמערכתקדםשכרDocument7 mUIמערכתקדםשכרDocument7;
+        
+        private UIמערכתקדםשכרDocument8 mUIמערכתקדםשכרDocument8;
         #endregion
     }
     
@@ -4052,6 +3814,807 @@ namespace CodedUITestProject1
     }
     
     [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UIמערכתקדםשכרDocument31 : HtmlDocument
+    {
+        
+        public UIמערכתקדםשכרDocument31(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "מערכת קדם שכר";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Modules/Ovdim/WorkCard.aspx";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&WCardDate=17/11/2013&dt=We" +
+                "d Nov 27 11:30:00 2013";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlInputButton UISD000ctl03SD_000_ctlButton
+        {
+            get
+            {
+                if ((this.mUISD000ctl03SD_000_ctlButton == null))
+                {
+                    this.mUISD000ctl03SD_000_ctlButton = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUISD000ctl03SD_000_ctlButton.SearchProperties[HtmlButton.PropertyNames.Id] = "SD_000_ctl03_SD_000_ctl03CancelPeilut";
+                    this.mUISD000ctl03SD_000_ctlButton.SearchProperties[HtmlButton.PropertyNames.Name] = "SD$000$ctl03$SD_000_ctl03CancelPeilut";
+                    this.mUISD000ctl03SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.DisplayText] = null;
+                    this.mUISD000ctl03SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.Type] = "submit";
+                    this.mUISD000ctl03SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUISD000ctl03SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.Class] = "ImgCheckedPeilut";
+                    this.mUISD000ctl03SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "id=SD_000_ctl03_SD_000_ctl03CancelPeilut";
+                    this.mUISD000ctl03SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "90";
+                    this.mUISD000ctl03SD_000_ctlButton.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUISD000ctl03SD_000_ctlButton;
+            }
+        }
+        
+        public HtmlInputButton UISDimgAddPeilut0Button
+        {
+            get
+            {
+                if ((this.mUISDimgAddPeilut0Button == null))
+                {
+                    this.mUISDimgAddPeilut0Button = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUISDimgAddPeilut0Button.SearchProperties[HtmlButton.PropertyNames.Id] = "SD_imgAddPeilut0";
+                    this.mUISDimgAddPeilut0Button.SearchProperties[HtmlButton.PropertyNames.Name] = "SD$imgAddPeilut0";
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.DisplayText] = null;
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.Type] = "image";
+                    this.mUISDimgAddPeilut0Button.FilterProperties["Src"] = "http://kdstest/images/plus.png";
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.Class] = null;
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "style=\"BORDER-RIGHT-WIDTH: 0px; DISPLAY:";
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "37";
+                    this.mUISDimgAddPeilut0Button.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUISDimgAddPeilut0Button;
+            }
+        }
+        
+        public HtmlCustom UISD_000_ctl03_lblKnisCustom
+        {
+            get
+            {
+                if ((this.mUISD_000_ctl03_lblKnisCustom == null))
+                {
+                    this.mUISD_000_ctl03_lblKnisCustom = new HtmlCustom(this);
+                    #region Search Criteria
+                    this.mUISD_000_ctl03_lblKnisCustom.SearchProperties["Id"] = "SD_000_ctl03_lblKnisa030762100";
+                    this.mUISD_000_ctl03_lblKnisCustom.SearchProperties[UITestControl.PropertyNames.Name] = null;
+                    this.mUISD_000_ctl03_lblKnisCustom.SearchProperties["TagName"] = "A";
+                    this.mUISD_000_ctl03_lblKnisCustom.FilterProperties["Class"] = null;
+                    this.mUISD_000_ctl03_lblKnisCustom.FilterProperties["ControlDefinition"] = "style=\"CURSOR: pointer; TEXT-DECORATION:";
+                    this.mUISD_000_ctl03_lblKnisCustom.FilterProperties["TagInstance"] = "3";
+                    this.mUISD_000_ctl03_lblKnisCustom.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUISD_000_ctl03_lblKnisCustom;
+            }
+        }
+        
+        public UISD_000Table2 UISD_000Table
+        {
+            get
+            {
+                if ((this.mUISD_000Table == null))
+                {
+                    this.mUISD_000Table = new UISD_000Table2(this);
+                }
+                return this.mUISD_000Table;
+            }
+        }
+        
+        public UISD_000Table11 UISD_000Table1
+        {
+            get
+            {
+                if ((this.mUISD_000Table1 == null))
+                {
+                    this.mUISD_000Table1 = new UISD_000Table11(this);
+                }
+                return this.mUISD_000Table1;
+            }
+        }
+        
+        public HtmlEdit UIתאריךשעתהיציאההוא010Edit
+        {
+            get
+            {
+                if ((this.mUIתאריךשעתהיציאההוא010Edit == null))
+                {
+                    this.mUIתאריךשעתהיציאההוא010Edit = new HtmlEdit(this);
+                    #region Search Criteria
+                    this.mUIתאריךשעתהיציאההוא010Edit.SearchProperties[HtmlEdit.PropertyNames.Id] = "SD_000_ctl07_SD_000_ctl07ShatYetiza";
+                    this.mUIתאריךשעתהיציאההוא010Edit.SearchProperties[HtmlEdit.PropertyNames.Name] = "SD$000$ctl07$SD_000_ctl07ShatYetiza";
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.LabeledBy] = null;
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.Type] = "SINGLELINE";
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.Title] = "תאריך שעת היציאה הוא: 01/01/0001";
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.Class] = "WCPilutTxtF MEFocus";
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.ControlDefinition] = "onblur=\"this.className=\'WCPilutTxt\';\" st";
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.TagInstance] = "152";
+                    this.mUIתאריךשעתהיציאההוא010Edit.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIתאריךשעתהיציאההוא010Edit;
+            }
+        }
+        
+        public HtmlEdit UICtl07MakatNumberEdit
+        {
+            get
+            {
+                if ((this.mUICtl07MakatNumberEdit == null))
+                {
+                    this.mUICtl07MakatNumberEdit = new HtmlEdit(this);
+                    #region Search Criteria
+                    this.mUICtl07MakatNumberEdit.SearchProperties[HtmlEdit.PropertyNames.Id] = "SD_000_ctl07_SD_000_ctl07MakatNumber";
+                    this.mUICtl07MakatNumberEdit.SearchProperties[HtmlEdit.PropertyNames.Name] = "SD$000$ctl07$SD_000_ctl07MakatNumber";
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.LabeledBy] = null;
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.Type] = "SINGLELINE";
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.Title] = null;
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.Class] = "WCPilutTxt";
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.ControlDefinition] = "style=\"WIDTH: 70px\" id=SD_000_ctl07_SD_0";
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.TagInstance] = "155";
+                    this.mUICtl07MakatNumberEdit.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUICtl07MakatNumberEdit;
+            }
+        }
+        
+        public HtmlInputButton UIעדכןכרטיסButton
+        {
+            get
+            {
+                if ((this.mUIעדכןכרטיסButton == null))
+                {
+                    this.mUIעדכןכרטיסButton = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUIעדכןכרטיסButton.SearchProperties[HtmlButton.PropertyNames.Id] = "btnUpdateCard";
+                    this.mUIעדכןכרטיסButton.SearchProperties[HtmlButton.PropertyNames.Name] = "btnUpdateCard";
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.DisplayText] = "עדכן כרטיס";
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.Type] = "submit";
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.Class] = "btnWorkCardUpadte";
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "style=\"WIDTH: 150px; HEIGHT: 33px\" id=bt";
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "221";
+                    this.mUIעדכןכרטיסButton.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIעדכןכרטיסButton;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlInputButton mUISD000ctl03SD_000_ctlButton;
+        
+        private HtmlInputButton mUISDimgAddPeilut0Button;
+        
+        private HtmlCustom mUISD_000_ctl03_lblKnisCustom;
+        
+        private UISD_000Table2 mUISD_000Table;
+        
+        private UISD_000Table11 mUISD_000Table1;
+        
+        private HtmlEdit mUIתאריךשעתהיציאההוא010Edit;
+        
+        private HtmlEdit mUICtl07MakatNumberEdit;
+        
+        private HtmlInputButton mUIעדכןכרטיסButton;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UISD_000Table2 : HtmlTable
+    {
+        
+        public UISD_000Table2(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlTable.PropertyNames.Id] = "SD_000";
+            this.SearchProperties[HtmlTable.PropertyNames.Name] = null;
+            this.FilterProperties[HtmlTable.PropertyNames.InnerText] = "ריקהכיסוי תורש. יציאהתיאורקוסוגמק\"טד. תכ";
+            this.FilterProperties[HtmlTable.PropertyNames.ControlDefinition] = "style=\"WIDTH: 975px\" id=SD_000 border=0 ";
+            this.FilterProperties[HtmlTable.PropertyNames.RowCount] = "6";
+            this.FilterProperties[HtmlTable.PropertyNames.ColumnCount] = "21";
+            this.FilterProperties[HtmlTable.PropertyNames.Class] = null;
+            this.FilterProperties[HtmlTable.PropertyNames.TagInstance] = "15";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlCell UIItemCell
+        {
+            get
+            {
+                if ((this.mUIItemCell == null))
+                {
+                    this.mUIItemCell = new HtmlCell(this);
+                    #region Search Criteria
+                    this.mUIItemCell.SearchProperties[HtmlCell.PropertyNames.Id] = null;
+                    this.mUIItemCell.SearchProperties[HtmlCell.PropertyNames.Name] = null;
+                    this.mUIItemCell.SearchProperties[HtmlCell.PropertyNames.MaxDepth] = "3";
+                    this.mUIItemCell.FilterProperties[HtmlCell.PropertyNames.InnerText] = "רמת שלמה-ג.שאול ד.כביש 4";
+                    this.mUIItemCell.FilterProperties[HtmlCell.PropertyNames.ControlDefinition] = "style=\"WIDTH: 300px\" class=WorkCardPeilu";
+                    this.mUIItemCell.FilterProperties[HtmlCell.PropertyNames.RowIndex] = "2";
+                    this.mUIItemCell.FilterProperties[HtmlCell.PropertyNames.ColumnIndex] = "5";
+                    this.mUIItemCell.FilterProperties[HtmlCell.PropertyNames.Class] = "WorkCardPeilutLabelRight";
+                    this.mUIItemCell.FilterProperties[HtmlCell.PropertyNames.TagInstance] = "27";
+                    this.mUIItemCell.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIItemCell;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlCell mUIItemCell;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UISD_000Table11 : HtmlTable
+    {
+        
+        public UISD_000Table11(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlTable.PropertyNames.Id] = "SD_000";
+            this.SearchProperties[HtmlTable.PropertyNames.Name] = null;
+            this.FilterProperties[HtmlTable.PropertyNames.InnerText] = "ריקהכיסוי תורש. יציאהתיאורקוסוגמק\"טד. תכ";
+            this.FilterProperties[HtmlTable.PropertyNames.ControlDefinition] = "style=\"WIDTH: 975px\" id=SD_000 border=0 ";
+            this.FilterProperties[HtmlTable.PropertyNames.RowCount] = "7";
+            this.FilterProperties[HtmlTable.PropertyNames.ColumnCount] = "21";
+            this.FilterProperties[HtmlTable.PropertyNames.Class] = null;
+            this.FilterProperties[HtmlTable.PropertyNames.TagInstance] = "15";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlCell UIרמתשלמהגשאולדכביש4Cell
+        {
+            get
+            {
+                if ((this.mUIרמתשלמהגשאולדכביש4Cell == null))
+                {
+                    this.mUIרמתשלמהגשאולדכביש4Cell = new HtmlCell(this);
+                    #region Search Criteria
+                    this.mUIרמתשלמהגשאולדכביש4Cell.SearchProperties[HtmlCell.PropertyNames.Id] = null;
+                    this.mUIרמתשלמהגשאולדכביש4Cell.SearchProperties[HtmlCell.PropertyNames.Name] = null;
+                    this.mUIרמתשלמהגשאולדכביש4Cell.SearchProperties[HtmlCell.PropertyNames.MaxDepth] = "3";
+                    this.mUIרמתשלמהגשאולדכביש4Cell.FilterProperties[HtmlCell.PropertyNames.InnerText] = "רמת שלמה-ג.שאול ד.כביש 4";
+                    this.mUIרמתשלמהגשאולדכביש4Cell.FilterProperties[HtmlCell.PropertyNames.ControlDefinition] = "style=\"WIDTH: 300px\" class=WorkCardPeilu";
+                    this.mUIרמתשלמהגשאולדכביש4Cell.FilterProperties[HtmlCell.PropertyNames.RowIndex] = "2";
+                    this.mUIרמתשלמהגשאולדכביש4Cell.FilterProperties[HtmlCell.PropertyNames.ColumnIndex] = "5";
+                    this.mUIרמתשלמהגשאולדכביש4Cell.FilterProperties[HtmlCell.PropertyNames.Class] = "WorkCardPeilutLabelRight";
+                    this.mUIרמתשלמהגשאולדכביש4Cell.FilterProperties[HtmlCell.PropertyNames.TagInstance] = "27";
+                    this.mUIרמתשלמהגשאולדכביש4Cell.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIרמתשלמהגשאולדכביש4Cell;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlCell mUIרמתשלמהגשאולדכביש4Cell;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UIמערכתקדםשכרDocument4 : HtmlDocument
+    {
+        
+        public UIמערכתקדםשכרDocument4(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "מערכת קדם שכר";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Modules/Ovdim/WorkCard.aspx";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&WCardDate=17/11/2013&dt=Th" +
+                "u Nov 28 10:27:40 2013";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlInputButton UISD000ctl06AddRekaSD_Button
+        {
+            get
+            {
+                if ((this.mUISD000ctl06AddRekaSD_Button == null))
+                {
+                    this.mUISD000ctl06AddRekaSD_Button = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUISD000ctl06AddRekaSD_Button.SearchProperties[HtmlButton.PropertyNames.Id] = "SD_000_ctl06_AddRekaSD_000_ctl06";
+                    this.mUISD000ctl06AddRekaSD_Button.SearchProperties[HtmlButton.PropertyNames.Name] = "SD$000$ctl06$AddRekaSD_000_ctl06";
+                    this.mUISD000ctl06AddRekaSD_Button.FilterProperties[HtmlButton.PropertyNames.DisplayText] = null;
+                    this.mUISD000ctl06AddRekaSD_Button.FilterProperties[HtmlButton.PropertyNames.Type] = "image";
+                    this.mUISD000ctl06AddRekaSD_Button.FilterProperties["Src"] = "http://kdstest/images/down.png";
+                    this.mUISD000ctl06AddRekaSD_Button.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUISD000ctl06AddRekaSD_Button.FilterProperties[HtmlButton.PropertyNames.Class] = null;
+                    this.mUISD000ctl06AddRekaSD_Button.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "style=\"BORDER-RIGHT-WIDTH: 0px; BORDER-T";
+                    this.mUISD000ctl06AddRekaSD_Button.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "128";
+                    this.mUISD000ctl06AddRekaSD_Button.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUISD000ctl06AddRekaSD_Button;
+            }
+        }
+        
+        public HtmlInputButton UISD000ctl07SD_000_ctlButton
+        {
+            get
+            {
+                if ((this.mUISD000ctl07SD_000_ctlButton == null))
+                {
+                    this.mUISD000ctl07SD_000_ctlButton = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUISD000ctl07SD_000_ctlButton.SearchProperties[HtmlButton.PropertyNames.Id] = "SD_000_ctl07_SD_000_ctl07CancelPeilut";
+                    this.mUISD000ctl07SD_000_ctlButton.SearchProperties[HtmlButton.PropertyNames.Name] = "SD$000$ctl07$SD_000_ctl07CancelPeilut";
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.DisplayText] = null;
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.Type] = "submit";
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.Class] = "ImgCheckedPeilut";
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "id=SD_000_ctl07_SD_000_ctl07CancelPeilut";
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "161";
+                    this.mUISD000ctl07SD_000_ctlButton.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUISD000ctl07SD_000_ctlButton;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlInputButton mUISD000ctl06AddRekaSD_Button;
+        
+        private HtmlInputButton mUISD000ctl07SD_000_ctlButton;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UIמערכתקדםשכרDocument5 : HtmlDocument
+    {
+        
+        public UIמערכתקדםשכרDocument5(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "מערכת קדם שכר";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Modules/Ovdim/WorkCard.aspx";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&WCardDate=17/11/2013&dt=Th" +
+                "u Nov 28 10:42:38 2013";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlInputButton UISDimgAddPeilut0Button
+        {
+            get
+            {
+                if ((this.mUISDimgAddPeilut0Button == null))
+                {
+                    this.mUISDimgAddPeilut0Button = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUISDimgAddPeilut0Button.SearchProperties[HtmlButton.PropertyNames.Id] = "SD_imgAddPeilut0";
+                    this.mUISDimgAddPeilut0Button.SearchProperties[HtmlButton.PropertyNames.Name] = "SD$imgAddPeilut0";
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.DisplayText] = null;
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.Type] = "image";
+                    this.mUISDimgAddPeilut0Button.FilterProperties["Src"] = "http://kdstest/images/plus.png";
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.Class] = null;
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "style=\"BORDER-RIGHT-WIDTH: 0px; DISPLAY:";
+                    this.mUISDimgAddPeilut0Button.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "37";
+                    this.mUISDimgAddPeilut0Button.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUISDimgAddPeilut0Button;
+            }
+        }
+        
+        public HtmlInputButton UISDimgAddPeilut0Button1
+        {
+            get
+            {
+                if ((this.mUISDimgAddPeilut0Button1 == null))
+                {
+                    this.mUISDimgAddPeilut0Button1 = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUISDimgAddPeilut0Button1.SearchProperties[HtmlButton.PropertyNames.Id] = "SD_imgAddPeilut0";
+                    this.mUISDimgAddPeilut0Button1.SearchProperties[HtmlButton.PropertyNames.Name] = "SD$imgAddPeilut0";
+                    this.mUISDimgAddPeilut0Button1.FilterProperties[HtmlButton.PropertyNames.DisplayText] = null;
+                    this.mUISDimgAddPeilut0Button1.FilterProperties[HtmlButton.PropertyNames.Type] = "image";
+                    this.mUISDimgAddPeilut0Button1.FilterProperties["Src"] = "http://kdstest/images/plus.png";
+                    this.mUISDimgAddPeilut0Button1.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUISDimgAddPeilut0Button1.FilterProperties[HtmlButton.PropertyNames.Class] = null;
+                    this.mUISDimgAddPeilut0Button1.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "style=\"BORDER-RIGHT-WIDTH: 0px; DISPLAY:";
+                    this.mUISDimgAddPeilut0Button1.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "32";
+                    this.mUISDimgAddPeilut0Button1.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUISDimgAddPeilut0Button1;
+            }
+        }
+        
+        public HtmlEdit UIתאריךשעתהיציאההוא010Edit
+        {
+            get
+            {
+                if ((this.mUIתאריךשעתהיציאההוא010Edit == null))
+                {
+                    this.mUIתאריךשעתהיציאההוא010Edit = new HtmlEdit(this);
+                    #region Search Criteria
+                    this.mUIתאריךשעתהיציאההוא010Edit.SearchProperties[HtmlEdit.PropertyNames.Id] = "SD_000_ctl07_SD_000_ctl07ShatYetiza";
+                    this.mUIתאריךשעתהיציאההוא010Edit.SearchProperties[HtmlEdit.PropertyNames.Name] = "SD$000$ctl07$SD_000_ctl07ShatYetiza";
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.LabeledBy] = null;
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.Type] = "SINGLELINE";
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.Title] = "תאריך שעת היציאה הוא: 01/01/0001";
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.Class] = "WCPilutTxtF MEFocus";
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.ControlDefinition] = "onblur=\"this.className=\'WCPilutTxt\';\" st";
+                    this.mUIתאריךשעתהיציאההוא010Edit.FilterProperties[HtmlEdit.PropertyNames.TagInstance] = "152";
+                    this.mUIתאריךשעתהיציאההוא010Edit.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIתאריךשעתהיציאההוא010Edit;
+            }
+        }
+        
+        public HtmlEdit UICtl07MakatNumberEdit
+        {
+            get
+            {
+                if ((this.mUICtl07MakatNumberEdit == null))
+                {
+                    this.mUICtl07MakatNumberEdit = new HtmlEdit(this);
+                    #region Search Criteria
+                    this.mUICtl07MakatNumberEdit.SearchProperties[HtmlEdit.PropertyNames.Id] = "SD_000_ctl07_SD_000_ctl07MakatNumber";
+                    this.mUICtl07MakatNumberEdit.SearchProperties[HtmlEdit.PropertyNames.Name] = "SD$000$ctl07$SD_000_ctl07MakatNumber";
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.LabeledBy] = null;
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.Type] = "SINGLELINE";
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.Title] = null;
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.Class] = "WCPilutTxt";
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.ControlDefinition] = "style=\"WIDTH: 70px\" id=SD_000_ctl07_SD_0";
+                    this.mUICtl07MakatNumberEdit.FilterProperties[HtmlEdit.PropertyNames.TagInstance] = "155";
+                    this.mUICtl07MakatNumberEdit.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUICtl07MakatNumberEdit;
+            }
+        }
+        
+        public HtmlInputButton UISD000ctl07SD_000_ctlButton
+        {
+            get
+            {
+                if ((this.mUISD000ctl07SD_000_ctlButton == null))
+                {
+                    this.mUISD000ctl07SD_000_ctlButton = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUISD000ctl07SD_000_ctlButton.SearchProperties[HtmlButton.PropertyNames.Id] = "SD_000_ctl07_SD_000_ctl07CancelPeilut";
+                    this.mUISD000ctl07SD_000_ctlButton.SearchProperties[HtmlButton.PropertyNames.Name] = "SD$000$ctl07$SD_000_ctl07CancelPeilut";
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.DisplayText] = null;
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.Type] = "submit";
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.Class] = "ImgCheckedPeilut";
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "id=SD_000_ctl07_SD_000_ctl07CancelPeilut";
+                    this.mUISD000ctl07SD_000_ctlButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "159";
+                    this.mUISD000ctl07SD_000_ctlButton.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUISD000ctl07SD_000_ctlButton;
+            }
+        }
+        
+        public HtmlInputButton UISDimgCancel1Button
+        {
+            get
+            {
+                if ((this.mUISDimgCancel1Button == null))
+                {
+                    this.mUISDimgCancel1Button = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUISDimgCancel1Button.SearchProperties[HtmlButton.PropertyNames.Id] = "SD_imgCancel1";
+                    this.mUISDimgCancel1Button.SearchProperties[HtmlButton.PropertyNames.Name] = "SD$imgCancel1";
+                    this.mUISDimgCancel1Button.FilterProperties[HtmlButton.PropertyNames.DisplayText] = null;
+                    this.mUISDimgCancel1Button.FilterProperties[HtmlButton.PropertyNames.Type] = "submit";
+                    this.mUISDimgCancel1Button.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUISDimgCancel1Button.FilterProperties[HtmlButton.PropertyNames.Class] = "ImgChecked";
+                    this.mUISDimgCancel1Button.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "id=SD_imgCancel1 class=ImgChecked onclic";
+                    this.mUISDimgCancel1Button.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "163";
+                    this.mUISDimgCancel1Button.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUISDimgCancel1Button;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlInputButton mUISDimgAddPeilut0Button;
+        
+        private HtmlInputButton mUISDimgAddPeilut0Button1;
+        
+        private HtmlEdit mUIתאריךשעתהיציאההוא010Edit;
+        
+        private HtmlEdit mUICtl07MakatNumberEdit;
+        
+        private HtmlInputButton mUISD000ctl07SD_000_ctlButton;
+        
+        private HtmlInputButton mUISDimgCancel1Button;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UIמערכתקדםשכרDocument6 : HtmlDocument
+    {
+        
+        public UIמערכתקדםשכרDocument6(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "מערכת קדם שכר";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Modules/Ovdim/WorkCard.aspx";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&WCardDate=17/11/2013&dt=Th" +
+                "u Nov 28 13:43:28 2013";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlInputButton UIהוסףסידורמיוחדButton
+        {
+            get
+            {
+                if ((this.mUIהוסףסידורמיוחדButton == null))
+                {
+                    this.mUIהוסףסידורמיוחדButton = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUIהוסףסידורמיוחדButton.SearchProperties[HtmlButton.PropertyNames.Id] = "btnAddMyuchad";
+                    this.mUIהוסףסידורמיוחדButton.SearchProperties[HtmlButton.PropertyNames.Name] = "btnAddMyuchad";
+                    this.mUIהוסףסידורמיוחדButton.FilterProperties[HtmlButton.PropertyNames.DisplayText] = "הוסף סידור מיוחד";
+                    this.mUIהוסףסידורמיוחדButton.FilterProperties[HtmlButton.PropertyNames.Type] = "submit";
+                    this.mUIהוסףסידורמיוחדButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUIהוסףסידורמיוחדButton.FilterProperties[HtmlButton.PropertyNames.Class] = "btnWorkCardAddSpecial";
+                    this.mUIהוסףסידורמיוחדButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "style=\"WIDTH: 124px\" id=btnAddMyuchad cl";
+                    this.mUIהוסףסידורמיוחדButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "162";
+                    this.mUIהוסףסידורמיוחדButton.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIהוסףסידורמיוחדButton;
+            }
+        }
+        
+        public HtmlEdit UISDlblSidur1Edit
+        {
+            get
+            {
+                if ((this.mUISDlblSidur1Edit == null))
+                {
+                    this.mUISDlblSidur1Edit = new HtmlEdit(this);
+                    #region Search Criteria
+                    this.mUISDlblSidur1Edit.SearchProperties[HtmlEdit.PropertyNames.Id] = "SD_lblSidur1";
+                    this.mUISDlblSidur1Edit.SearchProperties[HtmlEdit.PropertyNames.Name] = "SD$lblSidur1";
+                    this.mUISDlblSidur1Edit.FilterProperties[HtmlEdit.PropertyNames.LabeledBy] = null;
+                    this.mUISDlblSidur1Edit.FilterProperties[HtmlEdit.PropertyNames.Type] = "SINGLELINE";
+                    this.mUISDlblSidur1Edit.FilterProperties[HtmlEdit.PropertyNames.Title] = null;
+                    this.mUISDlblSidur1Edit.FilterProperties[HtmlEdit.PropertyNames.Class] = "WCSidurTxt";
+                    this.mUISDlblSidur1Edit.FilterProperties[HtmlEdit.PropertyNames.ControlDefinition] = "style=\"WIDTH: 45px\" id=SD_lblSidur1 clas";
+                    this.mUISDlblSidur1Edit.FilterProperties[HtmlEdit.PropertyNames.TagInstance] = "148";
+                    this.mUISDlblSidur1Edit.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUISDlblSidur1Edit;
+            }
+        }
+        
+        public HtmlEdit UIתאריךתחילתהסידורהוא0Edit
+        {
+            get
+            {
+                if ((this.mUIתאריךתחילתהסידורהוא0Edit == null))
+                {
+                    this.mUIתאריךתחילתהסידורהוא0Edit = new HtmlEdit(this);
+                    #region Search Criteria
+                    this.mUIתאריךתחילתהסידורהוא0Edit.SearchProperties[HtmlEdit.PropertyNames.Id] = "SD_txtSH1";
+                    this.mUIתאריךתחילתהסידורהוא0Edit.SearchProperties[HtmlEdit.PropertyNames.Name] = "SD$txtSH1";
+                    this.mUIתאריךתחילתהסידורהוא0Edit.FilterProperties[HtmlEdit.PropertyNames.LabeledBy] = null;
+                    this.mUIתאריךתחילתהסידורהוא0Edit.FilterProperties[HtmlEdit.PropertyNames.Type] = "SINGLELINE";
+                    this.mUIתאריךתחילתהסידורהוא0Edit.FilterProperties[HtmlEdit.PropertyNames.Title] = "תאריך תחילת הסידור הוא: 01/01/0001";
+                    this.mUIתאריךתחילתהסידורהוא0Edit.FilterProperties[HtmlEdit.PropertyNames.Class] = "WCSidurTxtF MEFocus";
+                    this.mUIתאריךתחילתהסידורהוא0Edit.FilterProperties[HtmlEdit.PropertyNames.ControlDefinition] = "onblur=\"this.className=\'WCSidurTxt\';\" st";
+                    this.mUIתאריךתחילתהסידורהוא0Edit.FilterProperties[HtmlEdit.PropertyNames.TagInstance] = "150";
+                    this.mUIתאריךתחילתהסידורהוא0Edit.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIתאריךתחילתהסידורהוא0Edit;
+            }
+        }
+        
+        public HtmlEdit UIתאריךגמרהסידורהוא010Edit
+        {
+            get
+            {
+                if ((this.mUIתאריךגמרהסידורהוא010Edit == null))
+                {
+                    this.mUIתאריךגמרהסידורהוא010Edit = new HtmlEdit(this);
+                    #region Search Criteria
+                    this.mUIתאריךגמרהסידורהוא010Edit.SearchProperties[HtmlEdit.PropertyNames.Id] = "SD_txtSG1";
+                    this.mUIתאריךגמרהסידורהוא010Edit.SearchProperties[HtmlEdit.PropertyNames.Name] = "SD$txtSG1";
+                    this.mUIתאריךגמרהסידורהוא010Edit.FilterProperties[HtmlEdit.PropertyNames.LabeledBy] = null;
+                    this.mUIתאריךגמרהסידורהוא010Edit.FilterProperties[HtmlEdit.PropertyNames.Type] = "SINGLELINE";
+                    this.mUIתאריךגמרהסידורהוא010Edit.FilterProperties[HtmlEdit.PropertyNames.Title] = "תאריך גמר הסידור הוא: 01/01/0001";
+                    this.mUIתאריךגמרהסידורהוא010Edit.FilterProperties[HtmlEdit.PropertyNames.Class] = "WCSidurTxtF MEFocus";
+                    this.mUIתאריךגמרהסידורהוא010Edit.FilterProperties[HtmlEdit.PropertyNames.ControlDefinition] = "onblur=\"this.className=\'WCSidurTxt\';\" st";
+                    this.mUIתאריךגמרהסידורהוא010Edit.FilterProperties[HtmlEdit.PropertyNames.TagInstance] = "153";
+                    this.mUIתאריךגמרהסידורהוא010Edit.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIתאריךגמרהסידורהוא010Edit;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlInputButton mUIהוסףסידורמיוחדButton;
+        
+        private HtmlEdit mUISDlblSidur1Edit;
+        
+        private HtmlEdit mUIתאריךתחילתהסידורהוא0Edit;
+        
+        private HtmlEdit mUIתאריךגמרהסידורהוא010Edit;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UIמערכתקדםשכרDocument7 : HtmlDocument
+    {
+        
+        public UIמערכתקדםשכרDocument7(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "מערכת קדם שכר";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Modules/Ovdim/WorkCard.aspx";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&WCardDate=17/11/2013&dt=Th" +
+                "u Nov 28 14:30:11 2013";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlEdit UIClnDateEdit
+        {
+            get
+            {
+                if ((this.mUIClnDateEdit == null))
+                {
+                    this.mUIClnDateEdit = new HtmlEdit(this);
+                    #region Search Criteria
+                    this.mUIClnDateEdit.SearchProperties[HtmlEdit.PropertyNames.Id] = "clnDate";
+                    this.mUIClnDateEdit.SearchProperties[HtmlEdit.PropertyNames.Name] = "clnDate";
+                    this.mUIClnDateEdit.FilterProperties[HtmlEdit.PropertyNames.LabeledBy] = null;
+                    this.mUIClnDateEdit.FilterProperties[HtmlEdit.PropertyNames.Type] = "SINGLELINE";
+                    this.mUIClnDateEdit.FilterProperties[HtmlEdit.PropertyNames.Title] = null;
+                    this.mUIClnDateEdit.FilterProperties[HtmlEdit.PropertyNames.Class] = "WorkCardTextBox";
+                    this.mUIClnDateEdit.FilterProperties[HtmlEdit.PropertyNames.ControlDefinition] = "style=\"WIDTH: 90px\" id=clnDate class=Wor";
+                    this.mUIClnDateEdit.FilterProperties[HtmlEdit.PropertyNames.TagInstance] = "5";
+                    this.mUIClnDateEdit.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIClnDateEdit;
+            }
+        }
+        
+        public HtmlInputButton UIהצגButton
+        {
+            get
+            {
+                if ((this.mUIהצגButton == null))
+                {
+                    this.mUIהצגButton = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUIהצגButton.SearchProperties[HtmlButton.PropertyNames.Id] = "btnRefreshOvedDetails";
+                    this.mUIהצגButton.SearchProperties[HtmlButton.PropertyNames.Name] = "btnRefreshOvedDetails";
+                    this.mUIהצגButton.FilterProperties[HtmlButton.PropertyNames.DisplayText] = "הצג";
+                    this.mUIהצגButton.FilterProperties[HtmlButton.PropertyNames.Type] = "submit";
+                    this.mUIהצגButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUIהצגButton.FilterProperties[HtmlButton.PropertyNames.Class] = "ImgButtonShowDis";
+                    this.mUIהצגButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "style=\"WIDTH: 54px; HEIGHT: 30px\" id=btn";
+                    this.mUIהצגButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "13";
+                    this.mUIהצגButton.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIהצגButton;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlEdit mUIClnDateEdit;
+        
+        private HtmlInputButton mUIהצגButton;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UIמערכתקדםשכרDocument8 : HtmlDocument
+    {
+        
+        public UIמערכתקדםשכרDocument8(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "מערכת קדם שכר";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Modules/Ovdim/WorkCard.aspx";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&WCardDate=18/11/2013&dt=Th" +
+                "u Nov 28 14:50:17 2013";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlInputButton UIעדכןכרטיסButton
+        {
+            get
+            {
+                if ((this.mUIעדכןכרטיסButton == null))
+                {
+                    this.mUIעדכןכרטיסButton = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUIעדכןכרטיסButton.SearchProperties[HtmlButton.PropertyNames.Id] = "btnUpdateCard";
+                    this.mUIעדכןכרטיסButton.SearchProperties[HtmlButton.PropertyNames.Name] = "btnUpdateCard";
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.DisplayText] = "עדכן כרטיס";
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.Type] = "submit";
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.Class] = "btnWorkCardUpadte";
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "style=\"WIDTH: 150px; HEIGHT: 33px\" id=bt";
+                    this.mUIעדכןכרטיסButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "397";
+                    this.mUIעדכןכרטיסButton.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIעדכןכרטיסButton;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlInputButton mUIעדכןכרטיסButton;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
     public class UIמערכתקדםשכרWebpageDiWindow1 : BrowserWindow
     {
         
@@ -4071,13 +4634,13 @@ namespace CodedUITestProject1
         }
         
         #region Properties
-        public UIמערכתקדםשכרDocument4 UIמערכתקדםשכרDocument
+        public UIמערכתקדםשכרDocument9 UIמערכתקדםשכרDocument
         {
             get
             {
                 if ((this.mUIמערכתקדםשכרDocument == null))
                 {
-                    this.mUIמערכתקדםשכרDocument = new UIמערכתקדםשכרDocument4(this);
+                    this.mUIמערכתקדםשכרDocument = new UIמערכתקדםשכרDocument9(this);
                 }
                 return this.mUIמערכתקדםשכרDocument;
             }
@@ -4107,13 +4670,13 @@ namespace CodedUITestProject1
             }
         }
         
-        public UIמערכתקדםשכרDocument31 UIמערכתקדםשכרDocument3
+        public UIמערכתקדםשכרDocument32 UIמערכתקדםשכרDocument3
         {
             get
             {
                 if ((this.mUIמערכתקדםשכרDocument3 == null))
                 {
-                    this.mUIמערכתקדםשכרDocument3 = new UIמערכתקדםשכרDocument31(this);
+                    this.mUIמערכתקדםשכרDocument3 = new UIמערכתקדםשכרDocument32(this);
                 }
                 return this.mUIמערכתקדםשכרDocument3;
             }
@@ -4121,21 +4684,21 @@ namespace CodedUITestProject1
         #endregion
         
         #region Fields
-        private UIמערכתקדםשכרDocument4 mUIמערכתקדםשכרDocument;
+        private UIמערכתקדםשכרDocument9 mUIמערכתקדםשכרDocument;
         
         private UIמערכתקדםשכרDocument12 mUIמערכתקדםשכרDocument1;
         
         private UIמערכתקדםשכרDocument22 mUIמערכתקדםשכרDocument2;
         
-        private UIמערכתקדםשכרDocument31 mUIמערכתקדםשכרDocument3;
+        private UIמערכתקדםשכרDocument32 mUIמערכתקדםשכרDocument3;
         #endregion
     }
     
     [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class UIמערכתקדםשכרDocument4 : HtmlDocument
+    public class UIמערכתקדםשכרDocument9 : HtmlDocument
     {
         
-        public UIמערכתקדםשכרDocument4(UITestControl searchLimitContainer) : 
+        public UIמערכתקדםשכרDocument9(UITestControl searchLimitContainer) : 
                 base(searchLimitContainer)
         {
             #region Search Criteria
@@ -4614,10 +5177,10 @@ namespace CodedUITestProject1
     }
     
     [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class UIמערכתקדםשכרDocument31 : HtmlDocument
+    public class UIמערכתקדםשכרDocument32 : HtmlDocument
     {
         
-        public UIמערכתקדםשכרDocument31(UITestControl searchLimitContainer) : 
+        public UIמערכתקדםשכרDocument32(UITestControl searchLimitContainer) : 
                 base(searchLimitContainer)
         {
             #region Search Criteria

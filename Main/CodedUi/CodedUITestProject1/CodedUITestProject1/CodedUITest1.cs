@@ -25,8 +25,6 @@ namespace CodedUITestProject1
         [TestMethod]
         public void CodedUITsestMethod1()
         {
-
-
             this.UIMap.Go_to_web_page();
 
             this.UIMap.כנסלמסךכרטיסיעבודהלעובד();
@@ -35,24 +33,32 @@ namespace CodedUITestProject1
             this.UIMap.בחרערךבשדהטכוגרף();
             this.UIMap.בחרערךבשדהלינה();
             this.UIMap.לחץעללשוניתנתוניםליוםעבודה();
-            this.UIMap.Cancel_peilut();
+            //this.UIMap.Cancel_peilut();
+            //this.UIMap.Cancel_Activity();
             //this.UIMap.לחץעלביטוללאחתהפעילותבסידור();
             this.UIMap.הזןערךבשדהשעתהתחלהsh_hat();
             this.UIMap.הזןערךבשדהשעתגמר();
-            this.UIMap.הזןערךבשדהשעתיציאהלאחתהפעילויות();
-            this.UIMap.הזןערךבשדהמקט();
+            //this.UIMap.הזןערךבשדהשעתיציאהלאחתהפעילויות();
+            //this.UIMap.הזןערךבשדהמקט();
             this.UIMap.הזןערךבשדהמספררכבלפעילותהראשונהבסידורששונהממספרהרכבהקייםoto_num();
             this.UIMap.לחץעלכן();
             this.UIMap.לחץעדכןכרטיס();
             this.UIMap.לחץעלהוסףריקהחץלמעלהבפעילותהראשונהביום();
-            this.UIMap.לחץעלהוסףריקהחץלמטהבפעילותהאחרונהביום();
-            this.UIMap.לחץעלהוסףפעילות();
-            this.UIMap.הזןערכיםתקיניםבשדות();
+            // this.UIMap.לחץעלהוסףריקהחץלמטהבפעילותהאחרונהביום();
+            this.UIMap.Add_last_reka();
+            //this.UIMap.לחץעלהוסףפעילות();
+            //this.UIMap.הזןערכיםתקיניםבשדות();
             this.UIMap.לחץעלעדכןכרטיס();
-            this.UIMap.לחץעלהוסףסידורמיוחד();
-            this.UIMap.הזןמספרסידורתקיןשעתהתחלהושעתגמר();
+            this.UIMap.Add_activity();
+
+            //this.UIMap.לחץעלהוסףסידורמיוחד();
+            //this.UIMap.הזןמספרסידורתקיןשעתהתחלהושעתגמר();
+            this.UIMap.Add_sidur_meyuhad();
+
+
             this.UIMap.לחץעלהוסףפעילות1();
             this.UIMap.הזןשעתיציאהומקט();
+            this.UIMap.Cancel_sidur();
             this.UIMap.לחץעדכןכרטיס1();
             this.UIMap.לחץעלחץשמאלההיוםהבא();
             this.UIMap.לחץעלהוסףסידורמפה();
@@ -61,7 +67,9 @@ namespace CodedUITestProject1
             this.UIMap.הזןמספררכבבפעילותהראשונה();
             this.UIMap.לחץכן();
             this.UIMap.לחץעלהוסףאתהסידורלכרטיסהעבודה();
-            this.UIMap.הזןתאריךבשדהתאריךולחץעלהצג();
+            this.UIMap.Update_work_card();
+            //this.UIMap.הזןתאריךבשדהתאריךולחץעלהצג();
+            this.UIMap.Type_date();
             this.UIMap.לחץעלדיווחהיעדרות();
             this.UIMap.בחרבקומבוהיעדרות();
             this.UIMap.הזןערכיםתקיניםבשדותשעתהתחלהושעתגמר();

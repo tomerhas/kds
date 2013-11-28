@@ -40,6 +40,101 @@
   </Configuration>
   <InitializeActions />
   <ExecuteActions>
+    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument4.UISD000ctl06AddRekaSD_Button">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="7" Y="5" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument4.UISD000ctl07SD_000_ctlButton">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="4" Y="14" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="Add_last_reka">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument2.UISD000ctl04SD_000_ctlButton">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="8" Y="13" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="Cancel_peilut">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument5.UISDimgCancel1Button">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="16" Y="11" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="Cancel_sidur">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+    <NavigateToUrlAction UIObjectName="UIMap.UIBlankPageWindowsInteWindow">
+      <ParameterName />
+      <Url>http://kdstest/</Url>
+      <NewInstance>true</NewInstance>
+    </NavigateToUrlAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="Go_to_web_page">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument8.UIעדכןכרטיסButton">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="94" Y="21" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="Update_work_card">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
     <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow1.UIמערכתקדםשכרDocument2.UIDdlHeadrutTypeComboBox">
       <ParameterName />
       <Value Encoded="false">היעדרות</Value>
@@ -191,36 +286,6 @@
       <WorkItemId>729</WorkItemId>
       <MarkerRegionType>Default</MarkerRegionType>
     </TestStepMarkerAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UISDlblSidur1Edit">
-      <ParameterName />
-      <Value Encoded="false">99300</Value>
-      <Type>String</Type>
-    </SetValueAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךתחילתהסידורהוא0Edit">
-      <ParameterName />
-      <Value Encoded="false">15:00</Value>
-      <Type>String</Type>
-    </SetValueAction>
-    <SendKeysAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךתחילתהסידורהוא0Edit">
-      <ParameterName />
-      <ModifierKeys>None</ModifierKeys>
-      <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Text Encoded="false">{Add}</Text>
-    </SendKeysAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךגמרהסידורהוא010Edit">
-      <ParameterName />
-      <Value Encoded="false">16:00</Value>
-      <Type>String</Type>
-    </SetValueAction>
-    <TestStepMarkerAction MarkerInformation="הזןמספרסידורתקיןשעתהתחלהושעתגמר">
-      <ParameterName />
-      <StepId>21</StepId>
-      <Direction>Both</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>729</WorkItemId>
-      <MarkerRegionType>Default</MarkerRegionType>
-    </TestStepMarkerAction>
     <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow1.UIמערכתקדםשכרDocument1.UITxtMisRechevEdit">
       <ParameterName />
       <Value Encoded="false">34918</Value>
@@ -290,48 +355,6 @@
       <WorkItemId>729</WorkItemId>
       <MarkerRegionType>Default</MarkerRegionType>
     </TestStepMarkerAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךגמרהסידורהוא171Edit">
-      <ParameterName />
-      <Value Encoded="false">14:04</Value>
-      <Type>String</Type>
-    </SetValueAction>
-    <TestStepMarkerAction MarkerInformation="הזןערךבשדהשעתגמר">
-      <ParameterName />
-      <StepId>8</StepId>
-      <Direction>Both</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>729</WorkItemId>
-      <MarkerRegionType>Default</MarkerRegionType>
-    </TestStepMarkerAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךתחילתהסידורהוא1Edit">
-      <ParameterName />
-      <Value Encoded="false">07:11</Value>
-      <Type>String</Type>
-    </SetValueAction>
-    <TestStepMarkerAction MarkerInformation="הזןערךבשדהשעתהתחלהsh_hat">
-      <ParameterName />
-      <StepId>7</StepId>
-      <Direction>Both</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>729</WorkItemId>
-      <MarkerRegionType>Default</MarkerRegionType>
-    </TestStepMarkerAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךשעתהיציאההוא171Edit">
-      <ParameterName />
-      <Value Encoded="false">11:51</Value>
-      <Type>String</Type>
-    </SetValueAction>
-    <TestStepMarkerAction MarkerInformation="הזןערךבשדהשעתיציאהלאחתהפעילויות">
-      <ParameterName />
-      <StepId>9</StepId>
-      <Direction>Both</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>729</WorkItemId>
-      <MarkerRegionType>Default</MarkerRegionType>
-    </TestStepMarkerAction>
     <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךשעתהיציאההוא010Edit">
       <ParameterName />
       <Value Encoded="false">13:28</Value>
@@ -381,56 +404,6 @@
     <TestStepMarkerAction MarkerInformation="הזןערכיםתקיניםבשדות1">
       <ParameterName />
       <StepId>44</StepId>
-      <Direction>Both</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>729</WorkItemId>
-      <MarkerRegionType>Default</MarkerRegionType>
-    </TestStepMarkerAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow1.UIמערכתקדםשכרDocument2.UITxtStartTimeEdit">
-      <ParameterName />
-      <Value Encoded="false">05:00</Value>
-      <Type>String</Type>
-    </SetValueAction>
-    <SendKeysAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow1.UIמערכתקדםשכרDocument2.UITxtStartTimeEdit">
-      <ParameterName />
-      <ModifierKeys>None</ModifierKeys>
-      <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Text Encoded="false">{Add}</Text>
-    </SendKeysAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow1.UIמערכתקדםשכרDocument2.UITxtEndTimeEdit">
-      <ParameterName />
-      <Value Encoded="false">23:59</Value>
-      <Type>String</Type>
-    </SetValueAction>
-    <TestStepMarkerAction MarkerInformation="הזןערכיםתקיניםבשדותשעתהתחלהושעתגמר">
-      <ParameterName />
-      <StepId>35</StepId>
-      <Direction>Both</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>729</WorkItemId>
-      <MarkerRegionType>Default</MarkerRegionType>
-    </TestStepMarkerAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךשעתהיציאההוא010Edit1">
-      <ParameterName />
-      <Value Encoded="false">15:00</Value>
-      <Type>String</Type>
-    </SetValueAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UICtl02MakatNumberEdit">
-      <ParameterName />
-      <Value Encoded="false">49036200</Value>
-      <Type>String</Type>
-    </SetValueAction>
-    <SendKeysAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UICtl02MakatNumberEdit">
-      <ParameterName />
-      <ModifierKeys>None</ModifierKeys>
-      <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Text Encoded="false">{Add}</Text>
-    </SendKeysAction>
-    <TestStepMarkerAction MarkerInformation="הזןשעתיציאהומקט">
-      <ParameterName />
-      <StepId>23</StepId>
       <Direction>Both</Direction>
       <Outcome />
       <Disabled>false</Disabled>
@@ -1202,52 +1175,6 @@
       <Disabled>false</Disabled>
       <WorkItemId>729</WorkItemId>
       <MarkerRegionType>Default</MarkerRegionType>
-    </TestStepMarkerAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument.UIתאריךשעתהיציאההוא191Edit">
-      <ParameterName />
-      <Value Encoded="false">09:12</Value>
-      <Type>String</Type>
-    </SetValueAction>
-    <TestStepMarkerAction MarkerInformation="עדכןשעתיציאהלאחתהפעילויותבמסך">
-      <ParameterName />
-      <StepId>38</StepId>
-      <Direction>Both</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>729</WorkItemId>
-      <MarkerRegionType>Default</MarkerRegionType>
-    </TestStepMarkerAction>
-    <NavigateToUrlAction UIObjectName="UIMap.UIBlankPageWindowsInteWindow">
-      <ParameterName />
-      <Url>http://kdstest/</Url>
-      <NewInstance>true</NewInstance>
-    </NavigateToUrlAction>
-    <TestStepMarkerAction Comment="" MarkerInformation="Go_to_web_page">
-      <ParameterName />
-      <StepId>-1</StepId>
-      <Direction>Start</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>0</WorkItemId>
-      <MarkerRegionType>Action</MarkerRegionType>
-    </TestStepMarkerAction>
-    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument2.UISD000ctl04SD_000_ctlButton">
-      <ParameterName />
-      <ModifierKeys>None</ModifierKeys>
-      <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Location X="8" Y="13" />
-      <WheelDirection>0</WheelDirection>
-      <ActionType>Click</ActionType>
-      <MouseButton>Left</MouseButton>
-    </MouseAction>
-    <TestStepMarkerAction Comment="" MarkerInformation="Cancel_peilut">
-      <ParameterName />
-      <StepId>-1</StepId>
-      <Direction>Start</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>0</WorkItemId>
-      <MarkerRegionType>Action</MarkerRegionType>
     </TestStepMarkerAction>
   </ExecuteActions>
   <CleanupActions />
@@ -3330,6 +3257,749 @@
                       <PropertyCondition Name="Class">ImgCheckedPeilut</PropertyCondition>
                       <PropertyCondition Name="ControlDefinition">id=SD_000_ctl04_SD_000_ctl04CancelPeilut</PropertyCondition>
                       <PropertyCondition Name="TagInstance">109</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIמערכתקדםשכרDocument3" FriendlyName="מערכת קדם שכר" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>מערכת קדם שכר</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">מערכת קדם שכר</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Modules/Ovdim/WorkCard.aspx</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&amp;WCardDate=17/11/2013&amp;dt=Wed Nov 27 11:30:00 2013</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Button" Id="UISD000ctl03SD_000_ctlButton" FriendlyName="SD$000$ctl03$SD_000_ctl03CancelPeilut" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_000_ctl03_SD_000_ctl03CancelPeilut</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$000$ctl03$SD_000_ctl03CancelPeilut</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText" />
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">ImgCheckedPeilut</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">id=SD_000_ctl03_SD_000_ctl03CancelPeilut</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">90</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Button" Id="UISDimgAddPeilut0Button" FriendlyName="SD$imgAddPeilut0" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_imgAddPeilut0</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$imgAddPeilut0</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText" />
+                      <PropertyCondition Name="Type">image</PropertyCondition>
+                      <PropertyCondition Name="Src">http://kdstest/images/plus.png</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class" />
+                      <PropertyCondition Name="ControlDefinition">style="BORDER-RIGHT-WIDTH: 0px; DISPLAY:</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">37</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Custom" Id="UISD_000_ctl03_lblKnisCustom" FriendlyName="SD_000_ctl03_lblKnisa030762100" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Custom</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_000_ctl03_lblKnisa030762100</PropertyCondition>
+                      <PropertyCondition Name="Name" />
+                      <PropertyCondition Name="TagName">A</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Class" />
+                      <PropertyCondition Name="ControlDefinition">style="CURSOR: pointer; TEXT-DECORATION:</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">3</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Table" Id="UISD_000Table" FriendlyName="SD_000" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Table</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_000</PropertyCondition>
+                      <PropertyCondition Name="Name" />
+                      <PropertyCondition Name="TagName">TABLE</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="InnerText">ריקהכיסוי תורש. יציאהתיאורקוסוגמק"טד. תכ</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">style="WIDTH: 975px" id=SD_000 border=0 </PropertyCondition>
+                      <PropertyCondition Name="RowCount">6</PropertyCondition>
+                      <PropertyCondition Name="ColumnCount">21</PropertyCondition>
+                      <PropertyCondition Name="Class" />
+                      <PropertyCondition Name="TagInstance">15</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Cell" Id="UIItemCell" FriendlyName="" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>מערכת קדם שכר</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Cell</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name" />
+                          <PropertyCondition Name="TagName">TD</PropertyCondition>
+                          <PropertyCondition Name="MaxDepth">3</PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">רמת שלמה-ג.שאול ד.כביש 4</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">style="WIDTH: 300px" class=WorkCardPeilu</PropertyCondition>
+                          <PropertyCondition Name="RowIndex">2</PropertyCondition>
+                          <PropertyCondition Name="ColumnIndex">5</PropertyCondition>
+                          <PropertyCondition Name="Class">WorkCardPeilutLabelRight</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">27</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+                <UIObject ControlType="Table" Id="UISD_000Table1" FriendlyName="SD_000" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Table</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_000</PropertyCondition>
+                      <PropertyCondition Name="Name" />
+                      <PropertyCondition Name="TagName">TABLE</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="InnerText">ריקהכיסוי תורש. יציאהתיאורקוסוגמק"טד. תכ</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">style="WIDTH: 975px" id=SD_000 border=0 </PropertyCondition>
+                      <PropertyCondition Name="RowCount">7</PropertyCondition>
+                      <PropertyCondition Name="ColumnCount">21</PropertyCondition>
+                      <PropertyCondition Name="Class" />
+                      <PropertyCondition Name="TagInstance">15</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Cell" Id="UIרמתשלמהגשאולדכביש4Cell" FriendlyName="רמת שלמה-ג.שאול ד.כביש 4" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>מערכת קדם שכר</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Cell</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name" />
+                          <PropertyCondition Name="TagName">TD</PropertyCondition>
+                          <PropertyCondition Name="MaxDepth">3</PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">רמת שלמה-ג.שאול ד.כביש 4</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">style="WIDTH: 300px" class=WorkCardPeilu</PropertyCondition>
+                          <PropertyCondition Name="RowIndex">2</PropertyCondition>
+                          <PropertyCondition Name="ColumnIndex">5</PropertyCondition>
+                          <PropertyCondition Name="Class">WorkCardPeilutLabelRight</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">27</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+                <UIObject ControlType="Edit" Id="UIתאריךשעתהיציאההוא010Edit" FriendlyName="תאריך שעת היציאה הוא: 01/01/0001" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_000_ctl07_SD_000_ctl07ShatYetiza</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$000$ctl07$SD_000_ctl07ShatYetiza</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="LabeledBy" />
+                      <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                      <PropertyCondition Name="Title">תאריך שעת היציאה הוא: 01/01/0001</PropertyCondition>
+                      <PropertyCondition Name="Class">WCPilutTxtF MEFocus</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">onblur="this.className='WCPilutTxt';" st</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">152</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Edit" Id="UICtl07MakatNumberEdit" FriendlyName="ctl07MakatNumber" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_000_ctl07_SD_000_ctl07MakatNumber</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$000$ctl07$SD_000_ctl07MakatNumber</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="LabeledBy" />
+                      <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">WCPilutTxt</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">style="WIDTH: 70px" id=SD_000_ctl07_SD_0</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">155</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Button" Id="UIעדכןכרטיסButton" FriendlyName="עדכן כרטיס" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">btnUpdateCard</PropertyCondition>
+                      <PropertyCondition Name="Name">btnUpdateCard</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText">עדכן כרטיס</PropertyCondition>
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">btnWorkCardUpadte</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">style="WIDTH: 150px; HEIGHT: 33px" id=bt</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">221</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIמערכתקדםשכרDocument4" FriendlyName="מערכת קדם שכר" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>מערכת קדם שכר</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">מערכת קדם שכר</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Modules/Ovdim/WorkCard.aspx</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&amp;WCardDate=17/11/2013&amp;dt=Thu Nov 28 10:27:40 2013</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Button" Id="UISD000ctl06AddRekaSD_Button" FriendlyName="SD$000$ctl06$AddRekaSD_000_ctl06" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_000_ctl06_AddRekaSD_000_ctl06</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$000$ctl06$AddRekaSD_000_ctl06</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText" />
+                      <PropertyCondition Name="Type">image</PropertyCondition>
+                      <PropertyCondition Name="Src">http://kdstest/images/down.png</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class" />
+                      <PropertyCondition Name="ControlDefinition">style="BORDER-RIGHT-WIDTH: 0px; BORDER-T</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">128</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Button" Id="UISD000ctl07SD_000_ctlButton" FriendlyName="SD$000$ctl07$SD_000_ctl07CancelPeilut" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_000_ctl07_SD_000_ctl07CancelPeilut</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$000$ctl07$SD_000_ctl07CancelPeilut</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText" />
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">ImgCheckedPeilut</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">id=SD_000_ctl07_SD_000_ctl07CancelPeilut</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">161</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIמערכתקדםשכרDocument5" FriendlyName="מערכת קדם שכר" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>מערכת קדם שכר</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">מערכת קדם שכר</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Modules/Ovdim/WorkCard.aspx</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&amp;WCardDate=17/11/2013&amp;dt=Thu Nov 28 10:42:38 2013</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Button" Id="UISDimgAddPeilut0Button" FriendlyName="SD$imgAddPeilut0" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_imgAddPeilut0</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$imgAddPeilut0</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText" />
+                      <PropertyCondition Name="Type">image</PropertyCondition>
+                      <PropertyCondition Name="Src">http://kdstest/images/plus.png</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class" />
+                      <PropertyCondition Name="ControlDefinition">style="BORDER-RIGHT-WIDTH: 0px; DISPLAY:</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">37</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Button" Id="UISDimgAddPeilut0Button1" FriendlyName="SD$imgAddPeilut0" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_imgAddPeilut0</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$imgAddPeilut0</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText" />
+                      <PropertyCondition Name="Type">image</PropertyCondition>
+                      <PropertyCondition Name="Src">http://kdstest/images/plus.png</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class" />
+                      <PropertyCondition Name="ControlDefinition">style="BORDER-RIGHT-WIDTH: 0px; DISPLAY:</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">32</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Edit" Id="UIתאריךשעתהיציאההוא010Edit" FriendlyName="תאריך שעת היציאה הוא: 01/01/0001" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_000_ctl07_SD_000_ctl07ShatYetiza</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$000$ctl07$SD_000_ctl07ShatYetiza</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="LabeledBy" />
+                      <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                      <PropertyCondition Name="Title">תאריך שעת היציאה הוא: 01/01/0001</PropertyCondition>
+                      <PropertyCondition Name="Class">WCPilutTxtF MEFocus</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">onblur="this.className='WCPilutTxt';" st</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">152</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Edit" Id="UICtl07MakatNumberEdit" FriendlyName="ctl07MakatNumber" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_000_ctl07_SD_000_ctl07MakatNumber</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$000$ctl07$SD_000_ctl07MakatNumber</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="LabeledBy" />
+                      <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">WCPilutTxt</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">style="WIDTH: 70px" id=SD_000_ctl07_SD_0</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">155</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Button" Id="UISD000ctl07SD_000_ctlButton" FriendlyName="SD$000$ctl07$SD_000_ctl07CancelPeilut" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_000_ctl07_SD_000_ctl07CancelPeilut</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$000$ctl07$SD_000_ctl07CancelPeilut</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText" />
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">ImgCheckedPeilut</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">id=SD_000_ctl07_SD_000_ctl07CancelPeilut</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">159</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Button" Id="UISDimgCancel1Button" FriendlyName="SD$imgCancel1" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_imgCancel1</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$imgCancel1</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText" />
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">ImgChecked</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">id=SD_imgCancel1 class=ImgChecked onclic</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">163</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIמערכתקדםשכרDocument6" FriendlyName="מערכת קדם שכר" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>מערכת קדם שכר</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">מערכת קדם שכר</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Modules/Ovdim/WorkCard.aspx</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&amp;WCardDate=17/11/2013&amp;dt=Thu Nov 28 13:43:28 2013</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Button" Id="UIהוסףסידורמיוחדButton" FriendlyName="הוסף סידור מיוחד" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">btnAddMyuchad</PropertyCondition>
+                      <PropertyCondition Name="Name">btnAddMyuchad</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText">הוסף סידור מיוחד</PropertyCondition>
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">btnWorkCardAddSpecial</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">style="WIDTH: 124px" id=btnAddMyuchad cl</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">162</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Edit" Id="UISDlblSidur1Edit" FriendlyName="SD$lblSidur1" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_lblSidur1</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$lblSidur1</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="LabeledBy" />
+                      <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">WCSidurTxt</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">style="WIDTH: 45px" id=SD_lblSidur1 clas</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">148</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Edit" Id="UIתאריךתחילתהסידורהוא0Edit" FriendlyName="תאריך תחילת הסידור הוא: 01/01/0001" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_txtSH1</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$txtSH1</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="LabeledBy" />
+                      <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                      <PropertyCondition Name="Title">תאריך תחילת הסידור הוא: 01/01/0001</PropertyCondition>
+                      <PropertyCondition Name="Class">WCSidurTxtF MEFocus</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">onblur="this.className='WCSidurTxt';" st</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">150</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Edit" Id="UIתאריךגמרהסידורהוא010Edit" FriendlyName="תאריך גמר הסידור הוא: 01/01/0001" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                      <PropertyCondition Name="Id">SD_txtSG1</PropertyCondition>
+                      <PropertyCondition Name="Name">SD$txtSG1</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="LabeledBy" />
+                      <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                      <PropertyCondition Name="Title">תאריך גמר הסידור הוא: 01/01/0001</PropertyCondition>
+                      <PropertyCondition Name="Class">WCSidurTxtF MEFocus</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">onblur="this.className='WCSidurTxt';" st</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">153</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIמערכתקדםשכרDocument7" FriendlyName="מערכת קדם שכר" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>מערכת קדם שכר</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">מערכת קדם שכר</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Modules/Ovdim/WorkCard.aspx</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&amp;WCardDate=17/11/2013&amp;dt=Thu Nov 28 14:30:11 2013</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Edit" Id="UIClnDateEdit" FriendlyName="clnDate" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                      <PropertyCondition Name="Id">clnDate</PropertyCondition>
+                      <PropertyCondition Name="Name">clnDate</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="LabeledBy" />
+                      <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">WorkCardTextBox</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">style="WIDTH: 90px" id=clnDate class=Wor</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">5</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Button" Id="UIהצגButton" FriendlyName="הצג" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">btnRefreshOvedDetails</PropertyCondition>
+                      <PropertyCondition Name="Name">btnRefreshOvedDetails</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText">הצג</PropertyCondition>
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">ImgButtonShowDis</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">style="WIDTH: 54px; HEIGHT: 30px" id=btn</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">13</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIמערכתקדםשכרDocument8" FriendlyName="מערכת קדם שכר" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>מערכת קדם שכר</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">מערכת קדם שכר</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Modules/Ovdim/WorkCard.aspx</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=87903&amp;WCardDate=18/11/2013&amp;dt=Thu Nov 28 14:50:17 2013</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Button" Id="UIעדכןכרטיסButton" FriendlyName="עדכן כרטיס" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="Id">btnUpdateCard</PropertyCondition>
+                      <PropertyCondition Name="Name">btnUpdateCard</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText">עדכן כרטיס</PropertyCondition>
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">btnWorkCardUpadte</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">style="WIDTH: 150px; HEIGHT: 33px" id=bt</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">397</PropertyCondition>
                     </FilterCondition>
                   </AndCondition>
                   <SupportLevel>0</SupportLevel>
