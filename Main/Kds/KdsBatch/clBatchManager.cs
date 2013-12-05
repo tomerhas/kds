@@ -242,7 +242,8 @@ namespace KdsBatch
             errMachalaLeloIshur202 = 202,
             errConenutGriraMealHamutar=203,
             errSidurAsurBeyomShishiLeoved5Yamim204=204,
-            errTipatChalavMealMichsa205=205
+            errTipatChalavMealMichsa205=205,
+            errOvedMutaamLeloShaotNosafot206 = 206
         }
 
         private enum errNesiaMeshtana
@@ -1311,8 +1312,8 @@ namespace KdsBatch
                     if (CheckErrorActive(201)) AvodaByemeyMachala201(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(202)) MachalaLeloIshurwithSidurLetashlum202(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(204)) SidurAsurBeShisiLeoved5Yamim204(ref oSidur, ref dtErrors);
-                    if (CheckErrorActive(205)) CheckMichsatTipatChalav205(ref oSidur, ref dtErrors);  
-
+                    if (CheckErrorActive(205)) CheckMichsatTipatChalav205(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(206)) OvedMutaamLeloShaotNosafot206(ref oSidur, ref dtErrors);  
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
                     int numPrev;
@@ -2054,6 +2055,59 @@ namespace KdsBatch
             }
             return isValid;
         }
+
+
+        private bool OvedMutaamLeloShaotNosafot206(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            bool isValid = true;
+            int iMutamut;
+            int iIsurShaotNosafot = 0;
+            DataRow[] dr;
+            try
+            {
+                if (oOvedYomAvodaDetails.sMutamut.Trim() != "")
+                {
+                    iMutamut = int.Parse(oOvedYomAvodaDetails.sMutamut);
+                    if (iMutamut > 0)
+                    {
+                      
+                        dr = dtMutamut.Select(string.Concat("kod_mutamut=", iMutamut));
+                        if (dr.Length > 0)
+                        {
+                            iIsurShaotNosafot = string.IsNullOrEmpty(dr[0]["isur_shaot_nosafot"].ToString()) ? 0 : int.Parse(dr[0]["isur_shaot_nosafot"].ToString());
+                        }
+
+                        if (iIsurShaotNosafot > 0)
+                        {
+                            if ((oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && 
+                                (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate) || oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+                                    isValid= false;
+                              
+                             if ((oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode()) && 
+                                  clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate))
+                                 isValid = false;
+                        }
+                    }
+                }
+
+                if (!isValid)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "עובד מותאם ללא שעות נוספות - אסורה עבודה בשישי/שבת/חג", enErrors.errOvedMutaamLeloShaotNosafot206.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errOvedMutaamLeloShaotNosafot206.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "errOvedMutaamLeloShaotNosafot206: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+
         private bool CheckAnozerSidurExsits(int iMispar_sidur, DateTime dShat_hatchala, string sug_headrut)
         {
             try
@@ -12907,9 +12961,9 @@ namespace KdsBatch
                         //if (!bSign)
                         //{
                             //תנאי 2
-                            bSign = Condition2Saif11(ref oSidur);
-                            if (!bSign)
-                            {
+                            //bSign = Condition2Saif11(ref oSidur);
+                            //if (!bSign)
+                            //{
                                 //תנאי 3
                                 bSign = Condition3Saif11(ref oSidur, iSidurIndex);
                                 if (!bSign)
@@ -12923,9 +12977,9 @@ namespace KdsBatch
                                         if (!bSign)
                                         {
                                             //תנאי 6
-                                            bSign = Condition6Saif11(ref oSidur);
-                                            if (!bSign)
-                                            {
+                                            //bSign = Condition6Saif11(ref oSidur);
+                                            //if (!bSign)
+                                            //{
                                                 bSign = ConditionSidurHeadrut(ref oSidur);
                                                 if (!bSign)
                                                 {
@@ -12968,11 +13022,11 @@ namespace KdsBatch
                                                     iKodSibaLoLetashlum = 22;
                                                 }
                                                 
-                                            }
-                                            else
-                                            {
-                                                iKodSibaLoLetashlum = 13;
-                                            }
+                                            //}
+                                            //else
+                                            //{
+                                            //    iKodSibaLoLetashlum = 13;
+                                            //}
                                         }
                                         else
                                         {
@@ -12988,11 +13042,11 @@ namespace KdsBatch
                                 {
                                     iKodSibaLoLetashlum = 3;
                                 }
-                            }
-                            else
-                            {
-                                iKodSibaLoLetashlum = 14;
-                            }
+                            //}
+                            //else
+                            //{
+                            //    iKodSibaLoLetashlum = 14;
+                            //}
 
                         //}
                         //else
