@@ -685,6 +685,8 @@ namespace KdsBatch
                     //dtParameters = GetKdsParametrs();
                     dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                     _dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
+                    if (dtMutamut == null)
+                        dtMutamut = oUtils.GetCtbMutamut();
                     _dtIdkuneyRashemet = clDefinitions.GetIdkuneyRashemet(iMisparIshi, dCardDate);
                     _dtIdkuneyRashemet.Columns.Add("update_machine", System.Type.GetType("System.Int32"));
                     //Get Meafyeny Ovdim
