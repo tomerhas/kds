@@ -1907,7 +1907,7 @@ namespace KdsBatch
             {
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.iMisparSidur ==99810 && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode().ToString())
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.iSidurLebdikatRezefMachala>0 && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode().ToString())
                     {
                         dTaarichKodem=_dCardDate.AddDays(-1);
                         iSugYomKodem = clGeneral.GetSugYom(dtYamimMeyuchadim, dTaarichKodem, _dtSugeyYamimMeyuchadim);//, _oMeafyeneyOved.iMeafyen56);          
@@ -2068,7 +2068,7 @@ namespace KdsBatch
             DataRow[] dr;
             try
             {
-                if (oOvedYomAvodaDetails.sMutamut.Trim() != "")
+                if (oSidur.iLoLetashlum == 0 &&  oOvedYomAvodaDetails.sMutamut.Trim() != "")
                 {
                     iMutamut = int.Parse(oOvedYomAvodaDetails.sMutamut);
                     if (iMutamut > 0)
@@ -2117,7 +2117,7 @@ namespace KdsBatch
                 foreach (clSidur oSidur in htEmployeeDetails.Values)
                 {
                     if (oSidur.iMisparSidur != iMispar_sidur && oSidur.dFullShatHatchala != dShat_hatchala && oSidur.iLoLetashlum == 0)
-                        if (!oSidur.bHeadrutTypeKodExists || (oSidur.bHeadrutTypeKodExists && oSidur.sHeadrutTypeKod !=sug_headrut))
+                        if (!oSidur.bHeadrutTypeKodExists || (oSidur.bHeadrutTypeKodExists && oSidur.iSidurLebdikatRezefMachala > 0  && oSidur.sHeadrutTypeKod != sug_headrut))
                             return true;
                 }
                 return false;
