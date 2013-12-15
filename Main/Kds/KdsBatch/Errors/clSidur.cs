@@ -112,6 +112,7 @@ namespace KdsBatch
         public bool bElement2HovaExists; //מאפיין 94
         public bool bElement3HovaExists; //מאפיין 95
         public bool bSidurAsurBeyomShishi;//102
+        public int iSidurLebdikatRezefMachala;//103
         public bool bMatalaKlalitLeloRechev;//101
         public int iNitanLedaveachBemachalaAruca;
         public int iShayahLeyomKodem;
@@ -378,6 +379,7 @@ namespace KdsBatch
             bIsYetziaTkina_err198 = bool.Parse(dr["yatzia_tkina_err198"].ToString());
             bSidurAsurBeyomShishi = !(String.IsNullOrEmpty(dr["sidur_asur_beyom_shishi"].ToString()));
             bMatalaKlalitLeloRechev = !(String.IsNullOrEmpty(dr["matala_klalit_lelo_rechev"].ToString()));
+            iSidurLebdikatRezefMachala = System.Convert.IsDBNull(dr["lebdikat_rezef_machala"]) ? 0 : int.Parse(dr["lebdikat_rezef_machala"].ToString());
             if (bSidurMyuhad)
             {
                 bSidurRetizfut = IsSidurRetzifut(iMisparSidur);
@@ -739,6 +741,7 @@ namespace KdsBatch
                 bHovaMisparMachsan = !(String.IsNullOrEmpty(dr["hova_ledaveach_mispar_machsan"].ToString()));
                 bSidurAsurBeyomShishi = !(String.IsNullOrEmpty(dr["sidur_asur_beyom_shishi"].ToString()));
                 bMatalaKlalitLeloRechev = !(String.IsNullOrEmpty(dr["matala_klalit_lelo_rechev"].ToString()));
+                iSidurLebdikatRezefMachala = System.Convert.IsDBNull(dr["lebdikat_rezef_machala"]) ? 0 : int.Parse(dr["lebdikat_rezef_machala"].ToString());
                 bSidurRetizfut = IsSidurRetzifut(iMisparSidur);
                 bSidurNahagut = IsSidurNahagut();
                 if (!bSidurNahagut)
@@ -837,6 +840,7 @@ namespace KdsBatch
             bSidurNotInShabtonKodExists = !(String.IsNullOrEmpty(dr["sidur_not_in_shabton_kod"].ToString()));
             iNitanLedaveachBemachalaAruca = System.Convert.IsDBNull(dr["nitan_ledaveach_bmachala_aruc"]) ? 0 : int.Parse(dr["nitan_ledaveach_bmachala_aruc"].ToString());
             bSidurAsurBeyomShishi = !(String.IsNullOrEmpty(dr["sidur_asur_beyom_shishi"].ToString()));
+            iSidurLebdikatRezefMachala = System.Convert.IsDBNull(dr["lebdikat_rezef_machala"]) ? 0 : int.Parse(dr["lebdikat_rezef_machala"].ToString());
             bMatalaKlalitLeloRechev = !(String.IsNullOrEmpty(dr["matala_klalit_lelo_rechev"].ToString()));
             sZakayMichutzLamichsa = dr["zakay_michutz_lamichsa"].ToString(); //מאפיין 25
                sKizuzAlPiHatchalaGmar = dr["kizuz_al_pi_hatchala_gmar"].ToString();
