@@ -1815,7 +1815,7 @@ namespace KdsBatch
                             if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYomKodem, dTaarichKodem))
                                 dTaarichKodem = dTaarichKodem.AddDays(-1);
                             if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
-                                (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                                (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
                                 dTaarichKodem = dTaarichKodem.AddDays(-1);
                             dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
                             dr = dtSidurim.Select("mispar_sidur=" + oSidur.iMisparSidur);
@@ -1865,7 +1865,7 @@ namespace KdsBatch
                         if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
                         if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
-                            (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                            (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
                         dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
                         dr = dtSidurim.Select("mispar_sidur=" + oSidur.iMisparSidur);
@@ -1914,7 +1914,7 @@ namespace KdsBatch
                         if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
                         if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
-                            (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) )
+                            (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) )
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
                         dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
                         dr = dtSidurim.Select("mispar_sidur=" + oSidur.iMisparSidur);
