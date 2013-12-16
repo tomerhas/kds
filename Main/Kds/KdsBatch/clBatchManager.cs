@@ -1822,11 +1822,25 @@ namespace KdsBatch
                             if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem) ||
                                 (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
                                 (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+                            {
                                 dTaarichKodem = dTaarichKodem.AddDays(-1);
 
-                            dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
-                            if (CheckAnozerSidurExsits(oSidur) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enTeuna.GetHashCode().ToString(), oSidur.iMisparSidur))
-                                bError = true;
+                                dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
+                                if (CheckAnozerSidurExsits(oSidur) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enTeuna.GetHashCode().ToString(), oSidur.iMisparSidur))
+                                    bError = true;
+                            }
+
+
+                            if (!bError)
+                            {
+                                if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
+                                   (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                                    dTaarichKodem = dTaarichKodem.AddDays(-1);
+
+                                dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
+                                if (CheckAnozerSidurExsits(oSidur) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enTeuna.GetHashCode().ToString(), oSidur.iMisparSidur))
+                                    bError = true;
+                            }
 
                         }
                     }
@@ -1878,11 +1892,24 @@ namespace KdsBatch
                             if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem) ||
                                 (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
                                 (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+                            {
                                 dTaarichKodem = dTaarichKodem.AddDays(-1);
 
-                            dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
-                            if (CheckAnozerSidurExsits(oSidur) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString(), oSidur.iMisparSidur))
-                                bError = true;
+                                dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
+                                if (CheckAnozerSidurExsits(oSidur) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString(), oSidur.iMisparSidur))
+                                    bError = true;
+                            }
+
+                            if (!bError)
+                            {
+                                if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
+                                   (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                                    dTaarichKodem = dTaarichKodem.AddDays(-1);
+
+                                dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
+                                if (CheckAnozerSidurExsits(oSidur) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString(), oSidur.iMisparSidur))
+                                    bError = true;
+                            }
 
                         }
                     }
@@ -1936,11 +1963,23 @@ namespace KdsBatch
                             if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem) ||
                                 (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
                                 (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+                            {
                                 dTaarichKodem = dTaarichKodem.AddDays(-1);
-
                                 dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
                                 if (CheckAnozerSidurExsits(oSidur) && CheckMachalaExsitsYomKodem(dtSidurim))
                                     bError = true;
+                            }
+
+                            if (!bError)
+                            {
+                                 if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
+                                    (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                                     dTaarichKodem = dTaarichKodem.AddDays(-1);
+                                 
+                                dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
+                                 if (CheckAnozerSidurExsits(oSidur) && CheckMachalaExsitsYomKodem(dtSidurim))
+                                     bError = true;
+                            }
                             
                         }
                         
