@@ -1797,42 +1797,49 @@ namespace KdsBatch
         {
             //בדיקה ברמת סידור         
             bool isValid = true;
-            int iSugYomKodem;
             bool bError = false;
             DateTime dTaarichKodem;
             DataTable dtSidurim;
-            clWorkCard oWorkCard = new clWorkCard();
-            DataRow[] dr;
+            clDefinitions oDefinition = new clDefinitions();
             try
             {
-               
-                    if (oSidur.bSidurMyuhad)
-                    {//סידור מיוחד
-                        if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enTeuna.GetHashCode().ToString())
+                if (oSidur.bSidurMyuhad)
+                {//סידור מיוחד
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enTeuna.GetHashCode().ToString()
+                        && (oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iKodSibaLoLetashlum == 22)))
+                    {
+                        dTaarichKodem = _dCardDate.AddDays(-1);
+                        if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem) ||
+                            dTaarichKodem.DayOfWeek == DayOfWeek.Friday)
                         {
-                            dTaarichKodem = _dCardDate.AddDays(-1);
-                            iSugYomKodem = clGeneral.GetSugYom(dtYamimMeyuchadim, dTaarichKodem, _dtSugeyYamimMeyuchadim);//, _oMeafyeneyOved.iMeafyen56);
-                            if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYomKodem, dTaarichKodem))
-                                dTaarichKodem = dTaarichKodem.AddDays(-1);
-                            if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
-                                (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
-                                dTaarichKodem = dTaarichKodem.AddDays(-1);
-                            dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
-                            dr = dtSidurim.Select("mispar_sidur=" + oSidur.iMisparSidur);
-                            if (dr.Length > 0 && CheckAnozerSidurExsits(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oSidur.sHeadrutTypeKod))
+                            dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
+                            if (CheckAnozerSidurExsits(oSidur) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enTeuna.GetHashCode().ToString(), oSidur.iMisparSidur))
                                 bError = true;
                         }
-                    }
 
-                    if (bError)
-                    {
-                        drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "לא יום ראשון של תאונה - עבודה ותאונה באותו יום", enErrors.errAvodaByemeyTeuna199.GetHashCode());
-                        dtErrors.Rows.Add(drNew);
+                        if (!bError)
+                        {
+                            if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem) ||
+                                (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
+                                (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+                                dTaarichKodem = _dCardDate.AddDays(-1);
 
-                        isValid = false;
+                            dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
+                            if (CheckAnozerSidurExsits(oSidur) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enTeuna.GetHashCode().ToString(), oSidur.iMisparSidur))
+                                bError = true;
+
+                        }
                     }
-                
+                }
+
+                if (bError)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "לא יום ראשון של תאונה - עבודה ותאונה באותו יום", enErrors.errAvodaByemeyTeuna199.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+
+                    isValid = false;
+                }                
             }
             catch (Exception ex)
             {
@@ -1845,32 +1852,39 @@ namespace KdsBatch
 
         private bool AvodaByemeyEvel200(ref clSidur oSidur, ref DataTable dtErrors)
         {
-            //בדיקה ברמת סידור         
             bool isValid = true;
             bool bError = false;
-            int iSugYomKodem;
-            DataTable dtSidurim;
             DateTime dTaarichKodem;
-            clWorkCard oWorkCard = new clWorkCard();
-            DataRow[] dr;
+            DataTable dtSidurim;
+            clDefinitions oDefinition = new clDefinitions();
             try
             {
-                
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString())
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString()
+                        && (oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iKodSibaLoLetashlum == 22)))
                     {
                         dTaarichKodem = _dCardDate.AddDays(-1);
-                        iSugYomKodem = clGeneral.GetSugYom(dtYamimMeyuchadim, dTaarichKodem, _dtSugeyYamimMeyuchadim);//, _oMeafyeneyOved.iMeafyen56);
-                        if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
-                            dTaarichKodem = dTaarichKodem.AddDays(-1);
-                        if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
-                            (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
-                            dTaarichKodem = dTaarichKodem.AddDays(-1);
-                        dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
-                        dr = dtSidurim.Select("mispar_sidur=" + oSidur.iMisparSidur);
-                        if (dr.Length > 0 && CheckAnozerSidurExsits(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oSidur.sHeadrutTypeKod))
-                            bError = true;
+                        if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem) ||
+                            dTaarichKodem.DayOfWeek == DayOfWeek.Friday)
+                        {
+                            dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
+                            if (CheckAnozerSidurExsits(oSidur) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString(), oSidur.iMisparSidur))
+                                bError = true;
+                        }
+
+                        if (!bError)
+                        {
+                            if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem) ||
+                                (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
+                                (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+                                dTaarichKodem = _dCardDate.AddDays(-1);
+
+                            dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
+                            if (CheckAnozerSidurExsits(oSidur) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString(), oSidur.iMisparSidur))
+                                bError = true;
+
+                        }
                     }
                 }
 
@@ -1882,7 +1896,6 @@ namespace KdsBatch
 
                     isValid = false;
                 }
-                    
             }
             catch (Exception ex)
             {
@@ -1898,28 +1911,39 @@ namespace KdsBatch
             //בדיקה ברמת סידור         
             bool isValid = true;
             bool bError = false;
-            int iSugYomKodem;
             DataTable dtSidurim;
             DateTime dTaarichKodem;
-            clWorkCard oWorkCard = new clWorkCard();
-            DataRow[] dr;
+            clDefinitions oDefinition = new clDefinitions();
             try
             {
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.iSidurLebdikatRezefMachala>0 && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode().ToString())
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.iSidurLebdikatRezefMachala>0 && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode().ToString()
+                        && (oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iKodSibaLoLetashlum  ==22)))
                     {
-                        dTaarichKodem=_dCardDate.AddDays(-1);
-                        iSugYomKodem = clGeneral.GetSugYom(dtYamimMeyuchadim, dTaarichKodem, _dtSugeyYamimMeyuchadim);//, _oMeafyeneyOved.iMeafyen56);          
-                        if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem))
-                            dTaarichKodem = dTaarichKodem.AddDays(-1);
-                        if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
-                            (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) )
-                            dTaarichKodem = dTaarichKodem.AddDays(-1);
-                        dtSidurim = oWorkCard.GetSidurimLeoved(_iMisparIshi, dTaarichKodem);
-                        dr = dtSidurim.Select("mispar_sidur=" + oSidur.iMisparSidur);
-                        if (dr.Length > 0 && CheckAnozerSidurExsits(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oSidur.sHeadrutTypeKod))
-                            bError = true;
+                        dTaarichKodem=_dCardDate.AddDays(-1);   
+                        if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem) ||
+                            dTaarichKodem.DayOfWeek == DayOfWeek.Friday )
+                          //  (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
+                        {
+                            dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
+                            if (CheckAnozerSidurExsits(oSidur) && CheckMachalaExsitsYomKodem(dtSidurim))
+                                bError = true;
+                        }
+
+                        if (!bError)
+                        {
+                            if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, dTaarichKodem) ||
+                                (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
+                                (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+                                    dTaarichKodem = _dCardDate.AddDays(-1);
+
+                                dtSidurim = oDefinition.GetOvedDetails(_iMisparIshi, dTaarichKodem);
+                                if (CheckAnozerSidurExsits(oSidur) && CheckMachalaExsitsYomKodem(dtSidurim))
+                                    bError = true;
+                            
+                        }
+                        
                     }
                 }
 
@@ -2110,15 +2134,57 @@ namespace KdsBatch
             return isValid;
         }
 
-        private bool CheckAnozerSidurExsits(int iMispar_sidur, DateTime dShat_hatchala, string sug_headrut)
+        private bool CheckSidurHeadrutExsits(DataTable dtSidurim, string sug_headrut, int imispar_sidur)
+        {
+            clSidur oSidur;
+            try
+            {
+                foreach (DataRow dr in dtSidurim.Rows)
+                {
+                    oSidur = new clSidur();
+                    oSidur.AddEmployeeSidurim(dr, true);
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.sHeadrutTypeKod == sug_headrut && oSidur.iMisparSidur == imispar_sidur 
+                           && (oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iKodSibaLoLetashlum == 22)))
+                        return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+      
+        private bool CheckAnozerSidurExsits(clSidur oSidur)
         {
             try
             {
-                foreach (clSidur oSidur in htEmployeeDetails.Values)
+                foreach (clSidur sidur in htEmployeeDetails.Values)
                 {
-                    if (oSidur.iMisparSidur != iMispar_sidur && oSidur.dFullShatHatchala != dShat_hatchala && oSidur.iLoLetashlum == 0)
-                        if (!oSidur.bHeadrutTypeKodExists || (oSidur.bHeadrutTypeKodExists && oSidur.iSidurLebdikatRezefMachala > 0  && oSidur.sHeadrutTypeKod != sug_headrut))
+                    if (oSidur.iMisparSidur != sidur.iMisparSidur && oSidur.dFullShatHatchala != sidur.dFullShatHatchala && sidur.iLoLetashlum == 0)
+                       // if (!oSidur.bHeadrutTypeKodExists || (oSidur.bHeadrutTypeKodExists && oSidur.iSidurLebdikatRezefMachala > 0 && oSidur.sHeadrutTypeKod != sug_headrut))
                             return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private bool CheckMachalaExsitsYomKodem(DataTable dtSidurim)
+        {
+            clSidur oSidur;
+            try
+            {
+
+                foreach (DataRow dr in dtSidurim.Rows)
+                {
+                    oSidur = new clSidur();
+                    oSidur.AddEmployeeSidurim(dr, true);
+                   if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.iSidurLebdikatRezefMachala > 0 && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode().ToString()
+                        && (oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iKodSibaLoLetashlum == 22)))
+                       return true;
                 }
                 return false;
             }
