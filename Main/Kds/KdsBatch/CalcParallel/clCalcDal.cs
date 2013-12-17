@@ -517,13 +517,15 @@ namespace KdsBatch
                 names += ",Peiluyot_Ovdim";
                 dal.AddParameter("p_Cur_Mutamut", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Ctb_Mutamut";
+                dal.AddParameter("p_Cur_Michsat_sidur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Michsat_Sidur_Meafyen";
                 dal.AddParameter("p_Cur_Matzav", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Matzav_Ovdim";
                 dal.AddParameter("p_Cur_Buses_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Buses_Details";
                 dal.AddParameter("p_Cur_Kavim_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Kavim_Details";
-
+                
                 dal.AddParameter("p_tar_me", ParameterType.ntOracleDate, TarMe, ParameterDir.pdInput);
                 dal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, TarAd, ParameterDir.pdInput);
 

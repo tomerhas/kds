@@ -7,6 +7,7 @@ using KdsLibrary.DAL;
 using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary;
+using KdsLibrary.Utils;
 
 namespace KdsBatch
 {
@@ -61,6 +62,7 @@ namespace KdsBatch
                     if (!objOved.bChishuvYom)
                     {                   
                         SimunSidurimLoLetashlum();
+                       // SimunSidurimLoLetashlumByMeafyen();
                     }
 
                     
@@ -597,6 +599,80 @@ namespace KdsBatch
             }
         }
 
+        private void SimunSidurimLoLetashlumByMeafyen()
+        {
+            DataRow[] drSidurim, drMeafyeneyOved;
+            DataTable dtMeafyen;
+            string lstSidurim="";
+            float fSumDakotNochehut, iMichsa;
+            int iMeafyen, iOutMichsa, iMisparSidur;
+            DateTime dTaarich, dShatHatchala;
+            CalcSidur oSidur;
+            CalcPeilut oPeilut;
+            try
+            {
+                oSidur = new CalcSidur(objOved);
+                oPeilut = new CalcPeilut(objOved);
+
+                dtMeafyen = objOved.oGeneralData.dtMichstSidurByMeafyenAll.SelectDistinct("Kod_Meafyen", "Kod_Meafyen");
+                foreach (DataRow dr in dtMeafyen.Rows)
+                {
+                    lstSidurim = ""; fSumDakotNochehut = 0;
+                    iMeafyen = int.Parse(dr["Kod_Meafyen"].ToString());
+
+                    drMeafyeneyOved = objOved.oGeneralData.dtMeafyenyOvedAll.Select("mispar_ishi=" + objOved.Mispar_ishi + " kod_meafyen= " + iMeafyen);
+                    if (drMeafyeneyOved.Length > 0)
+                    {
+                        drSidurim = objOved.oGeneralData.dtMichstSidurByMeafyenAll.Select("Kod_Meafyen=" + iMeafyen);
+                        iMichsa = float.Parse(drSidurim[0]["michsa"].ToString());
+                        foreach (DataRow sidur in drSidurim)
+                        {
+                            lstSidurim = sidur["mispar_sidur"] + ",";
+                        }
+                        lstSidurim = lstSidurim.Substring(0, lstSidurim.Length - 1);
+                        drSidurim = objOved.DtYemeyAvoda.Select("mispar_sidur in " + lstSidurim + " and Lo_letashlum =0", "TAARICH ASC");
+
+                        for (int J = 0; J < drSidurim.Length; J++)
+                        {
+                            dTaarich = DateTime.Parse(drSidurim[J]["taarich"].ToString());
+                            dShatHatchala = DateTime.Parse(drSidurim[J]["shat_hatchala_sidur"].ToString());
+                            objOved.Taarich = dTaarich;
+                            iOutMichsa = int.Parse(drSidurim[J]["out_michsa"].ToString());
+                            iMisparSidur = int.Parse(drSidurim[J]["mispar_sidur"].ToString());
+
+                            if (!oCalcBL.CheckOutMichsa(objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchala, iOutMichsa))
+                            {
+                                drSidurim[J]["Lo_letashlum"] = -1;
+                                if (fSumDakotNochehut >= iMichsa)
+                                {
+                                    drSidurim[J]["Lo_letashlum"] = 1;
+                                    drSidurim[J]["KOD_SIBA_LO_LETASHLUM"] = 19;
+                                }
+                                else
+                                {
+                                    //oPeilut.dTaarich = dTaarich;
+                                    objOved.Taarich = dTaarich;
+                                    SetNetunimLeYom();
+                                    fSumDakotNochehut += oSidur.CalcRechiv1BySidur(drSidurim[J], 0, oPeilut);
+                                }
+                            }
+                        }
+                    }
+                }
+                drSidurim = null;
+                objOved.DtYemeyAvoda.Select(null, "Lo_letashlum");
+                drSidurim = objOved.DtYemeyAvoda.Select("Lo_letashlum=-1", "");
+                for (int I = 0; I < drSidurim.Length; I++)
+                {
+                    drSidurim[I]["Lo_letashlum"] = 0;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         private bool HaveSidurimNosafim(int iMisparSidur, DateTime dTaarich)
         {
             DataRow[] drSidurimNosafim;
