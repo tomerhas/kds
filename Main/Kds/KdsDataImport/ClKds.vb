@@ -3847,12 +3847,14 @@ Public Class ClKds
     Public Sub TryKdsFilePundakim()
 
         'in web.config & app.config key="KdsInputFileNamePundakim" default value="Pundakim*.TXT"
-        Dim FileName As String = ConfigurationSettings.AppSettings("KdsInputFileNamePundakim")
+        Dim FileName As String = ConfigurationSettings.AppSettings("KdsInputFileNamePundakim") 'collectmodem.dat
         If Trim(FileName) = "" Then
-            FileName = "Pundakim*.DAT"
+            FileName = "collectmodem.dat" 'Pundakim*.DAT"
         End If
-        Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePath") '"\\kdstst01\Files\"
-        Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPath") '"inkds_old\"
+        'Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePath") '"\\kdstst01\Files\"
+        'Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPath") '"inkds_old\"
+        Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePathPundakim") '"\\kiwi\"
+        Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPathPundakim") '"synel\"
         Dim FileNameOld As String
         Dim MyFile As String
         Dim ShaonimNumber As Integer
@@ -3861,7 +3863,7 @@ Public Class ClKds
         Dim ErrorCounter As Integer = 0
 
         Try
-            MyFile = Dir(InPath & FileName)
+            MyFile = Dir(InPath & SubFolder & FileName)
             If Not MyFile = "" Then
                 ShaonimNumber = oBatch.InsertProcessLog(2, 2, KdsLibrary.BL.RecordStatus.Wait, "Pundakim", 0)
 
