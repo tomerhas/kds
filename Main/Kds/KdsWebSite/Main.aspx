@@ -26,11 +26,11 @@
                             <table cellspacing="4px" border="0" cellpadding="1">
                                  <tr><td colspan="6" style="height:6px;"></td></tr>
                                 <tr>
-                                     <td> <asp:Button Text=" כרטיסי&#10; עבודה&#10;לעובד " ID="btnUpdWorkCard" runat="server" CssClass="opening-btn" PostBackUrl="~/Modules/Ovdim/EmployeeCards.aspx" /></td>
+                                     <td> <asp:Button Text=" כרטיסי עבודה לעובד " ID="btnUpdWorkCard" runat="server" CssClass="opening-btn" PostBackUrl="~/Modules/Ovdim/EmployeeCards.aspx" /></td>
                                      <td style="width:9px;"></td>
-                                    <td> <asp:Button Text="סיכום&#10; חודשי   " ID="btnMonthlySum" runat="server" CssClass="opening-btn" PostBackUrl="~/Modules/Ovdim/EmployeTotalMonthly.aspx" /></td>
+                                    <td> <asp:Button Text= " סיכום חודשי " ID="btnMonthlySum" runat="server" CssClass="opening-btn" PostBackUrl="~/Modules/Ovdim/EmployeTotalMonthly.aspx" /></td>
                                     <td style="width:9px;"></td>
-                                    <td> <asp:Button Text="  דו''ח&#10; נוכחות  " ID="btnInquiryCalc" runat="server" CssClass="opening-btn"  PostBackUrl="~/Modules/Reports/ReportFilters.aspx?RdlName=Presence"/></td>
+                                    <td> <asp:Button Text=" דו''ח נוכחות " ID="btnInquiryCalc" runat="server" CssClass="opening-btn"  PostBackUrl="~/Modules/Reports/ReportFilters.aspx?RdlName=Presence"/></td>
                                </tr>
                                 <tr><td colspan="6" style="height:6px;"></td></tr>
                              </table>

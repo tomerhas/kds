@@ -250,8 +250,7 @@ function ChangeKeyCode()
    <input type="hidden" id="Params" name="Params"  runat="server" />
    <input type="hidden" id="InputHiddenBack" name="InputHiddenBack" value="false" runat="server" />
    <script language="javascript" type="text/javascript">
-    function window.onload()
-    {
+     window.onload = function () {  
        SetTextBox();
     }
     function SetTextBox() {

@@ -212,6 +212,7 @@ namespace KdsBatch
         public DateTime dShaaGrirotChol; //-  274    
         public DateTime dShaaGrirotErevChagShishi; // - 275
         public DateTime dTaarichHafalatMichsot; // - 277
+        public DateTime dTaarichmichsatHachanatMechona; // - 278
 
         public float fBasisLechishuvPremia; //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
         public float fMichsatSaotChodshitET; //503 -אגד תעבורה- מכסת שעות חודשית 
@@ -1016,6 +1017,10 @@ namespace KdsBatch
                 // 277
                 sTmp = GetOneParam(277, dCardDate);
                 dTaarichHafalatMichsot = String.IsNullOrEmpty(sTmp) ? DateTime.MaxValue : DateTime.Parse(sTmp);
+        
+                    // 278
+                sTmp = GetOneParam(278, dCardDate);
+                dTaarichmichsatHachanatMechona = String.IsNullOrEmpty(sTmp) ? DateTime.MaxValue : DateTime.Parse(sTmp);
 
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);
