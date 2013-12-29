@@ -308,7 +308,7 @@ function ChangeKeyCode()
  }
     function onChange_FromDate() {
       //  debugger;
-        var Param100 = ($('[id$=Params]')[0]).attributes["Param100"].value;// document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
+        var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes["Param100"].value;//($('[id$=Params]')[0]).attributes["Param100"].value;// document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
         var StartDateSplit = document.getElementById('ctl00_KdsContent_clnFromDate').value.split('/');
         var StartDate = new Date(StartDateSplit[2], StartDateSplit[1]-1, StartDateSplit[0], 0, 0, 0, 0);
         var minDate = new Date();
