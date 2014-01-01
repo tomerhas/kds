@@ -3087,6 +3087,18 @@ namespace KdsBatch
                                         fErechRechiv = 0;
                                     }
                                 }
+
+                                if ((objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode()) ||
+                                     (fErechRechiv < 1 && fDakotNochehut > 0 && !(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30)))
+                                {
+                                    if(fErechRechiv > 0) 
+                                    {
+                                        addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), fErechRechiv);
+                                        fErechRechiv = 0;
+                                    }   
+                                }
+
+                                
                                 fErechRechiv = float.Parse(Math.Round(fErechRechiv,2).ToString());
                                 addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), fErechRechiv, fKizuzMeheadrut);
                             }

@@ -17,6 +17,8 @@
     <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Button" />
                 <KdsCalendar:KdsCalendar runat="server" ID="KdsCalendar1"  AutoPostBack="true" OnTextChanged="TextChange"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>           
              </td>
+
+                <asp:Button id="Button6" runat="server" OnClick="OnClick_ShinuyHR" class="ImgButtonSearch" Width="120px" Text="שינוי hr" />
             </tr>
          </table>
 <%--        <table>

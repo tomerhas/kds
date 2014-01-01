@@ -269,7 +269,7 @@ function ChangeKeyCode()
     }
     function CheckSnif()
     {
-        debugger;
+       // debugger;
         var sSnifName = document.getElementById("ctl00_KdsContent_txtSnif").value;
        // alert(sSnifName);
         //document.getElementById("ctl00_KdsContent_btnSearch").disabled = true;

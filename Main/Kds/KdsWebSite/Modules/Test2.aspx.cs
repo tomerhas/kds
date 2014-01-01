@@ -50,13 +50,16 @@ public partial class Modules_Test2 : System.Web.UI.Page
     //   // oBatchManager.MainInputData(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
     //   // oBatchManager.MainOvedErrors(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
     }
-    
-    
-    //protected void OnClick_ShinuyHR(object sender, EventArgs e)
-    //{
-    //    KdsBatch.HrWorkersChanges.clMain obClManager = new KdsBatch.HrWorkersChanges.clMain();
-    //    obClManager.HRChangesMatzavPirteyBrerotmechdal();
-    //}
+
+
+    protected void OnClick_ShinuyHR(object sender, EventArgs e)
+    {
+        //KdsBatch.HrWorkersChanges.clMain obClManager = new KdsBatch.HrWorkersChanges.clMain();
+        //obClManager.HRChangesMatzavPirteyBrerotmechdal();
+
+        KdsBatch.HrWorkersChanges.clMain obClManager = new KdsBatch.HrWorkersChanges.clMain();
+        obClManager.HRChangesMeafyenim();
+    }
 
     //protected void OnClick_ShinuyMeafyenim(object sender, EventArgs e)
     //{
