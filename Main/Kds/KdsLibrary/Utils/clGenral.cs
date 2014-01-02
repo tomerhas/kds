@@ -1042,6 +1042,9 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public enum enKodMaamad
         {
             ChaverSofi = 11,
+            MoamadB=12,
+            MoamadA=13,
+            GimlayTakzivi=15,
             ChozeMeyuchad = 23,
             SachirKavua = 22,
             Sachir12 = 21,
