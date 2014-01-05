@@ -2956,6 +2956,7 @@ namespace KdsBatch
             DataRow[] rowSidur;
             string sRechivim;
             bool bflag = false;
+            bool bMutaam = false;
             bool bMaamadChange = false;
            // clPirteyOved oEzerPratim; 
             try
@@ -2999,6 +3000,7 @@ namespace KdsBatch
                                 {
                                     if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
                                     {
+                                        bMutaam = true;
                                         if (objOved.objMeafyeneyOved.iMeafyen33 == 1)
                                         {
                                             fErechRechiv = ((fMichsaYomit - fDakotNochehut) / fMichsaYomit);
@@ -3037,7 +3039,7 @@ namespace KdsBatch
                                      (objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 8 || objOved.objPirteyOved.iSibotMutamut == 1 ) ))
                                 {
                                     fErechRechiv = (fMichsaYomit - objOved.objPirteyOved.iZmanMutamut) / fMichsaYomit;
-                                
+                                    bMutaam = true;
                                     if ((objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && objOved.objPirteyOved.iIshurKeren > 0)
                                     {
                                         fErech60 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMachla.GetHashCode(), objOved.Taarich);
@@ -3080,7 +3082,17 @@ namespace KdsBatch
                                 
 
                                 /**********************/
+
                                 fErechRechiv = float.Parse(Math.Round(fErechRechiv, 2).ToString());
+
+                                //if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iZmanMutamut > 0 && objOved.objPirteyOved.iMutamut >0)  //(objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7) &&
+                                //  //  (objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22 ||
+                                //  //  objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 8 ||
+                                //   // objOved.objPirteyOved.iMutamBitachon == 6))
+                                //{
+                                //    fErechRechiv = 0;
+                                //}
+
                                 if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
                                 {
                                     if ((fErechRechiv == 1 || (bflag && fErechRechiv==float.Parse("0.6")) ||
@@ -3101,7 +3113,7 @@ namespace KdsBatch
                                     bMaamadChange = true;
 
                                 if ((objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode()) ||
-                                     (bMaamadChange && fErechRechiv < 1 && fDakotNochehut > 0 && !(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30)))
+                                     (!bMutaam && bMaamadChange && fErechRechiv < 1 && fDakotNochehut > 0 && !(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30)))
                                 {
                                     if(fErechRechiv > 0) 
                                     {
