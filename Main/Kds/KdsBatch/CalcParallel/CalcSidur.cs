@@ -6681,7 +6681,7 @@ namespace KdsBatch
             dShatHatchalaSidur = DateTime.MinValue;
             iMisparSidur = 0;
             int iSugSidur, iMaxDakot=30;
-            bool bYeshSidur;
+            bool bYeshSidur,bEggdT=false;
             string sIsuk, sQury;
             DataRow[] drPeiluyot;
             // DataTable dtPeiluyot;
@@ -6692,7 +6692,9 @@ namespace KdsBatch
                 fTemp = 0;
                 _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null", "shat_hatchala_sidur asc");
                 sSidurimLerchiv = GetSidurimMeyuchRechiv(clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode());
-
+                
+                if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30)
+                    bEggdT=true;
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
                     fZmanAruchatTzharimSidur = 0;
@@ -6702,7 +6704,7 @@ namespace KdsBatch
                     dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
                     dShatHatchalaLetaslum = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
                     fErech = 0;
-                    if (!clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
+                    if (bEggdT || !clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
                     {
                         if ((iMisparSidur == 99204 || iMisparSidur == 99224) && objOved.objPirteyOved.iIsuk == 420)
                         {
@@ -6760,7 +6762,8 @@ namespace KdsBatch
                             fZmanAruchatTzharim += fTemp;
                             //     fZmanAruchatTzharim += fZmanAruchatTzharimSidur;
                         }
-                        fErech = fErech - fTemp;
+                        if (!bEggdT)
+                            fErech = fErech - fTemp;
                         addRowToTable(clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
                            
                     }

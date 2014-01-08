@@ -3069,7 +3069,7 @@ namespace KdsBatch
                                     }
                                     if (fMichsaYomit > 0 && fMichsaYomit > fDakotNochehut && fDakotNochehut > 0 ) //|| (objOved.SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode())))
                                     {
-                                        fKizuzMeheadrut = (fMichsaYomit - fDakotNochehut) / 60;
+                                        fKizuzMeheadrut = fMichsaYomit - fDakotNochehut;
                                     }
 
                                 }
@@ -7383,7 +7383,8 @@ namespace KdsBatch
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), objOved.Taarich);
 
               //  fZmanAruchatTzharayim = Math.Min(fZmanAruchatTzharayim, 30 - objOved.fTotalAruchatZaharimForDay); ;
-                fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
+                if  (objOved.objPirteyOved.iDirug != 85 || objOved.objPirteyOved.iDarga != 30) 
+                    fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
                 objOved.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
 
                 addRowToTable(clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), fSumRechiv);
