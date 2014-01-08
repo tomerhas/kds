@@ -3096,7 +3096,7 @@ namespace KdsBatch
                                 if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
                                 {
                                     if ((fErechRechiv == 1 || (bflag && fErechRechiv==float.Parse("0.6")) ||
-                                        (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() && fErechRechiv == (1 * objOved.fMekademNipuach)))
+                                        (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() && fErechRechiv == float.Parse(Math.Round((1 * objOved.fMekademNipuach), 2).ToString()) ))
                                         && objOved.objMatzavOved.iKod_Headrut == 1)
                                     {
                                         addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), fErechRechiv, fKizuzMeheadrut);
@@ -7982,7 +7982,7 @@ namespace KdsBatch
                                            objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.MoamadA.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.GimlayTakzivi.GetHashCode() ||
                                            objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.Sachir12.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.SachirKavua.GetHashCode() ||
                                            objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.SachirZmani.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.OvedBechoze.GetHashCode() ||
-                                           objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode())
+                                           objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
                                     addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), dTarMe, 1);
                                 else
                                     if (objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.Aray.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode() ||

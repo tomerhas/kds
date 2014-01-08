@@ -165,7 +165,7 @@ namespace KdsBatch
               fErech = GetErechRechiv(clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), "erech_rechiv_a") / 60;
               if (fErech > 0)
               {
-                  CreateDataEtToRechiv("085", fErech, 0, 5, 0);
+                  CreateDataEtToRechiv("085", fErech, 0, 10, 2);
 
               }
             if (_ListErua.Count>0)
