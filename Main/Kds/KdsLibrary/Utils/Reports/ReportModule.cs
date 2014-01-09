@@ -6,6 +6,7 @@ using System.IO;
 using KdsLibrary.ReportingServices;
 using System.Configuration;
 using System.Data;
+using KdsLibrary.BL;
 
 namespace KdsLibrary.Utils.Reports
 {
@@ -39,6 +40,9 @@ namespace KdsLibrary.Utils.Reports
         public Byte[] CreateReport(String rptName, eFormat sFormat,bool AutoRefresh)
         {
             int LengthParam;
+            clReport rep = new clReport();
+            string RSVersion, ServiceUrlConfigKey,sRdlName;
+
             if (AutoRefresh)
             {
                 LengthParam = parameters.Length;
@@ -46,6 +50,16 @@ namespace KdsLibrary.Utils.Reports
                 parameters[LengthParam] = new ReportingServices.ParameterValue();
                 parameters[LengthParam].Name = "P_DT";
                 parameters[LengthParam].Value = DateTime.Now.ToString();
+            }
+
+            sRdlName = rptName.Split('/')[rptName.Split('/').Length-1].ToString();
+            DataTable dt = rep.GetReportDetails(((ReportName)Enum.Parse(typeof(ReportName), sRdlName)).GetHashCode());
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                DataRow dr = dt.Rows[0];
+                RSVersion = dr["RS_VERSION"].ToString();
+                ServiceUrlConfigKey = dr["SERVICE_URL_CONFIG_KEY"].ToString();
+                return CreateReport(rptName, sFormat, RSVersion, ServiceUrlConfigKey);
             }
             return CreateReport(rptName, sFormat);
         }
