@@ -16,9 +16,9 @@ namespace CodedUITestProject1
     /// Summary description for CodedUITest1
     /// </summary>
     [CodedUITest]
-    public class CodedUITest1
+    public class Sanity_work_card
     {
-        public CodedUITest1()
+        public Sanity_work_card()
         {
         }
 
@@ -26,41 +26,31 @@ namespace CodedUITestProject1
         public void CodedUITsestMethod1()
         {
             this.UIMap.Go_to_web_page();
-
             this.UIMap.כנסלמסךכרטיסיעבודהלעובד();
-            this.UIMap.בחרמאוחודש();
+            this.UIMap.Select_driverid_and_month();
             this.UIMap.כנסלתאריךכרטיסהעבודה();
             this.UIMap.בחרערךבשדהטכוגרף();
             this.UIMap.בחרערךבשדהלינה();
             this.UIMap.לחץעללשוניתנתוניםליוםעבודה();
-            //this.UIMap.Cancel_peilut();
             //this.UIMap.Cancel_Activity();
-            //this.UIMap.לחץעלביטוללאחתהפעילותבסידור();
             this.UIMap.הזןערךבשדהשעתהתחלהsh_hat();
             this.UIMap.הזןערךבשדהשעתגמר();
             //this.UIMap.הזןערךבשדהשעתיציאהלאחתהפעילויות();
-            //this.UIMap.הזןערךבשדהמקט();
             this.UIMap.הזןערךבשדהמספררכבלפעילותהראשונהבסידורששונהממספרהרכבהקייםoto_num();
             this.UIMap.לחץעלכן();
             this.UIMap.לחץעדכןכרטיס();
-            this.UIMap.לחץעלהוסףריקהחץלמעלהבפעילותהראשונהביום();
-            // this.UIMap.לחץעלהוסףריקהחץלמטהבפעילותהאחרונהביום();
+            this.UIMap.Add_first_rika();
+            this.UIMap.Update_work_card();
             this.UIMap.Add_last_reka();
-            //this.UIMap.לחץעלהוסףפעילות();
-            //this.UIMap.הזןערכיםתקיניםבשדות();
             this.UIMap.לחץעלעדכןכרטיס();
             this.UIMap.Add_activity();
-
-            //this.UIMap.לחץעלהוסףסידורמיוחד();
             //this.UIMap.הזןמספרסידורתקיןשעתהתחלהושעתגמר();
             this.UIMap.Add_sidur_meyuhad();
-
-
             this.UIMap.לחץעלהוסףפעילות1();
             this.UIMap.הזןשעתיציאהומקט();
             this.UIMap.Cancel_sidur();
             this.UIMap.לחץעדכןכרטיס1();
-            this.UIMap.לחץעלחץשמאלההיוםהבא();
+            this.UIMap.Click_next_card();
             this.UIMap.לחץעלהוסףסידורמפה();
             this.UIMap.הזןמספרסידורולחץעלהצג();
             this.UIMap.לחץעלהוסףהכל();
@@ -68,22 +58,26 @@ namespace CodedUITestProject1
             this.UIMap.לחץכן();
             this.UIMap.לחץעלהוסףאתהסידורלכרטיסהעבודה();
             this.UIMap.Update_work_card();
-            //this.UIMap.הזןתאריךבשדהתאריךולחץעלהצג();
-            this.UIMap.Type_date();
-            this.UIMap.לחץעלדיווחהיעדרות();
-            this.UIMap.בחרבקומבוהיעדרות();
-            this.UIMap.הזןערכיםתקיניםבשדותשעתהתחלהושעתגמר();
-            this.UIMap.לחץעלעדכוןסידורבכרטיסעבודה();
-            this.UIMap.לחץעלחץימינהיוםקודם();
+            this.UIMap.Close_work_card();
+            this.UIMap.Enter_work_card();
+            //this.UIMap.Type_date();
+            //this.UIMap.Type_date2();
             this.UIMap.עדכןשעתיציאהלאחתהפעילויותבמסך();
-            this.UIMap.לחץסגורכרטיס();
-            this.UIMap.לחץעדכןשינוייםבכרטיס();
+            this.UIMap.Close_and_update_workcard_popup1();
             this.UIMap.בחרמאוחודש1();
             this.UIMap.כנסלכרטיסעבודה();
             this.UIMap.לחץעללינקמספרסידור();
             this.UIMap.הזןערכיםתקיניםבשדות1();
             this.UIMap.לחץעלשמור();
+            this.UIMap.Enter_driver_id();
+            this.UIMap.Type_date();
+            this.UIMap.Select_Headrut();
+            this.UIMap.הזןערכיםתקיניםבשדותשעתהתחלהושעתגמר();
+            this.UIMap.לחץעלעדכוןסידורבכרטיסעבודה();
+            this.UIMap.Cancel_headrut();
             this.UIMap.לחץעלכפתורהשגויהבא();
+            this.UIMap.Close_work_card();
+            this.UIMap.Close_explorer();
             // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
             // For more information on generated code, see http://go.microsoft.com/fwlink/?LinkId=179463
         }
