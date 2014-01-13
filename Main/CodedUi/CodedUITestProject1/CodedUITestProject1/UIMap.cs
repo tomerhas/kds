@@ -213,66 +213,7 @@
 
         private הזןערךבשדהשעתיציאהלאחתהפעילויותParams mהזןערךבשדהשעתיציאהלאחתהפעילויותParams;
 
-        /// <summary>
-        /// Add_activity - Use 'Add_activityParams' to pass parameters into this method.
-        /// </summary>
-        public void Add_activity()
-        {
-            #region Variable Declarations
-            HtmlInputButton uISDimgAddPeilut0Button = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument5.UISDimgAddPeilut0Button;
-            HtmlInputButton uISDimgAddPeilut0Button1 = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument5.UISDimgAddPeilut0Button1;
-            HtmlEdit uIתאריךשעתהיציאההוא010Edit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument5.UIתאריךשעתהיציאההוא010Edit;
-            HtmlEdit uICtl07MakatNumberEdit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument5.UICtl07MakatNumberEdit;
-            HtmlInputButton uISD000ctl07SD_000_ctlButton = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument5.UISD000ctl07SD_000_ctlButton;
-            #endregion
 
-            // Click 'SD$imgAddPeilut0' button
-            Mouse.Click(uISDimgAddPeilut0Button, new Point(9, 13));
-
-            // Set flag to allow play back to continue if non-essential actions fail. (For example, if a mouse hover action fails.)
-            Playback.PlaybackSettings.ContinueOnError = true;
-
-            // Mouse hover 'SD$imgAddPeilut0' button at (9, 13)
-            Mouse.Hover(uISDimgAddPeilut0Button, new Point(9, 13));
-
-            // Mouse hover 'SD$imgAddPeilut0' button at (9, 13)
-            Mouse.Hover(uISDimgAddPeilut0Button1, new Point(9, 13));
-
-            // Reset flag to ensure that play back stops if there is an error.
-            Playback.PlaybackSettings.ContinueOnError = false;
-
-            // Type '11:30' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
-            //uIתאריךשעתהיציאההוא010Edit.Text = this.Add_activityParams.UIתאריךשעתהיציאההוא010EditText;
-            //uIתאריךשעתהיציאההוא010Edit.WaitForControlEnabled();
-
-            Keyboard.SendKeys(uIתאריךשעתהיציאההוא010Edit, "1130");
-
-            // Type '{Add}' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
-            Keyboard.SendKeys(uIתאריךשעתהיציאההוא010Edit, this.Add_activityParams.UIתאריךשעתהיציאההוא010EditSendKeys, ModifierKeys.None);
-
-            // Type '79100500' in 'ctl07MakatNumber' text box
-            uICtl07MakatNumberEdit.Text = this.Add_activityParams.UICtl07MakatNumberEditText;
-
-            // Type '{Add}' in 'ctl07MakatNumber' text box
-            Keyboard.SendKeys(uICtl07MakatNumberEdit, this.Add_activityParams.UICtl07MakatNumberEditSendKeys, ModifierKeys.None);
-
-            // Click 'SD$000$ctl07$SD_000_ctl07CancelPeilut' button
-            Mouse.Click(uISD000ctl07SD_000_ctlButton, new Point(8, 10));
-        }
-
-        public virtual Add_activityParams Add_activityParams
-        {
-            get
-            {
-                if ((this.mAdd_activityParams == null))
-                {
-                    this.mAdd_activityParams = new Add_activityParams();
-                }
-                return this.mAdd_activityParams;
-            }
-        }
-
-        private Add_activityParams mAdd_activityParams;
 
         /// <summary>
         /// Add_sidur_meyuhad - Use 'Add_sidur_meyuhadParams' to pass parameters into this method.
@@ -366,6 +307,9 @@
             HtmlInputButton uIהצגButton = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument7.UIהצגButton;
             #endregion
 
+
+
+
             // Type '20/11/2013' in 'clnDate' text box
             //uIClnDateEdit.Text = this.Type_dateParams.UIClnDateEditText;
             Keyboard.SendKeys(uIClnDateEdit, "20112013");
@@ -454,6 +398,132 @@
         }
 
         private עדכןשעתיציאהלאחתהפעילויותבמסךParams mעדכןשעתיציאהלאחתהפעילויותבמסךParams;
+
+        /// <summary>
+        /// Add_activity - Use 'Add_activityParams' to pass parameters into this method.
+        /// </summary>
+        public void Add_activity()
+        {
+            #region Variable Declarations
+            HtmlInputButton uISDimgAddPeilut0Button = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument10.UISDimgAddPeilut0Button;
+            HtmlEdit uIתאריךשעתהיציאההוא010Edit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument10.UIתאריךשעתהיציאההוא010Edit;
+            HtmlEdit uICtl06MakatNumberEdit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument10.UICtl06MakatNumberEdit;
+            HtmlInputButton uISD000ctl06SD_000_ctlButton = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument10.UISD000ctl06SD_000_ctlButton;
+            #endregion
+
+            // Click 'SD$imgAddPeilut0' button
+            Mouse.Click(uISDimgAddPeilut0Button, new Point(9, 9));
+
+            // Set flag to allow play back to continue if non-essential actions fail. (For example, if a mouse hover action fails.)
+            Playback.PlaybackSettings.ContinueOnError = true;
+
+            // Mouse hover 'SD$imgAddPeilut0' button at (9, 9)
+            Mouse.Hover(uISDimgAddPeilut0Button, new Point(9, 9));
+
+            // Reset flag to ensure that play back stops if there is an error.
+            Playback.PlaybackSettings.ContinueOnError = false;
+
+            // Type '11:30' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
+            //uIתאריךשעתהיציאההוא010Edit.Text = this.Add_activityParams.UIתאריךשעתהיציאההוא010EditText;
+            Keyboard.SendKeys(uIתאריךשעתהיציאההוא010Edit, "1130");
+
+            // Type '{Add}' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
+            Keyboard.SendKeys(uIתאריךשעתהיציאההוא010Edit, this.Add_activityParams.UIתאריךשעתהיציאההוא010EditSendKeys, ModifierKeys.None);
+
+            // Type '79100500' in 'ctl06MakatNumber' text box
+            uICtl06MakatNumberEdit.Text = this.Add_activityParams.UICtl06MakatNumberEditText;
+
+            // Type '{Add}' in 'ctl06MakatNumber' text box
+            Keyboard.SendKeys(uICtl06MakatNumberEdit, this.Add_activityParams.UICtl06MakatNumberEditSendKeys, ModifierKeys.None);
+
+            // Click 'SD$000$ctl06$SD_000_ctl06CancelPeilut' button
+            Mouse.Click(uISD000ctl06SD_000_ctlButton, new Point(12, 15));
+        }
+
+        public virtual Add_activityParams Add_activityParams
+        {
+            get
+            {
+                if ((this.mAdd_activityParams == null))
+                {
+                    this.mAdd_activityParams = new Add_activityParams();
+                }
+                return this.mAdd_activityParams;
+            }
+        }
+
+        private Add_activityParams mAdd_activityParams;
+
+        /// <summary>
+        /// Select_Headrut - Use 'Select_HeadrutParams' to pass parameters into this method.
+        /// </summary>
+        public void Select_Headrut()
+        {
+            #region Variable Declarations
+            HtmlInputButton uIדיווחהיעדרותButton = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument14.UIדיווחהיעדרותButton;
+            HtmlComboBox uIDdlHeadrutTypeComboBox = this.UIמערכתקדםשכרWebpageDiWindow1.UIמערכתקדםשכרDocument5.UIDdlHeadrutTypeComboBox;
+            #endregion
+
+            // Click 'דיווח היעדרות' button
+
+
+            Mouse.Click(uIדיווחהיעדרותButton, new Point(49, 13));
+
+            // Select 'היעדרות' in 'ddlHeadrutType' combo box
+
+
+
+            uIDdlHeadrutTypeComboBox.SelectedItem = this.Select_HeadrutParams.UIDdlHeadrutTypeComboBoxSelectedItem;
+        }
+
+        public virtual Select_HeadrutParams Select_HeadrutParams
+        {
+            get
+            {
+                if ((this.mSelect_HeadrutParams == null))
+                {
+                    this.mSelect_HeadrutParams = new Select_HeadrutParams();
+                }
+                return this.mSelect_HeadrutParams;
+            }
+        }
+
+        private Select_HeadrutParams mSelect_HeadrutParams;
+
+        /// <summary>
+        /// Type_date2 - Use 'Type_date2Params' to pass parameters into this method.
+        /// </summary>
+        public void Type_date2()
+        {
+            #region Variable Declarations
+            HtmlEdit uIClnDateEdit = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument20.UIClnDateEdit;
+            HtmlInputButton uIהצגButton = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument20.UIהצגButton;
+            #endregion
+
+            // Type '19/11/2013' in 'clnDate' text box
+            //uIClnDateEdit.Text = this.Type_date2Params.UIClnDateEditText;
+            Keyboard.SendKeys(uIClnDateEdit, "19112013");
+
+            // Type '{Add}' in 'clnDate' text box
+            Keyboard.SendKeys(uIClnDateEdit, this.Type_date2Params.UIClnDateEditSendKeys, ModifierKeys.None);
+
+            // Click 'הצג' button
+            Mouse.Click(uIהצגButton, new Point(33, 19));
+        }
+
+        public virtual Type_date2Params Type_date2Params
+        {
+            get
+            {
+                if ((this.mType_date2Params == null))
+                {
+                    this.mType_date2Params = new Type_date2Params();
+                }
+                return this.mType_date2Params;
+            }
+        }
+
+        private Type_date2Params mType_date2Params;
     }
     /// <summary>
     /// Parameters to be passed into 'Cancel_Activity'
@@ -553,35 +623,6 @@
         /// Type '11:51' in 'תאריך שעת היציאה הוא: 17/11/2013' text box
         /// </summary>
         public string UIתאריךשעתהיציאההוא171EditText = "11:51";
-        #endregion
-    }
-    /// <summary>
-    /// Parameters to be passed into 'Add_activity'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class Add_activityParams
-    {
-
-        #region Fields
-        /// <summary>
-        /// Type '11:30' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
-        /// </summary>
-        public string UIתאריךשעתהיציאההוא010EditText = "11:30";
-
-        /// <summary>
-        /// Type '{Add}' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
-        /// </summary>
-        public string UIתאריךשעתהיציאההוא010EditSendKeys = "{Add}";
-
-        /// <summary>
-        /// Type '79100500' in 'ctl07MakatNumber' text box
-        /// </summary>
-        public string UICtl07MakatNumberEditText = "79100500";
-
-        /// <summary>
-        /// Type '{Add}' in 'ctl07MakatNumber' text box
-        /// </summary>
-        public string UICtl07MakatNumberEditSendKeys = "{Add}";
         #endregion
     }
     /// <summary>
@@ -697,6 +738,68 @@
         /// Type '09:12' in 'תאריך שעת היציאה הוא: 19/11/2013' text box
         /// </summary>
         public string UIתאריךשעתהיציאההוא191EditText = "09:12";
+        #endregion
+    }
+    /// <summary>
+    /// Parameters to be passed into 'Add_activity'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class Add_activityParams
+    {
+
+        #region Fields
+        /// <summary>
+        /// Type '11:30' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
+        /// </summary>
+        public string UIתאריךשעתהיציאההוא010EditText = "11:30";
+
+        /// <summary>
+        /// Type '{Add}' in 'תאריך שעת היציאה הוא: 01/01/0001' text box
+        /// </summary>
+        public string UIתאריךשעתהיציאההוא010EditSendKeys = "{Add}";
+
+        /// <summary>
+        /// Type '79100500' in 'ctl06MakatNumber' text box
+        /// </summary>
+        public string UICtl06MakatNumberEditText = "79100500";
+
+        /// <summary>
+        /// Type '{Add}' in 'ctl06MakatNumber' text box
+        /// </summary>
+        public string UICtl06MakatNumberEditSendKeys = "{Add}";
+        #endregion
+    }
+    /// <summary>
+    /// Parameters to be passed into 'Select_Headrut'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class Select_HeadrutParams
+    {
+
+        #region Fields
+        /// <summary>
+        /// Select 'היעדרות' in 'ddlHeadrutType' combo box
+        /// </summary>
+        public string UIDdlHeadrutTypeComboBoxSelectedItem = "היעדרות";
+        #endregion
+    }
+    /// <summary>
+    /// Parameters to be passed into 'Type_date2'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class Type_date2Params
+    {
+
+        #region Fields
+        /// <summary>
+        /// Type '19/11/2013' in 'clnDate' text box
+        /// </summary>
+        public string UIClnDateEditText = "19/11/2013";
+
+        /// <summary>
+        /// Type '{Add}' in 'clnDate' text box
+        /// </summary>
+        public string UIClnDateEditSendKeys = "{Add}";
         #endregion
 }
 }
