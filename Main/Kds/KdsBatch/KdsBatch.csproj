@@ -172,6 +172,7 @@
     <Compile Include="Reports\clManagerReport.cs" />
     <Compile Include="Reports\clManagerRikuzim.cs" />
     <Compile Include="Reports\clReport.cs" />
+    <Compile Include="Reports\clReportOnLine.cs" />
     <Compile Include="Reports\clReportParam.cs" />
     <Compile Include="Reports\clDestinationReport.cs" />
     <Compile Include="Premia\SystemCompare\CompareScope.cs" />

@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using KdsLibrary.Utils;
+using KdsBatch.Reports;
 
 
 public partial class Modules_Ovdim_WorkCard : KdsPage
@@ -2571,31 +2572,24 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 string sIp;
                 string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
                 byte[] s;
+                clReportOnLine oReportOnLine = new clReportOnLine("PrintWorkCard", eFormat.PDF);
 
                 //EventLog.WriteEntry("Kds", "PathFileReportsTemp: " + sPathFilePrint, EventLogEntryType.Error);
-                ReportModule Report = new ReportModule();
-                Report.AddParameter("P_MISPAR_ISHI", iMisparIshi.ToString());
-                Report.AddParameter("P_TAARICH", dDateCard.ToShortDateString());
-                Report.AddParameter("P_EMDA", "0");
-                Report.AddParameter("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
-                Report.AddParameter("P_URL_BARCODE", urlBarcode);
-               
-                
-                //if (bWorkCardWasUpdate)
-                //{
-                    //במידה ויש ערך בטבלת מעדכן אחרון והכרטיס עלה ללא התייחסות ולחצו על מאשר או מסתייג נשלח תיקון 0, שלא היה תיקון
-                    if ((iOldMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull.GetHashCode()) && (oMeasherMistayeg != clGeneral.enMeasherOMistayeg.ValueNull))
-                        Report.AddParameter("P_TIKUN", "0");
-                    else
-                        Report.AddParameter("P_TIKUN", "1");
-                //}
-                //else
-                //{   //אם אין ערך המעדכן אחרון, לא נשלח תיקון, כלומר 0
-                //    Report.AddParameter("P_TIKUN",  "0");
-                //}
-                
+                oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", iMisparIshi.ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_TAARICH", dDateCard.ToShortDateString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_EMDA", "0"));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_URL_BARCODE", urlBarcode));
+                //במידה ויש ערך בטבלת מעדכן אחרון והכרטיס עלה ללא התייחסות ולחצו על מאשר או מסתייג נשלח תיקון 0, שלא היה תיקון
+                if ((iOldMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull.GetHashCode()) && (oMeasherMistayeg != clGeneral.enMeasherOMistayeg.ValueNull))
+                    oReportOnLine.ReportParams.Add(new clReportParam("P_TIKUN", "0"));
 
-                s = Report.CreateReport("/KdsReports/PrintWorkCard", eFormat.PDF, true);
+                else
+                    oReportOnLine.ReportParams.Add(new clReportParam("P_TIKUN", "1"));
+
+                oReportOnLine.ReportParams.Add(new clReportParam("P_DT", DateTime.Now.ToString()));
+               
+                s = oReportOnLine.CreateFile();
                 string sFileName, sPathFile;
                 FileStream fs;
                 sIp = "";// arrParams[1];
@@ -4982,8 +4976,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         _Report = new KdsReport();
         _Report = _KdsDynamicReport.FindReport(sRdlName);
 
-       clReport rep = new clReport();
-       DataTable dt = rep.GetReportDetails(((ReportName)Enum.Parse(typeof(ReportName), sRdlName)).GetHashCode());
+        KdsLibrary.BL.clReport rep = new KdsLibrary.BL.clReport();
+        DataTable dt = rep.GetReportDetails(((ReportName)Enum.Parse(typeof(ReportName), sRdlName)).GetHashCode());
         if(dt!=null && dt.Rows.Count>0)
         {
             DataRow dr = dt.Rows[0];

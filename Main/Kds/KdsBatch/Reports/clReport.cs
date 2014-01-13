@@ -58,6 +58,7 @@ namespace KdsBatch.Reports
 
         public string RdlName
         {
+            set { _sRdlName = value; }
             get { return _sRdlName; }    
         }
 
@@ -72,6 +73,7 @@ namespace KdsBatch.Reports
         }
         public eFormat Extension
         {
+            set { _Extension = value; }
             get { return _Extension; }
         }
 
@@ -106,7 +108,7 @@ namespace KdsBatch.Reports
         public List<clReportParam> ReportParams
         {
             get { return _ReportParams; }
-            //  set { _sRdlName = value; }
+            set { _ReportParams = value; }
         }
         public clReport() { }
         public clReport(string name, int kod, string teur, long BakashaId, eFormat Extension, int MisparIshi)
