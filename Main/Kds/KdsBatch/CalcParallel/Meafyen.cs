@@ -10,12 +10,23 @@ namespace KdsBatch.CalcParallel
         public int Kod { get; set; }
         public bool IsExist { get; set; }
         public string Value { get; set; }
+        public string ErechIshi { get; set; }
+        
         public int IntValue
         {
             get
             {
                 int val = -1;
                 Int32.TryParse(Value, out val);
+                return val;
+            }
+        }
+        public int IntErechIshi
+        {
+            get
+            {
+                int val = -1;
+                Int32.TryParse(ErechIshi, out val);
                 return val;
             }
         }
@@ -33,9 +44,10 @@ namespace KdsBatch.CalcParallel
         {
             Kod = kod;
         }
-        public Meafyen(bool isExist, string Val)
+        public Meafyen(bool isExist, string Val, string erech_ishi)
         {
             Value = Val;
+            ErechIshi = erech_ishi == null ? "" : erech_ishi.Trim();
             IsExist = isExist;
         }
     }

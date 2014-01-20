@@ -243,6 +243,13 @@ namespace KdsBatch
                 return Meafyenim[33].IntValue;
             }
         }
+        public string Meafyen33Ei
+        {
+            get
+            {
+                return Meafyenim[33].ErechIshi;
+            }
+        }
         public string sMeafyen41
         {
             get
@@ -1004,11 +1011,12 @@ namespace KdsBatch
                            {
                                kod = Int32.Parse(c.Field<string>("kod_meafyen").ToString()),
                                exist = Int32.Parse(c.Field<string>("source_meafyen").ToString()),
-                               value = c.Field<string>("value_erech_ishi")
+                               value = c.Field<string>("value_erech_ishi"),
+                               erech_ishi = c.Field<string>("erech_ishi_partany")
                            };
                 Meafyenim = List.ToDictionary(item => item.kod, item =>
                 {
-                    return new Meafyen((item.exist == 1), item.value);
+                    return new Meafyen((item.exist == 1), item.value,item.erech_ishi);
                 }
                                   );
 

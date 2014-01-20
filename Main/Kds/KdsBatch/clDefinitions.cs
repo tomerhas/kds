@@ -1048,6 +1048,27 @@ namespace KdsBatch
             } 
         }
 
+        public static void DeleteIdkunRashemet(COLL_IDKUN_RASHEMET oCollIdkunRashemetDel)
+        {
+            clDal Dal = new clDal();
+            try
+            {
+                Dal.AddParameter("p_coll_idkun_rashemet", ParameterType.ntOracleArray, oCollIdkunRashemetDel, ParameterDir.pdInput, "COLL_IDKUN_RASHEMET");
+                Dal.ExecuteSP(clGeneral.cProDeleteIdkunRashemet);
+            }
+            catch (Exception ex)
+            {
+                clMail omail;
+                string[] RecipientsList = (ConfigurationManager.AppSettings["MailErrorWorkCard"].ToString()).Split(';');
+                RecipientsList.ToList().ForEach(recipient =>
+                {
+                    omail = new clMail(recipient, "תקלה במחיקת עדכוני רשמת למספר אישי: " + oCollIdkunRashemetDel.Value[0].MISPAR_ISHI + "  תאריך:" + oCollIdkunRashemetDel.Value[0].TAARICH.ToShortDateString(), ex.Message);
+                    omail.SendMail();
+                });
+
+                throw ex;
+            }
+        }
         public static void UpdateAprrovalErrors(COLL_SHGIOT_MEUSHAROT oCollShgiotMeusharot)
         {
             clDal Dal = new clDal();

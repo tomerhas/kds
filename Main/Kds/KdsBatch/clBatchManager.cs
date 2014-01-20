@@ -80,6 +80,7 @@ namespace KdsBatch
         private COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd; //= new COLL_OBJ_PEILUT_OVDIM();
         private COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns; // new COLL_OBJ_PEILUT_OVDIM();
         private COLL_IDKUN_RASHEMET _oCollIdkunRashemet;
+        private COLL_IDKUN_RASHEMET _oCollIdkunRashemetDel;
         private COLL_SHGIOT_MEUSHAROT _oCollApprovalErrors;
    
        // private ApprovalRequest[] arrEmployeeApproval; vered 22/05/2012
@@ -7161,6 +7162,7 @@ namespace KdsBatch
             oCollPeilutOvdimUpd = new COLL_OBJ_PEILUT_OVDIM();
             oCollPeilutOvdimIns = new COLL_OBJ_PEILUT_OVDIM();
             _oCollIdkunRashemet = new COLL_IDKUN_RASHEMET();
+            _oCollIdkunRashemetDel = new COLL_IDKUN_RASHEMET();
             _oCollApprovalErrors = new COLL_SHGIOT_MEUSHAROT();
             htNewSidurim = new OrderedDictionary();
             bUpdateShatHatchala = false;
@@ -7200,13 +7202,16 @@ namespace KdsBatch
                                 oObjSidurimOvdimUpd.LO_LETASHLUM = 0;
                                 oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 0;                              
                             }
-                            //if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
-                            //{
-                            //    oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 0;
-                            //    oSidur.sPitzulHafsaka = "0";
-                            //}
+                          
                        }
-                       oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 0;
+                      if (oSidur.iLoLetashlum == 1 || (oSidur.iLoLetashlum == 0 && !CheckIdkunRashemet("PITZUL_HAFSAKA", oSidur.iMisparSidur, oSidur.dFullShatHatchala)))
+                      {
+                         oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 0;
+                         oSidur.sPitzulHafsaka = "0";
+                         if (CheckIdkunRashemet("PITZUL_HAFSAKA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                             DeleteIdkunRashemet("PITZUL_HAFSAKA", oSidur.iMisparSidur, oSidur.dFullShatHatchala);
+                      }
+                     
                        oObjSidurimOvdimUpd.MEZAKE_NESIOT = 0;
                        oObjSidurimOvdimUpd.MEZAKE_HALBASHA = 0;
                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
@@ -7611,6 +7616,9 @@ namespace KdsBatch
                 if (_oCollIdkunRashemet.Count > 0)
                     clDefinitions.SaveIdkunRashemet(_oCollIdkunRashemet);
 
+                if (_oCollIdkunRashemetDel.Count > 0)
+                    clDefinitions.DeleteIdkunRashemet(_oCollIdkunRashemetDel);
+
                 if (_oCollApprovalErrors.Count > 0)
                     clDefinitions.UpdateAprrovalErrors(_oCollApprovalErrors);
 
@@ -7846,6 +7854,34 @@ namespace KdsBatch
             {
                 throw ex;
             }
+        }
+
+        private void DeleteIdkunRashemet(string sFieldToChange, int iMisparSidur, DateTime dShatHatchala)
+        {
+            //bool bHaveIdkun = false;
+            DataRow dr;
+            OBJ_IDKUN_RASHEMET ObjIdkunRashemet;
+            try
+            {
+                for (int i = 0; i < _dtIdkuneyRashemet.Rows.Count; i++)
+                {
+                    dr = _dtIdkuneyRashemet.Rows[i];
+
+                    if (dr["shem_db"].ToString() ==  sFieldToChange.ToUpper() && int.Parse(dr["MISPAR_SIDUR"].ToString()) == iMisparSidur && dr["shat_hatchala"].ToString() == dShatHatchala.ToString())
+                    {
+                        ObjIdkunRashemet = FillIdkunRashemet(dr);
+                        _oCollIdkunRashemetDel.Add(ObjIdkunRashemet);
+                        _dtIdkuneyRashemet.Rows.RemoveAt(i);
+                    }
+                    
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
 

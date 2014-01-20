@@ -486,6 +486,9 @@ namespace KdsBatch
                 //דקות נוספות בנהגות (רכיב 19)/ דקות נוספות בניהול תנועה (רכיב 20)/ דקות נוספות בתפקיד (רכיב 21): 
                 CalcRechiv19_20_21();
 
+                //נוספות בנאמנות בימים עם דקות נוספות בתפקיד (רכיב 281): 
+                CalcRechiv281();
+
                 //קיזוז נוספות תפקיד חול ושישי (רכיב 147)
                 CalcRechiv147();
 
@@ -1140,8 +1143,8 @@ namespace KdsBatch
             int kodMutamut=0;
             try
             {
-                if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
-                {
+                //if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
+                //{
                     if (objOved.objPirteyOved.iMutamut>0)
                         kodMutamut = int.Parse(objOved.oGeneralData.dtMutamutAll.Select("KOD_MUTAMUT=" + objOved.objPirteyOved.iMutamut)[0]["kod_mutamut"].ToString());
 
@@ -1284,8 +1287,8 @@ namespace KdsBatch
                             }
                         //}
 
-                    }
-                }
+                   }
+                //}
             }
             catch (Exception ex)
             {
@@ -1294,6 +1297,36 @@ namespace KdsBatch
             }
         }
 
+
+
+        private void CalcRechiv281()
+        {
+            float fSumDakotRechiv,fDakotNosafot21,fDakotShishi193,sumSidureyneemanut=0,fmeshech;
+            DataRow[] dr;
+            try
+            {
+
+                fDakotNosafot21 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode(), objOved.Taarich);
+                fDakotShishi193 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), objOved.Taarich);
+                dr = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur in(99227,99028,99201,99026,99027,99012,99029)");
+
+                if (dr.Length > 0 && (fDakotNosafot21 > 0 || fDakotShishi193 > 0))
+                {
+                    fSumDakotRechiv = fDakotNosafot21 + fDakotShishi193;
+                    for(int i=0;i<dr.Length;i++)
+                    {
+                        fmeshech = float.Parse((DateTime.Parse(dr[i]["shat_gmar_letashlum"].ToString()) - DateTime.Parse(dr[i]["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
+                        sumSidureyneemanut += fmeshech;
+                    }
+                    addRowToTable(clGeneral.enRechivim.NosafotBeNeemanut.GetHashCode(), Math.Min(sumSidureyneemanut, fSumDakotRechiv));
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NosafotBeNeemanut.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
 
         private void CalcRechiv147()
         {
@@ -3113,7 +3146,7 @@ namespace KdsBatch
                                     bMaamadChange = true;
 
                                 if ((objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode()) ||
-                                     (!bMutaam && bMaamadChange && fErechRechiv < 1 && fDakotNochehut > 0 && !(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30)))
+                                     (!bMutaam && bMaamadChange && fErechRechiv < 1 && fDakotNochehut > 0 && !(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30) && (objOved.objMeafyeneyOved.Meafyen33Ei != "1") ))
                                 {
                                     if(fErechRechiv > 0) 
                                     {

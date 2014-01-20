@@ -223,6 +223,7 @@ namespace KdsLibrary
         public const string cProDelHachanotMechona = "pkg_ovdim.pro_del_hachanot_mechona";
         public const string cProGetArachimLeoved = "pkg_ovdim.pro_get_arachim_by_misIshi";
         public const string cProUpdIdkunRashemet = "pkg_ovdim.pro_ins_idkuney_rashemet";
+        public const string cProDeleteIdkunRashemet = "pkg_ovdim.pro_delete_idkuney_rashemet";
 
         public const string cProGetPirteyOvedLetkufot = "pkg_ovdim.pro_get_pirtey_oved_letkufot";
         public const string cProGetMeafyenOvedLetkufot = "pkg_ovdim.pro_get_meafyen_oved_letkufot";
@@ -878,6 +879,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ETPaarBetweenMichsaRegilaAndMuktenet = 278,
             ETMichsaMekoritBeforeHafchata = 279,
             YomMachalatYeledHadHori=280,
+            NosafotBeNeemanut=281,
             HalbashaTchilatYom=931,
             HalbashaSofYom=932,
             TosefetGririoTchilatSidur=1281,
