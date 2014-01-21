@@ -607,12 +607,12 @@ namespace KdsBatch
             string lstSidurim="", sQury;
             float fSumDakotNochehut, iMichsa;
             int iMeafyen, iOutMichsa, iMisparSidur;
-            DateTime dTaarich, dShatHatchala;
+            DateTime dTaarich = DateTime.Now.Date, dShatHatchala;
             CalcSidur oSidur;
             CalcPeilut oPeilut;
             clParameters oparam;
             try
-            { 
+            {
                 oparam= objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == objOved.Month));
                 if (objOved.Month >= oparam.dTaarichHafalatMichsot)
                 {
@@ -658,8 +658,8 @@ namespace KdsBatch
                                 if (drMeafyen.Length > 0)
                                 {
                                     iMichsa = float.Parse(drMeafyen[0]["value_erech_ishi"].ToString());
-                                    if (iMichsa > 0)
-                                    {
+                                    //if (iMichsa > 0)
+                                    //{
                                         dShatHatchala = DateTime.Parse(drSidurim[J]["shat_hatchala_sidur"].ToString());
                                         objOved.Taarich = dTaarich;
                                         iOutMichsa = int.Parse(drSidurim[J]["out_michsa"].ToString());
@@ -668,7 +668,7 @@ namespace KdsBatch
                                         if (!oCalcBL.CheckOutMichsa(objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchala, iOutMichsa))
                                         {
                                             drSidurim[J]["Lo_letashlum"] = -1;
-                                            if (fSumDakotNochehut >= (iMichsa*60))
+                                            if (fSumDakotNochehut >= (iMichsa * 60))
                                             {
                                                 drSidurim[J]["Lo_letashlum"] = 1;
                                                 drSidurim[J]["KOD_SIBA_LO_LETASHLUM"] = 19;
@@ -681,7 +681,12 @@ namespace KdsBatch
                                                 fSumDakotNochehut += oSidur.CalcRechiv1BySidur(drSidurim[J], 0, oPeilut);
                                             }
                                         }
-                                    }
+                                    //}
+                                    //else
+                                    //{
+                                    //    drSidurim[J]["Lo_letashlum"] = 1;
+                                    //    drSidurim[J]["KOD_SIBA_LO_LETASHLUM"] = 19;
+                                    //}
                                 }
                             }
                             
@@ -698,6 +703,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, dTaarich, "SimunSidurimLoLetashlumByMeafyen: " + ex.StackTrace + "\n message: " + ex.Message);      
                 throw ex;
             }
         }

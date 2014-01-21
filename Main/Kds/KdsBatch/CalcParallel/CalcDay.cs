@@ -8016,7 +8016,11 @@ namespace KdsBatch
                                            objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.Sachir12.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.SachirKavua.GetHashCode() ||
                                            objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.SachirZmani.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.OvedBechoze.GetHashCode() ||
                                            objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
-                                    addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), dTarMe, 1);
+                                {
+                                    if (objOved.objMeafyeneyOved.Meafyen33Ei != "1")
+                                        addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), dTarMe, 1);
+                                    else addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), dTarMe, 1);
+                                }
                                 else
                                     if (objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.Aray.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode() ||
                                          objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.Chanich.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.PensyonerBechoze.GetHashCode() ||
