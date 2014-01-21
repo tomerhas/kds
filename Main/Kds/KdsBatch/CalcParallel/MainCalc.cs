@@ -255,10 +255,10 @@ namespace KdsBatch
                 {
                     oDal.ClearCommand();
                     oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
-                    oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, drChanges[J]["taarich"], ParameterDir.pdInput);
-                    oDal.AddParameter("p_mispar_sidur", ParameterType.ntOracleInteger, drChanges[J]["mispar_sidur"], ParameterDir.pdInput);
-                    oDal.AddParameter("p_shat_hatchala", ParameterType.ntOracleDate, drChanges[J]["shat_hatchala_sidur"], ParameterDir.pdInput);
-                    oDal.AddParameter("p_kod_siba", ParameterType.ntOracleInteger, drChanges[J]["kod_siba_lo_letashlum"], ParameterDir.pdInput);
+                    oDal.AddParameter("p_taarich", ParameterType.ntOracleDate,DateTime.Parse(drChanges[J]["taarich"].ToString()), ParameterDir.pdInput);
+                    oDal.AddParameter("p_mispar_sidur", ParameterType.ntOracleInteger, int.Parse(drChanges[J]["mispar_sidur"].ToString()), ParameterDir.pdInput);
+                    oDal.AddParameter("p_shat_hatchala", ParameterType.ntOracleDate, DateTime.Parse(drChanges[J]["shat_hatchala_sidur"].ToString()), ParameterDir.pdInput);
+                    oDal.AddParameter("p_kod_siba", ParameterType.ntOracleInteger, int.Parse(drChanges[J]["kod_siba_lo_letashlum"].ToString()), ParameterDir.pdInput);
 
                     oDal.ExecuteSP(clDefinitions.cProUpdateSidurimLoLetashlum);
                 }
