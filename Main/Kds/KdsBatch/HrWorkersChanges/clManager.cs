@@ -80,20 +80,25 @@ namespace KdsBatch.HrWorkersChanges
                     TaarichShinuy = Period.FromDate;
                     for (int i = 0; i < Period.CountOfDay; i++)
                     {
+                       
                         oObjOvdimImShinuyHR = new OBJ_OVDIM_IM_SHINUY_HR();
                         oObjOvdimImShinuyHR.MISPAR_ISHI = Period.IdNumber;
                         oObjOvdimImShinuyHR.TAARICH = TaarichShinuy;
                         oObjOvdimImShinuyHR.TAVLA = getNameTavla();
-                        _oArrCollOvdimImShinuyHR[indexArr].Add(oObjOvdimImShinuyHR);
-                        TaarichShinuy = TaarichShinuy.AddDays(1);
-                        j++; 
-        
-                        if (j % godel == 0)
-                        {
-                            _oArrCollOvdimImShinuyHR[indexArr].DeleteNullElements();
-                            indexArr = indexArr + 1;
-                            _oArrCollOvdimImShinuyHR.Add(new COLL_OVDIM_IM_SHINUY_HR(godel));
-                        }
+
+                        //if (!_oArrCollOvdimImShinuyHR[indexArr].IsExists(oObjOvdimImShinuyHR))
+                        //{
+                            _oArrCollOvdimImShinuyHR[indexArr].Add(oObjOvdimImShinuyHR);
+                            TaarichShinuy = TaarichShinuy.AddDays(1);
+                            j++;
+
+                            if (j % godel == 0)
+                            {
+                                _oArrCollOvdimImShinuyHR[indexArr].DeleteNullElements();
+                                indexArr = indexArr + 1;
+                                _oArrCollOvdimImShinuyHR.Add(new COLL_OVDIM_IM_SHINUY_HR(godel));
+                            }
+                        //}
                     } 
                 }
                 _oArrCollOvdimImShinuyHR[indexArr].DeleteNullElements();
