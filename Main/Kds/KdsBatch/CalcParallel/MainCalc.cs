@@ -258,6 +258,7 @@ namespace KdsBatch
                     oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, drChanges[J]["taarich"], ParameterDir.pdInput);
                     oDal.AddParameter("p_mispar_sidur", ParameterType.ntOracleInteger, drChanges[J]["mispar_sidur"], ParameterDir.pdInput);
                     oDal.AddParameter("p_shat_hatchala", ParameterType.ntOracleDate, drChanges[J]["shat_hatchala_sidur"], ParameterDir.pdInput);
+                    oDal.AddParameter("p_kod_siba", ParameterType.ntOracleInteger, drChanges[J]["kod_siba_lo_letashlum"], ParameterDir.pdInput);
 
                     oDal.ExecuteSP(clDefinitions.cProUpdateSidurimLoLetashlum);
                 }
