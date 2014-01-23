@@ -644,7 +644,7 @@ namespace KdsBatch
                                 lstSidurim += sidur["mispar_sidur"] + ",";
                             }
                             lstSidurim = lstSidurim.Substring(0, lstSidurim.Length - 1);
-                            drSidurim = objOved.DtYemeyAvoda.Select("mispar_sidur in (" + lstSidurim + ") and Lo_letashlum =0", "TAARICH ASC");
+                            drSidurim = objOved.DtYemeyAvoda.Select("mispar_sidur in (" + lstSidurim + ") and Lo_letashlum =0", "shat_hatchala_sidur ASC");
 
                             for (int J = 0; J < drSidurim.Length; J++)
                             {
