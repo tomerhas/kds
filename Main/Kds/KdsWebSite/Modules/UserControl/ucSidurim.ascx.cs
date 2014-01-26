@@ -5347,7 +5347,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             if (EnabledValidator())
             {
                 oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-                oTextBox.Attributes.Add("onchange", "MovePanel(" + iIndex + "); n");
+                oTextBox.Attributes.Add("onchange", "MovePanel(" + iIndex + ");");
                 oTextBox.Attributes.Add("onkeyup", "SetDay('1|" + iIndex + "'); SidurTimeChanged(" + iIndex + ");");
                 oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
                 oTextBox.Attributes.Add("onfocus", "this.className='WCSidurTxtF';");
