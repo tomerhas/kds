@@ -2792,10 +2792,11 @@ namespace KdsBatch
             string lstStatus;
             try
             {
+
                 //בדיקה ברמת יום עבודה
                 if (dCardDate < DateTime.Parse("12/09/2013"))
-                    lstStatus = "1,3,4,5,6,7,8,10";
-                else lstStatus ="1,3,4,5,6,7,10";
+                    lstStatus = "1,3,4,5,6,7,8,10,11";
+                else lstStatus ="1,3,4,5,6,7,10,11";
 
                 if (!IsOvedInMatzav(lstStatus))
                 {
