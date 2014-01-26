@@ -36,7 +36,8 @@ public class wsGeneral : System.Web.Services.WebService
     private const string COL_TRIP_VISUT = "ויסות";
     private const string MAKAT_KNISA = "לפי-צורך";
     private const int SIDUR_HITYAZVUT_A = 99200;
-    private const int SIDUR_HITYAZVUT_B = 99214;    
+    private const int SIDUR_HITYAZVUT_B = 99214;
+    private const int SIDUR_GRIRA = 99220;
    
     public wsGeneral()
     {
@@ -2095,13 +2096,20 @@ public class wsGeneral : System.Web.Services.WebService
             DateTime dSidurStartHour;
             DateTime dStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
 
-            string sParam244 = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
+            string sParam = "";
+            if (iSidurKey==SIDUR_GRIRA)
+                  // param 276
+                  sParam = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaGrira.ToShortTimeString();
+              else
+                  //param 244
+                  sParam = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
+
             if (!sNewStartHour.Equals(string.Empty))
                 dSidurStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sNewStartHour.Substring(0, 2)), int.Parse(sNewStartHour.Substring(3, 2)), 0);
             else
                 dSidurStartHour = dStartHour;
 
-            DateTime dEndHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sParam244.Substring(0, 2)), int.Parse(sParam244.Substring(3, 2)), 0);
+            DateTime dEndHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sParam.Substring(0, 2)), int.Parse(sParam.Substring(3, 2)), 0);
 
             DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
             DataRow[] dr;

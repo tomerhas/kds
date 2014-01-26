@@ -49,6 +49,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private int _Param98;
     private DateTime _Param242;
     private DateTime _Param244;
+    private DateTime _Param276;
     private float _Param43;
     private float _Param42;
     private int _NumOfHashlama;
@@ -238,7 +239,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hidParam41.Value = Param41.ToString();
         hidParam98.Value = Param98.ToString();
         hidParam242.Value = Param242.ToShortTimeString();
-        hidParam244.Value = Param244.ToShortTimeString(); 
+        hidParam244.Value = Param244.ToShortTimeString();
+        hidParam276.Value = Param276.ToShortTimeString(); 
         hidNumOfHashlama.Value = NumOfHashlama.ToString();
         
     }
@@ -7002,6 +7004,17 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         get
         {
             return _Param244;
+        }
+    }
+    public DateTime Param276
+    {
+        set
+        {
+            _Param276 = value;
+        }
+        get
+        {
+            return _Param276;
         }
     }
     public int Param252

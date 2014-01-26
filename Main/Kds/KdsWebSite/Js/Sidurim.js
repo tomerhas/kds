@@ -5,6 +5,7 @@ var MKT_SHERUT = 1;
 var MKT_EMPTY = 2;
 var MKT_NAMAK = 3;
 var MKT_ELEMENT = 5;
+var SIDUR_GRIRA = 99220;
 function chkMkt(oRow) {
        var iMisparIshi = $get("txtId").value;
        var dCardDate = $get("clnDate").value;    
@@ -1163,7 +1164,8 @@ function chkMkt(oRow) {
     }
     function IsSHBigSG(val,args)
     {//נבדוק אם שעת ההתחלה קטנה משעת הגמר  
-       var iIndex = String(val.id).substr(String(val.id).length-1,1);
+       var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
+       var isSidurGrira = ($("#SD_lblSidur".concat(iIndex)).html()==SIDUR_GRIRA);
        var sShatHatchala = $get("SD_txtSH".concat(iIndex)).value; 
        var sShatGmar = $get("SD_txtSG".concat(iIndex));
        if ((sShatGmar.value == '') || (sShatHatchala == ''))
@@ -1171,7 +1173,7 @@ function chkMkt(oRow) {
        else {
            var sSidurDate;
            var dCardDate = $get("clnDate").value;
-           if (((IsShatHatchalaInNextDay(sShatHatchala)) || (sShatHatchala == '00:00'))) {
+           if (((IsShatHatchalaInNextDay(sShatHatchala, isSidurGrira)) || (sShatHatchala == '00:00'))) {
                sSidurDate = $get("SD_lblDate".concat(iIndex)).innerHTML;
            }
            else {

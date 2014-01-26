@@ -1852,6 +1852,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         SD.Param103 = oBatchManager.oParam.iHashlamaShabat;
         SD.Param242 = oBatchManager.oParam.dShatGmarNextDay;
         SD.Param244 = oBatchManager.oParam.dShatHatchalaNahagutNihulTnua;
+        SD.Param276 = oBatchManager.oParam.dShatHatchalaGrira;
         SD.Param252 = oBatchManager.oParam.iValidDays;
         SD.RefreshBtn = (hidRefresh.Value!=string.Empty) ? int.Parse(hidRefresh.Value) : 0;
         

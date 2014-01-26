@@ -211,6 +211,7 @@ namespace KdsBatch
         
         public DateTime dShaaGrirotChol; //-  274    
         public DateTime dShaaGrirotErevChagShishi; // - 275
+        public DateTime dShatHatchalaGrira; //276-התחלה מותרת-טווח עליון-גרירה בפועל
         public DateTime dTaarichHafalatMichsot; // - 277
         public DateTime dTaarichmichsatHachanatMechona; // - 278
 
@@ -973,6 +974,10 @@ namespace KdsBatch
                 sTmp = GetOneParam(244, dCardDate);
                 dShatHatchalaNahagutNihulTnua = GetParamHour(sTmp, dCardDate.AddDays(1));
 
+                //276- התחלה מותרת-טווח עליון-גרירה           
+                sTmp = GetOneParam(276, dCardDate);
+                dShatHatchalaGrira = GetParamHour(sTmp, dCardDate.AddDays(1));
+                                
                 //245- פרמיה גבוהה
                 sTmp = GetOneParam(245, dCardDate);
                 fHighPremya = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);

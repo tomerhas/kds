@@ -46,6 +46,7 @@
 <input type="hidden" runat="server" id="hidParam98"/>
 <input type="hidden" runat="server" id="hidParam242"/>
 <input type="hidden" runat="server" id="hidParam244"/>
+<input type="hidden" runat="server" id="hidParam276"/>
 <input type="hidden" runat="server" id="hidScrollPos"/>
 <input type="hidden" runat="server" id="hidGeneralParam"/>
 
