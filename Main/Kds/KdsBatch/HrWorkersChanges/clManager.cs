@@ -86,8 +86,8 @@ namespace KdsBatch.HrWorkersChanges
                         oObjOvdimImShinuyHR.TAARICH = TaarichShinuy;
                         oObjOvdimImShinuyHR.TAVLA = getNameTavla();
 
-                        //if (!_oArrCollOvdimImShinuyHR[indexArr].IsExists(oObjOvdimImShinuyHR))
-                        //{
+                        if (!_oArrCollOvdimImShinuyHR[indexArr].IsExists(oObjOvdimImShinuyHR))
+                        {
                             _oArrCollOvdimImShinuyHR[indexArr].Add(oObjOvdimImShinuyHR);
                             TaarichShinuy = TaarichShinuy.AddDays(1);
                             j++;
@@ -98,7 +98,7 @@ namespace KdsBatch.HrWorkersChanges
                                 indexArr = indexArr + 1;
                                 _oArrCollOvdimImShinuyHR.Add(new COLL_OVDIM_IM_SHINUY_HR(godel));
                             }
-                        //}
+                        }
                     } 
                 }
                 _oArrCollOvdimImShinuyHR[indexArr].DeleteNullElements();
