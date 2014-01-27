@@ -769,6 +769,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         dcSidur.ColumnName = "sidur_nihul_tnua";
         dcSidur.DataType = System.Type.GetType("System.Int32");
         dtUpdatedSidurim.Columns.Add(dcSidur);
+
+        dcSidur = new DataColumn();
+        dcSidur.ColumnName = "sidur_grira";
+        dcSidur.DataType = System.Type.GetType("System.Int32");
+        dtUpdatedSidurim.Columns.Add(dcSidur);
     }
     public void BuildDataTableColumns(ref DataTable dtPeilutyot)
     {
@@ -4244,6 +4249,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         drSidur["sidur_date"] = oSidur.dFullShatHatchala;
         drSidur["sidur_nahagut"] = IsSidurNahagut(ref oSidur, drSugSidur).GetHashCode();
         drSidur["sidur_nihul_tnua"] = IsSidurNihul(ref oSidur, drSugSidur).GetHashCode();
+        drSidur["sidur_grira"] = IsSidurGrira(ref oSidur, drSugSidur).GetHashCode();
         dtUpdatedSidurim.Rows.Add(drSidur);
        
     }
@@ -4749,7 +4755,20 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         return (!((oSidur.bSidurMyuhad) && (oSidur.sZakaiLehamara == clGeneral.enMeafyen32.enLoZakai.GetHashCode().ToString())));
     }
+    protected bool IsSidurGrira(ref clSidur oSidur, DataRow[] drSugSidur)
+    {
+        bool bSidurGrira = false;
+        //מחזיר אם סידור גרירה
+        if (oSidur.bSidurMyuhad)            
+            bSidurGrira = (oSidur.sSugAvoda == clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString());
+        else
+        {
+            if (drSugSidur.Length > 0)
+                bSidurGrira = (drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString());
+        }
 
+        return bSidurGrira;
+    }
     protected bool IsSidurNihul(ref clSidur oSidur, DataRow[] drSugSidur)
     {
         bool bSidurNihul = false;
