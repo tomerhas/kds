@@ -2123,7 +2123,7 @@ public class wsGeneral : System.Web.Services.WebService
                 {
                     if (IsSidurMyuhad(iSidurKey.ToString()))
                     {
-                        if ((dr[0]["sidur_nihul_tnua"].ToString().Equals("1")) || (dr[0]["sidur_nahagut"].ToString().Equals("1")))
+                        if ((dr[0]["sidur_nihul_tnua"].ToString().Equals("1")) || (dr[0]["sidur_nahagut"].ToString().Equals("1")) || (dr[0]["sidur_grira"].ToString().Equals("1")))
                             sResult = "1,1";
                     }
                     else
@@ -2136,7 +2136,7 @@ public class wsGeneral : System.Web.Services.WebService
                     odSidurim = (OrderedDictionary)Session["Sidurim"];
                     _Sidur = (clSidur)(odSidurim[iSidurIndex]);
                     _Sidur.dSidurDate = DateTime.Parse(sOrgStartHour);
-                    if (IsNewSidurNahagutOrNihul(_Sidur))
+                    if (IsNewSidurNahagutOrNihulOrGrira(_Sidur))
                         sResult = "1,1";
                 }
             }
@@ -2208,13 +2208,13 @@ public class wsGeneral : System.Web.Services.WebService
         else
             return "0";
     }
-    private bool IsNewSidurNahagutOrNihul(clSidur _Sidur)
+    private bool IsNewSidurNahagutOrNihulOrGrira(clSidur _Sidur)
     {
        // DataRow dr;
        // DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
         
        // bool bFound=false;
-        bool bSidurNihulONahagut = false;
+        bool bSidurNihulONahagutOrGrira = false;
 
         //dr = dtUpdateSidurim.NewRow();
         //dr["sidur_number"] = iSidurNumber;
@@ -2235,8 +2235,9 @@ public class wsGeneral : System.Web.Services.WebService
         //if (bFound)
         //{
         if ((_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()) ||
-            (_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString()))
-            bSidurNihulONahagut = true;
+            (_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString()) || 
+            (_Sidur.sSugAvoda ==  clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString()))
+            bSidurNihulONahagutOrGrira = true;
             //if (_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
             //{
             //    dr["sidur_nahagut"] = 1;
@@ -2249,7 +2250,7 @@ public class wsGeneral : System.Web.Services.WebService
             //}
         //}
        // dtUpdateSidurim.Rows.Add(dr);
-        return bSidurNihulONahagut;
+        return bSidurNihulONahagutOrGrira;
     }
     [WebMethod(EnableSession = true)]
     public void UpdateSidurDate(string sCardDate, int iSidurKey, string sOldStartHour, string sNewStartHour, int iAddDay, int iSidurIndex)
