@@ -2915,7 +2915,7 @@ namespace KdsBatch
 
         private bool IsSidurStartHourValid14(DateTime dCardDate, ref clSidur oSidur, ref DataTable dtErrors)
         {
-            DateTime dStartLimitHour, dEndLimitHour;
+            DateTime dStartLimitHour, dEndLimitHour,dEzerDate;
             DateTime dSidurStartHour;
              bool isValid = true;
              bool bSidurNahagut = false;
@@ -2949,8 +2949,12 @@ namespace KdsBatch
                     dStartLimitHour = oParam.dSidurStartLimitHourParam1;
                     dEndLimitHour = oParam.dShatHatchalaNahagutNihulTnua;
                  }
-                
-               
+
+                if (oSidur.bSidurMyuhad  && (oSidur.sSugAvoda == clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString()))
+                {
+                    dStartLimitHour = oParam.dSidurStartLimitHourParam1;
+                    dEndLimitHour = oParam.dShatHatchalaGrira;
+                }
                 if (oSidur.bSidurMyuhad)
                 {
 
@@ -2959,9 +2963,10 @@ namespace KdsBatch
                         dStartLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatHatchalaMuteret).ToString("HH:mm"), dCardDate);
                     }
 
-                    if ((oSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatGmarMuteret))) //קיים מאפיין
+                    if ((oSidur.bShatGmarMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatGmarMuteret))) //קיים מאפיין
                     {
-                        dEndLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatGmarMuteret).ToString("HH:mm"), dCardDate.AddDays(1));
+                        dEzerDate = DateTime.Parse(oSidur.sShatGmarMuteret); 
+                        dEndLimitHour = clGeneral.GetDateTimeFromStringHour(dEzerDate.ToString("HH:mm"), getCorrectDay(dEzerDate, dCardDate));
                     }
                 } 
 
@@ -2985,6 +2990,16 @@ namespace KdsBatch
             }
 
             return isValid;
+        }
+
+        private DateTime getCorrectDay(DateTime hour,DateTime dCardDate )
+        {
+            string date=hour.ToShortDateString();
+            if (hour >= DateTime.Parse(date + " 04:00:00") && hour <= DateTime.Parse(date + " 07:59:00"))
+            {
+                return dCardDate.AddDays(1);
+            }
+            else return dCardDate;
         }
 
         private bool IsSidurEndHourValid173(DateTime dCardDate, ref clSidur oSidur, ref DataTable dtErrors)

@@ -1952,8 +1952,8 @@ namespace KdsBatch
                 }
                 else
                 {
-                    fDakotNosafot21 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode(), objOved.Taarich);
-                    fDakotShishi193 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), objOved.Taarich);
+                    fDakotNosafot21 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode());
+                    fDakotShishi193 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode());
 
                     if ((fDakotNosafot21 > 0 || fDakotShishi193 > 0) && fTempX > 0)
                         fSumDakotRechiv = Math.Min(fDakotNosafot21 +fDakotShishi193, fTempX);
