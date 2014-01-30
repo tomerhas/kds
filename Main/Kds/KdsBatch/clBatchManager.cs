@@ -2995,7 +2995,7 @@ namespace KdsBatch
         private DateTime getCorrectDay(DateTime hour,DateTime dCardDate )
         {
             string date=hour.ToShortDateString();
-            if (hour >= DateTime.Parse(date + " 04:00:00") && hour <= DateTime.Parse(date + " 07:59:00"))
+            if (hour >= DateTime.Parse(date + " 00:01:00") && hour <= DateTime.Parse(date + " 07:59:00"))
             {
                 return dCardDate.AddDays(1);
             }
