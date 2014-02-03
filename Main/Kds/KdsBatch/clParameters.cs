@@ -1009,7 +1009,7 @@ namespace KdsBatch
 
                 // תאריך ביטול תמריץ נהגות
                 sTmp = GetOneParam(273, dCardDate);
-                dTaarichBitulTamrizNahagut = String.IsNullOrEmpty(sTmp) ? DateTime.MaxValue : DateTime.Parse(sTmp);
+                dTaarichBitulTamrizNahagut = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
                 // 274
                 sTmp = GetOneParam(274, dCardDate);

@@ -2991,13 +2991,18 @@ namespace KdsBatch
             bool bflag = false;
             bool bMutaam = false;
             bool bMaamadChange = false;
+            bool bAzmautWithMeafyen63 = false;
            // clPirteyOved oEzerPratim; 
             try
             {
                 fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich); 
                 fKizuzMeheadrut = 0;
-                if (!(oCalcBL.GetSugYomLemichsa(objOved, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56) == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode()
-                    && (objOved.objMeafyeneyOved.sMeafyen63 != "" || objOved.objMeafyeneyOved.sMeafyen63 != "0") && objOved.objMeafyeneyOved.iMeafyen33 == 1))
+
+                if (oCalcBL.GetSugYomLemichsa(objOved, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56) == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode()
+                  && objOved.objMeafyeneyOved.sMeafyen63 != "" && objOved.objMeafyeneyOved.sMeafyen63 != "0" && objOved.objMeafyeneyOved.iMeafyen33 == 1)
+                    bAzmautWithMeafyen63 = true;
+             
+                if(!bAzmautWithMeafyen63)
                 {
                     rowSidur = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur=99801 and Hashlama_Leyom=1");
                     if (rowSidur.Length == 0)
@@ -3182,13 +3187,18 @@ namespace KdsBatch
             DataRow[] rowSidur ;
             string sRechivim;
             bool flag = false;
+            bool bAzmautWithMeafyen63=false;
           // int matzav=0;
             try
             {
                 fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich); 
                 fKizuzMeheadrut = 0; 
-                if (!(oCalcBL.GetSugYomLemichsa(objOved, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56) == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode()
-                    && (objOved.objMeafyeneyOved.sMeafyen63 != "" && objOved.objMeafyeneyOved.sMeafyen63 != "0") && objOved.objMeafyeneyOved.iMeafyen33 == 0))
+
+                if (oCalcBL.GetSugYomLemichsa(objOved, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56) == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode()
+                  && objOved.objMeafyeneyOved.sMeafyen63 != "" && objOved.objMeafyeneyOved.sMeafyen63 != "0" && objOved.objMeafyeneyOved.iMeafyen33 == 0)
+                    bAzmautWithMeafyen63 = true;
+             
+                if(!bAzmautWithMeafyen63)
                 {
                      //rowSidur = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur=99830");
                      //if (rowSidur.Length == 0)
