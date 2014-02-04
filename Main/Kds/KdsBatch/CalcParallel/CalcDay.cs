@@ -3150,6 +3150,13 @@ namespace KdsBatch
                                     objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode())
                                     bMaamadChange = true;
 
+                                if (bflag && fErechRechiv==float.Parse("0.6") && bMaamadChange)
+                                {
+                                    addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), fErechRechiv, fKizuzMeheadrut);
+                                    fErechRechiv = 0;
+                                    fKizuzMeheadrut = 0;
+                                }
+
                                 if ((objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode()) ||
                                      (!bMutaam && bMaamadChange && fErechRechiv < 1 && fDakotNochehut > 0 && !(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30) && (objOved.objMeafyeneyOved.Meafyen33Ei != "1") ))
                                 {
