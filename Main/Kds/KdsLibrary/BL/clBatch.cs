@@ -724,6 +724,22 @@ namespace KdsLibrary.BL
             }
         }
 
+        public void BdikatYemeyMachala(long lRequestId, int iUserId)
+        {
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestId, ParameterDir.pdInput);
+                oDal.AddParameter("p_user_id", ParameterType.ntOracleInteger, iUserId, ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cProBdikatYemeyMachala);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public void IdkunMachalotOvdim(long lRequestNum)
         {
             clDal oDal = new clDal();

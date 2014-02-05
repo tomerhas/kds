@@ -342,7 +342,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const string cProInsTekenDriversToTnua = "KDSADMIN.pro_ins_amount_of_drivers_tnua";          
 #endregion
         public const string cProBdikatChufshaRezifa = "KDSADMIN.pro_bdikat_chufsha_rezifa";
-        public const string cProIdkunMachalotOvdim = "KDSADMIN.pro_idkun_machalot_ovdim"; 
+        public const string cProIdkunMachalotOvdim = "KDSADMIN.pro_idkun_machalot_ovdim";
+        public const string cProBdikatYemeyMachala = "KDSADMIN.pro_bdikat_machalot_dor_B";
         #region pkg_task_Manager 
         public const string cGetStuckGroup = "pkg_task_Manager.GetStuckGroup";
         public const string cGetLogKvuzotByKod = "pkg_task_Manager.GetLogKvuzotByKod";
@@ -1157,7 +1158,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ShguimOfHR=22,
             Sleep=23,
             ShguimOfRetroSpaectSdrn = 24,
-            IdkunMachalotOvdim=25
+            IdkunMachalotOvdim=25,
+            BdikatYemeyMachala=26
         }
         public enum enBechishuvSachar
         {

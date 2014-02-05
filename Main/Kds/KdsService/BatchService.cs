@@ -342,6 +342,33 @@ namespace KdsService
             LogThreadEnd("BdikatChufshaRezifa", lRequestNum);
         }
 
+        private void RunBdikatYemeyMachalaThread(object param)
+        {
+            object[] args = param as object[];
+            long lRequestNum = (long)args[0];
+            int iUserId = (int)args[1];
+            int iStatus = 0;
+            clBatch oBatch = new clBatch();
+            try
+            {
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                oBatch.BdikatYemeyMachala(lRequestNum, iUserId);
+                iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+                iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunBdikatYemeyMachalaThread: " + ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, iStatus);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "END");
+            }
+            LogThreadEnd("RunBdikatYemeyMachalaThread", lRequestNum);
+        }
         private void RunYeziratRikuzimThread(object param)
         {
             object[] args = param as object[];
@@ -660,6 +687,13 @@ namespace KdsService
             runThread.Start(new object[] { lRequestNum, iUserId });
         }
 
+        public void BdikatYemeyMachala(long lRequestNum, int iUserId)
+        {
+            Thread runThread = new Thread(
+                new ParameterizedThreadStart(RunBdikatYemeyMachalaThread));
+            LogThreadStart("BdikatYemeyMachala", lRequestNum);
+            runThread.Start(new object[] { lRequestNum, iUserId });
+        }
         public void YeziratRikuzim(long lRequestNum, long iRequestIdForRikuzim)
         {
             Thread runThread = new Thread(
