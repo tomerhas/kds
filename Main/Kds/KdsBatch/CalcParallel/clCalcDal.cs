@@ -35,6 +35,7 @@ namespace KdsBatch
         private const string cProGetOvdimShguimLechishuv = "Pkg_Calculation.pro_ovdim_kelet_lechishuv";
         private const string cProPrepareNetunimLechishuv = "Pkg_Calculation.pro_prepare_netunim_lechishuv";
         private const string cProPrepareNetunimLechishuvPremiyot = "Pkg_Calculation.pro_get_ovdim_lehishuv_premiot";
+        private const string cProPrepareKavimLechishuv = "Pkg_Calculation.pro_kavim_details_lechishuv";
 
         private const string cGetNetunryChishuv = "Pkg_Calc_worker.pro_get_netunim_lechishuv";
         private const string cGetNetunimLeprocess = "Pkg_Calculation.pro_get_netunim_leprocess";
@@ -466,6 +467,30 @@ namespace KdsBatch
                     oDal.AddParameter("p_maamad", ParameterType.ntOracleInteger, sMaamad, ParameterDir.pdInput);
                 }
                 oDal.AddParameter("p_ritza_gorefet", ParameterType.ntOracleInteger, bRitzaGorefet.GetHashCode(), ParameterDir.pdInput);
+
+                oDal.AddParameter("p_num_processe", ParameterType.ntOracleInteger, NumProcesse, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(cProPrepareNetunimLechishuv);
+
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                throw (ex);
+            }
+        }
+
+
+        public int FillKavimDetailsLechishuv(long lRequestNum, DateTime dFrom, DateTime dAd, int NumProcesse)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
+               
+                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dFrom, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dAd, ParameterDir.pdInput);
 
                 oDal.AddParameter("p_num_processe", ParameterType.ntOracleInteger, NumProcesse, ParameterDir.pdInput);
 

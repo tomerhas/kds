@@ -3004,7 +3004,7 @@ namespace KdsBatch
 
         private bool IsSidurEndHourValid173(DateTime dCardDate, ref clSidur oSidur, ref DataTable dtErrors)
         {
-            DateTime dEndLimitHour, dStartLimitHour;
+            DateTime dEndLimitHour, dStartLimitHour, dEzerDate;
             DateTime dSidurEndHour;
             bool isValid = true;
 
@@ -3047,7 +3047,10 @@ namespace KdsBatch
 
                     if ((oSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatGmarMuteret))) //קיים מאפיין
                     {
-                        dEndLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatGmarMuteret).ToString("HH:mm"), dCardDate.AddDays(1));
+                        dEzerDate = DateTime.Parse(oSidur.sShatGmarMuteret);
+                        dEndLimitHour = clGeneral.GetDateTimeFromStringHour(dEzerDate.ToString("HH:mm"), getCorrectDay(dEzerDate, dCardDate));
+
+                     //   dEndLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatGmarMuteret).ToString("HH:mm"), dCardDate.AddDays(1));
                     }
                 } 
                

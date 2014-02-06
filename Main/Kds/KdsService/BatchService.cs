@@ -157,7 +157,7 @@ namespace KdsService
             DateTime dFrom;
             DataTable dtParametrim;
             string sArguments = "";
-            int result, iStatus = 0;
+            int result, resultK,iStatus = 0;
             object[] args = param as object[];
             long lRequestNum = (long)args[0];
             DateTime dAdChodesh = (DateTime)args[1];
@@ -179,8 +179,9 @@ namespace KdsService
                 dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString())) * -1);
                 dAdChodesh = dAdChodesh.AddMonths(1).AddDays(-1);
                 result = oCalcDal.PrepareDataLeChishuv(lRequestNum,dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
+                resultK = oCalcDal.FillKavimDetailsLechishuv(lRequestNum, dFrom, dAdChodesh, iCntProcesses);
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
-                if (result > 0)
+                if (result > 0 && resultK > 0)
                 {
                     if (KdsCalcul.Exists)
                     {
