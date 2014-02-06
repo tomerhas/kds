@@ -3045,7 +3045,7 @@ namespace KdsBatch
                         dStartLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatHatchalaMuteret).ToString("HH:mm"), dCardDate);
                     }
 
-                    if ((oSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatGmarMuteret))) //קיים מאפיין
+                    if ((oSidur.bShatGmarMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatGmarMuteret))) //קיים מאפיין
                     {
                         dEzerDate = DateTime.Parse(oSidur.sShatGmarMuteret);
                         dEndLimitHour = clGeneral.GetDateTimeFromStringHour(dEzerDate.ToString("HH:mm"), getCorrectDay(dEzerDate, dCardDate));
@@ -3054,9 +3054,9 @@ namespace KdsBatch
                     }
                 } 
                
-                if ((!string.IsNullOrEmpty(oSidur.sShatGmar) && dSidurEndHour < dStartLimitHour) && (dStartLimitHour.Year != clGeneral.cYearNull) ||
-                    (!string.IsNullOrEmpty(oSidur.sShatGmar) && dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year != clGeneral.cYearNull) ||
-                    (!string.IsNullOrEmpty(oSidur.sShatGmar) && !string.IsNullOrEmpty(oSidur.sShatHatchala) && oSidur.dFullShatHatchala>=oSidur.dFullShatGmar)) 
+                if (((!string.IsNullOrEmpty(oSidur.sShatGmar) && dSidurEndHour < dStartLimitHour) && (dStartLimitHour.Year != clGeneral.cYearNull)) ||
+                    ((!string.IsNullOrEmpty(oSidur.sShatGmar) && dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year != clGeneral.cYearNull) ))
+                  //  ((!string.IsNullOrEmpty(oSidur.sShatGmar) && !string.IsNullOrEmpty(oSidur.sShatHatchala) && oSidur.dFullShatHatchala>=oSidur.dFullShatGmar)) )
                 {
                     isValid = false;
                    
