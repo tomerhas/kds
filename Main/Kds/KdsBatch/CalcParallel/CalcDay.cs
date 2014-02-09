@@ -1305,20 +1305,22 @@ namespace KdsBatch
             DataRow[] dr;
             try
             {
-
-                fDakotNosafot21 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode(), objOved.Taarich);
-                fDakotShishi193 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), objOved.Taarich);
-                dr = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur in(99227,99028,99201,99026,99027,99012,99029)");
-
-                if (dr.Length > 0 && (fDakotNosafot21 > 0 || fDakotShishi193 > 0))
+                if (objOved.Taarich >= objOved.objParameters.dTaarichHafalatMichsot)
                 {
-                    fSumDakotRechiv = fDakotNosafot21 + fDakotShishi193;
-                    for(int i=0;i<dr.Length;i++)
+                    fDakotNosafot21 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode(), objOved.Taarich);
+                    fDakotShishi193 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), objOved.Taarich);
+                    dr = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur in(99227,99028,99201,99026,99027,99012,99029)");
+
+                    if (dr.Length > 0 && (fDakotNosafot21 > 0 || fDakotShishi193 > 0))
                     {
-                        fmeshech = float.Parse((DateTime.Parse(dr[i]["shat_gmar_letashlum"].ToString()) - DateTime.Parse(dr[i]["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
-                        sumSidureyneemanut += fmeshech;
+                        fSumDakotRechiv = fDakotNosafot21 + fDakotShishi193;
+                        for (int i = 0; i < dr.Length; i++)
+                        {
+                            fmeshech = float.Parse((DateTime.Parse(dr[i]["shat_gmar_letashlum"].ToString()) - DateTime.Parse(dr[i]["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
+                            sumSidureyneemanut += fmeshech;
+                        }
+                        addRowToTable(clGeneral.enRechivim.NosafotBeNeemanut.GetHashCode(), Math.Min(sumSidureyneemanut, fSumDakotRechiv));
                     }
-                    addRowToTable(clGeneral.enRechivim.NosafotBeNeemanut.GetHashCode(), Math.Min(sumSidureyneemanut, fSumDakotRechiv));
                 }
             }
             catch (Exception ex)

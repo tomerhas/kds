@@ -1922,14 +1922,18 @@ public class wsGeneral : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public string[] GetOvdimLefiRikuzim(string prefixText, int count)
+    public string[] GetOvdimLefiRikuzim(string prefixText, int count, string contextKey)
     {
         clOvdim oOvdim = clOvdim.GetInstance();
         DataTable dt = new DataTable();
+        int userId = 0;
         try
         {
-            //string[] Params = contextKey.Split(';');
-            dt = oOvdim.GetOvdimLefiRikuzim(prefixText);
+            if (contextKey.Length > 0)
+            {
+                userId = int.Parse(contextKey);
+            }
+            dt = oOvdim.GetOvdimLefiRikuzim(prefixText, userId);
             return clGeneral.ConvertDatatableColumnToStringArray(dt, "mispar_ishi");
         }
         catch (Exception ex)

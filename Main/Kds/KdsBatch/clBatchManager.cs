@@ -244,7 +244,8 @@ namespace KdsBatch
             errConenutGriraMealHamutar=203,
             errSidurAsurBeyomShishiLeoved5Yamim204=204,
             errTipatChalavMealMichsa205=205,
-            errOvedMutaamLeloShaotNosafot206 = 206
+            errOvedMutaamLeloShaotNosafot206 = 206,
+            errShatHatchalaBiggerShatYetzia=207
         }
 
         private enum errNesiaMeshtana
@@ -1226,6 +1227,7 @@ namespace KdsBatch
                     if (CheckErrorActive(58)) IsVisaInSidurRagil58(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(14)) IsSidurStartHourValid14(dCardDate, ref oSidur, ref dtErrors);
                     if (CheckErrorActive(173)) IsSidurEndHourValid173(dCardDate, ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(207)) IsShatHatchalaBiggerShatYetzia207(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(49)) IsHashlamatHazmanaValid49(fSidurTime, ref oSidur, ref dtErrors);
                     //IsYomVisaValid56(ref oSidur, ref dtErrors);                    
                     //IsZakaiLehamara44(drSugSidur,ref oSidur, ref dtErrors);
@@ -3007,6 +3009,7 @@ namespace KdsBatch
             DateTime dEndLimitHour, dStartLimitHour, dEzerDate;
             DateTime dSidurEndHour;
             bool isValid = true;
+            bool bFlag = false;
 
             try
             { 
@@ -3031,11 +3034,17 @@ namespace KdsBatch
                 dEndLimitHour = (isSidurNahagut || isSidurNihulTnua) ? oParam.dNahagutLimitShatGmar : oParam.dSidurEndLimitHourParam3;
 
                 if (oSidur.bSidurMyuhad && !string.IsNullOrEmpty(oSidur.sShaonNochachut) && (oOvedYomAvodaDetails.iIsuk == 122 || oOvedYomAvodaDetails.iIsuk == 123 || oOvedYomAvodaDetails.iIsuk == 124 || oOvedYomAvodaDetails.iIsuk == 127))
-                   dEndLimitHour = oParam.dSidurLimitShatGmarMafilim;
+                {
+                    bFlag = true;
+                    dEndLimitHour = oParam.dSidurLimitShatGmarMafilim;
+                }
 
 
-                if ((oOvedYomAvodaDetails.iIsuk != 122 && oOvedYomAvodaDetails.iIsuk != 123 && oOvedYomAvodaDetails.iIsuk != 124 && oOvedYomAvodaDetails.iIsuk!= 127) && oMeafyeneyOved.Meafyen43Exists)
-                         dEndLimitHour = oParam.dSiyumLilaLeovedLoMafil;
+                if ((oOvedYomAvodaDetails.iIsuk != 122 && oOvedYomAvodaDetails.iIsuk != 123 && oOvedYomAvodaDetails.iIsuk != 124 && oOvedYomAvodaDetails.iIsuk != 127) && oMeafyeneyOved.Meafyen43Exists)
+                {
+                    bFlag = true;
+                    dEndLimitHour = oParam.dSiyumLilaLeovedLoMafil;
+                }
 
                 dSidurEndHour = oSidur.dFullShatGmar;
                 if (oSidur.bSidurMyuhad)
@@ -3045,7 +3054,7 @@ namespace KdsBatch
                         dStartLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatHatchalaMuteret).ToString("HH:mm"), dCardDate);
                     }
 
-                    if ((oSidur.bShatGmarMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatGmarMuteret))) //קיים מאפיין
+                    if ((!bFlag) && (oSidur.bShatGmarMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatGmarMuteret))) //קיים מאפיין
                     {
                         dEzerDate = DateTime.Parse(oSidur.sShatGmarMuteret);
                         dEndLimitHour = clGeneral.GetDateTimeFromStringHour(dEzerDate.ToString("HH:mm"), getCorrectDay(dEzerDate, dCardDate));
@@ -3080,6 +3089,34 @@ namespace KdsBatch
             return isValid;
         }
 
+        private bool IsShatHatchalaBiggerShatYetzia207(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            bool isValid = true;
+            try
+            { 
+               
+                if (!string.IsNullOrEmpty(oSidur.sShatGmar) && !string.IsNullOrEmpty(oSidur.sShatHatchala) && oSidur.dFullShatHatchala>=oSidur.dFullShatGmar)
+                {
+                    isValid = false;
+                   
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "שעת התחלה גדולה משעת גמר", enErrors.errShatHatchalaBiggerShatYetzia.GetHashCode());
+                    //drNew["shat_gmar"] = oSidur.sShatGmar;
+                    //drNew["gmar_limit_hour"] = dEndLimitHour.ToString();
+                    dtErrors.Rows.Add(drNew);
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errShatHatchalaBiggerShatYetzia.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "errShatHatchalaBiggerShatYetzia207: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+
+            return isValid;
+        }
+        
         private bool IsKodNesiaExists81(ref clSidur oSidur, ref clPeilut oPeilut, ref DataTable dtErrors,  DateTime dCardDate)
         {
             bool isValid = true;

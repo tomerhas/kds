@@ -1944,22 +1944,25 @@ namespace KdsBatch
             float fSumDakotRechiv=0, fTempX, fDakotNosafot21, fDakotShishi193;
             try
             {
-                fTempX = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.NosafotBeNeemanut.GetHashCode());
-
-                if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
+                if (objOved.Taarich >= objOved.objParameters.dTaarichHafalatMichsot)
                 {
-                    fSumDakotRechiv = fTempX;
-                }
-                else
-                {
-                    fDakotNosafot21 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode());
-                    fDakotShishi193 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode());
+                    fTempX = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.NosafotBeNeemanut.GetHashCode());
 
-                    if ((fDakotNosafot21 > 0 || fDakotShishi193 > 0) && fTempX > 0)
-                        fSumDakotRechiv = Math.Min(fDakotNosafot21 +fDakotShishi193, fTempX);
+                    if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
+                    {
+                        fSumDakotRechiv = fTempX;
+                    }
+                    else
+                    {
+                        fDakotNosafot21 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode());
+                        fDakotShishi193 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode());
+
+                        if ((fDakotNosafot21 > 0 || fDakotShishi193 > 0) && fTempX > 0)
+                            fSumDakotRechiv = Math.Min(fDakotNosafot21 + fDakotShishi193, fTempX);
+                    }
+                    if (fSumDakotRechiv > 0)
+                        addRowToTable(clGeneral.enRechivim.NosafotBeNeemanut.GetHashCode(), fSumDakotRechiv);
                 }
-                if (fSumDakotRechiv>0)
-                    addRowToTable(clGeneral.enRechivim.NosafotBeNeemanut.GetHashCode(), fSumDakotRechiv);
                 
             }
             catch (Exception ex)

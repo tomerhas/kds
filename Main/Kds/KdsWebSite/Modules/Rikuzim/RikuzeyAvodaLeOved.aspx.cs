@@ -56,6 +56,13 @@ public partial class Modules_Ovdim_RikuzeyAvodaLeOved   : KdsPage
                 // SetFixedHeaderGrid(pnlTotalMonthly.ClientID, mp.HeadPage);
                 //  SetFixedHeaderGrid(pnlMonthlyComponents.ClientID, mp.HeadPage);
 
+                KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
+                AutoCompleteExtenderID.ContextKey = "";
+                if ((iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
+                {
+                    AutoCompleteExtenderID.ContextKey = LoginUser.UserInfo.EmployeeNumber;
+                }
+
                 divNetunim.Style.Add("overflow-y", "hidden");
                 grdRikuzim.AllowPaging = false;
                 divNetunim.Style["height"] = "250px";
