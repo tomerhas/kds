@@ -3042,7 +3042,8 @@ namespace KdsBatch
 
                 if ((oOvedYomAvodaDetails.iIsuk != 122 && oOvedYomAvodaDetails.iIsuk != 123 && oOvedYomAvodaDetails.iIsuk != 124 && oOvedYomAvodaDetails.iIsuk != 127) && oMeafyeneyOved.Meafyen43Exists)
                 {
-                    bFlag = true;
+                    if (!string.IsNullOrEmpty(oSidur.sShaonNochachut) )
+                        bFlag = true;
                     dEndLimitHour = oParam.dSiyumLilaLeovedLoMafil;
                 }
 
