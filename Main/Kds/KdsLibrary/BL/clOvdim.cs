@@ -1816,6 +1816,27 @@ namespace KdsLibrary.BL
            }
        }
 
+       public int GetCountWCLoLetashlumWithMeafyenim(DateTime dTarMe, DateTime dTarAd)
+       {
+           clDal oDal = new clDal();
+           int iCount;
+           try
+           {
+               oDal.AddParameter("p_count", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+               oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+               oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
+
+               oDal.ExecuteSP(clGeneral.GetCountWCLoLetashlumWithMeafyenim);
+
+               iCount= int.Parse(oDal.GetValParam("p_count"));
+
+               return iCount;
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
        public DataTable GetWorkCardNoShaotLetashlum(DateTime dTarMe, DateTime dTarAd, string sMaamad)
        {
            DataTable dt = new DataTable();
