@@ -9,9 +9,9 @@ using System.Web.UI.HtmlControls;
 using KdsLibrary.Utils.Reports;
 using KdsLibrary.UI.SystemManager;
 using KdsLibrary.Controls; 
-using KdsLibrary.DAL;
 using System.Reflection;
 using AjaxControlToolkit.Design;
+using DalOraInfra.DAL;
 
 
 
@@ -439,13 +439,13 @@ namespace KdsLibrary.Utils.Reports
             Control CtrlChild = null;
             List<KdsFilter> ParentsOfChildFilter = new List<KdsFilter>();
             DataTable dt = new DataTable();
-            KdsLibrary.DAL.clDal db = null;
+            clDal db = null;
             try
             {
                 List<KdsFilter> ChildsOfParentFilter = FindChildsOfParentFilter(CtrlParent.ID);
                 ChildsOfParentFilter.ForEach(delegate(KdsFilter ChildFilter)
                 {
-                    db = new KdsLibrary.DAL.clDal();
+                    db = new clDal();
                     ChildFilter.DropDownList.ConditionFilters.ForEach(delegate(ConditionFilter CFilter)
                     {
                         CtrlChild = _Table.FindControl(ChildFilter.ParameterName);
@@ -486,7 +486,7 @@ namespace KdsLibrary.Utils.Reports
             try
             {
 
-                KdsLibrary.DAL.clDal db = new KdsLibrary.DAL.clDal();
+                clDal db = new clDal();
                 switch (Filter.DropDownList.QueryType)
                 {
                     case KdsQueryType.Select:

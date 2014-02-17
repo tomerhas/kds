@@ -28,7 +28,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
            // DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(input.curSidur.iSugSidurRagil, input.CardDate, _dtSugSidur);
             if (input.drSugSidur.Length > 0)
             {
-                if (input.drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString())
+                if (input.drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString())
                 {
                     for (int j = 0; j < input.curSidur.htPeilut.Count; j++)
                     {

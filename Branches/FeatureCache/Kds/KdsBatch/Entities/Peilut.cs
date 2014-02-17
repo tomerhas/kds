@@ -7,11 +7,11 @@ using KdsLibrary.BL;
 using System.Configuration;
 using System.Web;
 using KdsBatch.Errors;
-using KDSCommon.DataModels.UDT;
 using KDSCommon.Helpers;
 using KDSCommon.Enums;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.DAL;
+using KDSCommon.UDT;
 
 namespace KdsBatch.Entities
 {
@@ -475,9 +475,9 @@ namespace KdsBatch.Entities
 
                     sMakatNesia = lMakatNesia.ToString().Substring(0, 3);
                     sMakatDescription = ((drElementim.Length > 0) ? drElementim[0]["teur_element"].ToString() : "");
-                    bElementHachanatMechona = ((sMakatNesia.Equals(KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString()))
-                                                || (sMakatNesia.Equals(KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()))
-                                                || (sMakatNesia.Equals(KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString())));
+                    bElementHachanatMechona = ((sMakatNesia.Equals(enElementHachanatMechona.Element701.GetHashCode().ToString()))
+                                                || (sMakatNesia.Equals(enElementHachanatMechona.Element711.GetHashCode().ToString()))
+                                                || (sMakatNesia.Equals(enElementHachanatMechona.Element712.GetHashCode().ToString())));
 
                   //  sSugShirutName = "";
                     break;

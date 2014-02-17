@@ -26,6 +26,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             bool isValid = true;
             DataTable dtChafifa = new DataTable();
 
+            var ovedManagaer = _container.Resolve<IOvedManager>(); 
             if (CheckSidurNihulTnua(input.curSidur, input.drSugSidur))
             {
                 var sidurManager = ServiceLocator.Current.GetInstance<ISidurManager>();
@@ -39,7 +40,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                         userId = input.UserId.Value;
                     for (int i = 0; i < dtChafifa.Rows.Count; i++)
                     {
-                        clDefinitions.UpdateCardStatus((int)dtChafifa.Rows[i]["mispar_ishi"], (DateTime)dtChafifa.Rows[i]["taarich"], CardStatus.Error, userId);
+                        ovedManagaer.UpdateCardStatus((int)dtChafifa.Rows[i]["mispar_ishi"], (DateTime)dtChafifa.Rows[i]["taarich"], CardStatus.Error, userId);
                     }
                 }
             }
@@ -61,7 +62,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                 //כוננות גרירה (ערך 8 במאפיין 52 במאפייני סוג סידור)
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    bSidurNihulTnua = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                    bSidurNihulTnua = (oSidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString());
                     if (!bSidurNihulTnua)
                     {
                         bSidurNihulTnua = (oSidur.sSugAvoda == clGeneral.enSugAvoda.Lershut.GetHashCode().ToString());
@@ -79,7 +80,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                 {//סידור רגיל
                     if (drSugSidur.Length > 0)
                     {
-                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString());
                         if (!bSidurNihulTnua)
                         {
                             bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Lershut.GetHashCode().ToString());

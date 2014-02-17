@@ -11,7 +11,6 @@ using KdsBatch.Reports;
 using KdsBatch.Premia;
 using KdsBatch.MonthlyMails;
 using KdsDataImport;
-using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using System.Threading.Tasks;
 using System.Data;
@@ -19,6 +18,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using KdsBatch.History;
+using DalOraInfra.DAL;
 namespace KdsService
 {
     public class BatchService : IBatchService
@@ -551,7 +551,7 @@ namespace KdsService
                 iSeqNum = obatch.InsertProcessLog(3, 5, RecordStatus.Wait, "start refresh New_Pirtey_Ovdim", 0);
                 //**oKDs.KdsWriteProcessLog(3, 5, 1, "start refresh New_Pirtey_Ovdim", "");
                 oDal.ClearCommand();
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "New_Pirtey_Ovdim", KdsLibrary.DAL.ParameterDir.pdInput);
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "New_Pirtey_Ovdim", ParameterDir.pdInput);
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv");
                 obatch.UpdateProcessLog(iSeqNum, RecordStatus.Finish, "end ok refresh New_Pirtey_Ovdim", 0);
                 //**oKDs.KdsWriteProcessLog(3, 5, 2, "end ok refresh New_Pirtey_Ovdim", "");

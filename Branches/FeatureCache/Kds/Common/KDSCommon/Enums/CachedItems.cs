@@ -13,6 +13,7 @@ namespace KDSCommon.Enums
         SugeySidur,
         Mutamut,
         SibotLedivuchYadani,
-        ErrorTable
+        ErrorTable,
+        Elementim
     }
 }

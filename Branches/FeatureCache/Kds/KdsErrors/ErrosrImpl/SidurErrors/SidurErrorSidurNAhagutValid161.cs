@@ -25,7 +25,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             {
                 if (input.curSidur.sSugAvoda != clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString())
                 {
-                    if (input.curSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                    if (input.curSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString())
                     {
                         bError = CheckConditionsAllowSidur(input);
                     }
@@ -35,7 +35,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             {//סידור רגיל
                 if (input.drSugSidur.Length > 0)
                 {
-                    if (input.drSugSidur[0]["sug_Avoda"].ToString() != clGeneral.enSugAvoda.Grira.GetHashCode().ToString() && input.drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                    if (input.drSugSidur[0]["sug_Avoda"].ToString() != clGeneral.enSugAvoda.Grira.GetHashCode().ToString() && input.drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
                     {
                         bError = CheckConditionsAllowSidur(input);
                     }

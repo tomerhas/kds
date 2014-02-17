@@ -6,6 +6,8 @@ Imports System.Net
 Imports KdsLibrary
 Imports KdsLibrary.DAL
 Imports System.Threading
+Imports DalOraInfra.DAL
+
 'Imports kernel32
 'Imports Oracle.DataAccess.Client
 'Imports System.Net
@@ -60,7 +62,7 @@ Public Class ClKds
     Public Sub LoadKdsFile(ByVal InFileName)
 
         Dim ErrFileName As String
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim sr As StreamReader
         Dim sw As StreamWriter
         Dim dt As DataTable
@@ -146,7 +148,7 @@ Public Class ClKds
             SwIsOpen = False
 
             line = sr.ReadLine
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             InpStr = ""
             While Not line Is Nothing
                 Try
@@ -219,9 +221,9 @@ Public Class ClKds
                             ds = Nothing
                             ds = New DataSet
                             oDal.ClearCommand()
-                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-                            oDal.AddParameter("pIshi", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                            oDal.AddParameter("pIshi", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                             oDal.ExecuteSP("PKG_BATCH.pro_IfSdrnManas", ds)
                             NumLInDS = ds.Tables(0).Rows.Count
                             If Not NumLInDS = 0 Then
@@ -391,8 +393,8 @@ Public Class ClKds
                         dt = Nothing
                         dt = New DataTable
                         oDal.ClearCommand()
-                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-                        oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                        oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                        oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                         oDal.ExecuteSP("PKG_BATCH.pro_GetRowDt", dt)
                         thenextday = dt.Rows(0).Item("thenextday").ToString
 
@@ -402,26 +404,26 @@ Public Class ClKds
                         kpTAARICH = SRV_D_TAARICH
                         dt = New DataTable
                         oDal.ClearCommand()
-                        oDal.AddParameter("pIshi", KdsLibrary.DAL.ParameterType.ntOracleInteger, CInt(SRV_D_ISHI), KdsLibrary.DAL.ParameterDir.pdInput)
-                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                        oDal.AddParameter("pIshi", ParameterType.ntOracleInteger, CInt(SRV_D_ISHI), ParameterDir.pdInput)
+                        oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
                         '20120723 the following fields is overlooked. still being sent for integrity reasons.
                         If Trim(TAARICH_knisa_p24) = "" Then
-                            oDal.AddParameter("pDt24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("pDt24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
                         Else
-                            oDal.AddParameter("pDt24", KdsLibrary.DAL.ParameterType.ntOracleInteger, CInt(TAARICH_knisa_p24), KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("pDt24", ParameterType.ntOracleInteger, CInt(TAARICH_knisa_p24), ParameterDir.pdInput)
                         End If
-                        oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                        oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                         oDal.ExecuteSP("Pkg_clock.pro_GetRowKds", dt)
 
                         SQ99_COUNTER = CInt(dt.Rows(0).Item("ct99").ToString)
                         If SQ99_COUNTER = 0 Then
                             'insert tb_yamey_avoda_ovdim
                             oDal.ClearCommand()
-                            oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleInteger, SRV_D_ISHI, ParameterDir.pdInput)
                             '20120723If Trim(TAARICH_knisa_p24) = "" Then
-                            oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
                             '20120723Else
-                            '20120723 oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, thenextday, KdsLibrary.DAL.ParameterDir.pdInput)
+                            '20120723 oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, thenextday, ParameterDir.pdInput)
                             '20120723End If
                             oDal.ExecuteSP("PKG_BATCH.pro_ins_yamey_avoda_1oved")
                             'KdsSql = KdsSql & "insert into tb_yamey_avoda_ovdim ("
@@ -437,13 +439,13 @@ Public Class ClKds
                         ds = New DataSet
                         oDal.ClearCommand()
                         '20120723If Times_knisa_p24 > 0 Then
-                        '20120723oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, thenextday, KdsLibrary.DAL.ParameterDir.pdInput)
+                        '20120723oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, thenextday, ParameterDir.pdInput)
                         '20120723Else
-                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                        oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
                         '20120723End If
-                        oDal.AddParameter("pIshi", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                        oDal.AddParameter("psidur", KdsLibrary.DAL.ParameterType.ntOracleVarchar, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
-                        oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                        oDal.AddParameter("pIshi", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                        oDal.AddParameter("psidur", ParameterType.ntOracleVarchar, calc_D_new_sidur, ParameterDir.pdInput)
+                        oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                         oDal.ExecuteSP("PKG_clock.pro_GetListDs", ds)
                         NumLInDS = ds.Tables(0).Rows.Count
                         'End If
@@ -475,8 +477,8 @@ Public Class ClKds
                                 dt = Nothing
                                 dt = New DataTable
                                 oDal.ClearCommand()
-                                oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
-                                oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
+                                oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                 oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtLong", dt)
                                 'dt = GetRowKds("dual", "", "to_char(to_date('" & DatEfes & "' ,'yyyymmddhh24mi')+(1/1440),'yyyymmddhh24mi')  thenextefes", retsql)
                                 DatEfes = dt.Rows(0).Item("thenextefes").ToString
@@ -525,8 +527,8 @@ Public Class ClKds
                                     dt = Nothing
                                     dt = New DataTable
                                     oDal.ClearCommand()
-                                    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
-                                    oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                    oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
+                                    oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                     oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtLong", dt)
                                     'dt = GetRowKds("dual", "", "to_char(to_date('" & DatEfes & "' ,'yyyymmddhh24mi')+(1/1440),'yyyymmddhh24mi')  thenextefes", retsql)
                                     DatEfes = dt.Rows(0).Item("thenextefes").ToString
@@ -630,22 +632,22 @@ Public Class ClKds
                                         If KeepIin > 0 And Not KeepIin = i Then
                                             '4) there is a duplicate in the in
                                             'oDal.ClearCommand()
-                                            'oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "19540228" & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
-                                            'oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                            'oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, "19540228" & SRV_D_KNISA_X, ParameterDir.pdInput)
+                                            'oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                             'oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtVeryLong", dt)
                                             ''dt = GetRowKds("dual", "", "to_char(to_date('19540228" & SRV_D_KNISA_X & "' ,'yyyymmddhh24mi')+(1/86400),'yyyymmddhh24miss') thenextdt", retsql)
                                             'thenextdt = dt.Rows(0).Item("thenextdt").ToString
                                             oDal.ClearCommand()
                                             If Times_knisa_p24 > 0 Then
-                                                oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, thenextday, KdsLibrary.DAL.ParameterDir.pdInput)
-                                                oDal.AddParameter("phatchala", KdsLibrary.DAL.ParameterType.ntOracleVarchar, thenextday & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                                oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, thenextday, ParameterDir.pdInput)
+                                                oDal.AddParameter("phatchala", ParameterType.ntOracleVarchar, thenextday & SRV_D_KNISA_X, ParameterDir.pdInput)
                                             Else
-                                                oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-                                                oDal.AddParameter("phatchala", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                                oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                                                oDal.AddParameter("phatchala", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, ParameterDir.pdInput)
                                             End If
-                                            oDal.AddParameter("pIshi", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                                            oDal.AddParameter("psidur", KdsLibrary.DAL.ParameterType.ntOracleVarchar, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
-                                            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                            oDal.AddParameter("pIshi", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                                            oDal.AddParameter("psidur", ParameterType.ntOracleVarchar, calc_D_new_sidur, ParameterDir.pdInput)
+                                            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                             dt = Nothing
                                             dt = New DataTable
                                             oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtVeryLong2", dt)
@@ -689,8 +691,8 @@ Public Class ClKds
                                             dt = Nothing
                                             dt = New DataTable
                                             oDal.ClearCommand()
-                                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
-                                            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
+                                            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                             oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtLong", dt)
                                             'dt = GetRowKds("dual", "", "to_char(to_date('" & DatEfes & "' ,'yyyymmddhh24mi')+(1/1440),'yyyymmddhh24mi')  thenextefes", retsql)
                                             DatEfes = dt.Rows(0).Item("thenextefes").ToString
@@ -840,8 +842,8 @@ Public Class ClKds
                                             dt = Nothing
                                             dt = New DataTable
                                             oDal.ClearCommand()
-                                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
-                                            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
+                                            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                             oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtLong", dt)
                                             'dt = GetRowKds("dual", "", "to_char(to_date('" & DatEfes & "' ,'yyyymmddhh24mi')+(1/1440),'yyyymmddhh24mi')  thenextefes", retsql)
                                             DatEfes = dt.Rows(0).Item("thenextefes").ToString
@@ -926,8 +928,8 @@ Public Class ClKds
                                             dt = Nothing
                                             dt = New DataTable
                                             oDal.ClearCommand()
-                                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
-                                            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
+                                            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                             oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtLong", dt)
                                             'dt = GetRowKds("dual", "", "to_char(to_date('" & DatEfes & "' ,'yyyymmddhh24mi')+(1/1440),'yyyymmddhh24mi')  thenextefes", retsql)
                                             DatEfes = dt.Rows(0).Item("thenextefes").ToString
@@ -966,21 +968,21 @@ Public Class ClKds
                                         'dt = Nothing
                                         'dt = New DataTable
                                         'oDal.ClearCommand()
-                                        'oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "19540228" & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        'oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                        'oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, "19540228" & SRV_D_KNISA_X, ParameterDir.pdInput)
+                                        'oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                         'oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtVeryLong", dt)
                                         ''dt = GetRowKds("dual", "", "to_char(to_date('19540228" & SRV_D_KNISA_X & "' ,'yyyymmddhh24mi')+(1/86400),'yyyymmddhh24miss') thenextdt", retsql)
                                         oDal.ClearCommand()
                                         If Times_knisa_p24 > 0 Then
-                                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, thenextday, KdsLibrary.DAL.ParameterDir.pdInput)
-                                            oDal.AddParameter("phatchala", KdsLibrary.DAL.ParameterType.ntOracleVarchar, thenextday & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, thenextday, ParameterDir.pdInput)
+                                            oDal.AddParameter("phatchala", ParameterType.ntOracleVarchar, thenextday & SRV_D_KNISA_X, ParameterDir.pdInput)
                                         Else
-                                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-                                            oDal.AddParameter("phatchala", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                                            oDal.AddParameter("phatchala", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, ParameterDir.pdInput)
                                         End If
-                                        oDal.AddParameter("pIshi", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("psidur", KdsLibrary.DAL.ParameterType.ntOracleVarchar, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                        oDal.AddParameter("pIshi", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                                        oDal.AddParameter("psidur", ParameterType.ntOracleVarchar, calc_D_new_sidur, ParameterDir.pdInput)
+                                        oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                         dt = Nothing
                                         dt = New DataTable
                                         oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtVeryLong2", dt)
@@ -1023,8 +1025,8 @@ Public Class ClKds
                                         dt = Nothing
                                         dt = New DataTable
                                         oDal.ClearCommand()
-                                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                        oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
+                                        oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                         oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtLong", dt)
                                         'dt = GetRowKds("dual", "", "to_char(to_date('" & DatEfes & "' ,'yyyymmddhh24mi')+(1/1440),'yyyymmddhh24mi')  thenextefes", retsql)
                                         DatEfes = dt.Rows(0).Item("thenextefes").ToString
@@ -1049,31 +1051,31 @@ Public Class ClKds
                                     p_letashlum = 2
                                     dt = New DataTable
                                     oDal.ClearCommand()
-                                    oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                                    oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-                                    oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleVarchar, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+                                    oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                                    oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                                    oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleVarchar, calc_D_new_sidur, ParameterDir.pdInput)
                                     If SRV_D_KNISA_X = "" Then
-                                        oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("SRV_D_KNISA_X", ParameterType.ntOracleVarchar, "0000", ParameterDir.pdInput)
                                     Else
-                                        oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("SRV_D_KNISA_X", ParameterType.ntOracleVarchar, SRV_D_KNISA_X, ParameterDir.pdInput)
                                     End If
                                     If SRV_D_YETZIA_X = "" Then
-                                        oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("SRV_D_YETZIA_X", ParameterType.ntOracleVarchar, "0000", ParameterDir.pdInput)
                                     Else
-                                        oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_YETZIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("SRV_D_YETZIA_X", ParameterType.ntOracleVarchar, SRV_D_YETZIA_X, ParameterDir.pdInput)
                                     End If
                                     'TAARICH_knisa_musach_p24 knisa & yetzia
                                     If Trim(TAARICH_knisa_p24) = "" Then
-                                        oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
                                     Else
-                                        oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
                                     End If
                                     If Trim(TAARICH_yetzia_p24) = "" Then
-                                        oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("TAARICH_yetzia_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
                                     Else
-                                        oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("TAARICH_yetzia_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
                                     End If
-                                    oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                    oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                     oDal.ExecuteSP("Pkg_clock.pro_checkCharigaEtc", dt)
 
                                     '20120822: if there are no lines (clKdsline There is no row at position 0.)
@@ -1112,19 +1114,19 @@ Public Class ClKds
                                     If ifUpdletashlum = True Or ifUpdnesiot = True Or ifUpdhalbasha = True Or ifUpdChariga = True Then
                                         'insert into trail before update
                                         oDal.ClearCommand()
-                                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
                                         If SRV_D_KNISA_X = "" Then
-                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("p_KNISA", ParameterType.ntOracleVarchar, "0000", ParameterDir.pdInput)
                                         Else
-                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("p_KNISA", ParameterType.ntOracleVarchar, SRV_D_KNISA_X, ParameterDir.pdInput)
                                         End If
-                                        oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleInteger, SRV_D_ISHI, ParameterDir.pdInput)
+                                        oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleInteger, calc_D_new_sidur, ParameterDir.pdInput)
                                         'TAARICH_knisa_musach_p24 only knisa 
                                         If Trim(TAARICH_knisa_p24) = "" Then
-                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
                                         Else
-                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
                                         End If
                                         oDal.ExecuteSP("Pkg_Clock.InsIntoTrail")
                                     End If
@@ -1132,21 +1134,21 @@ Public Class ClKds
                                     If ifUpdletashlum = True Then
                                         'update lo_letashlum
                                         oDal.ClearCommand()
-                                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
                                         If SRV_D_KNISA_X = "" Then
-                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("p_KNISA", ParameterType.ntOracleVarchar, "0000", ParameterDir.pdInput)
                                         Else
-                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("p_KNISA", ParameterType.ntOracleVarchar, SRV_D_KNISA_X, ParameterDir.pdInput)
                                         End If
-                                        oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("p_letashlum", KdsLibrary.DAL.ParameterType.ntOracleInteger, p_letashlum, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleInteger, SRV_D_ISHI, ParameterDir.pdInput)
+                                        oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleInteger, calc_D_new_sidur, ParameterDir.pdInput)
+                                        oDal.AddParameter("p_letashlum", ParameterType.ntOracleInteger, p_letashlum, ParameterDir.pdInput)
+                                        oDal.AddParameter("menahel", ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, ParameterDir.pdInput)
                                         'TAARICH_knisa_musach_p24 only knisa 
                                         If Trim(TAARICH_knisa_p24) = "" Then
-                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
                                         Else
-                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
                                         End If
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updletashlum")
                                         If Not (p_letashlum = 0 Or p_letashlum = 1) Then
@@ -1156,63 +1158,63 @@ Public Class ClKds
                                     If ifUpdChariga = True Then
                                         'update chariga
                                         oDal.ClearCommand()
-                                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
                                         If SRV_D_KNISA_X = "" Then
-                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("p_KNISA", ParameterType.ntOracleVarchar, "0000", ParameterDir.pdInput)
                                         Else
-                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("p_KNISA", ParameterType.ntOracleVarchar, SRV_D_KNISA_X, ParameterDir.pdInput)
                                         End If
-                                        oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("p_chariga", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_CHARIGA_X, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleInteger, SRV_D_ISHI, ParameterDir.pdInput)
+                                        oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleInteger, calc_D_new_sidur, ParameterDir.pdInput)
+                                        oDal.AddParameter("p_chariga", ParameterType.ntOracleVarchar, SRV_D_KOD_CHARIGA_X, ParameterDir.pdInput)
+                                        oDal.AddParameter("menahel", ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, ParameterDir.pdInput)
                                         'TAARICH_knisa_musach_p24 only knisa 
                                         If Trim(TAARICH_knisa_p24) = "" Then
-                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
                                         Else
-                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
                                         End If
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updchariga")
                                     End If
                                     If ifUpdnesiot = True Then
                                         'update nesiot
                                         oDal.ClearCommand()
-                                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
                                         If SRV_D_KNISA_X = "" Then
-                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("p_KNISA", ParameterType.ntOracleVarchar, "0000", ParameterDir.pdInput)
                                         Else
-                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("p_KNISA", ParameterType.ntOracleVarchar, SRV_D_KNISA_X, ParameterDir.pdInput)
                                         End If
-                                        oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("p_nesiot", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_BITUL_ZMAN_NESIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleInteger, SRV_D_ISHI, ParameterDir.pdInput)
+                                        oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleInteger, calc_D_new_sidur, ParameterDir.pdInput)
+                                        oDal.AddParameter("p_nesiot", ParameterType.ntOracleVarchar, SRV_D_KOD_BITUL_ZMAN_NESIA_X, ParameterDir.pdInput)
+                                        oDal.AddParameter("menahel", ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, ParameterDir.pdInput)
                                         'TAARICH_knisa_musach_p24 only knisa 
                                         If Trim(TAARICH_knisa_p24) = "" Then
-                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
                                         Else
-                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
                                         End If
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updnesiot")
                                     End If
                                     If ifUpdhalbasha = True Then
                                         'update halbasha
                                         oDal.ClearCommand()
-                                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
                                         If SRV_D_KNISA_X = "" Then
-                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("p_KNISA", ParameterType.ntOracleVarchar, "0000", ParameterDir.pdInput)
                                         Else
-                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("p_KNISA", ParameterType.ntOracleVarchar, SRV_D_KNISA_X, ParameterDir.pdInput)
                                         End If
-                                        oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("p_halbasha", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_HALBASHA_X, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleInteger, SRV_D_ISHI, ParameterDir.pdInput)
+                                        oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleInteger, calc_D_new_sidur, ParameterDir.pdInput)
+                                        oDal.AddParameter("p_halbasha", ParameterType.ntOracleVarchar, SRV_D_KOD_HALBASHA_X, ParameterDir.pdInput)
+                                        oDal.AddParameter("menahel", ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, ParameterDir.pdInput)
                                         'TAARICH_knisa_musach_p24 only knisa 
                                         If Trim(TAARICH_knisa_p24) = "" Then
-                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
                                         Else
-                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                            oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
                                         End If
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updhalbasha")
                                     End If
@@ -1279,94 +1281,94 @@ Public Class ClKds
         'ByVal SRV_D_KOD_HAMARA_X, ByVal SRV_D_KOD_MICHUTZ_LAMICHSA_X, ByVal SRV_D_KOD_LINA_X, ByVal SRV_D_KOD_PITZUL_X, _
 
         'Dim KdsSql As String
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
 
         Try
 
             'todo:check if times_knisa_p24 should send thenextday
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ClearCommand()
-            oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleVarchar, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+            oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleVarchar, calc_D_new_sidur, ParameterDir.pdInput)
             If Trim(SRV_D_KNISA_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_X", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, ParameterDir.pdInput)
             End If
-            oDal.AddParameter("SRV_D_MIKUM_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_SIBAT_DIVUACH_KNISA, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_MIKUM_KNISA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_KNISA", ParameterType.ntOracleVarchar, SRV_D_SIBAT_DIVUACH_KNISA, ParameterDir.pdInput)
             If SRV_D_YETZIA_X = "" Then
-                oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_YETZIA_X", ParameterType.ntOracleVarchar, Nothing, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_YETZIA_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_X, ParameterDir.pdInput)
             End If
-            oDal.AddParameter("SRV_D_MIKUM_YETZIA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_MIKUM_YETZIA), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_YETZIA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_SIBAT_DIVUACH_YETZIA), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_ISHI_MEADKEN", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_ISHI_MEADKEN), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_BITUL_ZMAN_NESIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_CHARIGA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_CHARIGA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_HALBASHA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HALBASHA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_HAZMANA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HAZMANA_X), KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_MIKUM_YETZIA", ParameterType.ntOracleVarchar, Trim(SRV_D_MIKUM_YETZIA), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_YETZIA", ParameterType.ntOracleVarchar, Trim(SRV_D_SIBAT_DIVUACH_YETZIA), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI_MEADKEN", ParameterType.ntOracleVarchar, Trim(SRV_D_ISHI_MEADKEN), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_BITUL_ZMAN_NESIA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_CHARIGA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_CHARIGA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_HALBASHA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HALBASHA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_HAZMANA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HAZMANA_X), ParameterDir.pdInput)
             If Trim(TAARICH_knisa_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(TAARICH_yetzia_p24) = "" Then
-                oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_yetzia_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_yetzia_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
-            oDal.AddParameter("DatEfes", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("DatEfes", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
             If Trim(TAARICH_knisa_musach_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(SRV_D_KNISA_letashlum_musach_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", ParameterType.ntOracleVarchar, Nothing, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, ParameterDir.pdInput)
             End If
             If Trim(TAARICH_gmar_musach_p24) = "" Then
-                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(SRV_D_gmar_letashlum_musach_X) = "" Then
-                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", ParameterType.ntOracleVarchar, Nothing, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, ParameterDir.pdInput)
             End If
             oDal.ExecuteSP("Pkg_clock.pro_new_rec")
 
             oDal.ClearCommand()
-            oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
             If Trim(TAARICH_knisa_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If calc_D_new_sidur = 99200 Then
                 'oDal.ClearCommand()
-                'oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                'oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                'oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                'oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
                 'If Trim(TAARICH_knisa_p24) = "" Then
-                '    oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                '    oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
                 'Else
-                '    oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                '    oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
                 'End If
                 oDal.ExecuteSP("PKG_BATCH.pro_lo_letashlum")
                 'Else
                 '    'oDal.ClearCommand()
-                '    'oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                '    'oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                '    'oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                '    'oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
                 '    'If Trim(TAARICH_knisa_p24) = "" Then
-                '    '    oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                '    '    oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
                 '    'Else
-                '    '    oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                '    '    oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
                 '    'End If
                 ' 2010/06/29 measher_o_mistayeg only after sadran
                 '    oDal.ExecuteSP("PKG_BATCH.pro_measher_o_mistayeg")
@@ -1391,88 +1393,88 @@ Public Class ClKds
         'ByVal SRV_D_KOD_HAMARA_X, ByVal SRV_D_KOD_MICHUTZ_LAMICHSA_X, ByVal SRV_D_KOD_LINA_X, ByVal SRV_D_KOD_PITZUL_X, _
 
         'Dim KdsSql As String
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
             ' insert into trail before update
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("pDt_N_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+            oDal.AddParameter("pDt_N_KNISA", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleInteger, SRV_D_ISHI, ParameterDir.pdInput)
+            oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleInteger, calc_D_new_sidur, ParameterDir.pdInput)
             If Trim(TAARICH_knisa_p24) = "" Then
-                oDal.AddParameter("P24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("P24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("P24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("P24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             oDal.ExecuteSP("Pkg_clock.InsIntoTrailKnisa")
 
             oDal.ClearCommand()
-            oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleVarchar, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+            oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleVarchar, calc_D_new_sidur, ParameterDir.pdInput)
             If Trim(SRV_D_KNISA_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_X", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, ParameterDir.pdInput)
             End If
-            oDal.AddParameter("SRV_D_MIKUM_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_SIBAT_DIVUACH_KNISA, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_MIKUM_KNISA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_KNISA", ParameterType.ntOracleVarchar, SRV_D_SIBAT_DIVUACH_KNISA, ParameterDir.pdInput)
             If SRV_D_YETZIA_X = "" Then
-                oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_YETZIA_X", ParameterType.ntOracleVarchar, "", ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_YETZIA_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_X, ParameterDir.pdInput)
             End If
-            oDal.AddParameter("SRV_D_MIKUM_YETZIA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_MIKUM_YETZIA), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_YETZIA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_SIBAT_DIVUACH_YETZIA), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_ISHI_MEADKEN", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_ISHI_MEADKEN), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_BITUL_ZMAN_NESIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_CHARIGA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_CHARIGA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_HALBASHA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HALBASHA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_HAZMANA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HAZMANA_X), KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_MIKUM_YETZIA", ParameterType.ntOracleVarchar, Trim(SRV_D_MIKUM_YETZIA), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_YETZIA", ParameterType.ntOracleVarchar, Trim(SRV_D_SIBAT_DIVUACH_YETZIA), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI_MEADKEN", ParameterType.ntOracleVarchar, Trim(SRV_D_ISHI_MEADKEN), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_BITUL_ZMAN_NESIA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_CHARIGA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_CHARIGA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_HALBASHA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HALBASHA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_HAZMANA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HAZMANA_X), ParameterDir.pdInput)
             If Trim(TAARICH_knisa_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(TAARICH_yetzia_p24) = "" Then
-                oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_yetzia_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_yetzia_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
-            oDal.AddParameter("DatEfes", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("DatEfes", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
             If Trim(TAARICH_knisa_musach_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(SRV_D_KNISA_letashlum_musach_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", ParameterType.ntOracleVarchar, Nothing, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, ParameterDir.pdInput)
             End If
             If Trim(TAARICH_gmar_musach_p24) = "" Then
-                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(SRV_D_gmar_letashlum_musach_X) = "" Then
-                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", ParameterType.ntOracleVarchar, Nothing, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, ParameterDir.pdInput)
             End If
             'not in use:mikum_knisa,sibat_knisa,p24_yetzia,dateefes,p24_letashlum_knisa,p24_letashlum_yetzia
             oDal.ExecuteSP("Pkg_clock.pro_upd_out_blank")
 
             'If calc_D_new_sidur <> 99200 Then
             '    oDal.ClearCommand()
-            '    oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            '    oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+            '    oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+            '    oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
             '    If Trim(TAARICH_knisa_p24) = "" Then
-            '        oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+            '        oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             '    Else
-            '        oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+            '        oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             '    End If
             ' 2010/06/29 measher_o_mistayeg only after sadran
             '    oDal.ExecuteSP("PKG_BATCH.pro_measher_o_mistayeg")
@@ -1496,87 +1498,87 @@ Public Class ClKds
      ByVal TAARICH_gmar_musach_p24, ByVal SRV_D_gmar_letashlum_musach_X)
 
         'Dim KdsSql As String
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
             'insert into trail before update
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("pDt_N_YETZIA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+            oDal.AddParameter("pDt_N_YETZIA", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_X, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleInteger, SRV_D_ISHI, ParameterDir.pdInput)
+            oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleInteger, calc_D_new_sidur, ParameterDir.pdInput)
             If Trim(TAARICH_yetzia_p24) = "" Then
-                oDal.AddParameter("P24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("P24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("P24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("P24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             oDal.ExecuteSP("PKG_clock.InsIntoTrailYetzia")
 
             oDal.ClearCommand()
-            oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleVarchar, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+            oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleVarchar, calc_D_new_sidur, ParameterDir.pdInput)
             If Trim(SRV_D_KNISA_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_X", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, ParameterDir.pdInput)
             End If
-            oDal.AddParameter("SRV_D_MIKUM_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_SIBAT_DIVUACH_KNISA, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_MIKUM_KNISA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_KNISA", ParameterType.ntOracleVarchar, SRV_D_SIBAT_DIVUACH_KNISA, ParameterDir.pdInput)
             If SRV_D_YETZIA_X = "" Then
-                oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_YETZIA_X", ParameterType.ntOracleVarchar, Nothing, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_YETZIA_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_X, ParameterDir.pdInput)
             End If
-            oDal.AddParameter("SRV_D_MIKUM_YETZIA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_MIKUM_YETZIA), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_YETZIA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_SIBAT_DIVUACH_YETZIA), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_ISHI_MEADKEN", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_ISHI_MEADKEN), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_BITUL_ZMAN_NESIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_CHARIGA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_CHARIGA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_HALBASHA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HALBASHA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_HAZMANA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HAZMANA_X), KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_MIKUM_YETZIA", ParameterType.ntOracleVarchar, Trim(SRV_D_MIKUM_YETZIA), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_SIBAT_DIVUACH_YETZIA", ParameterType.ntOracleVarchar, Trim(SRV_D_SIBAT_DIVUACH_YETZIA), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI_MEADKEN", ParameterType.ntOracleVarchar, Trim(SRV_D_ISHI_MEADKEN), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_BITUL_ZMAN_NESIA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_CHARIGA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_CHARIGA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_HALBASHA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HALBASHA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_HAZMANA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HAZMANA_X), ParameterDir.pdInput)
             If Trim(TAARICH_knisa_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(TAARICH_yetzia_p24) = "" Then
-                oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_yetzia_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_yetzia_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
-            oDal.AddParameter("DatEfes", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("DatEfes", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
             If Trim(TAARICH_knisa_musach_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(SRV_D_KNISA_letashlum_musach_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", ParameterType.ntOracleVarchar, Nothing, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, ParameterDir.pdInput)
             End If
             If Trim(TAARICH_gmar_musach_p24) = "" Then
-                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(SRV_D_gmar_letashlum_musach_X) = "" Then
-                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", ParameterType.ntOracleVarchar, Nothing, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, ParameterDir.pdInput)
             End If
             oDal.ExecuteSP("Pkg_clock.pro_upd_in_blank")
 
             'If calc_D_new_sidur <> 99200 Then
             '    oDal.ClearCommand()
-            '    oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            '    oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+            '    oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+            '    oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
             '    If Trim(TAARICH_knisa_p24) = "" Then
-            '        oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+            '        oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             '    Else
-            '        oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+            '        oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             '    End If
             ' 2010/06/29 measher_o_mistayeg only after sadran
             '    oDal.ExecuteSP("PKG_BATCH.pro_measher_o_mistayeg")
@@ -1602,76 +1604,76 @@ Public Class ClKds
 
 
         'Dim KdsSql As String
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
             'insert into trail before update
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("pDt_N_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+            oDal.AddParameter("pDt_N_KNISA", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleInteger, SRV_D_ISHI, ParameterDir.pdInput)
+            oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleInteger, calc_D_new_sidur, ParameterDir.pdInput)
             If Trim(TAARICH_knisa_p24) = "" Then
-                oDal.AddParameter("P24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("P24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("P24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("P24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             oDal.ExecuteSP("Pkg_clock.InsIntoTrailKnisa")
 
             oDal.ClearCommand()
-            oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleVarchar, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+            oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleVarchar, calc_D_new_sidur, ParameterDir.pdInput)
             If Trim(SRV_D_KNISA_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_X", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, ParameterDir.pdInput)
             End If
-            'oDal.AddParameter("SRV_D_MIKUM_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, KdsLibrary.DAL.ParameterDir.pdInput)
-            'oDal.AddParameter("SRV_D_SIBAT_DIVUACH_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_SIBAT_DIVUACH_KNISA, KdsLibrary.DAL.ParameterDir.pdInput)
+            'oDal.AddParameter("SRV_D_MIKUM_KNISA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, ParameterDir.pdInput)
+            'oDal.AddParameter("SRV_D_SIBAT_DIVUACH_KNISA", ParameterType.ntOracleVarchar, SRV_D_SIBAT_DIVUACH_KNISA, ParameterDir.pdInput)
             If SRV_D_YETZIA_X = "" Then
-                oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_YETZIA_X", ParameterType.ntOracleVarchar, Nothing, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_YETZIA_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_X, ParameterDir.pdInput)
             End If
-            'oDal.AddParameter("SRV_D_MIKUM_YETZIA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_MIKUM_YETZIA), KdsLibrary.DAL.ParameterDir.pdInput)
-            'oDal.AddParameter("SRV_D_SIBAT_DIVUACH_YETZIA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_SIBAT_DIVUACH_YETZIA), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_ISHI_MEADKEN", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_ISHI_MEADKEN), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_BITUL_ZMAN_NESIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_HALBASHA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HALBASHA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_CHARIGA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_CHARIGA_X), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KOD_HAZMANA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HAZMANA_X), KdsLibrary.DAL.ParameterDir.pdInput)
+            'oDal.AddParameter("SRV_D_MIKUM_YETZIA", ParameterType.ntOracleVarchar, Trim(SRV_D_MIKUM_YETZIA), ParameterDir.pdInput)
+            'oDal.AddParameter("SRV_D_SIBAT_DIVUACH_YETZIA", ParameterType.ntOracleVarchar, Trim(SRV_D_SIBAT_DIVUACH_YETZIA), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI_MEADKEN", ParameterType.ntOracleVarchar, Trim(SRV_D_ISHI_MEADKEN), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_BITUL_ZMAN_NESIA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_HALBASHA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HALBASHA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_CHARIGA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_CHARIGA_X), ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KOD_HAZMANA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HAZMANA_X), ParameterDir.pdInput)
             If Trim(TAARICH_knisa_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(TAARICH_yetzia_p24) = "" Then
-                oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_yetzia_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_yetzia_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
-            oDal.AddParameter("DatEfes", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("DatEfes", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
             If Trim(TAARICH_knisa_musach_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(SRV_D_KNISA_letashlum_musach_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", ParameterType.ntOracleVarchar, Nothing, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, ParameterDir.pdInput)
             End If
             If Trim(TAARICH_gmar_musach_p24) = "" Then
-                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             If Trim(SRV_D_gmar_letashlum_musach_X) = "" Then
-                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", ParameterType.ntOracleVarchar, Nothing, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, ParameterDir.pdInput)
             End If
             oDal.ExecuteSP("Pkg_clock.pro_upd_in_out_letashlum")
 
@@ -1686,7 +1688,7 @@ Public Class ClKds
 
     Public Sub LoadPundakim(ByVal InLine)
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim dt As DataTable
         Dim ds As DataSet
         Dim dr As DataRow
@@ -1717,7 +1719,7 @@ Public Class ClKds
             efes = "0000000000"
             SRV_D_ISHI = Mid(InLine, 1, 5)
             SRV_D_TAARICH = Mid(InLine, 7, 8) 'format=yyyymmdd
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
 
             If Mid(InLine, 20, 4) = "0000" Then
                 SRV_D_KNISA_X = ""
@@ -1760,20 +1762,20 @@ Public Class ClKds
             dt = Nothing
             dt = New DataTable
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
             oDal.ExecuteSP("PKG_BATCH.pro_GetRowDt", dt)
             thenextday = dt.Rows(0).Item("thenextday").ToString
             ds = Nothing
             ds = New DataSet
             oDal.ClearCommand()
             '20120723 If Times_knisa_p24 > 0 Then
-            '20120723 oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, thenextday, KdsLibrary.DAL.ParameterDir.pdInput)
+            '20120723 oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, thenextday, ParameterDir.pdInput)
             '20120723 Else
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
             '20120723 End If
-            oDal.AddParameter("pIshi", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+            oDal.AddParameter("pIshi", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
             oDal.ExecuteSP("PKG_BATCH.pro_GetListDsPundakim", ds)
             NumLInDS = ds.Tables(0).Rows.Count
 
@@ -1792,8 +1794,8 @@ Public Class ClKds
                     dt = Nothing
                     dt = New DataTable
                     oDal.ClearCommand()
-                    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
-                    oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                    oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, DatEfes, ParameterDir.pdInput)
+                    oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                     oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtLong", dt)
                     'dt = GetRowKds("dual", "", "to_char(to_date('" & DatEfes & "' ,'yyyymmddhh24mi')+(1/1440),'yyyymmddhh24mi')  thenextefes", retsql)
                     DatEfes = dt.Rows(0).Item("thenextefes").ToString
@@ -1847,8 +1849,8 @@ Public Class ClKds
                             dt = Nothing
                             dt = New DataTable
                             oDal.ClearCommand()
-                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "19540228" & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
-                            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, "19540228" & SRV_D_KNISA_X, ParameterDir.pdInput)
+                            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                             oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtVeryLong", dt)
                             'dt = GetRowKds("dual", "", "to_char(to_date('19540228" & SRV_D_KNISA_X & "' ,'yyyymmddhh24mi')+(1/86400),'yyyymmddhh24miss') thenextdt", retsql)
                             thenextdt = dt.Rows(0).Item("thenextdt").ToString
@@ -1857,15 +1859,15 @@ Public Class ClKds
                             'dt = New DataTable
                             'oDal.ClearCommand()
                             'If Times_knisa_p24 > 0 Then
-                            '    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, thenextday, KdsLibrary.DAL.ParameterDir.pdInput)
-                            '    oDal.AddParameter("phatchala", KdsLibrary.DAL.ParameterType.ntOracleVarchar, thenextday & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                            '    oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, thenextday, ParameterDir.pdInput)
+                            '    oDal.AddParameter("phatchala", ParameterType.ntOracleVarchar, thenextday & SRV_D_KNISA_X, ParameterDir.pdInput)
                             'Else
-                            '    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-                            '    oDal.AddParameter("phatchala", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                            '    oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                            '    oDal.AddParameter("phatchala", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, ParameterDir.pdInput)
                             'End If
-                            'oDal.AddParameter("pIshi", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-                            'oDal.AddParameter("psidur", KdsLibrary.DAL.ParameterType.ntOracleVarchar, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
-                            'oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                            'oDal.AddParameter("pIshi", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                            'oDal.AddParameter("psidur", ParameterType.ntOracleVarchar, calc_D_new_sidur, ParameterDir.pdInput)
+                            'oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                             'oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtVeryLong2", dt)
                             'thenextdt = dt.Rows(0).Item("thenextdt").ToString
                             InpStr = "new_rec_pundakim:" & InpStr
@@ -1890,8 +1892,8 @@ Public Class ClKds
                             dt = Nothing
                             dt = New DataTable
                             oDal.ClearCommand()
-                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "19540228" & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
-                            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, "19540228" & SRV_D_KNISA_X, ParameterDir.pdInput)
+                            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                             oDal.ExecuteSP("PKG_BATCH.pro_GetRowDtVeryLong", dt)
                             'dt = GetRowKds("dual", "", "to_char(to_date('19540228" & SRV_D_KNISA_X & "' ,'yyyymmddhh24mi')+(1/86400),'yyyymmddhh24miss') thenextdt", retsql)
                             thenextdt = dt.Rows(0).Item("thenextdt").ToString
@@ -1923,21 +1925,21 @@ Public Class ClKds
     Private Sub new_rec_pundakim(ByVal SRV_D_ISHI, ByVal SRV_D_TAARICH, _
       ByVal SRV_D_KNISA_X, ByVal SRV_D_MIKUM_KNISA, ByVal TAARICH_knisa_p24)
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
 
             'todo:check if times_knisa_p24 should send thenextday
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ClearCommand()
-            oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("SRV_D_MIKUM_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_KNISA_X", ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_X, ParameterDir.pdInput)
+            oDal.AddParameter("SRV_D_MIKUM_KNISA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, ParameterDir.pdInput)
             If Trim(TAARICH_knisa_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
             oDal.ExecuteSP("Pkg_clock.pro_new_rec_pundakim")
 
@@ -1952,17 +1954,17 @@ Public Class ClKds
     Public Function change_knisot(ByVal p_dt As String) As DataTable
 
         'Dim KdsSql As String
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Dim dt As DataTable
         Try
             'insert into trail before update
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             dt = New DataTable
 
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
+            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
             oDal.ExecuteSP("PKG_sdrn.pro_change_Knisot_sdrm", dt)
             If dt.Rows.Count = 0 Then
                 'todo:error or stop
@@ -1979,7 +1981,7 @@ Public Class ClKds
     'End Sub
     Public Sub FetchKnisot(ByVal p_dt As String)
 
-        Dim oDal As KdsLibrary.DAL.clTnua
+        Dim oDal As clTnua
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Dim Dt As DataTable
         Dim Ds As DataSet
@@ -1998,18 +2000,18 @@ Public Class ClKds
                 For i = 0 To Dt.Rows.Count - 1
                     Makat = CInt(Dt.Rows(i).Item("makat_nesia").ToString)
                     If Makat > 0 Then
-                        oDal = New KdsLibrary.DAL.clTnua(TnuaConn)
+                        oDal = New clTnua(TnuaConn)
                         Try
                             oDal.ClearCommand()
                             Ds = New DataSet
                             rc = 1 'error=1, ok=0
-                            oDal.AddParameter("p_date", KdsLibrary.DAL.ParameterType.ntOracleDate, DtMakat, KdsLibrary.DAL.ParameterDir.pdInput)
-                            oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, Makat, KdsLibrary.DAL.ParameterDir.pdInput)
-                            oDal.AddParameter("p_rc", KdsLibrary.DAL.ParameterType.ntOracleInteger, DBNull.Value, KdsLibrary.DAL.ParameterDir.pdOutput)
-                            oDal.AddParameter("KavDetailsCrs", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, DBNull.Value, KdsLibrary.DAL.ParameterDir.pdOutput)
-                            oDal.AddParameter("EntryCrs", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, DBNull.Value, KdsLibrary.DAL.ParameterDir.pdOutput)
-                            oDal.AddParameter("VisutimCrs", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, DBNull.Value, KdsLibrary.DAL.ParameterDir.pdOutput)
-                            oDal.AddParameter("p_KnisaVisut", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("p_date", ParameterType.ntOracleDate, DtMakat, ParameterDir.pdInput)
+                            oDal.AddParameter("p_makat_nesia", ParameterType.ntOracleInteger, Makat, ParameterDir.pdInput)
+                            oDal.AddParameter("p_rc", ParameterType.ntOracleInteger, DBNull.Value, ParameterDir.pdOutput)
+                            oDal.AddParameter("KavDetailsCrs", ParameterType.ntOracleRefCursor, DBNull.Value, ParameterDir.pdOutput)
+                            oDal.AddParameter("EntryCrs", ParameterType.ntOracleRefCursor, DBNull.Value, ParameterDir.pdOutput)
+                            oDal.AddParameter("VisutimCrs", ParameterType.ntOracleRefCursor, DBNull.Value, ParameterDir.pdOutput)
+                            oDal.AddParameter("p_KnisaVisut", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
                             oDal.ExecuteSP(clGeneral.cGetKavDetails, Ds)
                             rc = CInt(oDal.GetValParam("p_rc").ToString)
                             If rc = 0 Then
@@ -2038,7 +2040,7 @@ Public Class ClKds
     Public Sub DelNInsKnisot(ByVal Ds As DataSet, ByVal p_dt As String)
 
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim Dt As DataTable
         Dim DtPeilut As DataTable
         Dim DtKnisot As DataTable
@@ -2061,11 +2063,11 @@ Public Class ClKds
             'todo: compare PDt and p_dt 'DtMakat
             PMakat = CInt(DtPeilut.Rows(0).Item(1).ToString)
             'NKnisot = 0
-            'oDal = New KdsLibrary.DAL.clDal
+            'oDal = New clDal
             'oDal.ClearCommand()
-            'oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
-            'oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
-            'oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+            'oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
+            'oDal.AddParameter("p_makat_nesia", ParameterType.ntOracleInteger, PMakat, ParameterDir.pdInput)
+            'oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
             'oDal.ExecuteSP("PKG_sdrn.pro_Count_Knisot_sdrm", Dt)
             'If Dt.Rows.Count = 0 Then
             '    'todo:error , no original kniot.
@@ -2080,18 +2082,18 @@ Public Class ClKds
                 PTeurNesia = DtKnisot.Rows(i).Item(7).ToString
 
                 oDal.ClearCommand()
-                oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
-                oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
-                oDal.AddParameter("pMisparKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMisparKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
-                oDal.AddParameter("PSugKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PSugKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
-                oDal.AddParameter("PTeurNesia", KdsLibrary.DAL.ParameterType.ntOracleVarchar, PTeurNesia, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
+                oDal.AddParameter("p_makat_nesia", ParameterType.ntOracleInteger, PMakat, ParameterDir.pdInput)
+                oDal.AddParameter("pMisparKnisa", ParameterType.ntOracleInteger, PMisparKnisa, ParameterDir.pdInput)
+                oDal.AddParameter("PSugKnisa", ParameterType.ntOracleInteger, PSugKnisa, ParameterDir.pdInput)
+                oDal.AddParameter("PTeurNesia", ParameterType.ntOracleVarchar, PTeurNesia, ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_sdrn.pro_Ins_Knisot_sdrm")
             Next
 
             'If Not NKnisot = DtKnisot.Rows.Count Then
             '    oDal.ClearCommand()
-            '    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
-            '    oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
+            '    oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
+            '    oDal.AddParameter("p_makat_nesia", ParameterType.ntOracleInteger, PMakat, ParameterDir.pdInput)
             '    oDal.ExecuteSP("PKG_sdrn.pro_Del_Knisot_sdrm", Dt)
             'End If
             'Else
@@ -2104,11 +2106,11 @@ Public Class ClKds
             ''PTeurNesia = DtKnisot.Rows(i).Item("TeurKnisa").ToString
 
             '    oDal.ClearCommand()
-            '    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
-            '    oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
-            '    oDal.AddParameter("pMisparKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMisparKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
-            '    oDal.AddParameter("PSugKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PSugKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
-            '    oDal.AddParameter("PTeurNesia", KdsLibrary.DAL.ParameterType.ntOracleVarchar, PTeurNesia, KdsLibrary.DAL.ParameterDir.pdInput)
+            '    oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
+            '    oDal.AddParameter("p_makat_nesia", ParameterType.ntOracleInteger, PMakat, ParameterDir.pdInput)
+            '    oDal.AddParameter("pMisparKnisa", ParameterType.ntOracleInteger, PMisparKnisa, ParameterDir.pdInput)
+            '    oDal.AddParameter("PSugKnisa", ParameterType.ntOracleInteger, PSugKnisa, ParameterDir.pdInput)
+            '    oDal.AddParameter("PTeurNesia", ParameterType.ntOracleVarchar, PTeurNesia, ParameterDir.pdInput)
             '    oDal.ExecuteSP("PKG_sdrn.pro_Upd_Knisot_sdrm")
             'Next
             '' insert more knisot than original
@@ -2125,7 +2127,7 @@ Public Class ClKds
 #Region "Sadran"
     Public Sub UpdSdrnFromReplicate(ByVal p_date_str As String, ByVal UserBatch As String)
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         'Dim clGenral As KdsLibrary.clGeneral
         'Dim clBatch As KdsBatch.clBatchFactory
         Dim tahalich As Integer
@@ -2139,7 +2141,7 @@ Public Class ClKds
         Try
             iNumSeq = 0
             iSdrnNumSeq = oBatch.InsertProcessLog(4, 1, KdsLibrary.BL.RecordStatus.Wait, "sdrn", 0)
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
 
             tahalich = 4
             sub_tahalich = 3
@@ -2147,7 +2149,7 @@ Public Class ClKds
             iNumSeq = oBatch.InsertProcessLog(4, 3, KdsLibrary.BL.RecordStatus.Wait, "yamim", 0)
             ''** KdsWriteProcessLog(4, 3, 1, "start yamim")
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_date_str, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_date_str, ParameterDir.pdInput)
             oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "yamim", 0)
             oDal.ExecuteSP("PKG_sdrn.pro_ins_yamim_4_sidurim")
 
@@ -2156,7 +2158,7 @@ Public Class ClKds
             iNumSeq = oBatch.InsertProcessLog(4, 4, KdsLibrary.BL.RecordStatus.Wait, "sidurim", 0)
             ''**KdsWriteProcessLog(4, 4, 1, "after yamim, before sidurim")
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_date_str, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_date_str, ParameterDir.pdInput)
             oDal.ExecuteSP("PKG_sdrn.pro_ins_sidurim_4_sidurim")
 
             oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "sidurim", 0)
@@ -2166,7 +2168,7 @@ Public Class ClKds
             teur = "peilut_4_sidurim"
             oDal.ClearCommand()
             iNumSeq = oBatch.InsertProcessLog(4, 5, KdsLibrary.BL.RecordStatus.Wait, "peilut_4_sidurim", 0)
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_date_str, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_date_str, ParameterDir.pdInput)
             oDal.ExecuteSP("PKG_sdrn.pro_ins_peilut_4_sidurim")
             oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "peilut_4_sidurim", 0)
 
@@ -2175,7 +2177,7 @@ Public Class ClKds
             iNumSeq = oBatch.InsertProcessLog(4, 6, KdsLibrary.BL.RecordStatus.Wait, "min-max", 0)
             ''** KdsWriteProcessLog(4, 6, 1, "after peilut, before min-max")
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_date_str, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_date_str, ParameterDir.pdInput)
             oDal.ExecuteSP("PKG_BATCH.pro_upd_yamey_avoda_ovdim")
             oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "min-max", 0)
 
@@ -2186,7 +2188,7 @@ Public Class ClKds
             'todo: shmulik will add an index column and its value will come from web-config
             'todo: how to differ the web-config / app-config ?
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_date_str, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_date_str, ParameterDir.pdInput)
             oDal.ExecuteSP("PKG_sdrn.pro_upd_sdrm_control")
             oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "upd control", 0)
             ''**KdsWriteProcessLog(4, 7, 1, "after upd control")
@@ -2262,17 +2264,17 @@ Public Class ClKds
     End Sub
     Public Function ChkStatusSdrn(ByVal p_date_str As String) As String
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim dt2 As DataTable = New DataTable()
         Dim p_status As Integer
 
         p_status = 6
         'the procedure aborted
         Try
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_date_str, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_date_str, ParameterDir.pdInput)
+            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
             oDal.ExecuteSP("PKG_sdrn.pro_GetStatusSdrn", dt2)
             If dt2.Rows.Count = 0 Then
                 p_status = "8"
@@ -2294,7 +2296,7 @@ Public Class ClKds
     End Function
     Public Function ReplicateSdrn(ByVal p_date As Date) As String
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim p_status As String
         Dim p_date_str As String
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
@@ -2313,10 +2315,10 @@ Public Class ClKds
                 threadSdrn.Start(p_date_str)
             End If
 
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ClearCommand()
-            oDal.AddParameter("p_date", KdsLibrary.DAL.ParameterType.ntOracleDate, p_date, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("p_return_code", KdsLibrary.DAL.ParameterType.ntOracleInteger, p_status, KdsLibrary.DAL.ParameterDir.pdOutput)
+            oDal.AddParameter("p_date", ParameterType.ntOracleDate, p_date, ParameterDir.pdInput)
+            oDal.AddParameter("p_return_code", ParameterType.ntOracleInteger, p_status, ParameterDir.pdOutput)
             oDal.ExecuteSP("KDS.KDS_Driver_Activities_Pack.create_driver_activities@kds2sdrm")
 
             oBatch.InsertProcessLog(4, 1, KdsLibrary.BL.RecordStatus.Wait, "after sdrn,before status", 0)
@@ -2336,7 +2338,7 @@ Public Class ClKds
     End Function
     Public Sub ChkStatusSdrn4thread(ByVal p_date_str As String)
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim dt2 As DataTable = New DataTable()
         Dim p_status As Integer
         Dim BodyMail As String
@@ -2348,10 +2350,10 @@ Public Class ClKds
         Try
             iSeqChkSdrn = oBatch.InsertProcessLog(4, 1, KdsLibrary.BL.RecordStatus.Wait, "ChkStatusSdrn4thread", 0)
             Thread.Sleep(900000) '15 minutes
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_date_str, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_date_str, ParameterDir.pdInput)
+            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
             oDal.ExecuteSP("PKG_sdrn.pro_GetStatusSdrn", dt2)
             If dt2.Rows.Count = 0 Then
                 p_status = 8
@@ -2415,15 +2417,15 @@ Public Class ClKds
 
     End Sub
     Public Sub CreateActivitiesAtSdrn()
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim Status As String
         Try
             Status = ChkStatusSdrn(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"))
             If (Status = 8) Then
-                oDal = New KdsLibrary.DAL.clDal
+                oDal = New clDal
                 oDal.ClearCommand()
-                oDal.AddParameter("p_date", KdsLibrary.DAL.ParameterType.ntOracleDate, DateTime.Now.AddDays(-1), KdsLibrary.DAL.ParameterDir.pdInput)
-                oDal.AddParameter("p_return_code", KdsLibrary.DAL.ParameterType.ntOracleInteger, Status, KdsLibrary.DAL.ParameterDir.pdOutput)
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, DateTime.Now.AddDays(-1), ParameterDir.pdInput)
+                oDal.AddParameter("p_return_code", ParameterType.ntOracleInteger, Status, ParameterDir.pdOutput)
                 oDal.ExecuteSP("KDS.KDS_Driver_Activities_Pack.create_driver_activities@kds2sdrm")
             End If
         Catch ex As Exception
@@ -2609,7 +2611,7 @@ Public Class ClKds
     End Sub
     Public Sub RunSdrnRetro(ByVal UserBatch As String)
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim dt As DataTable = New DataTable()
         Dim dt1 As DataTable = New DataTable()
         Dim dt2 As DataTable = New DataTable()
@@ -2632,11 +2634,11 @@ Public Class ClKds
                 SdrnStatTimes = "3"
             End If
 
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ClearCommand()
             'parameter pAr varchar is irrelevant because it is parameter 100 in tb_parametrim
-            oDal.AddParameter("pAr", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SdrnReRunPar, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+            oDal.AddParameter("pAr", ParameterType.ntOracleVarchar, SdrnReRunPar, ParameterDir.pdInput)
+            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
             oDal.ExecuteSP("PKG_sdrn.pro_GetStatus2Sdrn", dt2)
             If Not dt2.Rows.Count = 0 Then
                 'todo: loop on all lines
@@ -2649,14 +2651,14 @@ Public Class ClKds
                     dt = Nothing
                     dt = New DataTable
                     oDal.ClearCommand()
-                    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
-                    oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                    oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
+                    oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                     oDal.ExecuteSP("PKG_sdrn.pro_GetDtReRunSdrn", dt)
                     If dt.Rows.Count = 0 Then
                         'rerun not started yet, fields: taarich,kod_peilut_tahalich
                         oDal.ClearCommand()
-                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
-                        oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                        oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
+                        oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                         oDal.ExecuteSP("PKG_BATCH.pro_get_ovdim4rerunsdrn", dt1)
                         If dt1.Rows.Count = 0 Then
                             ToMail = ConfigurationSettings.AppSettings("miri")
@@ -2670,7 +2672,7 @@ Public Class ClKds
                             iSeqChkSdrnRetro = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "retro yamim", 0)
                             ''**KdsWriteProcessLog(4, 11, 1, "start retro yamim")
                             oDal.ClearCommand()
-                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
                             oDal.ExecuteSP("PKG_sdrn.pro_ins_yamim_4_sidurim")
                             oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "retro yamim", 0)
 
@@ -2678,7 +2680,7 @@ Public Class ClKds
                             iSeqChkSdrnRetro = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "delNtrail peilut", 0)
                             ''**KdsWriteProcessLog(4, 12, 1, "after yamim, before delNtrail peilut")
                             oDal.ClearCommand()
-                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
                             oDal.ExecuteSP("PKG_sdrn.pro_TrailNDel_peilut_4retrSdrn")
                             oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "delNtrail peilut", 0)
 
@@ -2686,7 +2688,7 @@ Public Class ClKds
                             iSeqChkSdrnRetro = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "delNtrail sidurim", 0)
                             ''**KdsWriteProcessLog(4, 13, 1, "after peilut, before delNtrail sidurim")
                             oDal.ClearCommand()
-                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
                             oDal.ExecuteSP("PKG_sdrn.pro_TrailNDel_sidurim_4reSdrn")
                             oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "delNtrail sidurim", 0)
 
@@ -2694,7 +2696,7 @@ Public Class ClKds
                             iSeqChkSdrnRetro = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "ins sidurim rerun", 0)
                             ''**KdsWriteProcessLog(4, 14, 1, "after sidurim, before ins sidurim rerun")
                             oDal.ClearCommand()
-                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
                             oDal.ExecuteSP("PKG_sdrn.pro_ins_sidurim_retroSdrn")
                             oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "ins sidurim rerun", 0)
 
@@ -2702,7 +2704,7 @@ Public Class ClKds
                             iSeqChkSdrnRetro = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "ins peilut rerun", 0)
                             ''** KdsWriteProcessLog(4, 15, 1, "after sidurim,before ins peilut rerun")
                             oDal.ClearCommand()
-                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
                             oDal.ExecuteSP("PKG_sdrn.pro_ins_peilut_retroSdrn")
                             oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "ins peilut rerun", 0)
 
@@ -2710,7 +2712,7 @@ Public Class ClKds
                             iSeqChkSdrnRetro = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "upd yamey etc", 0)
                             ''**KdsWriteProcessLog(4, 16, 1, "after rerun, before upd yamey etc")
                             oDal.ClearCommand()
-                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
                             oDal.ExecuteSP("PKG_BATCH.pro_upd_yamey_avoda_ovdim")
                             oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "upd yamey etc", 0)
 
@@ -2718,7 +2720,7 @@ Public Class ClKds
                             iSeqChkSdrnRetro = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "upd control", 0)
                             ''**KdsWriteProcessLog(4, 17, 1, "after yamey rerun, before upd control")
                             oDal.ClearCommand()
-                            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_dt, ParameterDir.pdInput)
                             oDal.ExecuteSP("PKG_sdrn.pro_upd_sdrnRerun_control")
                             oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "retro upd control", 0)
                             ''**sub_tahalich = 17
@@ -2782,7 +2784,7 @@ Public Class ClKds
 #Region "Refresh"
     Public Sub RunRefresh()
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim obClManager As KdsBatch.HrWorkersChanges.clMain
         Dim tahalich As Integer
         Dim sub_tahalich As Integer
@@ -2795,7 +2797,7 @@ Public Class ClKds
             iRunRefresh = oBatch.InsertProcessLog(3, 1, KdsLibrary.BL.RecordStatus.Wait, "RunRefresh", 0)
             'no need 4 date parameter since refresh has no date,
             'and PKG_BATCH.pro_ins_yamey_avoda_ovdim is of no importance "backwards"
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             tahalich = 3
             sub_tahalich = 1
 
@@ -2808,7 +2810,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start matzav", 0)
                 ''**KdsWriteProcessLog(3, 1, 1, "start matzav")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "New_Matzav_Ovdim", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "New_Matzav_Ovdim", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok matzav", 0)
                 ''** KdsWriteProcessLog(3, 1, 2, "end ok matzav")
@@ -2823,7 +2825,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(7, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start ins_yamey", 0)
                 ''**KdsWriteProcessLog(7, 1, 1, "start ins_yamey")
                 oDal.ClearCommand()
-                oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_TAARICH, ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_ins_yamey_avoda_ovdim")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok ins_yamey", 0)
                 ''**KdsWriteProcessLog(7, 1, 2, "end ok ins_yamey")
@@ -2838,7 +2840,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start ovdim", 0)
                 ''**KdsWriteProcessLog(3, 2, 1, "start ovdim")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "Ovdim", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "Ovdim", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok ovdim", 0)
                 ''**KdsWriteProcessLog(3, 2, 2, "end ok ovdim")
@@ -2854,7 +2856,7 @@ Public Class ClKds
             sub_tahalich = 4
             'KdsWriteProcessLog(3, 4, 1, "start ovdim_im_shinuy")
             'oDal.ClearCommand()
-            'oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "Ovdim_Im_Shinuy_HR", KdsLibrary.DAL.ParameterDir.pdInput)
+            'oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "Ovdim_Im_Shinuy_HR", ParameterDir.pdInput)
             'oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
             'KdsWriteProcessLog(3, 4, 2, "end ok ovdim_im")
             Try
@@ -2865,7 +2867,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start pirtey_ovdim", 0)
                 ''** KdsWriteProcessLog(3, 5, 1, "start pirtey_ovdim")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "New_Pirtey_Ovdim", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "New_Pirtey_Ovdim", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok pirtey_ovdim", 0)
                 ''**KdsWriteProcessLog(3, 5, 2, "end ok pirtey_ovdim")
@@ -2879,7 +2881,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start ez_nihuly", 0)
                 ''**KdsWriteProcessLog(3, 6, 1, "start ez_nihuly")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "Ez_Nihuly", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "Ez_Nihuly", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok ez", 0)
                 ''**KdsWriteProcessLog(3, 6, 2, "end ok ez")
@@ -2892,7 +2894,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start meashrim", 0)
                 ''** KdsWriteProcessLog(3, 7, 1, "start meashrim")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "Meashrim", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "Meashrim", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok meashrim", 0)
                 ''**KdsWriteProcessLog(3, 7, 2, "end ok meashrim")
@@ -2907,7 +2909,7 @@ Public Class ClKds
             '    'Else
             '    KdsWriteProcessLog(3, 3, 1, "start meafyenim_ovdim")
             '    oDal.ClearCommand()
-            '    oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "New_meafyenim_ovdim", KdsLibrary.DAL.ParameterDir.pdInput)
+            '    oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "New_meafyenim_ovdim", ParameterDir.pdInput)
             '    oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
             '    KdsWriteProcessLog(3, 3, 2, "end ok meafyenim_ovdim")
             '    'End If
@@ -2922,7 +2924,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start Brerot_Mechdal_Meafyenim", 0)
                 ''**KdsWriteProcessLog(3, 16, 1, "start Brerot_Mechdal_Meafyenim")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "New_Brerot_Mechdal_Meafyenim", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "New_Brerot_Mechdal_Meafyenim", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end Brerot_Mechdal_Meafyenim", 0)
                 ''**KdsWriteProcessLog(3, 16, 2, "end Brerot_Mechdal_Meafyenim")
@@ -2949,7 +2951,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_EZOR", 0)
                 ''** KdsWriteProcessLog(3, 9, 1, "start cTB_EZOR")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_EZOR", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_EZOR", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok cTB_EZOR", 0)
                 ''** KdsWriteProcessLog(3, 9, 2, "end ok cTB_EZOR")
@@ -2962,7 +2964,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_kod_Gil", 0)
                 ''**KdsWriteProcessLog(3, 10, 1, "start cTB_kod_Gil")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_kod_Gil", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_kod_Gil", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok cTB_kod_Gil", 0)
                 ''**KdsWriteProcessLog(3, 10, 2, "end ok cTB_kod_Gil")
@@ -2975,7 +2977,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_hevra", 0)
                 ''**KdsWriteProcessLog(3, 11, 1, "start cTB_hevra")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_hevra", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_hevra", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_hevra", 0)
                 ''**KdsWriteProcessLog(3, 11, 2, "end cTB_hevra")
@@ -2988,7 +2990,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_ISUK", 0)
                 ''**KdsWriteProcessLog(3, 12, 1, "start cTB_ISUK")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_ISUK", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_ISUK", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_ISUK", 0)
                 ''**  KdsWriteProcessLog(3, 12, 2, "end cTB_ISUK")
@@ -3001,7 +3003,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_MAAMAD", 0)
                 ''**KdsWriteProcessLog(3, 13, 1, "start cTB_MAAMAD")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_MAAMAD", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_MAAMAD", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_MAAMAD", 0)
                 ''** KdsWriteProcessLog(3, 13, 2, "end cTB_MAAMAD")
@@ -3014,7 +3016,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_MAHSANIM", 0)
                 ''**KdsWriteProcessLog(3, 14, 1, "start cTB_MAHSANIM")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_MAHSANIM", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_MAHSANIM", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_MAHSANIM", 0)
                 ''**KdsWriteProcessLog(3, 14, 2, "end cTB_MAHSANIM")
@@ -3027,7 +3029,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_MEAFYEN_BITZUA", 0)
                 ''** KdsWriteProcessLog(3, 15, 1, "start cTB_MEAFYEN_BITZUA")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_MEAFYEN_BITZUA", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_MEAFYEN_BITZUA", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_MEAFYEN_BITZUA", 0)
                 ''**KdsWriteProcessLog(3, 15, 2, "end cTB_MEAFYEN_BITZUA")
@@ -3039,7 +3041,7 @@ Public Class ClKds
                 sub_tahalich = 17
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_Mutamut", 0)
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_Mutamut", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_Mutamut", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_Mutamut", 0)
                 ''**KdsWriteProcessLog(3, 17, 2, "end cTB_Mutamut")
@@ -3052,7 +3054,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start CTB_Dargat_Rishayon", 0)
                 ''KdsWriteProcessLog(3, 18, 1, "start CTB_Dargat_Rishayon")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "CTB_Dargat_Rishayon", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "CTB_Dargat_Rishayon", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end CTB_Dargat_Rishayon", 0)
                 ''**KdsWriteProcessLog(3, 18, 2, "end CTB_Dargat_Rishayon")
@@ -3065,7 +3067,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_sector_ISUK", 0)
                 ''**KdsWriteProcessLog(3, 19, 1, "start cTB_sector_ISUK")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_sector_ISUK", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_sector_ISUK", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_sector_ISUK", 0)
                 ''**KdsWriteProcessLog(3, 19, 2, "end cTB_sector_ISUK")
@@ -3078,7 +3080,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_SNIF_AV", 0)
                 ''**KdsWriteProcessLog(3, 20, 1, "start cTB_SNIF_AV")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_SNIF_AV", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_SNIF_AV", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_SNIF_AV", 0)
                 ''** KdsWriteProcessLog(3, 20, 2, "end cTB_SNIF_AV")
@@ -3091,7 +3093,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_status", 0)
                 ''**KdsWriteProcessLog(3, 21, 1, "start cTB_status")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_status", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_status", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_status", 0)
                 ''** KdsWriteProcessLog(3, 21, 2, "end cTB_status")
@@ -3104,7 +3106,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_Sug_misra", 0)
                 ''** KdsWriteProcessLog(3, 22, 1, "start cTB_Sug_misra")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_Sug_misra", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_Sug_misra", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_Sug_misra", 0)
                 ''**KdsWriteProcessLog(3, 22, 2, "end cTB_Sug_misra")
@@ -3117,7 +3119,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_Sug_misra", 0)
                 ''**KdsWriteProcessLog(3, 23, 1, "start cTB_sug_yechida")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_sug_yechida", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_sug_yechida", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_sug_yechida", 0)
                 ''**KdsWriteProcessLog(3, 23, 2, "end cTB_sug_yechida")
@@ -3130,7 +3132,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start CTB_Tfkidim_Meashrim", 0)
                 ''**KdsWriteProcessLog(3, 24, 1, "start CTB_Tfkidim_Meashrim")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "CTB_Tfkidim_Meashrim", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "CTB_Tfkidim_Meashrim", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end CTB_Tfkidim_Meashrim", 0)
                 ''**KdsWriteProcessLog(3, 24, 2, "end CTB_Tfkidim_Meashrim")
@@ -3143,7 +3145,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_yechida", 0)
                 ''**KdsWriteProcessLog(3, 25, 1, "start cTB_yechida")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_yechida", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_yechida", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_yechida", 0)
                 ''**KdsWriteProcessLog(3, 25, 2, "end cTB_yechida")
@@ -3156,7 +3158,7 @@ Public Class ClKds
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_yechidat_meafyen", 0)
                 ''** KdsWriteProcessLog(3, 26, 1, "start cTB_yechidat_meafyen")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_yechidat_meafyen", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_yechidat_meafyen", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_yechidat_meafyen", 0)
                 ''**KdsWriteProcessLog(3, 26, 2, "end cTB_yechidat_meafyen")
@@ -3224,13 +3226,13 @@ Public Class ClKds
     End Sub
     Sub refrsh_meafyenim()
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim obClManager As KdsBatch.HrWorkersChanges.clMain
         Dim sub_tahalich, iRunRefresh As Integer
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
 
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             sub_tahalich = 3
             'If SdrnStatTimes = 3 Then
             '    KdsWriteProcessLog(3, 3, 2, "no refresh new_meafyenim_ovdim 4 karin")
@@ -3239,7 +3241,7 @@ Public Class ClKds
             iRunRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start meafyenim_ovdim", 0)
             ''**  KdsWriteProcessLog(3, 3, 1, "start meafyenim_ovdim")
             oDal.ClearCommand()
-            oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "New_meafyenim_ovdim", KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "New_meafyenim_ovdim", ParameterDir.pdInput)
             oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
             oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok meafyenim_ovdim", 0)
             ''** KdsWriteProcessLog(3, 3, 2, "end ok meafyenim_ovdim")
@@ -3267,7 +3269,7 @@ Public Class ClKds
     End Sub
     Sub refresh_from_shmulik()
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim dt As DataTable
         Dim WhrStr As String
         Dim tahalich As Integer
@@ -3275,7 +3277,7 @@ Public Class ClKds
         Dim RetSql As String = ""
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
 
-        oDal = New KdsLibrary.DAL.clDal
+        oDal = New clDal
         Try
 
             WhrStr = "taarich>trunc(sysdate) and kod_tahalich = 9"
@@ -3286,7 +3288,7 @@ Public Class ClKds
                 iRunRefresh = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_snifey_tnuaa", 0)
                 ''** KdsWriteProcessLog(9, 1, 1, "start cTB_snifey_tnuaa")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_snifey_tnuaa", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_snifey_tnuaa", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_snifey_tnuaa", 0)
                 ''** KdsWriteProcessLog(9, 1, 2, "end cTB_snifey_tnuaa")
@@ -3299,7 +3301,7 @@ Public Class ClKds
                 iRunRefresh = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_elementim", 0)
                 ''** KdsWriteProcessLog(10, 1, 1, "start cTB_elementim")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_elementim", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_elementim", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_elementim", 0)
                 ''**KdsWriteProcessLog(10, 1, 2, "end cTB_elementim")
@@ -3308,7 +3310,7 @@ Public Class ClKds
                 iRunRefresh = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_nkudut_tifaul", 0)
                 ''** KdsWriteProcessLog(10, 2, 1, "start cTB_nkudut_tifaul")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_nkudut_tifaul", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_nkudut_tifaul", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_nkudut_tifaul", 0)
                 ''**   KdsWriteProcessLog(10, 2, 2, "end cTB_nkudut_tifaul")
@@ -3317,7 +3319,7 @@ Public Class ClKds
                 iRunRefresh = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_sug_sidur", 0)
                 ''**   KdsWriteProcessLog(10, 3, 1, "start cTB_sug_sidur")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_sug_sidur", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_sug_sidur", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_sug_sidur", 0)
                 ''**  KdsWriteProcessLog(10, 3, 2, "end cTB_sug_sidur")
@@ -3330,7 +3332,7 @@ Public Class ClKds
                 iRunRefresh = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start cTB_snifey_mashar", 0)
                 ''**KdsWriteProcessLog(11, 1, 1, "start cTB_snifey_mashar")
                 oDal.ClearCommand()
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "cTB_snifey_mashar", KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "cTB_snifey_mashar", ParameterDir.pdInput)
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
                 oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "end cTB_snifey_mashar", 0)
                 ''**KdsWriteProcessLog(11, 1, 2, "end cTB_snifey_mashar")
@@ -3343,19 +3345,19 @@ Public Class ClKds
     End Sub
     Public Sub RunRefreshRetroMatzav()
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim tahalich As Integer
         Dim sub_tahalich, iRunRefresh As Integer
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
 
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             tahalich = 3
             sub_tahalich = 1
             iRunRefresh = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start Retromatzav", 0)
             ''** KdsWriteProcessLog(3, 1, 1, "start Retromatzav")
             oDal.ClearCommand()
-            oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "New_Matzav_Ovdim", KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, "New_Matzav_Ovdim", ParameterDir.pdInput)
             oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv")
             oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok Retromatzav", 0)
             ''** KdsWriteProcessLog(3, 1, 2, "end ok Retromatzav")
@@ -3368,11 +3370,11 @@ Public Class ClKds
     End Sub
     Public Sub RunRefreshRetroYamim(ByVal p_TAARICH)
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim tahalich As Integer
         Dim sub_tahalich, iRunRefresh As Integer
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
-        oDal = New KdsLibrary.DAL.clDal()
+        oDal = New clDal()
         Try
 
             tahalich = 7
@@ -3380,7 +3382,7 @@ Public Class ClKds
             iRunRefresh = oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start Retroins_yamey", 0)
             ''** KdsWriteProcessLog(7, 1, 1, "start Retroins_yamey")
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_TAARICH, ParameterDir.pdInput)
             oDal.ExecuteSP("PKG_BATCH.pro_ins_yamey_avoda_ovdim")
             oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok Retroins_yamey", 0)
             ''**KdsWriteProcessLog(7, 1, 2, "end ok Retroins_yamey")
@@ -3395,7 +3397,7 @@ Public Class ClKds
 
 #Region "Thread Hr Chainges"
     Sub Chk_ThreadHrChainges()
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim dt As DataTable = New DataTable()
         Dim SdrnStrtHour As String
         Dim if_while As Boolean
@@ -3416,7 +3418,7 @@ Public Class ClKds
 
         Try
 
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             SdrnStrtHour = ConfigurationSettings.AppSettings("SdrnStrtHour") '4
             If SdrnStrtHour = "" Then
                 SdrnStrtHour = "4"
@@ -3431,7 +3433,7 @@ Public Class ClKds
                 if_while = True
                 '2) check if scheduler in on 2nd cycle (for 4.5 hours time slice):pro_if_start
                 oDal.ClearCommand()
-                oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                 oDal.ExecuteSP("PKG_BATCH.pro_if_start", dt)
                 If dt.Rows.Count = 0 Then
                     if_while = False
@@ -3525,7 +3527,7 @@ Public Class ClKds
     End Function
     Public Sub RunThreadHrChainges(ByVal objSekChk As Object) 'todo: 20101003(ByVal In_TAARICH As String)
 
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim dt As DataTable = New DataTable()
         Dim dt2 As DataTable = New DataTable()
         Dim dt3 As DataTable = New DataTable()
@@ -3562,10 +3564,10 @@ Public Class ClKds
             '3) check if this process did not run yet:pro_if_GalreadyRun
 
             '1) check if meyrav's run and finished ok:PKG_BATCH.pro_sof_meafyenim
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_date_str_now, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("p_Cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, p_date_str_now, ParameterDir.pdInput)
+            oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
             oDal.ExecuteSP("PKG_BATCH.pro_sof_meafyenim", dt)
             If dt.Rows.Count = 0 Then
                 oBatch.UpdateProcessLog(iSekChk, KdsLibrary.BL.RecordStatus.Faild, "thread after shinuy hr no db ", 13)
@@ -3594,7 +3596,7 @@ Public Class ClKds
                     Else
                         '2) check if scheduler in on 2nd cycle (for 4.5 hours time slice):pro_if_start
                         oDal.ClearCommand()
-                        oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                        oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                         oDal.ExecuteSP("PKG_BATCH.pro_if_start", dt2)
                         If dt2.Rows.Count = 0 Then
                             oBatch.UpdateProcessLog(iSekChk, KdsLibrary.BL.RecordStatus.Faild, "thread after shinuy,start kds no db ", 13)
@@ -3611,7 +3613,7 @@ Public Class ClKds
 
                                 '3) check if this process did not run yet: pro_if_GalreadyRun
                                 oDal.ClearCommand()
-                                oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                 oDal.ExecuteSP("PKG_BATCH.pro_if_GalreadyRun", dt3)
                                 If dt3.Rows.Count = 0 Then
                                     oBatch.UpdateProcessLog(iSekChk, KdsLibrary.BL.RecordStatus.Faild, "thread after shinuy, GRun no db ", 13)
@@ -3732,7 +3734,7 @@ Public Class ClKds
         Dim part2 As String
         Dim part3 As String
         Dim dtbObject As DataTable = New DataTable
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
 
@@ -3750,7 +3752,7 @@ Public Class ClKds
             RetSql = String.Empty
             sql = sql & part1 & part2 & part3
 
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ExecuteSQL(sql, dtbObject)
         Catch ex As Exception 'todo: As Oracle.DataAccess.Client.OracleException
             RetSql = sql
@@ -3773,24 +3775,24 @@ Public Class ClKds
     End Function
     '' ''Public Sub KdsWriteProcessLog(ByVal KodTahalich As Integer, ByVal KodPeilut As Integer, ByVal KodStatus As Integer, ByVal TeurTech As String, Optional ByVal KodTakala As String = "")
 
-    '' ''    Dim oDal As KdsLibrary.DAL.clDal
+    '' ''    Dim oDal As clDal
     '' ''    Try
-    '' ''        oDal = New KdsLibrary.DAL.clDal
-    '' ''        oDal.AddParameter("p_KodTahalich", KdsLibrary.DAL.ParameterType.ntOracleInt64, KodTahalich, KdsLibrary.DAL.ParameterDir.pdInput)
-    '' ''        oDal.AddParameter("p_KodPeilut", KdsLibrary.DAL.ParameterType.ntOracleInt64, KodPeilut, KdsLibrary.DAL.ParameterDir.pdInput)
-    '' ''        oDal.AddParameter("p_KodStatus", KdsLibrary.DAL.ParameterType.ntOracleInt64, KodStatus, KdsLibrary.DAL.ParameterDir.pdInput)
+    '' ''        oDal = New clDal
+    '' ''        oDal.AddParameter("p_KodTahalich", ParameterType.ntOracleInt64, KodTahalich, ParameterDir.pdInput)
+    '' ''        oDal.AddParameter("p_KodPeilut", ParameterType.ntOracleInt64, KodPeilut, ParameterDir.pdInput)
+    '' ''        oDal.AddParameter("p_KodStatus", ParameterType.ntOracleInt64, KodStatus, ParameterDir.pdInput)
     '' ''        If Len(Trim(TeurTech)) > 100 Then
     '' ''            TeurTech = Left(Trim(TeurTech), 100)
     '' ''        Else
     '' ''            TeurTech = Trim(TeurTech)
     '' ''        End If
-    '' ''        oDal.AddParameter("p_TeurTech", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Trim(TeurTech), KdsLibrary.DAL.ParameterDir.pdInput)
+    '' ''        oDal.AddParameter("p_TeurTech", ParameterType.ntOracleVarchar, Trim(TeurTech), ParameterDir.pdInput)
     '' ''        If KodTakala = "" Then
     '' ''            oDal.ExecuteSP("PKG_BATCH.pro_ins_log_tahalich")
     '' ''        ElseIf KodTakala = "0" Then
     '' ''            oDal.ExecuteSP("PKG_BATCH.pro_ins_log_tahalich")
     '' ''        Else
-    '' ''            oDal.AddParameter("p_KodTakala", KdsLibrary.DAL.ParameterType.ntOracleInt64, CInt(KodTakala), KdsLibrary.DAL.ParameterDir.pdInput)
+    '' ''            oDal.AddParameter("p_KodTakala", ParameterType.ntOracleInt64, CInt(KodTakala), ParameterDir.pdInput)
     '' ''            oDal.ExecuteSP("PKG_BATCH.pro_ins_log_tahalich_takala")
     '' ''        End If
     '' ''    Catch ex As Exception
@@ -3803,9 +3805,9 @@ Public Class ClKds
     Function Execute_kds(ByVal KdsSql As String) As Boolean
         'my overlay with answere=boolean ifok
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         Try
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
             oDal.ExecuteSQL(KdsSql)
             Return True
         Catch ex As Exception

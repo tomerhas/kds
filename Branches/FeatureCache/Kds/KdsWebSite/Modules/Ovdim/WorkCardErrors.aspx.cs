@@ -11,9 +11,9 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using KdsLibrary;
-using KdsLibrary.DAL;
 using KdsLibrary.UI;
 using KdsLibrary.Security;
+using DalOraInfra.DAL;
 public partial class Modules_Ovdim_WorkCardErrors : KdsPage
 {
     private DataTable _dtErrorCodes;

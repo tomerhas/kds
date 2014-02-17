@@ -7,15 +7,14 @@ using System.Web.UI.WebControls;
 using KdsLibrary.UI;
 using KdsLibrary;
 using KdsLibrary.BL;
-using KdsLibrary.UDT;
 using KdsBatch;
 using KdsLibrary.Security;
 using KDSCommon.DataModels;
-using KDSCommon.DataModels.UDT;
 using KDSCommon.Helpers;
 using KDSCommon.Enums;
 using KDSCommon.Interfaces.DAL;
 using Microsoft.Practices.ServiceLocation;
+using KDSCommon.UDT;
 
 
 public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage

@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Web;
 using KdsLibrary.UI.SystemManager;
-using KdsLibrary.DAL;
+using DalOraInfra.DAL;
 
 namespace KdsLibrary.Utils.Reports
 {

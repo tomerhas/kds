@@ -4,17 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using KdsLibrary;
-using KdsLibrary.DAL;
 using System.IO;
 using System.Configuration;
-using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary.Utils;
-using KDSCommon.DataModels.UDT;
 using KDSCommon.Helpers;
 using KDSCommon.Enums;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.DAL;
+using KDSCommon.UDT;
 
 namespace KdsBatch
 {

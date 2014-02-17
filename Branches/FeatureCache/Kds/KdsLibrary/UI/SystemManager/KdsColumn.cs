@@ -7,8 +7,8 @@ using System.Xml.Serialization;
 using KdsLibrary.Utils;
 using System.Web.UI.WebControls;
 using System.Data;
-using KdsLibrary.DAL;
 using System.Web.UI;
+using DalOraInfra.DAL;
 
 namespace KdsLibrary.UI.SystemManager
 {
@@ -210,7 +210,7 @@ namespace KdsLibrary.UI.SystemManager
             DataTable dt = new DataTable();
             if (!_listValue.HasUnboundValues)
             {
-                KdsLibrary.DAL.clDal db = new KdsLibrary.DAL.clDal();
+                clDal db = new clDal();
                 parent.AddSelectParams(db, container,
                     _listValue.SelectParametersList);
                 db.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);

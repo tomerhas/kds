@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using KdsLibrary;
-using KdsLibrary.DAL;
 
 namespace KdsTaskManager
 {

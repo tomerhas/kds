@@ -7,7 +7,7 @@ using System.Data;
 using Microsoft.Practices.Unity;
 using KDSCommon.Interfaces;
 using KDSCommon.Enums;
-using KdsLibrary.DAL;
+using DalOraInfra.DAL;
 
 
 namespace KDSCache.Implement
@@ -21,6 +21,7 @@ namespace KDSCache.Implement
         public const string cProGetMutamut = "pkg_utils.pro_get_ctb_mutamut";
         public const string cProGetSibotLedivuchYadani = "pkg_utils.pro_get_sibot_ledivuch_yadani";
         public const string cProGetShgiotNoActive = "pkg_errors.pro_get_shgiot_no_active";
+        public const string cProGetCtbElementim = "PKG_UTILS.pro_get_ctb_elementim";
 
         private IKDSCacheManager _kdsCacheManager;
 
@@ -38,6 +39,7 @@ namespace KDSCache.Implement
              _kdsCacheManager.AddItem(CachedItems.Mutamut, GetCtbMutamut());
              _kdsCacheManager.AddItem(CachedItems.SibotLedivuchYadani, GetCtbSibotLedivuchYadani());
              _kdsCacheManager.AddItem(CachedItems.ErrorTable, GetErrorTable());
+             _kdsCacheManager.AddItem(CachedItems.Elementim, GetElementim());
         }
 
         private DataTable GetYamimMeyuchadim()
@@ -117,6 +119,16 @@ namespace KDSCache.Implement
             {
                 throw ex;
             }
+        }
+
+        private DataTable GetElementim()
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+            oDal.ExecuteSP(cProGetCtbElementim, ref dt);
+            return dt;
         }
     }
 }

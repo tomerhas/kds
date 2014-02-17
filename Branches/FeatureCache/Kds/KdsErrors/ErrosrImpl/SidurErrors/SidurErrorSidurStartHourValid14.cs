@@ -9,6 +9,7 @@ using KdsLibrary;
 using KDSCommon.Interfaces;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -50,18 +51,18 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
 
                 if ((input.curSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(input.curSidur.sShatHatchalaMuteret))) //קיים מאפיין
                 {
-                    dStartLimitHour = GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatHatchalaMuteret).ToString("HH:mm"), input.CardDate);
+                    dStartLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatHatchalaMuteret).ToString("HH:mm"), input.CardDate);
                 }
 
                 if ((input.curSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(input.curSidur.sShatGmarMuteret))) //קיים מאפיין
                 {
-                    dEndLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatGmarMuteret).ToString("HH:mm"), input.CardDate.AddDays(1));
+                    dEndLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatGmarMuteret).ToString("HH:mm"), input.CardDate.AddDays(1));
                 }
             }
 
 
-            if ((!string.IsNullOrEmpty(input.curSidur.sShatHatchala) && dSidurStartHour < dStartLimitHour) && (dStartLimitHour.Year != clGeneral.cYearNull) ||
-                (!string.IsNullOrEmpty(input.curSidur.sShatHatchala) && dSidurStartHour > dEndLimitHour) && (dEndLimitHour.Year != clGeneral.cYearNull))
+            if ((!string.IsNullOrEmpty(input.curSidur.sShatHatchala) && dSidurStartHour < dStartLimitHour) && (dStartLimitHour.Year != DateHelper.cYearNull) ||
+                (!string.IsNullOrEmpty(input.curSidur.sShatHatchala) && dSidurStartHour > dEndLimitHour) && (dEndLimitHour.Year != DateHelper.cYearNull))
             {
                 AddNewError(input);
                 return false;

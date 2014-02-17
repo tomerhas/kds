@@ -6,6 +6,7 @@ using KDSCommon.Enums;
 using KDSCommon.DataModels.Errors;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -18,7 +19,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
         }
         public override bool InternalIsCorrect(ErrorInputData input)
         {
-            if (input.curSidur.dFullShatHatchala.Year < clGeneral.cYearNull)
+            if (input.curSidur.dFullShatHatchala.Year < DateHelper.cYearNull)
             {
                 AddNewError(input);
                 return false;

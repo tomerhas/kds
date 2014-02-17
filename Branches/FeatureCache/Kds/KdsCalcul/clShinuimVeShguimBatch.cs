@@ -5,9 +5,9 @@ using System.Text;
 using KdsBatch;
 using KdsLibrary;
 using KdsLibrary.BL;
-using KdsLibrary.DAL;
 using System.Threading.Tasks;
 using System.Data;
+using DalOraInfra.DAL;
 
 namespace KdsCalcul
 {

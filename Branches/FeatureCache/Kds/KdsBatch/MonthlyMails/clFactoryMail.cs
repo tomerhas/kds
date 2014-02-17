@@ -12,7 +12,6 @@ using KdsLibrary.UI;
 using System.Configuration;
 using KdsLibrary.Security;
 using System.Windows.Forms;
-using KdsLibrary.UDT;
 
 namespace KdsBatch.MonthlyMails
 {

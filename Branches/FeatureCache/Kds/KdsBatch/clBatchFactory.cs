@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using KdsBatch.Errors;
-using KdsLibrary.DAL;
 using System.Web;
 using KdsLibrary;
+using DalOraInfra.DAL;
 
 namespace KdsBatch
 {

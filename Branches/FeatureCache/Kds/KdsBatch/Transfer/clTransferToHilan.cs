@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using KdsLibrary;
-using KdsLibrary.DAL;
 using System.IO;
 using System.Configuration;
-using KdsLibrary.UDT;
 using System.Web;
+using KDSCommon.UDT;
+using DalOraInfra.DAL;
 namespace KdsBatch
 {
    public class clTransferToHilan

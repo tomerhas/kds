@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DalOraInfra.DAL;
 using KdsLibrary.BL;
-using KdsLibrary.UDT;
-using KdsLibrary.DAL;
 
 namespace KdsBatch.HrWorkersChanges
 {

@@ -7,11 +7,10 @@ using System.Web.UI.WebControls;
 using KdsLibrary.BL;
 using System.Data;
 using KdsLibrary.UI;
-using KdsLibrary.UDT;
 using KdsBatch;
-using KDSCommon.DataModels.UDT;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.DAL;
+using KDSCommon.UDT;
 
 public partial class Modules_Ovdim_HosafatKnisot : KdsPage
 {

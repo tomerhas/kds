@@ -90,6 +90,14 @@
     <None Include="ClsDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\KDSCommon\KDSCommon.csproj">
+      <Project>{1cf6ed40-3036-4b17-ab5a-35f5c265c28c}</Project>
+      <Name>KDSCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
+      <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
+      <Name>DalOraInfra</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsBatch\KdsBatch.csproj">
       <Project>{482BDA70-9AF2-4498-9627-E9C43EE44FDF}</Project>
       <Name>KdsBatch</Name>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using KdsLibrary.DAL;
 using System.Configuration;
 using System.Web;
 using System.Web.UI.WebControls;
@@ -12,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 //using System.Threading.Tasks;
 using System.Threading;
+using DalOraInfra.DAL;
 namespace KdsLibrary.BL
 {
     public class clUtils

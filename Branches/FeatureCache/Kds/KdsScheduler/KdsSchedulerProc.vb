@@ -5,6 +5,7 @@ Imports System.Threading
 Imports KdsBatch.HrWorkersChanges
 Imports System.IO
 Imports KdsLibrary
+Imports DalOraInfra.DAL
 
 Module KdsSchedulerProc
 
@@ -46,13 +47,13 @@ Module KdsSchedulerProc
         End Try
 
     End Sub
-   
-   
+
+
     Sub Refresh_N_Sdrn()
         Dim oKDs As KdsDataImport.ClKds = New KdsDataImport.ClKds
         Dim oCalc As KdsBatch.clCalculation = New KdsBatch.clCalculation
         Dim oCalcul As KdsBatch.MainCalc = New KdsBatch.MainCalc
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         'Dim oWsBatch As wsBatch
         Dim dt As DataTable
         Dim WhrStr As String
@@ -68,7 +69,7 @@ Module KdsSchedulerProc
         Dim runRefresh As Boolean
         Dim SdrnStrtHour As String
         Dim iProcessRefreshSdrn, iRefreshMvAndInsYemey As Integer
-        oDal = New KdsLibrary.DAL.clDal
+        oDal = New clDal
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
             SdrnStrtHour = ConfigurationSettings.AppSettings("SdrnStrtHour") '4
@@ -80,11 +81,11 @@ Module KdsSchedulerProc
             ''**oKDs.KdsWriteProcessLog(1, 1, 1, "check Refresh_N_Sdrn")
 
             p_TAARICH = oKDs.getFullDateString(Now)
-            
+
             'the sadran run on yesterday
             p_date = Now.AddDays(-1)
             p_date_str = oKDs.getFullDateString(p_date)
-       
+
 
             dt = oKDs.GetRowKds("dual", "", "to_char(sysdate,'hh24:mi') kuku", RetSql)
             If dt.Rows.Count = 0 Then

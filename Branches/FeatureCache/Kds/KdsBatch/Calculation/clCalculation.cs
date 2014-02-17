@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using KdsLibrary.DAL;
-using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary;
+using KDSCommon.UDT;
+using DalOraInfra.DAL;
 
 
 namespace KdsBatch

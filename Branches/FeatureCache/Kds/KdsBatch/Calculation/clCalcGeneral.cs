@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using KdsLibrary;
-using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using System.Data;
 using KDSCommon.DataModels;
+using KDSCommon.Enums;
 
 namespace KdsBatch
 {
@@ -75,7 +75,7 @@ namespace KdsBatch
             do
             {
                 iSugYom = GetSugYomLemichsa(iMisparIshi, dTarMe);
-                if (iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())
+                if (iSugYom < enSugYom.Shishi.GetHashCode())
                 {
                     fCountYomLeloChag += 1;
                 }

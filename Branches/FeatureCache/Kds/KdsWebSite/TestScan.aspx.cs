@@ -12,11 +12,11 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using KdsLibrary;
-using KdsLibrary.DAL;
 using System.Text;
 using System.Xml.Serialization;
 using System.Xml;
 using System.IO;
+using DalOraInfra.DAL;
 
 
 
@@ -43,9 +43,9 @@ public partial class TestScan : System.Web.UI.Page
                taarich = DateTime.Parse(Taarich.Text);
 
                oDal.ClearCommand();
-               oDal.AddParameter("p_mispar_ishi ", KdsLibrary.DAL.ParameterType.ntOracleInteger,mis_ishi  , KdsLibrary.DAL.ParameterDir.pdInput);
-               oDal.AddParameter("p_taarich", KdsLibrary.DAL.ParameterType.ntOracleDate, taarich, KdsLibrary.DAL.ParameterDir.pdInput);
-               oDal.AddParameter("p_Barkod", KdsLibrary.DAL.ParameterType.ntOracleInt64, barcode, KdsLibrary.DAL.ParameterDir.pdInput);
+               oDal.AddParameter("p_mispar_ishi ", ParameterType.ntOracleInteger,mis_ishi  , ParameterDir.pdInput);
+               oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
+               oDal.AddParameter("p_Barkod", ParameterType.ntOracleInt64, barcode, ParameterDir.pdInput);
                oDal.ExecuteSP("PKG_UTILS.pro_insert_barkod_Tachograf");
             }
             catch (Exception ex)
@@ -83,8 +83,8 @@ public partial class TestScan : System.Web.UI.Page
                 taarich = DateTime.Parse(Taarich.Text);
 
                 oDal.ClearCommand();
-                oDal.AddParameter("p_mispar_ishi ", KdsLibrary.DAL.ParameterType.ntOracleInteger, mis_ishi, KdsLibrary.DAL.ParameterDir.pdInput);
-                oDal.AddParameter("p_taarich", KdsLibrary.DAL.ParameterType.ntOracleDate, taarich, KdsLibrary.DAL.ParameterDir.pdInput);
+                oDal.AddParameter("p_mispar_ishi ", ParameterType.ntOracleInteger, mis_ishi, ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP("PKG_UTILS.fun_get_barkod_Tachograf",ref dt);
 

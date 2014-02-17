@@ -1067,9 +1067,9 @@
 //                            bElementHachanatMechonaExists = oPeilut.bElementHachanatMechona;
 //                        }
 //                        //sMakatNesia = oPeilut.lMakatNesia.ToString().Substring(0, 3);
-//                        //if ((sMakatNesia.Equals(clGeneral.enElementHachanatMechona.Element701))
-//                        //    || (sMakatNesia.Equals(clGeneral.enElementHachanatMechona.Element711))
-//                        //    || (sMakatNesia.Equals(clGeneral.enElementHachanatMechona.Element712)))
+//                        //if ((sMakatNesia.Equals(enElementHachanatMechona.Element701))
+//                        //    || (sMakatNesia.Equals(enElementHachanatMechona.Element711))
+//                        //    || (sMakatNesia.Equals(enElementHachanatMechona.Element712)))
 //                        //{
 //                        //    bElementHachanatMechonaExists = true;
 //                        //}
@@ -1470,7 +1470,7 @@
 //                    OBJ_SIDURIM_OVDIM oPrevObjSidurimOvdimUpd;
 //                    oPrevObjSidurimOvdimUpd = GetSidurOvdimObject(iPrevSidurIndex);
 
-//                    if ((oPrevObjSidurimOvdimUpd.SHAT_GMAR != DateTime.MinValue) && (oObjSidurimOvdimUpd.SHAT_HATCHALA.Year > clGeneral.cYearNull))
+//                    if ((oPrevObjSidurimOvdimUpd.SHAT_GMAR != DateTime.MinValue) && (oObjSidurimOvdimUpd.SHAT_HATCHALA.Year > DateHelper.cYearNull))
 //                    {
 //                        if ((oPrevObjSidurimOvdimUpd.LO_LETASHLUM == 0) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0))
 //                        {
@@ -1520,7 +1520,7 @@
 //            //לעובדים להם יש מאפיין אישי 63 (משפחה שכולה) , אם סוג יום = 17 (יום הזכרון) ואין להם סידור עבודה אחר באות יום (שאינו מסומן לא לתשלום) , יש לפתוח להם סידור 99801 (העדרות בתשלום יום עבודה) עם שעות מ-0400 – 2800 (כדי שדיווח אחר יצא לשגוי בחפיפה אם ידווח).            
 //            try
 //            {
-//                if ((oMeafyeneyOved.IsMeafyenExist(63)) && (iSugYom == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode()) && (!bLoLetashlum))
+//                if ((oMeafyeneyOved.IsMeafyenExist(63)) && (iSugYom == enSugYom.ErevYomHatsmaut.GetHashCode()) && (!bLoLetashlum))
 //                {
 //                    oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
 //                    //InsertToObjSidurimOvdimForInsert(ref oSidur, ref oObjSidurimOvdimIns);
@@ -1763,7 +1763,7 @@
 //            //תנאי רביעי לסעיף 11
 //            bool bSign=false;
 
-//            if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((oSidur.sShabaton == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString())))
+//            if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((oSidur.sShabaton == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString())))
 //            {
 //                bSign = ((oSidur.sChariga != "3") && (!oMeafyeneyOved.Meafyen7Exists));
               
@@ -1776,7 +1776,7 @@
 //            //תנאי חמישי לסעיף 11
 //            bool bSign = false;
 
-//            if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())))
+//            if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())))
 //            {
 //                bSign = ((oSidur.sChariga != "3") && (!oMeafyeneyOved.IsMeafyenExist(5)));                
 //            }
@@ -2069,13 +2069,13 @@
 //            {
 //                if (oSidur.bSidurMyuhad)
 //                {//סידור מיוחד
-//                    bSidurNahagut = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString());                    
+//                    bSidurNahagut = (oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString());                    
 //                }
 //                else
 //                {//סידור רגיל
 //                    if (drSugSidur.Length > 0)
 //                    {
-//                        bSidurNahagut= (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString());                        
+//                        bSidurNahagut= (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString());                        
 //                    }
 //                }
 
@@ -2832,8 +2832,8 @@
 //                    if (oSidur.bSidurMyuhad)
 //                    {
 //                        //אם שני סידורי נהגות וגם פער הזמנים בין הסידורים גדול מפרמטר 104, נכניס סידור רציפות
-//                        if ((oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
-//                            && (oSidurPrev.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()))
+//                        if ((oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString())
+//                            && (oSidurPrev.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString()))
 //                        {
 //                            //נחשב את הפרש הזמן בין הסידורים
 //                            fDiffTimeBetweenSidurim = clDefinitions.GetTimeBetweenTwoSidurimInMinuts(oSidurPrev, oSidur);
@@ -2867,11 +2867,11 @@
 //                        //אם שני סידורי נהגות וגם פער הזמנים בין הסידורים גדול מפרמטר 104, נכניס סידור רציפות
 //                        if (drSugSidur.Length > 0)
 //                        {
-//                            if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+//                            if (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
 //                            {
 //                                if (drPrevSugSidur.Length > 0)
 //                                {
-//                                    if (drPrevSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+//                                    if (drPrevSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
 //                                    {
 //                                        fDiffTimeBetweenSidurim = clDefinitions.GetTimeBetweenTwoSidurimInMinuts(oSidurPrev, oSidur);
 //                                        if (fDiffTimeBetweenSidurim > oParam.iMinTimeBetweenSidurim)

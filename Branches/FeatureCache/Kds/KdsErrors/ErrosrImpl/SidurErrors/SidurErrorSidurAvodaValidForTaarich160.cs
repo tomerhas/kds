@@ -6,6 +6,7 @@ using KDSCommon.Enums;
 using KDSCommon.DataModels.Errors;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -27,14 +28,14 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                     dSidurDate = input.curSidur.dSidurDate;
                     if ((input.curSidur.sSidurInSummer == "1") || (input.curSidur.sSidurInSummer == "2"))
                     {
-                        if (input.oParameters.dStartNihulVShivik.Year != clGeneral.cYearNull)
+                        if (input.oParameters.dStartNihulVShivik.Year != DateHelper.cYearNull)
                         {
                             bError = (dSidurDate < input.oParameters.dStartNihulVShivik);
                         }
 
                         if (!bError)
                         {
-                            if (input.oParameters.dEndNihulVShivik.Year != clGeneral.cYearNull)
+                            if (input.oParameters.dEndNihulVShivik.Year != DateHelper.cYearNull)
                             {
                                 bError = (dSidurDate > input.oParameters.dEndNihulVShivik);
                             }
@@ -42,7 +43,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                     }
                     else
                     {
-                        bError = (((dSidurDate < input.oParameters.dStartTiful) && (input.oParameters.dStartTiful.Year != clGeneral.cYearNull)) || ((dSidurDate > input.oParameters.dEndTiful) && (input.oParameters.dEndTiful.Year != clGeneral.cYearNull)));
+                        bError = (((dSidurDate < input.oParameters.dStartTiful) && (input.oParameters.dStartTiful.Year != DateHelper.cYearNull)) || ((dSidurDate > input.oParameters.dEndTiful) && (input.oParameters.dEndTiful.Year != DateHelper.cYearNull)));
                     }
 
                     if (bError)

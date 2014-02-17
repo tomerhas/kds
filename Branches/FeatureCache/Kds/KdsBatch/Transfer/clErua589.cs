@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using KdsLibrary;
-using KdsLibrary.DAL;
 using System.Data;
 
 namespace KdsBatch

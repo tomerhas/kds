@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using KdsLibrary.DAL;
 using System.Data;
-using KdsLibrary.UDT;
+using KDSCommon.UDT;
+using DalOraInfra.DAL;
 
 namespace KdsLibrary.BL
 {

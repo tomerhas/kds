@@ -14,7 +14,6 @@ using KdsLibrary;
 using System.Collections.Specialized;
 using KdsBatch;
 using KdsLibrary.BL;
-using KdsLibrary.UDT;
 using KdsWorkFlow.Approvals;
 using KdsLibrary.Security;
 using KDSCommon.DataModels;
@@ -2581,7 +2580,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Style.Add("Display", "none");
         TextBox txt = new TextBox();
         txt.ID = "txtDayAdd" + iIndex;
-        txt.Text = ((oSidur.dFullShatGmar.ToShortDateString() == CardDate.ToShortDateString()) || (oSidur.dFullShatGmar.Year<clGeneral.cYearNull)) ? "0" : "1";
+        txt.Text = ((oSidur.dFullShatGmar.ToShortDateString() == CardDate.ToShortDateString()) || (oSidur.dFullShatGmar.Year<DateHelper.cYearNull)) ? "0" : "1";
         hCell.Controls.Add(txt);
     }
     protected void CreateCancelFlagHiddenCell(SidurDM oSidur, ref HtmlTableCell hCell, int iIndex)
@@ -2663,7 +2662,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         chkBox.ID = "chkLoLetashlum" + iIndex;
         chkBox.Checked = (oSidur.iLoLetashlum == 1);
         bEnable = (((IsLoLetashlum(ref oSidur))) 
-                 && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "LO_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))
+                 && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "LO_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))
                  && (((oSidur.oSidurStatus != SidurDM.enSidurStatus.enNew) || ((oSidur.oSidurStatus == SidurDM.enSidurStatus.enNew) && (oSidur.iMisparSidur > 0)))));
         chkBox.Disabled = ((!(bSidurActive)) || (!bEnable));
         if ((oSidur.oSidurStatus == SidurDM.enSidurStatus.enNew) && (oSidur.iMisparSidur>0))
@@ -2708,7 +2707,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         HtmlInputCheckBox chkBox = new HtmlInputCheckBox();
         chkBox.ID = "chkOutMichsa" + iIndex;
         chkBox.Checked = (oSidur.sOutMichsa == "1");
-        bEnabled = (IsOutMichsaAllowed(ref oSidur, drSugSidur)) && ((!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "OUT_MICHSA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+        bEnabled = (IsOutMichsaAllowed(ref oSidur, drSugSidur)) && ((!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "OUT_MICHSA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         chkBox.Disabled = (!((bEnabled) && (bSidurActive)));
         chkBox.Attributes.Add("cssClass", "WorkCardCheckBox");
         chkBox.Attributes.Add("OrgEnabled", bEnabled ? "1" : "0");
@@ -2855,7 +2854,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         oSidur.iKodSibaLedivuchYadaniOut = oDDL.SelectedValue.Equals("-1") ? 0 : int.Parse(oDDL.SelectedValue);
 
                         sTmp = ((TextBox)(this.FindControl("txtSHL" + iIndex))).Text;
-                        oSidur.dFullShatHatchalaLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatHatchalaLetashlum.ToShortDateString()));
+                        oSidur.dFullShatHatchalaLetashlum = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatHatchalaLetashlum.ToShortDateString()));
                         if (sTmp == string.Empty)
                             oSidur.sShatHatchalaLetashlum = "";
                         else
@@ -2863,7 +2862,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
 
                         sTmp = ((TextBox)(this.FindControl("txtSGL" + iIndex))).Text;
-                        oSidur.dFullShatGmarLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmarLetashlum.ToShortDateString()));
+                        oSidur.dFullShatGmarLetashlum = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmarLetashlum.ToShortDateString()));
                         if (sTmp == string.Empty)
                             oSidur.sShatGmarLetashlum = "";
                         else
@@ -2982,7 +2981,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                
                 //במידה ןיש שעת יציאה אבל אין תאריך, פעילות חדשה, נשתול תאריך של היום
                
-                if (dShatYetiza.Date.Year < clGeneral.cYearNull)
+                if (dShatYetiza.Date.Year < DateHelper.cYearNull)
                     if (oShatYetiza.Text != string.Empty)
                     {
                         if ((DateTime.Parse(oShatYetiza.Text).Hour >= 0) || (DateTime.Parse(oShatYetiza.Text).Minute >= 0))
@@ -2996,7 +2995,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 if (dShatYetiza.Date == _CardDate.Date)
                     dShatYetiza = dShatYetiza.AddDays(iDayToAdd);
                 else
-                    if (dShatYetiza.Date.Year > clGeneral.cYearNull)
+                    if (dShatYetiza.Date.Year > DateHelper.cYearNull)
                     {
                         if (iDayToAdd == 0) //נוריד יום- iDayToAdd=0 אם תאריך היציאה שונה מתאריך הכרטיס, כלומר הוא של היום הבא ורוצים לשנות ליום נוכחי
                             dShatYetiza = dShatYetiza.AddDays(-1);
@@ -3139,7 +3138,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             dr[0]["sidur_number"] = iSidurKey;
             dr[0]["sidur_start_hour"] = sNewStartHour;
             dr[0]["sidur_date"] = dSidurDate;
-            //if (DateTime.Parse(dr[0]["sidur_date"].ToString()).Year < clGeneral.cYearNull)
+            //if (DateTime.Parse(dr[0]["sidur_date"].ToString()).Year < DateHelper.cYearNull)
             //    //אם שעת ההתחלה ריקה, שנה 0001, נכניס את תאריך הכרטיס
             //    dtOrgDate = DateTime.Parse(sCardDate);
             //else
@@ -3227,7 +3226,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         _DataSource.Add(_DataSource.Count, _Sidur);
 
         _Sidur.oSidurStatus = SidurDM.enSidurStatus.enNew;
-        _Sidur.dFullShatHatchala = clGeneral.GetDateTimeFromStringHour("00:00", DateTime.Parse("01/01/0001 00:00"));
+        _Sidur.dFullShatHatchala = DateHelper.GetDateTimeFromStringHour("00:00", DateTime.Parse("01/01/0001 00:00"));
         _Sidur.dFullShatGmar = _Sidur.dFullShatHatchala;
         _Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
         _Sidur.dOldFullShatGmar = _Sidur.dFullShatHatchala;
@@ -3489,7 +3488,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //            oShatYetiza = ((TextBox)oGridRow.Cells[COL_SHAT_YETIZA].Controls[0]);
     //            dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);
     //            sShatYetiza = oShatYetiza.Text;
-    //            if (dShatYetiza.Date.Year < clGeneral.cYearNull)
+    //            if (dShatYetiza.Date.Year < DateHelper.cYearNull)
     //                if (oShatYetiza.Text != string.Empty)
     //                {
     //                    if (DateTime.Parse(oShatYetiza.Text).Hour > 0)
@@ -3503,7 +3502,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //            if (dShatYetiza.Date == CardDate)
     //                dShatYetiza = dShatYetiza.AddDays(iDayToAdd);
     //            else
-    //                if (dShatYetiza.Date.Year > clGeneral.cYearNull)
+    //                if (dShatYetiza.Date.Year > DateHelper.cYearNull)
     //                {
     //                    if (iDayToAdd == 0) //נוריד יום- iDayToAdd=0 אם תאריך היציאה שונה מתאריך הכרטיס, כלומר הוא של היום הבא ורוצים לשנות ליום נוכחי
     //                        dShatYetiza = dShatYetiza.AddDays(-1);
@@ -3634,7 +3633,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell = CreateTableCell("100px", "", "");
         bEnabled = ((clDefinitions.IsHashlamaAllowed(ref oSidur, drSugSidur, OvedYomAvoda)) 
                     && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, 
-                    clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "HASHLAMA"),
+                    ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "HASHLAMA"),
                     oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
 
         DropDownList ddl;
@@ -3797,7 +3796,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 break;
         }
 
-        bool bOrgEnable = ((bEnablePitzul) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "PITZUL_HAFSAKA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+        bool bOrgEnable = ((bEnablePitzul) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "PITZUL_HAFSAKA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
         ddl.Enabled = ((bSidurActive) && (bOrgEnable));
        
@@ -3824,7 +3823,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         bEnabled = clDefinitions.IsExceptionAllowed(ref oSidur, ref sCharigaType, KdsParameters);
         ddl.Attributes.Add("ChrigaType", sCharigaType);
-        ddl.Enabled = ((bEnabled) && (bSidurActive) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "CHARIGA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+        ddl.Enabled = ((bEnabled) && (bSidurActive) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "CHARIGA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Attributes.Add("OrgEnabled", ddl.Enabled ? "1":"0");
         ddl.CssClass = "WCSidurDDL";
         if (EnabledValidator())
@@ -3904,7 +3903,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         TextBox oTextBox = new TextBox();
         oTextBox.ID = "txtSGL" + iIndex;
         oTextBox.Text = oSidur.sShatGmarLetashlum;       
-        bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_GMAR_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0);
+        bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_GMAR_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0);
         bOrgEnable = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet) && ((oSidur.oSidurStatus != SidurDM.enSidurStatus.enNew) || (((oSidur.oSidurStatus == SidurDM.enSidurStatus.enNew) && (oSidur.iMisparSidur > 0)))));
         oTextBox.Enabled = ((bSidurActive) && (bOrgEnable));
         oTextBox.Width = Unit.Pixel(60);
@@ -3964,7 +3963,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.Width = Unit.Pixel(60);
       
         oTextBox.CausesValidation = true;
-        bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0);
+        bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0);
         bOrgEnabled = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet) && ((oSidur.oSidurStatus != SidurDM.enSidurStatus.enNew) || (((oSidur.oSidurStatus == SidurDM.enSidurStatus.enNew) && (oSidur.iMisparSidur>0)))));
         oTextBox.Enabled = ((bSidurActive) && (bOrgEnabled));
         oTextBox.MaxLength = MAX_LEN_HOUR;
@@ -4034,7 +4033,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",2);");
             ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         }
-        OrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonYetzia)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_OUT"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+        OrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonYetzia)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_OUT"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Enabled = ((bSidurActive) && (OrgEnable));
         ddl.Attributes.Add("OrgEnabled", OrgEnable ? "1" : "0");
         ddl.CssClass = "WCSidurDDL";
@@ -4106,7 +4105,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",1);");
                 ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             }
-            bOrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonKnisa)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_IN"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+            bOrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonKnisa)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_IN"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
             ddl.Enabled = ((bSidurActive) && (bOrgEnable));
             ddl.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
             ddl.CssClass = "WCSidurDDL";
@@ -4476,7 +4475,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //            //סידור רגיל
     //            if (drSugSidur.Length > 0)
     //            {
-    //                bSidurDriver = String.IsNullOrEmpty(drSugSidur[0]["sector_avoda"].ToString()) ? false : (int.Parse(drSugSidur[0]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+    //                bSidurDriver = String.IsNullOrEmpty(drSugSidur[0]["sector_avoda"].ToString()) ? false : (int.Parse(drSugSidur[0]["sector_avoda"].ToString()) == enSectorAvoda.Nahagut.GetHashCode());
     //            }
     //        }
     //        return bSidurDriver;
@@ -4508,7 +4507,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //    //סידור רגיל
         //    if (drSugSidur.Length > 0)
         //    {
-        //        bSidurDriver = String.IsNullOrEmpty(drSugSidur[0]["sector_avoda"].ToString()) ? false : (int.Parse(drSugSidur[0]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+        //        bSidurDriver = String.IsNullOrEmpty(drSugSidur[0]["sector_avoda"].ToString()) ? false : (int.Parse(drSugSidur[0]["sector_avoda"].ToString()) == enSectorAvoda.Nahagut.GetHashCode());
         //        if (bSidurDriver)
         //        {
         //            IsSidurNahagut = true;
@@ -4752,11 +4751,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         bool bSidurNihul = false;
         //מחזיר אם סידור ניהול
         if (oSidur.bSidurMyuhad)
-            bSidurNihul = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+            bSidurNihul = (oSidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString());
         else
         {
             if (drSugSidur.Length > 0)
-                bSidurNihul = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                bSidurNihul = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString());
         }
 
         return bSidurNihul;
@@ -4766,11 +4765,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         bool bSidurNahagut = false;
         //מחזיר אם סידור נהגות
         if (oSidur.bSidurMyuhad)        
-            bSidurNahagut = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString());        
+            bSidurNahagut = (oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString());        
         else
         {
             if (drSugSidur.Length > 0)            
-                bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString());                                           
+                bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString());                                           
         }
         oSidur.bSidurNahagut = bSidurNahagut;
         return bSidurNahagut;
@@ -4781,14 +4780,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         
     //    //if (oSidur.bSidurMyuhad)
     //    //{
-    //    //    bSidurNahagut = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString() || (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString()));
+    //    //    bSidurNahagut = (oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString() || (oSidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString()));
     //    //}
     //    //else
     //    //{
     //    //    if (drSugSidur.Length > 0)
     //    //    {
-    //    //        bSidurNahagut = (((drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
-    //    //                       || (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString())));
+    //    //        bSidurNahagut = (((drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
+    //    //                       || (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString())));
     //    //    }
     //    //}
     //    return bSidurNahagut;
@@ -4826,8 +4825,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //            //בסידורים רגילים נאפשר המרה רק לסידורים מסוג נהגות וניהול תנועה
     //            if (drSugSidur.Length > 0)
     //            {
-    //                if ((drSugSidur[0]["sector_avoda"].ToString() != clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
-    //                    && (drSugSidur[0]["sector_avoda"].ToString() != clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString()))
+    //                if ((drSugSidur[0]["sector_avoda"].ToString() != enSectorAvoda.Nahagut.GetHashCode().ToString())
+    //                    && (drSugSidur[0]["sector_avoda"].ToString() != enSectorAvoda.Nihul.GetHashCode().ToString()))
     //                {
     //                    bHamaraAllowed = false;
     //                }                    
@@ -4967,7 +4966,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             return _HasSaveCard;
         }        
     }
-    protected bool IsIdkunExists(int iMisparIshiIdkunRashemet,bool bProfileRashemet, clWorkCard.ErrorLevel oLevel, int iPakadId, int iMisparSidur, DateTime dShatHatchala, DateTime dShatYetiza, int iMisparKnisa)
+    protected bool IsIdkunExists(int iMisparIshiIdkunRashemet,bool bProfileRashemet, ErrorLevel oLevel, int iPakadId, int iMisparSidur, DateTime dShatHatchala, DateTime dShatYetiza, int iMisparKnisa)
     {
         return clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet,bProfileRashemet, oLevel, iPakadId, iMisparSidur, dShatHatchala, dShatYetiza, iMisparKnisa, ref _dtIdkuneyRashemet);
     }
@@ -4994,7 +4993,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.MaxLength = MAX_LEN_HOUR;
             bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue)
                                   || (!IsAccessToSidurNotShaon(ref oSidur))
-                                  || (IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+                                  || (IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
                                   
             
             oTextBox.ReadOnly = ((bSidurMustDisabled) || (!bSidurActive));
@@ -5332,7 +5331,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.CausesValidation = true;
             oTextBox.MaxLength = MAX_LEN_HOUR;
             oTextBox.CssClass = "WCSidurTxt";
-            bOrgEnable = ((((IsMikumShaonEmpty(oSidur.sMikumShaonYetzia))) && (IsAccessToSidurNotShaon(ref oSidur)) && (!bSidurContinue) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_GMAR"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))));
+            bOrgEnable = ((((IsMikumShaonEmpty(oSidur.sMikumShaonYetzia))) && (IsAccessToSidurNotShaon(ref oSidur)) && (!bSidurContinue) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_GMAR"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))));
             oTextBox.ReadOnly = ((!bOrgEnable) || (!bSidurActive));
 
             if ((oSidur.oSidurStatus == SidurDM.enSidurStatus.enNew) && (oSidur.iMisparSidur == 0))
@@ -5462,7 +5461,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 //אם סידור נהגות
                 if (drSugSidur.Length > 0)
                 {
-                    if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                    if (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
                     {
                         sShatGmarMutertEnd = Param80.ToShortTimeString();
                     }
@@ -5729,7 +5728,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ((TextBox)e.Row.Cells[_COL_DAY_TO_ADD].Controls[0]).ID = "txtDayToAdd";        
         ((TextBox)e.Row.Cells[_COL_SHAT_YETIZA].Controls[0]).Attributes.Add("onkeyup", "SetDay('2|" + e.Row.ClientID + "|" + iSidurIndex + "');");
         ((TextBox)e.Row.Cells[_COL_SHAT_YETIZA].Controls[0]).ToolTip = "תאריך שעת היציאה הוא: " + dtShatYetiza.ToShortDateString();
-        ((TextBox)e.Row.Cells[_COL_DAY_TO_ADD].Controls[0]).Text = ((dtShatYetiza.Date==CardDate.Date) || (dtShatYetiza.Year<clGeneral.cYearNull)) ? "0" : "1";
+        ((TextBox)e.Row.Cells[_COL_DAY_TO_ADD].Controls[0]).Text = ((dtShatYetiza.Date==CardDate.Date) || (dtShatYetiza.Year<DateHelper.cYearNull)) ? "0" : "1";
     
     }
     protected void SetPeilutStatus(GridViewRowEventArgs e )
@@ -5774,7 +5773,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             if (lMakatNesia.ToString().Length >= 3)
             {
                 iElementType = int.Parse(lMakatNesia.ToString().Substring(0, 3));
-                bHachanatMechona = (iElementType == clGeneral.enElementHachanatMechona.Element701.GetHashCode()) || (iElementType == clGeneral.enElementHachanatMechona.Element711.GetHashCode() || (iElementType == clGeneral.enElementHachanatMechona.Element712.GetHashCode()));
+                bHachanatMechona = (iElementType == enElementHachanatMechona.Element701.GetHashCode()) || (iElementType == enElementHachanatMechona.Element711.GetHashCode() || (iElementType == enElementHachanatMechona.Element712.GetHashCode()));
             }
         }
         return bHachanatMechona;
@@ -5818,7 +5817,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
             iMisparKnisa = int.Parse(arrKnisaVal[0]);//int.Parse(e.Row.Cells[_COL_KNISA].Text);
             iKnisaType = int.Parse(arrKnisaVal[1]);
-            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "DAKOT_BAFOAL"), MisparSidur, DateTime.Parse(CardDate.ToShortDateString() + " " + ShatHatchala), dShatYetiza, iMisparKnisa);
+            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "DAKOT_BAFOAL"), MisparSidur, DateTime.Parse(CardDate.ToShortDateString() + " " + ShatHatchala), dShatYetiza, iMisparKnisa);
             bool bEnabled = (!bIdkunRashemet);
 
             oTxt.CssClass = "WCPilutTxt";  
@@ -5939,7 +5938,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         if (_MakatType == enMakatType.mElement)
         {
             sElementPrefix = lMakat.ToString().Substring(0, 3);
-            if ((sElementPrefix == clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString()) || (sElementPrefix == clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()) || (sElementPrefix == clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString()))
+            if ((sElementPrefix == enElementHachanatMechona.Element701.GetHashCode().ToString()) || (sElementPrefix == enElementHachanatMechona.Element711.GetHashCode().ToString()) || (sElementPrefix == enElementHachanatMechona.Element712.GetHashCode().ToString()))
                 bFound = true;
         }
         return bFound;
@@ -6078,7 +6077,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
        
           dShatYetiza = DateTime.Parse(CardDate.ToShortDateString() + " " + ((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0])).Text);
           //אם יש עדכון רשמת על שדה דקות בפועל, יש להציג את כפתור "פעיל" כ- disable
-          bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "DAKOT_BAFOAL"), MisparSidur, DateTime.Parse(CardDate.ToShortDateString() + " " + ShatHatchala), dShatYetiza, iMisparKnisa);
+          bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "DAKOT_BAFOAL"), MisparSidur, DateTime.Parse(CardDate.ToShortDateString() + " " + ShatHatchala), dShatYetiza, iMisparKnisa);
 
           //if ((clDefinitions.GetDiffDays(CardDate, DateTime.Now) >= Param252) && (LoginUserId == MisparIshi) && (_MeasherOMistayeg == clGeneral.enMeasherOMistayeg.ValueNull))
           //    bDisabled = ((bDisabled) || (bIdkunRashemet));
@@ -6173,7 +6172,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             string sPeilutKey = string.Concat(((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0])).ClientID, "|", e.Row.Cells[_COL_KNISA].ClientID, "|", iSidurIndex, "|", e.Row.ClientID);
            
 
-            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "Makat_nesia"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
+            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "Makat_nesia"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
             bool bEnabled = IsMakatEnabled(bIdkunRashemet, bElementHachanatMechona, oMakatType, iMisparKnisa);//((!bIdkunRashemet) && (!bElementHachanatMechona) && (oMakatType != enMakatType.mVisa) && (oMakatType != enMakatType.mVisut));
             ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
             ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Enabled = ((bSidurActive) && (bPeilutActive) && (bEnabled));            
@@ -6283,7 +6282,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     break;
             }
             //iMisparKnisa = int.Parse(e.Row.Cells[_COL_KNISA].Text);
-            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "OTO_NO"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
+            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "OTO_NO"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
             oTxt = ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0]));
             bool bEnabled = IsCarEnabled(bIdkunRashemet, bElementHachanatMechona, bBusMustOtoNumber, oMakatType);//((!bIdkunRashemet) && (!bElementHachanatMechona) && ((((bBusMustOtoNumber) && (oMakatType == enMakatType.mElement)) || (oMakatType != enMakatType.mElement))));
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
@@ -6327,7 +6326,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             iKisuyTor = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString());
             iKisuyTorMap = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString());
             sShatYetiza = DataBinder.Eval(e.Row.DataItem, "shat_yetzia").ToString();
-            if ((!String.IsNullOrEmpty(sShatYetiza)) && (dShatYetiza.Year>clGeneral.cYearNull))
+            if ((!String.IsNullOrEmpty(sShatYetiza)) && (dShatYetiza.Year>DateHelper.cYearNull))
             {
                 sTmp = DateTime.Parse(sShatYetiza).ToShortTimeString();
                 oTxt.Text = sTmp;
@@ -6352,7 +6351,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             oTxt.CausesValidation = true;
             bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, 
-                                           clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "SHAT_YETIZA"), MisparSidur,
+                                           ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "SHAT_YETIZA"), MisparSidur,
                                            FullShatHatchala, dShatYetiza, iMisparKnisa);
 
             bool bEnabled = ((!bIdkunRashemet) && (!bElementHachanatMechona) && (iMisparKnisa==0));
@@ -6488,7 +6487,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     }
                     break;
             }
-            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "KISUY_TOR"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
+            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "KISUY_TOR"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
             oTxt = (TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0]);
             if (oTxt.Text.Equals(0))            
                 oTxt.Text = "";

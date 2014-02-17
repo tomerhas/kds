@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using KdsLibrary.BL;
 using System.Data;
-using KdsLibrary.DAL;
 using System.Collections.Specialized;
 using System.Configuration;
+using DalOraInfra.DAL;
 
 namespace KdsWorkFlow.Approvals
 {

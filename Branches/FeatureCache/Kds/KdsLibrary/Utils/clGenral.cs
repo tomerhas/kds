@@ -7,12 +7,14 @@ using System.Web.UI.WebControls;
 using System.Web.UI;
 using System.Diagnostics;
 using System.Data;
-using KdsLibrary.UDT;
-using KdsLibrary.DAL;
 using KdsLibrary.Security;
 using KdsLibrary.Controls;
 using System.Configuration;
 using System.Text.RegularExpressions;
+using KDSCommon.UDT;
+using DalOraInfra.DAL;
+using KDSCommon.Helpers;
+using KDSCommon.Enums;
 
 namespace KdsLibrary
 {
@@ -383,8 +385,7 @@ namespace KdsLibrary
         #endregion
         public static string[] arrCalcType = new string[] { "רגיל", "הפרשים", "חודש פתוח" };
         public static string[] arrDays = new string[] { "א", "ב", "ג", "ד", "ה", "ו", "ש" };
-        public const int cYearNull = 1900;
-
+        
 
 
         public const int cSuccessBatchRecordsParameterCode = 204;
@@ -597,10 +598,7 @@ namespace KdsLibrary
             NoTachograph = 1064
         }
 
-        public enum enEventId
-        {
-            ProblemOfAccessToTnua = 30001
-        }
+       
 
         public enum enRechivim
         {
@@ -867,14 +865,7 @@ namespace KdsLibrary
         }
         public enum TypeCalc
         { Batch = 1, OnLine = 2, Test = 3, Premiya = 4 }
-        public enum enSectorAvoda
-        {
-            Nahagut = 5, //סידור נהגות
-            Tafkid = 1, //סידור תפקיד
-            Headrut = 9, //סידור העדרות
-            Nihul = 4, //סידור ניהול  
-            Meshek = 6
-        }
+      
 
         public enum enMeafyenim
         {
@@ -931,27 +922,7 @@ namespace KdsLibrary
             Betipul = 0
         }
       
-        public enum enSugYom
-        {
-            Chol = 1,
-            CholHamoedSukot = 3,
-            CholHamoedPesach = 4,
-            Purim = 5,
-            ShushanPurim = 7,
-            Shishi = 10,
-            ErevRoshHashna = 11,
-            ErevYomKipur = 12,
-            ErevSukot = 13,
-            ErevSimchatTora = 14,
-            ErevPesach = 15,
-            ErevPesachSheni = 16,
-            ErevYomHatsmaut = 17,
-            ErevShavuot = 18,
-            LagBaomerOrPurim = 19,
-            Shabat = 20,
-            Bchirot = 29,
-            Rishon = 30
-        }
+       
 
         public enum enMeafyen
         {
@@ -1096,12 +1067,7 @@ namespace KdsLibrary
             VaadatPnim = 4
         }
 
-        public enum enElementHachanatMechona
-        {
-            Element701 = 701,
-            Element711 = 711,
-            Element712 = 712
-        }
+       
 
         public enum enGeneralBatchType
         {
@@ -1976,25 +1942,25 @@ namespace KdsLibrary
             drYaminMeyuchadim = dtYamimMeyuchadim.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "");
             if (drYaminMeyuchadim.Length > 0)
             {
-                if (iSectorOved == clGeneral.enSectorAvoda.Tafkid.GetHashCode())
+                if (iSectorOved == enSectorAvoda.Tafkid.GetHashCode())
                 {
                     if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Minhal"].ToString()))
                     { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Minhal"].ToString()); }
                     else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
                 }
-                else if (iSectorOved == clGeneral.enSectorAvoda.Meshek.GetHashCode())
+                else if (iSectorOved == enSectorAvoda.Meshek.GetHashCode())
                 {
                     if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Meshek"].ToString()))
                     { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Meshek"].ToString()); }
                     else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
                 }
-                else if (iSectorOved == clGeneral.enSectorAvoda.Nihul.GetHashCode())
+                else if (iSectorOved == enSectorAvoda.Nihul.GetHashCode())
                 {
                     if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Tnua"].ToString()))
                     { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Tnua"].ToString()); }
                     else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
                 }
-                else if (iSectorOved == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
+                else if (iSectorOved == enSectorAvoda.Nahagut.GetHashCode())
                 {
                     if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Nehagut"].ToString()))
                     { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Nehagut"].ToString()); }
@@ -2066,11 +2032,11 @@ namespace KdsLibrary
             sMeafyen = clGeneral.ConvertToValidHour(sShaaMeafyen);
             if (clGeneral.IsEggedTime(sMeafyen))
             {
-                dMeafyenDate = clGeneral.GetDateTimeFromStringHour(clGeneral.ConvertFromEggedTime(sMeafyen), dTaarich.Date).AddDays(1);
+                dMeafyenDate = DateHelper.GetDateTimeFromStringHour(clGeneral.ConvertFromEggedTime(sMeafyen), dTaarich.Date).AddDays(1);
             }
             else
             {
-                dMeafyenDate = clGeneral.GetDateTimeFromStringHour(sMeafyen, dTaarich.Date);
+                dMeafyenDate = DateHelper.GetDateTimeFromStringHour(sMeafyen, dTaarich.Date);
             }
             return dMeafyenDate;
         }

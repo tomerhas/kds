@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Web;
 using KdsBatch.Errors;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 
 namespace KdsBatch.Entities 
 {
@@ -157,10 +158,10 @@ namespace KdsBatch.Entities
 
             sErevShishiChag = dr["erev_shishi_chag"].ToString();
             dFullShatHatchala = DateTime.Parse(dr["Shat_Hatchala"].ToString());
-            sShatHatchala = (dFullShatHatchala.Year < clGeneral.cYearNull ? "" : DateTime.Parse(dr["Shat_Hatchala"].ToString()).ToString("HH:mm"));
+            sShatHatchala = (dFullShatHatchala.Year < DateHelper.cYearNull ? "" : DateTime.Parse(dr["Shat_Hatchala"].ToString()).ToString("HH:mm"));
             sShatHatchalaLetashlum = (System.Convert.IsDBNull(dr["shat_hatchala_letashlum"]) ? "" : DateTime.Parse(dr["shat_hatchala_letashlum"].ToString()).ToString("HH:mm"));
             dFullShatHatchalaLetashlum = System.Convert.IsDBNull(dr["shat_hatchala_letashlum"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_hatchala_letashlum"].ToString());
-            if (dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
+            if (dFullShatHatchalaLetashlum.Year < DateHelper.cYearNull)
                 sShatHatchalaLetashlum = "";
             sShatGmarLetashlum = (System.Convert.IsDBNull(dr["shat_gmar_letashlum"]) ? "" : DateTime.Parse(dr["shat_gmar_letashlum"].ToString()).ToString("HH:mm"));
             dFullShatGmarLetashlum = System.Convert.IsDBNull(dr["shat_gmar_letashlum"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_gmar_letashlum"].ToString());
@@ -430,7 +431,7 @@ namespace KdsBatch.Entities
 
         //    if (!String.IsNullOrEmpty(sSectorAvoda))
         //    {
-        //        bSidurNahagut = (int.Parse(sSectorAvoda) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+        //        bSidurNahagut = (int.Parse(sSectorAvoda) == enSectorAvoda.Nahagut.GetHashCode());
         //    }
         //    return bSidurNahagut;
         //}
@@ -445,7 +446,7 @@ namespace KdsBatch.Entities
             {//סידור מיוחד
                 if (!String.IsNullOrEmpty(sSectorAvoda))
                 {
-                    bSidurNahagut = (int.Parse(sSectorAvoda) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+                    bSidurNahagut = (int.Parse(sSectorAvoda) == enSectorAvoda.Nahagut.GetHashCode());
                 }
             }
             else
@@ -454,7 +455,7 @@ namespace KdsBatch.Entities
 
                 if (drSugSidur.Length > 0)
                 {
-                    bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString());
+                    bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString());
                 }
             }
            
@@ -468,7 +469,7 @@ namespace KdsBatch.Entities
 
             if (!String.IsNullOrEmpty(sSectorAvoda))
             {
-                bSidurTafkid = (int.Parse(sSectorAvoda) == clGeneral.enSectorAvoda.Tafkid.GetHashCode());
+                bSidurTafkid = (int.Parse(sSectorAvoda) == enSectorAvoda.Tafkid.GetHashCode());
             }
             return bSidurTafkid;
         }
@@ -500,7 +501,7 @@ namespace KdsBatch.Entities
             {
                 if (bSidurMyuhad)
                 {//סידור מיוחד
-                    bSidurNihulTnua = (sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                    bSidurNihulTnua = (sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString());
                     if (!bSidurNihulTnua)
                         if (iMisparSidur == 99301)
                         {
@@ -526,7 +527,7 @@ namespace KdsBatch.Entities
 
                     if (drSugSidur.Length > 0)
                     {
-                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString());
                     }
                 }
             }
@@ -626,7 +627,7 @@ namespace KdsBatch.Entities
                 //כוננות גרירה (ערך 8 במאפיין 52 במאפייני סוג סידור)
                 if (bSidurMyuhad)
                 {//סידור מיוחד
-                    bSidurNihulTnua = (sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                    bSidurNihulTnua = (sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString());
                     if (!bSidurNihulTnua)
                     {
                         bSidurNihulTnua = (sSugAvoda == clGeneral.enSugAvoda.Lershut.GetHashCode().ToString());
@@ -646,7 +647,7 @@ namespace KdsBatch.Entities
 
                     if (drSugSidur.Length > 0)
                     {
-                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString());
                         if (!bSidurNihulTnua)
                         {
                             bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Lershut.GetHashCode().ToString());

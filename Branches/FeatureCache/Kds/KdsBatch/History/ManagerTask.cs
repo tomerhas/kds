@@ -6,8 +6,8 @@ using System.Configuration;
 using KdsLibrary;
 using KdsLibrary.BL;
 using System.IO;
-using KdsLibrary.DAL;
 using System.Data;
+using DalOraInfra.DAL;
 namespace KdsBatch.History
 {
     public class ManagerTask

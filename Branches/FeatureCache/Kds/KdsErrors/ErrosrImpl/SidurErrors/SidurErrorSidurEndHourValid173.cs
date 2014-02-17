@@ -9,6 +9,7 @@ using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces;
 using System.Data;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 
 
@@ -51,17 +52,17 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             {
                 if ((input.curSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(input.curSidur.sShatHatchalaMuteret))) //קיים מאפיין
                 {
-                    dStartLimitHour = GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatHatchalaMuteret).ToString("HH:mm"), input.CardDate);
+                    dStartLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatHatchalaMuteret).ToString("HH:mm"), input.CardDate);
                 }
 
                 if ((input.curSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(input.curSidur.sShatGmarMuteret))) //קיים מאפיין
                 {
-                    dEndLimitHour = GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatGmarMuteret).ToString("HH:mm"), input.CardDate.AddDays(1));
+                    dEndLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatGmarMuteret).ToString("HH:mm"), input.CardDate.AddDays(1));
                 }
             }
 
-            if ((!string.IsNullOrEmpty(input.curSidur.sShatGmar) && dSidurEndHour < dStartLimitHour) && (dStartLimitHour.Year != clGeneral.cYearNull) ||
-                (!string.IsNullOrEmpty(input.curSidur.sShatGmar) && dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year != clGeneral.cYearNull) ||
+            if ((!string.IsNullOrEmpty(input.curSidur.sShatGmar) && dSidurEndHour < dStartLimitHour) && (dStartLimitHour.Year != DateHelper.cYearNull) ||
+                (!string.IsNullOrEmpty(input.curSidur.sShatGmar) && dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year != DateHelper.cYearNull) ||
                 (!string.IsNullOrEmpty(input.curSidur.sShatGmar) && !string.IsNullOrEmpty(input.curSidur.sShatHatchala) && input.curSidur.dFullShatHatchala >= input.curSidur.dFullShatGmar))
             {
                 AddNewError(input);

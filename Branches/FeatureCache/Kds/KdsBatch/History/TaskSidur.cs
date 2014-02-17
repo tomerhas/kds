@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using KdsLibrary.UDT;
 using KdsLibrary;
 using System.Configuration;
+using KDSCommon.UDT;
 
 namespace KdsBatch.History
 {

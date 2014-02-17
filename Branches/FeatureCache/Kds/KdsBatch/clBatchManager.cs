@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Collections.Specialized;
-using KdsLibrary.DAL;
 using KdsLibrary.BL;
-using KdsLibrary.UDT;
 using System.Collections;
 using KdsLibrary.Utils;
 using KdsLibrary;
@@ -18,10 +16,11 @@ using KDSCommon.Interfaces;
 using KDSCommon.Enums;
 using KDSCommon.DataModels.Errors;
 using KDSCommon.Interfaces.Managers;
-using KDSCommon.DataModels.UDT;
 using KDSCommon.Helpers;
 using KDSCommon.Interfaces.DAL;
 using KDSCommon.Interfaces.Errors;
+using KDSCommon.UDT;
+using DalOraInfra.DAL;
 
 namespace KdsBatch
 {
@@ -234,100 +233,8 @@ namespace KdsBatch
             }    
         }
 
-        private void DeleteErrorsFromTbShgiot(int iMisparIshi, DateTime CardDate)
-        {
-            clDal oDal = new clDal();
-            try
-            {
-                oDal.ExecuteSQL(string.Concat("DELETE TB_SHGIOT T WHERE T.MISPAR_ISHI = ", iMisparIshi, " and taarich = to_date('", CardDate.Date.ToString("dd/MM/yyyy"), "','dd/mm/yyyy')"));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public void InsertErrorsToTbShgiot(DataTable dtErrors, DateTime dCardDate)
-        {
-            //כתיבת שגיאות ל-TB_SHGIOT
-            clDal oDal = new clDal();
-            StringBuilder sbYeshut = new StringBuilder();
-            DataSet ds = new DataSet();
-            string[] ucols = new string[2];
-
-            try
-            {
-              
-                //ds.Tables.Add(dtErrors);
-                
-                //ucols[0] = "mispar_ishi";
-                //ucols[1] = "KOD_SHGIA";
-                //oDal.InsertXML(ds.GetXml(), "TB_SHGIOT", ucols);
-                int i = 0;
-                oDal.ArrayBindCount = dtErrors.Rows.Count;
-                int[] arrMisparIshi = new int[dtErrors.Rows.Count];
-                int[] arrKodShgia = new int[dtErrors.Rows.Count];
-                string[] arrYeshutId = new string[dtErrors.Rows.Count];
-                int[] arrMisparSidur = new int[dtErrors.Rows.Count];
-                DateTime[] arrTaarich = new DateTime[dtErrors.Rows.Count];
-                DateTime[] arrShatHatchala = new DateTime[dtErrors.Rows.Count];
-                DateTime[] arrShatYetzia = new DateTime[dtErrors.Rows.Count];
-                int[] arrMisparKnisa = new int[dtErrors.Rows.Count];
-                string[] arrHeara = new string[dtErrors.Rows.Count];
-
-                foreach (DataRow dr in dtErrors.Rows)
-                {
-                    arrMisparIshi[i] = int.Parse(dr["mispar_ishi"].ToString());
-                    arrKodShgia[i] = int.Parse(dr["check_num"].ToString());
-                    sbYeshut.Remove(0, sbYeshut.Length);
-                    sbYeshut.Append(string.IsNullOrEmpty(dr["Taarich"].ToString()) ? dCardDate.ToShortDateString() : DateTime.Parse(dr["Taarich"].ToString()).ToShortDateString());
-                    //sbYeshut.Append(DateTime.Parse(dr["Taarich"].ToString()).ToShortDateString());
-                    sbYeshut.Append(",");
-                    sbYeshut.Append(string.IsNullOrEmpty(dr["mispar_sidur"].ToString()) ? "" : string.Concat(dr["mispar_sidur"].ToString(), ","));
-                    sbYeshut.Append(string.IsNullOrEmpty(dr["shat_hatchala"].ToString()) ? "" : string.Concat(DateTime.Parse(dr["shat_hatchala"].ToString()).ToString("HH:mm"), ","));
-                    sbYeshut.Append(string.IsNullOrEmpty(dr["shat_yetzia"].ToString()) ? "" : string.Concat(DateTime.Parse(dr["shat_yetzia"].ToString()).ToString("HH:mm"), ","));
-
-                    if (string.IsNullOrEmpty(dr["mispar_knisa"].ToString()) || dr["mispar_knisa"].ToString() == "0")
-                        sbYeshut.Append("");
-                    else sbYeshut.Append(string.Concat(dr["mispar_knisa"].ToString(), ","));
-
-                  //  sbYeshut.Append(string.IsNullOrEmpty(dr["mispar_knisa"].ToString()) ? "" : string.Concat(dr["mispar_knisa"].ToString(), ","));
-                    
-                    sbYeshut.Append(int.Parse(dr["check_num"].ToString()));
-                    sbYeshut.Append(",");
-                    sbYeshut.Append(i.ToString());
-                    //arrYeshutId[i]=sbYeshut.ToString().Remove(sbYeshut.ToString().Length-1,1);
-                    arrYeshutId[i] = sbYeshut.ToString();
-
-                    arrTaarich[i] = (string.IsNullOrEmpty(dr["Taarich"].ToString()) ? DateTime.MinValue : DateTime.Parse(dr["Taarich"].ToString()));
-                    arrMisparSidur[i] = string.IsNullOrEmpty(dr["mispar_sidur"].ToString()) ? 0 : (int)dr["mispar_sidur"];
-                    arrShatHatchala[i] = string.IsNullOrEmpty(dr["shat_hatchala"].ToString()) ? DateTime.MinValue : DateTime.Parse(dr["shat_hatchala"].ToString());
-                    arrShatYetzia[i] = string.IsNullOrEmpty(dr["shat_yetzia"].ToString()) ? DateTime.MinValue : DateTime.Parse(dr["shat_yetzia"].ToString());
-                    arrMisparKnisa[i] = string.IsNullOrEmpty(dr["mispar_knisa"].ToString()) ? 0 : (int)dr["mispar_knisa"];
-                       
-                    //arrHeara[i] = dr["error_desc"].ToString();
-                    i++;
-                }
-
-                oDal.AddParameter("MISPAR_ISHI", ParameterType.ntOracleInteger, arrMisparIshi, ParameterDir.pdInput);
-                oDal.AddParameter("KOD_SHGIA", ParameterType.ntOracleInteger, arrKodShgia, ParameterDir.pdInput);
-                oDal.AddParameter("YESHUT_ID", ParameterType.ntOracleVarchar, arrYeshutId, ParameterDir.pdInput);
-                oDal.AddParameter("TAARICH", ParameterType.ntOracleDate, arrTaarich, ParameterDir.pdInput);
-                oDal.AddParameter("MISPAR_SIDUR", ParameterType.ntOracleInteger, arrMisparSidur, ParameterDir.pdInput);
-                oDal.AddParameter("SHAT_HATCHALA", ParameterType.ntOracleDate, arrShatHatchala, ParameterDir.pdInput);
-                oDal.AddParameter("SHAT_YETZIA", ParameterType.ntOracleDate, arrShatYetzia, ParameterDir.pdInput);
-                oDal.AddParameter("MISPAR_KNISA", ParameterType.ntOracleInteger, arrMisparKnisa, ParameterDir.pdInput);
-                //oDal.AddParameter("HEARA", ParameterType.ntOracleVarchar, arrHeara, ParameterDir.pdInput);
-                //// Set the command text on an OracleCommand object
-                //oDal.ExecuteSQL("insert into TB_SHGIOT(MISPAR_ISHI,KOD_SHGIA,YESHUT_ID,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA,SHAT_YETZIA,HEARA) values (:MISPAR_ISHI,:KOD_SHGIA,:YESHUT_ID,:TAARICH,:MISPAR_SIDUR,:SHAT_HATCHALA,:SHAT_YETZIA,:HEARA)");
-                oDal.ExecuteSQL("insert into TB_SHGIOT(MISPAR_ISHI,KOD_SHGIA,YESHUT_ID,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA,SHAT_YETZIA,MISPAR_KNISA) values (:MISPAR_ISHI,:KOD_SHGIA,:YESHUT_ID,:TAARICH,:MISPAR_SIDUR,:SHAT_HATCHALA,:SHAT_YETZIA,:MISPAR_KNISA)");          
-              
-                // //oDal.ExecuteSP("pro_del_tb_shgiot");
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }          
-        }
+        
+        
        
         private void SetOvedYomAvodaDetails(int iMisparIshi, DateTime dCardDate)
         {
@@ -560,37 +467,14 @@ namespace KdsBatch
         {
             var errorFlowManager = ServiceLocator.Current.GetInstance<IErrorFlowManager>();
             FlowErrorResult errorResults = errorFlowManager.ExecuteFlow(iMisparIshi, dCardDate, 0, 0);
-
-            DeleteErrorsFromTbShgiot(iMisparIshi, dCardDate);
-            errorResults.CardStatus = GetCardStatus(iMisparIshi, dCardDate, errorResults.Errors);
-
-            UpdateRitzatShgiotDate(iMisparIshi, dCardDate, _bHaveShgiotLetzuga);
-
+            
             _dtErrors = errorResults.Errors;
             _CardStatus = errorResults.CardStatus;
             return errorResults;
-          
+         
         }
 
-        private CardStatus GetCardStatus(int iMisparIshi, DateTime dCardDate, DataTable dtErr)
-        {
-            CardStatus status = CardStatus.Valid;
-
-            if (dtErr.Rows.Count > 0)
-            {
-                InsertErrorsToTbShgiot(dtErr, dCardDate);
-                status = CardStatus.Error;
-            }
-            else
-            {
-                status = CardStatus.Valid;
-            }
-            if ((int)status != oOvedYomAvodaDetails.iStatus)
-            {
-                clDefinitions.UpdateCardStatus(iMisparIshi, dCardDate, status, _iUserId);
-            }
-            return status;
-        }
+        
         public bool MainOvedErrors(int iMisparIshi, DateTime dCardDate)
         {
             //M A I N   P R O C E D U R E
@@ -774,6 +658,89 @@ namespace KdsBatch
             }
         }
 
+        public void InsertErrorsToTbShgiot(DataTable dtErrors, DateTime dCardDate)
+        {
+            //כתיבת שגיאות ל-TB_SHGIOT
+            clDal oDal = new clDal();
+            StringBuilder sbYeshut = new StringBuilder();
+            DataSet ds = new DataSet();
+            string[] ucols = new string[2];
+
+            try
+            {
+
+                //ds.Tables.Add(dtErrors);
+
+                //ucols[0] = "mispar_ishi";
+                //ucols[1] = "KOD_SHGIA";
+                //oDal.InsertXML(ds.GetXml(), "TB_SHGIOT", ucols);
+                int i = 0;
+                oDal.ArrayBindCount = dtErrors.Rows.Count;
+                int[] arrMisparIshi = new int[dtErrors.Rows.Count];
+                int[] arrKodShgia = new int[dtErrors.Rows.Count];
+                string[] arrYeshutId = new string[dtErrors.Rows.Count];
+                int[] arrMisparSidur = new int[dtErrors.Rows.Count];
+                DateTime[] arrTaarich = new DateTime[dtErrors.Rows.Count];
+                DateTime[] arrShatHatchala = new DateTime[dtErrors.Rows.Count];
+                DateTime[] arrShatYetzia = new DateTime[dtErrors.Rows.Count];
+                int[] arrMisparKnisa = new int[dtErrors.Rows.Count];
+                string[] arrHeara = new string[dtErrors.Rows.Count];
+
+                foreach (DataRow dr in dtErrors.Rows)
+                {
+                    arrMisparIshi[i] = int.Parse(dr["mispar_ishi"].ToString());
+                    arrKodShgia[i] = int.Parse(dr["check_num"].ToString());
+                    sbYeshut.Remove(0, sbYeshut.Length);
+                    sbYeshut.Append(string.IsNullOrEmpty(dr["Taarich"].ToString()) ? dCardDate.ToShortDateString() : DateTime.Parse(dr["Taarich"].ToString()).ToShortDateString());
+                    //sbYeshut.Append(DateTime.Parse(dr["Taarich"].ToString()).ToShortDateString());
+                    sbYeshut.Append(",");
+                    sbYeshut.Append(string.IsNullOrEmpty(dr["mispar_sidur"].ToString()) ? "" : string.Concat(dr["mispar_sidur"].ToString(), ","));
+                    sbYeshut.Append(string.IsNullOrEmpty(dr["shat_hatchala"].ToString()) ? "" : string.Concat(DateTime.Parse(dr["shat_hatchala"].ToString()).ToString("HH:mm"), ","));
+                    sbYeshut.Append(string.IsNullOrEmpty(dr["shat_yetzia"].ToString()) ? "" : string.Concat(DateTime.Parse(dr["shat_yetzia"].ToString()).ToString("HH:mm"), ","));
+
+                    if (string.IsNullOrEmpty(dr["mispar_knisa"].ToString()) || dr["mispar_knisa"].ToString() == "0")
+                        sbYeshut.Append("");
+                    else sbYeshut.Append(string.Concat(dr["mispar_knisa"].ToString(), ","));
+
+                    //  sbYeshut.Append(string.IsNullOrEmpty(dr["mispar_knisa"].ToString()) ? "" : string.Concat(dr["mispar_knisa"].ToString(), ","));
+
+                    sbYeshut.Append(int.Parse(dr["check_num"].ToString()));
+                    sbYeshut.Append(",");
+                    sbYeshut.Append(i.ToString());
+                    //arrYeshutId[i]=sbYeshut.ToString().Remove(sbYeshut.ToString().Length-1,1);
+                    arrYeshutId[i] = sbYeshut.ToString();
+
+                    arrTaarich[i] = (string.IsNullOrEmpty(dr["Taarich"].ToString()) ? DateTime.MinValue : DateTime.Parse(dr["Taarich"].ToString()));
+                    arrMisparSidur[i] = string.IsNullOrEmpty(dr["mispar_sidur"].ToString()) ? 0 : (int)dr["mispar_sidur"];
+                    arrShatHatchala[i] = string.IsNullOrEmpty(dr["shat_hatchala"].ToString()) ? DateTime.MinValue : DateTime.Parse(dr["shat_hatchala"].ToString());
+                    arrShatYetzia[i] = string.IsNullOrEmpty(dr["shat_yetzia"].ToString()) ? DateTime.MinValue : DateTime.Parse(dr["shat_yetzia"].ToString());
+                    arrMisparKnisa[i] = string.IsNullOrEmpty(dr["mispar_knisa"].ToString()) ? 0 : (int)dr["mispar_knisa"];
+
+                    //arrHeara[i] = dr["error_desc"].ToString();
+                    i++;
+                }
+
+                oDal.AddParameter("MISPAR_ISHI", ParameterType.ntOracleInteger, arrMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("KOD_SHGIA", ParameterType.ntOracleInteger, arrKodShgia, ParameterDir.pdInput);
+                oDal.AddParameter("YESHUT_ID", ParameterType.ntOracleVarchar, arrYeshutId, ParameterDir.pdInput);
+                oDal.AddParameter("TAARICH", ParameterType.ntOracleDate, arrTaarich, ParameterDir.pdInput);
+                oDal.AddParameter("MISPAR_SIDUR", ParameterType.ntOracleInteger, arrMisparSidur, ParameterDir.pdInput);
+                oDal.AddParameter("SHAT_HATCHALA", ParameterType.ntOracleDate, arrShatHatchala, ParameterDir.pdInput);
+                oDal.AddParameter("SHAT_YETZIA", ParameterType.ntOracleDate, arrShatYetzia, ParameterDir.pdInput);
+                oDal.AddParameter("MISPAR_KNISA", ParameterType.ntOracleInteger, arrMisparKnisa, ParameterDir.pdInput);
+                //oDal.AddParameter("HEARA", ParameterType.ntOracleVarchar, arrHeara, ParameterDir.pdInput);
+                //// Set the command text on an OracleCommand object
+                //oDal.ExecuteSQL("insert into TB_SHGIOT(MISPAR_ISHI,KOD_SHGIA,YESHUT_ID,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA,SHAT_YETZIA,HEARA) values (:MISPAR_ISHI,:KOD_SHGIA,:YESHUT_ID,:TAARICH,:MISPAR_SIDUR,:SHAT_HATCHALA,:SHAT_YETZIA,:HEARA)");
+                oDal.ExecuteSQL("insert into TB_SHGIOT(MISPAR_ISHI,KOD_SHGIA,YESHUT_ID,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA,SHAT_YETZIA,MISPAR_KNISA) values (:MISPAR_ISHI,:KOD_SHGIA,:YESHUT_ID,:TAARICH,:MISPAR_SIDUR,:SHAT_HATCHALA,:SHAT_YETZIA,:MISPAR_KNISA)");
+
+                // //oDal.ExecuteSP("pro_del_tb_shgiot");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static void UpdateRitzatShgiotDate(int iMisparIshi, DateTime dCardDate, bool bShgiotLetzuga)
         {
             clDal oDal = new clDal();
@@ -800,7 +767,7 @@ namespace KdsBatch
 
         private void RemoveShgiotMeusharotFromDt(ref DataTable dtErrors,ref string sArrKodShgia)
         {
-            clWorkCard.ErrorLevel iErrorLevel;
+            ErrorLevel iErrorLevel;
             bool bMeushar;
             DataRow dr;
             int iCount;
@@ -817,19 +784,19 @@ namespace KdsBatch
                         dr = dtErrors.Rows[I];
                         if (!(string.IsNullOrEmpty(dr["shat_yetzia"].ToString())))
                         {
-                            iErrorLevel = clWorkCard.ErrorLevel.LevelPeilut;
+                            iErrorLevel = ErrorLevel.LevelPeilut;
                             bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)dr["check_num"], (int)dr["mispar_ishi"], DateTime.Parse(dr["Taarich"].ToString()), (int)dr["mispar_sidur"], DateTime.Parse(dr["shat_hatchala"].ToString()), DateTime.Parse(dr["shat_yetzia"].ToString()), (int)dr["mispar_knisa"]);
 
                         }
                         else if (string.IsNullOrEmpty(dr["mispar_sidur"].ToString()))
                         {
-                            iErrorLevel = clWorkCard.ErrorLevel.LevelYomAvoda;
+                            iErrorLevel = ErrorLevel.LevelYomAvoda;
                             bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)dr["check_num"], (int)dr["mispar_ishi"], DateTime.Parse(dr["Taarich"].ToString()), 0, DateTime.MinValue, DateTime.MinValue, 0);
 
                         }
                         else
                         {
-                            iErrorLevel = clWorkCard.ErrorLevel.LevelSidur;
+                            iErrorLevel = ErrorLevel.LevelSidur;
                             bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)dr["check_num"], (int)dr["mispar_ishi"], DateTime.Parse(dr["Taarich"].ToString()), (int)dr["mispar_sidur"], DateTime.Parse(dr["shat_hatchala"].ToString()), DateTime.MinValue, 0);
                         }
 
@@ -1351,7 +1318,7 @@ namespace KdsBatch
             bool isValid = true;
             try
             {
-                if (oSidur.dFullShatHatchala.Year < clGeneral.cYearNull)
+                if (oSidur.dFullShatHatchala.Year < DateHelper.cYearNull)
                 {
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "חסרה שעת התחלה", ErrorTypes.errStartHourMissing.GetHashCode());
@@ -1514,7 +1481,7 @@ namespace KdsBatch
                 DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
                 if (drSugSidur.Length > 0)
                 {
-                    if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString())
+                    if (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString())
                     {
                         for (int j = 0; j < oSidur.htPeilut.Count; j++)
                         {
@@ -2626,18 +2593,18 @@ namespace KdsBatch
 
                     if ((oSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatHatchalaMuteret))) //קיים מאפיין
                     {
-                        dStartLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatHatchalaMuteret).ToString("HH:mm"), dCardDate);
+                        dStartLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatHatchalaMuteret).ToString("HH:mm"), dCardDate);
                     }
 
                     if ((oSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatGmarMuteret))) //קיים מאפיין
                     {
-                        dEndLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatGmarMuteret).ToString("HH:mm"), dCardDate.AddDays(1));
+                        dEndLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatGmarMuteret).ToString("HH:mm"), dCardDate.AddDays(1));
                     }
                 } 
 
 
-                if ((!string.IsNullOrEmpty(oSidur.sShatHatchala) && dSidurStartHour < dStartLimitHour) && (dStartLimitHour.Year != clGeneral.cYearNull) ||
-                    (!string.IsNullOrEmpty(oSidur.sShatHatchala) && dSidurStartHour > dEndLimitHour) && (dEndLimitHour.Year != clGeneral.cYearNull)) 
+                if ((!string.IsNullOrEmpty(oSidur.sShatHatchala) && dSidurStartHour < dStartLimitHour) && (dStartLimitHour.Year != DateHelper.cYearNull) ||
+                    (!string.IsNullOrEmpty(oSidur.sShatHatchala) && dSidurStartHour > dEndLimitHour) && (dEndLimitHour.Year != DateHelper.cYearNull)) 
                 {
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "שעת ההתחלה לסידור מיוחד שגוי", ErrorTypes.errSidurHourStartNotValid.GetHashCode());
@@ -2697,17 +2664,17 @@ namespace KdsBatch
                 {
                     if ((oSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatHatchalaMuteret))) //קיים מאפיין
                     {
-                        dStartLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatHatchalaMuteret).ToString("HH:mm"), dCardDate);
+                        dStartLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatHatchalaMuteret).ToString("HH:mm"), dCardDate);
                     }
 
                     if ((oSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatGmarMuteret))) //קיים מאפיין
                     {
-                        dEndLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatGmarMuteret).ToString("HH:mm"), dCardDate.AddDays(1));
+                        dEndLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatGmarMuteret).ToString("HH:mm"), dCardDate.AddDays(1));
                     }
                 } 
                
-                if ((!string.IsNullOrEmpty(oSidur.sShatGmar) && dSidurEndHour < dStartLimitHour) && (dStartLimitHour.Year != clGeneral.cYearNull) ||
-                    (!string.IsNullOrEmpty(oSidur.sShatGmar) && dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year != clGeneral.cYearNull) ||
+                if ((!string.IsNullOrEmpty(oSidur.sShatGmar) && dSidurEndHour < dStartLimitHour) && (dStartLimitHour.Year != DateHelper.cYearNull) ||
+                    (!string.IsNullOrEmpty(oSidur.sShatGmar) && dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year != DateHelper.cYearNull) ||
                     (!string.IsNullOrEmpty(oSidur.sShatGmar) && !string.IsNullOrEmpty(oSidur.sShatHatchala) && oSidur.dFullShatHatchala>=oSidur.dFullShatGmar)) 
                 {
                     isValid = false;
@@ -2940,14 +2907,14 @@ namespace KdsBatch
                     if (dsSidur.Tables[1].Rows.Count > 0)
                     {
                         sShaa = dsSidur.Tables[1].Rows[0]["SHAA"].ToString();
-                        dShaHatchalaMapa = clGeneral.GetDateTimeFromStringHour(sShaa, _dCardDate);
+                        dShaHatchalaMapa = DateHelper.GetDateTimeFromStringHour(sShaa, _dCardDate);
                         for (int i = dsSidur.Tables[1].Rows.Count - 1; i >= 0; i--)
                         {
                             long lMakatNesia = long.Parse(dsSidur.Tables[1].Rows[i]["MAKAT8"].ToString());
                             sShaa = dsSidur.Tables[1].Rows[i]["SHAA"].ToString();
                             if (!string.IsNullOrEmpty(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString()))
                                 dSumMazanTichnun = double.Parse(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString());
-                            dShatGmarMapa = clGeneral.GetDateTimeFromStringHour(sShaa, _dCardDate).AddMinutes(dSumMazanTichnun);
+                            dShatGmarMapa = DateHelper.GetDateTimeFromStringHour(sShaa, _dCardDate).AddMinutes(dSumMazanTichnun);
                             fZmanSidurMapa = int.Parse((dShatGmarMapa - dShaHatchalaMapa).TotalMinutes.ToString());
 
                             //במידה והפעילות האחרונה היא אלמנט לידיעה בלבד (ערך 2 (לידיעה בלבד) במאפיין 3  (לפעולה/לידיעה בלבד), יש לקחת את הפעילות הקודמת לה.
@@ -3114,14 +3081,14 @@ namespace KdsBatch
                     if (dsSidur.Tables[1].Rows.Count > 0)
                     {
                         sShaa = dsSidur.Tables[1].Rows[0]["SHAA"].ToString();
-                        dShaHatchalaMapa = clGeneral.GetDateTimeFromStringHour(sShaa, _dCardDate);
+                        dShaHatchalaMapa = DateHelper.GetDateTimeFromStringHour(sShaa, _dCardDate);
                         for (int i = dsSidur.Tables[1].Rows.Count - 1; i >= 0; i--)
                         {
                             long lMakatNesia = long.Parse(dsSidur.Tables[1].Rows[i]["MAKAT8"].ToString());
                             sShaa = dsSidur.Tables[1].Rows[i]["SHAA"].ToString();
                             if (!string.IsNullOrEmpty(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString()))
                                 fMaazanTichnun = double.Parse(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString());
-                            dShatGmarMapa = clGeneral.GetDateTimeFromStringHour(sShaa, _dCardDate).AddMinutes(fMaazanTichnun);
+                            dShatGmarMapa = DateHelper.GetDateTimeFromStringHour(sShaa, _dCardDate).AddMinutes(fMaazanTichnun);
                             fZmanMapa = int.Parse((dShatGmarMapa - dShaHatchalaMapa).TotalMinutes.ToString());
                     
                             //במידה והפעילות האחרונה היא אלמנט לידיעה בלבד (ערך 2 (לידיעה בלבד) במאפיין 3  (לפעולה/לידיעה בלבד), יש לקחת את הפעילות הקודמת לה.
@@ -3423,7 +3390,7 @@ namespace KdsBatch
             try
             {
                 //אם שדה מחוץ למכסה תקין (0 או 1) והסידור הוא סידור העדרות - תצא שגיאה. יודעים אם סידור הוא העדרות לפי מאפיין בטבלת מאפיינים סידורים מיוחדים. רק עבור סידורים מיוחדים.
-                if ( oSidur.sOutMichsa == "1" && oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Headrut.GetHashCode().ToString())
+                if ( oSidur.sOutMichsa == "1" && oSidur.sSectorAvoda == enSectorAvoda.Headrut.GetHashCode().ToString())
                 {
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "מחוץ למכסה בסדור שאסור ", ErrorTypes.errOutMichsaInSidurHeadrutNotValid.GetHashCode());                        
@@ -3518,8 +3485,8 @@ namespace KdsBatch
                             isValid = false;
                         }
                         //נבדוק אם שעה תקפה מול פרמטרים של שעת התחלה ושעת סיום
-                        dPeilutShatYetiza = clGeneral.GetDateTimeFromStringHour(sPeilutShatYetzia,dCardDate);
-                        if (oParam.dStartHourForPeilut.Year!=clGeneral.cYearNull)
+                        dPeilutShatYetiza = DateHelper.GetDateTimeFromStringHour(sPeilutShatYetzia,dCardDate);
+                        if (oParam.dStartHourForPeilut.Year!=DateHelper.cYearNull)
                         {
                             dStartHourForPeilut = oParam.dStartHourForPeilut;//DateTime.Parse(string.Concat(dCardDate.ToShortDateString(), " ", oParam.sStartHourForPeilut));
                             if ((dPeilutShatYetiza < dStartHourForPeilut))
@@ -3533,7 +3500,7 @@ namespace KdsBatch
                                 isValid = false;
                             }
                         }
-                        if (oParam.dEndHourForPeilut.Year!=clGeneral.cYearNull)
+                        if (oParam.dEndHourForPeilut.Year!=DateHelper.cYearNull)
                         {
                             dEndHourForPeilut = oParam.dEndHourForPeilut.AddDays(1);//DateTime.Parse(string.Concat(dCardDate.ToShortDateString(), " ", oParam.sEndHourForPeilut)).AddDays(1);
                             if (oPeilut.dFullShatYetzia > dEndHourForPeilut)
@@ -3609,7 +3576,7 @@ namespace KdsBatch
                 //    {
                 //        if (drSugSidur.Length > 0)
                 //        {   //עבור סידורים רגילים, רק בסידורי נהגות וניהול תנועה מותרת המרה.
-                //            if ((drSugSidur[0]["sector_avoda"].ToString() != clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString()) && (drSugSidur[0]["sector_avoda"].ToString() != clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()))
+                //            if ((drSugSidur[0]["sector_avoda"].ToString() != enSectorAvoda.Nihul.GetHashCode().ToString()) && (drSugSidur[0]["sector_avoda"].ToString() != enSectorAvoda.Nahagut.GetHashCode().ToString()))
                 //            {
                 //                drNew = dtErrors.NewRow();
                 //                InsertErrorRow(oSidur, ref drNew, "המרה אסורה לסידור", enErrors.errHamaraNotValid.GetHashCode());
@@ -3818,7 +3785,7 @@ namespace KdsBatch
                     {
                         if ((int.Parse(oSidur.sHashlama)) > 0)
                         {
-                            if ((!(string.IsNullOrEmpty(oSidur.sShatGmar))) && (oSidur.dFullShatHatchala.Year > clGeneral.cYearNull))
+                            if ((!(string.IsNullOrEmpty(oSidur.sShatGmar))) && (oSidur.dFullShatHatchala.Year > DateHelper.cYearNull))
                             {
                                 if (fSidurTime / 60 > int.Parse(oSidur.sHashlama))
                                 {
@@ -3865,7 +3832,7 @@ namespace KdsBatch
                 {
                     if ((!((oPeilut.iMakatType == (long)enMakatType.mElement.GetHashCode()) && (oPeilut.iElementLeYedia == 2))) && (lMakatNesia > 0))
                     {
-                        if (oSidur.dFullShatHatchala.Year > clGeneral.cYearNull)
+                        if (oSidur.dFullShatHatchala.Year > DateHelper.cYearNull)
                         {//בדיקה 121
                             if (oPeilut.dFullShatYetzia < oSidur.dFullShatHatchala)
                             {
@@ -4780,7 +4747,7 @@ namespace KdsBatch
                     //    if ((oSidur.bSidurMyuhad) && (oSidur.iMisparSidurMyuhad > 0))
                     //    {
                     //        //אם סידור נהגות וקיים לעובד ותק, אז זכאי להמרת שבת
-                    //        if (!((oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()) && ((sMaamad == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22"))))
+                    //        if (!((oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString()) && ((sMaamad == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22"))))
                     //        {
                     //            drNew = dtErrors.NewRow();
                     //            InsertErrorRow(oSidur, ref drNew, "המרה לעובד שלא זכאי ", enErrors.errZakaiLehamaratShabat.GetHashCode());
@@ -4793,8 +4760,8 @@ namespace KdsBatch
                     //    {
                     //        if (drSugSidur.Length > 0)
                     //        {
-                    //            //if (!((drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()) && (((sMaamad.Substring(0,1) == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22")))))
-                    //            if (!(((drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()) && ((sMaamad.Substring(0, 1) == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22") ))))
+                    //            //if (!((drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString()) && (((sMaamad.Substring(0,1) == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22")))))
+                    //            if (!(((drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString()) && ((sMaamad.Substring(0, 1) == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22") ))))
                     //            {
                     //                drNew = dtErrors.NewRow();
                     //                InsertErrorRow(oSidur, ref drNew, "המרה לעובד שלא זכאי ", enErrors.errZakaiLehamaratShabat.GetHashCode());
@@ -5215,8 +5182,8 @@ namespace KdsBatch
                         //נקרא את שעת כניסת השבת                   
                         //אם ביום שהוא ערב שבת/חג יש סידור אחד שמסתיים לפני כניסת שבת ויש לו סימון בשדה פיצול והסידור העוקב אחריו התחיל אחרי כניסת השבת  - זו שגיאה. (מצב תקין הוא שהסידור העוקב התחיל לפני כניסת שבת וגלש/לא גלש לשבת). 
                         //if (((int.Parse(sSidurPrevShatGmar.Remove(2, 1)) > iShabatStart)) || (int.Parse(oSidur.sShatHatchala.Remove(2, 1)) <= iShabatStart))
-                        dSidurPrevShatGmar =clGeneral.GetDateTimeFromStringHour(sSidurPrevShatGmar,dCardDate);
-                        dSidurShatHatchala = clGeneral.GetDateTimeFromStringHour(oSidur.sShatHatchala,dCardDate);
+                        dSidurPrevShatGmar =DateHelper.GetDateTimeFromStringHour(sSidurPrevShatGmar,dCardDate);
+                        dSidurShatHatchala = DateHelper.GetDateTimeFromStringHour(oSidur.sShatHatchala,dCardDate);
                         if ((dSidurPrevShatGmar <= oParam.dKnisatShabat) && (dSidurShatHatchala > oParam.dKnisatShabat))
                         {
                             //נציג את הסידור השני כשגוי
@@ -5360,7 +5327,7 @@ namespace KdsBatch
             //בדיקה ברמת סידור
             try
             {//אסור לדווח סידור תפקיד אם אין לעובד מאפייני שעת התחלה / גמר (לפי מאפיינים 3/4 במאפייני עובדים). רלוונטי רק לסידורים מיוחדים, לא לרגילים.
-                if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((!oMeafyeneyOved.IsMeafyenExist(3)) || (!oMeafyeneyOved.IsMeafyenExist(4))))
+                if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((!oMeafyeneyOved.IsMeafyenExist(3)) || (!oMeafyeneyOved.IsMeafyenExist(4))))
                 {
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "סידור תפקיד ללא מאפיין התחלה/גמר", ErrorTypes.errSidurTafkidWithOutApprove.GetHashCode());
@@ -5432,14 +5399,14 @@ namespace KdsBatch
                         dSidurDate = oSidur.dSidurDate;
                         if ((oSidur.sSidurInSummer == "1") || (oSidur.sSidurInSummer == "2"))
                         {
-                            if (oParam.dStartNihulVShivik.Year!=clGeneral.cYearNull)
+                            if (oParam.dStartNihulVShivik.Year!=DateHelper.cYearNull)
                             {
                                 bError = (dSidurDate < oParam.dStartNihulVShivik);
                             }
 
                             if (!bError)
                             {
-                                if (oParam.dEndNihulVShivik.Year != clGeneral.cYearNull)
+                                if (oParam.dEndNihulVShivik.Year != DateHelper.cYearNull)
                                 {
                                     bError = (dSidurDate > oParam.dEndNihulVShivik);
                                 }
@@ -5447,7 +5414,7 @@ namespace KdsBatch
                         }
                         else
                         {
-                            bError = (((dSidurDate < oParam.dStartTiful) && (oParam.dStartTiful.Year!=clGeneral.cYearNull)) || ((dSidurDate > oParam.dEndTiful) && (oParam.dEndTiful.Year!=clGeneral.cYearNull)));
+                            bError = (((dSidurDate < oParam.dStartTiful) && (oParam.dStartTiful.Year!=DateHelper.cYearNull)) || ((dSidurDate > oParam.dEndTiful) && (oParam.dEndTiful.Year!=DateHelper.cYearNull)));
                         }
                         if (bError)
                         {
@@ -5737,7 +5704,7 @@ namespace KdsBatch
                 //כוננות גרירה (ערך 8 במאפיין 52 במאפייני סוג סידור)
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    bSidurNihulTnua = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                    bSidurNihulTnua = (oSidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString());
                     if (!bSidurNihulTnua)
                     {
                         bSidurNihulTnua = (oSidur.sSugAvoda == clGeneral.enSugAvoda.Lershut.GetHashCode().ToString());
@@ -5755,7 +5722,7 @@ namespace KdsBatch
                 {//סידור רגיל
                     if (drSugSidur.Length > 0)
                     {
-                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString());
                         if (!bSidurNihulTnua)
                         {
                             bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Lershut.GetHashCode().ToString());
@@ -5824,7 +5791,7 @@ namespace KdsBatch
                 {
                     if (oSidur.sSugAvoda != clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString())
                     {
-                        if (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                        if (oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString())
                         {
                             bError = CheckConditionsAllowSidur(ref oSidur);
                         }
@@ -5834,7 +5801,7 @@ namespace KdsBatch
                 {//סידור רגיל
                     if (drSugSidur.Length > 0)
                     {
-                         if ( drSugSidur[0]["sug_Avoda"].ToString() != clGeneral.enSugAvoda.Grira.GetHashCode().ToString() && drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                         if ( drSugSidur[0]["sug_Avoda"].ToString() != clGeneral.enSugAvoda.Grira.GetHashCode().ToString() && drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
                         {
                             bError = CheckConditionsAllowSidur(ref oSidur);
                         }
@@ -5871,7 +5838,7 @@ namespace KdsBatch
                 {
                     if (oSidur.sSugAvoda != clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString())
                     {
-                        if (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                        if (oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString())
                         {
                             if (_dCardDate == oOvedYomAvodaDetails.dTaarichMe)
                                 bError = IsOvedBShlila();
@@ -5882,7 +5849,7 @@ namespace KdsBatch
                 {//סידור רגיל
                     if (drSugSidur.Length > 0)
                     {
-                        if (drSugSidur[0]["sug_Avoda"].ToString() != clGeneral.enSugAvoda.Grira.GetHashCode().ToString() && drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                        if (drSugSidur[0]["sug_Avoda"].ToString() != clGeneral.enSugAvoda.Grira.GetHashCode().ToString() && drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
                         {
                             if (_dCardDate == oOvedYomAvodaDetails.dTaarichMe)
                                 bError = IsOvedBShlila();
@@ -8061,7 +8028,7 @@ namespace KdsBatch
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                         oSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
                         oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
-                        if (oSidur.dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
+                        if (oSidur.dFullShatHatchalaLetashlum.Year < DateHelper.cYearNull)
                             oSidur.sShatHatchalaLetashlum = "";
                     }
 
@@ -8102,7 +8069,7 @@ namespace KdsBatch
                     oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
                     oSidur.dFullShatGmarLetashlum = oSidur.dFullShatGmar;
                     oSidur.sShatGmarLetashlum = oSidur.dFullShatGmarLetashlum.ToString("HH:mm");
-                    if (oSidur.dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
+                    if (oSidur.dFullShatHatchalaLetashlum.Year < DateHelper.cYearNull)
                         oSidur.sShatHatchalaLetashlum = "";
                 }
             }
@@ -8219,7 +8186,7 @@ namespace KdsBatch
                                 if (bHaveSidur && oSidurPutzal.htPeilut.Values.Count > 0 && oSidur.htPeilut.Values.Count > 0)
                                 {
                                     oLastPeilut = (PeilutDM)oSidurPutzal.htPeilut[oSidurPutzal.htPeilut.Count -1];// oSidurPutzal.htPeilut.Values.Cast<PeilutDM>().ToList().LastOrDefault(peilut => (peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "756"));
-                                    oFirstPeilut = oSidur.htPeilut.Values.Cast<PeilutDM>().ToList().FirstOrDefault(peilut => (peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "756"));
+                                    oFirstPeilut = oSidur.htPeilut.Values.Cast<PeilutDM>().ToList().FirstOrDefault(peilut => (peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element701.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element712.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element711.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "756"));
                                     if (oFirstPeilut != null && oLastPeilut != null)
                                     {
                                         var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
@@ -8231,20 +8198,20 @@ namespace KdsBatch
 
                                                 sShaa = dsSidur.Tables[1].Rows[i]["SHAA"].ToString();
                                                 lMakatNesia = long.Parse(dsSidur.Tables[1].Rows[i]["MAKAT8"].ToString());
-                                                dShatYetzia = clGeneral.GetDateTimeFromStringHour(sShaa, oSidur.dFullShatHatchala);
+                                                dShatYetzia = DateHelper.GetDateTimeFromStringHour(sShaa, oSidur.dFullShatHatchala);
                                                 if (oLastPeilut.lMakatNesia == lMakatNesia && oLastPeilut.dFullShatYetzia == dShatYetzia && i + 1 < dsSidur.Tables[1].Rows.Count)
                                                 {
                                                     lMakatNesia = long.Parse(dsSidur.Tables[1].Rows[i + 1]["MAKAT8"].ToString());
                                                     sShaa = dsSidur.Tables[1].Rows[i + 1]["SHAA"].ToString();
 
-                                                    if ((lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() || lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())  && i + 2 < dsSidur.Tables[1].Rows.Count)
+                                                    if ((lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element712.GetHashCode().ToString() || lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element711.GetHashCode().ToString())  && i + 2 < dsSidur.Tables[1].Rows.Count)
                                                     {
                                                         lMakatNesia = long.Parse(dsSidur.Tables[1].Rows[i + 2]["MAKAT8"].ToString());
 
                                                         sShaa = dsSidur.Tables[1].Rows[i + 2]["SHAA"].ToString();
                                                     }
 
-                                                    dShatYetzia = clGeneral.GetDateTimeFromStringHour(sShaa, oSidur.dFullShatHatchala);
+                                                    dShatYetzia = DateHelper.GetDateTimeFromStringHour(sShaa, oSidur.dFullShatHatchala);
                                                     if (oFirstPeilut.lMakatNesia == lMakatNesia && oFirstPeilut.dFullShatYetzia == dShatYetzia)
                                                     {
                                                         bSidurOkev = true;
@@ -8283,7 +8250,7 @@ namespace KdsBatch
                                                 //    { bCancelHachanatMechona = true; }
                                                 //}
 
-                                                //if (!bCancelHachanatMechona || (bCancelHachanatMechona && sMakat != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && sMakat != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && sMakat != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()))
+                                                //if (!bCancelHachanatMechona || (bCancelHachanatMechona && sMakat != enElementHachanatMechona.Element701.GetHashCode().ToString() && sMakat != enElementHachanatMechona.Element712.GetHashCode().ToString() && sMakat != enElementHachanatMechona.Element711.GetHashCode().ToString()))
                                                 //{
                                                     OBJ_PEILUT_OVDIM oObjPeilutOvdimIns = new OBJ_PEILUT_OVDIM();
                                                     InsertToObjPeilutOvdimForUpdate(ref oPeilut, oObjSidurimOvdimDel, ref oObjPeilutOvdimIns);
@@ -9258,7 +9225,7 @@ namespace KdsBatch
 
                     oSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
                     oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
-                    if (oSidur.dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
+                    if (oSidur.dFullShatHatchalaLetashlum.Year < DateHelper.cYearNull)
                         oSidur.sShatHatchalaLetashlum = "";
                    
                 }
@@ -9274,7 +9241,7 @@ namespace KdsBatch
 
                     oSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
                     oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
-                    if (oSidur.dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
+                    if (oSidur.dFullShatHatchalaLetashlum.Year < DateHelper.cYearNull)
                         oSidur.sShatHatchalaLetashlum = "";
                 }
                 if (oSidur.bSidurVisaKodExists)
@@ -9569,7 +9536,7 @@ namespace KdsBatch
                     {
                         bHaveSidurFromMatala = true;
                     }
-                    if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())
+                    if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element701.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element712.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element711.GetHashCode().ToString())
                     {
                         bHaveElementHachanatMechona = true;
                     }
@@ -10331,7 +10298,7 @@ namespace KdsBatch
 
 
                             //בכל המקומות בהם מחפשים סידור גרירה בפועל בטווח הזמן של כוננות הגרירה וסידור כוננות הגרירה מתחיל לפני חצות ומסתיים אחרי חצות, 
-                            if (bSidurKonnutGrira && oSidur.dFullShatHatchala < clGeneral.GetDateTimeFromStringHour("24:00", _dCardDate) && oSidur.dFullShatGmar > clGeneral.GetDateTimeFromStringHour("24:00", _dCardDate))
+                            if (bSidurKonnutGrira && oSidur.dFullShatHatchala < DateHelper.GetDateTimeFromStringHour("24:00", _dCardDate) && oSidur.dFullShatGmar > DateHelper.GetDateTimeFromStringHour("24:00", _dCardDate))
                             {
                                 // יש לחפש סידור גרירה בתאריך כרטיס העבודה ובתאריך כרטיס העבודה +1.
                                 if (CheckHaveSidurGrira(_iMisparIshi, _dCardDate.AddDays(1), ref dtSidurGrira))
@@ -10458,7 +10425,7 @@ namespace KdsBatch
         //                do
         //                {
         //                    oPeilut = (PeilutDM)oSidur.htPeilut[j];
-        //                    if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())
+        //                    if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element701.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element712.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element711.GetHashCode().ToString())
         //                    {
         //                        oObjPeilutDel = new OBJ_PEILUT_OVDIM();
         //                        InsertToObjPeilutOvdimForDelete(ref oPeilut, ref oSidur, ref oObjPeilutDel);
@@ -10713,7 +10680,7 @@ namespace KdsBatch
         //        for (i = iPeilutNesiaIndex; i <= oSidur.htPeilut.Values.Count - 1; i++)
         //        {
         //            oNextPeilut = (PeilutDM)oSidur.htPeilut[i];
-        //            if (oNextPeilut.iMakatType == enMakatType.mVisa.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mNamak.GetHashCode() || (oNextPeilut.iMakatType == enMakatType.mElement.GetHashCode() && (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()) && (oNextPeilut.iElementLeShatGmar > 0 || oNextPeilut.iElementLeShatGmar == -1 || oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
+        //            if (oNextPeilut.iMakatType == enMakatType.mVisa.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mNamak.GetHashCode() || (oNextPeilut.iMakatType == enMakatType.mElement.GetHashCode() && (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element701.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element712.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element711.GetHashCode().ToString()) && (oNextPeilut.iElementLeShatGmar > 0 || oNextPeilut.iElementLeShatGmar == -1 || oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
         //            {
         //                oFirstPeilutMashmautit = oNextPeilut;
         //                iIndexPeilutMashmautit = i;
@@ -10734,7 +10701,7 @@ namespace KdsBatch
         //                iMeshechPeilut = GetMeshechPeilutHachnatMechona(iIndexSidur, oNextPeilut, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur);
         //                iMeshechPeilutMachine = GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutMachine, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur);
 
-        //                dRefferenceDate = clGeneral.GetDateTimeFromStringHour("08:00", oSidur.dFullShatHatchala);
+        //                dRefferenceDate = DateHelper.GetDateTimeFromStringHour("08:00", oSidur.dFullShatHatchala);
         //                if (oSidur.dFullShatHatchala < dRefferenceDate || (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
         //                    bCheck = true;
 
@@ -10812,7 +10779,7 @@ namespace KdsBatch
         //                oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", oParam.iPrepareFirstMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
         //            else oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", "000", "00"));
 
-        //            ////dRefferenceDate = clGeneral.GetDateTimeFromStringHour("08:00", oPeilut.dFullShatYetzia);
+        //            ////dRefferenceDate = DateHelper.GetDateTimeFromStringHour("08:00", oPeilut.dFullShatYetzia);
         //            ////if (oPeilut.dFullShatYetzia >= dRefferenceDate && (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
         //            ////{
         //            ////    oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", "005", "00"));
@@ -10831,7 +10798,7 @@ namespace KdsBatch
 
         //            dShatYetziaPeilut = GetShatHatchalaElementMachine(iIndexSidur, iPeilutNesiaIndex, ref oSidur, oPeilutNew, true, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur);
 
-        //            dRefferenceDate = clGeneral.GetDateTimeFromStringHour("08:00", dShatYetziaPeilut);
+        //            dRefferenceDate = DateHelper.GetDateTimeFromStringHour("08:00", dShatYetziaPeilut);
         //            if (dShatYetziaPeilut >= dRefferenceDate && (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
         //            {
         //                oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", "005", "00"));
@@ -10866,7 +10833,7 @@ namespace KdsBatch
         //        if (iIndexPeilutMustAutoNum > 0)
         //        {
         //            PeilutDM oPeilut = (PeilutDM)oSidur.htPeilut[iIndexPeilutMustAutoNum - 1];
-        //            if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())
+        //            if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element712.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element711.GetHashCode().ToString())
         //            { bHave = true; }
         //        }
         //    }
@@ -11090,7 +11057,7 @@ namespace KdsBatch
                         do
                         {
                             oPeilut = (PeilutDM)oSidur.htPeilut[j];
-                            if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())
+                            if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element701.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element712.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element711.GetHashCode().ToString())
                             {
                                 oObjPeilutDel = new OBJ_PEILUT_OVDIM();
                                 InsertToObjPeilutOvdimForDelete(ref oPeilut, ref oSidur, ref oObjPeilutDel);
@@ -11339,7 +11306,7 @@ namespace KdsBatch
                     oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", oParam.iPrepareFirstMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
                     // else oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", "000", "00"));
 
-                    dRefferenceDate = clGeneral.GetDateTimeFromStringHour("08:00", oPeilut.dFullShatYetzia);
+                    dRefferenceDate = DateHelper.GetDateTimeFromStringHour("08:00", oPeilut.dFullShatYetzia);
                     dShatKisuyTor = oPeilut.dFullShatYetzia.AddMinutes(-oPeilut.iKisuyTor);
                     if (oPeilut.dFullShatYetzia > dRefferenceDate && dShatKisuyTor > dRefferenceDate && (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
                     {
@@ -11359,7 +11326,7 @@ namespace KdsBatch
 
                     dShatYetziaPeilut = GetShatHatchalaElementMachine_2(iIndexSidur, iPeilutNesiaIndex, ref oSidur, oPeilutNew, true, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur);
 
-                    //dRefferenceDate = clGeneral.GetDateTimeFromStringHour("08:00", dShatYetziaPeilut);
+                    //dRefferenceDate = DateHelper.GetDateTimeFromStringHour("08:00", dShatYetziaPeilut);
                     //if (dShatYetziaPeilut >= dRefferenceDate && (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
                     //{
                     //    oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", "005", "00"));
@@ -11511,7 +11478,7 @@ namespace KdsBatch
                 if (iIndexPeilutMustAutoNum > 0)
                 {
                     PeilutDM oPeilut = (PeilutDM)oSidur.htPeilut[iIndexPeilutMustAutoNum - 1];
-                    if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())
+                    if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element712.GetHashCode().ToString() || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == enElementHachanatMechona.Element711.GetHashCode().ToString())
                     { bHave = true; }
                 }
             }
@@ -11599,7 +11566,7 @@ namespace KdsBatch
                 {
                     oNextPeilut = (PeilutDM)oSidur.htPeilut[i];
 
-                  //  if (oNextPeilut.iMakatType == enMakatType.mVisa.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mNamak.GetHashCode() || (oNextPeilut.iMakatType == enMakatType.mElement.GetHashCode() && (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()) && (oNextPeilut.iElementLeShatGmar > 0 || oNextPeilut.iElementLeShatGmar == -1 || oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
+                  //  if (oNextPeilut.iMakatType == enMakatType.mVisa.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mNamak.GetHashCode() || (oNextPeilut.iMakatType == enMakatType.mElement.GetHashCode() && (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element701.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element712.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element711.GetHashCode().ToString()) && (oNextPeilut.iElementLeShatGmar > 0 || oNextPeilut.iElementLeShatGmar == -1 || oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
                     if (isPeilutMashmautit(oNextPeilut))
                     {
                         oFirstPeilutMashmautit = oNextPeilut;
@@ -11623,7 +11590,7 @@ namespace KdsBatch
                     else
                     {
 
-                        dRefferenceDate = clGeneral.GetDateTimeFromStringHour("08:00", oSidur.dFullShatHatchala);
+                        dRefferenceDate = DateHelper.GetDateTimeFromStringHour("08:00", oSidur.dFullShatHatchala);
                         j = iIndexPeilutMashmautit - 1;
                         oNextPeilut = (PeilutDM)oSidur.htPeilut[j];
                         while (oNextPeilut.lMakatNesia != oPeilutMachine.lMakatNesia)
@@ -12431,7 +12398,7 @@ namespace KdsBatch
                         oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
                         oPrevObjSidurimOvdimUpd = GetSidurOvdimObject(oSidurPrev.iMisparSidur, oSidurPrev.dFullShatHatchala);
 
-                        if ((oPrevObjSidurimOvdimUpd.SHAT_GMAR != DateTime.MinValue) && (oObjSidurimOvdimUpd.SHAT_HATCHALA.Year > clGeneral.cYearNull))
+                        if ((oPrevObjSidurimOvdimUpd.SHAT_GMAR != DateTime.MinValue) && (oObjSidurimOvdimUpd.SHAT_HATCHALA.Year > DateHelper.cYearNull))
                         {
                             datePrevShatGmar = oPrevObjSidurimOvdimUpd.SHAT_GMAR;
                             dateCurrShatHatchala = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
@@ -12543,7 +12510,7 @@ namespace KdsBatch
             try
             {
 
-                if ((oMeafyeneyOved.IsMeafyenExist(63)) && (iSugYom == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode()) && (!bLoLetashlum))
+                if ((oMeafyeneyOved.IsMeafyenExist(63)) && (iSugYom == enSugYom.ErevYomHatsmaut.GetHashCode()) && (!bLoLetashlum))
                 {
                     if (!IsSidurExits(99801))
                     {
@@ -12898,7 +12865,7 @@ namespace KdsBatch
             //תנאי רביעי לסעיף 11
             bool bSign = false;
             try{
-               // if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate)))
+               // if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == enSectorAvoda.Tafkid.GetHashCode().ToString()) && (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate)))
                 if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate) &&
                     (oSidur.bSidurMyuhad && oSidur.sShaonNochachut == "1" && oSidur.sChariga == "0"))
                         //וגם לעובד אין מאפיין 7 ו- 8 ברמה האישית. 
@@ -13091,7 +13058,7 @@ namespace KdsBatch
                             shaa = DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString() + " 18:00:00");
                             if (!oMeafyeneyOved.IsMeafyenExist(42) && oMeafyeneyOved.IsMeafyenExist(23) && oMeafyeneyOved.IsMeafyenExist(24)){
                                 if ((oSidur.dFullShatHatchala.Hour >= 11 && oSidur.dFullShatHatchala.Hour <= 17 && oSidur.dFullShatGmar > shaa)
-                                    && (oSidur.sShabaton != "1" && (iSugYom >= clGeneral.enSugYom.Chol.GetHashCode() && iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())))
+                                    && (oSidur.sShabaton != "1" && (iSugYom >= enSugYom.Chol.GetHashCode() && iSugYom < enSugYom.Shishi.GetHashCode())))
                                      bLoLetashlumAutomati = false;
                                  else bLoLetashlumAutomati = true;
                              }
@@ -13414,13 +13381,13 @@ namespace KdsBatch
             {
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    bSidurNahagut = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString());
+                    bSidurNahagut = (oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString());
                 }
                 else
                 {//סידור רגיל
                     if (drSugSidur.Length > 0)
                     {
-                        bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString());
+                        bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString());
                     }
                 }                
             }
@@ -13443,7 +13410,7 @@ namespace KdsBatch
             {
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    bSidurNihulTnua = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                    bSidurNihulTnua = (oSidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString());
                     if (!bSidurNihulTnua)
                        if (oSidur.iMisparSidur == 99301){
                     
@@ -13466,7 +13433,7 @@ namespace KdsBatch
                 {//סידור רגיל
                     if (drSugSidur.Length > 0)
                     {
-                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString());
                     }
                 }
             }
@@ -14586,7 +14553,7 @@ namespace KdsBatch
         //                }
         //                else if (drSugSidur.Length > 0)
         //                {
-        //                    if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+        //                    if (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
         //                    {
         //                        bSidurNahagut = true;
         //                    }
@@ -14599,7 +14566,7 @@ namespace KdsBatch
         //                }
         //                else if (drPrevSugSidur.Length > 0)
         //                {
-        //                    if (drPrevSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+        //                    if (drPrevSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
         //                    {
         //                        bSidurPrevNahagut = true;
 
@@ -14617,7 +14584,7 @@ namespace KdsBatch
         //                        }
         //                        else if (drPrevSugSidur.Length > 0)
         //                        {
-        //                            if (drPrevSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString() && drPrevSugSidur[0]["zakay_lepizul"].ToString() == "1")
+        //                            if (drPrevSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Tafkid.GetHashCode().ToString() && drPrevSugSidur[0]["zakay_lepizul"].ToString() == "1")
         //                            {
         //                                bSidurTafkidDoreshRetzifut = true;
         //                            }
@@ -14631,7 +14598,7 @@ namespace KdsBatch
         //                        }
         //                        else if (drSugSidur.Length > 0)
         //                        {
-        //                            if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString() && drSugSidur[0]["zakay_lepizul"].ToString() == "1")
+        //                            if (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Tafkid.GetHashCode().ToString() && drSugSidur[0]["zakay_lepizul"].ToString() == "1")
         //                            {
         //                                bSidurTafkidDoreshRetzifut = true;
         //                            }
@@ -14652,8 +14619,8 @@ namespace KdsBatch
         //                        oObjSidurimOvdimIns.MISPAR_ISHI = _iMisparIshi;
         //                        oObjSidurimOvdimIns.TAARICH = _dCardDate;
         //                        oObjSidurimOvdimIns.MISPAR_SIDUR = SIDUR_RETIZVUT99500;
-        //                        oObjSidurimOvdimIns.SHAT_HATCHALA = clGeneral.GetDateTimeFromStringHour(oSidurPrev.sShatGmar, oSidurPrev.dFullShatGmar);
-        //                        oObjSidurimOvdimIns.SHAT_GMAR = clGeneral.GetDateTimeFromStringHour(oSidur.sShatHatchala, oSidur.dFullShatHatchala);
+        //                        oObjSidurimOvdimIns.SHAT_HATCHALA = DateHelper.GetDateTimeFromStringHour(oSidurPrev.sShatGmar, oSidurPrev.dFullShatGmar);
+        //                        oObjSidurimOvdimIns.SHAT_GMAR = DateHelper.GetDateTimeFromStringHour(oSidur.sShatHatchala, oSidur.dFullShatHatchala);
         //                        oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oObjSidurimOvdimIns.SHAT_HATCHALA;
         //                        oObjSidurimOvdimIns.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimIns.SHAT_GMAR;
         //                        oObjSidurimOvdimIns.OUT_MICHSA = 0;
@@ -14684,8 +14651,8 @@ namespace KdsBatch
         //                    //    oObjSidurimOvdimIns.MISPAR_ISHI = _iMisparIshi;
         //                    //    oObjSidurimOvdimIns.TAARICH = _dCardDate;
         //                    //    oObjSidurimOvdimIns.MISPAR_SIDUR = SIDUR_RETIZVUT99501;
-        //                    //    oObjSidurimOvdimIns.SHAT_HATCHALA = clGeneral.GetDateTimeFromStringHour(oSidurPrev.sShatGmar,dCardDate).AddMinutes(1);
-        //                    //    oObjSidurimOvdimIns.SHAT_GMAR =clGeneral.GetDateTimeFromStringHour(oSidur.sShatHatchala,dCardDate).AddMinutes(-1);
+        //                    //    oObjSidurimOvdimIns.SHAT_HATCHALA = DateHelper.GetDateTimeFromStringHour(oSidurPrev.sShatGmar,dCardDate).AddMinutes(1);
+        //                    //    oObjSidurimOvdimIns.SHAT_GMAR =DateHelper.GetDateTimeFromStringHour(oSidur.sShatHatchala,dCardDate).AddMinutes(-1);
         //                    //    oObjSidurimOvdimIns.OUT_MICHSA = 0;
         //                    //    oObjSidurimOvdimIns.HASHLAMA = 0;
         //                    //    oObjSidurimOvdimIns.CHARIGA = 0;
@@ -14770,7 +14737,7 @@ namespace KdsBatch
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                     oSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
                     oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
-                    if (oSidur.dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
+                    if (oSidur.dFullShatHatchalaLetashlum.Year < DateHelper.cYearNull)
                         oSidur.sShatHatchalaLetashlum = "";
                 }
 
@@ -14878,11 +14845,11 @@ namespace KdsBatch
                 {
                     //oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
                     //oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 10;
-                    if (dShatHatchalaLetashlum.Year > clGeneral.cYearNull)
+                    if (dShatHatchalaLetashlum.Year > DateHelper.cYearNull)
                     {
                         dShatHatchalaLetashlumToUpd = dShatHatchalaLetashlum;
                     }
-                    if (dShatGmarLetashlum.Year > clGeneral.cYearNull)
+                    if (dShatGmarLetashlum.Year > DateHelper.cYearNull)
                     {
                         dShatGmarLetashlumToUpd = dShatGmarLetashlum;
                     }
@@ -14954,7 +14921,7 @@ namespace KdsBatch
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                     oSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
                     oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
-                    if (oSidur.dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
+                    if (oSidur.dFullShatHatchalaLetashlum.Year < DateHelper.cYearNull)
                         oSidur.sShatHatchalaLetashlum = "";
                 }
 
@@ -15175,7 +15142,7 @@ namespace KdsBatch
                 if (!oMeafyeneyOved.IsMeafyenExist(42) && oMeafyeneyOved.IsMeafyenExist(23) && oMeafyeneyOved.IsMeafyenExist(24))
                     if (oSidur.bKizuzAlPiHatchalaGmarExists)
                         if ((oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour >= 11 && oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour <= 17 && oObjSidurimOvdimUpd.SHAT_GMAR > shaa)
-                             && (oSidur.sShabaton != "1" && iSugYom >= clGeneral.enSugYom.Chol.GetHashCode() && iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())) //|| ((iSugYom == clGeneral.enSugYom.Shishi.GetHashCode()  && oObjSidurimOvdimUpd.SHAT_GMAR > shaa.AddHours(-5)))))
+                             && (oSidur.sShabaton != "1" && iSugYom >= enSugYom.Chol.GetHashCode() && iSugYom < enSugYom.Shishi.GetHashCode())) //|| ((iSugYom == enSugYom.Shishi.GetHashCode()  && oObjSidurimOvdimUpd.SHAT_GMAR > shaa.AddHours(-5)))))
                             {
                                 shaa23 = DateTime.Parse(oObjSidurimOvdimUpd.SHAT_HATCHALA.ToShortDateString() + " " + oMeafyeneyOved.GetMeafyen(23).Value.Substring(0, 2) + ":" + oMeafyeneyOved.GetMeafyen(23).Value.Substring(2, 2));
                                 shaa24 = DateTime.Parse(oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString()  + " " + oMeafyeneyOved.GetMeafyen(24).Value.Substring(0, 2) + ":" + oMeafyeneyOved.GetMeafyen(24).Value.Substring(2, 2));
@@ -15200,11 +15167,11 @@ namespace KdsBatch
             {
                 //oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
                 //oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 10;
-                if (dShatHatchalaLetashlum.Year > clGeneral.cYearNull)
+                if (dShatHatchalaLetashlum.Year > DateHelper.cYearNull)
                 {
                     dShatHatchalaLetashlumToUpd = dShatHatchalaLetashlum;
                 }
-                if (dShatGmarLetashlum.Year > clGeneral.cYearNull)
+                if (dShatGmarLetashlum.Year > DateHelper.cYearNull)
                 {
                     dShatGmarLetashlumToUpd = dShatGmarLetashlum;
                 }
@@ -15299,7 +15266,7 @@ namespace KdsBatch
                         for (i = 0; i <= oSidur.htPeilut.Values.Count - 1; i++)
                         {
                             oPeilut = (PeilutDM)oSidur.htPeilut[i];
-                            if (isPeilutMashmautit(oPeilut)) //oPeilut.iMakatType == enMakatType.mVisa.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mNamak.GetHashCode() || (oNextPeilut.iMakatType == enMakatType.mElement.GetHashCode() && (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()) && (oNextPeilut.iElementLeShatGmar > 0 || oNextPeilut.iElementLeShatGmar == -1 || oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
+                            if (isPeilutMashmautit(oPeilut)) //oPeilut.iMakatType == enMakatType.mVisa.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mNamak.GetHashCode() || (oNextPeilut.iMakatType == enMakatType.mElement.GetHashCode() && (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element701.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element712.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element711.GetHashCode().ToString()) && (oNextPeilut.iElementLeShatGmar > 0 || oNextPeilut.iElementLeShatGmar == -1 || oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
                             {
                                 oFirstPeilutMashmautit = oPeilut;
                                 iIndexPeilutMashmautit = i;
@@ -15396,7 +15363,7 @@ namespace KdsBatch
         private bool isPeilutMashmautit(PeilutDM oPeilut)
         {
             if (oPeilut.iMakatType == enMakatType.mVisa.GetHashCode() || oPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode() || oPeilut.iMakatType == enMakatType.mNamak.GetHashCode() ||
-                (oPeilut.iMakatType == enMakatType.mElement.GetHashCode() && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())
+                (oPeilut.iMakatType == enMakatType.mElement.GetHashCode() && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element701.GetHashCode().ToString() && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element712.GetHashCode().ToString() && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element711.GetHashCode().ToString())
                                 && (oPeilut.iElementLeShatGmar > 0 || oPeilut.iElementLeShatGmar == -1)))
                 return true;
             else return false;          
@@ -15549,7 +15516,7 @@ namespace KdsBatch
                 }
 
                 iSugYom = clGeneral.GetSugYom(_iMisparIshi, _dCardDate, _dtYamimMeyuchadim, _oOvedYomAvodaDetails.iKodSectorIsuk, _dtSugeyYamimMeyuchadim, _oMeafyeneyOved.GetMeafyen(56).IntValue);
-                if (iSugYom >= clGeneral.enSugYom.Chol.GetHashCode() && iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())
+                if (iSugYom >= enSugYom.Chol.GetHashCode() && iSugYom < enSugYom.Shishi.GetHashCode())
                 {
                     int iSugMishmeret = clDefinitions.GetSugMishmeret(_iMisparIshi, _dCardDate, _iSugYom, firstTafkidSidur.dFullShatHatchala, lastTafkidSidur.dFullShatGmar, _oParameters);
 
@@ -15594,7 +15561,7 @@ namespace KdsBatch
                 }
                 else
                 {
-                    if (iSugYom == clGeneral.enSugYom.Shishi.GetHashCode() && iSugYom < clGeneral.enSugYom.Shabat.GetHashCode())
+                    if (iSugYom == enSugYom.Shishi.GetHashCode() && iSugYom < enSugYom.Shabat.GetHashCode())
                     {
                         if (_oMeafyeneyOved.IsMeafyenExist(27))
                         {
@@ -15607,7 +15574,7 @@ namespace KdsBatch
                             bFromMeafyenGmar = true;
                         }
                     }
-                    else if ((iSugYom >= clGeneral.enSugYom.Shabat.GetHashCode() && iSugYom < clGeneral.enSugYom.Rishon.GetHashCode()) || oSidur.sShabaton == "1")
+                    else if ((iSugYom >= enSugYom.Shabat.GetHashCode() && iSugYom < enSugYom.Rishon.GetHashCode()) || oSidur.sShabaton == "1")
                     {
                         if (_oMeafyeneyOved.IsMeafyenExist(7))
                         {

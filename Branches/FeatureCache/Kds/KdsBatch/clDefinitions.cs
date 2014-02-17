@@ -4,9 +4,8 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Data;
-using KdsLibrary.DAL;
 using System.Collections;
-using KdsLibrary.UDT;
+
 using KdsLibrary;
 using KdsLibrary.BL;
 using System.Web;
@@ -18,6 +17,8 @@ using KDSCommon.Interfaces.Managers;
 using KDSCommon.Helpers;
 using KDSCommon.Enums;
 using KDSCommon.Interfaces.DAL;
+using KDSCommon.UDT;
+using DalOraInfra.DAL;
 
 namespace KdsBatch
 {

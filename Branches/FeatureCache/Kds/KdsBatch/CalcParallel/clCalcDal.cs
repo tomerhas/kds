@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using KdsLibrary.DAL;
 using System.Configuration;
 using System.Web;
 using System.Web.UI.WebControls;
 
 
-using KdsLibrary.DAL;
-using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary;
+using DalOraInfra.DAL;
 namespace KdsBatch
 {
     public class clCalcDal

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using KdsLibrary.DAL;
-using KdsLibrary.UDT;
+using DalOraInfra.DAL;
+using KDSCommon.UDT;
 namespace KdsTaskManager
 {
     public class Bl
@@ -39,7 +39,7 @@ namespace KdsTaskManager
             DataTable dt = new DataTable();
             try
             {
-                oDal.AddParameter("GroupId", KdsLibrary.DAL.ParameterType.ntOracleInt64, CurrentGroup, ParameterDir.pdInput);
+                oDal.AddParameter("GroupId", ParameterType.ntOracleInt64, CurrentGroup, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(OracleSp.GetTaskOfGroup, ref dt);
                 return dt;
@@ -56,8 +56,8 @@ namespace KdsTaskManager
             DataTable dt = new DataTable();
             try
             {
-                oDal.AddParameter("p_GroupId", KdsLibrary.DAL.ParameterType.ntOracleInt64, CurrentGroup, ParameterDir.pdInput);
-                oDal.AddParameter("p_OrderId", KdsLibrary.DAL.ParameterType.ntOracleInt64, CurrentOrder, ParameterDir.pdInput);
+                oDal.AddParameter("p_GroupId", ParameterType.ntOracleInt64, CurrentGroup, ParameterDir.pdInput);
+                oDal.AddParameter("p_OrderId", ParameterType.ntOracleInt64, CurrentOrder, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(OracleSp.GetActionParameters, ref dt);
                 return dt;

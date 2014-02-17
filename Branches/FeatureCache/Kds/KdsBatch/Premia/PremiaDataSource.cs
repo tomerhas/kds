@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using KdsLibrary;
+using DalOraInfra.DAL;
 
 namespace KdsBatch.Premia
 {

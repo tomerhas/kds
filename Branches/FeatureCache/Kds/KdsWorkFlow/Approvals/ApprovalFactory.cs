@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using KdsLibrary.DAL;
 using KdsLibrary;
+using DalOraInfra.DAL;
 
 namespace KdsWorkFlow.Approvals
 {

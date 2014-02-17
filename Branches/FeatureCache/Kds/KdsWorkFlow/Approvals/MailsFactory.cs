@@ -7,8 +7,8 @@ using System.Configuration;
 using System.Xml.Serialization;
 using System.Net.Mail;
 using System.Xml.Xsl;
-using KdsLibrary.DAL;
 using System.DirectoryServices;
+using DalOraInfra.DAL;
 
 namespace KdsWorkFlow.Approvals
 {

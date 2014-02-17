@@ -15,7 +15,7 @@ using KdsBatch;
 using KdsLibrary;
 using KdsLibrary.UI;
 using KdsLibrary.Security;
-using KdsLibrary.UDT;
+using KDSCommon.UDT;
 
 
 public partial class Modules_Ovdim_ZmaniNesiot : KdsLibrary.UI.KdsPage

@@ -7,8 +7,8 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Configuration;
 using System.IO;
-using KdsLibrary.DAL;
 using KdsLibrary;
+using DalOraInfra.DAL;
 
 namespace KdsBatch.SystemCompare
 {

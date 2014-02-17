@@ -7,10 +7,10 @@ using System.Xml;
 using System.Xml.Serialization;
 using KdsLibrary.Utils;
 using System.Data;
-using KdsLibrary.DAL;
 using KdsLibrary.Controls;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using DalOraInfra.DAL;
 
 namespace KdsLibrary.UI.SystemManager
 {
@@ -170,7 +170,7 @@ namespace KdsLibrary.UI.SystemManager
         
         public DataTable GetData(KdsSysManPageBase container)
         {
-            DAL.clDal dal = new KdsLibrary.DAL.clDal();
+            clDal dal = new clDal();
             DataTable dt = new  DataTable();
             AddSelectParams(dal, container);
             dal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
@@ -291,7 +291,7 @@ namespace KdsLibrary.UI.SystemManager
             else
             {
                 errorMessage = String.Empty;
-                DAL.clDal dal = GetDeleteCommand(newValues);
+                clDal dal = GetDeleteCommand(newValues);
                 try
                 {
                     dal.ExecuteSP(_deleteMethod);
@@ -321,7 +321,7 @@ namespace KdsLibrary.UI.SystemManager
             }
 
             errorMessage = String.Empty;
-            DAL.clDal dal = GetCommand(newValues);
+            clDal dal = GetCommand(newValues);
             try
             {
                 dal.ExecuteSP(method);

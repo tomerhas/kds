@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using KdsLibrary.BL;
-using KdsLibrary.UDT;
 using System.Diagnostics;
+using KDSCommon.UDT;
 
 namespace KdsBatch.HrWorkersChanges
 {

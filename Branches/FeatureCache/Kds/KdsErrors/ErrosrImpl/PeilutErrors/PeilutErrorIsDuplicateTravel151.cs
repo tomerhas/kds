@@ -22,7 +22,8 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
         public override bool InternalIsCorrect(ErrorInputData input)
         {
             DataTable dtDuplicate = new DataTable();
-            
+           
+            var ovedManagaer = _container.Resolve<IOvedManager>(); 
             if (input.curPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode())
             {
                 var PeilutManager = ServiceLocator.Current.GetInstance<IPeilutManager>();
@@ -36,7 +37,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
                         int userId = -2;
                         if (input.UserId.HasValue)
                             userId = input.UserId.Value;
-                        clDefinitions.UpdateCardStatus((int)dtDuplicate.Rows[i]["mispar_ishi"], (DateTime)dtDuplicate.Rows[i]["taarich"], CardStatus.Error, userId);
+                        ovedManagaer.UpdateCardStatus((int)dtDuplicate.Rows[i]["mispar_ishi"], (DateTime)dtDuplicate.Rows[i]["taarich"], CardStatus.Error, userId);
                     }
 
                     AddNewError(input);

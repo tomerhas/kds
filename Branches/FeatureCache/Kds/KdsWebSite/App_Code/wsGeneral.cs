@@ -192,8 +192,8 @@ public class wsGeneral : System.Web.Services.WebService
     private bool IsElementHachanatMechona(long lMakatMesia)
     {
         string sMakatPrefix =  lMakatMesia.ToString().Substring(0,3);
-        return ((sMakatPrefix == clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString()) || (sMakatPrefix == clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())
-                             || (sMakatPrefix == clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString()));
+        return ((sMakatPrefix == enElementHachanatMechona.Element701.GetHashCode().ToString()) || (sMakatPrefix == enElementHachanatMechona.Element711.GetHashCode().ToString())
+                             || (sMakatPrefix == enElementHachanatMechona.Element712.GetHashCode().ToString()));
 
     }
     [WebMethod(EnableSession = true)]
@@ -2231,15 +2231,15 @@ public class wsGeneral : System.Web.Services.WebService
 
         //if (bFound)
         //{
-        if ((_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()) ||
-            (_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString()))
+        if ((_Sidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString()) ||
+            (_Sidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString()))
             bSidurNihulONahagut = true;
-            //if (_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+            //if (_Sidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString())
             //{
             //    dr["sidur_nahagut"] = 1;
             //    bSidurNihulONahagut = true;
             //}
-            //if (_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString())
+            //if (_Sidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString())
             //{
             //    dr["sidur_nihul_tnua"] = 1;
             //    bSidurNihulONahagut = true;
@@ -2264,7 +2264,7 @@ public class wsGeneral : System.Web.Services.WebService
         {
             dr[0]["sidur_number"] = iSidurKey;
             dr[0]["sidur_start_hour"] = sNewStartHour;
-            if (DateTime.Parse(dr[0]["sidur_date"].ToString()).Year < clGeneral.cYearNull)
+            if (DateTime.Parse(dr[0]["sidur_date"].ToString()).Year < DateHelper.cYearNull)
                 //אם שעת ההתחלה ריקה, שנה 0001, נכניס את תאריך הכרטיס
                 dtOrgDate = DateTime.Parse(sCardDate);
             else
@@ -2613,7 +2613,7 @@ public class wsGeneral : System.Web.Services.WebService
     //        //נשלוף את מאפייני סוג הסידור ( סידורים רגילים(
     //        drSugSidur = clDefinitions.GetOneSugSidurMeafyen(_Sidur.iSugSidurRagil, DateTime.Parse(sCardDate), dtSugeySidur);
     //        if (drSugSidur.Length > 0)
-    //            bSidurDriver = String.IsNullOrEmpty(drSugSidur[0]["sector_avoda"].ToString()) ? false : (int.Parse(drSugSidur[0]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+    //            bSidurDriver = String.IsNullOrEmpty(drSugSidur[0]["sector_avoda"].ToString()) ? false : (int.Parse(drSugSidur[0]["sector_avoda"].ToString()) == enSectorAvoda.Nahagut.GetHashCode());
     //        //אם הסידור הראשון הוא סידור נהגות, נבדוק את הסידור הבא
     //        if (bSidurDriver)
     //        {
@@ -2621,7 +2621,7 @@ public class wsGeneral : System.Web.Services.WebService
     //            drSugSidur = clDefinitions.GetOneSugSidurMeafyen(_Sidur.iSugSidurRagil, DateTime.Parse(sCardDate), dtSugeySidur);
     //            if (drSugSidur.Length > 0)
     //            {
-    //                bSidurDriver = String.IsNullOrEmpty(drSugSidur[0]["sector_avoda"].ToString()) ? false : (int.Parse(drSugSidur[0]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+    //                bSidurDriver = String.IsNullOrEmpty(drSugSidur[0]["sector_avoda"].ToString()) ? false : (int.Parse(drSugSidur[0]["sector_avoda"].ToString()) == enSectorAvoda.Nahagut.GetHashCode());
     //                if (bSidurDriver)                    
     //                    sReturn = "1"; //שני הסידורים הם מסוג נהגות                    
     //            }

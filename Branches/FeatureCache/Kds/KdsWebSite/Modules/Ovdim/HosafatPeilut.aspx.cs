@@ -14,13 +14,12 @@ using KdsLibrary.UI;
 using KdsLibrary;
 using KdsLibrary.BL;
 using KdsLibrary.Security;
-using KdsLibrary.UDT;
 using KdsBatch;
-using KDSCommon.DataModels.UDT;
 using KDSCommon.Helpers;
 using KDSCommon.Enums;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.DAL;
+using KDSCommon.UDT;
 
 public partial class Modules_Ovdim_HosafatPeilut : KdsPage
 {

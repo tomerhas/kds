@@ -7,6 +7,7 @@ using KDSCommon.DataModels.Errors;
 using System.Data;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
+using KDSCommon.Interfaces.Managers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -24,8 +25,9 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             bool bError = false;
             DateTime dTaarichKodem;
             DataTable dtSidurim;
-            clDefinitions oDefinition = new clDefinitions();
-          
+           // clDefinitions oDefinition = new clDefinitions();
+
+            var ovedManagaer = _container.Resolve<IOvedManager>(); 
             if (input.curSidur.bSidurMyuhad)
             {//סידור מיוחד
                 if (!string.IsNullOrEmpty(input.curSidur.sHeadrutTypeKod) && input.curSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString()
@@ -35,7 +37,8 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                     if (CheckShaaton(input.iSugYom, dTaarichKodem, input) ||
                         dTaarichKodem.DayOfWeek == DayOfWeek.Friday)
                     {
-                        dtSidurim = oDefinition.GetOvedDetails(input.iMisparIshi, dTaarichKodem);
+
+                        dtSidurim = ovedManagaer.GetOvedDetails(input.iMisparIshi, dTaarichKodem);
                         if (CheckAnozerSidurExsits(input) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString(), input.curSidur.iMisparSidur))
                             bError = true;
                     }
@@ -48,7 +51,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                         {
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
 
-                            dtSidurim = oDefinition.GetOvedDetails(input.iMisparIshi, dTaarichKodem);
+                            dtSidurim = ovedManagaer.GetOvedDetails(input.iMisparIshi, dTaarichKodem);
                             if (CheckAnozerSidurExsits(input) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString(), input.curSidur.iMisparSidur))
                                 bError = true;
                         }
@@ -59,7 +62,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                                 (input.oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || input.oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
                                 dTaarichKodem = dTaarichKodem.AddDays(-1);
 
-                            dtSidurim = oDefinition.GetOvedDetails(input.iMisparIshi, dTaarichKodem);
+                            dtSidurim = ovedManagaer.GetOvedDetails(input.iMisparIshi, dTaarichKodem);
                             if (CheckAnozerSidurExsits(input) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString(), input.curSidur.iMisparSidur))
                                 bError = true;
                         }

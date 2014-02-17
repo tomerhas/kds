@@ -20,6 +20,8 @@ using KdsLibrary.KDSLogic.Managers;
 using KDSCommon.Interfaces.Errors;
 using KdsErrors.FlowManagers;
 using KdsErrors.FlowManagers.Factories;
+using KDSCommon.Interfaces.Logs;
+using KDSBLLogic.Logs;
 
 
 /// <summary>
@@ -55,6 +57,7 @@ public class Bootstrapper
         container.RegisterType<IKavimManager, KavimManager>();
         container.RegisterType<IErrorFlowManager, ErrorFlowManager>();
         container.RegisterType<ISubErrorFlowFactory, SubErrorFlowFactory>();
+        container.RegisterType<ILogger, Logger>();
         //Containers
         
         //DAL

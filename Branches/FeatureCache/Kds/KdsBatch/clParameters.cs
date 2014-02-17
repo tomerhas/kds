@@ -272,14 +272,14 @@
 //                //3 - מגבלת שעת סיום
 //                sTmp = GetOneParam(3, dCardDate.AddDays(1));
 //                dSidurEndLimitHourParam3 = GetParamHour(sTmp, dCardDate);//GetOneParam(3, dCardDate);
-//                if (dSidurEndLimitHourParam3 >= clGeneral.GetDateTimeFromStringHour("00:01", dCardDate) && dSidurEndLimitHourParam3 <= clGeneral.GetDateTimeFromStringHour("07:59", dCardDate))
+//                if (dSidurEndLimitHourParam3 >= DateHelper.GetDateTimeFromStringHour("00:01", dCardDate) && dSidurEndLimitHourParam3 <= DateHelper.GetDateTimeFromStringHour("07:59", dCardDate))
 //                {
 //                    dSidurEndLimitHourParam3 = dSidurEndLimitHourParam3.AddDays(1);
 //                }
 //                 //4 -שעת גמר מפעילי מחשב 
 //                sTmp = GetOneParam(4, dCardDate.AddDays(1));
 //                dSidurLimitShatGmarMafilim = GetParamHour(sTmp, dCardDate);
-//                if (dSidurLimitShatGmarMafilim >= clGeneral.GetDateTimeFromStringHour("00:01", dCardDate) && dSidurLimitShatGmarMafilim <= clGeneral.GetDateTimeFromStringHour("07:59", dCardDate))
+//                if (dSidurLimitShatGmarMafilim >= DateHelper.GetDateTimeFromStringHour("00:01", dCardDate) && dSidurLimitShatGmarMafilim <= DateHelper.GetDateTimeFromStringHour("07:59", dCardDate))
 //                {
 //                    dSidurLimitShatGmarMafilim = dSidurLimitShatGmarMafilim.AddDays(1);
 //                }
@@ -318,11 +318,11 @@
 
 //                //25- תאריך שמציין תחילת שעון קיץ (אגד) בפורמט DD/MM
 //                sTmp = GetOneParam(25, dCardDate);
-//                dSummerStart = GetParamDate(sTmp, dCardDate);// String.IsNullOrEmpty(sTmp) ? DateTime.Parse(string.Concat("01/01", "/", clGeneral.cYearNull.ToString())) : DateTime.Parse(string.Concat(sTmp, "/", dCardDate.Year.ToString()));
+//                dSummerStart = GetParamDate(sTmp, dCardDate);// String.IsNullOrEmpty(sTmp) ? DateTime.Parse(string.Concat("01/01", "/", DateHelper.cYearNull.ToString())) : DateTime.Parse(string.Concat(sTmp, "/", dCardDate.Year.ToString()));
 
 //                //26- תאריך שמציין סיום שעון קיץ (אגד) בפורמט  DD/MM
 //                sTmp = GetOneParam(26, dCardDate);
-//                dSummerEnd = GetParamDate(sTmp, dCardDate);// String.IsNullOrEmpty(sTmp) ? DateTime.Parse(string.Concat("01/01", "/", clGeneral.cYearNull.ToString())) : DateTime.Parse(string.Concat(sTmp, "/", dCardDate.Year.ToString()));
+//                dSummerEnd = GetParamDate(sTmp, dCardDate);// String.IsNullOrEmpty(sTmp) ? DateTime.Parse(string.Concat("01/01", "/", DateHelper.cYearNull.ToString())) : DateTime.Parse(string.Concat(sTmp, "/", dCardDate.Year.ToString()));
 
 //                //שעת התחלה ראשונה מותרת לפעילות בסידור - מאפיין 29
 //                sTmp = GetOneParam(29, dCardDate);
@@ -382,15 +382,15 @@
 
 //                //44 - אירועי קיץ - תאריך חוקי לתחילת סידורי ניהול ושיווק,
 //                sTmp = GetOneParam(44, dCardDate);
-//                dStartNihulVShivik = GetParamDate(sTmp, dCardDate);//String.IsNullOrEmpty(sTmp) ? DateTime.Parse(string.Concat("01/01", "/", clGeneral.cYearNull.ToString())) : DateTime.Parse(string.Concat(sTmp, "/", dCardDate.Year.ToString()));
+//                dStartNihulVShivik = GetParamDate(sTmp, dCardDate);//String.IsNullOrEmpty(sTmp) ? DateTime.Parse(string.Concat("01/01", "/", DateHelper.cYearNull.ToString())) : DateTime.Parse(string.Concat(sTmp, "/", dCardDate.Year.ToString()));
 
 //                //45 -  אירועי קיץ - תאריך חוקי לתחילת סידור תפעול,  
 //                sTmp = GetOneParam(45, dCardDate);
-//                dStartTiful = GetParamDate(sTmp, dCardDate); //String.IsNullOrEmpty(sTmp) ? DateTime.Parse(string.Concat("01/01", "/", clGeneral.cYearNull.ToString())) : DateTime.Parse(string.Concat(sTmp, "/", dCardDate.Year.ToString()));
+//                dStartTiful = GetParamDate(sTmp, dCardDate); //String.IsNullOrEmpty(sTmp) ? DateTime.Parse(string.Concat("01/01", "/", DateHelper.cYearNull.ToString())) : DateTime.Parse(string.Concat(sTmp, "/", dCardDate.Year.ToString()));
 
 //                //46 -   אירועי קיץ - תאריך חוקי לסיום סידור שיווק,ל,
 //                sTmp = GetOneParam(46, dCardDate);
-//                dEndNihulVShivik = GetParamDate(sTmp, dCardDate); // String.IsNullOrEmpty(sTmp) ? DateTime.Parse(string.Concat("01/01", "/", clGeneral.cYearNull.ToString())) : DateTime.Parse(string.Concat(sTmp, "/", dCardDate.Year.ToString())); 
+//                dEndNihulVShivik = GetParamDate(sTmp, dCardDate); // String.IsNullOrEmpty(sTmp) ? DateTime.Parse(string.Concat("01/01", "/", DateHelper.cYearNull.ToString())) : DateTime.Parse(string.Concat(sTmp, "/", dCardDate.Year.ToString())); 
 
 //                //47 אירועי קיץ - תאריך חוקי לסיום סידור תפעול 
 //                sTmp = GetOneParam(47, dCardDate);
@@ -1056,7 +1056,7 @@
 //            }
 //            else
 //            {
-//                tmpDate = new DateTime(clGeneral.cYearNull,1,1);
+//                tmpDate = new DateTime(DateHelper.cYearNull,1,1);
 //            }
 
 //            return tmpDate;
@@ -1066,11 +1066,11 @@
 //        {
 //            DateTime dTemp;
 //           if (String.IsNullOrEmpty(sHour)) {
-//                     dTemp =new DateTime(clGeneral.cYearNull, 1, 1);
+//                     dTemp =new DateTime(DateHelper.cYearNull, 1, 1);
 //           }
 //           else
 //           {
-//               dTemp = clGeneral.GetDateTimeFromStringHour(sHour, dCardDate);
+//               dTemp = DateHelper.GetDateTimeFromStringHour(sHour, dCardDate);
 //           }
 
 
@@ -1114,21 +1114,21 @@
 //        public void SetShatKnisatShabat(DateTime dTaarich, int iSugYom)
 //        {
 
-//            if (iSugYom == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode())
+//            if (iSugYom == enSugYom.ErevYomHatsmaut.GetHashCode())
 //            {//יום העצמאות - פרמטר 8
-//                dKnisatShabat = clGeneral.GetDateTimeFromStringHour(GetOneParam(8, dTaarich), dTaarich);
+//                dKnisatShabat = DateHelper.GetDateTimeFromStringHour(GetOneParam(8, dTaarich), dTaarich);
 //            }
 //            else
 //            {
 //                //נקבע את שעת כניסת השבת לפי התקופה
 //                if ((dTaarich >= dStartShabat) && (dTaarich <= dEndShabat))
 //                {//פרמטר 7 קיץ                        
-//                    dKnisatShabat = clGeneral.GetDateTimeFromStringHour(GetOneParam(7, dTaarich),dTaarich);
+//                    dKnisatShabat = DateHelper.GetDateTimeFromStringHour(GetOneParam(7, dTaarich),dTaarich);
 //                    // iShabatStart = iShabatStartInSummer;
 //                }
 //                else
 //                {//חורף פרמטר 6
-//                    dKnisatShabat = clGeneral.GetDateTimeFromStringHour(GetOneParam(6, dTaarich), dTaarich); 
+//                    dKnisatShabat = DateHelper.GetDateTimeFromStringHour(GetOneParam(6, dTaarich), dTaarich); 
 //                    //iShabatStart = iShabatStartInAuttom; //פרמטר 6  
 //                }
 //            }

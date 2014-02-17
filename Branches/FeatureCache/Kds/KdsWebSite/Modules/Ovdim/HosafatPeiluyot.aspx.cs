@@ -8,14 +8,13 @@ using KdsLibrary.UI;
 using KdsLibrary;
 using System.Data;
 using KdsLibrary.BL;
-using KdsLibrary.UDT;
 using KdsBatch;
 using System.Web.UI.HtmlControls;
-using KDSCommon.DataModels.UDT;
 using KDSCommon.Enums;
 using KDSCommon.Helpers;
 using KDSCommon.Interfaces.DAL;
 using Microsoft.Practices.ServiceLocation;
+using KDSCommon.UDT;
 
 public partial class Modules_Ovdim_HosafatPeiluyot : KdsPage
 {
@@ -116,9 +115,9 @@ public partial class Modules_Ovdim_HosafatPeiluyot : KdsPage
                         || (iMakatType == enMakatType.mElement.GetHashCode() && ((!string.IsNullOrEmpty(dtPeiluyotLesidur.Rows[i]["bus_number_must"].ToString()))
                         || lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700" || lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "761"
                         || lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "784")
-                        && (lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString())
-                                                     && (lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())
-                                                   && (lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString())))
+                        && (lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element701.GetHashCode().ToString())
+                                                     && (lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element711.GetHashCode().ToString())
+                                                   && (lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element712.GetHashCode().ToString())))
                     {
                         if (!string.IsNullOrEmpty(dtPeiluyotLesidur.Rows[i]["oto_no"].ToString()))
                             lTmpMisRechev = long.Parse(dtPeiluyotLesidur.Rows[i]["oto_no"].ToString());

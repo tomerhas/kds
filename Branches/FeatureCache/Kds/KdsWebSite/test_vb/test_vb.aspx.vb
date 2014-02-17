@@ -3,6 +3,7 @@ Imports KdsDataImport
 Imports System.Data
 Imports System.Net.Mail.MailMessage
 Imports System.IO
+Imports DalOraInfra.DAL
 
 
 Partial Class test_vb_test_vb
@@ -13,7 +14,7 @@ Partial Class test_vb_test_vb
 
 
         Dim oKDs As KdsDataImport.ClKds
-        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oDal As clDal
         'Dim smail As System.Net.Mail.SmtpClient
         Dim dt As DataTable
         Dim tahalich As Integer
@@ -62,7 +63,7 @@ Partial Class test_vb_test_vb
 
             iseq = oBatch.InsertProcessLog(28, 1, KdsLibrary.BL.RecordStatus.Wait, "start", 0)
             ''**oKDs.KdsWriteProcessLog(28, 1, 1, "start")
-            oDal = New KdsLibrary.DAL.clDal
+            oDal = New clDal
 
 
 

@@ -51,7 +51,7 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
-                if (SidurInstance.dFullShatHatchala.Year < clGeneral.cYearNull)
+                if (SidurInstance.dFullShatHatchala.Year < DateHelper.cYearNull)
                 {
                     bError = true;
                 }
@@ -401,7 +401,7 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
-                if (SidurInstance.sOutMichsa == "1" && SidurInstance.sSectorAvoda == clGeneral.enSectorAvoda.Headrut.GetHashCode().ToString())
+                if (SidurInstance.sOutMichsa == "1" && SidurInstance.sSectorAvoda == enSectorAvoda.Headrut.GetHashCode().ToString())
                 {
                     bError = true;
                 }            
@@ -521,7 +521,7 @@ namespace KdsBatch.Errors
                 {
                     if ((int.Parse(SidurInstance.sHashlama)) > 0)
                     {
-                        if ((!(string.IsNullOrEmpty(SidurInstance.sShatGmar))) && (SidurInstance.dFullShatHatchala.Year > clGeneral.cYearNull))
+                        if ((!(string.IsNullOrEmpty(SidurInstance.sShatGmar))) && (SidurInstance.dFullShatHatchala.Year > DateHelper.cYearNull))
                         {
                             fSidurTime = float.Parse((!string.IsNullOrEmpty(SidurInstance.sShatGmar) && !string.IsNullOrEmpty(SidurInstance.sShatHatchala) ? (SidurInstance.dFullShatGmar - SidurInstance.dFullShatHatchala).TotalMinutes : 0).ToString()); 
 
@@ -702,18 +702,18 @@ namespace KdsBatch.Errors
 
                     if ((SidurInstance.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(SidurInstance.sShatHatchalaMuteret))) //קיים מאפיין
                     {
-                        dStartLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(SidurInstance.sShatHatchalaMuteret).ToString("HH:mm"), SidurInstance.dSidurDate);
+                        dStartLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(SidurInstance.sShatHatchalaMuteret).ToString("HH:mm"), SidurInstance.dSidurDate);
                     }
 
                     if ((SidurInstance.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(SidurInstance.sShatGmarMuteret))) //קיים מאפיין
                     {
-                        dEndLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(SidurInstance.sShatGmarMuteret).ToString("HH:mm"), SidurInstance.dSidurDate.AddDays(1));
+                        dEndLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(SidurInstance.sShatGmarMuteret).ToString("HH:mm"), SidurInstance.dSidurDate.AddDays(1));
                     }
                 }
 
 
-                if ((!string.IsNullOrEmpty(SidurInstance.sShatHatchala) && dSidurStartHour < dStartLimitHour) && (dStartLimitHour.Year != clGeneral.cYearNull) ||
-                    (!string.IsNullOrEmpty(SidurInstance.sShatHatchala) && dSidurStartHour > dEndLimitHour) && (dEndLimitHour.Year != clGeneral.cYearNull))
+                if ((!string.IsNullOrEmpty(SidurInstance.sShatHatchala) && dSidurStartHour < dStartLimitHour) && (dStartLimitHour.Year != DateHelper.cYearNull) ||
+                    (!string.IsNullOrEmpty(SidurInstance.sShatHatchala) && dSidurStartHour > dEndLimitHour) && (dEndLimitHour.Year != DateHelper.cYearNull))
                 {
                     bError = true;
                 }
@@ -763,17 +763,17 @@ namespace KdsBatch.Errors
                 {
                     if ((SidurInstance.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(SidurInstance.sShatHatchalaMuteret))) //קיים מאפיין
                     {
-                        dStartLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(SidurInstance.sShatHatchalaMuteret).ToString("HH:mm"),SidurInstance.dSidurDate);
+                        dStartLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(SidurInstance.sShatHatchalaMuteret).ToString("HH:mm"),SidurInstance.dSidurDate);
                     }
 
                     if ((SidurInstance.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(SidurInstance.sShatGmarMuteret))) //קיים מאפיין
                     {
-                        dEndLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(SidurInstance.sShatGmarMuteret).ToString("HH:mm"),SidurInstance.dSidurDate.AddDays(1));
+                        dEndLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(SidurInstance.sShatGmarMuteret).ToString("HH:mm"),SidurInstance.dSidurDate.AddDays(1));
                     }
                 }
 
-                if ((!string.IsNullOrEmpty(SidurInstance.sShatGmar) && dSidurEndHour < dStartLimitHour) && (dStartLimitHour.Year != clGeneral.cYearNull) ||
-                    (!string.IsNullOrEmpty(SidurInstance.sShatGmar) && dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year != clGeneral.cYearNull) ||
+                if ((!string.IsNullOrEmpty(SidurInstance.sShatGmar) && dSidurEndHour < dStartLimitHour) && (dStartLimitHour.Year != DateHelper.cYearNull) ||
+                    (!string.IsNullOrEmpty(SidurInstance.sShatGmar) && dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year != DateHelper.cYearNull) ||
                     (!string.IsNullOrEmpty(SidurInstance.sShatGmar) && !string.IsNullOrEmpty(SidurInstance.sShatHatchala) && SidurInstance.dFullShatHatchala >= SidurInstance.dFullShatGmar))
                 {
                     bError = true;
@@ -1024,14 +1024,14 @@ namespace KdsBatch.Errors
                       //  dSidurDate =SidurInstance.dSidurDate;
                         if ((SidurInstance.sSidurInSummer == "1") || (SidurInstance.sSidurInSummer == "2"))
                         {
-                            if (SidurInstance.objDay.oParameters.dStartNihulVShivik.Year != clGeneral.cYearNull)
+                            if (SidurInstance.objDay.oParameters.dStartNihulVShivik.Year != DateHelper.cYearNull)
                             {
                                 bError = (SidurInstance.dSidurDate < SidurInstance.objDay.oParameters.dStartNihulVShivik);
                             }
 
                             if (!bError)
                             {
-                                if (SidurInstance.objDay.oParameters.dEndNihulVShivik.Year != clGeneral.cYearNull)
+                                if (SidurInstance.objDay.oParameters.dEndNihulVShivik.Year != DateHelper.cYearNull)
                                 {
                                     bError = (SidurInstance.dSidurDate > SidurInstance.objDay.oParameters.dEndNihulVShivik);
                                 }
@@ -1039,8 +1039,8 @@ namespace KdsBatch.Errors
                         }
                         else
                         {
-                            bError = (((SidurInstance.dSidurDate < SidurInstance.objDay.oParameters.dStartTiful) && (SidurInstance.objDay.oParameters.dStartTiful.Year != clGeneral.cYearNull)) ||
-                                ((SidurInstance.dSidurDate > SidurInstance.objDay.oParameters.dEndTiful) && (SidurInstance.objDay.oParameters.dEndTiful.Year != clGeneral.cYearNull)));
+                            bError = (((SidurInstance.dSidurDate < SidurInstance.objDay.oParameters.dStartTiful) && (SidurInstance.objDay.oParameters.dStartTiful.Year != DateHelper.cYearNull)) ||
+                                ((SidurInstance.dSidurDate > SidurInstance.objDay.oParameters.dEndTiful) && (SidurInstance.objDay.oParameters.dEndTiful.Year != DateHelper.cYearNull)));
                         }
                         if (bError)
                         {
@@ -1177,7 +1177,7 @@ namespace KdsBatch.Errors
                 {
                     if (SidurInstance.sSugAvoda != clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString())
                     {
-                        if (SidurInstance.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                        if (SidurInstance.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString())
                         {
                             bError = SidurInstance.CheckConditionsAllowSidur();
                         }
@@ -1189,7 +1189,7 @@ namespace KdsBatch.Errors
                    
                     if (drSugSidur.Length > 0)
                     {
-                        if (drSugSidur[0]["sug_Avoda"].ToString() != clGeneral.enSugAvoda.Grira.GetHashCode().ToString() && drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                        if (drSugSidur[0]["sug_Avoda"].ToString() != clGeneral.enSugAvoda.Grira.GetHashCode().ToString() && drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
                         {
                             bError =SidurInstance.CheckConditionsAllowSidur();
                         }
@@ -1282,8 +1282,8 @@ namespace KdsBatch.Errors
                                 //נקרא את שעת כניסת השבת                   
                                 //אם ביום שהוא ערב שבת/חג יש סידור אחד שמסתיים לפני כניסת שבת ויש לו סימון בשדה פיצול והסידור העוקב אחריו התחיל אחרי כניסת השבת  - זו שגיאה. (מצב תקין הוא שהסידור העוקב התחיל לפני כניסת שבת וגלש/לא גלש לשבת). 
                                 //if (((int.Parse(sSidurPrevShatGmar.Remove(2, 1)) > iShabatStart)) || (int.Parse(SidurInstance.sShatHatchala.Remove(2, 1)) <= iShabatStart))
-                                dSidurPrevShatGmar = clGeneral.GetDateTimeFromStringHour(oPrevSidur.sShatGmar, SidurInstance.dSidurDate);
-                                dSidurShatHatchala = clGeneral.GetDateTimeFromStringHour(SidurInstance.sShatHatchala, SidurInstance.dSidurDate);
+                                dSidurPrevShatGmar = DateHelper.GetDateTimeFromStringHour(oPrevSidur.sShatGmar, SidurInstance.dSidurDate);
+                                dSidurShatHatchala = DateHelper.GetDateTimeFromStringHour(SidurInstance.sShatHatchala, SidurInstance.dSidurDate);
                                 if ((dSidurPrevShatGmar <= SidurInstance.objDay.oParameters.dKnisatShabat) && (dSidurShatHatchala > SidurInstance.objDay.oParameters.dKnisatShabat))
                                 {
                                     //נציג את הסידור השני כשגוי
@@ -1532,14 +1532,14 @@ namespace KdsBatch.Errors
                     if (dsSidur.Tables[1].Rows.Count > 0)
                     {
                         sShaa = dsSidur.Tables[1].Rows[0]["SHAA"].ToString();
-                        dShaHatchalaMapa = clGeneral.GetDateTimeFromStringHour(sShaa, SidurInstance.dSidurDate);
+                        dShaHatchalaMapa = DateHelper.GetDateTimeFromStringHour(sShaa, SidurInstance.dSidurDate);
                         for (int i = dsSidur.Tables[1].Rows.Count - 1; i >= 0; i--)
                         {
                             long lMakatNesia = long.Parse(dsSidur.Tables[1].Rows[i]["MAKAT8"].ToString());
                             sShaa = dsSidur.Tables[1].Rows[i]["SHAA"].ToString();
                             if (!string.IsNullOrEmpty(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString()))
                                 dSumMazanTichnun = double.Parse(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString());
-                            dShatGmarMapa = clGeneral.GetDateTimeFromStringHour(sShaa, SidurInstance.dSidurDate).AddMinutes(dSumMazanTichnun);
+                            dShatGmarMapa = DateHelper.GetDateTimeFromStringHour(sShaa, SidurInstance.dSidurDate).AddMinutes(dSumMazanTichnun);
                             fZmanSidurMapa = int.Parse((dShatGmarMapa - dShaHatchalaMapa).TotalMinutes.ToString());
 
                             //במידה והפעילות האחרונה היא אלמנט לידיעה בלבד (ערך 2 (לידיעה בלבד) במאפיין 3  (לפעולה/לידיעה בלבד), יש לקחת את הפעילות הקודמת לה.

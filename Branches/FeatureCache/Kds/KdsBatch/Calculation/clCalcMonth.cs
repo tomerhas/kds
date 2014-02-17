@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using KdsLibrary.UDT;
 using KdsLibrary;
-using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using KDSCommon.DataModels;
 using KDSCommon.Interfaces.DAL;
 using Microsoft.Practices.ServiceLocation;
+using DalOraInfra.DAL;
+using KDSCommon.Enums;
 
 namespace KdsBatch
 {
@@ -219,7 +219,7 @@ namespace KdsBatch
             do
             {
                 iSugYom = _oGeneralData.GetSugYomLemichsa(iMisparIshi, dTarMe);
-                if (iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())
+                if (iSugYom < enSugYom.Shishi.GetHashCode())
                 {
                     fCountYomLeloChag += 1;
                 }
@@ -3686,11 +3686,11 @@ namespace KdsBatch
 
                     iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                     bLechishuv = false;
-                    if ((iSugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode()) && _oGeneralData.objMeafyeneyOved.GetMeafyen(85).IntValue == 1 && fDakotNochehut == 0 && fMichsaYomit>0 && bPutar)
+                    if ((iSugYom == enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == enSugYom.CholHamoedSukot.GetHashCode()) && _oGeneralData.objMeafyeneyOved.GetMeafyen(85).IntValue == 1 && fDakotNochehut == 0 && fMichsaYomit>0 && bPutar)
                     {
                         bLechishuv = true;
                     }
-                     if (iSugYom == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode() && _oGeneralData.objMeafyeneyOved.GetMeafyen(63).Value.Length>0)
+                     if (iSugYom == enSugYom.ErevYomHatsmaut.GetHashCode() && _oGeneralData.objMeafyeneyOved.GetMeafyen(63).Value.Length>0)
                     {
                         bLechishuv = true;
                     }

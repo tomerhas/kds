@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Globalization;
 using Oracle.DataAccess.Types;
-using KdsLibrary.DAL;
 using System.Data;
-using KdsLibrary.UDT;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using KdsLibrary;
+using DalOraInfra.DAL;
 
 namespace KdsBatch.History
 {

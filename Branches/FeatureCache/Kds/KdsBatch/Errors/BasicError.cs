@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using KdsBatch.Entities;
+using KDSCommon.Enums;
 using KdsLibrary.BL;
 
 namespace KdsBatch.Errors
@@ -55,7 +56,7 @@ namespace KdsBatch.Errors
 
         public void RemoveShgiotMeusharotFromDt(ref string sArrKodShgia, Day oDay)
         {
-            clWorkCard.ErrorLevel iErrorLevel;
+            ErrorLevel iErrorLevel;
             bool bMeushar;
             int iCount;
             iCount = oDay.CardErrors.Count;
@@ -72,19 +73,19 @@ namespace KdsBatch.Errors
                         ErrorItem = oDay.CardErrors[I];
                         if (ErrorItem.shat_yetzia != DateTime.MinValue)
                         {
-                            iErrorLevel = clWorkCard.ErrorLevel.LevelPeilut;
+                            iErrorLevel = ErrorLevel.LevelPeilut;
                             bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)ErrorItem.check_num, (int)ErrorItem.mispar_ishi, DateTime.Parse(ErrorItem.taarich.ToString()), (int)ErrorItem.mispar_sidur, DateTime.Parse(ErrorItem.shat_hatchala.ToString()), DateTime.Parse(ErrorItem.shat_yetzia.ToString()), (int)ErrorItem.mispar_knisa);
 
                         }
                         else if (string.IsNullOrEmpty(ErrorItem.mispar_sidur.ToString()))
                         {
-                            iErrorLevel = clWorkCard.ErrorLevel.LevelYomAvoda;
+                            iErrorLevel = ErrorLevel.LevelYomAvoda;
                             bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)ErrorItem.check_num, (int)ErrorItem.mispar_ishi, DateTime.Parse(ErrorItem.taarich.ToString()), 0, DateTime.MinValue, DateTime.MinValue, 0);
 
                         }
                         else
                         {
-                            iErrorLevel = clWorkCard.ErrorLevel.LevelSidur;
+                            iErrorLevel = ErrorLevel.LevelSidur;
                             bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)ErrorItem.check_num, (int)ErrorItem.mispar_ishi, DateTime.Parse(ErrorItem.taarich.ToString()), (int)ErrorItem.mispar_sidur, DateTime.Parse(ErrorItem.shat_hatchala.ToString()), DateTime.MinValue, 0);
                         }
 

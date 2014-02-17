@@ -114,24 +114,11 @@
     <Compile Include="BL\clTaskManager.cs" />
     <Compile Include="BL\clWorkCard.cs" />
     <Compile Include="BL\IOvdimDAL.cs" />
-    <Compile Include="KDSLogic\DAL\KavimDAL.cs" />
-    <Compile Include="KDSLogic\DAL\OvedDAL.cs" />
-    <Compile Include="KDSLogic\DAL\ParametersDAL.cs" />
-    <Compile Include="KDSLogic\DAL\PeilutDAL.cs" />
-    <Compile Include="KDSLogic\DAL\SidurDAL.cs" />
-    <Compile Include="KDSLogic\Managers\KavimManager.cs" />
-    <Compile Include="KDSLogic\Managers\OvedManager.cs" />
-    <Compile Include="KDSLogic\Managers\ParametersManager.cs" />
     <Compile Include="Controls\KdsCalendar.cs" />
     <Compile Include="Controls\KdsPanel.cs" />
     <Compile Include="Controls\ListBoxExtended.cs" />
     <Compile Include="Controls\TextBoxAutoCompleted.cs" />
-    <Compile Include="DAL\clDal.cs" />
-    <Compile Include="DAL\clTnua.cs" />
-    <Compile Include="DAL\clTxDal.cs" />
     <Compile Include="BL\clOvdim.cs" />
-    <Compile Include="KDSLogic\Managers\PeilutManager.cs" />
-    <Compile Include="KDSLogic\Managers\SidurManager.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -145,36 +132,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="TaskManager\Utils.cs" />
-    <Compile Include="UDT\Coll_Brerot_Mechdal_Meafyenim.cs" />
-    <Compile Include="UDT\Coll_Chishuv_Chodesh.cs" />
-    <Compile Include="UDT\Coll_Chishuv_Sidur.cs" />
-    <Compile Include="UDT\Coll_Chishuv_Yomi.cs" />
-    <Compile Include="UDT\Coll_Idkun_Rashemet.cs" />
-    <Compile Include="UDT\Coll_Meafyeney_Oved.cs" />
-    <Compile Include="UDT\Coll_Mispar_Ishi_Sug_Chishuv.cs" />
-    <Compile Include="UDT\Coll_Obj_Kavim.cs" />
-    <Compile Include="UDT\Coll_Obj_Peilut_Ovdim.cs" />
-    <Compile Include="UDT\Coll_Ovdim_Im_Shinuy_Hr.cs" />
-    <Compile Include="UDT\Coll_Report_Param.cs" />
-    <Compile Include="UDT\Coll_Rikuz_Pdf.cs" />
-    <Compile Include="UDT\Coll_Shgiot_Meusharot.cs" />
-    <Compile Include="UDT\Coll_Sidurim_Ovdim.cs" />
-    <Compile Include="UDT\Coll_Yamey_Avoda_Ovdim.cs" />
-    <Compile Include="UDT\Obj_Brerot_Mechdal_Meafyenim.cs" />
-    <Compile Include="UDT\Obj_Chishuv_Chodesh.cs" />
-    <Compile Include="UDT\Obj_Chishuv_Sidur.cs" />
-    <Compile Include="UDT\Obj_Chishuv_Yomi.cs" />
-    <Compile Include="UDT\Obj_Idkun_Rashemet.cs" />
-    <Compile Include="UDT\Obj_Kavim.cs" />
-    <Compile Include="UDT\Obj_Logtaskmsg.cs" />
-    <Compile Include="UDT\Obj_Meafyeney_Oved.cs" />
-    <Compile Include="UDT\Obj_Mispar_Ishi_Sug_Chishuv.cs" />
-    <Compile Include="UDT\Obj_Ovdim_Im_Shinuy_Hr.cs" />
-    <Compile Include="UDT\Obj_Report_Param.cs" />
-    <Compile Include="UDT\Obj_Rikuz_Pdf.cs" />
-    <Compile Include="UDT\Obj_Shgiot_Meusharot.cs" />
-    <Compile Include="UDT\Obj_Sidurim_Ovdim.cs" />
-    <Compile Include="UDT\Obj_Yamey_Avoda_Ovdim.cs" />
     <Compile Include="UI\SystemManager\KdsTableCategory.cs" />
     <Compile Include="UI\SystemManager\KdsDefaultValueAttribute.cs" />
     <Compile Include="UI\SystemManager\KdsFormTemplate.cs" />
@@ -321,6 +278,10 @@
     <ProjectReference Include="..\Common\KDSCommon\KDSCommon.csproj">
       <Project>{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}</Project>
       <Name>KDSCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
+      <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
+      <Name>DalOraInfra</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -187,35 +187,6 @@ namespace KdsErrors
             return bSidurHeadrut;
         }
 
-        protected DateTime GetDateTimeFromStringHour(string sShaa, DateTime dDate)
-        {
-            DateTime dTemp;
-            string[] arrTime;
-            try
-            {
-                dDate = dDate.Date;
-                arrTime = sShaa.Split(char.Parse(":"));
-                if (arrTime.Length > 1)
-                {
-                    dTemp = dDate.AddHours(double.Parse(arrTime[0])).AddMinutes(double.Parse(arrTime[1]));
-                    if (arrTime.Length > 2)
-                    {
-                        dTemp = dTemp.AddSeconds(double.Parse(arrTime[2]));
-                    }
-                }
-                else
-                {
-                    sShaa = sShaa.PadLeft(4, (char)48);
-                    dTemp = dDate.AddHours(double.Parse(sShaa.Substring(0, 2))).AddMinutes(double.Parse(sShaa.Substring(2, 2)));
-                }
-
-                return dTemp;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
         protected bool IsSidurNahagut(DataRow[] drSugSidur, SidurDM oSidur)
         {
@@ -227,13 +198,13 @@ namespace KdsErrors
             {
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    bSidurNahagut = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString());
+                    bSidurNahagut = (oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString());
                 }
                 else
                 {//סידור רגיל
                     if (drSugSidur.Length > 0)
                     {
-                        bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString());
+                        bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString());
                     }
                 }
             }
@@ -257,7 +228,7 @@ namespace KdsErrors
             {
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    bSidurNihulTnua = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                    bSidurNihulTnua = (oSidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString());
                     if (!bSidurNihulTnua)
                         if (oSidur.iMisparSidur == 99301)
                         { // oSidur.bMatalaKlalitLeloRechev
@@ -281,7 +252,7 @@ namespace KdsErrors
                 {//סידור רגיל
                     if (drSugSidur.Length > 0)
                     {
-                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString());
                     }
                 }
             }

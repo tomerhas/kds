@@ -16,7 +16,6 @@ using KdsLibrary;
 using KdsLibrary.UI;
 using KdsLibrary.Security;
 using System.Collections.Specialized;
-using KdsLibrary.UDT;
 using KdsWorkFlow.Approvals;
 using KdsLibrary.Utils.Reports;
 using System.Collections.Generic;
@@ -28,8 +27,9 @@ using KDSCommon.DataModels;
 using KDSCommon.Interfaces;
 using KDSCommon.Enums;
 using KDSCommon.Interfaces.Managers;
-using KDSCommon.DataModels.UDT;
 using KDSCommon.Interfaces.DAL;
+using KDSCommon.UDT;
+using KDSCommon.Helpers;
 
 public partial class Modules_Ovdim_WorkCard : KdsPage
 {
@@ -450,13 +450,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      {
          try
          {
-             ddlLina.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "LINA"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
-             ddlTachograph.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "TACHOGRAF"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
-             ddlTravleTime.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "BITUL_ZMAN_NESIOT"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
+             ddlLina.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "LINA"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
+             ddlTachograph.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "TACHOGRAF"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
+             ddlTravleTime.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "BITUL_ZMAN_NESIOT"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
              ddlHalbasha.Enabled = IsHalbasha();//(!clWorkCard.IsIdkunExists(clWorkCard.ErrorLevel.LevelYomAvoda, 5, 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));            
-             ddlHashlamaReason.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "SIBAT_HASHLAMA_LEYOM"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
-             HashlamaForDayValue.Disabled = (clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HASHLAMA_LEYOM"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
-             Hamara.Disabled = (clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HAMARAT_SHABAT"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
+             ddlHashlamaReason.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "SIBAT_HASHLAMA_LEYOM"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
+             HashlamaForDayValue.Disabled = (clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HASHLAMA_LEYOM"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
+             Hamara.Disabled = (clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HAMARAT_SHABAT"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
 
              SD.dtIdkuneyRashemet = dtIdkuneyRashemet;
              Session["IdkuneyRashemet"] = SD.dtIdkuneyRashemet;
@@ -513,10 +513,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                          ViewState["CardStatus"] = result.CardStatus;
                          Session["Errors"] = result.Errors;
                         //This is the old code for validiating new
-                         bInpuDataResult = oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
-                         bResult = bInpuDataResult;
-                         ViewState["CardStatus"] = oBatchManager.CardStatus;
-                         Session["Errors"] = oBatchManager.dtErrors;
+                         //bInpuDataResult = oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
+                         //bResult = bInpuDataResult;
+                         //ViewState["CardStatus"] = oBatchManager.CardStatus;
+                         //Session["Errors"] = oBatchManager.dtErrors;
                      }
                      else { 
                          hidErrChg.Value = "0";
@@ -1115,14 +1115,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              if (oSidur != null)
              {
                  if ((oSidur.iHachtamaBeatarLoTakin == clGeneral.enHityazvutErrorInSite.enHityazvutErrorInSite.GetHashCode())
-                     && (oSidur.dShatHitiatzvut != null) && (oSidur.dShatHitiatzvut.Year > clGeneral.cYearNull))
+                     && (oSidur.dShatHitiatzvut != null) && (oSidur.dShatHitiatzvut.Year > DateHelper.cYearNull))
                  {
                      txtParticipation.Text = ERROR_IN_SITE;
                      //txtParticipation.ReadOnly = true;
                  }
                  else
                  {
-                     if ((oSidur.dShatHitiatzvut != null) && (oSidur.dShatHitiatzvut.Year > clGeneral.cYearNull))
+                     if ((oSidur.dShatHitiatzvut != null) && (oSidur.dShatHitiatzvut.Year > DateHelper.cYearNull))
                      {
                          txtParticipation.Text = oSidur.dShatHitiatzvut.ToShortTimeString();
                          //txtParticipation.ReadOnly = false;
@@ -1748,7 +1748,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                  && ((SD.bAtLeatOneSidurIsNOTNahagutOrTnua))
                  //אם יש ערך במותאם וגם הזמן גדול מאפס לא נאפשר המרה
                  && (!(((oBatchManager.oOvedYomAvodaDetails.bMutamutExists)) && (oBatchManager.oOvedYomAvodaDetails.iZmanMutamut > 0)))
-                 && (!((clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HAMARAT_SHABAT"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet))))
+                 && (!((clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HAMARAT_SHABAT"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet))))
                  );
 
 
@@ -1832,11 +1832,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //לא נאפשר את שדה השלמהליום אם לא התקיימו התנאים ואם לא היה עדכון רשמת
         if (!btnHashlamaForDay.Disabled)
         {
-            btnHashlamaForDay.Disabled = ((!bEnable) || ((clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HASHLAMA_LEYOM"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet))));
+            btnHashlamaForDay.Disabled = ((!bEnable) || ((clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HASHLAMA_LEYOM"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet))));
         }
         if (ddlHashlamaReason.Enabled) //אם קבענו כבר שלא ניתן לעדכן לא נשנה את הערך
         {
-            ddlHashlamaReason.Enabled = ((bEnable) && (!(clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "SIBAT_HASHLAMA_LEYOM"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet))));
+            ddlHashlamaReason.Enabled = ((bEnable) && (!(clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "SIBAT_HASHLAMA_LEYOM"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet))));
         }
     }
     private void InitSidurimUserControl()
@@ -3595,7 +3595,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //אם שעת היציאה היא של כרטיס העבודה ובמקור זה היה היום הבא, נוריד יום
 
             dShatYetiza = DateTime.Parse(_TxtShatYetiza.Attributes["OrgDate"]);
-            if (dShatYetiza.Year > clGeneral.cYearNull)
+            if (dShatYetiza.Year > DateHelper.cYearNull)
             {
                 if ((dShatYetiza.AddDays(-1) == dDateCard)
                     && (iDayToAdd == 0))
@@ -3703,7 +3703,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         else{
             if (bUpdate)
             {
-                if (dShatYetiza.Date.Year < clGeneral.cYearNull)
+                if (dShatYetiza.Date.Year < DateHelper.cYearNull)
                     if (oShatYetiza.Text != string.Empty)
                     {
                         if (DateTime.Parse(oShatYetiza.Text).Hour > 0)
@@ -3717,7 +3717,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 if (dShatYetiza.Date == dDateCard.Date)
                     dShatYetiza = dShatYetiza.AddDays(iDayToAdd);
                 else
-                    if (dShatYetiza.Date.Year > clGeneral.cYearNull)
+                    if (dShatYetiza.Date.Year > DateHelper.cYearNull)
                     {
                         if (iDayToAdd == 0) //נוריד יום- iDayToAdd=0 אם תאריך היציאה שונה מתאריך הכרטיס, כלומר הוא של היום הבא ורוצים לשנות ליום נוכחי
                             dShatYetiza = dShatYetiza.AddDays(-1);
@@ -3843,11 +3843,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     //                oSidur.iKodSibaLedivuchYadaniOut = oDDL.SelectedValue.Equals("-1") ? 0 : int.Parse(oDDL.SelectedValue);
 
     //                sTmp = ((TextBox)(this.FindControl("SD").FindControl("txtSHL" + iIndex))).Text;
-    //                oSidur.dFullShatHatchalaLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, dDateCard);
+    //                oSidur.dFullShatHatchalaLetashlum = DateHelper.GetDateTimeFromStringHour(sTmp, dDateCard);
     //                oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToShortTimeString();
 
     //                sTmp = ((TextBox)(this.FindControl("SD").FindControl("txtSGL" + iIndex))).Text;
-    //                oSidur.dFullShatGmarLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, dDateCard);
+    //                oSidur.dFullShatGmarLetashlum = DateHelper.GetDateTimeFromStringHour(sTmp, dDateCard);
     //                oSidur.sShatGmarLetashlum = oSidur.dFullShatGmarLetashlum.ToShortTimeString();
 
     //                oDDL = (DropDownList)this.FindControl("SD").FindControl("ddlException" + iIndex);
@@ -3953,7 +3953,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
     //            dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);
     //            sShatYetiza = oShatYetiza.Text;
-    //            if (dShatYetiza.Date.Year < clGeneral.cYearNull)
+    //            if (dShatYetiza.Date.Year < DateHelper.cYearNull)
     //                if (oShatYetiza.Text != string.Empty)
     //                {
     //                    if (DateTime.Parse(oShatYetiza.Text).Hour > 0)
@@ -3967,7 +3967,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     //            if (dShatYetiza.Date == dDateCard.Date)
     //                dShatYetiza = dShatYetiza.AddDays(iDayToAdd);
     //            else
-    //                if (dShatYetiza.Date.Year > clGeneral.cYearNull)
+    //                if (dShatYetiza.Date.Year > DateHelper.cYearNull)
     //                {
     //                    if (iDayToAdd == 0) //נוריד יום- iDayToAdd=0 אם תאריך היציאה שונה מתאריך הכרטיס, כלומר הוא של היום הבא ורוצים לשנות ליום נוכחי
     //                        dShatYetiza = dShatYetiza.AddDays(-1);
@@ -4081,7 +4081,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                 //dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);
                 //sShatYetiza = oShatYetiza.Text;
-                //if (dShatYetiza.Date.Year < clGeneral.cYearNull)
+                //if (dShatYetiza.Date.Year < DateHelper.cYearNull)
                 //    if (oShatYetiza.Text != string.Empty)
                 //    {
                 //        if (DateTime.Parse(oShatYetiza.Text).Hour > 0)
@@ -4095,7 +4095,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //if (dShatYetiza.Date == dDateCard.Date)                
                 //    dShatYetiza = dShatYetiza.AddDays(iDayToAdd);                
                 //else
-                //    if (dShatYetiza.Date.Year > clGeneral.cYearNull)
+                //    if (dShatYetiza.Date.Year > DateHelper.cYearNull)
                 //    {
                 //        if (iDayToAdd == 0) //נוריד יום- iDayToAdd=0 אם תאריך היציאה שונה מתאריך הכרטיס, כלומר הוא של היום הבא ורוצים לשנות ליום נוכחי
                 //            dShatYetiza = dShatYetiza.AddDays(-1);
@@ -4380,10 +4380,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         //אם השתנתה שעת ההתחלה של הסידור, נכניס סידור חדש ונמחק את הקודם
                         //כמו כן נעדכן את שעת התחלת הסידור לפעילויות שמקושרות לסידור
                         bInsert = (((oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA != (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()))) &&
-                                  (!((oTxt.Text == "") && (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).Year <= clGeneral.cYearNull))))
+                                  (!((oTxt.Text == "") && (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).Year <= DateHelper.cYearNull))))
                                   || (oSidur.oSidurStatus == SidurDM.enSidurStatus.enNew));
                         //bInsert = (((oTxt.Text != (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).ToShortTimeString())) &&
-                        //          (!((oTxt.Text == "") && (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).Year<=clGeneral.cYearNull))))
+                        //          (!((oTxt.Text == "") && (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).Year<=DateHelper.cYearNull))))
                         //          || (oSidur.oSidurStatus==SidurDM.enSidurStatus.enNew));
 
                         oShatGmar = ((TextBox)(this.FindControl("SD").FindControl("txtSG" + iIndex)));
@@ -4408,15 +4408,15 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                             sTmp = ((TextBox)(this.FindControl("SD").FindControl("txtSHL" + iIndex))).Text;
                             if (sTmp == string.Empty)
-                                oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse("01/01/0001 00:00:00"));
+                                oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse("01/01/0001 00:00:00"));
                             else
-                                oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp);
+                                oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp);
 
                             sTmp = ((TextBox)(this.FindControl("SD").FindControl("txtSGL" + iIndex))).Text;
                             if (sTmp==string.Empty)
-                                oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse("01/01/0001 00:00:00"));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
+                                oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse("01/01/0001 00:00:00"));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
                             else
-                             oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmarLetashlum.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
+                             oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmarLetashlum.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
 
                             oDDL = (DropDownList)this.FindControl("SD").FindControl("ddlException" + iIndex);
                             oObjSidurimOvdimUpd.CHARIGA = int.Parse(oDDL.SelectedValue);

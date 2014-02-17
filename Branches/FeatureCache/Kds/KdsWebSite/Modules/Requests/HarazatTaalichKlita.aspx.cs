@@ -13,11 +13,11 @@ using System.Drawing;
 using System.Text;
 using KdsDataImport;
 using KdsBatch.HrWorkersChanges;
-using KdsLibrary.DAL;
 using KdsWorkFlow.Approvals;
 using System.Threading;
 using System.Web.UI;
 using System.Globalization;
+using DalOraInfra.DAL;
 
 
 
@@ -143,7 +143,7 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
                 seqNum = obatch.InsertProcessLog(3, sub_tahalich, RecordStatus.Wait, "start refresh " + nameTable, 0);
                 //**oKDs.KdsWriteProcessLog(3, sub_tahalich, 1, "start refresh " + nameTable, "");
                 oDal.ClearCommand();
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, nameTable, KdsLibrary.DAL.ParameterDir.pdInput);
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, nameTable, ParameterDir.pdInput);
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv");
                 obatch.UpdateProcessLog(seqNum, RecordStatus.Finish, "end ok refresh " + nameTable, 0);
                 //**oKDs.KdsWriteProcessLog(3, sub_tahalich, 2, "end ok refresh " + nameTable, "");

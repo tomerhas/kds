@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using KdsLibrary.DAL;
-using KdsLibrary.UDT;
 using System.Diagnostics;
+using KDSCommon.UDT;
+using DalOraInfra.DAL;
 
 
 
@@ -564,7 +564,7 @@ namespace KdsLibrary.BL
             DataTable dt = new DataTable();
             try
             {
-                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, NameTbl, KdsLibrary.DAL.ParameterDir.pdInput);
+                oDal.AddParameter("shem_mvew", ParameterType.ntOracleVarchar, NameTbl,ParameterDir.pdInput);
                 oDal.ExecuteSP(clGeneral.cProRefreshTable, ref dt); 
             }
             catch (Exception ex)
@@ -630,8 +630,8 @@ namespace KdsLibrary.BL
             clDal oDal = new clDal();
             try
             {
-                oDal.AddParameter("p_seqTahalich", KdsLibrary.DAL.ParameterType.ntOracleInt64, seqTahalich, ParameterDir.pdInput);
-                oDal.AddParameter("p_KodStatus", KdsLibrary.DAL.ParameterType.ntOracleInt64, KodStatus, ParameterDir.pdInput);
+                oDal.AddParameter("p_seqTahalich", ParameterType.ntOracleInt64, seqTahalich, ParameterDir.pdInput);
+                oDal.AddParameter("p_KodStatus", ParameterType.ntOracleInt64, KodStatus, ParameterDir.pdInput);
                 if (TeurTech.Trim().Length > 100)
                     TeurTech = TeurTech.Trim().Substring(0, 100);
                 else

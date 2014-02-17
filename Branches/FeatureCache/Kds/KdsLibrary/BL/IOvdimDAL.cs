@@ -1,12 +1,14 @@
 ﻿using System;
+using DalOraInfra.DAL;
+using KDSCommon.UDT;
 namespace KdsLibrary.BL
 {
     interface IOvdimDAL
     {
         bool CheckPeilutExist(int misparSidur, int misparIshi, DateTime shatSidur, DateTime shatYezia);
         bool CheckSidurExist(int misSidur, int misparIshi, DateTime shatSidur);
-        void DeleteHachanotMechonaInsertPeiluyot(int iMisparIshi, int iMisparSidur, DateTime dTaarich, DateTime dShatHatchala, KdsLibrary.UDT.COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns);
-        void DeleteInsertKnisotLePeilut(int iMisparIshi, int iMisparSidur, DateTime dTaarich, DateTime dShatHatchala, DateTime dShatYezia, long lMakat, int iMeadken_Acharon, KdsLibrary.UDT.COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns);
+        void DeleteHachanotMechonaInsertPeiluyot(int iMisparIshi, int iMisparSidur, DateTime dTaarich, DateTime dShatHatchala, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns);
+        void DeleteInsertKnisotLePeilut(int iMisparIshi, int iMisparSidur, DateTime dTaarich, DateTime dShatHatchala, DateTime dShatYezia, long lMakat, int iMeadken_Acharon, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns);
         System.Data.DataTable GetActiveWorkers(string sPrefix, DateTime FromDate, DateTime ToDate);
         System.Data.DataTable GetArachimLeOved(int iMisparIshi, DateTime dCardDate);
         int GetCountWorkCardNoShaotLetashlum(DateTime dTarMe, DateTime dTarAd, string sMaamad);
@@ -45,17 +47,17 @@ namespace KdsLibrary.BL
         System.Data.DataTable GetPakadIdForMasach(int iMasachId);
         System.Data.DataTable GetPeiluyotLeOved(int iMisparIshi, int iMisparSidur, DateTime dTaarichWc, DateTime dShatHatchlaSidur);
         System.Data.DataTable GetPirteyHeadrut(int iMisparIshi, DateTime dTaarich, long iBakashaId);
-        System.Data.DataTable GetPirteyHeadrutTemp(ref KdsLibrary.DAL.clTxDal oDal, int iMisparIshi, DateTime dTaarich, long iBakashaId);
+        System.Data.DataTable GetPirteyHeadrutTemp(ref clTxDal oDal, int iMisparIshi, DateTime dTaarich, long iBakashaId);
         System.Data.DataTable GetPirteyHitkashrut(int iMisparIshi);
         System.Data.DataTable GetPirteyOved(int iMisparIshi, DateTime dTaarich);
         System.Data.DataTable GetPirteyOvedAll(int iMisparIshi, DateTime dTaarich);
         System.Data.DataTable GetPirteyOvedLetkufa(int iMisparIshi, DateTime startDate, DateTime endDate);
         System.Data.DataTable GetRechivim();
         System.Data.DataTable GetRechivimChodshiyim(int iMisparIshi, DateTime dTaarich, long iBakashaId, int iTzuga);
-        System.Data.DataTable GetRechivimChodshiyimTemp(ref KdsLibrary.DAL.clTxDal oDal, int iMisparIshi, DateTime dTaarich, long iBakashaId, int iTzuga);
+        System.Data.DataTable GetRechivimChodshiyimTemp(ref clTxDal oDal, int iMisparIshi, DateTime dTaarich, long iBakashaId, int iTzuga);
         System.Data.DataTable GetRelevantMonthOfApproval(int MisparIshi);
         void GetRikuzChodshi(int iMisparIshi, DateTime dTaarich, long iBakashaId, int iTzuga, float fErechRechiv45, ref System.Data.DataTable dtRikuz1To10, ref System.Data.DataTable dtRikuz11To20, ref System.Data.DataTable dtRikuz21To31);
-        void GetRikuzChodshiTemp(ref KdsLibrary.DAL.clTxDal oDal, int iMisparIshi, DateTime dTaarich, long iBakashaId, int iTzuga, float fErechRechiv45, ref System.Data.DataTable dtRikuz1To10, ref System.Data.DataTable dtRikuz11To20, ref System.Data.DataTable dtRikuz21To31, ref System.Data.DataTable dtAllRikuz);
+        void GetRikuzChodshiTemp(ref clTxDal oDal, int iMisparIshi, DateTime dTaarich, long iBakashaId, int iTzuga, float fErechRechiv45, ref System.Data.DataTable dtRikuz1To10, ref System.Data.DataTable dtRikuz11To20, ref System.Data.DataTable dtRikuz21To31, ref System.Data.DataTable dtAllRikuz);
         System.Data.DataTable getRikuzimLeOved(int iMisparIshi, DateTime taarich);
         System.Data.DataTable GetRitzotChishuv(int iMisparIshi, DateTime dTaarich);
         System.Data.DataTable GetShaotMealMichsa(int iMisparIshi, DateTime dTaarich, long lBakashaId);
@@ -70,7 +72,7 @@ namespace KdsLibrary.BL
         void GetZmanNesiaaOvdim(int iMisparIshi, DateTime dTarich, ref int iZmanNesiaHaloch, ref int iZmanNesiaHazor);
         void InsertBakashaMechutzLemichsa(int iMisparIshi, DateTime dTaarich, int iShaot, string sSiba, int iUserId);
         bool IsCardWasUpdated(int iMisparIshi, DateTime dTaarich);
-        void SaveSidurimLeoved(KdsLibrary.UDT.COLL_SIDURIM_OVDIM oCollSidurimOvdimUpd, KdsLibrary.UDT.COLL_YAMEY_AVODA_OVDIM oCollYameyAvodaUpd, KdsLibrary.UDT.COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd);
+        void SaveSidurimLeoved(COLL_SIDURIM_OVDIM oCollSidurimOvdimUpd, COLL_YAMEY_AVODA_OVDIM oCollYameyAvodaUpd, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd);
         void SetMeasherOMistayeg(int iMisparIshi, DateTime dCardDate, int iMeasherOMistayeg);
         void UpdateIdkunyRashemet(int iMisparIshi, DateTime dCardDate, ref System.Data.DataTable dtPakadim, int iLoginUser, int iStatus);
         bool UpdatePremiaDetails(int MisparIshi, DateTime Taarich, int SugPremia, int DakotPremia, DateTime TaarichIdkun, int MeadkenAcharon, int MisparIshiTrail, DateTime TaarichIdkunTrail, int SugPeula);

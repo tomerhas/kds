@@ -826,7 +826,7 @@
 //            DataRow drNew;           
 //            try
 //            {
-//                if (oSidur.dFullShatHatchala.Year < clGeneral.cYearNull)
+//                if (oSidur.dFullShatHatchala.Year < DateHelper.cYearNull)
 //                {
 //                    drNew = dtErrors.NewRow();
 //                    InsertErrorRow(oSidur, ref drNew, "חסרה שעת התחלה", enErrors.errHourMissing.GetHashCode());
@@ -1364,7 +1364,7 @@
 //                        //{
 //                        //    dEndLimitHour = DateTime.Parse(string.Concat(dCardDate.ToShortDateString(), " ", oParam.sSidurEndLimitHourParam3)); // oParam.sSidurEndLimitHourParam3;
 //                        //}
-//                        if ((dSidurStartHour < dStartLimitHour) && (dStartLimitHour.Year!=clGeneral.cYearNull)) //|| (dSidurStartHour > dEndLimitHour))
+//                        if ((dSidurStartHour < dStartLimitHour) && (dStartLimitHour.Year!=DateHelper.cYearNull)) //|| (dSidurStartHour > dEndLimitHour))
 //                        {
 //                            drNew = dtErrors.NewRow();
 //                            InsertErrorRow(oSidur, ref drNew, "שעת ההתחלה לסידור מיוחד שגוי", enErrors.errSidurHourStartEndNotValid.GetHashCode());
@@ -1401,7 +1401,7 @@
 //                        //{
 //                        //    dStartLimitHour = DateTime.Parse(string.Concat(dCardDate.ToShortDateString(), " ", oParam.sSidurStartLimitHourParam1)); 
 //                        //}
-//                        if ((dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year!=clGeneral.cYearNull)) //|| (dSidurEndHour < dStartLimitHour))
+//                        if ((dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year!=DateHelper.cYearNull)) //|| (dSidurEndHour < dStartLimitHour))
 //                        {
 //                            //Insert into dtErrors                    
 //                            drNew = dtErrors.NewRow();
@@ -1415,7 +1415,7 @@
 //                }
 //                else
 //                {//סידורים רגילים
-//                    if ((!(string.IsNullOrEmpty(oSidur.sShatHatchala))) && (oParam.dSidurStartLimitHourParam1.Year!=clGeneral.cYearNull))
+//                    if ((!(string.IsNullOrEmpty(oSidur.sShatHatchala))) && (oParam.dSidurStartLimitHourParam1.Year!=DateHelper.cYearNull))
 //                    {                       
 //                        {
 //                            dSidurStartHour = oSidur.dFullShatHatchala;//DateTime.Parse(string.Concat(dCardDate.ToShortDateString(), " ", oSidur.sShatHatchala));
@@ -1431,7 +1431,7 @@
 //                            }
 //                        }
 //                    }
-//                    if ((!(string.IsNullOrEmpty(oSidur.sShatGmar))) && ((oParam.dSidurEndLimitHourParam3.Year!=clGeneral.cYearNull)))
+//                    if ((!(string.IsNullOrEmpty(oSidur.sShatGmar))) && ((oParam.dSidurEndLimitHourParam3.Year!=DateHelper.cYearNull)))
 //                    {
 //                        dSidurEndHour = oSidur.dFullShatGmar;//DateTime.Parse(string.Concat(dCardDate.ToShortDateString(), " ", oSidur.sShatGmar));
 //                        //dStartLimitHour = DateTime.Parse(string.Concat(dCardDate.ToShortDateString(), " ", oParam.sSidurStartLimitHourParam1));
@@ -1545,7 +1545,7 @@
 //            try
 //            {
 //                //אם שדה מחוץ למכסה תקין (0 או 1) והסידור הוא סידור העדרות - תצא שגיאה. יודעים אם סידור הוא העדרות לפי מאפיין בטבלת מאפיינים סידורים מיוחדים. רק עבור סידורים מיוחדים.
-//                if (((oSidur.sOutMichsa == "0") || (oSidur.sOutMichsa == "1")) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Headrut.GetHashCode().ToString()))
+//                if (((oSidur.sOutMichsa == "0") || (oSidur.sOutMichsa == "1")) && (oSidur.sSectorAvoda == enSectorAvoda.Headrut.GetHashCode().ToString()))
 //                {
 //                    drNew = dtErrors.NewRow();
 //                    InsertErrorRow(oSidur, ref drNew, "מחוץ למכסה בסדור שאסור ", enErrors.errOutMichsaInSidurHeadrutNotValid.GetHashCode());                        
@@ -1621,7 +1621,7 @@
 //                        }
 //                        //נבדוק אם שעה תקפה מול פרמטרים של שעת התחלה ושעת סיום
 //                        dPeilutShatYetiza = DateTime.Parse(string.Concat(dCardDate.ToShortDateString(), " ", sPeilutShatYetzia));
-//                        if (oParam.dStartHourForPeilut.Year!=clGeneral.cYearNull)
+//                        if (oParam.dStartHourForPeilut.Year!=DateHelper.cYearNull)
 //                        {
 //                            dStartHourForPeilut = oParam.dStartHourForPeilut;//DateTime.Parse(string.Concat(dCardDate.ToShortDateString(), " ", oParam.sStartHourForPeilut));
 //                            if ((dPeilutShatYetiza < dStartHourForPeilut))
@@ -1634,7 +1634,7 @@
 //                                dtErrors.Rows.Add(drNew);
 //                            }
 //                        }
-//                        if (oParam.dEndHourForPeilut.Year!=clGeneral.cYearNull)
+//                        if (oParam.dEndHourForPeilut.Year!=DateHelper.cYearNull)
 //                        {
 //                            dEndHourForPeilut = oParam.dEndHourForPeilut.AddDays(1);//DateTime.Parse(string.Concat(dCardDate.ToShortDateString(), " ", oParam.sEndHourForPeilut)).AddDays(1);
 //                            if (oPeilut.dFullShatYetzia > dEndHourForPeilut)
@@ -1698,7 +1698,7 @@
 //                            {
 //                                if (drSugSidur.Length > 0)
 //                                {   //עבור סידורים רגילים, רק בסידורי נהגות וניהול תנועה מותרת המרה.
-//                                    if ((drSugSidur[0]["sector_avoda"].ToString() != clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString()) && (drSugSidur[0]["sector_avoda"].ToString() != clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()) && (oSidur.sHamaratShabat != string.Empty))
+//                                    if ((drSugSidur[0]["sector_avoda"].ToString() != enSectorAvoda.Nihul.GetHashCode().ToString()) && (drSugSidur[0]["sector_avoda"].ToString() != enSectorAvoda.Nahagut.GetHashCode().ToString()) && (oSidur.sHamaratShabat != string.Empty))
 //                                    {
 //                                        drNew = dtErrors.NewRow();
 //                                        InsertErrorRow(oSidur, ref drNew, "המרה אסורה לסידור", enErrors.errHamaraNotValid.GetHashCode());
@@ -1868,7 +1868,7 @@
 //                    {
 //                        if ((int.Parse(oSidur.sHashlama)) > 0)
 //                        {
-//                            if ((!(string.IsNullOrEmpty(oSidur.sShatGmar))) && (oSidur.dFullShatHatchala.Year > clGeneral.cYearNull))
+//                            if ((!(string.IsNullOrEmpty(oSidur.sShatGmar))) && (oSidur.dFullShatHatchala.Year > DateHelper.cYearNull))
 //                            {
 //                                if (fSidurTime / 60 > int.Parse(oSidur.sHashlama))
 //                                {
@@ -1905,7 +1905,7 @@
 //            {   //12עקב שינוי שעת התחלה של סידור יכול להיווצר מצב בו יש פעילות המתחילה לפני שעת התחלת הסידור החדשה. אין לבצע את הבדיקה אם הפעילות היא אלמנט (מתחיל ב- 7) והיא לידיעה. פעילות היא לידיעה לפי פרמטר 3 (פעולה / ידיעה בלבד) בטבלת מאפייני אלמנטים121-
 //                //122עקב שינוי שעת סיום של סידור יכול להיווצר מצב בו יש פעילות המתחילה אחרי שעת סיום הסידור החדשה. אין לבצע את הבדיקה אם הפעילות היא אלמנט (מתחיל ב- 7) והיא לידיעה.  פעילות היא לידיעה לפי פרמטר 3 (פעולה / ידיעה בלבד) בטבלת מאפייני אלמנטים122-
 
-//                if (oSidur.dFullShatHatchala.Year > clGeneral.cYearNull)
+//                if (oSidur.dFullShatHatchala.Year > DateHelper.cYearNull)
 //                    {
 //                        dSidurShatHatchala = DateTime.Parse(string.Concat(dCardDate.ToShortDateString(), " ", oSidur.sShatHatchala));
 //                    }
@@ -1922,7 +1922,7 @@
                       
 //                        if ((!((oPeilut.iMakatType == (long)enMakatType.mElement.GetHashCode()) && (oPeilut.iElementLeYedia == 2))) && (lMakatNesia > 0))
 //                        {
-//                            if (oSidur.dFullShatHatchala.Year > clGeneral.cYearNull)
+//                            if (oSidur.dFullShatHatchala.Year > DateHelper.cYearNull)
 //                            {//בדיקה 121
 //                                if (dShatYetziaPeilut < dSidurShatHatchala)
 //                                {
@@ -2038,7 +2038,7 @@
 
 //            try
 //            { //צריך להיות שעה הפרש בין שני סידורי אילת. מזהים סידור אילת אם יש לו פעילות אילת. מזהים פעילות אילת לפי שדה שחוזר מהפרוצדורה GetKavDetails.
-//                if ((oSidur.bSidurEilat) && (bPrevSidurEilat) && (!(bFirstSidur)) && (oSidur.dFullShatHatchala.Year > clGeneral.cYearNull) && (!(string.IsNullOrEmpty(sPrevShatHatchala))))
+//                if ((oSidur.bSidurEilat) && (bPrevSidurEilat) && (!(bFirstSidur)) && (oSidur.dFullShatHatchala.Year > DateHelper.cYearNull) && (!(string.IsNullOrEmpty(sPrevShatHatchala))))
 //                {
 //                    DateTime dPrevTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sPrevShatHatchala.Substring(0, 2)), int.Parse(sPrevShatHatchala.Substring(3, 2)), 0);
 //                    DateTime dCurrTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(oSidur.sShatHatchala.Substring(0, 2)), int.Parse(oSidur.sShatHatchala.Substring(3, 2)), 0);
@@ -2499,7 +2499,7 @@
 //                        if ((oSidur.bSidurMyuhad) && (oSidur.iMisparSidurMyuhad > 0))
 //                        {
 //                            //אם סידור נהגות וקיים לעובד ותק, אז זכאי להמרת שבת
-//                            if (!((oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()) && ((sMaamad == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22"))))
+//                            if (!((oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString()) && ((sMaamad == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22"))))
 //                            {
 //                                drNew = dtErrors.NewRow();
 //                                InsertErrorRow(oSidur, ref drNew, "המרה לעובד שלא זכאי ", enErrors.errZakaiLehamaratShabat.GetHashCode());
@@ -2511,8 +2511,8 @@
 //                        {
 //                            if (drSugSidur.Length > 0)
 //                            {
-//                                //if (!((drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()) && (((sMaamad.Substring(0,1) == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22")))))
-//                                if (!(((drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()) && ((sMaamad.Substring(0, 1) == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22") ))))
+//                                //if (!((drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString()) && (((sMaamad.Substring(0,1) == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22")))))
+//                                if (!(((drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString()) && ((sMaamad.Substring(0, 1) == clGeneral.enMaamad.Friends.GetHashCode().ToString()) || (sMaamad == "21") || (sMaamad == "22") ))))
 //                                {
 //                                    drNew = dtErrors.NewRow();
 //                                    InsertErrorRow(oSidur, ref drNew, "המרה לעובד שלא זכאי ", enErrors.errZakaiLehamaratShabat.GetHashCode());
@@ -2928,7 +2928,7 @@
 //            //בדיקה ברמת סידור
 //            try
 //            {//אסור לדווח סידור תפקיד אם אין לעובד מאפייני שעת התחלה / גמר (לפי מאפיינים 3/4 במאפייני עובדים). רלוונטי רק לסידורים מיוחדים, לא לרגילים.
-//                if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((!oMeafyeneyOved.IsMeafyenExist(3)) || (!oMeafyeneyOved.IsMeafyenExist(4))))
+//                if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((!oMeafyeneyOved.IsMeafyenExist(3)) || (!oMeafyeneyOved.IsMeafyenExist(4))))
 //                {
 //                    drNew = dtErrors.NewRow();
 //                    InsertErrorRow(oSidur, ref drNew, "סידור תפקיד ללא מאפיין התחלה/גמר", enErrors.errSidurTafkidWithOutApprove.GetHashCode());
@@ -3000,14 +3000,14 @@
 //                        dSidurDate = DateTime.Parse(oSidur.sSidurDate);
 //                        if ((oSidur.sSidurInSummer == "1") || (oSidur.sSidurInSummer == "2"))
 //                        {
-//                            if (oParam.dStartNihulVShivik.Year!=clGeneral.cYearNull)
+//                            if (oParam.dStartNihulVShivik.Year!=DateHelper.cYearNull)
 //                            {
 //                                bError = (dSidurDate < oParam.dStartNihulVShivik);
 //                            }
 
 //                            if (!bError)
 //                            {
-//                                if (oParam.dEndNihulVShivik.Year != clGeneral.cYearNull)
+//                                if (oParam.dEndNihulVShivik.Year != DateHelper.cYearNull)
 //                                {
 //                                    bError = (dSidurDate > oParam.dEndNihulVShivik);
 //                                }
@@ -3015,7 +3015,7 @@
 //                        }
 //                        else
 //                        {
-//                            bError = (((dSidurDate < oParam.dStartTiful) && (oParam.dStartTiful.Year!=clGeneral.cYearNull)) || ((dSidurDate > oParam.dEndTiful) && (oParam.dEndTiful.Year!=clGeneral.cYearNull)));
+//                            bError = (((dSidurDate < oParam.dStartTiful) && (oParam.dStartTiful.Year!=DateHelper.cYearNull)) || ((dSidurDate > oParam.dEndTiful) && (oParam.dEndTiful.Year!=DateHelper.cYearNull)));
 //                        }
 //                        if (bError)
 //                        {
@@ -3135,7 +3135,7 @@
 //                //לעובד אסור לבצע סידור נהיגה (עבור סידורים מיוחדים, מזהים סידור נהגות לפי ערך 5 במאפיין  3 בטבלת סידורים מיוחדים. עבור סידורים רגילים מזהים סידור נהגות לפי ערך 5 ב מאפיין 3 בטבלת מאפייני סידורים) במקרים הבאים: א. לעובד אין רישיון נהיגה באוטובוס (יודעים אם לעובד יש רישיון לפי ערכים 6, 10, 11 בקוד נתון 7 (קוד רישיון אוטובוס) בטבלת פרטי עובדים) ב. עובד הוא מותאם שאסור לו לנהוג (יודעים שעובד הוא מותאם שאסור לו לנהוג לפי ערכים 4, 5 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים) ג. עובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה (יודעים שעובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה לפי ערכים 6, 7 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים) במקרה זה יש לבדוק אם הסידור מכיל רק נסיעות ריקות, מפעילים את הרוטינה לזיהוי מקט ד. עובד הוא בשלילה (יודעים שעובד הוא בשלילה לפי ערך 1 בקוד בנתון 21 (שלילת   רשיון) בטבלת פרטי עובדים) 
 //                if (oSidur.bSidurMyuhad) 
 //                {
-//                    if (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+//                    if (oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString())
 //                    {
 //                        //א. לעובד אין רישיון נהיגה באוטובוס (יודעים אם לעובד יש רישיון לפי ערכים 6, 10, 11 בקוד נתון 7 (קוד רישיון אוטובוס) בטבלת פרטי עובדים)
 //                        bError = (!IsOvedHasDriverLicence());
@@ -3157,7 +3157,7 @@
 //                {//סידור רגיל
 //                    if (drSugSidur.Length > 0)
 //                    {
-//                        if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+//                        if (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
 //                        {
 //                            //א. לעובד אין רישיון נהיגה באוטובוס (יודעים אם לעובד יש רישיון לפי ערכים 6, 10, 11 בקוד נתון 7 (קוד רישיון אוטובוס) בטבלת פרטי עובדים)
 //                            bError = (!IsOvedHasDriverLicence());
@@ -3265,7 +3265,7 @@
 //                {
 //                    if (oSidur.bSidurMyuhad)
 //                    {//סידור מיוחד
-//                        if ((oSidur.bSectorAvodaExists) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()))
+//                        if ((oSidur.bSectorAvodaExists) && (oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString()))
 //                        {
 //                            bError = true;
 //                        }
@@ -3274,7 +3274,7 @@
 //                    {//סידור רגיל
 //                        if (drSugSidur.Length > 0)
 //                        {                            
-//                            if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()) 
+//                            if (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString()) 
 //                            {
 //                                bError = true;
 //                            }

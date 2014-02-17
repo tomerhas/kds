@@ -6,6 +6,7 @@ using KDSCommon.Enums;
 using KDSCommon.DataModels.Errors;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -25,7 +26,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             {
                 if ((int.Parse(input.curSidur.sHashlama)) > 0)
                 {
-                    if ((!(string.IsNullOrEmpty(input.curSidur.sShatGmar))) && (input.curSidur.dFullShatHatchala.Year > clGeneral.cYearNull))
+                    if ((!(string.IsNullOrEmpty(input.curSidur.sShatGmar))) && (input.curSidur.dFullShatHatchala.Year > DateHelper.cYearNull))
                     {
                         if (fSidurTime / 60 > int.Parse(input.curSidur.sHashlama))
                         {

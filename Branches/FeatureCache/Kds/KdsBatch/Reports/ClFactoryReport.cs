@@ -12,7 +12,7 @@ using KdsLibrary.UI;
 using System.Configuration;
 using KdsLibrary.Security;
 using System.Windows.Forms;
-using KdsLibrary.UDT;
+using KDSCommon.UDT;
 namespace KdsBatch.Reports
 {
 

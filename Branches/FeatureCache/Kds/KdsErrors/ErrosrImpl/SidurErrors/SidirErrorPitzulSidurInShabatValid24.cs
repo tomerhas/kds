@@ -7,6 +7,7 @@ using KDSCommon.DataModels.Errors;
 using KDSCommon.DataModels;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -35,8 +36,8 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                     //נקרא את שעת כניסת השבת                   
                     //אם ביום שהוא ערב שבת/חג יש סידור אחד שמסתיים לפני כניסת שבת ויש לו סימון בשדה פיצול והסידור העוקב אחריו התחיל אחרי כניסת השבת  - זו שגיאה. (מצב תקין הוא שהסידור העוקב התחיל לפני כניסת שבת וגלש/לא גלש לשבת). 
                     //if (((int.Parse(sSidurPrevShatGmar.Remove(2, 1)) > iShabatStart)) || (int.Parse(input.curSidur.sShatHatchala.Remove(2, 1)) <= iShabatStart))
-                    dSidurPrevShatGmar = GetDateTimeFromStringHour(sSidurPrevShatGmar, input.CardDate);
-                    dSidurShatHatchala = GetDateTimeFromStringHour(input.curSidur.sShatHatchala, input.CardDate);
+                    dSidurPrevShatGmar = DateHelper.GetDateTimeFromStringHour(sSidurPrevShatGmar, input.CardDate);
+                    dSidurShatHatchala = DateHelper.GetDateTimeFromStringHour(input.curSidur.sShatHatchala, input.CardDate);
                     if ((dSidurPrevShatGmar <= input.oParameters.dKnisatShabat) && (dSidurShatHatchala > input.oParameters.dKnisatShabat))
                     {
                         isValid = false;

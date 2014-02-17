@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using KdsLibrary;
-using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using KDSCommon.DataModels;
 using KDSCommon.Interfaces;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Managers;
 using KDSCommon.Interfaces.DAL;
+using DalOraInfra.DAL;
+using KDSCommon.Enums;
 
 namespace KdsBatch
 {
@@ -193,7 +194,7 @@ namespace KdsBatch
 
         public static bool CheckYomShishi(int iSugYom)
         {
-            if (iSugYom == clGeneral.enSugYom.Shishi.GetHashCode())
+            if (iSugYom == enSugYom.Shishi.GetHashCode())
             {
                 return true;
             }

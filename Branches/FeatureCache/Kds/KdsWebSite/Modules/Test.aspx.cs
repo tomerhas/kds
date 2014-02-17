@@ -16,7 +16,6 @@ using KdsLibrary;
 using KdsLibrary.UI;
 using KdsLibrary.Security;
 using System.Collections.Specialized;
-using KdsLibrary.UDT;
 //using KdsBatch.InputData;
 //using KdsBatch;
 using KdsWorkFlow.Approvals;

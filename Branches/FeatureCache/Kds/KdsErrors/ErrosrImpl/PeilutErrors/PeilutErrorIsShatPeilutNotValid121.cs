@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using KDSCommon.DataModels.Errors;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
 
@@ -31,7 +32,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
             {
                 if ((!((input.curPeilut.iMakatType == (long)enMakatType.mElement.GetHashCode()) && (input.curPeilut.iElementLeYedia == 2))) && (lMakatNesia > 0))
                 {
-                    if (input.curSidur.dFullShatHatchala.Year > clGeneral.cYearNull)
+                    if (input.curSidur.dFullShatHatchala.Year > DateHelper.cYearNull)
                     {//בדיקה 121
                         if (input.curPeilut.dFullShatYetzia < input.curSidur.dFullShatHatchala)
                         {

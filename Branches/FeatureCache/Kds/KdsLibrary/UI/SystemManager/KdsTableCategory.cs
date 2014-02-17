@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using KdsLibrary.Utils;
-using KdsLibrary.DAL;
 using System.Data;
+using DalOraInfra.DAL;
 
 namespace KdsLibrary.UI.SystemManager
 {

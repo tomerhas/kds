@@ -118,6 +118,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
+      <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
+      <Name>DalOraInfra</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
       <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
       <Name>KdsLibrary</Name>

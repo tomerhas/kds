@@ -4,7 +4,7 @@ using Oracle.DataAccess.Types;
 using System.Xml.Serialization;
 using System.Xml.Schema;
 
-namespace KDSCommon.DataModels.UDT
+namespace KDSCommon.UDT
 {
     public class OBJ_PEILUT_OVDIM : INullable, IOracleCustomType, IXmlSerializable, IComparable
     {

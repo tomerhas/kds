@@ -16,11 +16,10 @@ using KdsBatch;
 using KdsLibrary.BL;
 using KdsLibrary.Security;
 using System.Text;
-using KdsLibrary.UDT;
-using KDSCommon.DataModels.UDT;
 using KDSCommon.Helpers;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.DAL;
+using KDSCommon.UDT;
 
 
 
@@ -216,7 +215,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 if (dsSidur.Tables[1].Rows.Count > 0)
                 {
                     SetPirteySidurlbls(dsSidur.Tables[0].Rows[0]);
-                    shatHatchala = clGeneral.GetDateTimeFromStringHour(dsSidur.Tables[1].Rows[0]["SHAA"].ToString(),DateTime.Parse(TaarichCA.Value)); 
+                    shatHatchala = DateHelper.GetDateTimeFromStringHour(dsSidur.Tables[1].Rows[0]["SHAA"].ToString(),DateTime.Parse(TaarichCA.Value)); 
                     shaa = shatHatchala.ToShortTimeString();
                     txtShatHatchala.Text = shaa;
                     TaarichHatchala.Value = shaa + " ";
@@ -236,7 +235,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     txtShatHatchala.ToolTip = TaarichHatchala.Value;
                     if (!string.IsNullOrEmpty(dsSidur.Tables[1].Rows[dsSidur.Tables[1].Rows.Count - 1]["MAZANTASHLUM"].ToString()))
                     {
-                        shatGmar = clGeneral.GetDateTimeFromStringHour(dsSidur.Tables[1].Rows[dsSidur.Tables[1].Rows.Count - 1]["SHAA"].ToString(), DateTime.Parse(TaarichCA.Value));
+                        shatGmar = DateHelper.GetDateTimeFromStringHour(dsSidur.Tables[1].Rows[dsSidur.Tables[1].Rows.Count - 1]["SHAA"].ToString(), DateTime.Parse(TaarichCA.Value));
                         shatGmar = shatGmar.AddMinutes(int.Parse(dsSidur.Tables[1].Rows[dsSidur.Tables[1].Rows.Count - 1]["MAZANTASHLUM"].ToString()));
                         txtShatGmar.Text = shatGmar.ToShortTimeString();
 
@@ -251,7 +250,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 {
                     DataRow drSource = dtSource.NewRow();
                     int type=0;
-                    shatYezia = clGeneral.GetDateTimeFromStringHour(dr["SHAA"].ToString(),DateTime.Parse(TaarichCA.Value));
+                    shatYezia = DateHelper.GetDateTimeFromStringHour(dr["SHAA"].ToString(),DateTime.Parse(TaarichCA.Value));
                     drSource["SHAT_YETZIA"] = shatYezia.ToShortTimeString();
                     drSource["SHAT_YEZIA_DATE"] = shatYezia;
                     drSource["KAV"] = dr["SHILUT"];

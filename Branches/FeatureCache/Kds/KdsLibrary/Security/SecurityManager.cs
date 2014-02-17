@@ -5,7 +5,6 @@ using System.Text;
 using System.Data;
 using System.Web;
 using System.Web.UI.WebControls;
-using KdsLibrary.DAL;
 using KdsLibrary.UI;
 using KdsLibrary.Utils;
 using System.Web.UI;
@@ -13,6 +12,7 @@ using System.Configuration;
 using System.Collections;
 using System.DirectoryServices;
 using System.Web.UI.HtmlControls;
+using DalOraInfra.DAL;
 
 namespace KdsLibrary.Security
 {

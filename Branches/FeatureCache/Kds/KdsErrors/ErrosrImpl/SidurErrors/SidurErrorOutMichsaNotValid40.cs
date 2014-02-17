@@ -19,7 +19,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
         }
         public override bool InternalIsCorrect(ErrorInputData input)
         {
-            if (input.curSidur.sOutMichsa == "1" && input.curSidur.sSectorAvoda == clGeneral.enSectorAvoda.Headrut.GetHashCode().ToString())
+            if (input.curSidur.sOutMichsa == "1" && input.curSidur.sSectorAvoda == enSectorAvoda.Headrut.GetHashCode().ToString())
             {
                 AddNewError(input);
                 return false;

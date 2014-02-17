@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using KdsBatch;
-using KdsLibrary.UDT;
 using KdsLibrary.Utils.Reports;
 using System.IO;
 using KdsLibrary.UI;

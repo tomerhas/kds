@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using KdsLibrary.DAL;
-using KdsLibrary.UDT;
 using System.Data;
 using System.Reflection;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces;
 using KDSCommon.Enums;
-using KDSCommon.DataModels.UDT;
+using KDSCommon.UDT;
+using DalOraInfra.DAL;
 
 namespace KdsLibrary.BL
 {
@@ -33,12 +32,7 @@ namespace KdsLibrary.BL
             Red,
             White
         }
-        public enum ErrorLevel
-        {
-            LevelYomAvoda = 1,
-            LevelSidur = 2,
-            LevelPeilut = 3
-        }
+        
         public static bool IsIdkunExists(int iMisparIshi, bool bProfileRashemet, ErrorLevel enLevel, int iPakadId, int iMisparSidur, 
                                          DateTime dShatHatchala, DateTime dShatYetiza, int iMisparKnisa, 
                                          ref DataTable dtIdkuneyRashemet)

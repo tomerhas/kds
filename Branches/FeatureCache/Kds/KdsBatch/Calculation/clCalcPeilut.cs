@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using KdsLibrary;
 using KDSCommon.Enums;
 using KDSCommon.Helpers;
 using KDSCommon.Interfaces.DAL;
 using Microsoft.Practices.ServiceLocation;
+using DalOraInfra.DAL;
 
 namespace KdsBatch
 {
@@ -508,7 +508,7 @@ namespace KdsBatch
                          {
                              if (iMakatFirst == iMakat && dShatYetziaFirst == dShatYetzia && iMisparKnisaFirst == iMisparKnisa)
                              {
-                                 if (fHagdaraLetashlum < 7 && dShatYetzia < clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date))
+                                 if (fHagdaraLetashlum < 7 && dShatYetzia < DateHelper.GetDateTimeFromStringHour("08:00", dTaarich.Date))
                                      bNoCalc = true;
                              }
                          }
@@ -602,14 +602,14 @@ namespace KdsBatch
                      {//א.	כאשר הפעילות השנייה בסידור הינה נסיעה ריקה 
                          if ((drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "7" && drPeiluyot[J]["kupai"].ToString() == "1" && drPeiluyot[J - 1]["MAKAT_NESIA"].ToString().Substring(0, 3) == "701"))
                          {
-                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
+                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= DateHelper.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAdShmone)
                                  {
                                      fErech = 0;
                                  }
                              }
-                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
+                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > DateHelper.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAchreyShmone)
                                  {
@@ -667,14 +667,14 @@ namespace KdsBatch
                      {//א.	כאשר הפעילות השנייה בסידור הינה נסיעה ריקה 
                          if (drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "6" && drPeiluyot[J - 1]["MAKAT_NESIA"].ToString().Substring(0, 3) == "701")
                          {
-                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
+                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= DateHelper.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAdShmone)
                                  {
                                      fErech = 0;
                                  }
                              }
-                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
+                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > DateHelper.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAchreyShmone)
                                  {
@@ -847,8 +847,8 @@ namespace KdsBatch
                   dShatYetzia = DateTime.Parse(drPeiluyot[i]["shat_yetzia"].ToString());
                   iZmanElement = int.Parse(iMakat.ToString().PadLeft(8).Substring(3, 3));
                   
-                  //dTempM1 = clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date);
-                  //dTempM2 = clGeneral.GetDateTimeFromStringHour("09:30", dTaarich.Date);
+                  //dTempM1 = DateHelper.GetDateTimeFromStringHour("08:00", dTaarich.Date);
+                  //dTempM2 = DateHelper.GetDateTimeFromStringHour("09:30", dTaarich.Date);
                   //fTempY = 0;
 
                   //if (dShatYetzia <= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM1)
@@ -873,8 +873,8 @@ namespace KdsBatch
                   fZmanAruchatTzharim += fTempY;
 
 
-                  //dTempM1 = clGeneral.GetDateTimeFromStringHour("18:00", dTaarich.Date);
-                  //dTempM2 = clGeneral.GetDateTimeFromStringHour("19:30", dTaarich.Date);
+                  //dTempM1 = DateHelper.GetDateTimeFromStringHour("18:00", dTaarich.Date);
+                  //dTempM2 = DateHelper.GetDateTimeFromStringHour("19:30", dTaarich.Date);
                   //fTempY = 0;
                   //if (dShatYetzia <= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM1)
                   //{ fTempY = float.Parse((dShatYetzia.AddMinutes(iZmanElement) - dTempM1).TotalMinutes.ToString()); }

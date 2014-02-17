@@ -5,9 +5,9 @@ using System.Text;
 using System.Data;
 using System.Data.Common;
 using System.Data.OleDb;
-using KdsLibrary.DAL;
 using KdsLibrary;
 using System.Configuration;
+using DalOraInfra.DAL;
 namespace KdsBatch.Premia
 {
     /// <summary>

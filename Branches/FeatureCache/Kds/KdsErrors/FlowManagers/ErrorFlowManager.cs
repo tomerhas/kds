@@ -13,6 +13,7 @@ using KDSCommon.Interfaces.Errors;
 using KDSCommon.Interfaces.Managers;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
+using KdsErrors.DAL;
 
 namespace KdsErrors.FlowManagers
 {
@@ -34,6 +35,7 @@ namespace KdsErrors.FlowManagers
 
             flowResult.Errors = inputData.dtErrors;
             flowResult.IsSuccess = inputData.IsSuccsess;
+            flowResult.CardStatus = GetCardStatus(inputData);
             return flowResult;
         }
 
@@ -59,9 +61,114 @@ namespace KdsErrors.FlowManagers
                 oSidurErrors.ExecuteFlow(inputData, 2);
             }
             oYomErrors.ExecuteFlow(inputData, 2);
+
+            ErrorsDal errDal = _container.Resolve<ErrorsDal>();
+
+            //Delete errors from shgiot
+            errDal.DeleteErrorsFromTbShgiot(inputData.iMisparIshi, inputData.CardDate);
+            //Remove shgiot meusharot
+            string sArrKodShgia = RemoveShgiotMeusharotFromDt(inputData.dtErrors);
+            bool haveShgiot = false;
+            //Validate shgiot letezuga
+            if (sArrKodShgia.Length > 0)
+            {
+                sArrKodShgia = sArrKodShgia.Substring(0, sArrKodShgia.Length - 1);
+                haveShgiot = errDal.CheckShgiotLetzuga(sArrKodShgia);
+            }
+            //Insert errors to shgiot
+            errDal.InsertErrorsToTbShgiot(inputData.dtErrors, inputData.CardDate);
+
+            //Update 
+            errDal.UpdateRitzatShgiotDate(inputData.iMisparIshi, inputData.CardDate, haveShgiot);
             
         }
 
+        private string  RemoveShgiotMeusharotFromDt(DataTable dtErrors)
+        {
+            ErrorLevel iErrorLevel;
+            bool bMeushar;
+            DataRow dr;
+            int iCount;
+            iCount = dtErrors.Rows.Count;
+            int I = 0;
+            try
+            {
+                ErrorsDal errDal = _container.Resolve<ErrorsDal>();
+                string sArrKodShgia = "";
+                if (iCount > 0)
+                {
+                    do
+                    {
+                        bMeushar = false;
+                        dr = dtErrors.Rows[I];
+                        if (!(string.IsNullOrEmpty(dr["shat_yetzia"].ToString())))
+                        {
+                            iErrorLevel = ErrorLevel.LevelPeilut;
+                            bMeushar = errDal.IsErrorApprovalExists(iErrorLevel, (int)dr["check_num"], (int)dr["mispar_ishi"], DateTime.Parse(dr["Taarich"].ToString()), (int)dr["mispar_sidur"], DateTime.Parse(dr["shat_hatchala"].ToString()), DateTime.Parse(dr["shat_yetzia"].ToString()), (int)dr["mispar_knisa"]);
+
+                        }
+                        else if (string.IsNullOrEmpty(dr["mispar_sidur"].ToString()))
+                        {
+                            iErrorLevel = ErrorLevel.LevelYomAvoda;
+                            bMeushar = errDal.IsErrorApprovalExists(iErrorLevel, (int)dr["check_num"], (int)dr["mispar_ishi"], DateTime.Parse(dr["Taarich"].ToString()), 0, DateTime.MinValue, DateTime.MinValue, 0);
+
+                        }
+                        else
+                        {
+                            iErrorLevel = ErrorLevel.LevelSidur;
+                            bMeushar = errDal.IsErrorApprovalExists(iErrorLevel, (int)dr["check_num"], (int)dr["mispar_ishi"], DateTime.Parse(dr["Taarich"].ToString()), (int)dr["mispar_sidur"], DateTime.Parse(dr["shat_hatchala"].ToString()), DateTime.MinValue, 0);
+                        }
+
+
+                        if (bMeushar)
+                        {
+                            dr.Delete();
+                        }
+                        else
+                        {
+                            sArrKodShgia += dr["check_num"].ToString() + ",";
+                            I += 1;
+                        }
+
+                        iCount = dtErrors.Rows.Count;
+                    }
+                    while (I < iCount);
+
+                }
+                return sArrKodShgia;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// TODO - need to set this function as priveate once 'MainOvedErrors' is removed from code
+        /// </summary>
+        /// <param name="inputData"></param>
+        /// <returns></returns>
+        public CardStatus GetCardStatus(ErrorInputData inputData)
+        {
+            CardStatus status = CardStatus.Valid;
+
+            if (inputData.dtErrors.Rows.Count > 0)
+            {
+                
+                status = CardStatus.Error;
+            }
+            else
+            {
+                status = CardStatus.Valid;
+            }
+            if ((int)status != inputData.OvedDetails.iStatus)
+            {
+                _container.Resolve<IOvedManager>().UpdateCardStatus(inputData.iMisparIshi, inputData.CardDate, status, inputData.UserId.Value);
+                
+            }
+            return status;
+        }
 
         private ErrorInputData FillInputData(int misparIshi, DateTime cardDate, long? btchRequest = null, int? userId = null)
         {

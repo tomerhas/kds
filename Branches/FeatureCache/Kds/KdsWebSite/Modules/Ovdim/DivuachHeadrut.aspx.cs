@@ -15,6 +15,7 @@ using KDSCommon.DataModels;
 using KDSCommon.Enums;
 using KDSCommon.Interfaces;
 using KDSCommon.Interfaces.Managers;
+using KDSCommon.Helpers;
 public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
 {
     public  clParametersDM _objParameters;
@@ -202,9 +203,9 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
 
                                     if (dtHeadruyot.Select("kod_sidur_meyuchad=" + item.Value).Any(row => row["shat_gmar_muteret"].ToString() != ""))
                                     {
-                                        dShatGmar = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(dtHeadruyot.Select("kod_sidur_meyuchad=" + item.Value).FirstOrDefault(row => row["shat_gmar_muteret"].ToString() != "")["shat_gmar_muteret"].ToString()).ToShortTimeString(),DateTime.Parse(ViewState["DateCard"].ToString()));
+                                        dShatGmar = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(dtHeadruyot.Select("kod_sidur_meyuchad=" + item.Value).FirstOrDefault(row => row["shat_gmar_muteret"].ToString() != "")["shat_gmar_muteret"].ToString()).ToShortTimeString(),DateTime.Parse(ViewState["DateCard"].ToString()));
 
-                                        //if (dShatGmar >= clGeneral.GetDateTimeFromStringHour("00:01", DateTime.Parse(ViewState["DateCard"].ToString())) && dShatGmar <= clGeneral.GetDateTimeFromStringHour("07:59", DateTime.Parse(ViewState["DateCard"].ToString())))
+                                        //if (dShatGmar >= DateHelper.GetDateTimeFromStringHour("00:01", DateTime.Parse(ViewState["DateCard"].ToString())) && dShatGmar <= DateHelper.GetDateTimeFromStringHour("07:59", DateTime.Parse(ViewState["DateCard"].ToString())))
                                         //{
                                         //    dShatGmar = dShatGmar.AddDays(1);
                                         //}
@@ -269,8 +270,8 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                         }
                         else
                         {
-                            dShatHatchala = clGeneral.GetDateTimeFromStringHour(txtStartTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
-                            dShatSiyum = clGeneral.GetDateTimeFromStringHour(txtEndTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
+                            dShatHatchala = DateHelper.GetDateTimeFromStringHour(txtStartTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
+                            dShatSiyum = DateHelper.GetDateTimeFromStringHour(txtEndTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
 
 
                             oWorkCard.InsYemeyAvodaWithSidurim(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()), DateTime.Parse(clnEndDateHeadrut.Text), dShatHatchala, dShatSiyum, DateTime.Parse(ddlHeadrutType.SelectedItem.Attributes["max_shat_hatchala"]), DateTime.Parse(ddlHeadrutType.SelectedItem.Attributes["max_gmar_muteret"]), int.Parse(ddlHeadrutType.SelectedValue), int.Parse(LoginUser.UserInfo.EmployeeNumber));
@@ -305,8 +306,8 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                         }
                         else
                         {
-                            dShatHatchala = clGeneral.GetDateTimeFromStringHour(txtStartTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
-                            dShatSiyum = clGeneral.GetDateTimeFromStringHour(txtEndTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
+                            dShatHatchala = DateHelper.GetDateTimeFromStringHour(txtStartTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
+                            dShatSiyum = DateHelper.GetDateTimeFromStringHour(txtEndTime.Text, DateTime.Parse(ViewState["DateCard"].ToString()).Date);
 
                             oWorkCard.InsUpdSidurimOvdim(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()), int.Parse(ddlHeadrutType.SelectedValue), dShatHatchala, dShatSiyum, int.Parse(LoginUser.UserInfo.EmployeeNumber));
                             ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "Close", "window.returnValue=1;window.close();", true);
@@ -336,9 +337,9 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
         try
         {
             drRowSidurim = ((DataTable)ViewState["dtSidurim"]).Select("MISPAR_SIDUR <> 99200 AND SHAT_HATCHALA is not null and (MISPAR_SIDUR <> " + ddlHeadrutType.SelectedValue + " or SHAT_HATCHALA<>Convert('" + ViewState["TimeStart"] + "', 'System.DateTime')) AND (Lo_letashlum=0 or (Lo_letashlum=1 and kod_siba_lo_letashlum=1)) and Bitul_O_Hosafa not in(1,3)", "SHAT_HATCHALA ASC");
-            dStartSidur = clGeneral.GetDateTimeFromStringHour(txtStartTime.Text,DateTime.Parse(ViewState["DateCard"].ToString()));
-            dEndSidur = clGeneral.GetDateTimeFromStringHour(txtEndTime.Text,DateTime.Parse(ViewState["DateCard"].ToString()));
-            //if (dEndSidur >= clGeneral.GetDateTimeFromStringHour("00:01", DateTime.Parse(ViewState["DateCard"].ToString())) && dEndSidur <= clGeneral.GetDateTimeFromStringHour("07:59", DateTime.Parse(ViewState["DateCard"].ToString())))
+            dStartSidur = DateHelper.GetDateTimeFromStringHour(txtStartTime.Text,DateTime.Parse(ViewState["DateCard"].ToString()));
+            dEndSidur = DateHelper.GetDateTimeFromStringHour(txtEndTime.Text,DateTime.Parse(ViewState["DateCard"].ToString()));
+            //if (dEndSidur >= DateHelper.GetDateTimeFromStringHour("00:01", DateTime.Parse(ViewState["DateCard"].ToString())) && dEndSidur <= DateHelper.GetDateTimeFromStringHour("07:59", DateTime.Parse(ViewState["DateCard"].ToString())))
             //{
             //    dEndSidur = dEndSidur.AddDays(1);
             //}

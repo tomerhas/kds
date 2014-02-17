@@ -42,28 +42,28 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
           
             var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
             dsSidur = kavimDal.GetSidurAndPeiluyotFromTnua(input.curSidur.iMisparSidur, input.CardDate, null, out iResult);
-
+            var peilutManager = _container.Resolve<IPeilutManager>();
             if (iResult == 0)
             {
                 //שעת התחלה ושעת גמר
                 if (dsSidur.Tables[1].Rows.Count > 0)
                 {
                     sShaa = dsSidur.Tables[1].Rows[0]["SHAA"].ToString();
-                    dShaHatchalaMapa = clGeneral.GetDateTimeFromStringHour(sShaa, input.CardDate);
+                    dShaHatchalaMapa = DateHelper.GetDateTimeFromStringHour(sShaa, input.CardDate);
                     for (int i = dsSidur.Tables[1].Rows.Count - 1; i >= 0; i--)
                     {
                         long lMakatNesia = long.Parse(dsSidur.Tables[1].Rows[i]["MAKAT8"].ToString());
                         sShaa = dsSidur.Tables[1].Rows[i]["SHAA"].ToString();
                         if (!string.IsNullOrEmpty(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString()))
                             dSumMazanTichnun = double.Parse(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString());
-                        dShatGmarMapa = clGeneral.GetDateTimeFromStringHour(sShaa, input.CardDate).AddMinutes(dSumMazanTichnun);
+                        dShatGmarMapa = DateHelper.GetDateTimeFromStringHour(sShaa, input.CardDate).AddMinutes(dSumMazanTichnun);
                         fZmanSidurMapa = int.Parse((dShatGmarMapa - dShaHatchalaMapa).TotalMinutes.ToString());
 
                         //במידה והפעילות האחרונה היא אלמנט לידיעה בלבד (ערך 2 (לידיעה בלבד) במאפיין 3  (לפעולה/לידיעה בלבד), יש לקחת את הפעילות הקודמת לה.
 
                         if ((enMakatType)(StaticBL.GetMakatType(lMakatNesia)) == enMakatType.mElement)
                         {
-                            var dtTmpMeafyeneyElements = clDefinitions.GetTmpMeafyeneyElements(input.CardDate, input.CardDate);
+                            var dtTmpMeafyeneyElements = peilutManager.GetTmpMeafyeneyElements(input.CardDate, input.CardDate);
                             DataRow drMeafyeneyElements = dtTmpMeafyeneyElements.Select("kod_element=" + int.Parse(lMakatNesia.ToString().Substring(1, 2)))[0];
                             if (drMeafyeneyElements["element_for_yedia"].ToString() != "2")
                             {

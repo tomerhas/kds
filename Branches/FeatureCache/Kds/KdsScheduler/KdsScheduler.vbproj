@@ -154,6 +154,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
+      <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
+      <Name>DalOraInfra</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsDataImport\KdsDataImport.vbproj">
       <Project>{D4A152EC-27EB-4C8C-BDAB-4012680DA683}</Project>
       <Name>KdsDataImport</Name>

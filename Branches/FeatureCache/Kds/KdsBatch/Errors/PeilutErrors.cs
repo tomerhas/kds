@@ -10,6 +10,7 @@ using KDSCommon.Enums;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.DAL;
 using System.Web;
+using KDSCommon.Helpers;
 
 namespace KdsBatch.Errors
 {
@@ -130,7 +131,7 @@ namespace KdsBatch.Errors
                 {
                     if ((!((PeilutInstance.iMakatType == (long)enMakatType.mElement.GetHashCode()) && (PeilutInstance.iElementLeYedia == 2))) && (PeilutInstance.lMakatNesia > 0))
                     {
-                        if (PeilutInstance.objSidur.dFullShatHatchala.Year > clGeneral.cYearNull)
+                        if (PeilutInstance.objSidur.dFullShatHatchala.Year > DateHelper.cYearNull)
                         {//בדיקה 121
                             if (PeilutInstance.dFullShatYetzia < PeilutInstance.objSidur.dFullShatHatchala)
                             {
