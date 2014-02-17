@@ -8,6 +8,8 @@ using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary;
 using KDSCommon.DataModels;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Managers;
 
 namespace KdsBatch
 {
@@ -27,7 +29,7 @@ namespace KdsBatch
         public DataTable DtYemeyAvoda { set; get; }
         public DataTable DtPeiluyotFromTnua { set; get; }
         public DataTable DtPeiluyotOved { set; get; }
-        public List<clMeafyenyOved> MeafyeneyOved { get; set; }
+        public List<MeafyenimDM> MeafyeneyOved { get; set; }
         public DataTable dtPremyotYadaniyot { set; get; }
         public DataTable dtPremyotNihulTnua { set; get; }
         public DataTable dtPremyot { set; get; }
@@ -49,7 +51,7 @@ namespace KdsBatch
         public clParametersDM objParameters { get; set; }
         public clPirteyOved objPirteyOved { get; set; }
         public clMatzavOvdim objMatzavOved { get; set; }
-        public clMeafyenyOved objMeafyeneyOved { get; set; }
+        public MeafyenimDM objMeafyeneyOved { get; set; }
 
         public DateTime Taarich { get; set; }
         public int SugYom { get; set; }
@@ -411,7 +413,7 @@ namespace KdsBatch
         public void InitMeafyenyOved()
         {
             clOvdim oOvdim = new clOvdim();
-            clMeafyenyOved itemMeafyenyOved;
+            MeafyenimDM itemMeafyenyOved;
             DateTime dTarMe = Month;
             DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
             string sQury = "";
@@ -423,7 +425,7 @@ namespace KdsBatch
             try
             {
                 StartTime = DateTime.Now;
-                MeafyeneyOved = new List<clMeafyenyOved>();
+                MeafyeneyOved = new List<MeafyenimDM>();
             
                 if ( iBakashaId > 1){
                     oGeneralData.dtMeafyenyOvedAll.Select(null, "mispar_ishi");
@@ -439,8 +441,10 @@ namespace KdsBatch
                     drMeafyn = oGeneralData.dtMeafyenyOvedAll.Select(sQury);
                     if (drMeafyn.Length > 0)
                     {
+                        var ovedManager =  ServiceLocator.Current.GetInstance<IOvedManager>();
                         MeafyenimLeYom = drMeafyn.CopyToDataTable();
-                        itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, "Calc", MeafyenimLeYom);
+                        itemMeafyenyOved = ovedManager.CreateMeafyenyOved(Mispar_ishi, dTarMe, MeafyenimLeYom);
+                        //itemMeafyenyOved = ovedManager.CreateMeafyenyOved(Mispar_ishi, dTarMe, "Calc", MeafyenimLeYom);
                         MeafyeneyOved.Add(itemMeafyenyOved);
                     }
                     dTarMe = dTarMe.AddDays(1);

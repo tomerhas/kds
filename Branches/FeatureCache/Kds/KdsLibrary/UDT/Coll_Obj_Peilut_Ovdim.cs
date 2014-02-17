@@ -16,6 +16,7 @@ namespace KdsLibrary.UDT
     using System.Xml.Serialization;
     using System.Xml.Schema;
     using System.Collections;
+    using KDSCommon.DataModels.UDT;
 
     
     public class COLL_OBJ_PEILUT_OVDIM : INullable, IOracleCustomType, IXmlSerializable, IComparable,IDisposable {

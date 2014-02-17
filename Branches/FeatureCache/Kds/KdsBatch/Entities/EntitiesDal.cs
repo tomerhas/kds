@@ -12,6 +12,7 @@ using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary;
 using KdsBatch.Errors;
+using KDSCommon.Enums;
 namespace KdsBatch.Entities
 {
     public class EntitiesDal
@@ -141,7 +142,7 @@ namespace KdsBatch.Entities
             }
         }
 
-        public  void UpdateCardStatus(int iMisparIshi, DateTime dCardDate, clGeneral.enCardStatus oCardStatus, int iUserId)
+        public  void UpdateCardStatus(int iMisparIshi, DateTime dCardDate, CardStatus oCardStatus, int iUserId)
         {
             clDal oDal = new clDal();
             try

@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Oracle.DataAccess, Version=4.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\KdsWebSite\ExternalDlls\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,17 +49,41 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModels\clParametersDM.cs" />
+    <Compile Include="DataModels\Errors\ErrorDualKey.cs" />
+    <Compile Include="DataModels\Errors\FlowErrorResult.cs" />
+    <Compile Include="DataModels\Meafyen.cs" />
+    <Compile Include="DataModels\MeafyenimDM.cs" />
+    <Compile Include="DataModels\PeilutDM.cs" />
+    <Compile Include="DataModels\SidurDM.cs" />
+    <Compile Include="DataModels\UDT\OBJ_PEILUT_OVDIM.cs" />
+    <Compile Include="Enums\CardStatus.cs" />
+    <Compile Include="Enums\ErrorSubLevel.cs" />
     <Compile Include="Enums\ErrorTypes.cs" />
     <Compile Include="DataModels\Errors\ErrorInputData.cs" />
     <Compile Include="DataModels\OvedYomAvodaDetailsDM.cs" />
     <Compile Include="Enums\CachedItems.cs" />
+    <Compile Include="Enums\SubFlowManagerTypes.cs" />
+    <Compile Include="Enums\MakatType.cs" />
+    <Compile Include="Helpers\DualKey.cs" />
+    <Compile Include="Helpers\StaticBL.cs" />
     <Compile Include="Interfaces\Cache\ICacheBuilder.cs" />
+    <Compile Include="Interfaces\DAL\IKavimDAL.cs" />
     <Compile Include="Interfaces\DAL\IOvedDAL.cs" />
+    <Compile Include="Interfaces\DAL\IParametersDAL.cs" />
+    <Compile Include="Interfaces\DAL\IPeilutDAL.cs" />
+    <Compile Include="Interfaces\DAL\ISidurDAL.cs" />
     <Compile Include="Interfaces\Errors\ICardError.cs" />
+    <Compile Include="Interfaces\Errors\ISubErrorFlowFactory.cs" />
+    <Compile Include="Interfaces\Errors\IErrorFlowManager.cs" />
+    <Compile Include="Interfaces\Errors\ISubErrorFlowManager.cs" />
     <Compile Include="Interfaces\Managers\FlowManagers\IDayErrorFlowManager.cs" />
+    <Compile Include="Interfaces\Managers\FlowManagers\ISidurErrorFlowManager.cs" />
     <Compile Include="Interfaces\Managers\ICardErrorContainer.cs" />
+    <Compile Include="Interfaces\Managers\IKavimManager.cs" />
     <Compile Include="Interfaces\Managers\IOvedManager.cs" />
     <Compile Include="Interfaces\Managers\IParametersManager.cs" />
+    <Compile Include="Interfaces\Managers\IPeilutManager.cs" />
+    <Compile Include="Interfaces\Managers\ISidurManager.cs" />
     <Compile Include="Interfaces\Queue\IKDSAgedQueueParameters.cs" />
     <Compile Include="Interfaces\Cache\IKDSCacheManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

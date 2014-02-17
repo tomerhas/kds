@@ -385,12 +385,12 @@
 //            int iZmanNesia = 0;
 //            try
 //            {                
-//                if (oMeafyeneyOved.Meafyen51Exists)
+//                if (oMeafyeneyOved.IsMeafyenExist(51))
 //                {
-//                    if (!String.IsNullOrEmpty(oMeafyeneyOved.sMeafyen51))
+//                    if (!String.IsNullOrEmpty(oMeafyeneyOved.GetMeafyen(51).Value))
 //                    {
-//                        iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.Substring(1));
-//                        switch (int.Parse(oMeafyeneyOved.sMeafyen51.Substring(0, 1)))
+//                        iZmanNesia = int.Parse(oMeafyeneyOved.GetMeafyen(51).Value.Substring(1));
+//                        switch (int.Parse(oMeafyeneyOved.GetMeafyen(51).Value.Substring(0, 1)))
 //                        {
 //                            case 1:
 //                                 oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = iZmanNesia;
@@ -813,7 +813,7 @@
 //            int iElementTime = 0;
 //            try                
 //            {
-//                if ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (!String.IsNullOrEmpty(oPeilut.sShatYetzia)))
+//                if ((oPeilut.iMakatType == enMakatType.mElement.GetHashCode()) && (!String.IsNullOrEmpty(oPeilut.sShatYetzia)))
 //                {
 //                    if (oPeilut.lMakatNesia.ToString().Length >= 6) //711XXX,701XXX
 //                    {
@@ -1114,7 +1114,7 @@
 //            {
 //                oPeilut = (clPeilut)oSidur.htPeilut[j];
 //                //אם פעילות מסוג אלמנט, אבל לא אלמנט הכנת מכונה
-//                if ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (!oPeilut.bElementHachanatMechona))
+//                if ((oPeilut.iMakatType == enMakatType.mElement.GetHashCode()) && (!oPeilut.bElementHachanatMechona))
 //                {
 //                    iZmanPeilut = int.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
 //                    //אם קיים מאפייו 8 לפעילות וזמן הפעילות שווה גדולה מזמן האלמנט החדש שהוספנו
@@ -1385,22 +1385,22 @@
 //                        iCount++;
 //                        switch (oPeilut.iMakatType)
 //                        {
-//                           case 1://clKavim.enMakatType.mKavShirut:  
+//                           case 1://enMakatType.mKavShirut:  
 //                                //פעילות מסוג נסיעת שירות
 //                                // אם הפעילות תחת המטלה  היא נסיעת שירות (לפי רוטינת זיהוי מקט), יש להכניס למספר סידור 99300
 //                                iMisparSidur = SIDUR_NESIA;
 //                                break;
-//                           case 2: //(int)clKavim.enMakatType.mEmpty.GetHashCode():   
+//                           case 2: //(int)enMakatType.mEmpty.GetHashCode():   
 //                                //פעילות מסוג ריקה
 //                                //אם הפעילות תחת המטלה היא ריקה (לפי רוטינת זיהוי מקט), יש לסמן את הסידור 99300 
 //                                iMisparSidur = SIDUR_NESIA;
 //                                break;
-//                           case 3:// (int)clKavim.enMakatType.mNamak.GetHashCode():  
+//                           case 3:// (int)enMakatType.mNamak.GetHashCode():  
 //                                //פעילות מסוג נמ"ק
 //                                //אם הפעילות תחת המטלה היא נמ"ק (לפי רוטינת זיהוי מקט), יש לסמן את הסידור 99300 
 //                                iMisparSidur = SIDUR_NESIA;
 //                                break;
-//                           case 5://(int)clKavim.enMakatType.mElement.GetHashCode():  
+//                           case 5://(int)enMakatType.mElement.GetHashCode():  
 //                                if (oPeilut.bMisparSidurMatalotTnuaExists) 
 //                                {
 //                                   //קיים מאפיין 28
@@ -1499,7 +1499,7 @@
 
 //            try
 //            {   //אם סידור נצר
-//                if ((oSidur.sSugAvoda == clGeneral.enSugAvoda.Netzer.GetHashCode().ToString()) && (oMeafyeneyOved.Meafyen64Exists) && (oSidur.iLoLetashlum==0))
+//                if ((oSidur.sSugAvoda == clGeneral.enSugAvoda.Netzer.GetHashCode().ToString()) && (oMeafyeneyOved.IsMeafyenExist(64)) && (oSidur.iLoLetashlum==0))
 //                {
                     
 //                    oObjSidurimOvdimUpd.CHARIGA = 3;
@@ -1520,7 +1520,7 @@
 //            //לעובדים להם יש מאפיין אישי 63 (משפחה שכולה) , אם סוג יום = 17 (יום הזכרון) ואין להם סידור עבודה אחר באות יום (שאינו מסומן לא לתשלום) , יש לפתוח להם סידור 99801 (העדרות בתשלום יום עבודה) עם שעות מ-0400 – 2800 (כדי שדיווח אחר יצא לשגוי בחפיפה אם ידווח).            
 //            try
 //            {
-//                if ((oMeafyeneyOved.Meafyen63Exists) && (iSugYom == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode()) && (!bLoLetashlum))
+//                if ((oMeafyeneyOved.IsMeafyenExist(63)) && (iSugYom == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode()) && (!bLoLetashlum))
 //                {
 //                    oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
 //                    //InsertToObjSidurimOvdimForInsert(ref oSidur, ref oObjSidurimOvdimIns);
@@ -1612,7 +1612,7 @@
 //                    //oObjSidurimOvdimUpd.bUpdate = true;
 //                    //oCollSidurimOvdimUpd.Add(oObjSidurimOvdimUpd);                        
 //                }
-//                if (oMeafyeneyOved.Meafyen51Exists)
+//                if (oMeafyeneyOved.IsMeafyenExist(51))
 //                {                   
 //                    if ((!String.IsNullOrEmpty(oSidur.sMikumShaonKnisa)) && (!String.IsNullOrEmpty(oSidur.sMikumShaonYetzia)))
 //                    {
@@ -1750,7 +1750,7 @@
 //                oPeilut = (clPeilut)oSidur.htPeilut[j];     
 //                //iKey = int.Parse(dePeilutEntry.Key.ToString());
 //                //oPeilut = (clPeilut)oSidur.htPeilut[iKey];
-//                if ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.iElementLeYedia == 2))
+//                if ((oPeilut.iMakatType == enMakatType.mElement.GetHashCode()) && (oPeilut.iElementLeYedia == 2))
 //                {
 //                    iNumPeilutForYedia++;
 //                }
@@ -1778,7 +1778,7 @@
 
 //            if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())))
 //            {
-//                bSign = ((oSidur.sChariga != "3") && (!oMeafyeneyOved.Meafyen5Exists));                
+//                bSign = ((oSidur.sChariga != "3") && (!oMeafyeneyOved.IsMeafyenExist(5)));                
 //            }
 
 //            return bSign;
@@ -1799,7 +1799,7 @@
 //                }
 //                else
 //                {//עובד 6 ימים 
-//                    if ((oMeafyeneyOved.Meafyen56Exists) && ((oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) || (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
+//                    if ((oMeafyeneyOved.IsMeafyenExist(56)) && ((oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) || (oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
 //                    {
 //                        if ((oSidur.sShabaton == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()))
 //                        {
@@ -1807,7 +1807,7 @@
 //                        }
 //                    }
 //                    //עובד 5 ימים 
-//                    if ((oMeafyeneyOved.Meafyen56Exists) && ((oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode()) || (oMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+//                    if ((oMeafyeneyOved.IsMeafyenExist(56)) && ((oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode()) || (oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
 //                    {
 //                        if ((oSidur.sShabaton == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
 //                        {
@@ -1875,10 +1875,10 @@
 //                        //    //}
 //                        //    oLocalPeilut = (clPeilut)oSidur.htPeilut[j];
 //                        //    if (oLocalPeilut.IsMustBusNumber())
-//                        //    //if (oLocalPeilut.iMakatType == clKavim.enMakatType.mEmpty.GetHashCode() ||
-//                        //    //    oLocalPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() ||
-//                        //    //    oLocalPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode() ||
-//                        //    //    ((oLocalPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oLocalPeilut.bBusNumberMustExists)))
+//                        //    //if (oLocalPeilut.iMakatType == enMakatType.mEmpty.GetHashCode() ||
+//                        //    //    oLocalPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode() ||
+//                        //    //    oLocalPeilut.iMakatType == enMakatType.mNamak.GetHashCode() ||
+//                        //    //    ((oLocalPeilut.iMakatType == enMakatType.mElement.GetHashCode()) && (oLocalPeilut.bBusNumberMustExists)))
 //                        //    {// נמצאה פעילות מסוג נסיעה או אלמנט הדורש מספר רכב
 //                        //        if (oLocalPeilut.lOtoNo == oPeilut.lOtoNo)
 //                        //        {//לא הוחלף רכב
@@ -2440,7 +2440,7 @@
 //            try
 //            {               
 //                //אם אין מאפיין נסיעות (51, 61) - נעדכן ל0- 
-//                if ((!oMeafyeneyOved.Meafyen51Exists) && (!oMeafyeneyOved.Meafyen61Exists))
+//                if ((!oMeafyeneyOved.IsMeafyenExist(51)) && (!oMeafyeneyOved.IsMeafyenExist(61)))
 //                {
 //                    oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = 0;
 //                    oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
@@ -2474,16 +2474,16 @@
 //                            }
 //                            //עבור מאפיין 51: 
 //                            //אם שדה נסיעות התעדכן בערך 1, אז יש לעדכן את שדה זמן נסיעה הלוך בטבלת ימי עבודה עובדים בערך הזמן ממאפיין 51
-//                            if ((oMeafyeneyOved.Meafyen61Exists))
+//                            if ((oMeafyeneyOved.IsMeafyenExist(61)))
 //                            {
 //                                //עבור מאפיין 61:
 //                                //אם שדה נסיעות התעדכן בערך 1 ויש ערך בשדה מיקום שעון כניסה בסידור הראשון ביום, יש לעדכן את שדה זמן נסיעה הלוך בערך מטבלה זמן נסיעה משתנה.                                        
 //                                iZmanNesia = GetZmanNesiaMeshtana(0, 1, dCardDate);
 //                                oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = iZmanNesia;
 //                            }
-//                            if (oMeafyeneyOved.Meafyen51Exists)
+//                            if (oMeafyeneyOved.IsMeafyenExist(51))
 //                            {
-//                                iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.Substring(1));
+//                                iZmanNesia = int.Parse(oMeafyeneyOved.GetMeafyen(51).Value.Substring(1));
 //                                oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = iZmanNesia;
 //                            }                            
 //                        }
@@ -2506,15 +2506,15 @@
 //                                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;                                                                         
 //                            }
                             
-//                            if ((oMeafyeneyOved.Meafyen61Exists)  && (htEmployeeDetails.Count>0))
+//                            if ((oMeafyeneyOved.IsMeafyenExist(61))  && (htEmployeeDetails.Count>0))
 //                            {
 //                                //נשלוף את הסידור האחרון
 //                                iZmanNesia = GetZmanNesiaMeshtana(htEmployeeDetails.Count - 1, 2, dCardDate);                                     
 //                                oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = iZmanNesia;                                
 //                            }
-//                            if (oMeafyeneyOved.Meafyen51Exists)
+//                            if (oMeafyeneyOved.IsMeafyenExist(51))
 //                            {
-//                                iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.Substring(1));
+//                                iZmanNesia = int.Parse(oMeafyeneyOved.GetMeafyen(51).Value.Substring(1));
 //                                oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = iZmanNesia;
 //                            }
 //                        }
@@ -2534,14 +2534,14 @@
 //                                oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisaYetiza.GetHashCode();
 //                                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;                                   
 //                            }
-//                            if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count>0))
+//                            if ((oMeafyeneyOved.IsMeafyenExist(61)) && (htEmployeeDetails.Count>0))
 //                            {
 //                                oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = GetZmanNesiaMeshtana(0, 1, dCardDate);
 //                                oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = GetZmanNesiaMeshtana(htEmployeeDetails.Count - 1, 2, dCardDate); 
 //                            }
-//                            if (oMeafyeneyOved.Meafyen51Exists)
+//                            if (oMeafyeneyOved.IsMeafyenExist(51))
 //                            {
-//                                iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.Substring(1));
+//                                iZmanNesia = int.Parse(oMeafyeneyOved.GetMeafyen(51).Value.Substring(1));
 //                                oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
 //                                oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH;
 //                            }
@@ -2618,7 +2618,7 @@
 //                else
 //                {
 //                    //אם אין לעובד מאפיין הלבשה, נעדכן 0-
-//                    if (!oMeafyeneyOved.Meafyen44Exists)
+//                    if (!oMeafyeneyOved.IsMeafyenExist(44))
 //                    {
 //                        oObjYameyAvodaUpd.HALBASHA = 0;
 //                        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
@@ -2633,7 +2633,7 @@
 //                           אם זהו הסידור הראשון ביום העבודה עבורו זיהינו כי לעובד מגיע זמן הלבשה – יש לעדכן את השדה "הלבשה" ברמת סידור העבודה בקוד – זכאי להלבשה
 //                            לכניסה לעבודה.
 //                           TB_Sidurim_Ovedim.Mezake_Halbasha=1*/
-//                        if (oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Error.GetHashCode())
+//                        if (oOvedYomAvodaDetails.iStatus == enCardStatus.Error.GetHashCode())
 //                        {
 //                            oObjYameyAvodaUpd.HALBASHA = ZmanHalbashaType.CardError.GetHashCode();
 //                            oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
@@ -2761,25 +2761,25 @@
 //        private bool IsOvedZakaiLZmanNesiaLaAvoda()
 //        {
 //            //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות לעבודה (ערך 1 בספרה הראשונה של מאפיין זמן נסיעות            
-//            return (((((oMeafyeneyOved.Meafyen61Exists) && (oMeafyeneyOved.sMeafyen61.Substring(0, 1) == "1"))
+//            return (((((oMeafyeneyOved.IsMeafyenExist(61)) && (oMeafyeneyOved.GetMeafyen(61).Value.Substring(0, 1) == "1"))
 //                   ||
-//                   ((oMeafyeneyOved.Meafyen51Exists) && (oMeafyeneyOved.sMeafyen51.Substring(0, 1) == "1")))));                                 
+//                   ((oMeafyeneyOved.IsMeafyenExist(51)) && (oMeafyeneyOved.GetMeafyen(51).Value.Substring(0, 1) == "1")))));                                 
 //        }
 
 //        private bool IsOvedZakaiLZmanNesiaMeAvoda()
 //        {
 //            //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות מהעבודה (ערך 2 בספרה הראשונה של מאפיין זמן נסיעות            
-//            return (((((oMeafyeneyOved.Meafyen61Exists) && (oMeafyeneyOved.sMeafyen61.Substring(0, 1) == "2"))
+//            return (((((oMeafyeneyOved.IsMeafyenExist(61)) && (oMeafyeneyOved.GetMeafyen(61).Value.Substring(0, 1) == "2"))
 //                   ||
-//                   ((oMeafyeneyOved.Meafyen51Exists) && (oMeafyeneyOved.sMeafyen51.Substring(0, 1) == "2")))));
+//                   ((oMeafyeneyOved.IsMeafyenExist(51)) && (oMeafyeneyOved.GetMeafyen(51).Value.Substring(0, 1) == "2")))));
 //        }
 
 //        private bool IsOvedZakaiLZmanNesiaLeMeAvoda()
 //        {
 //            //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות מהעבודה (ערך 3 בספרה הראשונה של מאפיין זמן נסיעות            
-//            return (((((oMeafyeneyOved.Meafyen61Exists) && (oMeafyeneyOved.sMeafyen61.Substring(0, 1) == "3"))
+//            return (((((oMeafyeneyOved.IsMeafyenExist(61)) && (oMeafyeneyOved.GetMeafyen(61).Value.Substring(0, 1) == "3"))
 //                   ||
-//                   ((oMeafyeneyOved.Meafyen51Exists) && (oMeafyeneyOved.sMeafyen51.Substring(0, 1) == "3")))));
+//                   ((oMeafyeneyOved.IsMeafyenExist(51)) && (oMeafyeneyOved.GetMeafyen(51).Value.Substring(0, 1) == "3")))));
 //        }
 
 //        private int CalcOvedDakotInYafkid(DateTime dCardDate)
@@ -3169,19 +3169,19 @@
 //                    {//אם אין מאפיין, נקבע את שעת הסידור כברירת מחדל
 //                        dShatHatchalaLetashlum = oSidur.dFullShatHatchala;
 //                    }
-//                    if (oMeafyeneyOved.Meafyen8Exists)
+//                    if (oMeafyeneyOved.IsMeafyenExist(8))
 //                    {
-//                        if (oMeafyeneyOved.sMeafyen8 == "1")
+//                        if (oMeafyeneyOved.GetMeafyen(8).Value == "1")
 //                        {
 //                            dShatGmarLetashlum = DateTime.Parse(String.Concat(oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString(), " 00:01"));
 //                        }
 //                        else
 //                        {
-//                            if (oMeafyeneyOved.sMeafyen8.Length > 2)
+//                            if (oMeafyeneyOved.GetMeafyen(8).Value.Length > 2)
 //                            {
-//                                iPos = oMeafyeneyOved.sMeafyen8.Length - 2;
-//                                sMinutes = oMeafyeneyOved.sMeafyen8.Substring(iPos, 2);
-//                                sShaa = oMeafyeneyOved.sMeafyen8.Substring(0, iPos);
+//                                iPos = oMeafyeneyOved.GetMeafyen(8).Value.Length - 2;
+//                                sMinutes = oMeafyeneyOved.GetMeafyen(8).Value.Substring(iPos, 2);
+//                                sShaa = oMeafyeneyOved.GetMeafyen(8).Value.Substring(0, iPos);
 //                                iShaa = int.Parse(sShaa);
 //                                if ((iShaa >= 24) && (iShaa <= 32))
 //                                {
@@ -3215,19 +3215,19 @@
 //                    //יום שישי או ערב חג
 //                    if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) || (oSidur.sErevShishiChag == "1"))
 //                    {
-//                        if (oMeafyeneyOved.Meafyen5Exists)
+//                        if (oMeafyeneyOved.IsMeafyenExist(5))
 //                        {
-//                            if (oMeafyeneyOved.sMeafyen5 == "1")
+//                            if (oMeafyeneyOved.GetMeafyen(5).Value == "1")
 //                            {
 //                                dShatHatchalaLetashlum = DateTime.Parse(string.Concat(oSidur.dFullShatHatchala.ToShortDateString(), " 00:01"));
 //                            }
 //                            else
 //                            {
-//                                if (oMeafyeneyOved.sMeafyen5.Length > 2)
+//                                if (oMeafyeneyOved.GetMeafyen(5).Value.Length > 2)
 //                                {
-//                                    iPos = oMeafyeneyOved.sMeafyen5.Length - 2;
-//                                    sMinutes = oMeafyeneyOved.sMeafyen5.Substring(iPos, 2);
-//                                    sShaa = oMeafyeneyOved.sMeafyen5.Substring(0, iPos);
+//                                    iPos = oMeafyeneyOved.GetMeafyen(5).Value.Length - 2;
+//                                    sMinutes = oMeafyeneyOved.GetMeafyen(5).Value.Substring(iPos, 2);
+//                                    sShaa = oMeafyeneyOved.GetMeafyen(5).Value.Substring(0, iPos);
 //                                    sShaa = string.Concat(sShaa, ":", sMinutes);
 //                                    dShatHatchalaLetashlum = DateTime.Parse(string.Concat(oSidur.dFullShatHatchala.ToShortDateString(), " ", sShaa));
 //                                }
@@ -3237,19 +3237,19 @@
 //                        {//אם אין מאפיין, נקבע את שעת הסידור כברירת מחדל
 //                            dShatHatchalaLetashlum = oSidur.dFullShatHatchala;
 //                        }
-//                        if (oMeafyeneyOved.Meafyen6Exists)
+//                        if (oMeafyeneyOved.IsMeafyenExist(6))
 //                        {
-//                            if (oMeafyeneyOved.sMeafyen6 == "1")
+//                            if (oMeafyeneyOved.GetMeafyen(6).Value == "1")
 //                            {
 //                                dShatGmarLetashlum = DateTime.Parse(string.Concat(oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString(), " 00:01"));
 //                            }
 //                            else
 //                            {
-//                                if (oMeafyeneyOved.sMeafyen6.Length > 2)
+//                                if (oMeafyeneyOved.GetMeafyen(6).Value.Length > 2)
 //                                {
-//                                    iPos = oMeafyeneyOved.sMeafyen6.Length - 2;
-//                                    sMinutes = oMeafyeneyOved.sMeafyen6.Substring(iPos, 2);
-//                                    sShaa = oMeafyeneyOved.sMeafyen6.Substring(0, iPos);
+//                                    iPos = oMeafyeneyOved.GetMeafyen(6).Value.Length - 2;
+//                                    sMinutes = oMeafyeneyOved.GetMeafyen(6).Value.Substring(iPos, 2);
+//                                    sShaa = oMeafyeneyOved.GetMeafyen(6).Value.Substring(0, iPos);
 //                                    iShaa = int.Parse(sShaa);
 //                                    if ((iShaa >= 24) && (iShaa <= 32))
 //                                    {
@@ -3280,19 +3280,19 @@
 //                    }
 //                    else
 //                    {   //יום חול
-//                        if (oMeafyeneyOved.Meafyen3Exists)
+//                        if (oMeafyeneyOved.IsMeafyenExist(3))
 //                        {
-//                            if (oMeafyeneyOved.sMeafyen3 == "1")
+//                            if (oMeafyeneyOved.GetMeafyen(3).Value == "1")
 //                            {
 //                                dShatHatchalaLetashlum = DateTime.Parse(string.Concat(oSidur.dFullShatHatchala.ToShortDateString(), " 00:01"));
 //                            }
 //                            else
 //                            {
-//                                if (oMeafyeneyOved.sMeafyen3.Length > 2)
+//                                if (oMeafyeneyOved.GetMeafyen(3).Value.Length > 2)
 //                                {
-//                                    iPos = oMeafyeneyOved.sMeafyen3.Length - 2;
-//                                    sMinutes = oMeafyeneyOved.sMeafyen3.Substring(iPos, 2);
-//                                    sShaa = oMeafyeneyOved.sMeafyen3.Substring(0, iPos);
+//                                    iPos = oMeafyeneyOved.GetMeafyen(3).Value.Length - 2;
+//                                    sMinutes = oMeafyeneyOved.GetMeafyen(3).Value.Substring(iPos, 2);
+//                                    sShaa = oMeafyeneyOved.GetMeafyen(3).Value.Substring(0, iPos);
 //                                    //iShaa = int.Parse(sShaa);
 //                                    //if ((iShaa >= 24) && (iShaa <= 28))
 //                                    //{
@@ -3314,19 +3314,19 @@
 //                            dShatHatchalaLetashlum = oSidur.dFullShatHatchala;
 //                        }  
 
-//                        if (oMeafyeneyOved.Meafyen4Exists)
+//                        if (oMeafyeneyOved.IsMeafyenExist(4))
 //                        {
-//                            if (oMeafyeneyOved.sMeafyen4 == "1")
+//                            if (oMeafyeneyOved.GetMeafyen(4).Value == "1")
 //                            {
 //                                dShatGmarLetashlum = DateTime.Parse(string.Concat(oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString(), " 00:01"));
 //                            }
 //                            else
 //                            {
-//                                if (oMeafyeneyOved.sMeafyen4.Length > 2)
+//                                if (oMeafyeneyOved.GetMeafyen(4).Value.Length > 2)
 //                                {
-//                                    iPos = oMeafyeneyOved.sMeafyen4.Length - 2;
-//                                    sMinutes = oMeafyeneyOved.sMeafyen4.Substring(iPos, 2);
-//                                    sShaa = oMeafyeneyOved.sMeafyen4.Substring(0, iPos);
+//                                    iPos = oMeafyeneyOved.GetMeafyen(4).Value.Length - 2;
+//                                    sMinutes = oMeafyeneyOved.GetMeafyen(4).Value.Substring(iPos, 2);
+//                                    sShaa = oMeafyeneyOved.GetMeafyen(4).Value.Substring(0, iPos);
 //                                    iShaa = int.Parse(sShaa);
 //                                    if ((iShaa >= 24) && (iShaa <= 32))
 //                                    {

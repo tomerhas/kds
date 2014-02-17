@@ -48,7 +48,7 @@ namespace KDSCommon.Enums
         errOtoNoNotExists = 69,//לבדוק באיפיון מה הכוונה מספר פעילות המתחילה ב7-
         errKodNesiaNotExists = 81,
         errPeilutForSidurNonValid = 84,
-        errTimeForPrepareMechineNotValid = 86,
+        errTimeMechineInPeilutNotValid = 86,
         errHighValueKisuyTor = 87,
         errNesiaTimeNotValid = 91,
         errShatYetizaNotExist = 92,
@@ -104,6 +104,9 @@ namespace KDSCommon.Enums
         errHightValueDakotBefoal = 179,
         IsShatHatchalaLetashlumNull = 180,
         IsShatGmarLetashlumNull = 181,
+        errTimeMechineNosefetInDayNotValid =182,
+        errTimeAllMechineInDayNotValid =183,
+        errCntMechineInSidurNotValid = 184,
         ErrMisparElementimMealHamutar = 185,
         errMutamLoBeNahagutBizeaNahagut = 186,
         errKupaiWithNihulTnua = 187,
@@ -121,6 +124,9 @@ namespace KDSCommon.Enums
         errAvodaByemeyTeuna199 = 199,
         errAvodaByemeyEvel200 = 200,
         errAvodaByemeyMachala201 = 201,
-        errMachalaLeloIshur202 = 202
+        errMachalaLeloIshur202 = 202,
+        errConenutGriraMealHamutar = 203,
+        errSidurAsurBeyomShishiLeoved5Yamim204 = 204,
+        errTipatChalavMealMichsa205 = 205
     }
 }

@@ -15,8 +15,11 @@ using KdsBatch;
 using KDSCommon.Interfaces.DAL;
 using KdsLibrary.KDSLogic.DAL;
 using KDSCommon.Interfaces.Managers.FlowManagers;
-using KdsBatch.Errors.BasicErrorsLib.FlowManagers;
-using KdsBatch.Errors.BasicErrorsLib;
+using KdsErrors;
+using KdsLibrary.KDSLogic.Managers;
+using KDSCommon.Interfaces.Errors;
+using KdsErrors.FlowManagers;
+using KdsErrors.FlowManagers.Factories;
 
 
 /// <summary>
@@ -47,20 +50,30 @@ public class Bootstrapper
         //Managers
         container.RegisterType<IParametersManager, ParametersManager>();
         container.RegisterType<IOvedManager, OvedManager>();
-
-        container.RegisterType<IDayErrorFlowManager, DayErrorFlowManager>();
+        container.RegisterType<ISidurManager, SidurManager>();
+        container.RegisterType<IPeilutManager, PeilutManager>();
+        container.RegisterType<IKavimManager, KavimManager>();
+        container.RegisterType<IErrorFlowManager, ErrorFlowManager>();
+        container.RegisterType<ISubErrorFlowFactory, SubErrorFlowFactory>();
         //Containers
-        ICardErrorContainer cardErrorContainer = container.Resolve<CardErrorContainer>();
-        container.RegisterInstance<ICardErrorContainer>(cardErrorContainer);
-        cardErrorContainer.Init();
+        
         //DAL
         container.RegisterType<IOvedDAL, OvedDAL>();
+        container.RegisterType<IKavimDAL, KavimDAL>();
+        container.RegisterType<ISidurDAL, SidurDAL>();
+        container.RegisterType<IPeilutDAL,PeilutDAL>();
+        container.RegisterType<IParametersDAL, ParametersDAL>();
         
         //var manager = container.Resolve<ISimpleCacheManager<int>>();
         //var item = container.Resolve<ISimpleCacheManager<string>>();
         InitServiceLocator(container);
-
         InitCacheItems(container);
+
+        //Init card error
+        ICardErrorContainer cardErrorContainer = container.Resolve<CardErrorContainer>();
+        container.RegisterInstance<ICardErrorContainer>(cardErrorContainer);
+        cardErrorContainer.Init();
+        
     }
 
     private void InitCacheItems(IUnityContainer container)

@@ -23,6 +23,8 @@ using KDSCommon.DataModels;
 using KDSCommon.Interfaces;
 using KDSCommon.Enums;
 using KDSCommon.Interfaces.Managers;
+using KDSCommon.Helpers;
+using KDSCommon.Interfaces.DAL;
 
 //using System.Web.UI;
 //using System.IO;
@@ -196,38 +198,38 @@ public class wsGeneral : System.Web.Services.WebService
     }
     [WebMethod(EnableSession = true)]
     private string BuildMakatDetails(DataTable dtMakat, string sTravelDate, string sShatYetiza, string sDayToAdd, 
-                                     long lNewMakat, long lOldMakat, int iSidurIndex, int iPeilutIndex, ref clPeilut _PeilutElement)
+                                     long lNewMakat, long lOldMakat, int iSidurIndex, int iPeilutIndex, ref PeilutDM _PeilutElement)
     {
         StringBuilder sXML = new StringBuilder();
         if (sShatYetiza.Equals("__:__")) sShatYetiza = "";
         DateTime dActivityDate = DateTime.Parse(sTravelDate + " " + sShatYetiza).AddDays(int.Parse(sDayToAdd));
-        clKavim _Kavim = new clKavim();
         DataTable dtElement=new DataTable();
-        clKavim.enMakatType oMakatType;
+        enMakatType oMakatType;
         DataRow[] dr;
-        clSidur _Sidur;
-        clPeilut _Peilut;
+        SidurDM _Sidur;
+        PeilutDM _Peilut;
         int iDefMinutesForElement, iDefMinForElemenTWithoutFactor;
         try
         {
-            _Sidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
-            _Peilut = (clPeilut)_Sidur.htPeilut[iPeilutIndex];
+            _Sidur = (SidurDM)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
+            _Peilut = (PeilutDM)_Sidur.htPeilut[iPeilutIndex];
 
             sXML.Append("<MAKAT>");
 
 
             if (dtMakat.Rows.Count > 0)
             {
-                oMakatType = (clKavim.enMakatType)GetMakatType(lNewMakat);
+                oMakatType = (enMakatType)GetMakatType(lNewMakat);
 
-                if (oMakatType == clKavim.enMakatType.mElement)
+                if (oMakatType == enMakatType.mElement)
                 {
                     sXML.Append(string.Concat("<DAKOT_DEF>", "", "</DAKOT_DEF>"));
                     sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "", "</DAKOT_DEF_TITLE>"));
 
                     long lElementValue;
                     //יכיל את מאפייני האלמנט
-                    dtElement = _Kavim.GetMeafyeneyElementByKod(lNewMakat, DateTime.Parse(sTravelDate));
+                    var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                    dtElement = kavimDal.GetMeafyeneyElementByKod(lNewMakat, DateTime.Parse(sTravelDate));
                     if (dtElement.Rows.Count > 0)
                     {
                         //ד.	אם שינו לאלמנט עם מאפיין 13 (דיווח בסידור מיוחד) וערך 2 (לא רשאי לדיווח בסידור מיוחד) והסידור הוא סידור מיוחד,  יש להציג הודעה: "אסור לדווח אלמנט זה בסידור מיוחד". 
@@ -328,7 +330,7 @@ public class wsGeneral : System.Web.Services.WebService
                 
                 switch (oMakatType)
                 {
-                    case clKavim.enMakatType.mKavShirut:
+                    case enMakatType.mKavShirut:
                         sXML.Append(string.Concat("<MAZAN_TASHLUM>", dtMakat.Rows[0]["mazantashlum"].ToString(), "</MAZAN_TASHLUM>"));
                         sXML.Append(string.Concat("<HYPER_LINK>", "1", "</HYPER_LINK>"));
                         sXML.Append(string.Concat("<SHILUT>", dtMakat.Rows[0]["shilut"].ToString(), "</SHILUT>"));
@@ -374,12 +376,12 @@ public class wsGeneral : System.Web.Services.WebService
                             sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
                         if (iPeilutIndex == 1) //נבדוק את הפעילות הקודמת, אם היא הכנת מכונה, נאפשר הוספת ריקה למעלה
                         {
-                            _Peilut = (clPeilut)_Sidur.htPeilut[iPeilutIndex-1];
+                            _Peilut = (PeilutDM)_Sidur.htPeilut[iPeilutIndex-1];
                             if (IsElementHachanatMechona(_Peilut.lMakatNesia))
                                 sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
                         }
                         break;
-                    case clKavim.enMakatType.mNamak:
+                    case enMakatType.mNamak:
                         sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
                         if ((!sShatYetiza.Equals("")) && (!String.IsNullOrEmpty(dtMakat.Rows[0]["kisuitor"].ToString())))
                             dActivityDate = dActivityDate.AddMinutes(-int.Parse(dtMakat.Rows[0]["kisuitor"].ToString()));
@@ -409,12 +411,12 @@ public class wsGeneral : System.Web.Services.WebService
                             sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
                         if (iPeilutIndex == 1) //נבדוק את הפעילות הקודמת, אם היא הכנת מכונה, נאפשר הוספת ריקה למעלה
                         {
-                            _Peilut = (clPeilut)_Sidur.htPeilut[iPeilutIndex-1];
+                            _Peilut = (PeilutDM)_Sidur.htPeilut[iPeilutIndex-1];
                             if (IsElementHachanatMechona(_Peilut.lMakatNesia))
                                 sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
                         }
                         break;
-                    case clKavim.enMakatType.mElement:
+                    case enMakatType.mElement:
                         sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
                         sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
                         sXML.Append(string.Concat("<SHILUT>", "", "</SHILUT>"));
@@ -428,7 +430,7 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "0", "</DAKOT_BAFOAL_ENABLED>"));
                         
                         break;
-                    case clKavim.enMakatType.mEmpty:
+                    case enMakatType.mEmpty:
                         sXML.Append(string.Concat("<MAZAN_TASHLUM>", dtMakat.Rows[0]["mazantashlum"].ToString(), "</MAZAN_TASHLUM>"));
                         sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
                         sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
@@ -445,12 +447,12 @@ public class wsGeneral : System.Web.Services.WebService
                             sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
                         if (iPeilutIndex == 1) //נבדוק את הפעילות הקודמת, אם היא הכנת מכונה, נאפשר הוספת ריקה למעלה
                         {
-                            _Peilut = (clPeilut)_Sidur.htPeilut[iPeilutIndex-1];
+                            _Peilut = (PeilutDM)_Sidur.htPeilut[iPeilutIndex-1];
                             if (IsElementHachanatMechona(_Peilut.lMakatNesia))
                                 sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
                         }
                         break;
-                    case clKavim.enMakatType.mVisa:
+                    case enMakatType.mVisa:
                         sXML.Append(string.Concat("<MAZAN_TASHLUM>", dtMakat.Rows[0]["mazantashlum"].ToString(), "</MAZAN_TASHLUM>"));
                         sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
                         sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
@@ -463,7 +465,7 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
                         //sXML.Append(string.Concat("<SHILUT_NAME>", COL_TRIP_VISUT, "</SHILUT_NAME>"));
                         break;
-                    case clKavim.enMakatType.mVisut:
+                    case enMakatType.mVisut:
                         sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
                         sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
                         sXML.Append(string.Concat("<SHILUT>", "", "</SHILUT>"));
@@ -1167,7 +1169,6 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string CheckOtoNo(long lOtoNo)
     {
-        clKavim oKavim = new clKavim();
         long lLicenseNumber = 0;
 
         try
@@ -1179,7 +1180,8 @@ public class wsGeneral : System.Web.Services.WebService
                 if (lOtoNo > 0)
                 {
                     //בודק אם מספר רכב קיים בתנועה ואם כן מחזיר מספר רישוי
-                    oKavim.GetBusLicenseNumber(lOtoNo, ref lLicenseNumber);
+                    var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                    kavimDal.GetBusLicenseNumber(lOtoNo, ref lLicenseNumber);
                 }
            // }
             return lLicenseNumber.ToString();
@@ -1192,11 +1194,10 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string GetKnisaActualMin(long lMakat, string sSidurDate, int iMisaprKnisa)
     {
-        clKavim _Kavim = new clKavim();
         DataSet dsMakat;
         int iResult;
-
-        dsMakat = _Kavim.GetKavimDetailsFromTnuaDS(lMakat, DateTime.Parse(sSidurDate), out iResult, 1);
+        var kavimdDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+        dsMakat = kavimdDal.GetKavimDetailsFromTnuaDS(lMakat, DateTime.Parse(sSidurDate), out iResult, 1);
         if (dsMakat.Tables[1].Rows.Count > 0)        
             return dsMakat.Tables[1].Rows[iMisaprKnisa-1]["mazan"].ToString();        
         else
@@ -1207,10 +1208,9 @@ public class wsGeneral : System.Web.Services.WebService
                              long lNewMakat, long lOldMakat, string sTravelDate, 
                              string sShatYetiza, string sDayToAdd)
     {
-        clKavim oKavim = new clKavim();
         string sResult = "0";
         DataTable dtDetailsFromTnua;
-        clPeilut _PeilutElement = new clPeilut();
+        PeilutDM _PeilutElement =null;
         try
         {
             if (Session["Parameters"] == null)
@@ -1222,7 +1222,8 @@ public class wsGeneral : System.Web.Services.WebService
                     //if ((sShatYetiza != string.Empty) || (sTravelDate != "01/01/0001"))
                     //{
                     //בדיקה אם קיים מקט בתנועה
-                    dtDetailsFromTnua = oKavim.GetMakatDetails(lNewMakat, DateTime.Parse(sCardDate));
+                    var kavimManager = ServiceLocator.Current.GetInstance<IKavimManager>();
+                    dtDetailsFromTnua = kavimManager.GetMakatDetails(lNewMakat, DateTime.Parse(sCardDate));
                     if (dtDetailsFromTnua.Rows.Count > 0)
                     {
                         sResult = BuildMakatDetails(dtDetailsFromTnua, DateTime.Parse(sCardDate).ToShortDateString(),
@@ -1244,34 +1245,33 @@ public class wsGeneral : System.Web.Services.WebService
    
     private void GetPeilyotTnuaDetails(int iMisparIshi, DateTime dCardDate, int iSidurIndex, 
                                        int iPeilutIndex, long lMakatNesia, DataTable dtPeilyotTnuaDetails,
-                                       clPeilut _PeilutElement)
+                                       PeilutDM _PeilutElement)
     {
         //string sCacheKey = iMisparIshi + dCardDate.ToShortDateString();
-        clKavim _Kavim = new clKavim();
         //DataTable _Peilyout;
         DataRow[] _PeilyotDetails;
-        clPeilut _Peilut;
-        clSidur _Sidur;
+        PeilutDM _Peilut;
+        SidurDM _Sidur;
         int iMakatType;
        // long lMakatNesia;
         try
         {
-            _Sidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
-            _Peilut =  (clPeilut)_Sidur.htPeilut[iPeilutIndex];
-            iMakatType = _Kavim.GetMakatType(lMakatNesia);
-            clKavim.enMakatType _MakatType;
-            _MakatType = (clKavim.enMakatType)iMakatType;
+            _Sidur = (SidurDM)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
+            _Peilut =  (PeilutDM)_Sidur.htPeilut[iPeilutIndex];
+            iMakatType = StaticBL.GetMakatType(lMakatNesia);
+            enMakatType _MakatType;
+            _MakatType = (enMakatType)iMakatType;
 
             //lMakatNesia = long.Parse(dtPeilyotTnuaDetails.Rows[0]["Makat8"].ToString());
            
             
-                //iMakatType = _Kavim.GetMakatType(lMakatNesia);
-                //clKavim.enMakatType _MakatType;
-                //_MakatType = (clKavim.enMakatType)iMakatType;
+                //iMakatType = StaticBL.GetMakatType(lMakatNesia);
+                //enMakatType _MakatType;
+                //_MakatType = (enMakatType)iMakatType;
                
                 switch (_MakatType)
                 {
-                    case clKavim.enMakatType.mKavShirut:
+                    case enMakatType.mKavShirut:
                         _Peilut.lMakatNesia = lMakatNesia;
                         _PeilyotDetails = dtPeilyotTnuaDetails.Select("Makat8=" + lMakatNesia.ToString());
                         if (_PeilyotDetails.Length > 0)
@@ -1288,7 +1288,7 @@ public class wsGeneral : System.Web.Services.WebService
                             AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
                         }
                         break;
-                    case clKavim.enMakatType.mEmpty:
+                    case enMakatType.mEmpty:
                         _Peilut.lMakatNesia = lMakatNesia;
                         _PeilyotDetails = dtPeilyotTnuaDetails.Select("Makat8=" + lMakatNesia.ToString());
                         if (_PeilyotDetails.Length > 0)
@@ -1307,7 +1307,7 @@ public class wsGeneral : System.Web.Services.WebService
                         }
                         break;
 
-                    case clKavim.enMakatType.mNamak:
+                    case enMakatType.mNamak:
                          _Peilut.lMakatNesia = lMakatNesia;
                          _PeilyotDetails = dtPeilyotTnuaDetails.Select("Makat8=" + lMakatNesia.ToString());
                          if (_PeilyotDetails.Length > 0)
@@ -1324,7 +1324,7 @@ public class wsGeneral : System.Web.Services.WebService
                              AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
                          }
                          break;
-                    case clKavim.enMakatType.mElement:
+                    case enMakatType.mElement:
                         _Peilut.sMakatDescription=dtPeilyotTnuaDetails.Rows[0]["TEUR_ELEMENT"].ToString();
                         _Peilut.sShilut = "";
                         _Peilut.sSugShirutName = "";
@@ -1340,7 +1340,7 @@ public class wsGeneral : System.Web.Services.WebService
                         _Peilut.lMakatNesia = lMakatNesia;
                          AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
                         break;
-                    case clKavim.enMakatType.mVisut:                       
+                    case enMakatType.mVisut:                       
                         break;
                 }                       
         }
@@ -1349,7 +1349,7 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
-    public void AddPeilutToPeiluyotDT(int iMisparIshi, DateTime dCardDate, ref clPeilut _Peilut)
+    public void AddPeilutToPeiluyotDT(int iMisparIshi, DateTime dCardDate, ref PeilutDM _Peilut)
     {
      
       DataRow dr;
@@ -1385,10 +1385,9 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public int GetMakatType(long lMakat)
     {
-        clKavim oKavim = new clKavim();
         try
         {
-            return oKavim.GetMakatType(lMakat);
+            return StaticBL.GetMakatType(lMakat);
         }
         catch (Exception ex)
         {
@@ -1719,13 +1718,13 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string GetSidurDetailsFromTnua(int sidur, string date)
     {
-        clKavim oKavim = new clKavim(); //.GetInstance();
         DataTable PirteySidur;
         int result;
 
         try
         {
-            PirteySidur = oKavim.GetSidurDetailsFromTnua(sidur, DateTime.Parse(date), out result);
+            var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+            PirteySidur = kavimDal.GetSidurDetailsFromTnua(sidur, DateTime.Parse(date), out result);
             if (result == 1)
                 return "-1";
             return "0";
@@ -2097,7 +2096,7 @@ public class wsGeneral : System.Web.Services.WebService
         else
         {
             OrderedDictionary odSidurim;
-            clSidur _Sidur = new clSidur();
+            SidurDM _Sidur = null;
             DateTime dSidurStartHour;
             DateTime dStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
 
@@ -2132,7 +2131,7 @@ public class wsGeneral : System.Web.Services.WebService
                 else
                 {
                     odSidurim = (OrderedDictionary)Session["Sidurim"];
-                    _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+                    _Sidur = (SidurDM)(odSidurim[iSidurIndex]);
                     _Sidur.dSidurDate = DateTime.Parse(sOrgStartHour);
                     if (IsNewSidurNahagutOrNihul(_Sidur))
                         sResult = "1,1";
@@ -2154,10 +2153,10 @@ public class wsGeneral : System.Web.Services.WebService
     public string UpdateShatGmar(int iSidurIndex, string sCardDate, string sShatGmar, int iAddDay)
     {
         OrderedDictionary odSidurim;
-        clSidur _Sidur = new clSidur();
+        SidurDM _Sidur = null;
 
         odSidurim = (OrderedDictionary)Session["Sidurim"];
-        _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+        _Sidur = (SidurDM)(odSidurim[iSidurIndex]);
         _Sidur.dFullShatGmar = DateTime.Parse(DateTime.Parse(sCardDate).AddDays(iAddDay).ToShortDateString() + " " + sShatGmar);
         _Sidur.sShatGmar = sShatGmar;
         return IsHashlamaAllowed(iSidurIndex, sCardDate) + "," + IsExecptionAllowed(iSidurIndex);
@@ -2169,12 +2168,12 @@ public class wsGeneral : System.Web.Services.WebService
         DataRow[] drSugSidur;
         OvedYomAvodaDetailsDM OvedYomAvoda = (OvedYomAvodaDetailsDM)Session["OvedYomAvodaDetails"];
         OrderedDictionary odSidurim;
-        clSidur _Sidur = new clSidur();
+        SidurDM _Sidur = null;
         var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
         odSidurim = (OrderedDictionary)Session["Sidurim"];
         if (odSidurim.Count > 0)
         {
-            _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+            _Sidur = (SidurDM)(odSidurim[iSidurIndex]);
             dtSugSidur = cache.GetCacheItem<DataTable>(CachedItems.SugeySidur);
             drSugSidur = clDefinitions.GetOneSugSidurMeafyen(_Sidur.iSugSidurRagil, DateTime.Parse(sCardDate), dtSugSidur);
             return clDefinitions.IsHashlamaAllowed(ref _Sidur, drSugSidur, OvedYomAvoda) ? "1" : "0";
@@ -2188,16 +2187,16 @@ public class wsGeneral : System.Web.Services.WebService
        
         clParametersDM _parameters = (clParametersDM)Session["Parameters"];
         OrderedDictionary odSidurim;
-        clSidur _Sidur = new clSidur();
+        SidurDM _Sidur = null;
         string sCharigaType="";
         odSidurim = (OrderedDictionary)Session["Sidurim"];
         if (odSidurim.Count > 0)
         {
-            _Sidur = (clSidur)(odSidurim[iSidurIndex]);
-            if (_Sidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+            _Sidur = (SidurDM)(odSidurim[iSidurIndex]);
+            if (_Sidur.oSidurStatus == SidurDM.enSidurStatus.enNew)
             {
-               
-                clMeafyenyOved _MeafyenyOved = (clMeafyenyOved)Session["MeafyenyOved"];
+
+                MeafyenimDM _MeafyenyOved = (MeafyenimDM)Session["MeafyenyOved"];
                 return clDefinitions.IsExceptionAllowedForSidurMyuchad(ref _Sidur, ref sCharigaType, ref _MeafyenyOved, ref _parameters) ? "1" : "0";
             }
             else
@@ -2206,7 +2205,7 @@ public class wsGeneral : System.Web.Services.WebService
         else
             return "0";
     }
-    private bool IsNewSidurNahagutOrNihul(clSidur _Sidur)
+    private bool IsNewSidurNahagutOrNihul(SidurDM _Sidur)
     {
        // DataRow dr;
        // DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
@@ -2222,8 +2221,8 @@ public class wsGeneral : System.Web.Services.WebService
         //odSidurim = (OrderedDictionary)Session["Sidurim"];
         ////for (int i = 0; i <= odSidurim.Count - 1; i++)
         ////{
-        //_Sidur = (clSidur)(odSidurim[iSidutIndex]);
-            //if ((_Sidur.iMisparSidur == iSidurNumber) && (_Sidur.oSidurStatus == clSidur.enSidurStatus.enNew))
+        //_Sidur = (SidurDM)(odSidurim[iSidutIndex]);
+            //if ((_Sidur.iMisparSidur == iSidurNumber) && (_Sidur.oSidurStatus == SidurDM.enSidurStatus.enNew))
             //{
             //    bFound = true;
             //    break;
@@ -2256,12 +2255,12 @@ public class wsGeneral : System.Web.Services.WebService
         DataRow[] dr;
         DateTime dtOrgDate, dtCardDate;
         OrderedDictionary odSidurim;
-        clSidur _Sidur;
+        SidurDM _Sidur;
         
         odSidurim = (OrderedDictionary)Session["Sidurim"];
-        _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+        _Sidur = (SidurDM)(odSidurim[iSidurIndex]);
         dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOldStartHour).ToShortTimeString() + "'");
-        if ((dr.Length > 0) && (_Sidur.oSidurStatus != clSidur.enSidurStatus.enNew))
+        if ((dr.Length > 0) && (_Sidur.oSidurStatus != SidurDM.enSidurStatus.enNew))
         {
             dr[0]["sidur_number"] = iSidurKey;
             dr[0]["sidur_start_hour"] = sNewStartHour;
@@ -2299,14 +2298,14 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public int MeafyenSidurMapaExists(int imisSidur, string sTaarich, int iMeafyen, int iErech)
     {
-        clKavim oKavim = new clKavim();
         clUtils oUtils = new clUtils();
         DataTable PirteySidur, dtMeafyeneySidur;
         int result,sugSidur;
         string sSql;
         try
         {
-            PirteySidur = oKavim.GetSidurDetailsFromTnua(imisSidur,DateTime.Parse(sTaarich), out result);
+            var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+            PirteySidur = kavimDal.GetSidurDetailsFromTnua(imisSidur,DateTime.Parse(sTaarich), out result);
             if (PirteySidur.Rows.Count > 0)
             {
                 if (PirteySidur.Rows[0]["sugsidur"].ToString() != "")
@@ -2422,8 +2421,8 @@ public class wsGeneral : System.Web.Services.WebService
         StringBuilder sXML = new StringBuilder();
         DataRow[] dr;
         OvedYomAvodaDetailsDM OvedYomAvoda = (OvedYomAvodaDetailsDM)Session["OvedYomAvodaDetails"];
-        clMeafyenyOved _MeafyenyOved = (clMeafyenyOved)Session["MeafyenyOved"];
-        clSidur _Sidur= (clSidur)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
+        MeafyenimDM _MeafyenyOved = (MeafyenimDM)Session["MeafyenyOved"];
+        SidurDM _Sidur= (SidurDM)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
       
         try
         {
@@ -2473,9 +2472,9 @@ public class wsGeneral : System.Web.Services.WebService
                 dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen54.GetHashCode().ToString() + " and erech='"+ clGeneral.enMeafyenSidur54.enAdministrator.GetHashCode().ToString()+ "')");
                 if (dr.Length > 0)
                 {
-                    if (((_Sidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) && (!_MeafyenyOved.Meafyen5Exists) && (!_MeafyenyOved.Meafyen6Exists))
-                        || (((_Sidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (OvedYomAvoda.sShabaton.Equals("1"))) && ((!_MeafyenyOved.Meafyen7Exists) && (!_MeafyenyOved.Meafyen8Exists)))
-                        || (((OvedYomAvoda.sErevShishiChag.Equals("1") || ((_Sidur.sSidurDay != clGeneral.enDay.Shishi.GetHashCode().ToString()) && (_Sidur.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString())))) && ((!_MeafyenyOved.Meafyen4Exists) && (!_MeafyenyOved.Meafyen5Exists))))
+                    if (((_Sidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) && (!_MeafyenyOved.IsMeafyenExist(5)) && (!_MeafyenyOved.IsMeafyenExist(6)))
+                        || (((_Sidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (OvedYomAvoda.sShabaton.Equals("1"))) && ((!_MeafyenyOved.IsMeafyenExist(7)) && (!_MeafyenyOved.IsMeafyenExist(8))))
+                        || (((OvedYomAvoda.sErevShishiChag.Equals("1") || ((_Sidur.sSidurDay != clGeneral.enDay.Shishi.GetHashCode().ToString()) && (_Sidur.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString())))) && ((!_MeafyenyOved.IsMeafyenExist(4)) && (!_MeafyenyOved.IsMeafyenExist(5)))))
 
                         sXML.Append(string.Concat("<CHARIGA>", "1", "</CHARIGA>"));
                     else
@@ -2530,16 +2529,16 @@ public class wsGeneral : System.Web.Services.WebService
     }
     private void UpdateSidurimCash(int iSidurNumber, int iSidurIndex, DateTime dCardDate)
     {        
-        clSidur _Sidur;
+        SidurDM _Sidur;
         DataTable dt;
         
         //Get Sidur from session
-        _Sidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
+        _Sidur = (SidurDM)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
         //Update sidurim cash with new sidur
         dt = clWorkCard.GetMeafyeneySidurById(dCardDate,iSidurNumber);
         if (dt.Rows.Count > 0)
         {
-            _Sidur.oSidurStatus = clSidur.enSidurStatus.enNew;
+            _Sidur.oSidurStatus = SidurDM.enSidurStatus.enNew;
             _Sidur.bSidurMyuhad = true;
             _Sidur.iMisparSidur = iSidurNumber;
             _Sidur.iMisparSidurMyuhad = iSidurNumber;
@@ -2605,7 +2604,7 @@ public class wsGeneral : System.Web.Services.WebService
     //{
     //    string sReturn = "0";
     //    OrderedDictionary htSidurim = (OrderedDictionary)(Session["Sidurim"]);
-    //    clSidur _Sidur = (clSidur)htSidurim[iSidurIndex];
+    //    SidurDM _Sidur = (SidurDM)htSidurim[iSidurIndex];
     //    DataTable dtSugeySidur = clDefinitions.GetSugeySidur();
     //    DataRow[] drSugSidur;
     //    bool bSidurDriver=false;
@@ -2618,7 +2617,7 @@ public class wsGeneral : System.Web.Services.WebService
     //        //אם הסידור הראשון הוא סידור נהגות, נבדוק את הסידור הבא
     //        if (bSidurDriver)
     //        {
-    //            _Sidur = (clSidur)htSidurim[iSidurIndex+1];
+    //            _Sidur = (SidurDM)htSidurim[iSidurIndex+1];
     //            drSugSidur = clDefinitions.GetOneSugSidurMeafyen(_Sidur.iSugSidurRagil, DateTime.Parse(sCardDate), dtSugeySidur);
     //            if (drSugSidur.Length > 0)
     //            {

@@ -6,6 +6,7 @@ using KdsLibrary.BL;
 using System.Data;
 using KdsBatch.Entities;
 using KdsLibrary;
+using KDSCommon.Enums;
 
 namespace KdsBatch.Errors
 {
@@ -66,11 +67,11 @@ namespace KdsBatch.Errors
                     if (oDay.CardErrors.Count > 0)
                     {
                         oDal.InsertErrorsToTbShgiot(oDay);
-                        oDay.CardStatus = clGeneral.enCardStatus.Error;
+                        oDay.CardStatus = CardStatus.Error;
                     }
                     else
                     {
-                        oDay.CardStatus = clGeneral.enCardStatus.Valid;
+                        oDay.CardStatus = CardStatus.Valid;
                     }
                     if (oDay.CardStatus.GetHashCode() != oDay.iStatus)
                     {

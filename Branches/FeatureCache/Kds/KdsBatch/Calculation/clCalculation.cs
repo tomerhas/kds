@@ -321,7 +321,6 @@ namespace KdsBatch
                DateTime dTarMe, dTarAd;
                DataSet dsChishuv=null;
                clUtils oUtils = new clUtils();
-               clKavim oKavim = new clKavim();
                bStatus = false;
                try
                {

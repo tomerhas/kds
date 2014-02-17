@@ -77,12 +77,6 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KdsDataImport">
-      <HintPath>..\KdsDataImport\bin\Debug\KdsDataImport.dll</HintPath>
-    </Reference>
-    <Reference Include="KdsWorkFlow">
-      <HintPath>..\KdsWorkFlow\bin\Debug\KdsWorkFlow.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
@@ -161,13 +155,25 @@
     <Content Include="runMacro.vbs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\KDSCommon\KDSCommon.csproj">
+      <Project>{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}</Project>
+      <Name>KDSCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsBatch\KdsBatch.csproj">
       <Project>{482BDA70-9AF2-4498-9627-E9C43EE44FDF}</Project>
       <Name>KdsBatch</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KdsDataImport\KdsDataImport.vbproj">
+      <Project>{d4a152ec-27eb-4c8c-bdab-4012680da683}</Project>
+      <Name>KdsDataImport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
       <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
       <Name>KdsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsWorkFlow\KdsWorkFlow.csproj">
+      <Project>{8979010c-fe5c-4652-8027-fff2378353e3}</Project>
+      <Name>KdsWorkFlow</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

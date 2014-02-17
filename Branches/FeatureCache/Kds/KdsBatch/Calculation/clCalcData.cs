@@ -9,6 +9,8 @@ using KdsLibrary.BL;
 using KDSCommon.DataModels;
 using KDSCommon.Interfaces;
 using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Managers;
+using KDSCommon.Interfaces.DAL;
 
 namespace KdsBatch
 {
@@ -31,7 +33,7 @@ namespace KdsBatch
         private static DataTable _dtParameters;
         private static List<clParametersDM> _listParametersMonth;
         private static DataTable _dtMeafyenyOvedMonth;
-        private static List<clMeafyenyOved> _listMeafyeneyOvedMonth;
+        private static List<MeafyenimDM> _listMeafyeneyOvedMonth;
 
         public static int iSugYom;
         public static string sSugYechida;
@@ -117,7 +119,7 @@ namespace KdsBatch
         }
 
 
-        public static List<clMeafyenyOved> ListMeafyeneyOvedMonth
+        public static List<MeafyenimDM> ListMeafyeneyOvedMonth
         {
             set { _listMeafyeneyOvedMonth = value; }
             get { return _listMeafyeneyOvedMonth; }
@@ -298,10 +300,10 @@ namespace KdsBatch
         public static DataTable GetNetunimMashar(string sKodRechev)
         {
             DataTable dtMashar;
-            clKavim oKavim = new clKavim();
             try
             {
-                dtMashar = oKavim.GetMasharData(sKodRechev);
+                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                dtMashar = kavimDal.GetMasharData(sKodRechev);
 
                 return dtMashar;
             }
@@ -402,14 +404,16 @@ namespace KdsBatch
         public static void InitListMeafyenyOvedObject(int iMisparIshi, DateTime dTarMe, DateTime dTarAd)
         {
             clOvdim oOvdim = new clOvdim();
-            clMeafyenyOved itemMeafyenyOved;
+            MeafyenimDM itemMeafyenyOved;
             try
             {
                 DtMeafyenyOvedMonth = oOvdim.GetMeafyeneyBitzuaLeOvedAll(iMisparIshi, dTarMe, dTarAd, 1);
-                ListMeafyeneyOvedMonth = new List<clMeafyenyOved>();
+                ListMeafyeneyOvedMonth = new List<MeafyenimDM>();
                 while (dTarMe <= dTarAd)
                 {
-                    itemMeafyenyOved = new clMeafyenyOved(iMisparIshi, dTarMe, "Calc");
+                    var ovedManager = ServiceLocator.Current.GetInstance<IOvedManager>();
+                    //itemMeafyenyOved = new clMeafyenyOved(iMisparIshi, dTarMe, "Calc");
+                    itemMeafyenyOved = ovedManager.CreateMeafyenyOved(iMisparIshi, dTarMe);
                     ListMeafyeneyOvedMonth.Add(itemMeafyenyOved);
                     dTarMe = dTarMe.AddDays(1);
                 }

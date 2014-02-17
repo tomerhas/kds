@@ -14,10 +14,11 @@ using Microsoft.Practices.ServiceLocation;
 using KDSCommon.DataModels;
 using KDSCommon.Enums;
 using KDSCommon.Interfaces;
+using KDSCommon.Interfaces.Managers;
 public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
 {
     public  clParametersDM _objParameters;
-    public clMeafyenyOved _MeafyeneyOved;
+    public MeafyenimDM _MeafyeneyOved;
     public string sDateCard; 
     private string[] arrParams;
     private int iMisparIshiKiosk;
@@ -54,9 +55,10 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
             ViewState["MisparIshi"] = int.Parse(Request.QueryString["MisparIshi"].ToString());
             ViewState["DateCard"] = DateTime.Parse(Request.QueryString["DateCard"].ToString());
 
-             _MeafyeneyOved = new clMeafyenyOved(int.Parse(Request.QueryString["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
+            var ovedManager = ServiceLocator.Current.GetInstance<IOvedManager>();
+             _MeafyeneyOved = ovedManager.CreateMeafyenyOved(int.Parse(Request.QueryString["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
              IParametersManager paramManager = ServiceLocator.Current.GetInstance<IParametersManager>();
-             _objParameters = paramManager.CreateClsParametrs(DateTime.Parse(ViewState["DateCard"].ToString()), clGeneral.GetSugYom(cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim), DateTime.Parse(ViewState["DateCard"].ToString()), cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim)));//, _MeafyeneyOved.iMeafyen56));
+             _objParameters = paramManager.CreateClsParametrs(DateTime.Parse(ViewState["DateCard"].ToString()), clGeneral.GetSugYom(cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim), DateTime.Parse(ViewState["DateCard"].ToString()), cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim)));//, _MeafyeneyOved.GetMeafyen(56).IntValue));
            
             if (!Page.IsPostBack)
             {
@@ -178,7 +180,7 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                                             item.Selected = true;
                                         }
                                      }
-                                    //else if (item.Value == "99822" && (_MeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() || ((DataTable)ViewState["dtSidurim"]).Rows.Count>0))
+                                    //else if (item.Value == "99822" && (_MeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() || ((DataTable)ViewState["dtSidurim"]).Rows.Count>0))
                                     //    {
                                     //        item.Enabled = false;
                                     //    } 

@@ -7,7 +7,7 @@ using KDSCommon.Enums;
 
 namespace KdsBatch.Errors.BasicErrorsLib.ErrosrImpl.DayErrors
 {
-    public class DayErrorHrStatusValid01 : CardErrorBase
+    public class DayErrorHrStatusValid01 : DayErrorBase
     {
         public override bool InternalIsCorrect(ErrorInputData input)
         {

@@ -801,7 +801,7 @@
 //            try
 //            {//נשמור את זמן הפעילות 
 //                dPrevStartPeilut = oPeilut.dFullShatYetzia;
-//                if (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode())
+//                if (oPeilut.iMakatType == enMakatType.mElement.GetHashCode())
 //                {
 //                    //אם אלמנט זמן
 //                    //אבל לא אלמנט זמן מסוג המתנה
@@ -906,10 +906,10 @@
 //                        {
 //                            case "1":
 //                                //אם שעת כניסה המוגדרת לעובד פחות שעת הכניסה בפועל קטנה מפרמטר 41 המגדיר מינימום לחריגה ומדווח חריגה נעלה שגיאה
-//                                if (!string.IsNullOrEmpty(oSidur.sShatHatchala) && (oMeafyeneyOved.Meafyen3Exists))
+//                                if (!string.IsNullOrEmpty(oSidur.sShatHatchala) && (oMeafyeneyOved.IsMeafyenExist(3)))
 //                                {
 //                                    iShatHatchala = clDefinitions.GetTimeInMinuts(oSidur.sShatHatchala);
-//                                    iMeafyen3 = clDefinitions.GetTimeInMinuts(oMeafyeneyOved.sMeafyen3);
+//                                    iMeafyen3 = clDefinitions.GetTimeInMinuts(oMeafyeneyOved.GetMeafyen(3).Value);
 //                                    if (iShatHatchala < iMeafyen3)
 //                                    {
 //                                        if ((iMeafyen3 - iShatHatchala) < oParam.iZmanChariga)
@@ -920,10 +920,10 @@
 //                                }
 //                                break;
 //                            case "2":
-//                                if (!string.IsNullOrEmpty(oSidur.sShatGmar) && (oMeafyeneyOved.Meafyen4Exists))
+//                                if (!string.IsNullOrEmpty(oSidur.sShatGmar) && (oMeafyeneyOved.IsMeafyenExist(4)))
 //                                {//כנ"ל לגבי שעת יציאה
 //                                    iShatGmar = clDefinitions.GetTimeInMinuts(oSidur.sShatGmar);
-//                                    iMeafyen4 = clDefinitions.GetTimeInMinuts(oMeafyeneyOved.sMeafyen4);
+//                                    iMeafyen4 = clDefinitions.GetTimeInMinuts(oMeafyeneyOved.GetMeafyen(4).Value);
 //                                    if (iShatGmar > iMeafyen4)
 //                                    {
 //                                        if ((iShatGmar - iMeafyen4) < oParam.iZmanChariga)
@@ -935,10 +935,10 @@
 //                                break;
 //                            case "3":
 //                                //אם שעת כניסה המוגדרת לעובד פחות שעת הכניסה בפועל קטנה מפרמטר 41 המגדיר מינימום לחריגה ומדווח חריגה נעלה שגיאה
-//                                if (!string.IsNullOrEmpty(oSidur.sShatHatchala) && (oMeafyeneyOved.Meafyen3Exists))
+//                                if (!string.IsNullOrEmpty(oSidur.sShatHatchala) && (oMeafyeneyOved.IsMeafyenExist(3)))
 //                                {
 //                                    iShatHatchala = clDefinitions.GetTimeInMinuts(oSidur.sShatHatchala);
-//                                    iMeafyen3 = clDefinitions.GetTimeInMinuts(oMeafyeneyOved.sMeafyen3);
+//                                    iMeafyen3 = clDefinitions.GetTimeInMinuts(oMeafyeneyOved.GetMeafyen(3).Value);
 //                                    if (iShatHatchala < iMeafyen3)
 //                                    {
 //                                        if ((iMeafyen3 - iShatHatchala) < oParam.iZmanChariga)
@@ -947,10 +947,10 @@
 //                                        }
 //                                    }
 //                                }
-//                                if (!string.IsNullOrEmpty(oSidur.sShatGmar) && (oMeafyeneyOved.Meafyen4Exists))
+//                                if (!string.IsNullOrEmpty(oSidur.sShatGmar) && (oMeafyeneyOved.IsMeafyenExist(4)))
 //                                {//כנ"ל לגבי שעת יציאה
 //                                    iShatGmar = clDefinitions.GetTimeInMinuts(oSidur.sShatGmar);
-//                                    iMeafyen4 = clDefinitions.GetTimeInMinuts(oMeafyeneyOved.sMeafyen4);
+//                                    iMeafyen4 = clDefinitions.GetTimeInMinuts(oMeafyeneyOved.GetMeafyen(4).Value);
 //                                    if (iShatGmar > iMeafyen4)
 //                                    {
 //                                        if ((iShatGmar - iMeafyen4) < oParam.iZmanChariga)
@@ -1494,7 +1494,7 @@
 //                    else
 //                    { //אם לא קיימים מאפיינים 51 ו61-
 //                        //לא אמור להיות ערך בשדה 
-//                        if ((!oMeafyeneyOved.Meafyen51Exists) && (!oMeafyeneyOved.Meafyen61Exists))
+//                        if ((!oMeafyeneyOved.IsMeafyenExist(51)) && (!oMeafyeneyOved.IsMeafyenExist(61)))
 //                        {
 //                            bError = true;
 //                        }
@@ -1569,7 +1569,7 @@
 //            /*מפעילים את הרוטינה לזיהיו סוג מקט. אם חוזר שסוג המקט הוא אלמנט יש לבדוק שהמשך שלו אינו גדול מזמן הסידור. משך האלמנט רשום בדקות בספרות 4-6 שלו.
 //            */            
 //                //iSidurTime = int.Parse(oSidur.sShatGmar.Replace(":", "")) * 60 - int.Parse(oSidur.sShatHatchala.Replace(":", "")) * 60;           
-//            if ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.sElementZviraZman != clGeneral.enSectorZviratZmanForElement.ElementZviratZman.GetHashCode().ToString()) && (oPeilut.sElementInMinutes == "1"))
+//            if ((oPeilut.iMakatType == enMakatType.mElement.GetHashCode()) && (oPeilut.sElementZviraZman != clGeneral.enSectorZviratZmanForElement.ElementZviratZman.GetHashCode().ToString()) && (oPeilut.sElementInMinutes == "1"))
 //                {
 //                    iElementTime = int.Parse(lMakatNesia.ToString().Substring(3, 3));
 //                    if (iElementTime >(fSidurTime))
@@ -1920,7 +1920,7 @@
 
 //                        //אם אלמנט ולידיעה לא נבצע את הבדיקה
                       
-//                        if ((!((oPeilut.iMakatType == (long)clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.iElementLeYedia == 2))) && (lMakatNesia > 0))
+//                        if ((!((oPeilut.iMakatType == (long)enMakatType.mElement.GetHashCode()) && (oPeilut.iElementLeYedia == 2))) && (lMakatNesia > 0))
 //                        {
 //                            if (oSidur.dFullShatHatchala.Year > clGeneral.cYearNull)
 //                            {//בדיקה 121
@@ -2084,7 +2084,7 @@
 //                {
 //                    //שגיאה 69
 //                    //בודקים אם הפעילות דורשת מספר רכב ואם הוא קיים וחוקי (מול מש"ר). פעילות דורשת מספר רכב אם מרוטינת זיהוי מקט חזר פרמטר שונה מאלמנט. אם חזר מהרוטינה אלנמט יש לבדוק אם דורש מספר רכב. תהיה טבלה של מספר פעילות המתחילים ב- 7 ולכל רשומה יהיה מאפיין אם הוא דורש מספר רכב. בטבלת מאפייני אלמנטים (11 - חובה מספר רכב)
-//                    if ((!(oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode())) || ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bBusNumberMustExists)))
+//                    if ((!(oPeilut.iMakatType == enMakatType.mElement.GetHashCode())) || ((oPeilut.iMakatType == enMakatType.mElement.GetHashCode()) && (oPeilut.bBusNumberMustExists)))
 //                    {
 //                        drNew = dtErrors.NewRow();
 //                        InsertErrorRow(oSidur, ref drNew, "מספר רכב לא תקין/חסר מספר רכב", enErrors.errOtoNoNotExists.GetHashCode());
@@ -2173,7 +2173,7 @@
 //                //אם  יש ערך בשדה לינה ובסידור האחרון יש פעילות מסוג אלמנט (לפי רוטינת זיהוי מקט) ולאלמנט יש מאפיין המתנה (15) - יוצא לשגיאה
 //                if (!string.IsNullOrEmpty(oOvedYomAvodaDetails.sLina))
 //                {
-//                    if ((oSidur.iMisparSidur == iLastMisaprSidur) && (int.Parse(oOvedYomAvodaDetails.sLina) > 0) && (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bElementHamtanaExists ))
+//                    if ((oSidur.iMisparSidur == iLastMisaprSidur) && (int.Parse(oOvedYomAvodaDetails.sLina) > 0) && (oPeilut.iMakatType == enMakatType.mElement.GetHashCode()) && (oPeilut.bElementHamtanaExists ))
 //                    {
 //                        drNew = dtErrors.NewRow();
 //                        InsertErrorRow(oSidur, ref drNew, "לא זכאי ללינה", enErrors.errLoZakaiLLina.GetHashCode());
@@ -2245,7 +2245,7 @@
 //                // אם הפעילות היא אלמנט
 //                //,והאלמנט הוא נהגות ובדקות
 //                //אז נבדוק שזמן הסידור לא חורג
-//                if ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.sElementZviraZman == clGeneral.enSectorZviratZmanForElement.ElementZviratZman.GetHashCode().ToString()) && (oPeilut.sElementInMinutes == "1"))
+//                if ((oPeilut.iMakatType == enMakatType.mElement.GetHashCode()) && (oPeilut.sElementZviraZman == clGeneral.enSectorZviratZmanForElement.ElementZviratZman.GetHashCode().ToString()) && (oPeilut.sElementInMinutes == "1"))
 //                {
 //                    if (oPeilut.lMakatNesia > 0)
 //                    {
@@ -2589,7 +2589,7 @@
 //            try
 //            {
 //                //שגיאה חדשה - היום נבדק רק בחישוב !!! לעובד מגיע זמן נסיעה משתנה (מאפיין 61 במאפייני עובדים) עפ"י מקום החתמת השעון. נבנתה טבלה המכילה את זמני הנסיעה ממקום מגוריו של העובד (נקבע עפ"י מרכז הארוע - קוד נתון 10 בטבלת פרטי עובדים) אל מיקום שעון כניסה וממיקום שעון יציאה הביתה. לעיתים חסר נתון בטבלה וזאת השגיאה.  כדי לדעת מה הערך הרלוונטי לעובד יש להפעיל את "הפרוצדורה של שרי"
-//                if (oMeafyeneyOved.Meafyen61Exists) // אם קיים מאפיין 61, לעובד מגיע זמן נסיעה משתנה
+//                if (oMeafyeneyOved.IsMeafyenExist(61)) // אם קיים מאפיין 61, לעובד מגיע זמן נסיעה משתנה
 //                {
 //                    if (oOvedYomAvodaDetails.bMercazEruaExists)
 //                    {
@@ -2653,8 +2653,8 @@
 //                //בסידורי ויזה מותר רק פעילויות שמתחילות ב- 5 (תעודת ויזה) או 7 (אלמנט). עבור אלמנט יש לבדוק אם הוא מותר בסידור ויזה (לפי ערך 1 (רשאי) במאפיין 12 (דיווח בסידור ויזה) בטבלת מאפייני אלמנטים). טבלת מאפייני אלמנטים תכיל מאפיינים לכל האלמנטים במערכת. מזהים סידור ויזה לפי מאפיין 45 בסידורים מיוחדים. 
 //                if (oSidur.bSidurVisaKodExists)
 //                {
-//                    iMakatType = oKavim.GetMakatType(oPeilut.lMakatNesia);
-//                    if (!((iMakatType == clKavim.enMakatType.mVisut.GetHashCode()) || ((iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.sDivuchInSidurVisa == "1"))))
+//                    iMakatType = StaticBL.GetMakatType(oPeilut.lMakatNesia);
+//                    if (!((iMakatType == enMakatType.mVisut.GetHashCode()) || ((iMakatType == enMakatType.mElement.GetHashCode()) && (oPeilut.sDivuchInSidurVisa == "1"))))
 //                    {
 //                        drNew = dtErrors.NewRow();
 //                        InsertErrorRow(oSidur, ref drNew, "נסיעה אסורה בסידור ויזה", enErrors.errNesiaInSidurVisaNotAllowed.GetHashCode());
@@ -2745,7 +2745,7 @@
 //            try
 //            {
 //                //עובדים במרכז נ.צ.ר רשאים לעבוד שם רק לאחר שעברו הכשרה. בסיומה מדווחים להם מאפיין 64. מזהים סידור נ.צ.ר לפי מאפיין 52 ערך 11(סידור נצר) בטבלת סידורים מיוחדים.
-//                if ((oSidur.bSidurMyuhad) && (oSidur.sSugAvoda == clGeneral.enSugAvoda.Netzer.GetHashCode().ToString()) && (!oMeafyeneyOved.Meafyen64Exists))
+//                if ((oSidur.bSidurMyuhad) && (oSidur.sSugAvoda == clGeneral.enSugAvoda.Netzer.GetHashCode().ToString()) && (!oMeafyeneyOved.IsMeafyenExist(64)))
 //                {
 //                    drNew = dtErrors.NewRow();
 //                    InsertErrorRow(oSidur, ref drNew, "לעובד אסור סידור נ.צ.ר", enErrors.errSidurNetzerNotValidForOved.GetHashCode());
@@ -2885,7 +2885,7 @@
 //            try
 //            {
 //                //אם יש ערך תקין בשדה ביטול נסיעות ולעובד אין מאפיין 51 (זמן נסיעה קבוע) או 61 (זמן נסיעה משתנה) - זו שגיאה.                
-//                if ((!(string.IsNullOrEmpty(oOvedYomAvodaDetails.sBitulZmanNesiot))) && (!oMeafyeneyOved.Meafyen51Exists) && (!oMeafyeneyOved.Meafyen61Exists))
+//                if ((!(string.IsNullOrEmpty(oOvedYomAvodaDetails.sBitulZmanNesiot))) && (!oMeafyeneyOved.IsMeafyenExist(51)) && (!oMeafyeneyOved.IsMeafyenExist(61)))
 //                {
 //                    drNew = dtErrors.NewRow();
 //                    drNew["check_num"] = enErrors.errLoZakaiLeNesiot.GetHashCode();
@@ -2928,7 +2928,7 @@
 //            //בדיקה ברמת סידור
 //            try
 //            {//אסור לדווח סידור תפקיד אם אין לעובד מאפייני שעת התחלה / גמר (לפי מאפיינים 3/4 במאפייני עובדים). רלוונטי רק לסידורים מיוחדים, לא לרגילים.
-//                if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((!oMeafyeneyOved.Meafyen3Exists) || (!oMeafyeneyOved.Meafyen4Exists)))
+//                if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((!oMeafyeneyOved.IsMeafyenExist(3)) || (!oMeafyeneyOved.IsMeafyenExist(4))))
 //                {
 //                    drNew = dtErrors.NewRow();
 //                    InsertErrorRow(oSidur, ref drNew, "סידור תפקיד ללא מאפיין התחלה/גמר", enErrors.errSidurTafkidWithOutApprove.GetHashCode());
@@ -3040,7 +3040,7 @@
 //            try
 //            {
 //                //זמן תחילת פעילות לאחר זמן תחילת הפעילות הקודמת לה וזמן סיום הפעילות קודם לזמן סיום הפעילות הקודמת לה. זיהוי זמן הפעילות (זיהוי סוג פעילות לפי רוטינת זיהוי מק"ט) :עבור קו שירות, נמ"ק, ריקה, יש לפנות לקטלוג נסיעות כדי לקבל את הזמן. עבור אלמנט, במידה וזה אלמנט זמן (לפי ערך 1 במאפיין 4 בטבלת מאפייני אלמנטים), הזמן נלקח מפוזיציות 4-6 של האלמנט. בבדיקה זו אין  להתייחס לפעילות המתנה (מזהים פעילות המתנה (מסוג אלמנט) לפי מאפיין 15 בטבלת מאפייני אלמנטים).           
-//                if ((oPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode()) || (oPeilut.iMakatType == clKavim.enMakatType.mEmpty.GetHashCode()) || (oPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode()))
+//                if ((oPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode()) || (oPeilut.iMakatType == enMakatType.mEmpty.GetHashCode()) || (oPeilut.iMakatType == enMakatType.mNamak.GetHashCode()))
 //                {
 //                    dCurrStartPeilut = oPeilut.dFullShatYetzia;
 //                    dblTimeInMinutes = oPeilut.iMazanTichnun;
@@ -3049,7 +3049,7 @@
 //                else
 //                {
 //                    dCurrStartPeilut = oPeilut.dFullShatYetzia;
-//                    if (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode())
+//                    if (oPeilut.iMakatType == enMakatType.mElement.GetHashCode())
 //                    {
 //                        //אם אלמנט זמן
 //                        //אבל לא אלמנט זמן מסוג המתנה
@@ -3087,7 +3087,7 @@
 //                //השלמה ליום עבודה אסורה ביום שבתון (שבתון יכול להיות יום שבת (חוזר מה- Oracle) או שבטבלת סוגי ימים מיוחדים הוא מוגדר כשבתון) לעובד ללא מאפיין 07 (שעת התחלה מותרת בשבתון) או ביום שישי (אם חוזר 6 מה- Oracle) לעובד ללא מאפיין 05.
 //                if (!string.IsNullOrEmpty(oOvedYomAvodaDetails.sHashlamaLeyom))
 //                {    
-//                    if ((((oOvedYomAvodaDetails.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) || (oOvedYomAvodaDetails.sErevShishiChag=="1"))  && (!oMeafyeneyOved.Meafyen5Exists))
+//                    if ((((oOvedYomAvodaDetails.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) || (oOvedYomAvodaDetails.sErevShishiChag=="1"))  && (!oMeafyeneyOved.IsMeafyenExist(5)))
 //                        || ((((oOvedYomAvodaDetails.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oOvedYomAvodaDetails.sShabaton=="1")) && (!oMeafyeneyOved.Meafyen7Exists))))
 //                    {                       
 //                        drNew = dtErrors.NewRow();
@@ -3113,7 +3113,7 @@
 //            try
 //            {
 //                //סידור של ארועי קיץ חייב להיות לעובד אשר הוגדר עובד 6 ימים (מזהים לפי ערך 61, 62) במאפיין 56 במאפייני עובדים. סידור של ארועי קיץ = סידור מיוחד עם מאפיין 73
-//                if (((oSidur.bSidurInSummerExists) && (!oMeafyeneyOved.Meafyen56Exists)) || ((oMeafyeneyOved.Meafyen56Exists) && (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
+//                if (((oSidur.bSidurInSummerExists) && (!oMeafyeneyOved.IsMeafyenExist(56))) || ((oMeafyeneyOved.IsMeafyenExist(56)) && (oMeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (oMeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
 //                {
 //                    drNew = dtErrors.NewRow();
 //                    InsertErrorRow(oSidur, ref drNew, "סידור של ארועי קיץ לעובד 5 ימים", enErrors.errSidurSummerNotValidForOved.GetHashCode());
@@ -3234,7 +3234,7 @@
 //            try
 //            {
 //                //אלמנט 724 , המתנה , אסור מעל x דקות (פרמטר 161 מכסימום זמן המתנה ידני ללא אישור מיוחד). מעבר לכך יש להעביר לסבב אישורים (28). יש מקרים בהם יש הודעה כללית של התנועה על עיכובים ביום ובאזור מסויים ולכן אין צורך להעביר כל כרטיס לאישור אלא הרשמת מאשרת את השגיאה.
-//                if ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode())
+//                if ((oPeilut.iMakatType == enMakatType.mElement.GetHashCode())
 //                    && (oPeilut.bElementHamtanaExists))
 //                {
 //                    iTimeInMinutes = int.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
@@ -3261,7 +3261,7 @@
 //            try
 //            {
 //                //לעובד מאפיין זמן נסיעות  (51, 61) ועשה סידור נהגות.
-//                if ((oMeafyeneyOved.Meafyen51Exists) || (oMeafyeneyOved.Meafyen61Exists))
+//                if ((oMeafyeneyOved.IsMeafyenExist(51)) || (oMeafyeneyOved.IsMeafyenExist(61)))
 //                {
 //                    if (oSidur.bSidurMyuhad)
 //                    {//סידור מיוחד
@@ -3309,7 +3309,7 @@
 //            try
 //            {
 //                //זמן הכנת מכונה באלמנט הוא מוגבל בזמן הזמן משתנה אם זו הכנת מכונה ראשונה (אלמנט 701xxx00) ביום או נוספת (711xxx00). זיהוי הכנה ראשונה/נוספת ביום - אם הסידור בו מדווחת הכנת מכונה התחיל עד 8 בבוקר (לא כולל) זוהי הכנת מכונה ראשונה. כל הכנת מכונה נוספת/מאוחרת משעה 8 בבוקר (כולל) נחשבת להכנת מכונה נוספת. זמן תקין להכנת מכונה  ראשונה הוא עד הערך בפרמטר 120 (זמן הכנת מכונה ראשונה), זמן תקין להכנת מכונה נוספת הוא עד הערך בפרמטר 121 (זמן הכנת מכונה נוספת). ביום עבודה יש מקסימום זמן לסה"כ הכנות מכונה נוספות, זמן תקין לפי פרמטר 122 (מכסימום יומי להכנות מכונה נוספות דקות). ביום עבודה יש מקסימום זמן לסה"כ הכנות מכונה (ראשונה ונוספות), זמן תקין לפי פרמטר 123 (מכסימום יומי להכנות מכונה  דקות).      מקסימום הכנות מכונה מותר בסידור         יש מקסימום למספר הכנות מכונה מותרות בסידור, נבדק לפי פרמטר 124 (מכסימום הכנות מכונה בסידור אחד), לא משנה מה הסוג שלהן.      
-//                if ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (!String.IsNullOrEmpty(oPeilut.sShatYetzia)))
+//                if ((oPeilut.iMakatType == enMakatType.mElement.GetHashCode()) && (!String.IsNullOrEmpty(oPeilut.sShatYetzia)))
 //                {
 //                    iElementType = int.Parse(oPeilut.lMakatNesia.ToString().Substring(0,3));                    
 //                    if ((iElementType == 701) || (iElementType == 711))

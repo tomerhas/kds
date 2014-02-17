@@ -9,6 +9,9 @@ using System.Data;
 using KdsLibrary.UI;
 using KdsLibrary.UDT;
 using KdsBatch;
+using KDSCommon.DataModels.UDT;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.DAL;
 
 public partial class Modules_Ovdim_HosafatKnisot : KdsPage
 {
@@ -22,7 +25,6 @@ public partial class Modules_Ovdim_HosafatKnisot : KdsPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        clKavim oKavim = new clKavim();
         clUtils oUtils = new clUtils();
         DataSet dtMakat;
         DataTable dtParametrim;
@@ -67,7 +69,8 @@ public partial class Modules_Ovdim_HosafatKnisot : KdsPage
                 ViewState["Makat"] = lMakat;
                 tdHeader.InnerHtml = "  כניסות למק''ט " + lMakat;
 
-                dtMakat = oKavim.GetKavimDetailsFromTnuaDS(lMakat, DateTime.Parse(ViewState["SidurDate"].ToString()), out iResult, 1);
+                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                dtMakat = kavimDal.GetKavimDetailsFromTnuaDS(lMakat, DateTime.Parse(ViewState["SidurDate"].ToString()), out iResult, 1);
                 if (dtMakat.Tables[1].Rows.Count > 0)
                 {
                     sTeur = dtMakat.Tables[0].Rows[0]["Description"].ToString();

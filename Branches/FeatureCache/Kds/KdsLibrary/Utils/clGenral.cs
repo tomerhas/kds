@@ -32,7 +32,7 @@ namespace KdsLibrary
         #region pkg_rikuz_avoda constants
         public const string cProGetRikuzAvodaChodshiTemp = "PKG_RIKUZ_AVODA.pro_get_rikuz_chodshi_temp";
         #endregion
-        
+
         #region pkg_batch constants
         public const string cProInsBakasha = "pkg_batch.pro_ins_bakasha";
         public const string cProInsLogBakasha = "pkg_batch.pro_ins_log_bakasha";
@@ -79,10 +79,10 @@ namespace KdsLibrary
         public const string cProInsYameyAvodaHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Yamim";
         public const string cProInsSidurimOvdimHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Sidurim";
         public const string cProInsPeilutOvdimHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Peilut";
-        public const string cProInsNetuneyHistoryHodshi= "PKG_MF_HISTORY.Pro_Ins_historiya_chodshi";
+        public const string cProInsNetuneyHistoryHodshi = "PKG_MF_HISTORY.Pro_Ins_historiya_chodshi";
         public const string cProInsNetuneyHistoryYomi = "PKG_MF_HISTORY.Pro_Ins_historiya_yomi";
         public const string cProInsNetuneyHistoryCatalog = "PKG_MF_HISTORY.Ins_netuney_historiya_Catalog";
-#endregion 
+        #endregion
         #region pkg_sdrn constants
         public const string cProGetKnisotToRefresh = "PKG_sdrn.pro_get_Knisot_sdrm";
         public const string cProInsertKnisot = "PKG_sdrn.pro_insert_knisot";
@@ -94,32 +94,32 @@ namespace KdsLibrary
         public const string cProCheckOvedPutar = "pkg_calc.pro_get_oved_putar";
         public const string cProGetPeiluyotLeoved = "pkg_calc.pro_get_peiluyot_leoved";
         public const string cProGetPirteyOvedForMonth = "pkg_calc.pro_get_pirtey_oved_ForMonth";
-#endregion
+        #endregion
 
-#region kds_catalog_pack constants
+        #region kds_catalog_pack constants
         public const string cGetKavDetails = "kds_catalog_pack.GetKavDetails";
         public const string cGetRekaDetails = "kds_catalog_pack.GetRekaDetails";
         public const string cGetNamakDetails = "kds_catalog_pack.GetNamakDetails";
         public const string cGetRekaDetailsByXY = "kds_catalog_pack.GetRekaDetailsByXY";
-#endregion 
+        #endregion
 
-#region PKG_COMPONENT_SIDURIM constant
+        #region PKG_COMPONENT_SIDURIM constant
         public const string cProGetMatchingComponentSidurDesc = "PKG_COMPONENT_SIDURIM.pro_get_matching_description";
         public const string cProGetMatchingComponentSidurKod = "PKG_COMPONENT_SIDURIM.pro_get_matching_kod";
         public const string cProGetComponentSidurDescByKod = "PKG_COMPONENT_SIDURIM.pro_get_description_by_kod";
         public const string cProGetKodByComponentSidurDesc = "PKG_COMPONENT_SIDURIM.pro_get_kod_by_description";
         public const string cProGetHistoryOfComponentSidur = "PKG_COMPONENT_SIDURIM.pro_get_history";
-#endregion 
+        #endregion
 
-#region PKG_COMPONENT_SUG_SIDUR constant
+        #region PKG_COMPONENT_SUG_SIDUR constant
         public const string cProGetMatchingComponentTypeSidurDesc = "PKG_COMPONENT_SUG_SIDUR.pro_get_matching_description";
         public const string cProGetMatchingComponentTypeSidurKod = "PKG_COMPONENT_SUG_SIDUR.pro_get_matching_kod";
         public const string cProGetComponentTypeSidurDescByKod = "PKG_COMPONENT_SUG_SIDUR.pro_get_description_by_kod";
         public const string cProGetKodByComponentTypeSidurDesc = "PKG_COMPONENT_SUG_SIDUR.pro_get_kod_by_description";
         public const string cProGetHistoryOfComponentTypeSidur = "PKG_COMPONENT_SUG_SIDUR.pro_get_history";
-#endregion 
-        
-#region PKG_ELEMENTS constants
+        #endregion
+
+        #region PKG_ELEMENTS constants
         public const string cProGetDataByKodElement = "PKG_ELEMENTS.pro_get_data_by_kod_element";
         public const string cProGetElementsVeMeafyenim = "PKG_ELEMENTS.pro_get_elements_vemeafyenim";
         public const string cProGetTeurElements = "PKG_ELEMENTS.pro_get_teur_elements";
@@ -132,9 +132,9 @@ namespace KdsLibrary
         public const string cProGetAllElementsKod = "PKG_ELEMENTS.pro_get_all_elements_kod";
         public const string cProGetElementDetails = "PKG_ELEMENTS.pro_get_element_details";
         public const string cProGetVisutDetails = "PKG_ELEMENTS.pro_get_visut_details";
-#endregion
+        #endregion
 
-#region PKG_ERRORS constants
+        #region PKG_ERRORS constants
         public const string cFnIsOtoNumberExists = "pkg_errors.fn_is_oto_number_exists";
         public const string cProGetOvedSidurimPeilut = "pkg_errors.pro_get_oved_sidurim_peilut";
         public const string cProGetLastUpdateData = "PKG_ERRORS.pro_oved_update_fields";
@@ -147,10 +147,10 @@ namespace KdsLibrary
         public const string cProInsPeilutOvdim = "pkg_errors.pro_ins_peilut_ovdim";
         public const string cProGetAllErrorsAndFields = "pkg_errors.pro_get_all_shgiot";
         public const string cProGetApprovalErrors = "pkg_errors.get_approval_errors";
-        
-#endregion
 
-#region pkg_ovdim constants
+        #endregion
+
+        #region pkg_ovdim constants
         public const string cProGetHistoriatMeafyenLeoved = "pkg_ovdim.pro_get_historiat_meafyen";
         public const string cProGetMonthWorkToOved = "pkg_ovdim.pro_get_month_year_to_oved";
         public const string cProGetMonthHuavarLesacharToOved = "pkg_ovdim.pro_get_months_huavar_lesachar";
@@ -213,8 +213,8 @@ namespace KdsLibrary
         public const string cProSaveMeasherOmistayeg = "pkg_ovdim.pro_save_measher_O_mistayeg";
         public const string cProGetPakadId = "pkg_ovdim.pro_get_pakad_id";
         public const string cFunCheckPeilutExist = "pkg_ovdim.fun_check_peilut_exist";
-        public const string cFunCheckSidurExist = "pkg_ovdim.fun_check_sidur_exist";       
-        public const string cFunIsCardLastUpdate =  "pkg_ovdim.func_is_card_last_updated";
+        public const string cFunCheckSidurExist = "pkg_ovdim.fun_check_sidur_exist";
+        public const string cFunIsCardLastUpdate = "pkg_ovdim.func_is_card_last_updated";
         public const string cProUpdSadotNosafim = "pkg_ovdim.pro_upd_sadot_nosafim";
         public const string cProDelKnisotPeilut = "pkg_ovdim.pro_del_knisot_peilut";
         public const string cProDelHachanotMechona = "pkg_ovdim.pro_del_hachanot_mechona";
@@ -227,19 +227,19 @@ namespace KdsLibrary
         public const string cProGetOvdimLefiRikuzim = "pkg_ovdim.get_ovdim_by_Rikuzim";
         public const string cProGetCountWorkCardNoShaotLetahlum = "pkg_ovdim.fun_get_count_no_val_letashlum";
         public const string cProGetWorkCardNoShaotLetahlum = "pkg_ovdim.pro_get_workcad_no_val_letash";
-        
-#endregion
 
-#region PKG_PARAMETERS constants
+        #endregion
+
+        #region PKG_PARAMETERS constants
         public const string cProGetErechParameterByKod = "PKG_PARAMETERS.pro_get_erech_by_kod";
         public const string cProGetMatchingParametersDesc = "PKG_PARAMETERS.pro_get_matching_description";
         public const string cProGetMatchingParametersKod = "PKG_PARAMETERS.pro_get_matching_kod";
         public const string cProGetParameterDescByKod = "PKG_PARAMETERS.pro_get_description_by_kod";
         public const string cProGetKodByParametersDesc = "PKG_PARAMETERS.pro_get_kod_by_description";
         public const string cProGetHistoryOfParameters = "PKG_PARAMETERS.pro_get_history";
-#endregion
+        #endregion
 
-#region PKG_REQUEST constants
+        #region PKG_REQUEST constants
         public const string cProGetRequests = "PKG_REQUEST.pro_get_requests";
         public const string cProGetRequestsList = "PKG_REQUEST.pro_get_requests_list";
         public const string cProGetStatusRequest = "PKG_REQUEST.pro_get_status_request";
@@ -249,9 +249,9 @@ namespace KdsLibrary
         public const string cProGetListOvdimFromLogBakashot = "PKG_REQUEST.pro_get_ovdim_log_bakashot";
         public const string cProGetTahalichKlita = "PKG_REQUEST.pro_get_tahalich_klita";
         public const string cProGetLogTahalich = "PKG_REQUEST.pro_get_log_tahalich";
-#endregion
+        #endregion
 
-#region PKG_REPORTS constants
+        #region PKG_REPORTS constants
         public const string cProGetIdOfYameyAvoda = "PKG_REPORTS.pro_get_Id_of_Yamey_Avoda";
         public const string cProGetRizotChishuvLechodeshSucceeded = "PKG_REPORTS.pro_get_rizot_chishuv_lehodesh";
         public const string cProGetListReports = "PKG_REPORTS.pro_get_reports_list";
@@ -271,15 +271,15 @@ namespace KdsLibrary
         public const string cProGetHeavyReportsToDelete = "PKG_REPORTS.pro_get_HeavyReportsToDelete";
         public const string cProGetProfilToDisplay = "PKG_REPORTS.pro_get_ProfilToDisplay";
         public const string cProGetSnifeyTnuaByEzor = "PKG_REPORTS.pro_GetSnifeyTnuaByEzor";
-#endregion
+        #endregion
 
-#region PKG_SIDURIM constants
+        #region PKG_SIDURIM constants
         public const string cProGetSidurimLeoved = "PKG_SIDURIM.pro_get_sidurim_leoved";
         public const string cProInsUpdSidurimLeoved = "pkg_sidurim.pro_ins_upd_sidurim_ovdim";
         public const string cProGetMeafyeneySidur = "PKG_SIDURIM.pro_get_meafyen_sidur_by_kod";
         public const string cProTeurSidurWhithOutList = "PKG_SIDURIM.pro_get_teur_whithoutlist";
         public const string cProGetKodElement = "PKG_SIDURIM.pro_get_kod_element";
-        public const string cProKodSidurWhithOutList = "PKG_SIDURIM.pro_get_kod_whithoutlist"; 
+        public const string cProKodSidurWhithOutList = "PKG_SIDURIM.pro_get_kod_whithoutlist";
         public const string cProGetCtbSidurimWithMeafyen = "PKG_SIDURIM.pro_get_ctb_sidurim_meafyen";
         public const string cProGetMatchingSidurDesc = "PKG_SIDURIM.pro_get_matching_description";
         public const string cProGetMatchingSidurKod = "PKG_SIDURIM.pro_get_matching_kod";
@@ -295,10 +295,10 @@ namespace KdsLibrary
         public const string cProGetSibaLoLetashlum = "pkg_sidurim.pro_get_siba_lo_letashlum";
         public const string cProGetSidurimMeyuchadim = "pkg_sidurim.get_sidurim_meyuchadim_all";
         public const string cFuncGetNextErrCard = "pkg_ovdim.func_get_next_err_card";
-      //  public const string cProGetMeafyenimLesidurRagil = "PKG_SIDURIM.pro_get_meafyen_sidur_ragil";
-#endregion
+        //  public const string cProGetMeafyenimLesidurRagil = "PKG_SIDURIM.pro_get_meafyen_sidur_ragil";
+        #endregion
 
-#region PKG_SUG_SIDUR constant
+        #region PKG_SUG_SIDUR constant
         public const string cProGetMeafyeneySugSidur = "PKG_SUG_SIDUR.get_meafyeney_sug_sidur_all";
         public const string cProGetMatchingTypeSidurDesc = "PKG_SUG_SIDUR.pro_get_matching_description";
         public const string cProGetMatchingTypeSidurKod = "PKG_SUG_SIDUR.pro_get_matching_kod";
@@ -308,36 +308,36 @@ namespace KdsLibrary
         public const string cProRefreshSugSidur = "PKG_SUG_SIDUR.calling_Pivot_Meafyeney_S";
         public const string cProGetSugeySidurFromTnua = "PKG_SUG_SIDUR.pro_get_sugey_sidur_tnua";
         public const string cFunGetSugSidur = "PKG_SUG_SIDUR.fun_get_sug_sidur";
-#endregion 
+        #endregion
 
 
-public const string cProGetYamimMeyuchadim = "pkg_utils.pro_get_yamim_meyuchadim";
-public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim_meyuchadim";
-     
+        public const string cProGetYamimMeyuchadim = "pkg_utils.pro_get_yamim_meyuchadim";
+        public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim_meyuchadim";
 
 
-#region KDS_SIDUR_AVODA_PACK constants 
+
+        #region KDS_SIDUR_AVODA_PACK constants
         public const string cGetSidurDetails = "KDS_SIDUR_AVODA_PACK.GetSidurDetails";
-#endregion
-       
-#region pkg_tnua constants
-        public const string cGetKatalogKavim = "pkg_tnua.pro_get_kavim_details";        
+        #endregion
+
+        #region pkg_tnua constants
+        public const string cGetKatalogKavim = "pkg_tnua.pro_get_kavim_details";
         public const string cProGetMasharBusLicenseNum = "pkg_tnua.pro_get_mashar_bus_license_num";
         public const string cProGetMasharData = "PKG_TNUA.pro_get_mashar_data";
         public const string cProGetBusesDetails = "PKG_TNUA.pro_get_buses_details";
-       
-#endregion
+
+        #endregion
 
 
-#region tnua function constants
+        #region tnua function constants
         public const string cCheckHityatzvutNehag = "kds.KdsVerifyDriverCheckIn";
-        public const string cProInsTekenDriversToTnua = "KDSADMIN.pro_ins_amount_of_drivers_tnua";          
-#endregion
-        public const string cProBdikatChufshaRezifa = "KDSADMIN.pro_bdikat_chufsha_rezifa"; 
-        #region pkg_task_Manager 
+        public const string cProInsTekenDriversToTnua = "KDSADMIN.pro_ins_amount_of_drivers_tnua";
+        #endregion
+        public const string cProBdikatChufshaRezifa = "KDSADMIN.pro_bdikat_chufsha_rezifa";
+        #region pkg_task_Manager
         public const string cGetStuckGroup = "pkg_task_Manager.GetStuckGroup";
         public const string cGetLogKvuzotByKod = "pkg_task_Manager.GetLogKvuzotByKod";
-        #endregion 
+        #endregion
         #region pkg_utils constants
         public const string cProGetPremiaYadanit = "pkg_utils.pro_get_premia_yadanit";
         public const string cProGetOvdimLeritza = "pkg_utils.pro_get_ovdim_leRitza";
@@ -370,17 +370,17 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const string cProGetTavlaotToRefresh = "PKG_UTILS.pro_get_tavlaot_to_refresh";
         public const string cProGetOvdimLeBakashatChishuv = "PKG_UTILS.pro_get_ovdim_by_bakasha";
 
-        
-     
-#endregion
+
+
+        #endregion
         #region PKG_APPROVALS constants
-        public const string cFnIsOvedMusach = "PKG_APPROVALS.fn_is_oved_musach";       
+        public const string cFnIsOvedMusach = "PKG_APPROVALS.fn_is_oved_musach";
         #endregion
 
 
-#region PKG_DEMANDS
+        #region PKG_DEMANDS
         public const string cProGetMachalaDays = "PKG_DEMANDS.pro_get_machala_days_rivon";
-#endregion 
+        #endregion
         public static string[] arrCalcType = new string[] { "רגיל", "הפרשים", "חודש פתוח" };
         public static string[] arrDays = new string[] { "א", "ב", "ג", "ד", "ה", "ו", "ש" };
         public const int cYearNull = 1900;
@@ -390,16 +390,16 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const int cSuccessBatchRecordsParameterCode = 204;
         public enum enProfile
         {
-            enDefault = 0 , 
+            enDefault = 0,
             enSystemAdmin = 1,
             enRashemet = 2,
             enRashemetAll = 3,
             enMenahelImKfufim = 5,
-            enVaadatPikuah = 6 
+            enVaadatPikuah = 6
         }
         public enum enOnatiut
         {
-            enOnatiut=71
+            enOnatiut = 71
         }
         public enum enPtorHityazvut
         {
@@ -407,16 +407,16 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         }
         public enum enHityazvutErrorInSite
         {
-            enHityazvutErrorInSite = 1          
+            enHityazvutErrorInSite = 1
         }
         public enum enHityazvut
         {
-            enFirstHityatzvut =1,
+            enFirstHityatzvut = 1,
             enSecondHityatzvut = 2
         }
         public enum enSugHashlama
         {
-            enHashlama =2, enNoHashlama=0
+            enHashlama = 2, enNoHashlama = 0
         }
         public enum enShowOvedSibatHashlamaLeyom
         {
@@ -458,11 +458,11 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         }
         public enum enStatusRequest
         {
-            InProcess = 1, ToBeEnded = 2, Failure = 3, PartEnded=4
+            InProcess = 1, ToBeEnded = 2, Failure = 3, PartEnded = 4
         }
         public enum enLoLetashlum
         {
-            WorkAtFridayWithoutPremission = 5, WorkAtSaturdayWithoutPremission = 4, SidurInNonePremissionHours = 10, WorkWitoutPremmision = 17,WorkCardWithoutHityachasut = 16 //17 -  עבודה ביום חול ללא הרשאה
+            WorkAtFridayWithoutPremission = 5, WorkAtSaturdayWithoutPremission = 4, SidurInNonePremissionHours = 10, WorkWitoutPremmision = 17, WorkCardWithoutHityachasut = 16 //17 -  עבודה ביום חול ללא הרשאה
         }
         public enum enNetuneyOved
         {
@@ -473,7 +473,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         {
             YemeyAvoda = 56, MichsaLeShaotNosafot = 12
         }
-    
+
         public enum enRishyonAutobus
         {
             //לעובד אין רישיון אוטובוס
@@ -557,13 +557,13 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             enMachala = 2,
             enMilueim = 3,
             enTeuna = 4,
-            enEvel =6,
+            enEvel = 6,
             enHeadrutWithPayment = 8
         }
         public enum enMeafyenSidur54
         {
             //מאפיין 54 - שעון נוכחות
-            enAdministrator =1 //מנהל
+            enAdministrator = 1 //מנהל
         }
         public enum enDynamicFormType
         {
@@ -599,7 +599,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
         public enum enEventId
         {
-            ProblemOfAccessToTnua=30001
+            ProblemOfAccessToTnua = 30001
         }
 
         public enum enRechivim
@@ -667,7 +667,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             YomMachalatHorim = 70,
             YomMachalaYeled = 71,
             YomKursHasavaLekav = 72,
-            YomShlichutBeChul=73,
+            YomShlichutBeChul = 73,
             YemeyNochehutLeoved = 75,
             Nosafot125 = 76,
             Nosafot150 = 77,
@@ -798,7 +798,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             SachKM = 215,
             SachKMVisaLepremia = 216,
             DakotHagdara = 217,
-            DakotKisuiTor=218,
+            DakotKisuiTor = 218,
             ShaotChofesh = 219,
             DakotHeadrut = 220,
             DakotChofesh = 221,
@@ -840,17 +840,17 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             NochehutLepremiaSadran = 258,
             NochehutLepremiaRakaz = 259,
             NochehutLepremiaPakach = 260,
-            MachalaYomMale=261,
-            MachalaYomChelki=262,
-            HashlamaBenahagut=263,
-            HashlamaBenihulTnua=264,
-            HashlamaBetafkid=265,
-            YomMiluimChelki=266,
-            DakotElementim=267,
-            DakotNesiaLepremia=268,
-            DakotChofeshHeadrut=269,
-            YemeyChofeshHeadrut=270,
-            ZmanLilaSidureyBoker=271,
+            MachalaYomMale = 261,
+            MachalaYomChelki = 262,
+            HashlamaBenahagut = 263,
+            HashlamaBenihulTnua = 264,
+            HashlamaBetafkid = 265,
+            YomMiluimChelki = 266,
+            DakotElementim = 267,
+            DakotNesiaLepremia = 268,
+            DakotChofeshHeadrut = 269,
+            YemeyChofeshHeadrut = 270,
+            ZmanLilaSidureyBoker = 271,
             ZmanRetzifutLaylaEgged = 272,
             ZmanRetzifutLaylaChok = 273,
             ZmanRetzifutBoker = 274,
@@ -859,14 +859,14 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             NochechutLePremiyaMeshekKonenutGrira = 277,
             ETPaarBetweenMichsaRegilaAndMuktenet = 278,
             ETMichsaMekoritBeforeHafchata = 279,
-            YomMachalatYeledHadHori=280,
-            HalbashaTchilatYom=931,
-            HalbashaSofYom=932,
-            TosefetGririoTchilatSidur=1281,
-            TosefetGrirotSofSidur=1282
+            YomMachalatYeledHadHori = 280,
+            HalbashaTchilatYom = 931,
+            HalbashaSofYom = 932,
+            TosefetGririoTchilatSidur = 1281,
+            TosefetGrirotSofSidur = 1282
         }
         public enum TypeCalc
-        { Batch = 1, OnLine = 2, Test = 3 ,Premiya = 4}
+        { Batch = 1, OnLine = 2, Test = 3, Premiya = 4 }
         public enum enSectorAvoda
         {
             Nahagut = 5, //סידור נהגות
@@ -890,7 +890,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public enum enSugSidur
         {
             //סוג סידור
-           SugSidur73 = 73
+            SugSidur73 = 73
         }
 
 
@@ -899,7 +899,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             //מאפיין 52 - סוג עבודה
             Shaon = 1,
             Nahagut = 5, //סידור נהגות  
-            Lershut=6, //לרשות
+            Lershut = 6, //לרשות
             Kupai = 7, //קופאי
             Netzer = 11, //סידור נ.צ.ר
             VaadOvdim = 10, //סידור ועד עובדים 
@@ -915,14 +915,14 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
         public enum enKodIshur
         {
-            HashlamatShaotLemutamut=32,
+            HashlamatShaotLemutamut = 32,
             TashlumShaotNosafotOvdeyMusac = 34,
             TashlumShaotNosafot = 35,
             HashlamaLeshaot = 38,
             HashlamaLeyom = 39,
             TashlumShaotNosafotShabatOvdeyMusac = 44,
             TashlumShaotNosafotShabat = 45,
-            OutMichsa=48
+            OutMichsa = 48
         }
 
         public enum enStatusTipul
@@ -930,12 +930,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             HistayemTipul = 1,
             Betipul = 0
         }
-        public enum enCardStatus
-        {            
-            Error = 0,
-            Valid = 1,
-            Calculate = 2 //הועבר לשכר
-        }
+      
         public enum enSugYom
         {
             Chol = 1,
@@ -944,24 +939,24 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             Purim = 5,
             ShushanPurim = 7,
             Shishi = 10,
-            ErevRoshHashna=11,
-            ErevYomKipur=12,
-            ErevSukot=13,
-            ErevSimchatTora=14,
-            ErevPesach=15,
-            ErevPesachSheni =16,
+            ErevRoshHashna = 11,
+            ErevYomKipur = 12,
+            ErevSukot = 13,
+            ErevSimchatTora = 14,
+            ErevPesach = 15,
+            ErevPesachSheni = 16,
             ErevYomHatsmaut = 17,
-            ErevShavuot=18,
-            LagBaomerOrPurim=19,
-            Shabat=20,
+            ErevShavuot = 18,
+            LagBaomerOrPurim = 19,
+            Shabat = 20,
             Bchirot = 29,
-            Rishon=30
+            Rishon = 30
         }
 
         public enum enMeafyen
         {
             SectorAvoda = 3,
-            SugAvoda=52
+            SugAvoda = 52
         }
 
         public enum enMeafyen79
@@ -977,12 +972,12 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
         public enum enCalcType
         {
-            MonthlyCalc = 1, 
-            PremiotCalc = 2, 
-            ShinuyimVeShguyim = 3, 
-            ShinuyimVeSghuimHR = 4, 
-            ShinuyimVeSghuimPremiot =5,
-            Rikuzim = 6 
+            MonthlyCalc = 1,
+            PremiotCalc = 2,
+            ShinuyimVeShguyim = 3,
+            ShinuyimVeSghuimHR = 4,
+            ShinuyimVeSghuimPremiot = 5,
+            Rikuzim = 6
 
         }
         public enum enYechidaIrgunit
@@ -1003,9 +998,9 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             Rasham = 133,
             Poked = 188,
             MenahelMoreNehiga = 194,
-            Mafil=122,
-            AchraaiMishmeretMachshev=123,
-            MetaemTikshoret=124
+            Mafil = 122,
+            AchraaiMishmeretMachshev = 123,
+            MetaemTikshoret = 124
         }
 
         public enum enEmployeeType
@@ -1038,9 +1033,9 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             PensyonerTakziviBechoze = 58
         }
         public enum enHrMaamad
-        {            
+        {
             SalariedEmployee12 = 221,
-            PermanentSalariedEmployee = 222            
+            PermanentSalariedEmployee = 222
         }
         public enum enEzor
         {
@@ -1052,10 +1047,10 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             Meshek = 1,
             Machsenaim = 5,
             Grira = 8,
-            Manas =10,
+            Manas = 10,
             Rakaz = 30,
-            Sadran =40,
-            Pakach= 50,
+            Sadran = 40,
+            Pakach = 50,
             MevakrimBadrachim = 100,
             MifalYetzur = 101,
             NehageyTovala = 102,
@@ -1115,25 +1110,25 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             TransferToPayment = 3,
             Approvals = 4,
             InputDataAndErrorsFromInputProcess = 5,
-            CreateConstantReprts =6,
+            CreateConstantReprts = 6,
             CreateHeavyReports = 7,
             CreatePremiaExcelInput = 8,
             ExecutePremiaCalculationMacro = 9,
             StorePremiaCalculationOutput = 10,
             DataComparisonImport = 11,
             CalculationForPremiaPopulation = 12,
-            YeziratRikuzim =13,
-            SendRikuzimMail=14,
-            RifreshKnisot=15,
-            TransferTekenNehagim=16,
+            YeziratRikuzim = 13,
+            SendRikuzimMail = 14,
+            RifreshKnisot = 15,
+            TransferTekenNehagim = 16,
             HasavatNetuniToOracle = 17,
-            RetroSpectSDRN =18,
-            LoadNetuneyMeshekForPremyot=19,
-            BdikatChufshaRezifa=20
+            RetroSpectSDRN = 18,
+            LoadNetuneyMeshekForPremyot = 19,
+            BdikatChufshaRezifa = 20
         }
         public enum enBechishuvSachar
         {
-            bsActive=1
+            bsActive = 1
         }
         public enum enBatchExecutionStatus
         {
@@ -1154,7 +1149,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         }
         public enum enMeafyenElementim23
         {
-            ElementTimeNesiaReka = 1            
+            ElementTimeNesiaReka = 1
         }
         public enum enMeafyenElementim35
         {
@@ -1167,37 +1162,37 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ValueNull = -1
         }
 
-   
+
         public enum enNetuneyPeilut
         {
-            SugPeilut =0, //0-element, 1-nesiaa
-            KisuyTorShaa=1,
-            ShatYezia=2,
-            Teur=3,
-            Kav=4,
-            Sug=5,
-            MisparRechev=6,
-            MisparRishuy=7,
-            Makat=8,
-            DakotHagdara=9,
-            DakotBafoal=10,
-            MisparKnisa=11,
-            Bitul_O_Hosafa=12,
-            KisuyTorDakot=13,
-            ShatYeziaDate=14
+            SugPeilut = 0, //0-element, 1-nesiaa
+            KisuyTorShaa = 1,
+            ShatYezia = 2,
+            Teur = 3,
+            Kav = 4,
+            Sug = 5,
+            MisparRechev = 6,
+            MisparRishuy = 7,
+            Makat = 8,
+            DakotHagdara = 9,
+            DakotBafoal = 10,
+            MisparKnisa = 11,
+            Bitul_O_Hosafa = 12,
+            KisuyTorDakot = 13,
+            ShatYeziaDate = 14
         }
         public enum WorkerViewLevel
         {
-            HimSelf ,
+            HimSelf,
             UnderManager,
-            All 
+            All
         }
 
         public enum enReportType
         {
-            ConstantReport=0,
-            HeavyReport=1,
-            Rikuz=2
+            ConstantReport = 0,
+            HeavyReport = 1,
+            Rikuz = 2
         }
 
         public enum enMouthlyMailsType
@@ -1437,12 +1432,12 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                             StrListValues += Item.Value.ToString() + ",";
                     return (StrListValues.Length > 0) ? StrListValues.Remove(StrListValues.Length - 1) : "";
                 case "KdsLibrary.Controls.ListBoxExtended":
-                    return ((ListBoxExtended)ctl).ListOfValues; 
-                case "System.Web.UI.WebControls.RadioButtonList" :
+                    return ((ListBoxExtended)ctl).ListOfValues;
+                case "System.Web.UI.WebControls.RadioButtonList":
                     foreach (ListItem Item in ((RadioButtonList)ctl).Items)
                         if (Item.Selected)
-                            StrListValues =  Item.Value;
-                    return StrListValues; 
+                            StrListValues = Item.Value;
+                    return StrListValues;
                 default: return null;
             }
 
@@ -1664,7 +1659,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
             if (System.Web.HttpContext.Current != null)
                 foreach (UserProfile Profile in LoginUser.GetLoginUser().UserProfiles)
-                        Result += Profile.ProfileGroup + ",";
+                    Result += Profile.ProfileGroup + ",";
             return (Result == string.Empty) ? string.Empty : Result.Substring(0, Result.Length - 1);
         }
 
@@ -1697,7 +1692,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                 StackFrame sf = st.GetFrame(1);
                 StrError = sf.GetMethod().Name + " :: " + StrError;
             }
-            LogMessage( StrError,entryType);
+            LogMessage(StrError, entryType);
         }
 
         public static void LogMessage(string message, EventLogEntryType entryType)
@@ -1731,7 +1726,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                 kdsLog.Source = KdsEventLogSource;
 
                 // Write an informational entry to the event log.    
-                kdsLog.WriteEntry(message, entryType,iEventId);
+                kdsLog.WriteEntry(message, entryType, iEventId);
             }
             catch (Exception) { }
         }
@@ -1745,7 +1740,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                 dDate = dDate.Date;
                 arrTime = sShaa.Split(char.Parse(":"));
                 if (arrTime.Length > 1)
-                {                    
+                {
                     dTemp = dDate.AddHours(double.Parse(arrTime[0])).AddMinutes(double.Parse(arrTime[1]));
                     if (arrTime.Length > 2)
                     {
@@ -1756,7 +1751,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                 {
                     sShaa = sShaa.PadLeft(4, (char)48);
                     dTemp = dDate.AddHours(double.Parse(sShaa.Substring(0, 2))).AddMinutes(double.Parse(sShaa.Substring(2, 2)));
-                 }
+                }
 
                 return dTemp;
             }
@@ -1797,7 +1792,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                 throw ex;
             }
         }
-        public static void SetServiceReference(Page CurrentPage , string WebServicePath)
+        public static void SetServiceReference(Page CurrentPage, string WebServicePath)
         {
             MasterPage mp = (MasterPage)CurrentPage.Master;
             ScriptManager objScriptManager = new ScriptManager();
@@ -1925,14 +1920,14 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public static DataTable FilterDataTable(DataTable dtTable, string sFilter)
         {
             DataRow[] dr;
-            DataTable dtTableNew=new DataTable();
+            DataTable dtTableNew = new DataTable();
 
             dr = dtTable.Select(sFilter);
             dtTableNew = new DataTable();
             dtTableNew = dtTable.Clone();
             foreach (DataRow dRow in dr)
                 dtTableNew.ImportRow(dRow);
-            
+
             return dtTableNew;
         }
 
@@ -2030,7 +2025,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         }
 
 
-        public static int GetSugYom(DataTable dtYamimMeyuchadim, DateTime dTaarich, DataTable dtSugeyYamimMeyuchadim) //, int iMeafyen56)
+        public static int GetSugYom(DataTable dtYamimMeyuchadim, DateTime dTaarich, DataTable dtSugeyYamimMeyuchadim) //, int GetMeafyen(56).IntValue)
         {
             int iSugYom;
             if (dtYamimMeyuchadim.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')").Length > 0)
@@ -2038,7 +2033,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                 iSugYom = int.Parse(dtYamimMeyuchadim.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')")[0]["sug_yom"].ToString());
                 if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
                 { iSugYom = 20; }
-                else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shishi.GetHashCode()) // && !(dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["Shishi_Muhlaf"].ToString() == "1") && (iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shishi.GetHashCode()) // && !(dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["Shishi_Muhlaf"].ToString() == "1") && (GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
                 { iSugYom = 10; }
                 return iSugYom;
             }
@@ -2062,6 +2057,22 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                 return match.Captures[0].Value;
             else
                 return url;
+        }
+
+        public static DateTime ConvertMefyenShaotValid(DateTime dTaarich, string sShaaMeafyen)
+        {
+            DateTime dMeafyenDate;
+            string sMeafyen;
+            sMeafyen = clGeneral.ConvertToValidHour(sShaaMeafyen);
+            if (clGeneral.IsEggedTime(sMeafyen))
+            {
+                dMeafyenDate = clGeneral.GetDateTimeFromStringHour(clGeneral.ConvertFromEggedTime(sMeafyen), dTaarich.Date).AddDays(1);
+            }
+            else
+            {
+                dMeafyenDate = clGeneral.GetDateTimeFromStringHour(sMeafyen, dTaarich.Date);
+            }
+            return dMeafyenDate;
         }
     }
 }

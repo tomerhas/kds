@@ -10,6 +10,11 @@ using System.Configuration;
 using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary.Utils;
+using KDSCommon.DataModels.UDT;
+using KDSCommon.Helpers;
+using KDSCommon.Enums;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.DAL;
 
 namespace KdsBatch
 {
@@ -20,10 +25,9 @@ namespace KdsBatch
             StreamWriter oFileMakat=null;
             DataTable dtMakatim = new DataTable();
             DataTable dtKavim = new DataTable();
-            clKavim oKavim = new clKavim();
             clBatch oBatch = new clBatch();
             int numFaild = 0, numSucceeded = 0, iMakatValid, invalidMakat=0;
-            clKavim.enMakatType oMakatType;
+            enMakatType oMakatType;
             long lMakatNesia,lRequestNum = 0;
             DateTime dCardDate;
             string Line;
@@ -32,8 +36,8 @@ namespace KdsBatch
             try
             {
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromUI, "CheckTkinutMakatim", -12);
-
-                dtMakatim = oKavim.GetMakatimLeTkinut(dTaarich);
+                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                dtMakatim = kavimDal.GetMakatimLeTkinut(dTaarich);
 
                 oFileMakat = new StreamWriter(sPathFile , false, Encoding.Default);
                 clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "count= " + dtMakatim.Rows.Count);
@@ -44,17 +48,17 @@ namespace KdsBatch
                     {
                         lMakatNesia = long.Parse(dtMakatim.Rows[i]["MAKAT_NESIA"].ToString());
                         dCardDate = DateTime.Parse(dtMakatim.Rows[i]["TAARICH"].ToString());
-                        oMakatType = (clKavim.enMakatType)oKavim.GetMakatType(lMakatNesia);
+                        oMakatType = (enMakatType)StaticBL.GetMakatType(lMakatNesia);
                         switch (oMakatType)
                         {
-                            case clKavim.enMakatType.mKavShirut:
-                                 dtKavim = oKavim.GetKavimDetailsFromTnuaDT(lMakatNesia, dCardDate, out iMakatValid);    
+                            case enMakatType.mKavShirut:
+                                dtKavim = kavimDal.GetKavimDetailsFromTnuaDT(lMakatNesia, dCardDate, out iMakatValid);    
                                 break;
-                            case clKavim.enMakatType.mEmpty:
-                                 dtKavim = oKavim.GetMakatRekaDetailsFromTnua(lMakatNesia, dCardDate, out iMakatValid);         
+                            case enMakatType.mEmpty:
+                                dtKavim = kavimDal.GetMakatRekaDetailsFromTnua(lMakatNesia, dCardDate, out iMakatValid);         
                                 break;
-                            case clKavim.enMakatType.mNamak:
-                                 dtKavim = oKavim.GetMakatNamakDetailsFromTnua(lMakatNesia, dCardDate, out iMakatValid);
+                            case enMakatType.mNamak:
+                                dtKavim = kavimDal.GetMakatNamakDetailsFromTnua(lMakatNesia, dCardDate, out iMakatValid);
                                 break;
                             default: iMakatValid = 1;
                                 break;
@@ -126,7 +130,6 @@ namespace KdsBatch
             DataRow PirteyKav;
          //   DateTime dCardDate;
             int iResult = 0,num;
-            clKavim oKavim = new clKavim();
             long lMakatNesia, lRequestNum=0;
             int numFaild = 0;
             int numFaildEx = 0;
@@ -143,9 +146,12 @@ namespace KdsBatch
                     try
                     {
                         lMakatNesia = long.Parse(dtMakatim.Rows[i]["MAKAT_NESIA"].ToString());
-                        num = int.Parse(dtMakatim.Rows[i]["num"].ToString()); 
+                        num = int.Parse(dtMakatim.Rows[i]["num"].ToString());
                         if (num == 1)
-                            dsKavim = oKavim.GetKavimDetailsFromTnuaDS(lMakatNesia, dTaarich, out iResult, 1);
+                        {
+                            var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                            dsKavim = kavimDal.GetKavimDetailsFromTnuaDS(lMakatNesia, dTaarich, out iResult, 1);
+                        }
                         if (iResult == 0)
                         {
                             if (dsKavim.Tables[0].Rows.Count > 0)

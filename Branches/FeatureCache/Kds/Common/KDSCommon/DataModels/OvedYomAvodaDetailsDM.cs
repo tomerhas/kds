@@ -22,6 +22,8 @@ namespace KDSCommon.DataModels
         public int iZmanNesiaHaloch;
         public int iZmanNesiaHazor;
         public int iStatus;
+        public int iDirug;
+        public int iDarga;
         public int iStatusTipul;
         public string sStatusCardDesc;
         public string sDayTypeDesc; //תאור סוג יום

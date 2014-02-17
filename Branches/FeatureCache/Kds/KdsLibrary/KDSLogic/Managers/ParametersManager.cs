@@ -8,17 +8,19 @@ using KdsLibrary;
 using KdsLibrary.BL;
 using KDSCommon.DataModels;
 using KDSCommon.Interfaces;
+using Microsoft.Practices.Unity;
+using KDSCommon.Interfaces.DAL;
 
 namespace KdsLibrary
 {
     public class ParametersManager : IParametersManager
     {
-        private DataTable dtParameters;
-        private string _Type = "";
-        
+        private IUnityContainer _container;
+        private DataTable _dtParams;
 
-        public ParametersManager()
+        public ParametersManager(IUnityContainer container)
         {
+            _container = container;
         }
 
         public clParametersDM CreateClsParametrs(DateTime dCardDate, int iSugYom)
@@ -35,17 +37,21 @@ namespace KdsLibrary
             clParametersDM cls = new clParametersDM();
 
             cls._Taarich = dCardDate;
-            _Type = type;
-            dtParameters = dtParams;
-            SetParameters(cls , dCardDate, iSugYom);
-            dtParameters.Dispose();
-            dtParameters = null;
+            SetParameters(cls , dCardDate, iSugYom, dtParams);
             return cls;
         }
 
-        private void SetParameters(clParametersDM cls, DateTime dCardDate, int iSugYom)
+        private void SetParameters(clParametersDM cls, DateTime dCardDate, int iSugYom, DataTable dtParams)
         {
-
+            if (dtParams == null)
+            {
+                //In order not to modify all the use of GetOneParam to the list of params - saving state for this method only
+                _dtParams = _container.Resolve<IParametersDAL>().GetKdsParametrs();
+            }
+            else
+            {
+                _dtParams = dtParams;
+            }
             StringBuilder sHour = new StringBuilder();
             string sTmp;
             try
@@ -885,7 +891,7 @@ namespace KdsLibrary
             //return sParamVal;
             try
             {
-                var rows = (from c in dtParameters.AsEnumerable()
+                var rows = (from c in _dtParams.AsEnumerable()
                             where c.Field<int>("kod_param").Equals(iParamNum)
                             && c.Field<DateTime>("me_taarich") <= dDate
                             && c.Field<DateTime>("ad_taarich") >= dDate

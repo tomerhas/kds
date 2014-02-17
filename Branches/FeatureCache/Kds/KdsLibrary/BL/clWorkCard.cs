@@ -9,6 +9,7 @@ using System.Reflection;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces;
 using KDSCommon.Enums;
+using KDSCommon.DataModels.UDT;
 
 namespace KdsLibrary.BL
 {

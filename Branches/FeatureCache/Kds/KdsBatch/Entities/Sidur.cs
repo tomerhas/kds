@@ -10,6 +10,7 @@ using KdsLibrary;
 using System.Diagnostics;
 using System.Web;
 using KdsBatch.Errors;
+using KDSCommon.Enums;
 
 namespace KdsBatch.Entities 
 {
@@ -367,11 +368,11 @@ namespace KdsBatch.Entities
                 {
                     oPeilut = Peiluyot[i];
                     iTypeMakat = oPeilut.iMakatType;
-                    if (oPeilut.iMisparKnisa == 0 && (iTypeMakat == clKavim.enMakatType.mKavShirut.GetHashCode() || iTypeMakat == clKavim.enMakatType.mEmpty.GetHashCode() || iTypeMakat == clKavim.enMakatType.mNamak.GetHashCode()))
+                    if (oPeilut.iMisparKnisa == 0 && (iTypeMakat == enMakatType.mKavShirut.GetHashCode() || iTypeMakat == enMakatType.mEmpty.GetHashCode() || iTypeMakat == enMakatType.mNamak.GetHashCode()))
                     {
                         dSumMazanTashlum += oPeilut.iMazanTashlum;
                     }
-                    else if (iTypeMakat == clKavim.enMakatType.mElement.GetHashCode())
+                    else if (iTypeMakat == enMakatType.mElement.GetHashCode())
                     {
                         if (oPeilut.sElementInMinutes == "1" && oPeilut.sKodLechishuvPremia.Trim() == "1:1")
                         {
@@ -678,7 +679,7 @@ namespace KdsBatch.Entities
                 for (int i = Peiluyot.Count - 1; i >= 0; i--)
                 {
                     oPeilutAchrona = (Peilut)Peiluyot[i];
-                    if (oPeilutAchrona.iMakatType == clKavim.enMakatType.mElement.GetHashCode())
+                    if (oPeilutAchrona.iMakatType == enMakatType.mElement.GetHashCode())
                     {
                         if (oPeilutAchrona.iElementLeYedia != 2)
                         {

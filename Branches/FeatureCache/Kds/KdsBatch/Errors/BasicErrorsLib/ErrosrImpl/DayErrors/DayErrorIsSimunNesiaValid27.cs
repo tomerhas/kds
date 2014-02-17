@@ -7,14 +7,14 @@ using KDSCommon.Enums;
 
 namespace KdsBatch.Errors.BasicErrorsLib.ErrosrImpl.DayErrors
 {
-    public class DayErrorIsSimunNesiaValid27 : CardErrorBase
+    public class DayErrorIsSimunNesiaValid27 : DayErrorBase
     {
         public override bool InternalIsCorrect(ErrorInputData input)
         {
             string sLookUp;
             string sBitulZmanNesia = string.Empty;
             //בדיקה ברמת כרטיס עבודה
-            sLookUp = GetLookUpKods("ctb_zmaney_nesiaa");
+            sLookUp = GetLookUpKods("ctb_zmaney_nesiaa",input);
 
             sBitulZmanNesia = input.OvedDetails.sBitulZmanNesiot;
             if (!(string.IsNullOrEmpty(sBitulZmanNesia)))

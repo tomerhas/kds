@@ -11,6 +11,7 @@ using KdsLibrary.BL;
 using KDSCommon.DataModels;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces;
+using KDSCommon.Enums;
 
 namespace KdsBatch.Entities
 {
@@ -52,7 +53,7 @@ namespace KdsBatch.Entities
     //    public DataTable dtTmpMeafyeneyElements;
         public Oved oOved;
         public List<CardError> CardErrors;
-        public clGeneral.enCardStatus CardStatus;
+        public CardStatus CardStatus;
         
         public Day() : base(OriginError.Day)  { }
         public Day(int iMisparIshi, DateTime dDate, bool bInsertToShguim) : base(OriginError.Day)

@@ -8,6 +8,9 @@ using KDSCommon.DataModels;
 using KDSCommon.Interfaces.Managers;
 using Microsoft.Practices.Unity;
 using KDSCommon.Interfaces.DAL;
+using System.Collections.Specialized;
+using KDSCommon.Enums;
+using KDSCommon.Helpers;
 
 namespace KdsLibrary
 {
@@ -71,6 +74,8 @@ namespace KdsLibrary
                 ovedYomAvodaDatails.sErevShishiChag = dtOvedCardDetails.Rows[0]["erev_shishi_chag"].ToString();
                 ovedYomAvodaDatails.sRishyonAutobus = dtOvedCardDetails.Rows[0]["rishyon_autobus"].ToString().Trim();
                 ovedYomAvodaDatails.sShlilatRishayon = dtOvedCardDetails.Rows[0]["shlilat_rishayon"].ToString();
+                ovedYomAvodaDatails.iDirug = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["dirug"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["dirug"].ToString());
+                ovedYomAvodaDatails.iDarga = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["darga"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["darga"].ToString());   
                 ovedYomAvodaDatails.iZmanNesiaHaloch = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["zman_nesia_haloch"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["zman_nesia_haloch"].ToString());
                 ovedYomAvodaDatails.iZmanNesiaHazor = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["zman_nesia_hazor"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["zman_nesia_hazor"].ToString());
                 ovedYomAvodaDatails.iStatus = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["Status"]) ? -1 : int.Parse(dtOvedCardDetails.Rows[0]["Status"].ToString());
@@ -97,6 +102,160 @@ namespace KdsLibrary
         {
             return _container.Resolve<IOvedDAL>().GetOvedDetails(iMisparIshi, dCardDate);
         }
+
+        public MeafyenimDM CreateMeafyenyOved(int iMisparIshi, DateTime dDate, DataTable meafyenim)
+        {
+
+            if (meafyenim!=null && meafyenim.Rows.Count > 0)
+            {
+                Dictionary<int, Meafyen> dict = PrepareMeafyenim(meafyenim);
+                var meafyenimDM = new MeafyenimDM(dict);
+                meafyenimDM.Taarich = dDate;
+                return meafyenimDM;
+            }
+            return null;
+        }
+
+        public MeafyenimDM CreateMeafyenyOved(int iMisparIshi, DateTime dDate)
+        {
+            var dtMeafyenyOved = _container.Resolve<IOvedDAL>().GetMeafyeneyBitzuaLeOved(iMisparIshi, dDate);
+            if (dtMeafyenyOved.Rows.Count > 0)
+            {
+                Dictionary<int, Meafyen> dict = PrepareMeafyenim(dtMeafyenyOved);
+                var meafyenimDM = new MeafyenimDM(dict);
+                meafyenimDM.Taarich = dDate;
+                return meafyenimDM;
+            }
+            return null;
+        }
+
+        private Dictionary<int, Meafyen> PrepareMeafyenim(DataTable dtMeafyenyOved)
+        {
+            try
+            {
+                var List = from c in dtMeafyenyOved.AsEnumerable()
+                           select new
+                           {
+                               kod = Int32.Parse(c.Field<string>("kod_meafyen").ToString()),
+                               exist = Int32.Parse(c.Field<string>("source_meafyen").ToString()),
+                               value = c.Field<string>("value_erech_ishi")
+                           };
+                Dictionary<int, Meafyen> Meafyenim = List.ToDictionary(item => item.kod, item =>
+                {
+                    return new Meafyen((item.exist == 1), item.value);
+                }
+                    );
+                return Meafyenim;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("PrepareMeafyenim :" + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Need to review code and validate if relenvant.
+        /// Copied from clDefinitions.InsertEmployeeDetails with minor modifications
+        /// </summary>
+        /// <param name="dtDetails"></param>
+        /// <param name="dCardDate"></param>
+        /// <param name="misparIshi"></param>
+        /// <param name="iLastMisaprSidur"></param>
+        /// <returns></returns>
+        public OrderedDictionary GetEmployeeDetails(DataTable dtDetails, DateTime dCardDate, int misparIshi,out int iLastMisaprSidur)
+        {
+            int iMisparSidur, iPeilutMisparSidur;
+            int iKey = 0;
+            int i = 1;
+            int iMisparSidurPrev = 0;
+            DateTime dShatHatchala = DateTime.MinValue;
+            DateTime dShatHatchalaPrev = new DateTime();
+            SidurDM oSidur = null;
+            PeilutDM oPeilut = null;
+            OrderedDictionary htEmployeeDetails = new OrderedDictionary();
+            var htSpecialEmployeeDetails = new OrderedDictionary();
+            string sLastShilut = "";
+            DataTable dtPeiluyot;
+            enMakatType _MakatType;
+            try
+            {
+                //נשלוף את נתוני הפעילויות לאותו יום
+                var kavimDal = _container.Resolve<IKavimDAL>();
+                dtPeiluyot = kavimDal.GetKatalogKavim(misparIshi, dCardDate, dCardDate);
+
+                //HashTable-הכנסת כל הסידורים והפעילויות של עובד בתאריך הנתון ל
+                foreach (DataRow dr in dtDetails.Rows)
+                {
+
+                    iMisparSidur = int.Parse(dr["Mispar_Sidur"].ToString());
+                    dShatHatchala = DateTime.Parse(dr["shat_hatchala"].ToString());
+
+                    if ((iMisparSidur != iMisparSidurPrev) || (iMisparSidur == iMisparSidurPrev) && (dShatHatchala != dShatHatchalaPrev))
+                    {
+                        iKey = 1;
+                        i++;
+                        //נתונים ברמת סידור
+
+                        var sidurManager = _container.Resolve<ISidurManager>();
+                        oSidur = sidurManager.CreateClsSidurFromEmployeeDetails(dr);
+
+                        List<int> SpecialSidurim = new List<int> { 99200 };
+                        if (SpecialSidurim.Contains(iMisparSidur))
+                        {
+                            htSpecialEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+                        }
+                        else
+                        {
+                            if (oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iLebdikaShguim == 1))
+                            {
+                                htEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+                            }
+
+                            //htFullSidurimDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+                        }
+                        iMisparSidurPrev = iMisparSidur;
+                        dShatHatchalaPrev = dShatHatchala;
+
+                    }
+                    //נתוני פעילויות  
+
+                    iPeilutMisparSidur = (System.Convert.IsDBNull(dr["peilut_mispar_sidur"]) ? 0 : int.Parse(dr["peilut_mispar_sidur"].ToString()));
+                    if (iPeilutMisparSidur > 0)
+                    {
+                        var peilutManager = _container.Resolve<IPeilutManager>();
+                        oPeilut = peilutManager.CreateEmployeePeilut(dCardDate, iKey, dr, dtPeiluyot);
+                        _MakatType = (enMakatType)StaticBL.GetMakatType(oPeilut.lMakatNesia);
+                        if (_MakatType == enMakatType.mKavShirut)
+                            sLastShilut = oPeilut.sShilut;
+                        else if (_MakatType == enMakatType.mVisut)
+                            oPeilut.sShilut = sLastShilut;
+                        oSidur.htPeilut.Add(iKey, oPeilut);
+
+                        //אם לפחות אחד מהפעילויות היא פעילות אילת, נסמן את הסידור כסידור אילת
+                        if (oPeilut.bPeilutEilat)
+                            oSidur.bSidurEilat = true;
+
+                        //אם לפחות פעילות אחת לא ריקה, נגדיר את הסידור כסידור לא ריק
+                        if (!oSidur.bSidurNotEmpty)
+                            oSidur.bSidurNotEmpty = oPeilut.bPeilutNotRekea;
+
+                        iKey++;
+                    }
+
+                }
+                iLastMisaprSidur = int.Parse(dtDetails.Rows[dtDetails.Rows.Count - 1]["mispar_sidur"].ToString());
+
+                return htEmployeeDetails;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error in InsertEmployeeDetails:" + " " + ex.Message);
+
+            }
+        }
+
+        
     }
 }
 

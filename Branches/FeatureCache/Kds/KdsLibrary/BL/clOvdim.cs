@@ -8,7 +8,7 @@ using KdsLibrary.UDT;
 
 namespace KdsLibrary.BL
 {
-    public class clOvdim
+    public class clOvdim 
     {
         private clDal _Dal;
         private static clOvdim _Instance;
@@ -800,27 +800,7 @@ namespace KdsLibrary.BL
             }
         }
 
-        public DataTable GetMeafyeneyBitzuaLeOved(int iMisparIshi, DateTime dTaarich)
-        {
-            clDal oDal = new clDal();
-            DataTable dt = new DataTable();
-            try
-            {   //פונקציה המחזירה מאפייני ביצוע  לעובד
-                //כולל ברירות מחדל
-                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
-                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-
-                oDal.ExecuteSP(clGeneral.cProGetMeafyeneyBituaLeoved, ref dt);
-
-
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        
 
         public DataTable GetMeafyeneyBitzuaLeOvedAll(int iMisparIshi, DateTime dMeTaarich, DateTime dAdTaarich, int iBreratMechdal)
         {

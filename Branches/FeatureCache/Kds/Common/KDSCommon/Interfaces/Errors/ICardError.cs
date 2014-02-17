@@ -11,5 +11,6 @@ namespace KDSCommon.Interfaces.Errors
     {
         bool IsCorrect(ErrorInputData input);
         ErrorTypes CardErrorType { get; }
+        ErrorSubLevel CardErrorSubLevel { get; }
     }
 }

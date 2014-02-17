@@ -6,6 +6,10 @@ using KdsLibrary.BL;
 using System.Data;
 using KdsBatch.Entities;
 using KdsLibrary;
+using KDSCommon.Helpers;
+using KDSCommon.Enums;
+using KDSCommon.Interfaces.DAL;
+using Microsoft.Practices.ServiceLocation;
 
 namespace KdsBatch.Errors
 {
@@ -109,21 +113,21 @@ namespace KdsBatch.Errors
                //יום חול - מאפיינים 3, 4, שישי/ערב חג -  מאפיינים 5, 6 שבת/שבתון -  מאפיינים 7, 8
                if (clDefinitions.CheckShaaton(GlobalData.dtSugeyYamimMeyuchadim,SidurInstance.objDay.iSugYom, SidurInstance.dSidurDate))
                {
-                   if (SidurInstance.objDay.oOved.oMeafyeneyOved.Meafyen7Exists && SidurInstance.objDay.oOved.oMeafyeneyOved.Meafyen8Exists)
+                   if (SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(7) && SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(8))
                    {
                        bCheckChariga = true;
                    }
                }
                else if ((SidurInstance.sErevShishiChag == "1") || (SidurInstance.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
                {
-                   if (SidurInstance.objDay.oOved.oMeafyeneyOved.Meafyen5Exists && SidurInstance.objDay.oOved.oMeafyeneyOved.Meafyen6Exists)
+                   if (SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(5) && SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(6))
                    {
                        bCheckChariga = true;
                     }
                }
                else
                {
-                   if (SidurInstance.objDay.oOved.oMeafyeneyOved.Meafyen3Exists && SidurInstance.objDay.oOved.oMeafyeneyOved.Meafyen4Exists)
+                   if (SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(3) && SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(4))
                    {
                        bCheckChariga = true;
                    }
@@ -341,7 +345,7 @@ namespace KdsBatch.Errors
                         Peiluyot.
                         ForEach (peilut =>
                                 {
-                                    if (peilut.MakatType == clKavim.enMakatType.mVisa
+                                    if (peilut.MakatType == enMakatType.mVisa
                                         && peilut.iKmVisa <= 0)
                                     {
                                         bError = true;
@@ -751,7 +755,7 @@ namespace KdsBatch.Errors
                     dEndLimitHour = SidurInstance.objDay.oParameters.dSidurLimitShatGmarMafilim;
 
 
-                if ((SidurInstance.objDay.oOved.iIsuk != 122 && SidurInstance.objDay.oOved.iIsuk != 123 && SidurInstance.objDay.oOved.iIsuk != 124 && SidurInstance.objDay.oOved.iIsuk != 127) && SidurInstance.objDay.oOved.oMeafyeneyOved.Meafyen43Exists)
+                if ((SidurInstance.objDay.oOved.iIsuk != 122 && SidurInstance.objDay.oOved.iIsuk != 123 && SidurInstance.objDay.oOved.iIsuk != 124 && SidurInstance.objDay.oOved.iIsuk != 127) && SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(43))
                     dEndLimitHour = SidurInstance.objDay.oParameters.dSiyumLilaLeovedLoMafil;
 
                 dSidurEndHour = SidurInstance.dFullShatGmar;
@@ -987,7 +991,7 @@ namespace KdsBatch.Errors
             {
                 //עובדים במרכז נ.צ.ר רשאים לעבוד שם רק לאחר שעברו הכשרה. בסיומה מדווחים להם מאפיין 64. מזהים סידור נ.צ.ר לפי מאפיין 52 ערך 11(סידור נצר) בטבלת סידורים מיוחדים.
                 if ((SidurInstance.bSidurMyuhad) && (SidurInstance.sSugAvoda == clGeneral.enSugAvoda.Netzer.GetHashCode().ToString()) && 
-                    (!SidurInstance.objDay.oOved.oMeafyeneyOved.Meafyen64Exists))
+                    (!SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(64)))
                 {
                     bError = true;
                 }
@@ -1139,8 +1143,8 @@ namespace KdsBatch.Errors
                     if (SidurInstance.bSidurInSummerExists && (SidurInstance.sSidurInSummer != "1" && SidurInstance.sSidurInSummer != "2" && SidurInstance.sSidurInSummer != "3" && SidurInstance.sSidurInSummer != "4"))
                     {
                         //סידור של ארועי קיץ חייב להיות לעובד אשר הוגדר עובד 6 ימים (מזהים לפי ערך 61, 62) במאפיין 56 במאפייני עובדים. סידור של ארועי קיץ = סידור מיוחד עם מאפיין 73
-                        if (((!SidurInstance.objDay.oOved.oMeafyeneyOved.Meafyen56Exists)) || 
-                            ((SidurInstance.objDay.oOved.oMeafyeneyOved.Meafyen56Exists)  && (SidurInstance.objDay.oOved.oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (SidurInstance.objDay.oOved.oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
+                        if (((!SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(56))) || 
+                            ((SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(56))  && (SidurInstance.objDay.oOved.oMeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (SidurInstance.objDay.oOved.oMeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
                         {
                             bError = true;
                         }
@@ -1484,7 +1488,7 @@ namespace KdsBatch.Errors
                         for (int i = 0; i < dtChafifa.Rows.Count; i++)
                         {
                             //if (!CheckApprovalToEmploee((int)dtChafifa.Rows[i]["mispar_ishi"], (DateTime)dtChafifa.Rows[i]["taarich"], "27", SidurInstance.iMisparSidur, SidurInstance.dFullShatHatchala))
-                            oDal.UpdateCardStatus((int)dtChafifa.Rows[i]["mispar_ishi"], (DateTime)dtChafifa.Rows[i]["taarich"], clGeneral.enCardStatus.Error, SidurInstance.objDay.iUserId);
+                            oDal.UpdateCardStatus((int)dtChafifa.Rows[i]["mispar_ishi"], (DateTime)dtChafifa.Rows[i]["taarich"], CardStatus.Error, SidurInstance.objDay.iUserId);
                         }
                     }
                 }
@@ -1515,13 +1519,13 @@ namespace KdsBatch.Errors
             Peilut oPeilut;
             float fZmanSidur = 0;
             float fZmanSidurMapa = 0;
-            clKavim oKavim = new clKavim();
             DateTime dShatGmarMapa, dShaHatchalaMapa;
             int iResult;
             string sShaa;
             try
             {
-                dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(SidurInstance.iMisparSidur, SidurInstance.dSidurDate, null, out iResult);
+                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                dsSidur = kavimDal.GetSidurAndPeiluyotFromTnua(SidurInstance.iMisparSidur, SidurInstance.dSidurDate, null, out iResult);
                 if (iResult == 0)
                 {
                     //שעת התחלה ושעת גמר
@@ -1540,7 +1544,7 @@ namespace KdsBatch.Errors
 
                             //במידה והפעילות האחרונה היא אלמנט לידיעה בלבד (ערך 2 (לידיעה בלבד) במאפיין 3  (לפעולה/לידיעה בלבד), יש לקחת את הפעילות הקודמת לה.
 
-                            if ((clKavim.enMakatType)(oKavim.GetMakatType(lMakatNesia)) == clKavim.enMakatType.mElement)
+                            if ((enMakatType)(StaticBL.GetMakatType(lMakatNesia)) == enMakatType.mElement)
                             {
                                 DataRow drMeafyeneyElements = GlobalData.dtTmpMeafyeneyElements.Select("kod_element=" + int.Parse(lMakatNesia.ToString().Substring(1, 2)))[0];
                                 if (drMeafyeneyElements["element_for_yedia"].ToString() != "2")
@@ -1561,11 +1565,11 @@ namespace KdsBatch.Errors
                     {
                         oPeilut = ((Peilut)SidurInstance.Peiluyot[i]);
                         iTypeMakat = oPeilut.iMakatType;
-                        if ((oPeilut.iMisparKnisa == 0 && iTypeMakat == clKavim.enMakatType.mKavShirut.GetHashCode()) || iTypeMakat == clKavim.enMakatType.mEmpty.GetHashCode() || iTypeMakat == clKavim.enMakatType.mNamak.GetHashCode())
+                        if ((oPeilut.iMisparKnisa == 0 && iTypeMakat == enMakatType.mKavShirut.GetHashCode()) || iTypeMakat == enMakatType.mEmpty.GetHashCode() || iTypeMakat == enMakatType.mNamak.GetHashCode())
                         {
                             dSumMazanTashlum += oPeilut.iMazanTashlum;
                         }
-                        else if (iTypeMakat == clKavim.enMakatType.mElement.GetHashCode())
+                        else if (iTypeMakat == enMakatType.mElement.GetHashCode())
                         {
                             if (oPeilut.sElementInMinutes == "1" && oPeilut.sKodLechishuvPremia.Trim() == "1:1")
                             {

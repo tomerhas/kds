@@ -5,6 +5,7 @@ using System.Text;
 using KdsLibrary.UDT;
 using KdsLibrary;
 using System.Configuration;
+using KDSCommon.DataModels.UDT;
 
 namespace KdsBatch.History
 {

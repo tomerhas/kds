@@ -2143,7 +2143,7 @@
           <Member Name="#IsMakatHasActualMinPremmision(KdsLibrary.BL.clKavim+enMakatType,System.Int32,System.Int32)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
             <Message TypeName="RethrowToPreserveStackDetails" Category="Microsoft.Usage" CheckId="CA2200" Status="Active" Created="2011-01-05 12:25:40Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="Error" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="3749">'Modules_UserControl_ucSidurim.IsMakatHasActualMinPremmision(clKavim.enMakatType, int, int)' rethrows a caught exception and specifies it explicitly as an argument. Use 'throw' without an argument instead, in order to preserve the stack location where the exception was initially raised.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="3749">'Modules_UserControl_ucSidurim.IsMakatHasActualMinPremmision(enMakatType, int, int)' rethrows a caught exception and specifies it explicitly as an argument. Use 'throw' without an argument instead, in order to preserve the stack location where the exception was initially raised.</Issue>
             </Message>
            </Messages>
           </Member>
@@ -2171,17 +2171,17 @@
           <Member Name="#SetActualMinutes(System.Web.UI.WebControls.GridViewRowEventArgs,System.Boolean,System.Boolean,KdsLibrary.BL.clKavim+enMakatType,System.Boolean)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
             <Message TypeName="RethrowToPreserveStackDetails" Category="Microsoft.Usage" CheckId="CA2200" Status="Active" Created="2011-01-05 12:25:40Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="Error" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="3805">'Modules_UserControl_ucSidurim.SetActualMinutes(GridViewRowEventArgs, bool, bool, clKavim.enMakatType, bool)' rethrows a caught exception and specifies it explicitly as an argument. Use 'throw' without an argument instead, in order to preserve the stack location where the exception was initially raised.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="3805">'Modules_UserControl_ucSidurim.SetActualMinutes(GridViewRowEventArgs, bool, bool, enMakatType, bool)' rethrows a caught exception and specifies it explicitly as an argument. Use 'throw' without an argument instead, in order to preserve the stack location where the exception was initially raised.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#SetAddNesiaRekaColumn(System.Web.UI.WebControls.GridViewRowEventArgs,System.Boolean,System.Boolean,System.Boolean,KdsLibrary.BL.clKavim+enMakatType,System.Int32)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
             <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2011-01-05 12:25:40Z" FixCategory="DependsOnFix">
-             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="3885">In method 'Modules_UserControl_ucSidurim.SetAddNesiaRekaColumn(GridViewRowEventArgs, bool, bool, bool, clKavim.enMakatType, int)', object 'imgAddReka' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'imgAddReka' before all references to it are out of scope.</Issue>
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="3885">In method 'Modules_UserControl_ucSidurim.SetAddNesiaRekaColumn(GridViewRowEventArgs, bool, bool, bool, enMakatType, int)', object 'imgAddReka' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'imgAddReka' before all references to it are out of scope.</Issue>
             </Message>
             <Message TypeName="RethrowToPreserveStackDetails" Category="Microsoft.Usage" CheckId="CA2200" Status="Active" Created="2011-01-05 12:25:40Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="Error" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="3893">'Modules_UserControl_ucSidurim.SetAddNesiaRekaColumn(GridViewRowEventArgs, bool, bool, bool, clKavim.enMakatType, int)' rethrows a caught exception and specifies it explicitly as an argument. Use 'throw' without an argument instead, in order to preserve the stack location where the exception was initially raised.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="3893">'Modules_UserControl_ucSidurim.SetAddNesiaRekaColumn(GridViewRowEventArgs, bool, bool, bool, enMakatType, int)' rethrows a caught exception and specifies it explicitly as an argument. Use 'throw' without an argument instead, in order to preserve the stack location where the exception was initially raised.</Issue>
             </Message>
            </Messages>
           </Member>
@@ -2195,10 +2195,10 @@
           <Member Name="#SetCarNumber(System.Web.UI.WebControls.GridViewRowEventArgs,System.Boolean,System.Boolean,System.Int32,System.Boolean,KdsLibrary.BL.clKavim+enMakatType)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
             <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2011-01-05 12:25:40Z" FixCategory="DependsOnFix">
-             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="4027">In method 'Modules_UserControl_ucSidurim.SetCarNumber(GridViewRowEventArgs, bool, bool, int, bool, clKavim.enMakatType)', call System.IDisposable.Dispose on object 'hCell' before all references to it are out of scope.</Issue>
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="4027">In method 'Modules_UserControl_ucSidurim.SetCarNumber(GridViewRowEventArgs, bool, bool, int, bool, enMakatType)', call System.IDisposable.Dispose on object 'hCell' before all references to it are out of scope.</Issue>
             </Message>
             <Message TypeName="RethrowToPreserveStackDetails" Category="Microsoft.Usage" CheckId="CA2200" Status="Active" Created="2011-01-05 12:25:40Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="Error" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="4099">'Modules_UserControl_ucSidurim.SetCarNumber(GridViewRowEventArgs, bool, bool, int, bool, clKavim.enMakatType)' rethrows a caught exception and specifies it explicitly as an argument. Use 'throw' without an argument instead, in order to preserve the stack location where the exception was initially raised.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="4099">'Modules_UserControl_ucSidurim.SetCarNumber(GridViewRowEventArgs, bool, bool, int, bool, enMakatType)' rethrows a caught exception and specifies it explicitly as an argument. Use 'throw' without an argument instead, in order to preserve the stack location where the exception was initially raised.</Issue>
             </Message>
            </Messages>
           </Member>
@@ -2236,10 +2236,10 @@
           <Member Name="#SetMakatNumber(System.Web.UI.WebControls.GridViewRowEventArgs,System.Boolean,System.Boolean,System.Int32,System.Boolean,KdsLibrary.BL.clKavim+enMakatType&amp;)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
             <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2011-01-05 12:25:40Z" FixCategory="DependsOnFix">
-             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="3942">In method 'Modules_UserControl_ucSidurim.SetMakatNumber(GridViewRowEventArgs, bool, bool, int, bool, ref clKavim.enMakatType)', call System.IDisposable.Dispose on object 'hCell' before all references to it are out of scope.</Issue>
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="3942">In method 'Modules_UserControl_ucSidurim.SetMakatNumber(GridViewRowEventArgs, bool, bool, int, bool, ref enMakatType)', call System.IDisposable.Dispose on object 'hCell' before all references to it are out of scope.</Issue>
             </Message>
             <Message TypeName="RethrowToPreserveStackDetails" Category="Microsoft.Usage" CheckId="CA2200" Status="Active" Created="2011-01-05 12:25:40Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="Error" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="4010">'Modules_UserControl_ucSidurim.SetMakatNumber(GridViewRowEventArgs, bool, bool, int, bool, ref clKavim.enMakatType)' rethrows a caught exception and specifies it explicitly as an argument. Use 'throw' without an argument instead, in order to preserve the stack location where the exception was initially raised.</Issue>
+             <Issue Certainty="95" Level="Error" Path="c:\dev\kds\Main\Kds\KdsWebSite\Modules\UserControl" File="ucSidurim.ascx.cs" Line="4010">'Modules_UserControl_ucSidurim.SetMakatNumber(GridViewRowEventArgs, bool, bool, int, bool, ref enMakatType)' rethrows a caught exception and specifies it explicitly as an argument. Use 'throw' without an argument instead, in order to preserve the stack location where the exception was initially raised.</Issue>
             </Message>
            </Messages>
           </Member>

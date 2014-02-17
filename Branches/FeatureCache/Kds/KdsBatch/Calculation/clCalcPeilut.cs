@@ -6,6 +6,10 @@ using System.Data;
 using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using KdsLibrary;
+using KDSCommon.Enums;
+using KDSCommon.Helpers;
+using KDSCommon.Interfaces.DAL;
+using Microsoft.Practices.ServiceLocation;
 
 namespace KdsBatch
 {
@@ -226,9 +230,8 @@ namespace KdsBatch
              string sMakat, sQury;
             DateTime dShatYetzia = DateTime.MinValue;
 
-            clKavim _Kavim = new clKavim();
-            int iMakatType; //= _Kavim.GetMakatType(lMakatNesia);
-            clKavim.enMakatType oMakatType;
+            int iMakatType; //= StaticBL.GetMakatType(lMakatNesia);
+            enMakatType oMakatType;
            
              try 
              {
@@ -242,9 +245,9 @@ namespace KdsBatch
                      iMisparKnisa = int.Parse(drPeiluyot[J]["Mispar_Knisa"].ToString());
                      sMakat = drPeiluyot[J]["makat_nesia"].ToString();
                      dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
-                     iMakatType = _Kavim.GetMakatType(int.Parse(sMakat));
-                     oMakatType = (clKavim.enMakatType)iMakatType;
-                     if (oMakatType == clKavim.enMakatType.mNamak || (oMakatType == clKavim.enMakatType.mKavShirut && iMisparKnisa == 0))
+                     iMakatType = StaticBL.GetMakatType(int.Parse(sMakat));
+                     oMakatType = (enMakatType)iMakatType;
+                     if (oMakatType == enMakatType.mNamak || (oMakatType == enMakatType.mKavShirut && iMisparKnisa == 0))
                      {
                          fErech+=1;
                      }
@@ -269,7 +272,6 @@ namespace KdsBatch
              DataRow[] drPeiluyot;
              int iMakat, iMisparKnisa, iDakotBefoal;
              DateTime dShatHatchla, dShatYetzia,dMeTaarich;
-             clKavim oKavim = new clKavim();
              float fErech,fHistaglutMifraki , fHistaglutEilat;
              iMisparKnisa = 0;
              dShatHatchla = DateTime.MinValue;
@@ -294,8 +296,9 @@ namespace KdsBatch
                  {
                      if (clCalcData.DtBusNumbers == null)
                      {
+                         var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
                          dMeTaarich = DateTime.Parse("01/" + dTaarich.Month + "/" + dTaarich.Year);
-                         clCalcData.DtBusNumbers = oKavim.GetBusesDetailsLeOvedForMonth(dMeTaarich, dMeTaarich.AddMonths(1).AddDays(-1), _iMisparIshi);
+                         clCalcData.DtBusNumbers = kavimDal.GetBusesDetailsLeOvedForMonth(dMeTaarich, dMeTaarich.AddMonths(1).AddDays(-1), _iMisparIshi);
                      }
                      if (clCalcData.DtBusNumbers.Rows.Count > 0)
                      {

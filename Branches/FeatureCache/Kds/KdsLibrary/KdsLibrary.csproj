@@ -109,12 +109,17 @@
   <ItemGroup>
     <Compile Include="BL\clBatch.cs" />
     <Compile Include="BL\clDynamicForms.cs" />
-    <Compile Include="BL\clKavim.cs" />
     <Compile Include="BL\clReport.cs" />
     <Compile Include="BL\clRequest.cs" />
     <Compile Include="BL\clTaskManager.cs" />
     <Compile Include="BL\clWorkCard.cs" />
+    <Compile Include="BL\IOvdimDAL.cs" />
+    <Compile Include="KDSLogic\DAL\KavimDAL.cs" />
     <Compile Include="KDSLogic\DAL\OvedDAL.cs" />
+    <Compile Include="KDSLogic\DAL\ParametersDAL.cs" />
+    <Compile Include="KDSLogic\DAL\PeilutDAL.cs" />
+    <Compile Include="KDSLogic\DAL\SidurDAL.cs" />
+    <Compile Include="KDSLogic\Managers\KavimManager.cs" />
     <Compile Include="KDSLogic\Managers\OvedManager.cs" />
     <Compile Include="KDSLogic\Managers\ParametersManager.cs" />
     <Compile Include="Controls\KdsCalendar.cs" />
@@ -125,6 +130,8 @@
     <Compile Include="DAL\clTnua.cs" />
     <Compile Include="DAL\clTxDal.cs" />
     <Compile Include="BL\clOvdim.cs" />
+    <Compile Include="KDSLogic\Managers\PeilutManager.cs" />
+    <Compile Include="KDSLogic\Managers\SidurManager.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -163,7 +170,6 @@
     <Compile Include="UDT\Obj_Meafyeney_Oved.cs" />
     <Compile Include="UDT\Obj_Mispar_Ishi_Sug_Chishuv.cs" />
     <Compile Include="UDT\Obj_Ovdim_Im_Shinuy_Hr.cs" />
-    <Compile Include="UDT\Obj_Peilut_Ovdim.cs" />
     <Compile Include="UDT\Obj_Report_Param.cs" />
     <Compile Include="UDT\Obj_Rikuz_Pdf.cs" />
     <Compile Include="UDT\Obj_Shgiot_Meusharot.cs" />

@@ -123,30 +123,37 @@
     <Compile Include="clMatzavOvdim.cs" />
     <Compile Include="clPirteyOved.cs" />
     <Compile Include="clTkinutMakatim.cs" />
-    <Compile Include="Entities\CardError.cs" />
-    <Compile Include="Entities\ErrorItem.cs" />
+    <Compile Include="Entities\CardError.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Day.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\EntitiesDal.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\ErrorItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Oved.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Peilut.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Sidur.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Errors\BasicChecker.cs" />
     <Compile Include="Errors\BasicError.cs" />
-    <Compile Include="Entities\Day.cs" />
-    <Compile Include="Entities\EntitiesDal.cs" />
-    <Compile Include="Errors\BasicErrorsLib\CardErrorBase.cs" />
-    <Compile Include="Errors\BasicErrorsLib\CardErrorContainer.cs" />
-    <Compile Include="Errors\BasicErrorsLib\ErrosrImpl\DayErrors\DayErrorDuplicateShatYetiza103.cs" />
-    <Compile Include="Errors\BasicErrorsLib\ErrosrImpl\DayErrors\DayErrorHrStatusValid01.cs" />
-    <Compile Include="Errors\BasicErrorsLib\ErrosrImpl\DayErrors\DayErrorIsSimunNesiaValid27.cs" />
-    <Compile Include="Errors\BasicErrorsLib\FlowManagers\DayErrorFlowManager.cs" />
     <Compile Include="Errors\DayErrors.cs" />
     <Compile Include="Errors\FactoryChecker.cs" />
     <Compile Include="Errors\GlobalData.cs" />
     <Compile Include="Errors\GlobalEnum.cs" />
-    <Compile Include="Entities\Oved.cs" />
-    <Compile Include="Entities\Peilut.cs" />
     <Compile Include="Errors\clCardErrors.cs" />
     <Compile Include="clDefinitions.cs" />
     <Compile Include="clMeafyenyOved.cs" />
     <Compile Include="clParameters.cs" />
-    <Compile Include="Errors\clPeilut.cs" />
-    <Compile Include="Errors\clSidur.cs" />
     <Compile Include="Errors\MainErrors.cs" />
     <Compile Include="Errors\PeilutErrors.cs" />
     <Compile Include="Errors\SidurErrors.cs" />
@@ -162,7 +169,6 @@
     <Compile Include="HrWorkersChanges\ClWorkerCompare.cs" />
     <Compile Include="HrWorkersChanges\ClWorkerTable.cs" />
     <Compile Include="InputData\clInputData.cs" />
-    <Compile Include="Entities\Sidur.cs" />
     <Compile Include="MonthlyMails\clFactoryMail.cs" />
     <Compile Include="MonthlyMails\clManagerRikuzimMail.cs" />
     <Compile Include="MonthlyMails\Mail.cs" />
@@ -313,7 +319,7 @@
       <Name>KDSCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
-      <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
+      <Project>{b3e759ec-2a7b-4c38-9013-730c3a628aa8}</Project>
       <Name>KdsLibrary</Name>
     </ProjectReference>
   </ItemGroup>

@@ -6,6 +6,10 @@ using KdsLibrary.BL;
 using System.Data;
 using KdsBatch.Entities;
 using KdsLibrary;
+using KDSCommon.Enums;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.DAL;
+using System.Web;
 
 namespace KdsBatch.Errors
 {
@@ -23,12 +27,12 @@ namespace KdsBatch.Errors
             {
                 if (PeilutInstance.lMakatNesia.ToString().Length < 6)
                     bError = true;
-                else if (PeilutInstance.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() || PeilutInstance.iMakatType == clKavim.enMakatType.mNamak.GetHashCode() || PeilutInstance.iMakatType == clKavim.enMakatType.mEmpty.GetHashCode())
+                else if (PeilutInstance.iMakatType == enMakatType.mKavShirut.GetHashCode() || PeilutInstance.iMakatType == enMakatType.mNamak.GetHashCode() || PeilutInstance.iMakatType == enMakatType.mEmpty.GetHashCode())
                 {
                     if (PeilutInstance.iMakatValid != 0)
                         bError = true;
                 }
-                else if (PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && PeilutInstance.lMakatNesia.ToString().Substring(0, 3) != "700" && (PeilutInstance.lMakatNesia.ToString().Length < 8 || PeilutInstance.iMakatValid != 0))
+                else if (PeilutInstance.iMakatType == enMakatType.mElement.GetHashCode() && PeilutInstance.lMakatNesia.ToString().Substring(0, 3) != "700" && (PeilutInstance.lMakatNesia.ToString().Length < 8 || PeilutInstance.iMakatValid != 0))
                     bError = true;
             }
             catch (Exception ex)
@@ -53,7 +57,7 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
-                if (PeilutInstance.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() && PeilutInstance.iMisparKnisa == 0 &&
+                if (PeilutInstance.iMakatType == enMakatType.mKavShirut.GetHashCode() && PeilutInstance.iMisparKnisa == 0 &&
                    PeilutInstance.iOnatiyut == 71 && PeilutInstance.lMisparSiduriOto == 0 && PeilutInstance.bPeilutEilat)
                 {
                     bError = true;
@@ -79,12 +83,11 @@ namespace KdsBatch.Errors
             bool bError = false;
             DataRow drNew;
             long lMakatNesia = PeilutInstance.lMakatNesia;
-            clKavim oKavim = new clKavim();
             int iElementTime;
             float fSidurTime;
             try
             {
-                if ((PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (PeilutInstance.sElementZviraZman != clGeneral.enSectorZviratZmanForElement.ElementZviratZman.GetHashCode().ToString()) && (PeilutInstance.sElementInMinutes == "1"))
+                if ((PeilutInstance.iMakatType == enMakatType.mElement.GetHashCode()) && (PeilutInstance.sElementZviraZman != clGeneral.enSectorZviratZmanForElement.ElementZviratZman.GetHashCode().ToString()) && (PeilutInstance.sElementInMinutes == "1"))
                 {
                     fSidurTime = float.Parse((!string.IsNullOrEmpty(PeilutInstance.objSidur.sShatGmar) && !string.IsNullOrEmpty(PeilutInstance.objSidur.sShatHatchala) ? (PeilutInstance.objSidur.dFullShatGmar - PeilutInstance.objSidur.dFullShatHatchala).TotalMinutes : 0).ToString()); //clDefinitions.GetSidurTimeInMinuts(PeilutInstance.objSidur);
                     iElementTime = int.Parse(lMakatNesia.ToString().PadLeft(8).Substring(3, 3));
@@ -114,7 +117,7 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
-                if ((clKavim.enMakatType)PeilutInstance.iMakatType == clKavim.enMakatType.mElement
+                if ((enMakatType)PeilutInstance.iMakatType == enMakatType.mElement
                     && PeilutInstance.iElementLeYedia == 2 && PeilutInstance.lMakatNesia > 0)
                 {
                     return bError;
@@ -125,7 +128,7 @@ namespace KdsBatch.Errors
               
                 if (!(string.IsNullOrEmpty(PeilutInstance.sShatYetzia)))
                 {
-                    if ((!((PeilutInstance.iMakatType == (long)clKavim.enMakatType.mElement.GetHashCode()) && (PeilutInstance.iElementLeYedia == 2))) && (PeilutInstance.lMakatNesia > 0))
+                    if ((!((PeilutInstance.iMakatType == (long)enMakatType.mElement.GetHashCode()) && (PeilutInstance.iElementLeYedia == 2))) && (PeilutInstance.lMakatNesia > 0))
                     {
                         if (PeilutInstance.objSidur.dFullShatHatchala.Year > clGeneral.cYearNull)
                         {//בדיקה 121
@@ -159,7 +162,7 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
-                if ((clKavim.enMakatType)PeilutInstance.iMakatType == clKavim.enMakatType.mElement
+                if ((enMakatType)PeilutInstance.iMakatType == enMakatType.mElement
                     && PeilutInstance.iElementLeYedia == 2 && PeilutInstance.lMakatNesia > 0)
                 {
                     return bError;
@@ -170,7 +173,7 @@ namespace KdsBatch.Errors
 
                 if (!(string.IsNullOrEmpty(PeilutInstance.sShatYetzia)))
                 {
-                    if ((!((PeilutInstance.iMakatType == (long)clKavim.enMakatType.mElement.GetHashCode()) && (PeilutInstance.iElementLeYedia == 2))) && (PeilutInstance.lMakatNesia > 0))
+                    if ((!((PeilutInstance.iMakatType == (long)enMakatType.mElement.GetHashCode()) && (PeilutInstance.iElementLeYedia == 2))) && (PeilutInstance.lMakatNesia > 0))
                     {
                         if (PeilutInstance.objSidur.dFullShatGmar != DateTime.MinValue)
                         {//בדיקה 122
@@ -216,7 +219,7 @@ namespace KdsBatch.Errors
                         bError = true;
                         if (PeilutInstance.objSidur.Peiluyot.Count == 1)
                         {
-                            if (PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && PeilutInstance.bMisparSidurMatalotTnuaExists && PeilutInstance.iMisparSidurMatalotTnua == iPeilutMisparSidur)
+                            if (PeilutInstance.iMakatType == enMakatType.mElement.GetHashCode() && PeilutInstance.bMisparSidurMatalotTnuaExists && PeilutInstance.iMisparSidurMatalotTnua == iPeilutMisparSidur)
                                 bError = false;
                         }
                     }                    
@@ -240,18 +243,17 @@ namespace KdsBatch.Errors
         protected override bool IsCorrect()
         {
             bool bError = false;
-            clKavim oKavim = new clKavim();
             try
             {
-                clKavim.enMakatType oMakatType = (clKavim.enMakatType)PeilutInstance.iMakatType;
-                if (((oMakatType == clKavim.enMakatType.mKavShirut) || (oMakatType == clKavim.enMakatType.mEmpty) || (oMakatType == clKavim.enMakatType.mNamak) || (oMakatType == clKavim.enMakatType.mElement && PeilutInstance.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")) || ((PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && PeilutInstance.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "700" && (PeilutInstance.bBusNumberMustExists) && (PeilutInstance.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "701") && (PeilutInstance.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "712") && (PeilutInstance.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "711")))
+                enMakatType oMakatType = (enMakatType)PeilutInstance.iMakatType;
+                if (((oMakatType == enMakatType.mKavShirut) || (oMakatType == enMakatType.mEmpty) || (oMakatType == enMakatType.mNamak) || (oMakatType == enMakatType.mElement && PeilutInstance.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")) || ((PeilutInstance.iMakatType == enMakatType.mElement.GetHashCode()) && PeilutInstance.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "700" && (PeilutInstance.bBusNumberMustExists) && (PeilutInstance.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "701") && (PeilutInstance.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "712") && (PeilutInstance.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "711")))
                 {
                     //בודקים אם הפעילות דורשת מספר רכב ואם הוא קיים וחוקי (מול מש"ר). פעילות דורשת מספר רכב אם מרוטינת זיהוי מקט חזר פרמטר שונה מאלמנט. אם חזר מהרוטינה אלנמט יש לבדוק אם דורש מספר רכב. תהיה טבלה של מספר פעילות המתחילים ב- 7 ולכל רשומה יהיה מאפיין אם הוא דורש מספר רכב. בטבלת מאפייני אלמנטים (11 - חובה מספר רכב)
                     //בדיקת מספר רכב מול מש"ר
 
                     if (PeilutInstance.lOtoNo > 0)
                     {
-                        if (!(oKavim.IsBusNumberValid(PeilutInstance.lOtoNo,PeilutInstance.dCardDate)))
+                        if (!(IsBusNumberValid(PeilutInstance.lOtoNo,PeilutInstance.dCardDate)))
                         {
                             bError = true;
                         }
@@ -270,7 +272,26 @@ namespace KdsBatch.Errors
             }
             return bError;
         }
+
+        private bool IsBusNumberValid(long otoNumber, DateTime cardDate)
+        {
+            string sCacheKey = otoNumber + cardDate.ToShortDateString();
+            if (HttpRuntime.Cache.Get(sCacheKey) == null || HttpRuntime.Cache.Get(sCacheKey).ToString() == "")
+            {
+                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                var result = kavimDal.IsBusNumberValid(otoNumber, cardDate);
+
+                HttpRuntime.Cache.Insert(sCacheKey, result, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+                return result == 0;
+            }
+            else
+            {
+                return HttpRuntime.Cache.Get(sCacheKey).ToString().Trim() == "0";
+            }
+        }
     }
+
+
     public class PeilutError31 : BasicChecker
     {
         public PeilutError31(object CurrentInstance)
@@ -288,7 +309,7 @@ namespace KdsBatch.Errors
            
                 if (!string.IsNullOrEmpty(PeilutInstance.objSidur.objDay.sLina))
                 {
-                    if ((PeilutInstance.objSidur.iMisparSidur == iLastMisaprSidur) && (int.Parse(PeilutInstance.objSidur.objDay.sLina) > 0) && (PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (PeilutInstance.bElementHamtanaExists))
+                    if ((PeilutInstance.objSidur.iMisparSidur == iLastMisaprSidur) && (int.Parse(PeilutInstance.objSidur.objDay.sLina) > 0) && (PeilutInstance.iMakatType == enMakatType.mElement.GetHashCode()) && (PeilutInstance.bElementHamtanaExists))
                     {
                         bError = true;
                     }
@@ -384,7 +405,7 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
-                if ((PeilutInstance.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() && PeilutInstance.iMisparKnisa == 0) || PeilutInstance.iMakatType == clKavim.enMakatType.mNamak.GetHashCode())
+                if ((PeilutInstance.iMakatType == enMakatType.mKavShirut.GetHashCode() && PeilutInstance.iMisparKnisa == 0) || PeilutInstance.iMakatType == enMakatType.mNamak.GetHashCode())
                 {
                     if (PeilutInstance.iKisuyTor > PeilutInstance.iKisuyTorMap)
                         bError = true;
@@ -413,7 +434,7 @@ namespace KdsBatch.Errors
             {
                 if (PeilutInstance.objSidur.bSidurMyuhad)
                 {
-                    if (PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && PeilutInstance.sDivuchInSidurMeyuchad == "1")
+                    if (PeilutInstance.iMakatType == enMakatType.mElement.GetHashCode() && PeilutInstance.sDivuchInSidurMeyuchad == "1")
                     {
                         bError = true;
                     }
@@ -441,7 +462,7 @@ namespace KdsBatch.Errors
             {
                 if (PeilutInstance.objSidur.bSidurVisaKodExists)
                 {
-                    if (!(PeilutInstance.iMakatType == clKavim.enMakatType.mVisa.GetHashCode() || (PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && PeilutInstance.sDivuchInSidurVisa == "2")))
+                    if (!(PeilutInstance.iMakatType == enMakatType.mVisa.GetHashCode() || (PeilutInstance.iMakatType == enMakatType.mElement.GetHashCode() && PeilutInstance.sDivuchInSidurVisa == "2")))
                     {
                         bError = true;
                     }
@@ -480,12 +501,12 @@ namespace KdsBatch.Errors
 
                 //1. אם בסידור אליו משויכת פעילות ההמתנה קיימת נסיעת אילת ארוכה ומשך ההמתנה (הערך בפוזיציות 4-6) הוא מעל הערך בפרמטר 148 - שגוי.
                 //2. אם בסידור אליו משויכת פעילות ההמתנה לא קיימת נסיעת אילת ארוכה ומשך ההמתנה (הערך בפוזיציות 4-6) הוא מעל הערך בפרמטר 161 - שגוי.
-                if (bCurrSidurEilat && PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && PeilutInstance.bElementHamtanaExists)
+                if (bCurrSidurEilat && PeilutInstance.iMakatType == enMakatType.mElement.GetHashCode() && PeilutInstance.bElementHamtanaExists)
                 {
                     iParamHamtana = PeilutInstance.objSidur.objDay.oParameters.iMaxZmanHamtanaEilat;
                     bhaveHamtana = true;
                 }
-                else if (!bCurrSidurEilat && PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && PeilutInstance.bElementHamtanaExists)
+                else if (!bCurrSidurEilat && PeilutInstance.iMakatType == enMakatType.mElement.GetHashCode() && PeilutInstance.bElementHamtanaExists)
                 {
                     iParamHamtana = PeilutInstance.objSidur.objDay.oParameters.iMaximumHmtanaTime;
                     bhaveHamtana = true;
@@ -556,7 +577,7 @@ namespace KdsBatch.Errors
                 if (PeilutInstance.iMispar_siduri > 0 && PeilutInstance.iMisparKnisa == 0)//לא נבצע את הבדיקה לפעילות הראשונה 
                 {
                     oPrevPeilut = (Peilut)PeilutInstance.objSidur.Peiluyot[PeilutInstance.iMispar_siduri - 1];
-                    if ((PeilutInstance.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode()) || (PeilutInstance.iMakatType == clKavim.enMakatType.mNamak.GetHashCode()))
+                    if ((PeilutInstance.iMakatType == enMakatType.mKavShirut.GetHashCode()) || (PeilutInstance.iMakatType == enMakatType.mNamak.GetHashCode()))
                     {
                         dCurrStartPeilut = PeilutInstance.dFullShatYetzia;
                         if (PeilutInstance.iDakotBafoal > 0)
@@ -567,7 +588,7 @@ namespace KdsBatch.Errors
                     
 
                     //זמן תחילת פעילות לאחר זמן תחילת הפעילות הקודמת לה וזמן סיום הפעילות קודם לזמן סיום הפעילות הקודמת לה. זיהוי זמן הפעילות (זיהוי סוג פעילות לפי רוטינת זיהוי מק"ט) :עבור קו שירות, נמ"ק, , יש לפנות לקטלוג נסיעות כדי לקבל את הזמן. עבור אלמנט, במידה וזה אלמנט זמן (לפי ערך 1 במאפיין 4 בטבלת מאפייני אלמנטים), הזמן נלקח מפוזיציות 4-6 של האלמנט. בבדיקה זו אין  להתייחס לפעילות המתנה (מזהים פעילות המתנה (מסוג אלמנט) לפי מאפיין 15 בטבלת מאפייני אלמנטים).           
-                    if ((oPrevPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode()) || (oPrevPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode()))
+                    if ((oPrevPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode()) || (oPrevPeilut.iMakatType == enMakatType.mNamak.GetHashCode()))
                     {
                         dPrevStartPeilut = oPrevPeilut.dFullShatYetzia;
                         if (oPrevPeilut.iDakotBafoal > 0)
@@ -611,7 +632,7 @@ namespace KdsBatch.Errors
             EntitiesDal oDal = new EntitiesDal();
             try
             {
-                if (PeilutInstance.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode())
+                if (PeilutInstance.iMakatType == enMakatType.mKavShirut.GetHashCode())
                 {
                     if (oDal.IsDuplicateTravle(PeilutInstance.objSidur.iMisparIshi, PeilutInstance.dCardDate, PeilutInstance.lMakatNesia, PeilutInstance.dFullShatYetzia, PeilutInstance.iMisparKnisa, ref dtDuplicate))
                     {
@@ -620,7 +641,7 @@ namespace KdsBatch.Errors
                         for (int i = 0; i < dtDuplicate.Rows.Count; i++)
                         {
                             //if (!CheckApprovalToEmploee((int)dtDuplicate.Rows[i]["mispar_ishi"],(DateTime)dtDuplicate.Rows[i]["taarich"],"25", PeilutInstance.objSidur.iMisparSidur, PeilutInstance.objSidur.dFullShatHatchala, PeilutInstance.iMisparKnisa, PeilutInstance.dFullShatYetzia))
-                            clDefinitions.UpdateCardStatus((int)dtDuplicate.Rows[i]["mispar_ishi"], (DateTime)dtDuplicate.Rows[i]["taarich"], clGeneral.enCardStatus.Error, PeilutInstance.objSidur.objDay.iUserId);
+                            clDefinitions.UpdateCardStatus((int)dtDuplicate.Rows[i]["mispar_ishi"], (DateTime)dtDuplicate.Rows[i]["taarich"], CardStatus.Error, PeilutInstance.objSidur.objDay.iUserId);
 
                         }
                     }
@@ -646,14 +667,14 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
-                if ((PeilutInstance.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() && PeilutInstance.iMisparKnisa == 0) || PeilutInstance.iMakatType == clKavim.enMakatType.mNamak.GetHashCode() || PeilutInstance.iMakatType == clKavim.enMakatType.mEmpty.GetHashCode())
+                if ((PeilutInstance.iMakatType == enMakatType.mKavShirut.GetHashCode() && PeilutInstance.iMisparKnisa == 0) || PeilutInstance.iMakatType == enMakatType.mNamak.GetHashCode() || PeilutInstance.iMakatType == enMakatType.mEmpty.GetHashCode())
                 {
                     if (PeilutInstance.iDakotBafoal > PeilutInstance.iMazanTashlum)
                         bError = true;
 
                 }
 
-                if (PeilutInstance.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() && PeilutInstance.iMisparKnisa > 0)
+                if (PeilutInstance.iMakatType == enMakatType.mKavShirut.GetHashCode() && PeilutInstance.iMisparKnisa > 0)
                 {
                     if (PeilutInstance.iDakotBafoal > PeilutInstance.objSidur.objDay.oParameters.iMaxMinutsForKnisot)
                         bError = true;
@@ -682,7 +703,7 @@ namespace KdsBatch.Errors
             try
             {
                 //זמן הכנת מכונה באלמנט הוא מוגבל בזמן הזמן משתנה אם זו הכנת מכונה ראשונה (אלמנט 701xxx00) ביום או נוספת (711xxx00). זיהוי הכנה ראשונה/נוספת ביום - אם הסידור בו מדווחת הכנת מכונה התחיל עד 8 בבוקר (לא כולל) זוהי הכנת מכונה ראשונה. כל הכנת מכונה נוספת/מאוחרת משעה 8 בבוקר (כולל) נחשבת להכנת מכונה נוספת. זמן תקין להכנת מכונה  ראשונה הוא עד הערך בפרמטר 120 (זמן הכנת מכונה ראשונה), זמן תקין להכנת מכונה נוספת הוא עד הערך בפרמטר 121 (זמן הכנת מכונה נוספת). ביום עבודה יש מקסימום זמן לסה"כ הכנות מכונה נוספות, זמן תקין לפי פרמטר 122 (מכסימום יומי להכנות מכונה נוספות דקות). ביום עבודה יש מקסימום זמן לסה"כ הכנות מכונה (ראשונה ונוספות), זמן תקין לפי פרמטר 123 (מכסימום יומי להכנות מכונה  דקות).      מקסימום הכנות מכונה מותר בסידור         יש מקסימום למספר הכנות מכונה מותרות בסידור, נבדק לפי פרמטר 124 (מכסימום הכנות מכונה בסידור אחד), לא משנה מה הסוג שלהן.      
-                if ((PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (!String.IsNullOrEmpty(PeilutInstance.sShatYetzia)))
+                if ((PeilutInstance.iMakatType == enMakatType.mElement.GetHashCode()) && (!String.IsNullOrEmpty(PeilutInstance.sShatYetzia)))
                 {
                     iElementType = int.Parse(PeilutInstance.lMakatNesia.ToString().Substring(0, 3));
                     if ((iElementType == 701) || (iElementType == 711))

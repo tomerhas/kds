@@ -10,6 +10,12 @@ using KdsLibrary.BL;
 using KdsLibrary.UDT;
 using KdsBatch;
 using KdsLibrary.Security;
+using KDSCommon.DataModels;
+using KDSCommon.DataModels.UDT;
+using KDSCommon.Helpers;
+using KDSCommon.Enums;
+using KDSCommon.Interfaces.DAL;
+using Microsoft.Practices.ServiceLocation;
 
 
 public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
@@ -53,7 +59,6 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         string listMeafyenim = "";
         clUtils oUtils = new clUtils();
         clOvdim oOvdim = new clOvdim();
-        clKavim oKavim = new clKavim();
         DataRow[] drs;
         int erech;
         try
@@ -97,7 +102,8 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                
                 dtSadotNosafimLePeilut = oUtils.GetSadotNosafimLePeilut();
                 dtPeiluyotLesidur = oOvdim.GetPeiluyotLeOved(int.Parse(txtId.Value), int.Parse(MisSidur.Value),DateTime.Parse(clnDate.Value), DateTime.Parse(ShatHatchala.Value));
-                Session["dtMakatimCatalog"] = oKavim.GetKatalogKavim(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value), DateTime.Parse(clnDate.Value));
+                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                Session["dtMakatimCatalog"] = kavimDal.GetKatalogKavim(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value), DateTime.Parse(clnDate.Value));
            //     cheackEilatTrip(ref dtSadotNosafimLesidur, dtPeiluyotLesidur);
                 Session["dtPeiluyot"] = dtPeiluyotLesidur;
                 Session["dtSadotNosafimLesidur"] = dtSadotNosafimLesidur;
@@ -262,9 +268,8 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
 
     private bool CheckKavSherut(int makat,out bool bEilatTrip,out int iOnatiyut)
     {
-        clKavim oKavim = new clKavim();
         DataTable dtKavim = new DataTable();
-        clKavim.enMakatType MakatType;
+        enMakatType MakatType;
         decimal km=0;
          iOnatiyut = 0;
       //  int iMakatValid;
@@ -274,11 +279,11 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         bEilatTrip = false;
         try{
               //  makat = int.Parse(dr["MAKAT_NESIA"].ToString());
-                MakatType = (clKavim.enMakatType)oKavim.GetMakatType(makat);
+                MakatType = (enMakatType)StaticBL.GetMakatType(makat);
 
                 switch (MakatType)
                 {
-                    case clKavim.enMakatType.mKavShirut:
+                    case enMakatType.mKavShirut:
                         dtKavim =(DataTable)Session["dtMakatimCatalog"]; // oKavim.GetKavimDetailsFromTnuaDT(makat, DateTime.Parse(clnDate.Value), out iMakatValid);
                         sSQL = "MAKAT8=" + makat +" AND ACTIVITY_DATE='" + clnDate.Value +"'";
                         drSelect = dtKavim.Select(sSQL);
@@ -394,7 +399,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         string sugObject;
         string kodObject;
       //  bool bErrorExists;
-        clSidur oSidur = new clSidur();//int.Parse(MisIshi.Value), DateTime.Parse(TaarichCA.Value), int.Parse(MisSidur.Value),null);       
+        SidurDM oSidur = null;//int.Parse(MisIshi.Value), DateTime.Parse(TaarichCA.Value), int.Parse(MisSidur.Value),null);       
         DropDownList cmb = new DropDownList();
         TextBox txt = new TextBox();
         CustomValidator vldCustomValidator = new CustomValidator();
@@ -1581,7 +1586,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
 
     /**************************/
 
-    protected bool SetOneError(Control oObj, HtmlTableCell hCell, string sFieldName, ref clSidur oSidur, string sPeilutKey, string sImgId)
+    protected bool SetOneError(Control oObj, HtmlTableCell hCell, string sFieldName, ref SidurDM oSidur, string sPeilutKey, string sImgId)
     {
         bool bErrorExists = false; ;
         DataSet dsFieldsErrors;

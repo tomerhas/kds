@@ -26,6 +26,10 @@ using System.IO;
 using System.Threading.Tasks;
 using KdsLibrary.Utils.Reports;
 using System.Collections.Generic;
+using KDSCommon.DataModels;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.DAL;
+using KDSCommon.Enums;
 
 
 public partial class Modules_Test :Page
@@ -123,16 +127,16 @@ public partial class Modules_Test :Page
     private string GetMasharCarNumbers(OrderedDictionary htEmployeeDetails)
     {
         string sCarNumbers = "";
-        clPeilut oPeilut;
-        clSidur oSidur;
+        PeilutDM oPeilut;
+        SidurDM oSidur;
 
         //נשרשר את כל מספרי הרכב, כדי לפנות למש"ר עם פחות נתונים
         for (int i = 0; i < htEmployeeDetails.Count; i++)
         {
-            oSidur = (KdsBatch.clSidur)htEmployeeDetails[i];
+            oSidur = (SidurDM)htEmployeeDetails[i];
             for (int j = 0; j < oSidur.htPeilut.Count; j++)
             {
-                oPeilut = (clPeilut)oSidur.htPeilut[j];
+                oPeilut = (PeilutDM)oSidur.htPeilut[j];
                 sCarNumbers += oPeilut.lOtoNo.ToString() + ",";
             }
         }
@@ -147,13 +151,13 @@ public partial class Modules_Test :Page
     {
         string sCarNumbers;
         DataTable dtLicenseNumber = new DataTable();
-        clKavim oKavim = new clKavim();
 
         sCarNumbers = GetMasharCarNumbers(htEmployeeDetails);
 
         if (sCarNumbers != string.Empty)
         {
-            dtLicenseNumber = oKavim.GetMasharData(sCarNumbers);
+            var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+            dtLicenseNumber = kavimDal.GetMasharData(sCarNumbers);
         }
         return dtLicenseNumber;
     }
@@ -184,11 +188,11 @@ public partial class Modules_Test :Page
     }
     private DataTable GetMeafyeneyElementim()
     {
-        clKavim oKavim = new clKavim();
         DataTable dtElementim = new DataTable();
         try
         {
-            dtElementim = oKavim.GetMeafyeneyElementByKod(0, dDateCard);
+            var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+            dtElementim = kavimDal.GetMeafyeneyElementByKod(0, dDateCard);
             return dtElementim;
         }
         catch (Exception ex)
@@ -821,7 +825,7 @@ public partial class Modules_Test :Page
     private void HafelShguim(int mispar_ishi,DateTime taarich)
     {
         EntitiesDal oDal = new EntitiesDal();
-        clGeneral.enCardStatus _CardStatus;
+        CardStatus _CardStatus;
         bool bHaveShgiotLetzuga = false;
         string sArrKodShgia;
       //  DataTable dt = new DataTable();
@@ -872,11 +876,11 @@ public partial class Modules_Test :Page
                 if (oDay.CardErrors.Count > 0)
                 {
                     oDal.InsertErrorsToTbShgiot(oDay);
-                    _CardStatus = clGeneral.enCardStatus.Error;
+                    _CardStatus = CardStatus.Error;
                 }
                 else
                 {
-                    _CardStatus = clGeneral.enCardStatus.Valid;
+                    _CardStatus = CardStatus.Valid;
                 }
                 if (_CardStatus.GetHashCode() != oDay.iStatus)
                 {
@@ -896,18 +900,18 @@ public partial class Modules_Test :Page
     }
     protected void Button5_Click(object sender, EventArgs e)
     {
-        clKavim oKavim = new clKavim();
         DataSet dsSidur=new DataSet();
         int iResult;
         double dTotalTime;
         DateTime dTime = DateTime.Now;
 
         //5095, DateTime.Parse("03/10/2010")
-        dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(67409, DateTime.Parse("14/12/2010"), null, out iResult);
+        var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+        dsSidur = kavimDal.GetSidurAndPeiluyotFromTnua(67409, DateTime.Parse("14/12/2010"), null, out iResult);
          dTotalTime = (DateTime.Now - dTime).TotalSeconds;
         lblTimeNoVisut.Text = dTotalTime.ToString();
         dTime = DateTime.Now;
-        dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(67409, DateTime.Parse("14/12/2010"), 1, out iResult);
+        dsSidur = kavimDal.GetSidurAndPeiluyotFromTnua(67409, DateTime.Parse("14/12/2010"), 1, out iResult);
         dTotalTime = (DateTime.Now - dTime).TotalSeconds;
         lblTimeWithVisut.Text = dTotalTime.ToString();       
     }

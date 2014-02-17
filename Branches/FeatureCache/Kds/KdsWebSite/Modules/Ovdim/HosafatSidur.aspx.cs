@@ -17,6 +17,10 @@ using KdsLibrary.BL;
 using KdsLibrary.Security;
 using System.Text;
 using KdsLibrary.UDT;
+using KDSCommon.DataModels.UDT;
+using KDSCommon.Helpers;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.DAL;
 
 
 
@@ -187,7 +191,6 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
 
     protected void InitializeSidurMapa(ref DataTable dtSource)
     {
-        clKavim oKavim = new clKavim();
         int result;
         DataSet dsSidur = new DataSet();
 
@@ -203,7 +206,8 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
       
         try
         {
-            dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(int.Parse(lblMisSidur.Text), DateTime.Parse(TaarichCA.Value),1,out result);
+            var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+            dsSidur = kavimDal.GetSidurAndPeiluyotFromTnua(int.Parse(lblMisSidur.Text), DateTime.Parse(TaarichCA.Value),1,out result);
             
             //     dtMustElemnts = (DataTable)Session["ELEMENTS"];
             if (result == 0)
@@ -363,14 +367,13 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
     protected string getPratimLeMakat(long makat, ref DataRow drSource,ref int type)
     {
         DataTable dtMustElemnts = new DataTable();
-        clKavim oKavim = new clKavim();
         DataRow[] drSelect;
         string sSQL = "";
       //  int sug;
         string pratim = "";
         try
         {
-            type = oKavim.GetMakatType(makat);
+            type = StaticBL.GetMakatType(makat);
             if (type == 5)
             {
                 dtMustElemnts = (DataTable)Session["ELEMENTS"];

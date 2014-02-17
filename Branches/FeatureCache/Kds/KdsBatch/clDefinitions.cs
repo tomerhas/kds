@@ -13,6 +13,11 @@ using System.Web;
 using System.Configuration;
 using KdsLibrary.Utils;
 using KDSCommon.DataModels;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Managers;
+using KDSCommon.Helpers;
+using KDSCommon.Enums;
+using KDSCommon.Interfaces.DAL;
 
 namespace KdsBatch
 {
@@ -79,7 +84,7 @@ namespace KdsBatch
         private static List<int> SpecialSidurim = new List<int> { 99200 };
 
 
-        public static void UpdateCardStatus(int iMisparIshi, DateTime dCardDate, clGeneral.enCardStatus oCardStatus, int iUserId)
+        public static void UpdateCardStatus(int iMisparIshi, DateTime dCardDate, CardStatus oCardStatus, int iUserId)
         {
             clDal oDal = new clDal();
             try
@@ -216,7 +221,6 @@ namespace KdsBatch
         {
             DataTable _Peiluyot;
             string sCacheKey = iMisparIshi + dCardDate.ToShortDateString();
-            clKavim _Kavim = new clKavim();
             try
             {
                 _Peiluyot = (DataTable)HttpRuntime.Cache.Get(sCacheKey);
@@ -228,7 +232,8 @@ namespace KdsBatch
 
             if (_Peiluyot == null)
             {
-                _Peiluyot = _Kavim.GetKatalogKavim(iMisparIshi, dCardDate, dCardDate);
+                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                _Peiluyot = kavimDal.GetKatalogKavim(iMisparIshi, dCardDate, dCardDate);
                 HttpRuntime.Cache.Insert(sCacheKey, _Peiluyot, null, DateTime.MaxValue, TimeSpan.FromMinutes(int.Parse((ConfigurationSettings.AppSettings["PeilyutCacheTimeOutMinutes"]))));
             }
 
@@ -262,16 +267,15 @@ namespace KdsBatch
             int iMisparSidurPrev = 0;
             DateTime dShatHatchala=DateTime.MinValue;
             DateTime dShatHatchalaPrev = new DateTime();
-            clSidur oSidur = new clSidur();
-            //clSidur oSidurWithCanceld = new clSidur();
-            clPeilut oPeilut = new clPeilut();
+            SidurDM oSidur = null;
+            //SidurDM oSidurWithCanceld = new SidurDM();
+            PeilutDM oPeilut =null;
             OrderedDictionary htEmployeeDetails = new OrderedDictionary();
             htSpecialEmployeeDetails = new OrderedDictionary();
             //htEmployeeDetailsWithCancled = new OrderedDictionary();
             string sLastShilut="";
             DataTable dtPeiluyot;
-            clKavim _Kavim = new clKavim();
-            clKavim.enMakatType _MakatType;
+            enMakatType _MakatType;
            try
            {
            //נשלוף את נתוני הפעילויות לאותו יום
@@ -289,11 +293,11 @@ namespace KdsBatch
                     iKey = 1;
                     i++;
                     //נתונים ברמת סידור
+
+                    var sidurManager = ServiceLocator.Current.GetInstance<ISidurManager>();
+                    oSidur = sidurManager.CreateClsSidurFromEmployeeDetails(dr);
                    
-                    oSidur = new clSidur();
-                    oSidur.AddEmployeeSidurim(dr,true);
-                   
-                    //oSidurWithCanceld = new clSidur();
+                    //oSidurWithCanceld = new SidurDM();
                     //oSidurWithCanceld.AddEmployeeSidurim(dr,false);
                     //oSidurWithCanceld.iSugSidurRagil = oSidur.iSugSidurRagil;
                     //oSidurWithCanceld.bSidurRagilExists = oSidur.bSidurRagilExists;
@@ -327,13 +331,15 @@ namespace KdsBatch
                     iPeilutMisparSidur = (System.Convert.IsDBNull(dr["peilut_mispar_sidur"]) ? 0 : int.Parse(dr["peilut_mispar_sidur"].ToString()));
                     if (iPeilutMisparSidur > 0)
                     {
-                        oPeilut = new clPeilut(dCardDate);
-                        oPeilut.dCardDate = dCardDate;
-                        oPeilut.AddEmployeePeilut(iKey, dr, dtPeiluyot);
-                        _MakatType = (clKavim.enMakatType)_Kavim.GetMakatType(oPeilut.lMakatNesia);
-                        if (_MakatType == clKavim.enMakatType.mKavShirut)                        
+                        var peilutManager = ServiceLocator.Current.GetInstance<IPeilutManager>();
+                        oPeilut = peilutManager.CreateEmployeePeilut(dCardDate,iKey, dr, dtPeiluyot);
+                        //oPeilut = new clPeilut(dCardDate);
+                        //oPeilut.dCardDate = dCardDate;
+                        //oPeilut.AddEmployeePeilut(iKey, dr, dtPeiluyot);
+                        _MakatType = (enMakatType)StaticBL.GetMakatType(oPeilut.lMakatNesia);
+                        if (_MakatType == enMakatType.mKavShirut)                        
                             sLastShilut = oPeilut.sShilut;
-                        else if (_MakatType == clKavim.enMakatType.mVisut)
+                        else if (_MakatType == enMakatType.mVisut)
                             oPeilut.sShilut= sLastShilut;
                         //if (!(oSidur.iBitulOHosafa == 1 || oSidur.iBitulOHosafa == 3) && !(oPeilut.iBitulOHosafa == 1 || oPeilut.iBitulOHosafa == 3))
                         //{
@@ -641,7 +647,7 @@ namespace KdsBatch
             }
         }
 
-        public static float GetSidurTimeInMinuts(clSidur oSidur)
+        public static float GetSidurTimeInMinuts(SidurDM oSidur)
         {
             float fSidurTime = 0;
             try
@@ -711,7 +717,7 @@ namespace KdsBatch
             }
         }
 
-        public static float GetTimeBetweenTwoSidurimInMinuts(clSidur oPrevSidur, clSidur oSidur)
+        public static float GetTimeBetweenTwoSidurimInMinuts(SidurDM oPrevSidur, SidurDM oSidur)
         {
             float fDiffSidurTime = 0;
             try
@@ -785,16 +791,16 @@ namespace KdsBatch
         public static string GetMasharCarNumbers(OrderedDictionary htEmployeeDetails)
         {
             string sCarNumbers = "";
-            clPeilut oPeilut;
-            clSidur oSidur;
+            PeilutDM oPeilut;
+            SidurDM oSidur;
 
             //נשרשר את כל מספרי הרכב, כדי לפנות למש"ר עם פחות נתונים
             for (int i = 0; i < htEmployeeDetails.Count; i++)
             {
-                oSidur = (KdsBatch.clSidur)htEmployeeDetails[i];
+                oSidur = (SidurDM)htEmployeeDetails[i];
                 for (int j = 0; j < oSidur.htPeilut.Count; j++)
                 {
-                    oPeilut = (clPeilut)oSidur.htPeilut[j];
+                    oPeilut = (PeilutDM)oSidur.htPeilut[j];
                     sCarNumbers += oPeilut.lOtoNo.ToString() + ",";
                 }
             }
@@ -1063,7 +1069,7 @@ namespace KdsBatch
             }
         }
 
-        public static bool IsExceptionAllowedForSidurMyuchad(ref clSidur oSidur, ref string sCharigaType, ref clMeafyenyOved oMeafyenyOved, ref clParametersDM KdsParameters)
+        public static bool IsExceptionAllowedForSidurMyuchad(ref SidurDM oSidur, ref string sCharigaType, ref MeafyenimDM oMeafyenyOved, ref clParametersDM KdsParameters)
         {
             bool bExceptionAllowed = false;
             
@@ -1090,7 +1096,7 @@ namespace KdsBatch
                     (oSidur.sSidurDay != clGeneral.enDay.Shishi.GetHashCode().ToString()) &&
                     (!oSidur.sErevShishiChag.Equals("1")) && (!oSidur.sShabaton.Equals("1"))))
 
-                    && ((!oMeafyenyOved.Meafyen4Exists) && (!oMeafyenyOved.Meafyen3Exists))
+                    && ((!oMeafyenyOved.IsMeafyenExist(4)) && (!oMeafyenyOved.IsMeafyenExist(3)))
                     )
                 {
                     sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
@@ -1100,7 +1106,7 @@ namespace KdsBatch
                 {
                     //אם זה יום שישי ואין לו מאפיינים 5 ו-6
                     if (((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
-                        && ((!oMeafyenyOved.Meafyen5Exists) && (!oMeafyenyOved.Meafyen6Exists)))
+                        && ((!oMeafyenyOved.IsMeafyenExist(5)) && (!oMeafyenyOved.IsMeafyenExist(6))))
                     {
                         sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
                         bExceptionAllowed = true;
@@ -1109,7 +1115,7 @@ namespace KdsBatch
                     {
                         //אם יום שבת או שבתון ואין לו מאפיין 7 ו-8
                         if (((oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
-                             && ((!oMeafyenyOved.Meafyen7Exists) && (!oMeafyenyOved.Meafyen8Exists)))
+                             && ((!oMeafyenyOved.IsMeafyenExist(7)) && (!oMeafyenyOved.IsMeafyenExist(8))))
                         {
                             sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
                             bExceptionAllowed = true;
@@ -1123,7 +1129,7 @@ namespace KdsBatch
                  //    //ביום שישי/ערב חג לעובד ללא מאפיינים 5 ו- 6 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=5   (עבודה בשישי ללא הרשאה).
                  //    if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
                  //    {
-                 //        if ((!oBatchManager.oMeafyeneyOved.Meafyen5Exists) && (!oBatchManager.oMeafyeneyOved.Meafyen6Exists) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtFridayWithoutPremission.GetHashCode()))
+                 //        if ((!oBatchManager.oMeafyeneyOved.IsMeafyenExist(5)) && (!oBatchManager.oMeafyeneyOved.IsMeafyenExist(6)) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtFridayWithoutPremission.GetHashCode()))
                  //        {
                  //            bExceptionAllowed = true;
                  //            sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
@@ -1132,7 +1138,7 @@ namespace KdsBatch
                  ////ביום שבת/שבתון לעובד ללא מאפיינים 7 ו- 8 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=4  (עבודה בשבתון ללא הרשאה).
                  //if ((oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
                  //{
-                 //    if ((!MeafyenyOved.Meafyen7Exists) && (!MeafyenyOved.Meafyen8Exists) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtSaturdayWithoutPremission.GetHashCode()))
+                 //    if ((!MeafyenyOved.Meafyen7Exists) && (!MeafyenyOved.IsMeafyenExist(8)) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtSaturdayWithoutPremission.GetHashCode()))
                  //    {
                  //        bExceptionAllowed = true;
                  //        sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
@@ -1142,7 +1148,7 @@ namespace KdsBatch
             return bExceptionAllowed;
         }
 
-        public static bool IsExceptionAllowed(ref clSidur oSidur, ref string sCharigaType, clParametersDM KdsParameters)
+        public static bool IsExceptionAllowed(ref SidurDM oSidur, ref string sCharigaType, clParametersDM KdsParameters)
         {
             bool bExceptionAllowed = false;
 
@@ -1237,7 +1243,7 @@ namespace KdsBatch
             }
         }
 
-        public static bool IsHashlamaAllowed(ref clSidur oSidur, DataRow[] drSugSidur, OvedYomAvodaDetailsDM OvedYomAvoda)
+        public static bool IsHashlamaAllowed(ref SidurDM oSidur, DataRow[] drSugSidur, OvedYomAvodaDetailsDM OvedYomAvoda)
         {
             bool bHashlamaAllowed = true;
 
@@ -1269,7 +1275,7 @@ namespace KdsBatch
                         
             return bHashlamaAllowed;
         }
-        public static bool IsSidurTimeBigOrEquallToHashlamaTime(ref clSidur oSidur)
+        public static bool IsSidurTimeBigOrEquallToHashlamaTime(ref SidurDM oSidur)
         {
             float fSidurTime;
             bool bSidurTimeBigger = false;

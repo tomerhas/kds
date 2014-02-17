@@ -16,6 +16,11 @@ using KdsLibrary.BL;
 using KdsLibrary.Security;
 using KdsLibrary.UDT;
 using KdsBatch;
+using KDSCommon.DataModels.UDT;
+using KDSCommon.Helpers;
+using KDSCommon.Enums;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.DAL;
 
 public partial class Modules_Ovdim_HosafatPeilut : KdsPage
 {
@@ -29,43 +34,45 @@ public partial class Modules_Ovdim_HosafatPeilut : KdsPage
             ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
             btnSave.Style.Add("Display", "none");
             if (!Page.IsPostBack)
-            {                       
+            {
                 SetDefault();
                 if (Request.QueryString["SidurID"] != null)
                 {
-                    txtHiddenMisparSidur.Value =  Request.QueryString["SidurID"].ToString();
+                    txtHiddenMisparSidur.Value = Request.QueryString["SidurID"].ToString();
                 }
-               if (Request.QueryString["CardDate"] != null)
-                 {
-                     txtHiddenTaarichCA.Value = Request.QueryString["CardDate"].ToString(); //"26/05/2009";//
+                if (Request.QueryString["CardDate"] != null)
+                {
+                    txtHiddenTaarichCA.Value = Request.QueryString["CardDate"].ToString(); //"26/05/2009";//
                 }
                 //אם הפרמטר 'לא לשמור פעילות' קיים אז לא שומרים את הפעילות בדף,אם הוא לא קיים,שומרים
-               if (Request.QueryString["NoSavePeilut"] != null)
+                if (Request.QueryString["NoSavePeilut"] != null)
                     SavePeilut.Value = "NO";
-               else SavePeilut.Value = "YES";
-                
-               if (Request.QueryString["SidurHour"] != null){
-                   txtHiddenHourHatchaltSidur.Value = Request.QueryString["SidurHour"].ToString(); //  "12:00"; //
-               }
-               if (Request.QueryString["EmpID"] != null){
-                   txtHiddenMisparIshi.Value = Request.QueryString["EmpID"].ToString();
-               }
-            
-               setAttributsElemnt();
-               dtElements = oUtils.getAllElements("");
-               if (dtElements.Rows.Count > 0)
-               {
-                   ElementsRelevants.Value = ",";
-                   for (int i = 0; i < dtElements.Rows.Count; i++)
-                       ElementsRelevants.Value = ElementsRelevants.Value + dtElements.Rows[i]["KOD_ELEMENT"].ToString() + ",";
-               }
+                else SavePeilut.Value = "YES";
 
-               dtParametrim = oUtils.getErechParamByKod("29", txtHiddenTaarichCA.Value);
-               if (dtParametrim.Rows.Count > 0)
-               {
-                   for (int i = 0; i < dtParametrim.Rows.Count; i++)
-                       Params.Attributes.Add("Param" + dtParametrim.Rows[i]["KOD_PARAM"].ToString(), dtParametrim.Rows[i]["ERECH_PARAM"].ToString());
-               }
+                if (Request.QueryString["SidurHour"] != null)
+                {
+                    txtHiddenHourHatchaltSidur.Value = Request.QueryString["SidurHour"].ToString(); //  "12:00"; //
+                }
+                if (Request.QueryString["EmpID"] != null)
+                {
+                    txtHiddenMisparIshi.Value = Request.QueryString["EmpID"].ToString();
+                }
+
+                setAttributsElemnt();
+                dtElements = oUtils.getAllElements("");
+                if (dtElements.Rows.Count > 0)
+                {
+                    ElementsRelevants.Value = ",";
+                    for (int i = 0; i < dtElements.Rows.Count; i++)
+                        ElementsRelevants.Value = ElementsRelevants.Value + dtElements.Rows[i]["KOD_ELEMENT"].ToString() + ",";
+                }
+
+                dtParametrim = oUtils.getErechParamByKod("29", txtHiddenTaarichCA.Value);
+                if (dtParametrim.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dtParametrim.Rows.Count; i++)
+                        Params.Attributes.Add("Param" + dtParametrim.Rows[i]["KOD_PARAM"].ToString(), dtParametrim.Rows[i]["ERECH_PARAM"].ToString());
+                }
             }
         }
         catch (Exception ex)
@@ -85,7 +92,7 @@ public partial class Modules_Ovdim_HosafatPeilut : KdsPage
     //}
     protected void setAttributsElemnt()
     {
-        txtMisparElement.Attributes.Add("KodValid","true");
+        txtMisparElement.Attributes.Add("KodValid", "true");
         txtTeurElement.Attributes.Add("TeurValid", "true");
         txtHosefErechElement.Attributes.Add("ErechValid", "true");
         txtMisRechev.Attributes.Add("MisRechevValid", "true");
@@ -94,9 +101,8 @@ public partial class Modules_Ovdim_HosafatPeilut : KdsPage
 
     protected void btnShow_OnClick(object sender, EventArgs e)
     {
-        clKavim.enMakatType MakatType;
+        enMakatType MakatType;
         DataTable dtKavim = new DataTable();
-        clKavim oKavim = new clKavim();
         long lMakatNesia = int.Parse(txtMakat.Text);
         DateTime dCardDate = DateTime.Parse(txtHiddenTaarichCA.Value);
         int iMakatValid;
@@ -104,45 +110,46 @@ public partial class Modules_Ovdim_HosafatPeilut : KdsPage
         try
         {
             NikuySadot();
-           
-            MakatType = (clKavim.enMakatType)oKavim.GetMakatType(lMakatNesia); //(clKavim.enMakatType)int.Parse(txtMakat.Attributes["MakatType"].ToString());
 
+            MakatType = (enMakatType)StaticBL.GetMakatType(lMakatNesia); //(enMakatType)int.Parse(txtMakat.Attributes["MakatType"].ToString());
+            var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
             switch (MakatType)
             {
-                case clKavim.enMakatType.mKavShirut:      
-                        dtKavim = oKavim.GetKavimDetailsFromTnuaDT(lMakatNesia, dCardDate, out iMakatValid);
-                        if (dtKavim.Rows.Count > 0)
-                            setNetuneyKavShirut(dtKavim);
-                        else flag = false;
-                      
+                case enMakatType.mKavShirut:
+                    var kavimdDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                    dtKavim = kavimdDal.GetKavimDetailsFromTnuaDT(lMakatNesia, dCardDate, out iMakatValid);
+                    if (dtKavim.Rows.Count > 0)
+                        setNetuneyKavShirut(dtKavim);
+                    else flag = false;
+
                     break;
-                case clKavim.enMakatType.mEmpty:
-                        dtKavim = oKavim.GetMakatRekaDetailsFromTnua(lMakatNesia, dCardDate, out iMakatValid);
-                        if (dtKavim.Rows.Count > 0)
-                            setNetuneyEmpty(dtKavim);
-                        else flag = false;
-                       
+                case enMakatType.mEmpty:
+                    dtKavim = kavimDal.GetMakatRekaDetailsFromTnua(lMakatNesia, dCardDate, out iMakatValid);
+                    if (dtKavim.Rows.Count > 0)
+                        setNetuneyEmpty(dtKavim);
+                    else flag = false;
+
                     break;
-                case clKavim.enMakatType.mNamak:
-                        dtKavim = oKavim.GetMakatNamakDetailsFromTnua(lMakatNesia, dCardDate, out iMakatValid);
-                        if (dtKavim.Rows.Count > 0)
-                            setNetuneyNamak(dtKavim);    
-                        else flag = false;
-                        
+                case enMakatType.mNamak:
+                    dtKavim = kavimDal.GetMakatNamakDetailsFromTnua(lMakatNesia, dCardDate, out iMakatValid);
+                    if (dtKavim.Rows.Count > 0)
+                        setNetuneyNamak(dtKavim);
+                    else flag = false;
+
                     break;
             }
             if (flag)
             {
-                tblPeilutNesiaa.Style.Add("display", "inline"); 
+                tblPeilutNesiaa.Style.Add("display", "inline");
                 divButtons.Visible = true;
-                divButtons.Style.Add("display", "inline"); 
+                divButtons.Style.Add("display", "inline");
             }
             else
             {
                 vldMakat.ErrorMessage = "המק''ט שהוקלד שגוי";
                 vldMakat.IsValid = false;
-                tblPeilutNesiaa.Style.Add("display", "none"); 
-                divButtons.Style.Add("display", "none"); 
+                tblPeilutNesiaa.Style.Add("display", "none");
+                divButtons.Style.Add("display", "none");
             }
 
         }
@@ -155,16 +162,16 @@ public partial class Modules_Ovdim_HosafatPeilut : KdsPage
 
     protected void NikuySadot()
     {
-         txtKisuiTor.Text = "";
-         txtShatYeziaKatalog.Text = "";
-         lblTeur.Text = "";
-         lblKav.Text = "";
-         lblSug.Text = "";
-         txtMisRechevKatalog.Text = "";
-         lblMakatKatalog.Text = "";
-         lblDakotHagdara.Text = "";
-         txtDakotBafoal.Text = "";
-         IsValidRechevKatalog.Value = "";
+        txtKisuiTor.Text = "";
+        txtShatYeziaKatalog.Text = "";
+        lblTeur.Text = "";
+        lblKav.Text = "";
+        lblSug.Text = "";
+        txtMisRechevKatalog.Text = "";
+        lblMakatKatalog.Text = "";
+        lblDakotHagdara.Text = "";
+        txtDakotBafoal.Text = "";
+        IsValidRechevKatalog.Value = "";
     }
     protected void setNetuneyKavShirut(DataTable dtKavim)
     {
@@ -172,7 +179,7 @@ public partial class Modules_Ovdim_HosafatPeilut : KdsPage
         try
         {
             //kisuy Tor  
-            kisuy_tor= dtKavim.Rows[0]["KISUITOR"].ToString();
+            kisuy_tor = dtKavim.Rows[0]["KISUITOR"].ToString();
             if (kisuy_tor != "0" && kisuy_tor != "")
             {
                 txtKisuiTor.Attributes.Add("kisuy_tor", kisuy_tor);
@@ -188,9 +195,9 @@ public partial class Modules_Ovdim_HosafatPeilut : KdsPage
             lblSug.Text = dtKavim.Rows[0]["SUGSHIRUTNAME"].ToString();
             lblMakatKatalog.Text = dtKavim.Rows[0]["MAKAT8"].ToString();
             lblDakotHagdara.Text = dtKavim.Rows[0]["MAZANTICHNUN"].ToString();
-            
 
-      }
+
+        }
         catch (Exception ex)
         {
             throw ex;
@@ -227,10 +234,10 @@ public partial class Modules_Ovdim_HosafatPeilut : KdsPage
     protected void setNetuneyEmpty(DataTable dtKavim)
     {
         try
-        {        
+        {
             lblTeur.Text = dtKavim.Rows[0]["DESCRIPTION"].ToString();
-          ///  lblKav.Text = dtKavim.Rows[0]["SHILUT"].ToString();
-           /// lblSug.Text = dtKavim.Rows[0]["SUGNAMAKNAME"].ToString();
+            ///  lblKav.Text = dtKavim.Rows[0]["SHILUT"].ToString();
+            /// lblSug.Text = dtKavim.Rows[0]["SUGNAMAKNAME"].ToString();
             lblMakatKatalog.Text = dtKavim.Rows[0]["MAKAT8"].ToString();
             lblDakotHagdara.Text = dtKavim.Rows[0]["MAZANTICHNUN"].ToString();
             txtKisuiTor.Enabled = false;
@@ -312,8 +319,8 @@ public partial class Modules_Ovdim_HosafatPeilut : KdsPage
 
             return oWorkCard.CheckPeilutExist(int.Parse(txtHiddenMisparSidur.Value),
                                               int.Parse(txtHiddenMisparIshi.Value),
-                                              HourHatchaltSidur,DateTime.Parse( ShatYetzia));
-          
+                                              HourHatchaltSidur, DateTime.Parse(ShatYetzia));
+
         }
         catch (Exception ex)
         {

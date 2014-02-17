@@ -6,6 +6,10 @@ using System.Data;
 using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using KdsLibrary;
+using KDSCommon.Enums;
+using KDSCommon.Helpers;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.DAL;
 
 namespace KdsBatch
 {
@@ -282,9 +286,8 @@ namespace KdsBatch
              string sMakat, sQury;
             DateTime dShatYetzia = DateTime.MinValue;
 
-            clKavim _Kavim = new clKavim();
-            int iMakatType; //= _Kavim.GetMakatType(lMakatNesia);
-            clKavim.enMakatType oMakatType;
+            int iMakatType; //= StaticBL.GetMakatType(lMakatNesia);
+            enMakatType oMakatType;
 
             try
             {
@@ -296,10 +299,10 @@ namespace KdsBatch
                     iMisparKnisa = int.Parse(drPeiluyot[J]["Mispar_Knisa"].ToString());
                     sMakat = drPeiluyot[J]["makat_nesia"].ToString();
                     dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
-                    iMakatType = _Kavim.GetMakatType(int.Parse(sMakat));
-                    oMakatType = (clKavim.enMakatType)iMakatType;
+                    iMakatType = StaticBL.GetMakatType(int.Parse(sMakat));
+                    oMakatType = (enMakatType)iMakatType;
 
-                    if ((oMakatType == clKavim.enMakatType.mNamak && !(sMakat.Substring(0, 1) == "8" && sMakat.Substring(6, 2) == "41")) || (oMakatType == clKavim.enMakatType.mKavShirut && iMisparKnisa == 0))
+                    if ((oMakatType == enMakatType.mNamak && !(sMakat.Substring(0, 1) == "8" && sMakat.Substring(6, 2) == "41")) || (oMakatType == enMakatType.mKavShirut && iMisparKnisa == 0))
                     {
                         fErech += 1;
                     }
@@ -318,7 +321,6 @@ namespace KdsBatch
             }
             finally
             {
-                _Kavim = null;
                 drPeiluyot = null;
             }
          }
@@ -328,7 +330,6 @@ namespace KdsBatch
             // DataTable dtPeiluyot;
              DataRow[] drPeiluyot;
              int iMakat, iMisparKnisa, iDakotBefoal;
-             clKavim oKavim = new clKavim();
              DateTime dShatHatchla, dShatYetzia,dMeTaarich;
             float fErech,fHistaglutMifraki , fHistaglutEilat;
              iMisparKnisa = 0;
@@ -355,7 +356,8 @@ namespace KdsBatch
                      if (objOved.oGeneralData.dtBusNumbersAll == null)
                      {
                          dMeTaarich = DateTime.Parse("01/" + objOved.Taarich.Month + "/" + objOved.Taarich.Year);
-                         objOved.oGeneralData.dtBusNumbersAll = oKavim.GetBusesDetailsLeOvedForMonth(dMeTaarich, dMeTaarich.AddMonths(1).AddDays(-1), objOved.Mispar_ishi);
+                         var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                         objOved.oGeneralData.dtBusNumbersAll = kavimDal.GetBusesDetailsLeOvedForMonth(dMeTaarich, dMeTaarich.AddMonths(1).AddDays(-1), objOved.Mispar_ishi);
                      }
                      if (objOved.oGeneralData.dtBusNumbersAll.Rows.Count > 0)
                      {
@@ -372,7 +374,8 @@ namespace KdsBatch
                              {
                                  if (iMisparSidur.ToString().Substring(0, 2) != "99" && objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
                                  {
-                                     dsSidurim = oKavim.GetSidurDetailsFromTnua(iMisparSidur, objOved.Taarich, out iResult);
+                                     var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                                     dsSidurim = kavimDal.GetSidurDetailsFromTnua(iMisparSidur, objOved.Taarich, out iResult);
                                      if (dsSidurim.Rows.Count > 0)
                                      {
                                          if (dsSidurim.Rows[0]["bus_type"].ToString() == "4" || dsSidurim.Rows[0]["bus_type"].ToString() == "5")
@@ -424,7 +427,6 @@ namespace KdsBatch
              }
              finally
              {
-                 oKavim = null;
                  drPeiluyot = null;
              }
          }
@@ -700,8 +702,7 @@ namespace KdsBatch
             
              DataRow[] drPeiluyot;
              int iMisparKnisa, iDakotBefoal;
-             clKavim.enMakatType oMakatType;
-             clKavim _Kavim = new clKavim();
+             enMakatType oMakatType;
              float fErech;
              string sMakat;
              DateTime dShatHatchla, dShatYetzia;
@@ -722,11 +723,11 @@ namespace KdsBatch
                      iDakotBefoal = int.Parse(drPeiluyot[J]["Dakot_bafoal"].ToString());
                      
                      sMakat = drPeiluyot[J]["MAKAT_NESIA"].ToString();
-                     oMakatType = (clKavim.enMakatType)(_Kavim.GetMakatType(int.Parse(sMakat)));
+                     oMakatType = (enMakatType)(StaticBL.GetMakatType(int.Parse(sMakat)));
 
                      fErech = 0;
                      if ((drPeiluyot[J]["kod_lechishuv_premia"].ToString().Trim() == "1:1" && sMakat.Substring(0, 1) == "7")
-                         || (oMakatType  == clKavim.enMakatType.mNamak && sMakat.Substring(0, 1) == "8" && sMakat.Substring(6, 2) == "41"))
+                         || (oMakatType  == enMakatType.mNamak && sMakat.Substring(0, 1) == "8" && sMakat.Substring(6, 2) == "41"))
                      {
                          fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                      }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using KDSCommon.DataModels;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Managers;
 
 namespace KdsBatch.Entities
 {
@@ -30,7 +33,7 @@ namespace KdsBatch.Entities
       //  public DataTable dtTmpMeafyeneyElements;
         public DataTable dtOvedDetails;
         public DataTable dtSidurimVePeiluyot;
-        public clMeafyenyOved oMeafyeneyOved;
+        public MeafyenimDM oMeafyeneyOved;
         public DataTable dtPeiluyotTnua;
         public bool bOvedDetailsExists = false;
         public bool bSidurimExists = false;
@@ -73,8 +76,9 @@ namespace KdsBatch.Entities
                 iSnifTnua = System.Convert.IsDBNull(dtOvedDetails.Rows[0]["Snif_Tnua"]) ? 0 : int.Parse(dtOvedDetails.Rows[0]["Snif_Tnua"].ToString());
                 sRishyonAutobus = dtOvedDetails.Rows[0]["rishyon_autobus"].ToString().Trim();
                 sShlilatRishayon = dtOvedDetails.Rows[0]["shlilat_rishayon"].ToString();
-               
-                oMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dCardDate);
+
+                var ovedManager = ServiceLocator.Current.GetInstance<IOvedManager>();
+                oMeafyeneyOved = ovedManager.CreateMeafyenyOved(iMisparIshi, dCardDate);
                
 
                 SetDataTables();
@@ -108,25 +112,25 @@ namespace KdsBatch.Entities
         public bool IsOvedZakaiLZmanNesiaLaAvoda()
         {
             //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות לעבודה (ערך 1 בספרה הראשונה של מאפיין זמן נסיעות            
-            return ((oMeafyeneyOved.Meafyen61Exists && oMeafyeneyOved.sMeafyen61.Substring(0, 1) == "1")
+            return ((oMeafyeneyOved.IsMeafyenExist(61) && oMeafyeneyOved.GetMeafyen(61).Value.Substring(0, 1) == "1")
                    ||
-                   (oMeafyeneyOved.Meafyen51Exists && oMeafyeneyOved.sMeafyen51.Substring(0, 1) == "1"));
+                   (oMeafyeneyOved.IsMeafyenExist(51) && oMeafyeneyOved.GetMeafyen(51).Value.Substring(0, 1) == "1"));
         }
 
         public bool IsOvedZakaiLZmanNesiaMeAvoda()
         {
             //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות מהעבודה (ערך 2 בספרה הראשונה של מאפיין זמן נסיעות            
-            return ((oMeafyeneyOved.Meafyen61Exists && oMeafyeneyOved.sMeafyen61.Substring(0, 1) == "2")
+            return ((oMeafyeneyOved.IsMeafyenExist(61) && oMeafyeneyOved.GetMeafyen(61).Value.Substring(0, 1) == "2")
                    ||
-                   (oMeafyeneyOved.Meafyen51Exists && oMeafyeneyOved.sMeafyen51.Substring(0, 1) == "2"));
+                   (oMeafyeneyOved.IsMeafyenExist(51) && oMeafyeneyOved.GetMeafyen(51).Value.Substring(0, 1) == "2"));
         }
 
         public bool IsOvedZakaiLZmanNesiaLeMeAvoda()
         {
             //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות מהעבודה (ערך 3 בספרה הראשונה של מאפיין זמן נסיעות            
-            return ((oMeafyeneyOved.Meafyen61Exists && oMeafyeneyOved.sMeafyen61.Substring(0, 1) == "3")
+            return ((oMeafyeneyOved.IsMeafyenExist(61) && oMeafyeneyOved.GetMeafyen(61).Value.Substring(0, 1) == "3")
                    ||
-                   (oMeafyeneyOved.Meafyen51Exists && oMeafyeneyOved.sMeafyen51.Substring(0, 1) == "3"));
+                   (oMeafyeneyOved.IsMeafyenExist(51) && oMeafyeneyOved.GetMeafyen(51).Value.Substring(0, 1) == "3"));
         }
 
         public bool IsOvedInMatzav(string sMatzavim)
