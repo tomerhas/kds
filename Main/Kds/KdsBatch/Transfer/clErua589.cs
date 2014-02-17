@@ -11,8 +11,8 @@ namespace KdsBatch
   public  class clErua589:clErua
     {
       private DataTable dtChishuvYomi;
-      public clErua589(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv,DataTable dtChishuv)
-          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,589)
+      public clErua589(long lBakashaId, DataRow drPirteyOved, DataSet dsNetunim, DataTable dtChishuv)
+          : base(lBakashaId, drPirteyOved, dsNetunim, 589)
       {
           dtChishuvYomi = dtChishuv;
           _sBody = SetBody();

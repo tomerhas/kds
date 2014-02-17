@@ -494,7 +494,7 @@ namespace KdsBatch
 
                 oDal.AddParameter("p_num_processe", ParameterType.ntOracleInteger, NumProcesse, ParameterDir.pdInput);
 
-                oDal.ExecuteSP(cProPrepareNetunimLechishuv);
+                oDal.ExecuteSP(cProPrepareKavimLechishuv);
 
                 return 1;
             }

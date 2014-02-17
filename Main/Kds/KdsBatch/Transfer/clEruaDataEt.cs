@@ -11,8 +11,8 @@ namespace KdsBatch
     {
         private List<string> _ListErua;
       //  private DataTable dtChishuvYomi;
-        public clEruaDataEt(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
-            : base(lBakashaId, drPirteyOved, dtDetailsChishuv,162)
+        public clEruaDataEt(long lBakashaId, DataRow drPirteyOved,DataSet dsNetunim)
+            : base(lBakashaId, drPirteyOved, dsNetunim,162)
       {
         //  dtChishuvYomi = dtChishuv;
            _sBody = SetBody();

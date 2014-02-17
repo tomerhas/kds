@@ -53,6 +53,7 @@ namespace KdsBatch
         public const string cProUpdBakashaAllfields = "pkg_batch.pro_upd_bakasha_all_fields";
         public const string cProShinuyKelet = "pkg_errors.pro_shinuy_kelet";
         public const string cProGetOvdimToTransfer = "pkg_batch.pro_get_ovdim_to_transfer";
+        public const string cProGetNetuneyDorB = "pkg_batch.get_netuney_machala_dor_b";
         public const string cProCheckOvedPutar = "pkg_calc.pro_get_oved_putar";
         public const string cProGetAllYameiAvoda = "pkg_batch.pro_get_all_yamei_avoda";
         public const string cProUpdCardStatus = "pkg_errors.pro_upd_card_status";

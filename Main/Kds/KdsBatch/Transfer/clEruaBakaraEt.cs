@@ -20,8 +20,8 @@ namespace KdsBatch
           Hefreshim = 2
       }
 
-      public clEruaBakaraEt(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, string sChodeshIbud)
-          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,162)
+      public clEruaBakaraEt(long lBakashaId, DataRow drPirteyOved,DataSet dsNetunim, string sChodeshIbud)
+          : base(lBakashaId, drPirteyOved, dsNetunim,162)
       {
           if (sChodeshIbud == DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy"))
               TypeFile = enTypeFile.Ragil.GetHashCode();

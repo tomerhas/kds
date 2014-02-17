@@ -12,11 +12,11 @@ namespace KdsBatch
       private DataTable _dtPrem;
       private DataTable _dtChufsha;
     //  private DateTime dChodeshIbud;
-      public clErua460(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtChufshaRezufa)
-          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,460)
+      public clErua460(long lBakashaId, DataRow drPirteyOved, DataSet dsNetunim)
+          : base(lBakashaId, drPirteyOved, dsNetunim, 460)
       {
-          _dtPrem = dtPrem;
-         _dtChufsha = dtChufshaRezufa;
+          _dtPrem = dsNetunim.Tables[2];
+          _dtChufsha = dsNetunim.Tables[4];
          //dChodeshIbud = DateTime.Parse(drPirteyOved["chodesh_ibud"].ToString());
           _sBody = SetBody();
           if (_sBody != null)
@@ -51,7 +51,11 @@ namespace KdsBatch
               }
               else sErua460.Append(GetBlank(4));
 
-              if (_iMaamadRashi != clGeneral.enMaamad.Friends.GetHashCode())
+              if (MaamadDorB())
+              {
+                  sErua460.Append(FormatNumber(GetErechRechivDorB(clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode()), 4, 2));
+              }
+              else  if (_iMaamadRashi != clGeneral.enMaamad.Friends.GetHashCode())
               {
                   sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode()), 4, 2));
               }
