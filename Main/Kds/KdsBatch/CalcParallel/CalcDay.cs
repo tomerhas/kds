@@ -3080,12 +3080,12 @@ namespace KdsBatch
                                 {
                                     fErechRechiv = (fMichsaYomit - objOved.objPirteyOved.iZmanMutamut) / fMichsaYomit;
                                     bMutaam = true;
-                                    if ((objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && objOved.objPirteyOved.iIshurKeren > 0)
+                                 /**     זמנית 18/09/2014    if ((objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && objOved.objPirteyOved.iIshurKeren > 0)
                                     {
                                         fErech60 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMachla.GetHashCode(), objOved.Taarich);
                                         if (objOved.objMeafyeneyOved.iMeafyen33 == 1 && fMichsaYomit > 0 && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut && fErech60 == 0)
                                             fErechRechiv += ((objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit);
-                                    }
+                                    }**/
 
                                 }
 
@@ -3281,7 +3281,7 @@ namespace KdsBatch
                                  }
                              }
 
-                             if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iZmanMutamut > 0 &&
+                      /**     זמנית 18/09/2014   if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iZmanMutamut > 0 &&
                                   fMichsaYomit > 0 && ((objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3)))
                              {
                                  fErech60 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMachla.GetHashCode(), objOved.Taarich);
@@ -3292,7 +3292,7 @@ namespace KdsBatch
                                  else
                                      fErechRechiv = (objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit;
 
-                             }
+                             } **/
                              ////if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iZmanMutamut > 0 &&
                              ////     ( (objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) ))
                              ////{

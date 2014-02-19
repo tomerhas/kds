@@ -105,8 +105,9 @@ namespace KdsBatch
                    {
                        if (i % 100 == 0)
                            clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "after " + i + " ovdim");
-
-                       AddEruaToList(lBakashaId, lRequestNumToTransfer, dtOvdim.Rows[i], dsTables, ref objCollMisparIshiSugChishuv);
+                      
+                      AddEruaToList(lBakashaId, lRequestNumToTransfer, dtOvdim.Rows[i], dsTables, ref objCollMisparIshiSugChishuv);
+                      
                       ////// iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
                       ////// dChodesh = DateTime.Parse(dtOvdim.Rows[i]["taarich"].ToString());
 
@@ -210,8 +211,8 @@ namespace KdsBatch
            iMisparIshi = int.Parse(drOved["mispar_ishi"].ToString());
            dChodesh = DateTime.Parse(drOved["taarich"].ToString());
 
-           //try
-           //{
+           try
+           {
 
            //if (i == 0)
            //    sChodeshIbud = drOved["chodesh_ibud"].ToString();
@@ -227,7 +228,11 @@ namespace KdsBatch
            SetSugChishuvUDT(iMisparIshi, dChodesh, oPirteyOved, ref objMisparIshiSugChishuv);
            objCollMisparIshiSugChishuv.Add(objMisparIshiSugChishuv);
 
-        
+           }
+           catch (Exception ex)
+           {
+               clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, dChodesh, "Transfer: " + ex.Message);
+           }
        }
 
        ////private DataTable GetChishuvYomiToOved(int iMisparIshi, DataTable dtRechivimYomiim)
