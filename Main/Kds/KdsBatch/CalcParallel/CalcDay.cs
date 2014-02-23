@@ -2878,12 +2878,25 @@ namespace KdsBatch
 
         private void CalcRechiv61()
         {
-            float fErechRechiv;
+            float fErechRechiv, fMichsaYomit;
 
             try
             {
-
+                fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
+               
                 fErechRechiv = CalcHeadruyot(clGeneral.enRechivim.YomMachalaBoded.GetHashCode());
+                if (fErechRechiv > 0)
+                {
+                    if ((objOved.objPirteyOved.iZmanMutamut > 0 && 
+                        (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7) &&
+                        ((objOved.objPirteyOved.iIshurKeren >0 && (objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22))
+                         || (objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 8)
+                         || (objOved.objPirteyOved.iSibotMutamut == 1) )) )
+                    {
+                        fErechRechiv = objOved.objPirteyOved.iZmanMutamut / fMichsaYomit;
+                    }
+                }
+
                 addRowToTable(clGeneral.enRechivim.YomMachalaBoded.GetHashCode(), fErechRechiv);
 
             }
@@ -3078,7 +3091,11 @@ namespace KdsBatch
                                     (((objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && objOved.objPirteyOved.iIshurKeren > 0) ||
                                      (objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 8 || objOved.objPirteyOved.iSibotMutamut == 1 ) ))
                                 {
-                                    fErechRechiv = (fMichsaYomit - objOved.objPirteyOved.iZmanMutamut) / fMichsaYomit;
+                                    if (fMichsaYomit > 0 && fDakotNochehut == 0 && !HaveRechivimInDay(objOved.Taarich, "60,61,71,70,69,65,280,68,56,64,67,62,266") && objOved.objMatzavOved.iKod_Headrut == 0)
+                                        fErechRechiv = 1;
+                                    else 
+                                        fErechRechiv = (fMichsaYomit - objOved.objPirteyOved.iZmanMutamut) / fMichsaYomit;
+                                    
                                     bMutaam = true;
                                  /**     זמנית 18/09/2014    if ((objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && objOved.objPirteyOved.iIshurKeren > 0)
                                     {
@@ -3261,7 +3278,7 @@ namespace KdsBatch
                                            objOved.objPirteyOved.iMutamBitachon != 6 && objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali &&
                                            (objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7))))
                                  {
-                                     if (objOved.objMeafyeneyOved.iMeafyen33 == 0 && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut)
+                                     if (objOved.objMeafyeneyOved.iMeafyen33 == 0 && fDakotNochehut>0  && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut)
                                      {
                                          fErechRechiv = (objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit;
                                      }
@@ -3271,6 +3288,14 @@ namespace KdsBatch
                                  {
                                      fErechRechiv = 0;
                                  }
+                                 //היעדרות יום שלם מהעבודה ללא סיבה + לעובד יש אישור חופש: 4
+                                 if (fMichsaYomit>0 && fDakotNochehut==0 && !HaveRechivimInDay(objOved.Taarich, "60,61,71,70,69,65,280,68,56,64,67,62,266") && objOved.objMatzavOved.iKod_Headrut == 1)
+                                     fErechRechiv = objOved.objPirteyOved.iZmanMutamut / fMichsaYomit;
+
+                                 // 5. עובד היה בעבודה, עבד חלק מהמכסה
+                                 if (fMichsaYomit > 0 && fDakotNochehut > 0 &&  fDakotNochehut < objOved.objPirteyOved.iZmanMutamut && !HaveRechivimInDay(objOved.Taarich, "60,61,71,70,69,65,280") )
+                                     fErechRechiv = (objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit;
+
                              }
                              else
                              {
