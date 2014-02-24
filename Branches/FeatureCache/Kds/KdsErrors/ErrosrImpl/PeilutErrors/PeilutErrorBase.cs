@@ -25,7 +25,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
         {
             var drNew = input.dtErrors.NewRow();
             drNew["mispar_ishi"] = input.iMisparIshi;
-            drNew["check_num"] = ErrorTypes.errHrStatusNotValid.GetHashCode();
+            drNew["check_num"] = (int)CardErrorType;
             drNew["taarich"] = input.CardDate.ToShortDateString();
             drNew["mispar_sidur"] = input.curSidur.iMisparSidur;
             drNew["shat_hatchala"] = (input.curSidur.sShatHatchala == null ? DateTime.MinValue : input.curSidur.dFullShatHatchala);

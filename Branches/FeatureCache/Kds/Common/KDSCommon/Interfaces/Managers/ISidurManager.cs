@@ -15,7 +15,8 @@ namespace KDSCommon.Interfaces.Managers
         SidurDM CreateClsSidurFromSidurayGrira(DataRow dr);
         SidurDM CreateClsSidurFromSidurMeyuchad(SidurDM oSidurKodem, DateTime dTaarich, int iMisparSidurNew, DataRow dr);
         bool IsSidurChofef(int iMisparIshi, DateTime dCardDate, int iMisparSidur, DateTime dShatHatchala, DateTime dShatGmar, int iParamChafifa, DataTable dt);
-      //  DataSet GetSidurAndPeiluyotFromTnua(int iMisparSidur, DateTime dDate, int? iKnisaVisut, out int iResult);
-     
+        float GetMeshechSidur(int iMisparIshi, int iMisparSidur, DateTime taarich_me, DateTime taarich_ad);
+      
+      
     }
 }

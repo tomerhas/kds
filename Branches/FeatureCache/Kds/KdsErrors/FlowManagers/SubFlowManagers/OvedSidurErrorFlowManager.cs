@@ -40,212 +40,87 @@ namespace KdsErrors.FlowManagers.SubFlowManagers
 
         private void ErrorValidationBeforePeilut(ErrorInputData input, ICardErrorContainer errContainer)
         {
-            int iHashlama = 0;
-
+           
             List<ErrorTypes> errorTypeList = new List<ErrorTypes>();
-            errorTypeList.Add(ErrorTypes.errSidurNotExists);
-            errorTypeList.Add(ErrorTypes.errStartHourMissing);
-            errorTypeList.Add(ErrorTypes.errEndHourMissing);
-            errorTypeList.Add(ErrorTypes.errCharigaZmanHachtamatShaonNotValid);
-            errorTypeList.Add(ErrorTypes.errPizulHafsakaValueNotValid);
-            errorTypeList.Add(ErrorTypes.errHashlamaNotValid);
-            errorTypeList.Add(ErrorTypes.errShabatPizulValueNotValid);
-            errorTypeList.Add(ErrorTypes.errKmNotExists);
-            errorTypeList.Add(ErrorTypes.errOutMichsaNotValid);
-            errorTypeList.Add(ErrorTypes.errOutMichsaInSidurHeadrutNotValid);
-            errorTypeList.Add(ErrorTypes.errDriverLessonsNumberNotValid);
-            errorTypeList.Add(ErrorTypes.errZakaiLeCharigaValueNotValid);
-            errorTypeList.Add(ErrorTypes.errHashlamaForSidurNotValid);
-            errorTypeList.Add(ErrorTypes.errPitzulMuchadValueNotValid);
-            errorTypeList.Add(ErrorTypes.errSimunVisaNotValid);
 
-            errorTypeList.Add(ErrorTypes.errPizulValueNotValid);
-            errorTypeList.Add(ErrorTypes.errSidurVisaNotValid);
-            errorTypeList.Add(ErrorTypes.errSidurHourStartNotValid);
-            errorTypeList.Add(ErrorTypes.errSidurHourEndNotValid);
-            errorTypeList.Add(ErrorTypes.errHahlamatHazmanaNotValid);
-            errorTypeList.Add(ErrorTypes.errMissingSugVisa);
-            errorTypeList.Add(ErrorTypes.errMissingKodMevatzaVisa);
-            errorTypeList.Add(ErrorTypes.errAtLeastOnePeilutRequired);
-            errorTypeList.Add(ErrorTypes.errNotAllowedSidurForEggedTaavora);
-            errorTypeList.Add(ErrorTypes.errSidurNetzerNotValidForOved);
-            errorTypeList.Add(ErrorTypes.errSidurAvodaNotValidForMonth);
-            
-            
+            errorTypeList.Add(ErrorTypes.errSidurNotExists);//9
+            errorTypeList.Add(ErrorTypes.errStartHourMissing);//15
+            errorTypeList.Add(ErrorTypes.errEndHourMissing);//174
+            errorTypeList.Add(ErrorTypes.errCharigaZmanHachtamatShaonNotValid);//33
+            errorTypeList.Add(ErrorTypes.errPizulHafsakaValueNotValid);//20
+            errorTypeList.Add(ErrorTypes.errHashlamaNotValid);//137
+            errorTypeList.Add(ErrorTypes.errShabatPizulValueNotValid);//23
+            errorTypeList.Add(ErrorTypes.errKmNotExists);//96
+            errorTypeList.Add(ErrorTypes.errOutMichsaNotValid);//118
+            errorTypeList.Add(ErrorTypes.errOutMichsaInSidurHeadrutNotValid);//40
+            errorTypeList.Add(ErrorTypes.errDriverLessonsNumberNotValid);//136
+            errorTypeList.Add(ErrorTypes.errZakaiLeCharigaValueNotValid);//34
+            errorTypeList.Add(ErrorTypes.errHashlamaForSidurNotValid);//48
+            errorTypeList.Add(ErrorTypes.errPitzulMuchadValueNotValid);//25
+            errorTypeList.Add(ErrorTypes.errSimunVisaNotValid);//57
+            errorTypeList.Add(ErrorTypes.errPizulValueNotValid);//22
+            errorTypeList.Add(ErrorTypes.errSidurVisaNotValid);//58
+            errorTypeList.Add(ErrorTypes.errSidurHourStartNotValid);//14
+            errorTypeList.Add(ErrorTypes.errSidurHourEndNotValid);//173
+            errorTypeList.Add(ErrorTypes.errShatHatchalaBiggerShatYetzia);//207
+            errorTypeList.Add(ErrorTypes.errHahlamatHazmanaNotValid);//49
+            errorTypeList.Add(ErrorTypes.errMissingSugVisa);//106
+            errorTypeList.Add(ErrorTypes.errMissingKodMevatzaVisa);//178
+            errorTypeList.Add(ErrorTypes.errAtLeastOnePeilutRequired);//127
+            errorTypeList.Add(ErrorTypes.errNotAllowedSidurForEggedTaavora);//148
+            errorTypeList.Add(ErrorTypes.errSidurNetzerNotValidForOved);//124
+            errorTypeList.Add(ErrorTypes.errSidurAvodaNotValidForMonth);//160
+            errorTypeList.Add(ErrorTypes.errSidurNotAllowedInShabaton);//50
+            errorTypeList.Add(ErrorTypes.errCharigaValueNotValid);//32
+            errorTypeList.Add(ErrorTypes.errSidurSummerNotValidForOved);//164
+            errorTypeList.Add(ErrorTypes.errOvedNotAllowedToDoSidurNahagut);//161
+            errorTypeList.Add(ErrorTypes.errFirstDayShlilatRishayon195); //195
+            errorTypeList.Add(ErrorTypes.errSidurimHoursNotValid);//16
+            errorTypeList.Add(ErrorTypes.errPitzulSidurInShabat);//24
+            errorTypeList.Add(ErrorTypes.errHashlamaForComputerWorkerAndAccident);//45
+            errorTypeList.Add(ErrorTypes.errTotalHashlamotBiggerThanAllow);//142
+            errorTypeList.Add(ErrorTypes.errMiluimAndAvoda); //156
+            errorTypeList.Add(ErrorTypes.errMissingNumStore);//143
+            errorTypeList.Add(ErrorTypes.errChafifaBesidurNihulTnua);//152
+            errorTypeList.Add(ErrorTypes.errHighPremya);//153
+            errorTypeList.Add(ErrorTypes.errNegativePremya);//154
+            errorTypeList.Add(ErrorTypes.errMutamLoBeNahagutBizeaNahagut); //186
+            errorTypeList.Add(ErrorTypes.errKupaiWithNihulTnua);//187
+            errorTypeList.Add(ErrorTypes.errChofeshAlCheshbonShaotNosafot);//188
+            errorTypeList.Add(ErrorTypes.errCurrentSidurInPrevSidur);//168
+            errorTypeList.Add(ErrorTypes.errHachtamaYadanitKnisa);//175
+            errorTypeList.Add(ErrorTypes.errHachtamaYadanitYetzia); //176
+            errorTypeList.Add(ErrorTypes.IsShatHatchalaLetashlumNull);//180
+            errorTypeList.Add(ErrorTypes.IsShatGmarLetashlumNull);//181
+            errorTypeList.Add(ErrorTypes.errSidurLoTakefLetaarich);//190
+            errorTypeList.Add(ErrorTypes.errIsukNahagImSidurTafkidNoMefyen);//191
+            errorTypeList.Add(ErrorTypes.errDivuachSidurLoMatimLeisuk420); //193
+
+
+            errorTypeList.Add(ErrorTypes.errDivuachSidurLoMatimLeisuk422); //194
+            errorTypeList.Add(ErrorTypes.errHachtamatKnisaLoBmakomHasaka197);//197
+            errorTypeList.Add(ErrorTypes.errHachtamatYetziaLoBmakomHasaka198);//198
+            errorTypeList.Add(ErrorTypes.errAvodaByemeyTeuna199);//199
+            errorTypeList.Add(ErrorTypes.errAvodaByemeyEvel200);//200
+            errorTypeList.Add(ErrorTypes.errAvodaByemeyMachala201); //201
+            errorTypeList.Add(ErrorTypes.errMachalaLeloIshur202);//202
+            errorTypeList.Add(ErrorTypes.errSidurAsurBeyomShishiLeoved5Yamim204);//204
+            errorTypeList.Add(ErrorTypes.errTipatChalavMealMichsa205);//205
+            errorTypeList.Add(ErrorTypes.errOvedMutaamLeloShaotNosafot206);//206
+
             ExecuteListOfErrors(errContainer, input, errorTypeList, ErrorSubLevel.Sidur);
-            ICardError err;
-         
-            //Err 50
-            err = errContainer[new ErrorDualKey(ErrorTypes.errSidurNotAllowedInShabaton, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 32
-            err = errContainer[new ErrorDualKey(ErrorTypes.errCharigaValueNotValid, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 164
-            err = errContainer[new ErrorDualKey(ErrorTypes.errSidurSummerNotValidForOved, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 161
-            err = errContainer[new ErrorDualKey(ErrorTypes.errOvedNotAllowedToDoSidurNahagut, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 195
-            err = errContainer[new ErrorDualKey(ErrorTypes.errFirstDayShlilatRishayon195, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            if (input.iSidur > 0)//לא נבצע את הבדיקה לסידור הראשון
-            {
-                //Err 16
-                err = errContainer[new ErrorDualKey(ErrorTypes.errSidurimHoursNotValid, ErrorSubLevel.Sidur)];
-                err.IsCorrect(input);
-                //Err 24
-                err = errContainer[new ErrorDualKey(ErrorTypes.errPitzulSidurInShabat, ErrorSubLevel.Sidur)];
-                err.IsCorrect(input);
-            }
-            else
-            {
-                //Err 45
-                err = errContainer[new ErrorDualKey(ErrorTypes.errHashlamaForComputerWorkerAndAccident, ErrorSubLevel.Sidur)];
-                err.IsCorrect(input);
-            }
-
-            iHashlama = string.IsNullOrEmpty(input.curSidur.sHashlama) ? 0 : int.Parse(input.curSidur.sHashlama);
-            if (iHashlama > 0)
-            {
-                input.iTotalHashlamotForSidur += 1;
-                //Err 142
-                err = errContainer[new ErrorDualKey(ErrorTypes.errTotalHashlamotBiggerThanAllow, ErrorSubLevel.Sidur)];
-                err.IsCorrect(input);
-            }
-
-            //Err 156
-            err = errContainer[new ErrorDualKey(ErrorTypes.errMiluimAndAvoda, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 143
-            err = errContainer[new ErrorDualKey(ErrorTypes.errMissingNumStore, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 152
-            err = errContainer[new ErrorDualKey(ErrorTypes.errChafifaBesidurNihulTnua, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 153
-            err = errContainer[new ErrorDualKey(ErrorTypes.errHighPremya, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 154
-            err = errContainer[new ErrorDualKey(ErrorTypes.errNegativePremya, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 186
-            err = errContainer[new ErrorDualKey(ErrorTypes.errMutamLoBeNahagutBizeaNahagut, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 187
-            err = errContainer[new ErrorDualKey(ErrorTypes.errKupaiWithNihulTnua, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 188
-            err = errContainer[new ErrorDualKey(ErrorTypes.errChofeshAlCheshbonShaotNosafot, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 168
-            err = errContainer[new ErrorDualKey(ErrorTypes.errCurrentSidurInPrevSidur, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 175
-            err = errContainer[new ErrorDualKey(ErrorTypes.errHachtamaYadanitKnisa, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 176
-            err = errContainer[new ErrorDualKey(ErrorTypes.errHachtamaYadanitYetzia, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 180
-            err = errContainer[new ErrorDualKey(ErrorTypes.IsShatHatchalaLetashlumNull, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 181
-            err = errContainer[new ErrorDualKey(ErrorTypes.IsShatGmarLetashlumNull, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 190
-            err = errContainer[new ErrorDualKey(ErrorTypes.errSidurLoTakefLetaarich, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 191
-            err = errContainer[new ErrorDualKey(ErrorTypes.errIsukNahagImSidurTafkidNoMefyen, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 193
-            err = errContainer[new ErrorDualKey(ErrorTypes.errDivuachSidurLoMatimLeisuk420, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 194
-            err = errContainer[new ErrorDualKey(ErrorTypes.errDivuachSidurLoMatimLeisuk422, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 197
-            err = errContainer[new ErrorDualKey(ErrorTypes.errHachtamatKnisaLoBmakomHasaka197, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 198
-            err = errContainer[new ErrorDualKey(ErrorTypes.errHachtamatYetziaLoBmakomHasaka198, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 199
-            err = errContainer[new ErrorDualKey(ErrorTypes.errAvodaByemeyTeuna199, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 200
-            err = errContainer[new ErrorDualKey(ErrorTypes.errAvodaByemeyEvel200, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 201
-            err = errContainer[new ErrorDualKey(ErrorTypes.errAvodaByemeyMachala201, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            //Err 202
-            err = errContainer[new ErrorDualKey(ErrorTypes.errMachalaLeloIshur202, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
-
-            ////Err 204
-            //err = errContainer[new ErrorDualKey(ErrorTypes.errSidurAsurBeyomShishiLeoved5Yamim204, ErrorSubLevel.Sidur)];
-            //err.IsCorrect(input);
-
-            ////Err 205
-            //err = errContainer[new ErrorDualKey(ErrorTypes.errTipatChalavMealMichsa205, ErrorSubLevel.Sidur)];
-            //err.IsCorrect(input);
-
-            //Err 206
-            //err = errContainer[new ErrorDualKey(ErrorTypes.errHachtamatYetziaLoBmakomHasaka198, ErrorSubLevel.Sidur)];
-            //err.IsCorrect(input);
-
-            //peiluyot
-
-
 
         }
 
         private void ErrorValidationAfterPeilut(ErrorInputData input, ICardErrorContainer errContainer)
         {
-            //Err 185
-            ICardError err = errContainer[new ErrorDualKey(ErrorTypes.ErrMisparElementimMealHamutar, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
+            List<ErrorTypes> errorTypeList = new List<ErrorTypes>();
 
-            if (input.iSidur > 0)//לא נבצע את הבדיקה לסידור הראשון
-            {
-                //Err 55
-                err = errContainer[new ErrorDualKey(ErrorTypes.errSidurEilatNotValid, ErrorSubLevel.Sidur)];
-                err.IsCorrect(input);
-            }
+            errorTypeList.Add(ErrorTypes.ErrMisparElementimMealHamutar); //185
+            errorTypeList.Add(ErrorTypes.errSidurEilatNotValid);//55
+            errorTypeList.Add(ErrorTypes.errCntMechineInSidurNotValid);//184
 
-            //Err 184
-            err = errContainer[new ErrorDualKey(ErrorTypes.errCntMechineInSidurNotValid, ErrorSubLevel.Sidur)];
-            err.IsCorrect(input);
+            ExecuteListOfErrors(errContainer, input, errorTypeList, ErrorSubLevel.Sidur);
         }
     }
 }

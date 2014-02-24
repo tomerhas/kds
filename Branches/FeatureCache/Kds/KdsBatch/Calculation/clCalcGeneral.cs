@@ -95,7 +95,7 @@ namespace KdsBatch
             {
                 iSugYom = GetSugYomLemichsa(iMisparIshi, dTaarich);
             }
-            if (objMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || objMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())
+            if (objMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || objMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())
             { iShvuaAvoda = 6; }
             else { iShvuaAvoda = 5; }
 

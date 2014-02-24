@@ -18,6 +18,7 @@ using KdsLibrary.Utils.Reports;
 using KdsBatch;
 using System.IO;
 using System.Collections.Generic;
+using KDSCommon.Enums;
 
 public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
 {
@@ -297,11 +298,11 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                       lblIsuk.Text = dtPirteyOved.Rows[0]["isuk"].ToString();
 
                     sWorkDay = oOvdim.GetMeafyenLeOved(int.Parse(txtEmpId.Text), dTaarich, clGeneral.enMeafyeneyOved.YemeyAvoda);
-                    if (int.Parse(sWorkDay) == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
+                    if (int.Parse(sWorkDay) == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
                     { lblWorkDay.Text = "5 ימים חודשי"; }
-                    else if (int.Parse(sWorkDay) == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode())
+                    else if (int.Parse(sWorkDay) == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode())
                     { lblWorkDay.Text = "5 ימים יומי"; }
-                    else if (int.Parse(sWorkDay) == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
+                    else if (int.Parse(sWorkDay) == enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
                     { lblWorkDay.Text = "6 ימים יומי"; }
                     else { lblWorkDay.Text = "6 ימים חודשי"; }
 

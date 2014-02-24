@@ -13,6 +13,7 @@ using System.Configuration;
 using KdsLibrary.Security;
 using System.Windows.Forms;
 using KDSCommon.UDT;
+using KDSCommon.Enums;
 
 namespace KdsBatch.Reports
 {
@@ -125,11 +126,11 @@ namespace KdsBatch.Reports
 
         private string getTeurWorkDay(string sWorkDay)
         {
-            if (int.Parse(sWorkDay) == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
+            if (int.Parse(sWorkDay) == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
             { return "5 ימים חודשי"; }
-            else if (int.Parse(sWorkDay) == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode())
+            else if (int.Parse(sWorkDay) == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode())
             { return "5 ימים יומי"; }
-            else if (int.Parse(sWorkDay) == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
+            else if (int.Parse(sWorkDay) == enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
             { return "6 ימים יומי"; }
             else { return "6 ימים חודשי"; }
         }

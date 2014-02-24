@@ -225,7 +225,10 @@ namespace KdsBatch
                 if (_executionType == clGeneral.BatchExecutionType.ErrorIdentification ||
                     (_executionType == clGeneral.BatchExecutionType.All && nextStep))
                 {
-                    nextStep = btchMan.MainOvedErrors(employeeID, date);
+                    var result = btchMan.MainOvedErrorsNew(employeeID, date);
+                    nextStep = result.IsSuccess;
+          
+                   //  nextStep = btchMan.MainOvedErrors(employeeID, date);
                    // nextStep = oErrors.HafelShguim(employeeID, date);
                     
                     //clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,

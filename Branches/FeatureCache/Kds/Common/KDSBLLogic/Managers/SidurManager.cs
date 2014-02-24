@@ -489,6 +489,10 @@ namespace KdsLibrary.KDSLogic.Managers
             return _container.Resolve<ISidurDAL>().IsSidurChofef(iMisparIshi, dCardDate, iMisparSidur, dShatHatchala, dShatGmar, iParamChafifa, dt);
         }
 
+        public float GetMeshechSidur(int iMisparIshi, int iMisparSidur, DateTime taarich_me, DateTime taarich_ad)
+        {
+            return _container.Resolve<ISidurDAL>().GetMeshechSidur(iMisparIshi, iMisparSidur, taarich_me, taarich_ad);
+        }
         //public DataSet GetSidurAndPeiluyotFromTnua(int iMisparSidur, DateTime dDate, int? iKnisaVisut, out int iResult)
         //{
         //    return _container.Resolve<ISidurDAL>().GetSidurAndPeiluyotFromTnua(iMisparSidur, dDate, iKnisaVisut,out iResult);

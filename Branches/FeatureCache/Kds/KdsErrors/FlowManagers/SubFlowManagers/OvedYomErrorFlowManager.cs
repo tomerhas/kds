@@ -45,56 +45,30 @@ namespace KdsErrors.FlowManagers.SubFlowManagers
 
         private void ErrorValidationBeforeSidur(ErrorInputData inputData, ICardErrorContainer errContainer)
         {
-            //Err 1
-            ICardError err = errContainer[new ErrorDualKey(ErrorTypes.errHrStatusNotValid, ErrorSubLevel.Yomi)];
-            err.IsCorrect(inputData);
-            //Err 30
-            err = errContainer[new ErrorDualKey(ErrorTypes.errLinaValueNotValid, ErrorSubLevel.Yomi)];
-            err.IsCorrect(inputData);
-            //Err 27
-            err = errContainer[new ErrorDualKey(ErrorTypes.errSimunNesiaNotValid, ErrorSubLevel.Yomi)];
-            err.IsCorrect(inputData);
-            //Err 47
-            err = errContainer[new ErrorDualKey(ErrorTypes.errShbatHashlamaNotValid, ErrorSubLevel.Yomi)];
-            err.IsCorrect(inputData);
+            List<ErrorTypes> errorTypeList = new List<ErrorTypes>();
+
+            errorTypeList.Add(ErrorTypes.errHrStatusNotValid); //1
+            errorTypeList.Add(ErrorTypes.errLinaValueNotValid); //30
+            errorTypeList.Add(ErrorTypes.errSimunNesiaNotValid);//27
+            errorTypeList.Add(ErrorTypes.errShbatHashlamaNotValid);//47
+    
+            ExecuteListOfErrors(errContainer, inputData, errorTypeList, ErrorSubLevel.Yomi);
+           
 
             if (inputData.htEmployeeDetails.Count > 0)
             {
+                errorTypeList = new List<ErrorTypes>();
 
-                //Err 36
-                err = errContainer[new ErrorDualKey(ErrorTypes.errHalbashaNotvalid, ErrorSubLevel.Yomi)];
-                err.IsCorrect(inputData);
+                errorTypeList.Add(ErrorTypes.errHalbashaNotvalid); //36
+                errorTypeList.Add(ErrorTypes.errDuplicateShatYetiza); //103
+                errorTypeList.Add(ErrorTypes.errOvdaInMachalaNotAllowed);//132
+                errorTypeList.Add(ErrorTypes.errMatzavOvedNotValidFirstDay);//192
+                errorTypeList.Add(ErrorTypes.errHafifaBetweenSidurim); //167
+                errorTypeList.Add(ErrorTypes.errHasBothSidurEilatAndSidurVisa); //171
+                errorTypeList.Add(ErrorTypes.errOvedPeilutNotValid);//172
+                errorTypeList.Add(ErrorTypes.errConenutGriraMealHamutar);//203
 
-                //Err 103
-                err = errContainer[new ErrorDualKey(ErrorTypes.errDuplicateShatYetiza, ErrorSubLevel.Yomi)];
-                err.IsCorrect(inputData);
-
-                //Err 132
-                err = errContainer[new ErrorDualKey(ErrorTypes.errOvdaInMachalaNotAllowed, ErrorSubLevel.Yomi)];
-                err.IsCorrect(inputData);
-
-                //Err 192
-                err = errContainer[new ErrorDualKey(ErrorTypes.errMatzavOvedNotValidFirstDay, ErrorSubLevel.Yomi)];
-                err.IsCorrect(inputData);
-
-                //Err 167
-                err = errContainer[new ErrorDualKey(ErrorTypes.errHafifaBetweenSidurim, ErrorSubLevel.Yomi)];
-                err.IsCorrect(inputData);
-
-                //Err 171
-                err = errContainer[new ErrorDualKey(ErrorTypes.errHasBothSidurEilatAndSidurVisa, ErrorSubLevel.Yomi)];
-                err.IsCorrect(inputData);
-
-                //Err 172
-                err = errContainer[new ErrorDualKey(ErrorTypes.errOvedPeilutNotValid, ErrorSubLevel.Yomi)];
-                err.IsCorrect(inputData);
-
-                //Err 203
-                err = errContainer[new ErrorDualKey(ErrorTypes.errConenutGriraMealHamutar, ErrorSubLevel.Yomi)];
-                err.IsCorrect(inputData);
-
-
-
+                ExecuteListOfErrors(errContainer, inputData, errorTypeList, ErrorSubLevel.Yomi);
             }
         }
 
@@ -102,29 +76,17 @@ namespace KdsErrors.FlowManagers.SubFlowManagers
         {
             if (inputData.htEmployeeDetails.Count > 0)
             {
-                //if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                //{
-                //Err 165
 
-                ICardError err = errContainer[new ErrorDualKey(ErrorTypes.errAvodatNahagutNotValid, ErrorSubLevel.Yomi)];
-                err.IsCorrect(inputData);
-                //}
+                List<ErrorTypes> errorTypeList = new List<ErrorTypes>();
 
-                //Err 182
-                err = errContainer[new ErrorDualKey(ErrorTypes.errTimeMechineNosefetInDayNotValid, ErrorSubLevel.Yomi)];
-                err.IsCorrect(inputData);
+                //if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))//165
+                errorTypeList.Add(ErrorTypes.errAvodatNahagutNotValid); //165
+                errorTypeList.Add(ErrorTypes.errTimeMechineNosefetInDayNotValid); //182
+                errorTypeList.Add(ErrorTypes.errTimeAllMechineInDayNotValid);//183
+                errorTypeList.Add(ErrorTypes.errNesiaMeshtanaNotDefine);//150
 
-                //Err 183
-                err = errContainer[new ErrorDualKey(ErrorTypes.errTimeAllMechineInDayNotValid, ErrorSubLevel.Yomi)];
-                err.IsCorrect(inputData);
-
-
-                if (inputData.htEmployeeDetails.Count > 0)
-                {
-                    //Err 150
-                    err = errContainer[new ErrorDualKey(ErrorTypes.errNesiaMeshtanaNotDefine, ErrorSubLevel.Yomi)];
-                    err.IsCorrect(inputData);
-                }
+                ExecuteListOfErrors(errContainer, inputData, errorTypeList, ErrorSubLevel.Yomi);
+  
             }
         }
 

@@ -22,33 +22,36 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
         public override bool InternalIsCorrect(ErrorInputData input)
         {
             bool isValid = true;
-            DateTime dSidurPrevShatGmar;
-            DateTime dSidurShatHatchala;
-            SidurDM oPrevSidur = (SidurDM)input.htEmployeeDetails[input.iSidur - 1];
-            string sSidurPrevShatGmar = oPrevSidur.sShatGmar;
-            int iSidurPrevPitzulHafsaka = string.IsNullOrEmpty(oPrevSidur.sPitzulHafsaka) ? 0 : int.Parse(oPrevSidur.sPitzulHafsaka);
-
-            if (!(string.IsNullOrEmpty(input.curSidur.sShatHatchala)))
+            if (input.iSidur > 0)//לא נבצע את הבדיקה לסידור הראשון
             {
-                //אם  יום שישי או ערב חג אבל  לא בשבתון
-                if ((((input.curSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) || ((input.curSidur.sErevShishiChag == "1") && (input.curSidur.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString())))) && (iSidurPrevPitzulHafsaka > 0))
+               
+                DateTime dSidurPrevShatGmar;
+                DateTime dSidurShatHatchala;
+                SidurDM oPrevSidur = (SidurDM)input.htEmployeeDetails[input.iSidur - 1];
+                string sSidurPrevShatGmar = oPrevSidur.sShatGmar;
+                int iSidurPrevPitzulHafsaka = string.IsNullOrEmpty(oPrevSidur.sPitzulHafsaka) ? 0 : int.Parse(oPrevSidur.sPitzulHafsaka);
+
+                if (!(string.IsNullOrEmpty(input.curSidur.sShatHatchala)))
                 {
-                    //נקרא את שעת כניסת השבת                   
-                    //אם ביום שהוא ערב שבת/חג יש סידור אחד שמסתיים לפני כניסת שבת ויש לו סימון בשדה פיצול והסידור העוקב אחריו התחיל אחרי כניסת השבת  - זו שגיאה. (מצב תקין הוא שהסידור העוקב התחיל לפני כניסת שבת וגלש/לא גלש לשבת). 
-                    //if (((int.Parse(sSidurPrevShatGmar.Remove(2, 1)) > iShabatStart)) || (int.Parse(input.curSidur.sShatHatchala.Remove(2, 1)) <= iShabatStart))
-                    dSidurPrevShatGmar = DateHelper.GetDateTimeFromStringHour(sSidurPrevShatGmar, input.CardDate);
-                    dSidurShatHatchala = DateHelper.GetDateTimeFromStringHour(input.curSidur.sShatHatchala, input.CardDate);
-                    if ((dSidurPrevShatGmar <= input.oParameters.dKnisatShabat) && (dSidurShatHatchala > input.oParameters.dKnisatShabat))
+                    //אם  יום שישי או ערב חג אבל  לא בשבתון
+                    if ((((input.curSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) || ((input.curSidur.sErevShishiChag == "1") && (input.curSidur.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString())))) && (iSidurPrevPitzulHafsaka > 0))
                     {
-                        isValid = false;
+                        //נקרא את שעת כניסת השבת                   
+                        //אם ביום שהוא ערב שבת/חג יש סידור אחד שמסתיים לפני כניסת שבת ויש לו סימון בשדה פיצול והסידור העוקב אחריו התחיל אחרי כניסת השבת  - זו שגיאה. (מצב תקין הוא שהסידור העוקב התחיל לפני כניסת שבת וגלש/לא גלש לשבת). 
+                        //if (((int.Parse(sSidurPrevShatGmar.Remove(2, 1)) > iShabatStart)) || (int.Parse(input.curSidur.sShatHatchala.Remove(2, 1)) <= iShabatStart))
+                        dSidurPrevShatGmar = DateHelper.GetDateTimeFromStringHour(sSidurPrevShatGmar, input.CardDate);
+                        dSidurShatHatchala = DateHelper.GetDateTimeFromStringHour(input.curSidur.sShatHatchala, input.CardDate);
+                        if ((dSidurPrevShatGmar <= input.oParameters.dKnisatShabat) && (dSidurShatHatchala > input.oParameters.dKnisatShabat))
+                        {
+                            isValid = false;
+                        }
+                        if ((dSidurPrevShatGmar > input.oParameters.dKnisatShabat) && (dSidurShatHatchala > input.oParameters.dKnisatShabat))
+                            isValid = false;
                     }
-                    if ((dSidurPrevShatGmar > input.oParameters.dKnisatShabat) && (dSidurShatHatchala > input.oParameters.dKnisatShabat))
-                      isValid = false;
                 }
+                if (!isValid)
+                    AddNewError(input);
             }
-            if(!isValid)
-             AddNewError(input);
-             
             return isValid;
         }
 

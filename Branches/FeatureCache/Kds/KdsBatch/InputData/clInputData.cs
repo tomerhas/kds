@@ -1799,7 +1799,7 @@
 //                }
 //                else
 //                {//עובד 6 ימים 
-//                    if ((oMeafyeneyOved.IsMeafyenExist(56)) && ((oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) || (oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
+//                    if ((oMeafyeneyOved.IsMeafyenExist(56)) && ((oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) || (oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
 //                    {
 //                        if ((oSidur.sShabaton == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()))
 //                        {
@@ -1807,7 +1807,7 @@
 //                        }
 //                    }
 //                    //עובד 5 ימים 
-//                    if ((oMeafyeneyOved.IsMeafyenExist(56)) && ((oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode()) || (oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+//                    if ((oMeafyeneyOved.IsMeafyenExist(56)) && ((oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode()) || (oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
 //                    {
 //                        if ((oSidur.sShabaton == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
 //                        {

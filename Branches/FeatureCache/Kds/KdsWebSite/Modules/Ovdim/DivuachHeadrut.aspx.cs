@@ -181,7 +181,7 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                                             item.Selected = true;
                                         }
                                      }
-                                    //else if (item.Value == "99822" && (_MeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() || ((DataTable)ViewState["dtSidurim"]).Rows.Count>0))
+                                    //else if (item.Value == "99822" && (_MeafyeneyOved.GetMeafyen(56).IntValue != enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() || ((DataTable)ViewState["dtSidurim"]).Rows.Count>0))
                                     //    {
                                     //        item.Enabled = false;
                                     //    } 

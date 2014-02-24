@@ -1998,7 +1998,8 @@ public class wsGeneral : System.Web.Services.WebService
             //שינוי קלט
             _BatchManager.MainInputData(iMisaprIshi, dDateCard);
             //שגויים
-            _BatchManager.MainOvedErrors(iMisaprIshi, dDateCard);
+            _BatchManager.MainOvedErrorsNew(iMisaprIshi, dDateCard);
+            //_BatchManager.MainOvedErrors(iMisaprIshi, dDateCard);
             sResult = "1";
             return sResult;
         }

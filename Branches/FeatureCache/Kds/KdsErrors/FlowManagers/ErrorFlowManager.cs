@@ -76,7 +76,9 @@ namespace KdsErrors.FlowManagers
                 haveShgiot = errDal.CheckShgiotLetzuga(sArrKodShgia);
             }
             //Insert errors to shgiot
-            errDal.InsertErrorsToTbShgiot(inputData.dtErrors, inputData.CardDate);
+
+            if (inputData.dtErrors.Rows.Count > 0)
+                errDal.InsertErrorsToTbShgiot(inputData.dtErrors, inputData.CardDate);
 
             //Update 
             errDal.UpdateRitzatShgiotDate(inputData.iMisparIshi, inputData.CardDate, haveShgiot);

@@ -34,81 +34,30 @@ namespace KdsErrors.FlowManagers.SubFlowManagers
 
         private void ErrorValidation(ErrorInputData input, ICardErrorContainer errContainer)
         {
-            //Err 81
-            ICardError err = errContainer[new ErrorDualKey(ErrorTypes.errKodNesiaNotExists, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
+            List<ErrorTypes> errorTypeList = new List<ErrorTypes>();
 
-            //Err 139
-            err = errContainer[new ErrorDualKey(ErrorTypes.errMisparSiduriOtoNotExists, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
+            errorTypeList.Add(ErrorTypes.errKodNesiaNotExists); //81
+            errorTypeList.Add(ErrorTypes.errMisparSiduriOtoNotExists); //139
+            errorTypeList.Add(ErrorTypes.errElementTimeBiggerThanSidurTime);//129
+            errorTypeList.Add(ErrorTypes.errShatPeilutSmallerThanShatHatchalaSidur);//121
+            errorTypeList.Add(ErrorTypes.errPeilutForSidurNonValid); //84
+            errorTypeList.Add(ErrorTypes.errOtoNoNotExists); //69
+            errorTypeList.Add(ErrorTypes.errLoZakaiLLina);//31
+            errorTypeList.Add(ErrorTypes.errOtoNoExists);//68
+            errorTypeList.Add(ErrorTypes.errTeoodatNesiaNotInVisa); //52
+            errorTypeList.Add(ErrorTypes.errHighValueKisuyTor);//87
+            errorTypeList.Add(ErrorTypes.errElementInSpecialSidurNotAllowed);//123
+            errorTypeList.Add(ErrorTypes.errNesiaInSidurVisaNotAllowed); //125
+            errorTypeList.Add(ErrorTypes.errHighValueKisuyTor);//166
+            errorTypeList.Add(ErrorTypes.errSidurNamlakWithoutNesiaCard);//13
+            errorTypeList.Add(ErrorTypes.errCurrentPeilutInPrevPeilut); //162
+            errorTypeList.Add(ErrorTypes.errTimeMechineInPeilutNotValid);//86
+            errorTypeList.Add(ErrorTypes.errDuplicateTravle);//151
+            errorTypeList.Add(ErrorTypes.errHightValueDakotBefoal);//179
+            errorTypeList.Add(ErrorTypes.errKisuyTorLifneyHatchalatSidur);//189
 
-            //Err 129
-            err = errContainer[new ErrorDualKey(ErrorTypes.errElementTimeBiggerThanSidurTime, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
+            ExecuteListOfErrors(errContainer, input, errorTypeList, ErrorSubLevel.Peilut);
 
-            //Err 121
-            err = errContainer[new ErrorDualKey(ErrorTypes.errShatPeilutSmallerThanShatHatchalaSidur, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 84
-            err = errContainer[new ErrorDualKey(ErrorTypes.errPeilutForSidurNonValid, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 69
-            err = errContainer[new ErrorDualKey(ErrorTypes.errOtoNoNotExists, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 31
-            err = errContainer[new ErrorDualKey(ErrorTypes.errLoZakaiLLina, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 68
-            err = errContainer[new ErrorDualKey(ErrorTypes.errOtoNoExists, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 52
-            err = errContainer[new ErrorDualKey(ErrorTypes.errTeoodatNesiaNotInVisa, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 87
-            err = errContainer[new ErrorDualKey(ErrorTypes.errHighValueKisuyTor, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 123
-            err = errContainer[new ErrorDualKey(ErrorTypes.errElementInSpecialSidurNotAllowed, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 125
-            err = errContainer[new ErrorDualKey(ErrorTypes.errNesiaInSidurVisaNotAllowed, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 166
-            err = errContainer[new ErrorDualKey(ErrorTypes.errHmtanaTimeNotValid, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 13
-            err = errContainer[new ErrorDualKey(ErrorTypes.errSidurNamlakWithoutNesiaCard, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 162
-            err = errContainer[new ErrorDualKey(ErrorTypes.errCurrentPeilutInPrevPeilut, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 86
-            err = errContainer[new ErrorDualKey(ErrorTypes.errTimeMechineInPeilutNotValid, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 151
-            err = errContainer[new ErrorDualKey(ErrorTypes.errDuplicateTravle, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 179
-            err = errContainer[new ErrorDualKey(ErrorTypes.errHightValueDakotBefoal, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
-
-            //Err 189
-            err = errContainer[new ErrorDualKey(ErrorTypes.errKisuyTorLifneyHatchalatSidur, ErrorSubLevel.Peilut)];
-            err.IsCorrect(input);
         }
     }
 }

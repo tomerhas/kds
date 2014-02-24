@@ -23,8 +23,8 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                 if (input.curSidur.bSidurInSummerExists && (input.curSidur.sSidurInSummer != "1" && input.curSidur.sSidurInSummer != "2" && input.curSidur.sSidurInSummer != "3" && input.curSidur.sSidurInSummer != "4"))
                 {
                     //סידור של ארועי קיץ חייב להיות לעובד אשר הוגדר עובד 6 ימים (מזהים לפי ערך 61, 62) במאפיין 56 במאפייני עובדים. סידור של ארועי קיץ = סידור מיוחד עם מאפיין 73
-                    if (((!input.oMeafyeneyOved.IsMeafyenExist(56))) || ((input.oMeafyeneyOved.IsMeafyenExist(56)) && (input.oMeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
-                        && (input.oMeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
+                    if (((!input.oMeafyeneyOved.IsMeafyenExist(56))) || ((input.oMeafyeneyOved.IsMeafyenExist(56)) && (input.oMeafyeneyOved.GetMeafyen(56).IntValue != enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
+                        && (input.oMeafyeneyOved.GetMeafyen(56).IntValue != enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
                     {
                         AddNewError(input);
                         return false;

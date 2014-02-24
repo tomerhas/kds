@@ -23,7 +23,7 @@ namespace KdsErrors.ErrosrImpl.DayErrors
         {
             var drNew = input.dtErrors.NewRow();
             drNew["mispar_ishi"] = input.iMisparIshi;
-            drNew["check_num"] = ErrorTypes.errHrStatusNotValid.GetHashCode();
+            drNew["check_num"] = (int)CardErrorType;
             drNew["taarich"] = input.CardDate.ToShortDateString();
 
             input.dtErrors.Rows.Add(drNew);

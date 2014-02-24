@@ -58,6 +58,7 @@
     <Compile Include="Enums\CardStatus.cs" />
     <Compile Include="Enums\enElementHachanatMechona.cs" />
     <Compile Include="Enums\enEventId.cs" />
+    <Compile Include="Enums\enMeafyenOved56.cs" />
     <Compile Include="Enums\enSectorAvoda.cs" />
     <Compile Include="Enums\enSugYom.cs" />
     <Compile Include="Enums\ErrorLevel.cs" />

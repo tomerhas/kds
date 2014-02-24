@@ -81,7 +81,9 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
 
                     if (nextStep)
                     {
-                        nextStep = btchMan.MainOvedErrors(int.Parse(dt.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dt.Rows[i]["taarich"].ToString()));
+                        var result = btchMan.MainOvedErrorsNew(int.Parse(dt.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dt.Rows[i]["taarich"].ToString()));
+                        nextStep = result.IsSuccess;
+                        //nextStep = btchMan.MainOvedErrors(int.Parse(dt.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dt.Rows[i]["taarich"].ToString()));
                     }
                  }
                 catch (Exception ex)

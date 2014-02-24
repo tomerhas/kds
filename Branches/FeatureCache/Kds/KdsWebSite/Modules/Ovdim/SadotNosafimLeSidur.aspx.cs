@@ -110,9 +110,11 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
 
                
             }
-            oBatchManager = new clBatchManager(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value));
-            oBatchManager.MainOvedErrors(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value));
-            ErrorsList = oBatchManager.dtErrors;
+            var result = oBatchManager.MainOvedErrorsNew(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value));
+            ErrorsList = result.Errors;
+            //oBatchManager = new clBatchManager(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value));
+            //oBatchManager.MainOvedErrors(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value));
+            //ErrorsList = oBatchManager.dtErrors;
             BuildPirteySidur();
             BuildPeiluyot();
         }

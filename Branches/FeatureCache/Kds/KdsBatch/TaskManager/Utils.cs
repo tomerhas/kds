@@ -174,7 +174,9 @@ namespace KdsBatch.TaskManager
 
 						if (bInpuDataResult)
 						{
-							bInpuDataResult = oBatchManager.MainOvedErrors(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                            var result = oBatchManager.MainOvedErrorsNew(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                            bInpuDataResult = result.IsSuccess; 
+							//bInpuDataResult = oBatchManager.MainOvedErrors(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
 							numSucceeded += 1;
 						}
 						else

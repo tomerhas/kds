@@ -97,6 +97,7 @@
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsTimeForPrepareMechineValid86.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsZakaiLina31.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorKisuyTorLifneyHatchalatSidur189.cs" />
+    <Compile Include="ErrosrImpl\SidurErrors\SidurErrorShatHatchalaBiggerShatYetzia207.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidirErrorPitzulSidurInShabatValid24.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorAvodaByemeyEvel200.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorAvodaByemeyMachala201.cs" />
@@ -133,12 +134,14 @@
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorOneSidurNotValid22.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorOutMichsaNotValid118.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorOutMichsaNotValid40.cs" />
+    <Compile Include="ErrosrImpl\SidurErrors\SidurErrorOvedMutaamLeloShaotNosafot206.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurerrorPitzulAndNotZakai25.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorPitzulHafsakaNotValid20.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorShabatPizulVNotValid23.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorShatGmarLetashlumNull181.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorShatHatchalaLetashlumNull180.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorSidurAllowedForEggedTaavora148.cs" />
+    <Compile Include="ErrosrImpl\SidurErrors\SidurErrorSidurAsurBeShisiLeoved5Yamim204.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorSidurAvodaValidForTaarich160.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorSidurCharigaNotValid33.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorSidurEilatValid55.cs" />
@@ -156,6 +159,7 @@
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorSidurVisaMissingSugVisa106.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorSidurVisaNotValid57.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorStartHourMissing15.cs" />
+    <Compile Include="ErrosrImpl\SidurErrors\SidurErrorTipatChalavMealMichsa205.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorTotalHashlamotInCardValid142.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorVisaInSidurRagil58.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorZakaiLeChariga34.cs" />

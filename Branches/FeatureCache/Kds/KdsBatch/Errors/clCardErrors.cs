@@ -3113,7 +3113,7 @@
 //            try
 //            {
 //                //סידור של ארועי קיץ חייב להיות לעובד אשר הוגדר עובד 6 ימים (מזהים לפי ערך 61, 62) במאפיין 56 במאפייני עובדים. סידור של ארועי קיץ = סידור מיוחד עם מאפיין 73
-//                if (((oSidur.bSidurInSummerExists) && (!oMeafyeneyOved.IsMeafyenExist(56))) || ((oMeafyeneyOved.IsMeafyenExist(56)) && (oMeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (oMeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
+//                if (((oSidur.bSidurInSummerExists) && (!oMeafyeneyOved.IsMeafyenExist(56))) || ((oMeafyeneyOved.IsMeafyenExist(56)) && (oMeafyeneyOved.GetMeafyen(56).IntValue != enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (oMeafyeneyOved.GetMeafyen(56).IntValue != enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
 //                {
 //                    drNew = dtErrors.NewRow();
 //                    InsertErrorRow(oSidur, ref drNew, "סידור של ארועי קיץ לעובד 5 ימים", enErrors.errSidurSummerNotValidForOved.GetHashCode());

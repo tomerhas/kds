@@ -113,13 +113,14 @@ namespace KdsErrors
             Add(_container.Resolve<SidurErrorAvodaByemeyEvel200>());
             Add(_container.Resolve<SidurErrorAvodaByemeyMachala201>());
             Add(_container.Resolve<SidurErrorMachalaLeloIshurwithSidurLetashlum202>());
-
-
+            Add(_container.Resolve<SidurErrorSidurAsurBeShisiLeoved5Yamim204>());
+            Add(_container.Resolve<SidurErrorTipatChalavMealMichsa205>());
+            Add(_container.Resolve<SidurErrorOvedMutaamLeloShaotNosafot206>());
+            Add(_container.Resolve<SidurErrorShatHatchalaBiggerShatYetzia207>());
             Add(_container.Resolve<SidurErrorMisparElementimMealHamutar185>());
             Add(_container.Resolve<SidurErrorSidurEilatValid55>());
             Add(_container.Resolve<SidurErrorCntMechineInSidurNotValid184>());
-            //      Add(_container.Resolve<SidurErrorCntMechineInSidurNotValid184>());
-
+       
 
             Add(_container.Resolve<PeilutErrorIsKodNesiaExists81>());
             Add(_container.Resolve<PeilutErorMisparSiduriOtoNotExists139>());
@@ -141,6 +142,7 @@ namespace KdsErrors
             Add(_container.Resolve<PeilutErrorIsDuplicateTravel151>());
             Add(_container.Resolve<PeilutErrorHightValueDakotBefoal179>());
             Add(_container.Resolve<PeilutErrorKisuyTorLifneyHatchalatSidur189>());
+           
 
         }
     }

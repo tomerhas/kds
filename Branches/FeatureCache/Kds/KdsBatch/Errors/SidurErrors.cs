@@ -1144,7 +1144,7 @@ namespace KdsBatch.Errors
                     {
                         //סידור של ארועי קיץ חייב להיות לעובד אשר הוגדר עובד 6 ימים (מזהים לפי ערך 61, 62) במאפיין 56 במאפייני עובדים. סידור של ארועי קיץ = סידור מיוחד עם מאפיין 73
                         if (((!SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(56))) || 
-                            ((SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(56))  && (SidurInstance.objDay.oOved.oMeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (SidurInstance.objDay.oOved.oMeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
+                            ((SidurInstance.objDay.oOved.oMeafyeneyOved.IsMeafyenExist(56))  && (SidurInstance.objDay.oOved.oMeafyeneyOved.GetMeafyen(56).IntValue != enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (SidurInstance.objDay.oOved.oMeafyeneyOved.GetMeafyen(56).IntValue != enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
                         {
                             bError = true;
                         }

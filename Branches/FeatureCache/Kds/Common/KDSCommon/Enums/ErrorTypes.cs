@@ -127,6 +127,8 @@ namespace KDSCommon.Enums
         errMachalaLeloIshur202 = 202,
         errConenutGriraMealHamutar = 203,
         errSidurAsurBeyomShishiLeoved5Yamim204 = 204,
-        errTipatChalavMealMichsa205 = 205
+        errTipatChalavMealMichsa205 = 205,
+        errOvedMutaamLeloShaotNosafot206 = 206,
+        errShatHatchalaBiggerShatYetzia = 207
     }
 }

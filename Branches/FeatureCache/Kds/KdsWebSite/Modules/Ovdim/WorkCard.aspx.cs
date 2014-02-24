@@ -1776,12 +1776,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              
         //. עובד 5 ימים - מותר בימים  א-ה כולל ערבי חג בימים אלה. זיהוי עובד 5 ימים לפי לפי ערך 51/52 במאפיין 56 במאפייני עובדים.
         if (((iSidurDay == clGeneral.enDay.Shabat.GetHashCode()) || (oBatchManager.oOvedYomAvodaDetails.sShabaton == "1") || ((iSidurDay == clGeneral.enDay.Shishi.GetHashCode())))
-            && ((oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode()) || (oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+            && ((oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode()) || (oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
             return false;
 
         //. עובד 6 ימים - מותר בימים  א-ו כולל ערבי חג בימים אלה. זיהוי עובד 6 ימים לפי לפי ערך 61/62 במאפיין 56 במאפייני עובדים
         if ((iSidurDay== clGeneral.enDay.Shabat.GetHashCode()) || (oBatchManager.oOvedYomAvodaDetails.sShabaton == "1"))
-            if ((((oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode()))))
+            if ((((oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek2.GetHashCode()))))
                 return false;
      
         if (oBatchManager.oOvedYomAvodaDetails.sMutamut != clGeneral.enMutaam.enMutaam1.GetHashCode().ToString())

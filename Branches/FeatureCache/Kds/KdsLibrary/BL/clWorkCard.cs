@@ -378,7 +378,7 @@ namespace KdsLibrary.BL
                     var sugeyYamimMeyuhadim = cacheManager.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim);
 
                     sug_yom = clGeneral.GetSugYom(iMisparIshi, dTemp, yamimMeyuhadim, iSectorIsuk, sugeyYamimMeyuhadim, meafyen56);
-                    if ((iMisparSidur==99006) || (sug_yom < 19 && !((meafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || meafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && sug_yom == 10)))
+                    if ((iMisparSidur==99006) || (sug_yom < 19 && !((meafyen56 == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || meafyen56 == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && sug_yom == 10)))
                     {
                         InsYemeyAvodaLeoved(ref oDal, iMisparIshi, dTemp, clGeneral.enStatusTipul.Betipul.GetHashCode(), null, iUserId);
                         InsUpdSidurimOvdim(ref oDal, iMisparIshi, dTemp, iMisparSidur, dShatHatchalaDef, dShatSiyumDef, iUserId);

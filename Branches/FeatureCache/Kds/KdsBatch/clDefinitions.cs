@@ -824,7 +824,9 @@ namespace KdsBatch
             ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
 
             //רוטינת שגויים
-            oBatchManager.MainOvedErrors(iMisparIshi, dCardDate);
+            oBatchManager.MainOvedErrorsNew(iMisparIshi, dCardDate);
+          //oBatchManager.MainOvedErrors(iMisparIshi, dCardDate);
+
             //רמת פעילות
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
@@ -888,8 +890,9 @@ namespace KdsBatch
             ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
 
             //רוטינת שגויים
-            oBatchManager.MainOvedErrors(iMisparIshi, dCardDate);
-            dtErr = oBatchManager.dtErrors;
+            var result = oBatchManager.MainOvedErrorsNew(iMisparIshi, dCardDate);
+
+            dtErr = result.Errors; // oBatchManager.dtErrors;
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 iErrorNum = int.Parse(dr["KOD_SHGIA"].ToString());
@@ -985,7 +988,8 @@ namespace KdsBatch
             ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
 
             //רוטינת שגויים
-            oBatchManager.MainOvedErrors(iMisparIshi, dCardDate);
+            oBatchManager.MainOvedErrorsNew(iMisparIshi, dCardDate);
+           // oBatchManager.MainOvedErrors(iMisparIshi, dCardDate);
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 iErrorNum = int.Parse(dr["KOD_SHGIA"].ToString());

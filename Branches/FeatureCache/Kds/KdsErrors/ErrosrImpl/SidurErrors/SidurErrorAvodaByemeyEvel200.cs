@@ -47,7 +47,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                     {
                         if (CheckShaaton(input.iSugYom, dTaarichKodem, input) ||
                             (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
-                            (input.oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || input.oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+                            (input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
                         {
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
 
@@ -59,7 +59,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                         if (!bError)
                         {
                             if (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
-                                (input.oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || input.oMeafyeneyOved.GetMeafyen(56).IntValue == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                                (input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
                                 dTaarichKodem = dTaarichKodem.AddDays(-1);
 
                             dtSidurim = ovedManagaer.GetOvedDetails(input.iMisparIshi, dTaarichKodem);

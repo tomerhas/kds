@@ -395,7 +395,8 @@ public partial class Modules_Test :Page
         a = new DateTime(2010, 10, 03, 19, 20, 0);
         clBatchManager oBatchManager = new clBatchManager(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
         oBatchManager.MainInputData(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
-        oBatchManager.MainOvedErrors(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
+      //  oBatchManager.MainOvedErrors(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
+        oBatchManager.MainOvedErrorsNew(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
         
     }
     protected void BtAddSelected_Click(object sender, EventArgs e) 
@@ -808,7 +809,8 @@ public partial class Modules_Test :Page
          foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
          {
             // HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-             oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+            //  oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+             oBatchManager.MainOvedErrorsNew(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
          }
          clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End MainOvedErrors");
 

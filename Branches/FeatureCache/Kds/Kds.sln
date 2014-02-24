@@ -40,7 +40,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "KdsWebSite", "KdsWebSite", 
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "17714"
+		VWDPort = "46693"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsTaskManager", "KdsTaskManager\KdsTaskManager.csproj", "{438301FD-7CC1-40FB-A426-EBC716082965}"
@@ -70,6 +70,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalOraInfra", "Infrastructure\DalOraInfra\DalOraInfra.csproj", "{6EC931D1-0935-49F4-8A12-331CA207C256}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KDSBLLogic", "Common\KDSBLLogic\KDSBLLogic.csproj", "{BA5C4914-3D29-4B2B-83AF-D43389DFED17}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KDSBL", "KDSBL", "{A6620A11-F241-4F85-994D-C9158FAD93EF}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -123,6 +125,7 @@ Global
 		SccProjectName13 = Common/KDSCache
 		SccLocalPath13 = Common\\KDSCache
 		SccProjectUniqueName14 = KdsErrors\\KdsErrors.csproj
+		SccProjectTopLevelParentUniqueName14 = Kds.sln
 		SccProjectName14 = KdsErrors
 		SccLocalPath14 = KdsErrors
 		SccProjectUniqueName15 = Infrastructure\\DalOraInfra\\DalOraInfra.csproj
@@ -361,8 +364,9 @@ Global
 		{B3E759EC-2A7B-4C38-9013-730C3A628AA8} = {8F942FC4-D956-4D17-9756-F4E9B2446E64}
 		{1CF6ED40-3036-4B17-AB5A-35F5C265C28C} = {8F942FC4-D956-4D17-9756-F4E9B2446E64}
 		{F2F12CC6-7B61-4B62-A364-CF1E132D2BF9} = {8F942FC4-D956-4D17-9756-F4E9B2446E64}
-		{BA5C4914-3D29-4B2B-83AF-D43389DFED17} = {8F942FC4-D956-4D17-9756-F4E9B2446E64}
 		{96AA16AD-DC40-43DF-807D-C1F20ECD7C02} = {4DA23671-7C5A-4FF7-86B8-A22FE56F5D5B}
 		{6EC931D1-0935-49F4-8A12-331CA207C256} = {4DA23671-7C5A-4FF7-86B8-A22FE56F5D5B}
+		{BA5C4914-3D29-4B2B-83AF-D43389DFED17} = {A6620A11-F241-4F85-994D-C9158FAD93EF}
+		{99802F09-7707-4AE2-8120-7F2DAAF871D7} = {A6620A11-F241-4F85-994D-C9158FAD93EF}
 	EndGlobalSection
 EndGlobal

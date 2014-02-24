@@ -26,7 +26,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                 {
 
                     iCountSidurim = input.htEmployeeDetails.Values.Cast<SidurDM>().ToList().Count(Sidur => ((Sidur.iMisparSidur != input.curSidur.iMisparSidur || Sidur.dFullShatHatchala != input.curSidur.dFullShatHatchala) && Sidur.iLoLetashlum == 0));
-                    if (iCountSidurim > 0 || input.oMeafyeneyOved.GetMeafyen(56).IntValue != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
+                    if (iCountSidurim > 0 || input.oMeafyeneyOved.GetMeafyen(56).IntValue != enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
                     {
                         AddNewError(input);
                         return false;

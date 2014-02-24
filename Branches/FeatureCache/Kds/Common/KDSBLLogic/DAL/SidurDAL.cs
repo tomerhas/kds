@@ -13,6 +13,7 @@ namespace KdsLibrary.KDSLogic.DAL
     {
         public const string cProIsSidurChofef = "pkg_errors.pro_have_sidur_chofef";
         public const string cGetSidurDetails = "KDS_SIDUR_AVODA_PACK.GetSidurDetails";
+        public const string cFunGetMeshechSidurForPeriod = "pkg_sidurim.fun_get_meshech_sidur_Toperiod";
 
         public bool IsSidurChofef(int iMisparIshi, DateTime dCardDate, int iMisparSidur, DateTime dShatHatchala, DateTime dShatGmar, int iParamChafifa, DataTable dt)
         {
@@ -76,5 +77,32 @@ namespace KdsLibrary.KDSLogic.DAL
                 throw ex;
             }
         }
+
+        public float GetMeshechSidur(int iMisparIshi, int iMisparSidur, DateTime taarich_me, DateTime taarich_ad)
+        {
+             clDal oDal = new clDal();
+             float iMeshechSidur = 0;
+             try
+             {
+                 //מחזיר את סטטוס קוד האישור ברמה הגבוהה ביותר
+                 oDal.AddParameter("p_return_value", ParameterType.ntOracleDecimal, null, ParameterDir.pdReturnValue);
+
+                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                 oDal.AddParameter("p_mispar_sidur", ParameterType.ntOracleInteger, iMisparSidur, ParameterDir.pdInput);
+                 oDal.AddParameter("p_taarich_me", ParameterType.ntOracleDate, taarich_me, ParameterDir.pdInput);
+                 oDal.AddParameter("p_taarich_ad", ParameterType.ntOracleDate, taarich_ad, ParameterDir.pdInput);
+
+                 oDal.ExecuteSP(cFunGetMeshechSidurForPeriod);
+
+                 iMeshechSidur = float.Parse(oDal.GetValParam("p_return_value"));
+
+                 return iMeshechSidur;
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+        }
+
     }
 }
