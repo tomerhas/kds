@@ -121,7 +121,7 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
                 sMaamad += clGeneral.enMaamad.Salarieds.GetHashCode().ToString();
             }
             dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
-            dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) - 1) * -1);
+            dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString())  * -1);
             dFrom = dFrom >= DateTime.Parse("01/07/2012") ? dFrom : DateTime.Parse("01/07/2012");
             dTo = (DateTime.Parse(ddlToMonth.SelectedValue)).AddMonths(1).AddDays(-1);
            iCount= objOvdim.GetCountWorkCardNoShaotLetashlum(dFrom, dTo, sMaamad);
@@ -156,7 +156,7 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
                 sMaamad += clGeneral.enMaamad.Salarieds.GetHashCode().ToString();
             }
             dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
-            dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) - 1) * -1);
+            dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString())  * -1);
             dFrom = dFrom >= DateTime.Parse("01/07/2012") ? dFrom : DateTime.Parse("01/07/2012");
             dTo = (DateTime.Parse(ddlToMonth.SelectedValue)).AddMonths(1).AddDays(-1);
            iCount= objOvdim.GetCountWCLoLetashlumWithMeafyenim(dFrom, dTo);
