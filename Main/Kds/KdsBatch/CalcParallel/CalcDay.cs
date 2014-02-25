@@ -3103,7 +3103,12 @@ namespace KdsBatch
                                         if (objOved.objMeafyeneyOved.iMeafyen33 == 1 && fMichsaYomit > 0 && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut && fErech60 == 0)
                                             fErechRechiv += ((objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit);
                                     }**/
-
+                                }
+                                if (objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7) &&
+                                    (objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && objOved.objPirteyOved.iIshurKeren ==0 )
+                                {
+                                    if (fMichsaYomit > 0 && fDakotNochehut == 0 && !HaveRechivimInDay(objOved.Taarich, "61,71,70,69,68,280,65,67,64,56,62,266") && objOved.objMatzavOved.iKod_Headrut == 0)
+                                        fErechRechiv = objOved.objPirteyOved.iZmanMutamut / fMichsaYomit; 
                                 }
 
                                 //ו
