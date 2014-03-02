@@ -546,33 +546,33 @@ namespace KdsBatch
          {
             // DataTable dtPeiluyot;
              DataRow[] drPeiluyot;
-             int iMakat, iMakatFirst,iMisparKnisa, iMisparKnisaFirst, iDakotBefoal;
+             int iMakat, iMisparKnisa, iDakotBefoal; //iMisparKnisaFirst, iMakatFirst ;
              DateTime dShatHatchla, dShatYetzia;
              float fErech;
              iMisparKnisa = 0;
              dShatHatchla = DateTime.MinValue;
              dShatYetzia = DateTime.MinValue;
-             DateTime dShatYetziaFirst = DateTime.MinValue;
+             //DateTime dShatYetziaFirst = DateTime.MinValue;
              float fHagdaraLetashlum;
-             string sQury;
+             //string sQury;
              bool bNoCalc = false;
-             iMakatFirst = 0;
-             iMisparKnisaFirst = 0;
+             //iMakatFirst = 0;
+             //iMisparKnisaFirst = 0;
              try
              {
                  
-                 if (bFirstSidur)
-                 {
-                     drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>701)");
-                 //   drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3)<>701", "shat_yetzia asc");
+                 //if (bFirstSidur)
+                 //{
+                 //    drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>701)");
+                 ////   drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3)<>701", "shat_yetzia asc");
  
-                     if (drPeiluyot.Length > 0)
-                     {
-                         iMakatFirst = int.Parse(drPeiluyot[0]["MAKAT_NESIA"].ToString());
-                         dShatYetziaFirst = DateTime.Parse(drPeiluyot[0]["shat_yetzia"].ToString());
-                         iMisparKnisaFirst = int.Parse(drPeiluyot[0]["mispar_knisa"].ToString());
-                     }
-                 }
+                 //    if (drPeiluyot.Length > 0)
+                 //    {
+                 //        iMakatFirst = int.Parse(drPeiluyot[0]["MAKAT_NESIA"].ToString());
+                 //        dShatYetziaFirst = DateTime.Parse(drPeiluyot[0]["shat_yetzia"].ToString());
+                 //        iMisparKnisaFirst = int.Parse(drPeiluyot[0]["mispar_knisa"].ToString());
+                 //    }
+                 //}
 
                //  drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,1)<>5");
                  drPeiluyot = null;
@@ -592,14 +592,14 @@ namespace KdsBatch
 
                          fErech =  objOved.objParameters.fMekademTosefetZmanLefiRechev * fHagdaraLetashlum;
                         
-                         if (drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "6" || drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 3) == "791")
-                         {
-                             if (iMakatFirst == iMakat && dShatYetziaFirst == dShatYetzia && iMisparKnisaFirst == iMisparKnisa)
-                             {
-                                 if (fHagdaraLetashlum < 7 && dShatYetzia < clGeneral.GetDateTimeFromStringHour("08:00", objOved.Taarich.Date))
-                                     bNoCalc = true;
-                             }
-                         }
+                         //if (drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "6" || drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 3) == "791")
+                         //{
+                         //    if (iMakatFirst == iMakat && dShatYetziaFirst == dShatYetzia && iMisparKnisaFirst == iMisparKnisa)
+                         //    {
+                         //        if (fHagdaraLetashlum < 7 && dShatYetzia < clGeneral.GetDateTimeFromStringHour("08:00", objOved.Taarich.Date))
+                         //            bNoCalc = true;
+                         //    }
+                         //}
                          if (drPeiluyot[J]["MAKAT_NESIA"].ToString().PadLeft(8, '0').Substring(0, 1) == "8" && drPeiluyot[J]["MAKAT_NESIA"].ToString().PadLeft(8, '0').Substring(6, 2) == "41")
                              bNoCalc = true;
                          
