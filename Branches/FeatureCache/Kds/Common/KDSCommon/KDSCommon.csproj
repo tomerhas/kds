@@ -54,12 +54,25 @@
     <Compile Include="DataModels\Meafyen.cs" />
     <Compile Include="DataModels\MeafyenimDM.cs" />
     <Compile Include="DataModels\PeilutDM.cs" />
+    <Compile Include="DataModels\Shinuyim\FlowShinuyResult.cs" />
+    <Compile Include="DataModels\Shinuyim\ShinuyInputData.cs" />
     <Compile Include="DataModels\SidurDM.cs" />
     <Compile Include="Enums\CardStatus.cs" />
+    <Compile Include="Enums\enDay.cs" />
     <Compile Include="Enums\enElementHachanatMechona.cs" />
+    <Compile Include="Enums\enEmployeeType.cs" />
     <Compile Include="Enums\enEventId.cs" />
+    <Compile Include="Enums\enMeafyen15.cs" />
+    <Compile Include="Enums\enMeafyen79.cs" />
     <Compile Include="Enums\enMeafyenOved56.cs" />
+    <Compile Include="Enums\enMeafyenSidur25.cs" />
+    <Compile Include="Enums\enMeafyenSidur35.cs" />
+    <Compile Include="Enums\enMeafyenSidur53.cs" />
+    <Compile Include="Enums\enMutaam.cs" />
     <Compile Include="Enums\enSectorAvoda.cs" />
+    <Compile Include="Enums\enShaonNochachut.cs" />
+    <Compile Include="Enums\enSugAvoda.cs" />
+    <Compile Include="Enums\enSugMishmeret.cs" />
     <Compile Include="Enums\enSugYom.cs" />
     <Compile Include="Enums\ErrorLevel.cs" />
     <Compile Include="Enums\ErrorSubLevel.cs" />
@@ -67,12 +80,15 @@
     <Compile Include="DataModels\Errors\ErrorInputData.cs" />
     <Compile Include="DataModels\OvedYomAvodaDetailsDM.cs" />
     <Compile Include="Enums\CachedItems.cs" />
+    <Compile Include="Enums\ShinuyTypes.cs" />
+    <Compile Include="Enums\SourceObj.cs" />
     <Compile Include="Enums\SubFlowManagerTypes.cs" />
     <Compile Include="Enums\MakatType.cs" />
     <Compile Include="Enums\ZmanHalbashaType.cs" />
     <Compile Include="Helpers\ArrayHelper.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\DualKey.cs" />
+    <Compile Include="Helpers\NumerichHelper.cs" />
     <Compile Include="Helpers\StaticBL.cs" />
     <Compile Include="Interfaces\Cache\ICacheBuilder.cs" />
     <Compile Include="Interfaces\DAL\IKavimDAL.cs" />
@@ -85,8 +101,8 @@
     <Compile Include="Interfaces\Errors\IErrorFlowManager.cs" />
     <Compile Include="Interfaces\Errors\ISubErrorFlowManager.cs" />
     <Compile Include="Interfaces\Logs\ILogger.cs" />
-    <Compile Include="Interfaces\Managers\FlowManagers\IDayErrorFlowManager.cs" />
-    <Compile Include="Interfaces\Managers\FlowManagers\ISidurErrorFlowManager.cs" />
+    <Compile Include="Interfaces\Errors\IDayErrorFlowManager.cs" />
+    <Compile Include="Interfaces\Errors\ISidurErrorFlowManager.cs" />
     <Compile Include="Interfaces\Managers\ICardErrorContainer.cs" />
     <Compile Include="Interfaces\Managers\IKavimManager.cs" />
     <Compile Include="Interfaces\Managers\IOvedManager.cs" />
@@ -95,6 +111,8 @@
     <Compile Include="Interfaces\Managers\ISidurManager.cs" />
     <Compile Include="Interfaces\Queue\IKDSAgedQueueParameters.cs" />
     <Compile Include="Interfaces\Cache\IKDSCacheManager.cs" />
+    <Compile Include="Interfaces\Shinuyim\IShinuy.cs" />
+    <Compile Include="Interfaces\Shinuyim\IShinuyimFlowManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UDT\Coll_Brerot_Mechdal_Meafyenim.cs" />
     <Compile Include="UDT\Coll_Chishuv_Chodesh.cs" />
@@ -127,6 +145,15 @@
     <Compile Include="UDT\Obj_Shgiot_Meusharot.cs" />
     <Compile Include="UDT\Obj_Sidurim_Ovdim.cs" />
     <Compile Include="UDT\Obj_Yamey_Avoda_Ovdim.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\Managers\FlowManagers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ObjectCompare\ObjectCompare.csproj">
+      <Project>{e4dbf1bd-f8e5-430f-bc25-8064954cebee}</Project>
+      <Name>ObjectCompare</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

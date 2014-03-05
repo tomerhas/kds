@@ -73,7 +73,7 @@ namespace KdsErrors
             {
                 //return result;
                 result = sMatzavim.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                               .Any(matzav => IsOvedMatzavExists(matzav, dtMatzavOved));
+                               .Any(matzav =>  _container.Resolve<IOvedManager>().IsOvedMatzavExists(matzav, dtMatzavOved));
             }
             catch (Exception ex)
             {
@@ -82,27 +82,6 @@ namespace KdsErrors
 
             return result;
         }
-
-        protected bool IsOvedMatzavExists(string sKodMatzav, DataTable dtMatzavOved)
-        {
-            DataRow[] dr;
-            bool bOvedMatzavExists;
-            
-            try
-            {
-                sKodMatzav = Append0ToNumber(sKodMatzav);
-
-                dr = dtMatzavOved.Select(string.Concat("kod_matzav='",sKodMatzav+"'"));
-                bOvedMatzavExists = dr.Length > 0;
-                return bOvedMatzavExists;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-     
 
         protected void AddLogErrorToDb(ErrorInputData input, Exception ex)
         {
@@ -135,30 +114,7 @@ namespace KdsErrors
             }
         }
 
-        private string Append0ToNumber(string val)
-        {
-
-            if(IsNumber(val))
-              val =  string.Format("{0:00}", int.Parse(val));
-            return val;
-        }
-
-        private bool IsNumber(string val)
-        {
-            int temp = 0;
-            return int.TryParse(val, out temp);
-        }
-
-        protected bool CheckShaaton(int isugYom, DateTime dTaarich, ErrorInputData input)
-        {
-            if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
-                return true;
-            else if (input.SugeyYamimMeyuchadim.Select("sug_yom=" + isugYom).Length > 0)
-            {
-                return (input.SugeyYamimMeyuchadim.Select("sug_yom=" + isugYom)[0]["Shbaton"].ToString() == "1") ? true : false;
-            }
-            else return false;
-        }
+   
 
         protected bool IsSidurHeadrut(SidurDM oSidur)
         {
@@ -188,36 +144,7 @@ namespace KdsErrors
         }
 
 
-        protected bool IsSidurNahagut(DataRow[] drSugSidur, SidurDM oSidur)
-        {
-            bool bSidurNahagut = false;
-
-            //הפונקציה תחזיר TRUE אם הסידור הוא סידור נהגות
-
-            try
-            {
-                if (oSidur.bSidurMyuhad)
-                {//סידור מיוחד
-                    bSidurNahagut = (oSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString());
-                }
-                else
-                {//סידור רגיל
-                    if (drSugSidur.Length > 0)
-                    {
-                        bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString());
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 0, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNahagut: " + ex.Message, null);
-                //_bSuccsess = false;
-            }
-
-            return bSidurNahagut;
-        }
-
+    
         protected bool IsSidurNihulTnua(DataRow[] drSugSidur, SidurDM oSidur)
         {
             bool bSidurNihulTnua = false;

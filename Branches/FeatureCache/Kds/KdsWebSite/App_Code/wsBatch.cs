@@ -70,16 +70,16 @@ public class wsBatch : System.Web.Services.WebService
         client.Close();
         return "OK";
     }
-    [WebMethod(EnableSession = true)]
-    public string CalcBatch(long lRequestNum, string sAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
-    {
-        DateTime dAdChodesh;
-        dAdChodesh = clGeneral.GetDateTimeFromStringMonthYear(1, sAdChodesh);
-        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
-        client.CalcBatch(lRequestNum, dAdChodesh, sMaamad, bRitzatTest, bRitzaGorefet);
-        client.Close();
-        return "OK";
-    }
+    //[WebMethod(EnableSession = true)]
+    //public string CalcBatch(long lRequestNum, string sAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
+    //{
+    //    DateTime dAdChodesh;
+    //    dAdChodesh = clGeneral.GetDateTimeFromStringMonthYear(1, sAdChodesh);
+    //    KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+    //    client.CalcBatch(lRequestNum, dAdChodesh, sMaamad, bRitzatTest, bRitzaGorefet);
+    //    client.Close();
+    //    return "OK";
+    //}
 
     [WebMethod(EnableSession = true)]
     public string TransferToHilan(long lRequestNum, long lRequestNumToTransfer)

@@ -10,6 +10,7 @@ using KDSCommon.Interfaces;
 using System.Data;
 using Microsoft.Practices.Unity;
 using KDSCommon.Helpers;
+using KDSCommon.Interfaces.Managers;
 
 
 
@@ -33,7 +34,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             var cacheManager =  ServiceLocator.Current.GetInstance<IKDSCacheManager>();
             //DataTable sugSidur =  cacheManager.GetCacheItem<DataTable>(CachedItems.SugeySidur);
             //DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(input.curSidur.iSugSidurRagil, input.CardDate, sugSidur);
-            isSidurNahagut = IsSidurNahagut(input.drSugSidur, input.curSidur);
+            isSidurNahagut = _container.Resolve<ISidurManager>().IsSidurNahagut(input.drSugSidur, input.curSidur);
 
             if (!isSidurNahagut) { isSidurNihulTnua = IsSidurNihulTnua(input.drSugSidur, input.curSidur); }
 

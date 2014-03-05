@@ -19,8 +19,8 @@ using System.Collections.Specialized;
 //using KdsBatch.InputData;
 //using KdsBatch;
 using KdsWorkFlow.Approvals;
-using KdsBatch.Entities;
-using KdsBatch.Errors;
+//using KdsBatch.Entities;
+//using KdsBatch.Errors;
 using System.IO;
 using System.Threading.Tasks;
 using KdsLibrary.Utils.Reports;
@@ -371,8 +371,8 @@ public partial class Modules_Test :Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        clCalculation objCalc = new clCalculation();
-        objCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
+        //clCalculation objCalc = new clCalculation();
+        //objCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
 
        //MainCalc objMainCalc = new MainCalc();
        //objMainCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
@@ -795,8 +795,8 @@ public partial class Modules_Test :Page
     }
     protected void ButtonShinuyim_Click(object sender, EventArgs e)
     {
-        EntitiesDal oDal = new EntitiesDal();
-        DataTable dt = oDal.getOvdimForShguim();
+        //EntitiesDal oDal = new EntitiesDal();
+       // DataTable dt = oDal.getOvdimForShguim();
        // string sMisparim = "77319";
        // DateTime dTaarich = DateTime.Parse("25/08/2011");
         // string[] iMisparim = sMisparim.Split(',');
@@ -806,91 +806,91 @@ public partial class Modules_Test :Page
          //oBatchManager.MainOvedErrors(26506, DateTime.Parse("15/02/2011"));
 
          clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start MainOvedErrors");
-         foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
-         {
-            // HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-            //  oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-             oBatchManager.MainOvedErrorsNew(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         }
+         //foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
+         //{
+         //   // HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         //   //  oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         //    oBatchManager.MainOvedErrorsNew(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         //}
          clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End MainOvedErrors");
 
          clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start HafelShguim");
-         foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
-         {
-             HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-           //  oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         }
+         //foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
+         //{
+         //    HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         //  //  oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         //}
          clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End HafelShguim");
     }
 
     private void HafelShguim(int mispar_ishi,DateTime taarich)
     {
-        EntitiesDal oDal = new EntitiesDal();
+        //EntitiesDal oDal = new EntitiesDal();
         CardStatus _CardStatus;
         bool bHaveShgiotLetzuga = false;
         string sArrKodShgia;
       //  DataTable dt = new DataTable();
         try
         {
-            GlobalData.InitGlobalData(taarich);
+           // GlobalData.InitGlobalData(taarich);
 
-            Day oDay = new Day(mispar_ishi, taarich,true);// new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
-            oDay.btchRequest = 0;
-            if (oDay.oOved.bOvedDetailsExists)
-            {
-                try
-                {
-                    foreach (Sidur oSidur in oDay.Sidurim)
-                    {
-                    //Parallel.ForEach(oDay.Sidurim, oSidur =>
-                    //{
-                        if (oSidur.bIsSidurLeBdika)
-                        {
-                            //Parallel.ForEach(oSidur.Peiluyot, oPeilut =>
-                            //{
-                            //    oPeilut.Run(oDay);
+            //Day oDay = new Day(mispar_ishi, taarich,true);// new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
+            //oDay.btchRequest = 0;
+            //if (oDay.oOved.bOvedDetailsExists)
+            //{
+            //    try
+            //    {
+            //        foreach (Sidur oSidur in oDay.Sidurim)
+            //        {
+            //        //Parallel.ForEach(oDay.Sidurim, oSidur =>
+            //        //{
+            //            if (oSidur.bIsSidurLeBdika)
+            //            {
+            //                //Parallel.ForEach(oSidur.Peiluyot, oPeilut =>
+            //                //{
+            //                //    oPeilut.Run(oDay);
 
-                            //});
-                            foreach (Peilut oPeilut in oSidur.Peiluyot)
-                            {
-                                oPeilut.Run(oDay);
-                            }
-                            oSidur.Run(oDay);
-                        }
-                    }//);
-                    oDay.Run(oDay);
-                }
-                catch (Exception ex)
-                {
-                    oDay.bSuccsess = false;
-                }
+            //                //});
+            //                foreach (Peilut oPeilut in oSidur.Peiluyot)
+            //                {
+            //                    oPeilut.Run(oDay);
+            //                }
+            //                oSidur.Run(oDay);
+            //            }
+            //        }//);
+            //        oDay.Run(oDay);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        oDay.bSuccsess = false;
+            //    }
                
-                oDal.DeleteErrorsFromTbShgiot(oDay.oOved.iMisparIshi, oDay.dCardDate);
+            //    oDal.DeleteErrorsFromTbShgiot(oDay.oOved.iMisparIshi, oDay.dCardDate);
 
-                sArrKodShgia = "";
-                oDay.RemoveShgiotMeusharotFromDt(ref sArrKodShgia, oDay);
-                if (sArrKodShgia.Length > 0)
-                {
-                    sArrKodShgia = sArrKodShgia.Substring(0, sArrKodShgia.Length - 1);
-                    bHaveShgiotLetzuga = oDal.CheckShgiotLetzuga(sArrKodShgia);
-                }
-                if (oDay.CardErrors.Count > 0)
-                {
-                    oDal.InsertErrorsToTbShgiot(oDay);
-                    _CardStatus = CardStatus.Error;
-                }
-                else
-                {
-                    _CardStatus = CardStatus.Valid;
-                }
-                if (_CardStatus.GetHashCode() != oDay.iStatus)
-                {
-                    oDal.UpdateCardStatus(oDay.oOved.iMisparIshi, oDay.dCardDate, _CardStatus, oDay.iUserId);
-                }
+            //    sArrKodShgia = "";
+            //    oDay.RemoveShgiotMeusharotFromDt(ref sArrKodShgia, oDay);
+            //    if (sArrKodShgia.Length > 0)
+            //    {
+            //        sArrKodShgia = sArrKodShgia.Substring(0, sArrKodShgia.Length - 1);
+            //        bHaveShgiotLetzuga = oDal.CheckShgiotLetzuga(sArrKodShgia);
+            //    }
+            //    if (oDay.CardErrors.Count > 0)
+            //    {
+            //        oDal.InsertErrorsToTbShgiot(oDay);
+            //        _CardStatus = CardStatus.Error;
+            //    }
+            //    else
+            //    {
+            //        _CardStatus = CardStatus.Valid;
+            //    }
+            //    if (_CardStatus.GetHashCode() != oDay.iStatus)
+            //    {
+            //        oDal.UpdateCardStatus(oDay.oOved.iMisparIshi, oDay.dCardDate, _CardStatus, oDay.iUserId);
+            //    }
 
-                oDal.UpdateRitzatShgiotDate(oDay.oOved.iMisparIshi, oDay.dCardDate, bHaveShgiotLetzuga);
-               // dt = oDay.CardErrors.ToDataTable();
-            }
+            //    oDal.UpdateRitzatShgiotDate(oDay.oOved.iMisparIshi, oDay.dCardDate, bHaveShgiotLetzuga);
+            //   // dt = oDay.CardErrors.ToDataTable();
+            //}
             // return oDay.bSuccsess;
         }
         catch (Exception ex)

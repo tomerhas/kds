@@ -34,7 +34,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                 if (!(string.IsNullOrEmpty(input.curSidur.sShatHatchala)))
                 {
                     //אם  יום שישי או ערב חג אבל  לא בשבתון
-                    if ((((input.curSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) || ((input.curSidur.sErevShishiChag == "1") && (input.curSidur.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString())))) && (iSidurPrevPitzulHafsaka > 0))
+                    if ((((input.curSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()) || ((input.curSidur.sErevShishiChag == "1") && (input.curSidur.sSidurDay != enDay.Shabat.GetHashCode().ToString())))) && (iSidurPrevPitzulHafsaka > 0))
                     {
                         //נקרא את שעת כניסת השבת                   
                         //אם ביום שהוא ערב שבת/חג יש סידור אחד שמסתיים לפני כניסת שבת ויש לו סימון בשדה פיצול והסידור העוקב אחריו התחיל אחרי כניסת השבת  - זו שגיאה. (מצב תקין הוא שהסידור העוקב התחיל לפני כניסת שבת וגלש/לא גלש לשבת). 

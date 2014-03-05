@@ -14,6 +14,7 @@ namespace KdsLibrary.KDSLogic.DAL
         public const string cProIsSidurChofef = "pkg_errors.pro_have_sidur_chofef";
         public const string cGetSidurDetails = "KDS_SIDUR_AVODA_PACK.GetSidurDetails";
         public const string cFunGetMeshechSidurForPeriod = "pkg_sidurim.fun_get_meshech_sidur_Toperiod";
+        public const string cProGetMeafyenySidurById = "pkg_sidurim.pro_get_meafyeny_sidur_by_id";
 
         public bool IsSidurChofef(int iMisparIshi, DateTime dCardDate, int iMisparSidur, DateTime dShatHatchala, DateTime dShatGmar, int iParamChafifa, DataTable dt)
         {
@@ -102,6 +103,25 @@ namespace KdsLibrary.KDSLogic.DAL
              {
                  throw ex;
              }
+        }
+
+        public DataTable GetMeafyeneySidurById(DateTime dCardDate, int iSidurNumber)
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
+                oDal.AddParameter("p_sidur_number", ParameterType.ntOracleInteger, iSidurNumber, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(cProGetMeafyenySidurById, ref dt);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }

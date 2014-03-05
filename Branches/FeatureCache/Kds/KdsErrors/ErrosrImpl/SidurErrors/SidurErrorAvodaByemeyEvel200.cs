@@ -8,6 +8,7 @@ using System.Data;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
 using KDSCommon.Interfaces.Managers;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -30,29 +31,29 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             var ovedManagaer = _container.Resolve<IOvedManager>(); 
             if (input.curSidur.bSidurMyuhad)
             {//סידור מיוחד
-                if (!string.IsNullOrEmpty(input.curSidur.sHeadrutTypeKod) && input.curSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString()
+                if (!string.IsNullOrEmpty(input.curSidur.sHeadrutTypeKod) && input.curSidur.sHeadrutTypeKod == enMeafyenSidur53.enEvel.GetHashCode().ToString()
                     && (input.curSidur.iLoLetashlum == 0 || (input.curSidur.iLoLetashlum == 1 && input.curSidur.iKodSibaLoLetashlum == 22)))
                 {
                     dTaarichKodem = input.CardDate.AddDays(-1);
-                    if (CheckShaaton(input.iSugYom, dTaarichKodem, input) ||
+                    if (DateHelper.CheckShaaton(input.iSugYom, dTaarichKodem, input.SugeyYamimMeyuchadim) ||
                         dTaarichKodem.DayOfWeek == DayOfWeek.Friday)
                     {
 
                         dtSidurim = ovedManagaer.GetOvedDetails(input.iMisparIshi, dTaarichKodem);
-                        if (CheckAnozerSidurExsits(input) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString(), input.curSidur.iMisparSidur))
+                        if (CheckAnozerSidurExsits(input) && CheckSidurHeadrutExsits(dtSidurim, enMeafyenSidur53.enEvel.GetHashCode().ToString(), input.curSidur.iMisparSidur))
                             bError = true;
                     }
 
                     if (!bError)
                     {
-                        if (CheckShaaton(input.iSugYom, dTaarichKodem, input) ||
+                        if (DateHelper.CheckShaaton(input.iSugYom, dTaarichKodem, input.SugeyYamimMeyuchadim) ||
                             (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
                             (input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
                         {
                             dTaarichKodem = dTaarichKodem.AddDays(-1);
 
                             dtSidurim = ovedManagaer.GetOvedDetails(input.iMisparIshi, dTaarichKodem);
-                            if (CheckAnozerSidurExsits(input) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString(), input.curSidur.iMisparSidur))
+                            if (CheckAnozerSidurExsits(input) && CheckSidurHeadrutExsits(dtSidurim, enMeafyenSidur53.enEvel.GetHashCode().ToString(), input.curSidur.iMisparSidur))
                                 bError = true;
                         }
 
@@ -63,7 +64,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                                 dTaarichKodem = dTaarichKodem.AddDays(-1);
 
                             dtSidurim = ovedManagaer.GetOvedDetails(input.iMisparIshi, dTaarichKodem);
-                            if (CheckAnozerSidurExsits(input) && CheckSidurHeadrutExsits(dtSidurim, clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString(), input.curSidur.iMisparSidur))
+                            if (CheckAnozerSidurExsits(input) && CheckSidurHeadrutExsits(dtSidurim, enMeafyenSidur53.enEvel.GetHashCode().ToString(), input.curSidur.iMisparSidur))
                                 bError = true;
                         }
 

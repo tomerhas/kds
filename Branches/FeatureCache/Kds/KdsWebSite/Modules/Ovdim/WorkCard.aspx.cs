@@ -609,13 +609,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      {
          string sToolTip = "";
          if (oBatchManager.oMeafyeneyOved.IsMeafyenExist(3))
-             sToolTip = "שעת התחלה מותרת (3): " + clGeneral.ConvertToValidHour(oBatchManager.oMeafyeneyOved.GetMeafyen(3).Value) + "\n";
+             sToolTip = "שעת התחלה מותרת (3): " + DateHelper.ConvertToValidHour(oBatchManager.oMeafyeneyOved.GetMeafyen(3).Value) + "\n";
          else
              sToolTip = "שעת התחלה מותרת (3): 0 \n";
 
         
          if (oBatchManager.oMeafyeneyOved.IsMeafyenExist(4))
-             sToolTip = sToolTip + "שעת גמר מותרת (4): " + clGeneral.ConvertToValidHour(oBatchManager.oMeafyeneyOved.GetMeafyen(4).Value);
+             sToolTip = sToolTip + "שעת גמר מותרת (4): " + DateHelper.ConvertToValidHour(oBatchManager.oMeafyeneyOved.GetMeafyen(4).Value);
          else
              sToolTip = sToolTip + "שעת גמר מותרת (4): 0 ";
 
@@ -1735,12 +1735,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
              //
              bHamaraAllowed = (((oBatchManager.htFullEmployeeDetails != null) && (oBatchManager.htFullEmployeeDetails.Count>0)) && 
-                 (oBatchManager.oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEgged.GetHashCode())
+                 (oBatchManager.oOvedYomAvodaDetails.iKodHevra == enEmployeeType.enEgged.GetHashCode())
                  //&& (oBatchManager.oMeafyeneyOved.Meafyen31Exists)
                  && (
-                     (oBatchManager.oOvedYomAvodaDetails.sShabaton == "1") || (oBatchManager.oOvedYomAvodaDetails.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString())
+                     (oBatchManager.oOvedYomAvodaDetails.sShabaton == "1") || (oBatchManager.oOvedYomAvodaDetails.sSidurDay == enDay.Shabat.GetHashCode().ToString())
                      || ((oBatchManager.oOvedYomAvodaDetails.sErevShishiChag.Equals("1")) && (SD.bAtLeastOneSidurInShabat))
-                     || ((oBatchManager.oOvedYomAvodaDetails.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) && (SD.bAtLeastOneSidurInShabat))
+                     || ((oBatchManager.oOvedYomAvodaDetails.sSidurDay == enDay.Shishi.GetHashCode().ToString()) && (SD.bAtLeastOneSidurInShabat))
                     )
                  //&& ((iKodMaamad == clGeneral.enHrMaamad.PermanentSalariedEmployee.GetHashCode())
                  //    || (iKodMaamad == clGeneral.enHrMaamad.SalariedEmployee12.GetHashCode())
@@ -1770,17 +1770,17 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
        
         //אין לאפשר עדכון עבור עובד שאינו מאגד (Ovdim.Kod_Hevra=580 ) מאגד תעבורה (Ovdim.Kod_Hevra=4895)
         //2. אסור לעדכן ביום שבתון/שבת/ערב חג.
-        if ((oBatchManager.oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode()) ||
-            (oBatchManager.oOvedYomAvodaDetails.sShabaton == "1") || (iSidurDay == clGeneral.enDay.Shabat.GetHashCode()))
+        if ((oBatchManager.oOvedYomAvodaDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode()) ||
+            (oBatchManager.oOvedYomAvodaDetails.sShabaton == "1") || (iSidurDay == enDay.Shabat.GetHashCode()))
             return false;
              
         //. עובד 5 ימים - מותר בימים  א-ה כולל ערבי חג בימים אלה. זיהוי עובד 5 ימים לפי לפי ערך 51/52 במאפיין 56 במאפייני עובדים.
-        if (((iSidurDay == clGeneral.enDay.Shabat.GetHashCode()) || (oBatchManager.oOvedYomAvodaDetails.sShabaton == "1") || ((iSidurDay == clGeneral.enDay.Shishi.GetHashCode())))
+        if (((iSidurDay == enDay.Shabat.GetHashCode()) || (oBatchManager.oOvedYomAvodaDetails.sShabaton == "1") || ((iSidurDay == enDay.Shishi.GetHashCode())))
             && ((oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode()) || (oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
             return false;
 
         //. עובד 6 ימים - מותר בימים  א-ו כולל ערבי חג בימים אלה. זיהוי עובד 6 ימים לפי לפי ערך 61/62 במאפיין 56 במאפייני עובדים
-        if ((iSidurDay== clGeneral.enDay.Shabat.GetHashCode()) || (oBatchManager.oOvedYomAvodaDetails.sShabaton == "1"))
+        if ((iSidurDay== enDay.Shabat.GetHashCode()) || (oBatchManager.oOvedYomAvodaDetails.sShabaton == "1"))
             if ((((oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()) && (oBatchManager.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek2.GetHashCode()))))
                 return false;
      

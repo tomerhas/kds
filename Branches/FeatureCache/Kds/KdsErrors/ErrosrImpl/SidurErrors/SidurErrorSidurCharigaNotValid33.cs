@@ -6,6 +6,7 @@ using KDSCommon.Enums;
 using KDSCommon.DataModels.Errors;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -27,7 +28,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                //בדיקה ברמת סידור
                //השגיאה רלוונטית רק עבור עובד שיש לו מאפייני עבודה מתאימים ליום העבודה:
                //יום חול - מאפיינים 3, 4, שישי/ערב חג -  מאפיינים 5, 6 שבת/שבתון -  מאפיינים 7, 8
-           if (CheckShaaton(input.iSugYom, input.CardDate, input))
+           if (DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim))
                {
                    if (input.oMeafyeneyOved.IsMeafyenExist(7)  && input.oMeafyeneyOved.IsMeafyenExist(8) )
                    {
@@ -37,7 +38,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
 
                    }
                }
-               else if ((input.curSidur.sErevShishiChag == "1") || (input.curSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+               else if ((input.curSidur.sErevShishiChag == "1") || (input.curSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()))
                {
                    if (input.oMeafyeneyOved.IsMeafyenExist(5) && input.oMeafyeneyOved.IsMeafyenExist(6) )
                    {

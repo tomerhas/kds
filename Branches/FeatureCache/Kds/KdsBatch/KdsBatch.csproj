@@ -110,53 +110,16 @@
     <Compile Include="CalcParallel\MainCalc.cs" />
     <Compile Include="CalcParallel\Meafyen.cs" />
     <Compile Include="CalcParallel\Oved.cs" />
-    <Compile Include="Calculation\clCalcData.cs" />
-    <Compile Include="Calculation\clCalcDay.cs" />
-    <Compile Include="Calculation\clCalcGeneral.cs" />
-    <Compile Include="Calculation\clCalcMonth.cs" />
-    <Compile Include="Calculation\clCalcPeilut.cs" />
-    <Compile Include="Calculation\clCalcSidur.cs" />
-    <Compile Include="Calculation\clCalculation.cs" />
-    <Compile Include="Calculation\Ovdim.cs" />
     <Compile Include="clBatchFactory.cs" />
     <Compile Include="clBatchManager.cs" />
     <Compile Include="clMatzavOvdim.cs" />
-    <Compile Include="clPirteyOved.cs" />
+    <Compile Include="clPirteyOved.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="clTkinutMakatim.cs" />
-    <Compile Include="Entities\CardError.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entities\Day.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entities\EntitiesDal.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entities\ErrorItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entities\Oved.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entities\Peilut.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Entities\Sidur.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Errors\BasicChecker.cs" />
-    <Compile Include="Errors\BasicError.cs" />
-    <Compile Include="Errors\DayErrors.cs" />
-    <Compile Include="Errors\FactoryChecker.cs" />
-    <Compile Include="Errors\GlobalData.cs" />
-    <Compile Include="Errors\GlobalEnum.cs" />
-    <Compile Include="Errors\clCardErrors.cs" />
     <Compile Include="clDefinitions.cs" />
     <Compile Include="clMeafyenyOved.cs" />
     <Compile Include="clParameters.cs" />
-    <Compile Include="Errors\MainErrors.cs" />
-    <Compile Include="Errors\PeilutErrors.cs" />
-    <Compile Include="Errors\SidurErrors.cs" />
     <Compile Include="History\BaseTask.cs" />
     <Compile Include="History\Builder.cs" />
     <Compile Include="History\ManagerTask.cs" />
@@ -325,6 +288,10 @@
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
       <Project>{b3e759ec-2a7b-4c38-9013-730c3a628aa8}</Project>
       <Name>KdsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectCompare\ObjectCompare.csproj">
+      <Project>{e4dbf1bd-f8e5-430f-bc25-8064954cebee}</Project>
+      <Name>ObjectCompare</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

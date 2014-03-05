@@ -28,9 +28,9 @@ namespace KdsService
         [OperationContract]
         void InsetRecordsToHistory(long lRequestNum);
 
-        [OperationContract]
-        void CalcBatch(long lRequestNum, DateTime dAdChodesh, string sMaamad, 
-            bool bRitzatTest, bool bRitzaGorefet);
+        //[OperationContract]
+        //void CalcBatch(long lRequestNum, DateTime dAdChodesh, string sMaamad, 
+        //    bool bRitzatTest, bool bRitzaGorefet);
 
         [OperationContract]
         void TransferToHilan(long lRequestNum, long lRequestNumToTransfer);

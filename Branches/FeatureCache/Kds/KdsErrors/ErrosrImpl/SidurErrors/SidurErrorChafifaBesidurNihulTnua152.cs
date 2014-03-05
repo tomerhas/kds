@@ -65,15 +65,15 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                     bSidurNihulTnua = (oSidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString());
                     if (!bSidurNihulTnua)
                     {
-                        bSidurNihulTnua = (oSidur.sSugAvoda == clGeneral.enSugAvoda.Lershut.GetHashCode().ToString());
+                        bSidurNihulTnua = (oSidur.sSugAvoda == enSugAvoda.Lershut.GetHashCode().ToString());
                     }
                     if (!bSidurNihulTnua)
                     {
-                        bSidurNihulTnua = (oSidur.sSugAvoda == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString());
+                        bSidurNihulTnua = (oSidur.sSugAvoda == enSugAvoda.Kupai.GetHashCode().ToString());
                     }
                     if (!bSidurNihulTnua)
                     {
-                        bSidurNihulTnua = (oSidur.sSugAvoda == clGeneral.enSugAvoda.Grira.GetHashCode().ToString());
+                        bSidurNihulTnua = (oSidur.sSugAvoda == enSugAvoda.Grira.GetHashCode().ToString());
                     }
                 }
                 else
@@ -83,15 +83,15 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                         bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString());
                         if (!bSidurNihulTnua)
                         {
-                            bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Lershut.GetHashCode().ToString());
+                            bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == enSugAvoda.Lershut.GetHashCode().ToString());
                         }
                         if (!bSidurNihulTnua)
                         {
-                            bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString());
+                            bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == enSugAvoda.Kupai.GetHashCode().ToString());
                         }
                         if (!bSidurNihulTnua)
                         {
-                            bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Grira.GetHashCode().ToString());
+                            bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == enSugAvoda.Grira.GetHashCode().ToString());
                         }
                     }
                 }

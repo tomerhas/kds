@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using KdsBatch.Errors;
+//using KdsBatch.Errors;
 using System.Web;
 using KdsLibrary;
 using DalOraInfra.DAL;

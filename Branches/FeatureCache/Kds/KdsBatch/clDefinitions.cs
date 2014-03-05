@@ -106,7 +106,7 @@ namespace KdsBatch
        
         public static bool CheckShaaton(DataTable dtSugeyYamimMeyuchadim, int iSugYom, DateTime dTaarich)
         {
-            if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
+            if ((dTaarich.DayOfWeek.GetHashCode() + 1) == enDay.Shabat.GetHashCode())
                 return true;
             else if (dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom).Length > 0)
             {
@@ -648,75 +648,9 @@ namespace KdsBatch
             }
         }
 
-        public static float GetSidurTimeInMinuts(SidurDM oSidur)
-        {
-            float fSidurTime = 0;
-            try
-            {   //מחזיר את זמן הסידור בדקות
+     
 
-                if ((!(string.IsNullOrEmpty(oSidur.sShatGmar))) && (!(string.IsNullOrEmpty(oSidur.sShatHatchala))))
-                {
-                    fSidurTime = (float)(oSidur.dFullShatGmar - oSidur.dFullShatHatchala).TotalMinutes;
-                }
-                return fSidurTime;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static int GetSugMishmeret(int iMisparIshi,DateTime Taarich,int  iSugYom,DateTime dShatHatchalaSidur,DateTime dShatGmarSidur,clParametersDM oParameters)
-        {
-            int iSugMishmeret;
-            DateTime dTemp1,dTemp2;
-            try { 
-                      iSugMishmeret = clGeneral.enSugMishmeret.Boker.GetHashCode();
-                      if (iSugYom== 1 || iSugYom == 3 || iSugYom == 4 || iSugYom == 5)
-                      {
-                  
-                          dTemp1 = oParameters.dMinStartMishmeretMafilimChol;
-                          dTemp2 = oParameters.dMaxStartMishmeretMafilimChol;
-                          //-	אם סוג יום [שליפת סוג יום לשליפת מכסה יומית (תאריך, מ.א.)] הוא אחד מתוך 01 או 03 או 04 או 05 וגם [שעת התחלה ראשונה] >= 11:00 וקטן מ- 17:00 וגם [שעת גמר אחרונה] > 18 אזי [סוג משמרת] = צהריים 
-                          if (dShatHatchalaSidur >= dTemp1 && dShatHatchalaSidur < dTemp2)
-                          {
-                              if (dShatGmarSidur >oParameters.dMinEndMishmeretMafilimChol)
-                              {
-                                  iSugMishmeret = clGeneral.enSugMishmeret.Tzaharim.GetHashCode();
-                              }
-                          }
-                          dTemp1 =oParameters.dMinEndMishmeretMafilimLilaChol1;
-                          dTemp2 = oParameters.dMinStartMishmeretMafilimLilaChol;
-                          //-	אם סוג יום [שליפת סוג יום לשליפת מכסה יומית (תאריך, מ.א.)] הוא אחד מתוך 01 או 03 או 04 או 05 וגם [שעת התחלה ראשונה] >= 17:00 וגם [שעת גמר אחרונה] > 21:00 אזי [סוג משמרת] = לילה
-                          if (dShatHatchalaSidur > dTemp2 && dShatGmarSidur > dTemp1)
-                          {
-                              iSugMishmeret = clGeneral.enSugMishmeret.Liyla.GetHashCode();
-                           }
-                      }
-                      //-	אם סוג יום [שליפת סוג יום לשליפת מכסה יומית (תאריך, מ.א.)] הוא אחד מתוך 11 או 13 או 14 או 15 או 16 או 17 או 18 וגם [שעת גמר אחרונה] > 13:00 אזי [סוג משמרת] = צהריים
-                      if (iSugYom == 11 || iSugYom == 13 || (iSugYom >= 14 && iSugYom <= 15))
-                      {
-                          dTemp1 = oParameters.dMinEndMishmeretMafilimShishi;
-                          if (dShatGmarSidur >= dTemp1)
-                          {
-                              iSugMishmeret = clGeneral.enSugMishmeret.Tzaharim.GetHashCode();
-                          }
-                      }
-
-                      dTemp1 = oParameters.dMinEndMishmeretMafilimLilaChol2;
-                      //-	אם סוג יום [שליפת סוג יום לשליפת מכסה יומית (תאריך, מ.א.)] הוא אחד מתוך 01 או 03 או 04 או 05 וגם [שעת גמר אחרונה] >= 23:15 אזי [סוג משמרת] = לילה
-                      if (dShatGmarSidur >= dTemp1)
-                      {
-                          iSugMishmeret = clGeneral.enSugMishmeret.Liyla.GetHashCode();
-                      }
-                 
-                return iSugMishmeret;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+      
 
         public static float GetTimeBetweenTwoSidurimInMinuts(SidurDM oPrevSidur, SidurDM oSidur)
         {
@@ -1079,8 +1013,8 @@ namespace KdsBatch
             bool bExceptionAllowed = false;
             
             //ברמת הסידור - רק לסידורים מיוחדים שיש להם ערך 1 (זכאי) במאפיין 35 (זכאות לחריגה משעות כניסה ויציאה
-            if ((oSidur.bSidurMyuhad) && (oSidur.sZakaiLeChariga == clGeneral.enMeafyenSidur35.enCharigaZakai.GetHashCode().ToString())
-                && ((oSidur.sShaonNochachut == clGeneral.enShaonNochachut.enMinhal.GetHashCode().ToString())))
+            if ((oSidur.bSidurMyuhad) && (oSidur.sZakaiLeChariga == enMeafyenSidur35.enCharigaZakai.GetHashCode().ToString())
+                && ((oSidur.sShaonNochachut == enShaonNochachut.enMinhal.GetHashCode().ToString())))
             {
                 /*
                 ג. בדיקת מאפייני העובד (רלוונטי רק לסידור שנוסף בכע) - מותר לעדכן את שדה חריגה במקרים הבאים: 
@@ -1097,8 +1031,8 @@ namespace KdsBatch
                  */
                 //אם זה ערב חג או יום חול וגם אין לו מאפייני עובד 3 ו-4
                 if (((oSidur.sErevShishiChag.Equals("1")) ||
-                    ((oSidur.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString()) &&
-                    (oSidur.sSidurDay != clGeneral.enDay.Shishi.GetHashCode().ToString()) &&
+                    ((oSidur.sSidurDay != enDay.Shabat.GetHashCode().ToString()) &&
+                    (oSidur.sSidurDay != enDay.Shishi.GetHashCode().ToString()) &&
                     (!oSidur.sErevShishiChag.Equals("1")) && (!oSidur.sShabaton.Equals("1"))))
 
                     && ((!oMeafyenyOved.IsMeafyenExist(4)) && (!oMeafyenyOved.IsMeafyenExist(3)))
@@ -1110,7 +1044,7 @@ namespace KdsBatch
                 else
                 {
                     //אם זה יום שישי ואין לו מאפיינים 5 ו-6
-                    if (((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+                    if (((oSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()))
                         && ((!oMeafyenyOved.IsMeafyenExist(5)) && (!oMeafyenyOved.IsMeafyenExist(6))))
                     {
                         sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
@@ -1119,7 +1053,7 @@ namespace KdsBatch
                     else
                     {
                         //אם יום שבת או שבתון ואין לו מאפיין 7 ו-8
-                        if (((oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
+                        if (((oSidur.sSidurDay == enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
                              && ((!oMeafyenyOved.IsMeafyenExist(7)) && (!oMeafyenyOved.IsMeafyenExist(8))))
                         {
                             sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
@@ -1132,7 +1066,7 @@ namespace KdsBatch
 
                  //    //יום שישי או ערב חג
                  //    //ביום שישי/ערב חג לעובד ללא מאפיינים 5 ו- 6 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=5   (עבודה בשישי ללא הרשאה).
-                 //    if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+                 //    if ((oSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()))
                  //    {
                  //        if ((!oBatchManager.oMeafyeneyOved.IsMeafyenExist(5)) && (!oBatchManager.oMeafyeneyOved.IsMeafyenExist(6)) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtFridayWithoutPremission.GetHashCode()))
                  //        {
@@ -1141,7 +1075,7 @@ namespace KdsBatch
                  //        }
                  //    }
                  ////ביום שבת/שבתון לעובד ללא מאפיינים 7 ו- 8 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=4  (עבודה בשבתון ללא הרשאה).
-                 //if ((oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
+                 //if ((oSidur.sSidurDay == enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
                  //{
                  //    if ((!MeafyenyOved.Meafyen7Exists) && (!MeafyenyOved.IsMeafyenExist(8)) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtSaturdayWithoutPremission.GetHashCode()))
                  //    {
@@ -1167,7 +1101,7 @@ namespace KdsBatch
                 //נקרא את מאפייני שעת גמר ושעת התחלה לתשלום           
                 //ברמת הסידור - רק לסידורים מיוחדים שיש להם ערך 1 (זכאי) במאפיין 35 (זכאות לחריגה משעות כניסה ויציאה
 
-                if ((oSidur.bSidurMyuhad) && (oSidur.sZakaiLeChariga == clGeneral.enMeafyenSidur35.enCharigaZakai.GetHashCode().ToString()))
+                if ((oSidur.bSidurMyuhad) && (oSidur.sZakaiLeChariga == enMeafyenSidur35.enCharigaZakai.GetHashCode().ToString()))
                 {
                     /* ברמת העובד -
                        א. עובד עם מאפיינים מתאימים ליום העבודה- 
@@ -1257,7 +1191,7 @@ namespace KdsBatch
                 bHashlamaAllowed = false;
             
             //לא נאפשר השלמה לעובד מאגד תעבורה
-            if (OvedYomAvoda.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())            
+            if (OvedYomAvoda.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode())            
                 bHashlamaAllowed = false;            
             //סידור מיוחד - לסידור מאפיין 40        
             if (oSidur.bSidurMyuhad)
@@ -1340,6 +1274,24 @@ namespace KdsBatch
             TimeSpan ts = dToDate - dFromDate;
             int iDays = ts.Days;
             return iDays;
+        }
+
+        public static float GetSidurTimeInMinuts(SidurDM oSidur)
+        {
+            float fSidurTime = 0;
+            try
+            {   //מחזיר את זמן הסידור בדקות
+
+                if ((!(string.IsNullOrEmpty(oSidur.sShatGmar))) && (!(string.IsNullOrEmpty(oSidur.sShatHatchala))))
+                {
+                    fSidurTime = (float)(oSidur.dFullShatGmar - oSidur.dFullShatHatchala).TotalMinutes;
+                }
+                return fSidurTime;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
   }
 }

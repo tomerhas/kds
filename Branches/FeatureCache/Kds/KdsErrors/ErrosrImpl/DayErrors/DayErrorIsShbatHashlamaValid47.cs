@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using KDSCommon.DataModels.Errors;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 using Microsoft.Practices.Unity;
 
 namespace KdsErrors.ErrosrImpl.DayErrors
@@ -17,7 +18,7 @@ namespace KdsErrors.ErrosrImpl.DayErrors
         public override bool InternalIsCorrect(ErrorInputData input)
         {
 
-            if (input.OvedDetails.sHashlamaLeyom == "1" && CheckShaaton(input.iSugYom, input.CardDate,input))
+            if (input.OvedDetails.sHashlamaLeyom == "1" && DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim))
             {
                 AddNewError(input);
                 return false;

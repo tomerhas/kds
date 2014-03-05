@@ -16,7 +16,7 @@ namespace KDSCommon.UDT
     using System.Xml.Serialization;
     using System.Xml.Schema;
     
-    
+    [Serializable]
     public class OBJ_YAMEY_AVODA_OVDIM : INullable, IOracleCustomType, IXmlSerializable {
         
         private bool m_IsNull;

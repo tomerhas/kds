@@ -10,6 +10,7 @@ namespace KDSCommon.Interfaces.DAL
     {
         bool IsSidurChofef(int iMisparIshi, DateTime dCardDate, int iMisparSidur, DateTime dShatHatchala, DateTime dShatGmar, int iParamChafifa, DataTable dt);
         float GetMeshechSidur(int iMisparIshi, int iMisparSidur, DateTime taarich_me, DateTime taarich_ad);
+        DataTable GetMeafyeneySidurById(DateTime dCardDate, int iSidurNumber);
        // DataSet GetSidurAndPeiluyotFromTnua(int iMisparSidur, DateTime dDate, int? iKnisaVisut, out int iResult);
     }
 }

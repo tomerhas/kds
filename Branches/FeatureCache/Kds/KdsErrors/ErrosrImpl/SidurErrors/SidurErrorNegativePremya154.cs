@@ -31,7 +31,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
            
             if (input.curSidur.htPeilut.Count > 0)
             {
-                bSidurNahagut = IsSidurNahagut(input.drSugSidur, input.curSidur);
+                bSidurNahagut =  _container.Resolve<ISidurManager>().IsSidurNahagut(input.drSugSidur, input.curSidur);
                 if (bSidurNahagut)
                 {
                     oPeilutAchrona = GetLastPeilutNoElementLeyedia(input.curSidur);

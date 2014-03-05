@@ -18,7 +18,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
         }
         public override bool InternalIsCorrect(ErrorInputData input)
         {
-            if ((input.curSidur.bSidurMyuhad) && (input.curSidur.sSugAvoda == clGeneral.enSugAvoda.Netzer.GetHashCode().ToString()) && (!input.oMeafyeneyOved.IsMeafyenExist(64)))
+            if ((input.curSidur.bSidurMyuhad) && (input.curSidur.sSugAvoda == enSugAvoda.Netzer.GetHashCode().ToString()) && (!input.oMeafyeneyOved.IsMeafyenExist(64)))
             {
                 AddNewError(input);
                 return false;

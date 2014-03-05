@@ -51,7 +51,6 @@ Module KdsSchedulerProc
 
     Sub Refresh_N_Sdrn()
         Dim oKDs As KdsDataImport.ClKds = New KdsDataImport.ClKds
-        Dim oCalc As KdsBatch.clCalculation = New KdsBatch.clCalculation
         Dim oCalcul As KdsBatch.MainCalc = New KdsBatch.MainCalc
         Dim oDal As clDal
         'Dim oWsBatch As wsBatch

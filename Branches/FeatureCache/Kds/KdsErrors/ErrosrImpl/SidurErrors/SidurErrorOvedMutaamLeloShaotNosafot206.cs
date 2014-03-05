@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using KDSCommon.DataModels.Errors;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 using KDSCommon.Interfaces;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
@@ -41,11 +42,11 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                     if (iIsurShaotNosafot > 0)
                     {
                         if ((input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) &&
-                            (CheckShaaton(input.iSugYom, input.CardDate, input) || input.curSidur.sSidurDay ==  "6"))
+                            (DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim) || input.curSidur.sSidurDay ==  "6"))
                             isValid = false;
 
                         if ((input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek2.GetHashCode()) &&
-                                CheckShaaton(input.iSugYom, input.CardDate, input))
+                                DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim))
                             isValid = false;
                     }
                 }

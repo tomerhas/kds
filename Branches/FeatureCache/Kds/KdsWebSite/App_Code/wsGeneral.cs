@@ -2454,7 +2454,7 @@ public class wsGeneral : System.Web.Services.WebService
             sXML.Append(string.Concat("<PITZUL_HAFSAKA>", "0", "</PITZUL_HAFSAKA>"));
 
             //רק לסידורים מיוחדים שיש להם ערך 1 (זכאי) במאפיין 35 (זכאות לחריגה משעות כניסה ויציאה
-            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenSidur35.enCharigaZakai.GetHashCode().ToString() + " and erech='1')");
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + enMeafyenSidur35.enCharigaZakai.GetHashCode().ToString() + " and erech='1')");
             if (dr.Length > 0)            
                 sXML.Append(string.Concat("<CHARIGA>", "1", "</CHARIGA>"));
             else
@@ -2473,9 +2473,9 @@ public class wsGeneral : System.Web.Services.WebService
                 dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen54.GetHashCode().ToString() + " and erech='"+ clGeneral.enMeafyenSidur54.enAdministrator.GetHashCode().ToString()+ "')");
                 if (dr.Length > 0)
                 {
-                    if (((_Sidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) && (!_MeafyenyOved.IsMeafyenExist(5)) && (!_MeafyenyOved.IsMeafyenExist(6)))
-                        || (((_Sidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (OvedYomAvoda.sShabaton.Equals("1"))) && ((!_MeafyenyOved.IsMeafyenExist(7)) && (!_MeafyenyOved.IsMeafyenExist(8))))
-                        || (((OvedYomAvoda.sErevShishiChag.Equals("1") || ((_Sidur.sSidurDay != clGeneral.enDay.Shishi.GetHashCode().ToString()) && (_Sidur.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString())))) && ((!_MeafyenyOved.IsMeafyenExist(4)) && (!_MeafyenyOved.IsMeafyenExist(5)))))
+                    if (((_Sidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()) && (!_MeafyenyOved.IsMeafyenExist(5)) && (!_MeafyenyOved.IsMeafyenExist(6)))
+                        || (((_Sidur.sSidurDay == enDay.Shabat.GetHashCode().ToString()) || (OvedYomAvoda.sShabaton.Equals("1"))) && ((!_MeafyenyOved.IsMeafyenExist(7)) && (!_MeafyenyOved.IsMeafyenExist(8))))
+                        || (((OvedYomAvoda.sErevShishiChag.Equals("1") || ((_Sidur.sSidurDay != enDay.Shishi.GetHashCode().ToString()) && (_Sidur.sSidurDay != enDay.Shabat.GetHashCode().ToString())))) && ((!_MeafyenyOved.IsMeafyenExist(4)) && (!_MeafyenyOved.IsMeafyenExist(5)))))
 
                         sXML.Append(string.Concat("<CHARIGA>", "1", "</CHARIGA>"));
                     else
@@ -2490,7 +2490,7 @@ public class wsGeneral : System.Web.Services.WebService
             //ניתן לעדכון- סידור מיוחד עם ערך 1 במאפיין  - 25.
             dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen25.GetHashCode().ToString() + " and erech='1')");
             if (dr.Length > 0)
-                if ((OvedYomAvoda.iKodHevra) != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                if ((OvedYomAvoda.iKodHevra) != enEmployeeType.enEggedTaavora.GetHashCode())
                     sXML.Append(string.Concat("<OUT_MICHSA>", "1", "</OUT_MICHSA>"));
                 else
                     sXML.Append(string.Concat("<OUT_MICHSA>", "0", "</OUT_MICHSA>"));
@@ -2516,7 +2516,7 @@ public class wsGeneral : System.Web.Services.WebService
             //השלמה 
             //לסידור מאפיין 40 (לפי מספר סידור או סוג סידור) - ניתן לחסום את השדה אם אין מאפיין
             dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen40.GetHashCode().ToString() + ")");
-            if ((dr.Length > 0) && ((OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())))
+            if ((dr.Length > 0) && ((OvedYomAvoda.iKodHevra != enEmployeeType.enEggedTaavora.GetHashCode())))
                 sXML.Append(string.Concat("<HASHLAMA>", "1", "</HASHLAMA>"));
             else
                 sXML.Append(string.Concat("<HASHLAMA>", "0", "</HASHLAMA>"));
@@ -2536,7 +2536,8 @@ public class wsGeneral : System.Web.Services.WebService
         //Get Sidur from session
         _Sidur = (SidurDM)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
         //Update sidurim cash with new sidur
-        dt = clWorkCard.GetMeafyeneySidurById(dCardDate,iSidurNumber);
+        var sidurManager = ServiceLocator.Current.GetInstance<ISidurDAL>();
+        dt = sidurManager.GetMeafyeneySidurById(dCardDate,iSidurNumber);
         if (dt.Rows.Count > 0)
         {
             _Sidur.oSidurStatus = SidurDM.enSidurStatus.enNew;

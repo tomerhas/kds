@@ -5,6 +5,7 @@ using System.Text;
 using KDSCommon.Enums;
 using KDSCommon.DataModels.Errors;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -19,7 +20,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
         {
             if (input.curSidur.bSidurMyuhad) //וסידור מיוחד
             {   //אם שבתון וקיים מאפיין 9, כלומר סידור אזור בשבתון, אז נעלה שגיאה
-                if (CheckShaaton(input.iSugYom, input.CardDate, input) && input.curSidur.bSidurNotInShabtonKodExists)
+                if (DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim) && input.curSidur.bSidurNotInShabtonKodExists)
                 {//היום הוא יום שבתון ולסידור יש מאפיין אסור בשבתון, לכן נעלה שגיאה
                         AddNewError(input);
                         return false;                    

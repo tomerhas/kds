@@ -47,22 +47,22 @@ namespace KdsBatch
             dtOvedCardDetails = null;
         }
 
-         public clPirteyOved(int iMisparIshi, DateTime dDate,string type)
-         {
-              DataRow[] rows;
-              try
-              {
-                  rows = clCalcData.DtPirteyOvedForMonth.Select("Convert('" + dDate.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dDate.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
-                  if (rows.Length > 0)
-                  {
-                      SetMeafyneyOved(rows[0]);
-                  }
-              }
-              catch (Exception ex)
-              {
-                  throw ex;
-              }
-         }
+         //public clPirteyOved(int iMisparIshi, DateTime dDate,string type)
+         //{
+         //     DataRow[] rows;
+         //     try
+         //     {
+         //         rows = clCalcData.DtPirteyOvedForMonth.Select("Convert('" + dDate.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dDate.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
+         //         if (rows.Length > 0)
+         //         {
+         //             SetMeafyneyOved(rows[0]);
+         //         }
+         //     }
+         //     catch (Exception ex)
+         //     {
+         //         throw ex;
+         //     }
+         //}
 
          public clPirteyOved(DataRow dr, DateTime dTaarich)
          {

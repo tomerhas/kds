@@ -283,33 +283,33 @@ namespace KdsService
             }
             //LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
-        private void RunCalcBatchThread(object param)
-        {
-            object[] args = param as object[];
-            long lRequestNum = (long)args[0];
-            DateTime dAdChodesh = (DateTime)args[1];
-            string sMaamad = args[2].ToString();
-            bool bRitzatTest = (bool)args[3];
-            bool bRitzaGorefet = (bool)args[4];
-            clCalculation objCalc = new clCalculation();
+        //private void RunCalcBatchThread(object param)
+        //{
+        //    object[] args = param as object[];
+        //    long lRequestNum = (long)args[0];
+        //    DateTime dAdChodesh = (DateTime)args[1];
+        //    string sMaamad = args[2].ToString();
+        //    bool bRitzatTest = (bool)args[3];
+        //    bool bRitzaGorefet = (bool)args[4];
+        //    clCalculation objCalc = new clCalculation();
 
-            try
-            {
-                if (bRitzatTest)
-                {
-                    objCalc.MainCalc(lRequestNum, dAdChodesh, sMaamad, bRitzaGorefet, clCalculation.TypeCalc.Test);
-                }
-                else
-                {
-                    objCalc.MainCalc(lRequestNum, dAdChodesh, sMaamad, bRitzaGorefet, clCalculation.TypeCalc.Batch);
-                }
-            }
-            catch (Exception ex)
-            {
-                clGeneral.LogError(ex);
-            }
-            LogThreadEnd("CalcBatch", lRequestNum);
-        }
+        //    try
+        //    {
+        //        if (bRitzatTest)
+        //        {
+        //            objCalc.MainCalc(lRequestNum, dAdChodesh, sMaamad, bRitzaGorefet, clCalculation.TypeCalc.Test);
+        //        }
+        //        else
+        //        {
+        //            objCalc.MainCalc(lRequestNum, dAdChodesh, sMaamad, bRitzaGorefet, clCalculation.TypeCalc.Batch);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        clGeneral.LogError(ex);
+        //    }
+        //    LogThreadEnd("CalcBatch", lRequestNum);
+        //}
 
         private void RunTransferToHilanThread(object param)
         {
@@ -652,14 +652,14 @@ namespace KdsService
             LogThreadStart("CalcBatchPremiyot", lRequestNum);
             runThread.Start(new object[] { lRequestNum });
         }
-        public void CalcBatch(long lRequestNum, DateTime dAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
-        {
-            Thread runThread = new Thread(
-                new ParameterizedThreadStart(RunCalcBatchThread));
-            LogThreadStart("CalcBatch", lRequestNum);
-            runThread.Start(new object[] { lRequestNum, dAdChodesh, sMaamad, 
-                bRitzatTest, bRitzaGorefet });
-        }
+        //public void CalcBatch(long lRequestNum, DateTime dAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
+        //{
+        //    Thread runThread = new Thread(
+        //        new ParameterizedThreadStart(RunCalcBatchThread));
+        //    LogThreadStart("CalcBatch", lRequestNum);
+        //    runThread.Start(new object[] { lRequestNum, dAdChodesh, sMaamad, 
+        //        bRitzatTest, bRitzaGorefet });
+        //}
 
         public void TransferToHilan(long lRequestNum, long lRequestNumToTransfer)
         {

@@ -5,6 +5,7 @@ using System.Text;
 using KDSCommon.Enums;
 using KDSCommon.DataModels.Errors;
 using Microsoft.Practices.Unity;
+using KDSCommon.Interfaces.Managers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -22,7 +23,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             if (input.OvedDetails.sMutamut.Trim() != "")
             {
                 iMutamut = int.Parse(input.OvedDetails.sMutamut);
-                bSidurNahagut = IsSidurNahagut(input.drSugSidur, input.curSidur);
+                bSidurNahagut = _container.Resolve<ISidurManager>().IsSidurNahagut(input.drSugSidur, input.curSidur);
                 if (bSidurNahagut && (iMutamut == 4 || iMutamut == 5 || iMutamut == 9))
                 {
                     AddNewError(input);

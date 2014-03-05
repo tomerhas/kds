@@ -10,6 +10,7 @@ using KDSCommon.Interfaces;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using KDSCommon.Helpers;
+using KDSCommon.Interfaces.Managers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -36,7 +37,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
 
            // DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(input.curSidur.iSugSidurRagil, input.CardDate, sugSidur);
 
-            bSidurNahagut = IsSidurNahagut(input.drSugSidur, input.curSidur);
+            bSidurNahagut = _container.Resolve<ISidurManager>().IsSidurNahagut(input.drSugSidur, input.curSidur);
             bSidurNihulTnua = IsSidurNihulTnua(input.drSugSidur, input.curSidur);
 
             if (bSidurNahagut || bSidurNihulTnua)

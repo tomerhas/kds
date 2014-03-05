@@ -9,6 +9,7 @@ using KDSCommon.Interfaces;
 using KDSCommon.Enums;
 using KDSCommon.UDT;
 using DalOraInfra.DAL;
+using KDSCommon.Helpers;
 
 namespace KdsLibrary.BL
 {
@@ -377,7 +378,7 @@ namespace KdsLibrary.BL
                     var yamimMeyuhadim =  cacheManager.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim);
                     var sugeyYamimMeyuhadim = cacheManager.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim);
 
-                    sug_yom = clGeneral.GetSugYom(iMisparIshi, dTemp, yamimMeyuhadim, iSectorIsuk, sugeyYamimMeyuhadim, meafyen56);
+                    sug_yom = DateHelper.GetSugYom(iMisparIshi, dTemp, yamimMeyuhadim, iSectorIsuk, sugeyYamimMeyuhadim, meafyen56);
                     if ((iMisparSidur==99006) || (sug_yom < 19 && !((meafyen56 == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || meafyen56 == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && sug_yom == 10)))
                     {
                         InsYemeyAvodaLeoved(ref oDal, iMisparIshi, dTemp, clGeneral.enStatusTipul.Betipul.GetHashCode(), null, iUserId);
@@ -577,24 +578,7 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
-        public static DataTable GetMeafyeneySidurById(DateTime dCardDate, int iSidurNumber)
-        {
-            DataTable dt = new DataTable();
-            clDal oDal = new clDal();
-
-            try
-            {
-                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
-                oDal.AddParameter("p_sidur_number", ParameterType.ntOracleInteger, iSidurNumber, ParameterDir.pdInput);                
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clGeneral.cProGetMeafyenySidurById, ref dt);
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+       
         public static DataTable GetMeafyeneySidur()
         {
             DataTable dt = new DataTable();

@@ -6,6 +6,7 @@ using KdsLibrary;
 using KdsLibrary.BL;
 using System.Data;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 
 
 namespace KdsBatch
@@ -240,7 +241,7 @@ namespace KdsBatch
                     oOved.oGeneralData.dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                 }
 
-                iSugYom = clGeneral.GetSugYom(oOved.Mispar_ishi, dTaarich, oOved.oGeneralData.dtYamimMeyuchadim, iKodSectorIsuk, oOved.oGeneralData.dtSugeyYamimMeyuchadim, iMeafyen56);
+                iSugYom = DateHelper.GetSugYom(oOved.Mispar_ishi, dTaarich, oOved.oGeneralData.dtYamimMeyuchadim, iKodSectorIsuk, oOved.oGeneralData.dtSugeyYamimMeyuchadim, iMeafyen56);
                 return iSugYom;
             }
             catch (Exception ex)

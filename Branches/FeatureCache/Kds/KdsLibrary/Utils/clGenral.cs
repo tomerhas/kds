@@ -444,12 +444,7 @@ namespace KdsLibrary
             Ragil = 0, Hefreshim = 1, Patuch = 2
         }
 
-        public enum enSugMishmeret
-        {
-            Boker = 1,
-            Tzaharim = 2,
-            Liyla = 3
-        }
+       
         public enum enBitulOHosafa
         {
             BitulByUser = 1,
@@ -526,34 +521,14 @@ namespace KdsLibrary
             enKshishon = 2
         }
 
-        public enum enMeafyenSidur25
-        {
-            //מאפיין 25 זכאי מחוץ למכסה
-            enZakaiAutomat = 3,
-            enNotZakai = 2,
-            enZakai = 1 //?
-        }
+      
         public enum enMeafyenSidur46
         {
             //אסור לדווח פעילות
             enAddPeilutNotAllowed = 1
         }
-        public enum enMeafyenSidur35
-        {
-            //מאפיין 35 - חריגה
-            enCharigaAutomat = 3, //זיכוי אוטומטי
-            enCharigaZakai = 1
-        }
-        public enum enMeafyenSidur53
-        {
-            //מאפיין 53 - סוג העדרות
-            enHolidayForHours = 9,
-            enMachala = 2,
-            enMilueim = 3,
-            enTeuna = 4,
-            enEvel = 6,
-            enHeadrutWithPayment = 8
-        }
+      
+        
         public enum enMeafyenSidur54
         {
             //מאפיין 54 - שעון נוכחות
@@ -878,25 +853,6 @@ namespace KdsLibrary
         }
 
 
-        public enum enSugAvoda
-        {
-            //מאפיין 52 - סוג עבודה
-            Shaon = 1,
-            Nahagut = 5, //סידור נהגות  
-            Lershut = 6, //לרשות
-            Kupai = 7, //קופאי
-            Netzer = 11, //סידור נ.צ.ר
-            VaadOvdim = 10, //סידור ועד עובדים 
-            ActualGrira = 9, //סידור גרירה בפועל
-            Grira = 8 //סידור כוננות  גרירה 
-        }
-
-        public enum enDay
-        {
-            Shishi = 6,
-            Shabat = 7
-        }
-
         public enum enKodIshur
         {
             HashlamatShaotLemutamut = 32,
@@ -923,10 +879,7 @@ namespace KdsLibrary
             SugAvoda = 52
         }
 
-        public enum enMeafyen79
-        {
-            LoLetashlumAutomat = 1
-        }
+       
 
         public enum enDemandType
         {
@@ -967,18 +920,9 @@ namespace KdsLibrary
             MetaemTikshoret = 124
         }
 
-        public enum enEmployeeType
-        {
-            enEgged = 580,
-            enEggedTaavora = 4895
-        }
+  
 
-        public enum enShaonNochachut
-        {
-            enMinhal = 1,
-            enNetzer = 2,
-            enGrira = 3
-        }
+       
 
         public enum enKodMaamad
         {
@@ -1785,96 +1729,7 @@ namespace KdsLibrary
             return result;
         }
 
-        public static bool IsEggedTime(string sHour)
-        {
-            string[] arr;
-
-            //מחזיר אמת אם השעה היא שעה בין 24-32
-            try
-            {
-                if ((sHour.IndexOf(char.Parse(":"))) == -1)
-                {
-                    sHour = sHour.Substring(0, 2) + ":" + sHour.Substring(2, 2);
-                }
-                arr = sHour.Split(char.Parse(":"));
-
-                return ((int.Parse(arr[0]) >= 24) && (int.Parse(arr[0]) <= 32));
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public static string ConvertToEggedTime(string sHour)
-        {
-            string[] arr;
-            int iHour;
-            string sNewHour = sHour;
-            //הפונקציה מקבלת שעה בפורמט 00:00-08:00 ןמחזירה 24:00-32:00
-            try
-            {
-                arr = sHour.Split(char.Parse(":"));
-                if (arr.Length > 1)
-                {
-                    iHour = int.Parse(arr[0]);
-                    if ((iHour >= 0) && (iHour <= 4))
-                    {
-                        iHour = iHour + 24;
-                    }
-                    sNewHour = iHour.ToString() + ":" + arr[1];
-                }
-                return sNewHour;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static string ConvertFromEggedTime(string sHour)
-        {
-            string[] arr;
-            int iHour;
-            string sNewHour = sHour;
-            try
-            {
-                arr = sHour.Split(char.Parse(":"));
-                if (arr.Length > 1)
-                {
-                    iHour = int.Parse(arr[0]);
-                    if ((iHour >= 24) && (iHour <= 32))
-                    {
-                        iHour = iHour - 24;
-                    }
-                    sNewHour = iHour.ToString() + ":" + arr[1];
-                }
-                return sNewHour;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static string ConvertToValidHour(string sHour)
-        {
-            //הפונקציה מקבלת שעה למשל 545 או 1 ומחזיר 05:45 או 00:00
-            string sNewHour = sHour.PadLeft(4, (char)48);
-            try
-            {
-                if ((sNewHour.IndexOf(char.Parse(":"))) == -1)
-                {
-                    sNewHour = sNewHour.Substring(0, 2) + ":" + sNewHour.Substring(2, 2);
-                }
-
-                return sNewHour;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+       
 
         public static DataTable FilterDataTable(DataTable dtTable, string sFilter)
         {
@@ -1927,85 +1782,7 @@ namespace KdsLibrary
         }
 
 
-        public static int GetSugYom(int iMisparIshi, DateTime dTaarich, DataTable dtYamimMeyuchadim, int iSectorOved, DataTable dtSugeyYamimMeyuchadim, int iMeafyen56)
-        {
-            DataRow[] drYaminMeyuchadim;
-            int iSugYom;
-
-            drYaminMeyuchadim = dtYamimMeyuchadim.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "");
-            if (drYaminMeyuchadim.Length > 0)
-            {
-                if (iSectorOved == enSectorAvoda.Tafkid.GetHashCode())
-                {
-                    if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Minhal"].ToString()))
-                    { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Minhal"].ToString()); }
-                    else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
-                }
-                else if (iSectorOved == enSectorAvoda.Meshek.GetHashCode())
-                {
-                    if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Meshek"].ToString()))
-                    { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Meshek"].ToString()); }
-                    else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
-                }
-                else if (iSectorOved == enSectorAvoda.Nihul.GetHashCode())
-                {
-                    if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Tnua"].ToString()))
-                    { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Tnua"].ToString()); }
-                    else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
-                }
-                else if (iSectorOved == enSectorAvoda.Nahagut.GetHashCode())
-                {
-                    if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Nehagut"].ToString()))
-                    { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Nehagut"].ToString()); }
-                    else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
-                }
-                else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
-
-                if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
-                { iSugYom = 20; }
-                else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shishi.GetHashCode() && !(dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["Shishi_Muhlaf"].ToString() == "1") && (iMeafyen56 == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || iMeafyen56 == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
-                { iSugYom = 10; }
-
-            }
-            else
-            {
-                switch ((dTaarich.DayOfWeek.GetHashCode() + 1))
-                {
-                    case 7:
-                        { iSugYom = 20; break; }
-                    case 6:
-                        { iSugYom = 10; break; }
-                    default:
-                        { iSugYom = 1; break; }
-                }
-            }
-
-            return iSugYom;
-        }
-
-
-        public static int GetSugYom(DataTable dtYamimMeyuchadim, DateTime dTaarich, DataTable dtSugeyYamimMeyuchadim) //, int GetMeafyen(56).IntValue)
-        {
-            int iSugYom;
-            if (dtYamimMeyuchadim.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')").Length > 0)
-            {
-                iSugYom = int.Parse(dtYamimMeyuchadim.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')")[0]["sug_yom"].ToString());
-                if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
-                { iSugYom = 20; }
-                else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shishi.GetHashCode()) // && !(dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["Shishi_Muhlaf"].ToString() == "1") && (GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
-                { iSugYom = 10; }
-                return iSugYom;
-            }
-            else
-            {
-                switch ((dTaarich.DayOfWeek.GetHashCode() + 1))
-                {
-                    case 7: return 20;
-                    case 6: return 10;
-                    default: return 1;
-                }
-            }
-        }
+      
         public static string AsDomain(string url)
         {
             if (string.IsNullOrEmpty(url))
@@ -2018,20 +1795,6 @@ namespace KdsLibrary
                 return url;
         }
 
-        public static DateTime ConvertMefyenShaotValid(DateTime dTaarich, string sShaaMeafyen)
-        {
-            DateTime dMeafyenDate;
-            string sMeafyen;
-            sMeafyen = clGeneral.ConvertToValidHour(sShaaMeafyen);
-            if (clGeneral.IsEggedTime(sMeafyen))
-            {
-                dMeafyenDate = DateHelper.GetDateTimeFromStringHour(clGeneral.ConvertFromEggedTime(sMeafyen), dTaarich.Date).AddDays(1);
-            }
-            else
-            {
-                dMeafyenDate = DateHelper.GetDateTimeFromStringHour(sMeafyen, dTaarich.Date);
-            }
-            return dMeafyenDate;
-        }
+        
     }
 }

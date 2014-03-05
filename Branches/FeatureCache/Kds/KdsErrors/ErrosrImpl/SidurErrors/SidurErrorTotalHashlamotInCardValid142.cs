@@ -6,6 +6,7 @@ using KDSCommon.Enums;
 using KDSCommon.DataModels.Errors;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -26,13 +27,13 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                 int iZmanMaximum = 0;
 
                 //יש מספר מקסימלי של השלמות המותר ליום, תלוי בסוג היום. בודקים את סוג היום ולפי סוג היום בודקים בטבלת פרמטרים חיצוניים מה מקסימום ההשלמות המותר ליום. 108 (מכסימום השלמות ביום חול), 109 (מכסימום השלמות בשישי/ע.ח), 110 (מכסימום השלמות בשבתון). אם בודקים יום אל מול טבלת סוגי ימים מיוחדים והוא אינו מוגדר כשבתון או ערב שבת/חג  - יום זה הוא יום חול.
-                if (CheckShaaton(input.iSugYom, input.CardDate, input))
+                if (DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim))
                 {
                     iZmanMaximum = input.oParameters.iHashlamaMaxShabat;
                 }
                 else
                 {
-                    if ((input.curSidur.sErevShishiChag == "1") || (input.curSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+                    if ((input.curSidur.sErevShishiChag == "1") || (input.curSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()))
                     {
                         iZmanMaximum = input.oParameters.iHashlamaMaxShisi;
                     }

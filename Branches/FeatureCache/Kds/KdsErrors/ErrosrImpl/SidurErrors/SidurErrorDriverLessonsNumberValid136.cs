@@ -25,7 +25,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             {//סידורים רגילים
                 if (input.drSugSidur.Length > 0)
                 {   //עבור סידורים רגילים, נבדוק במאפייני סידורים אם סוג סידור נהגות.
-                    if ((input.drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Nahagut.GetHashCode().ToString()))
+                    if ((input.drSugSidur[0]["sug_avoda"].ToString() == enSugAvoda.Nahagut.GetHashCode().ToString()))
                     {
                         iCountShiureyNehiga = input.curSidur.htPeilut.Values.Cast<PeilutDM>().ToList().Count(Peilut => Peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "842" && Peilut.lMakatNesia.ToString().PadLeft(8).Substring(5, 3) == "044");
 

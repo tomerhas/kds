@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using KDSCommon.DataModels.Errors;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 using Microsoft.Practices.Unity;
 
 namespace KdsErrors.ErrosrImpl.PeilutErrors
@@ -30,7 +31,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
                 if ((iElementType == 701) || (iElementType == 711))
                 {
                     iElementTime = int.Parse(input.curPeilut.lMakatNesia.ToString().PadLeft(8).Substring(3, 3));
-                    if ((iElementType == 701) && input.curPeilut.dFullShatYetzia < input.curPeilut.dFullShatYetzia.Date.AddHours(8) || CheckShaaton(input.iSugYom, input.CardDate, input))
+                    if ((iElementType == 701) && input.curPeilut.dFullShatYetzia < input.curPeilut.dFullShatYetzia.Date.AddHours(8) || DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim))
                     {
                         //מכונה ראשונה ביום- נשווה לפרמטר 120
                         bError = (iElementTime > input.oParameters.iPrepareFirstMechineMaxTime);
@@ -40,7 +41,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
                         //iTotalTimePrepareMechineForSidur = iTotalTimePrepareMechineForSidur + iElementTime;
                         input.iTotalTimePrepareMechineForSidur = input.iTotalTimePrepareMechineForSidur + 1 ;
                     }
-                    else if ((iElementType == 701) && input.curPeilut.dFullShatYetzia >= input.curPeilut.dFullShatYetzia.Date.AddHours(8) && !CheckShaaton(input.iSugYom, input.CardDate, input))
+                    else if ((iElementType == 701) && input.curPeilut.dFullShatYetzia >= input.curPeilut.dFullShatYetzia.Date.AddHours(8) && !DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim))
                     {
                             //מכונות נוספות נשווה לפרמטר 121
                         bError = (iElementTime > input.oParameters.iPrepareOtherMechineMaxTime);

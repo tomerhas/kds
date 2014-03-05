@@ -2060,7 +2060,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         if (dsSidurim.Tables[1]!=null)
         {
             if (iAddDay == 1) //היום הבא לכן נחזיר לפורמט של היום הבא בתנועה
-                sShatYetiza = clGeneral.ConvertToEggedTime(sShatYetiza);
+                sShatYetiza = DateHelper.ConvertToEggedTime(sShatYetiza);
             iHour = int.Parse(sShatYetiza.Replace(":", ""));
             for (int i = 0; i < dsSidurim.Tables[1].Rows.Count; i++)
             {
@@ -2147,7 +2147,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             _PeilutReka.dFullShatYetzia = _Sidur.dFullShatHatchala;
 
         sMapHour = sMapHour.Substring(0, 2) + ":" + sMapHour.Substring(2, 2);
-        _PeilutReka.sShatYetzia = clGeneral.ConvertFromEggedTime(sMapHour);
+        _PeilutReka.sShatYetzia = DateHelper.ConvertFromEggedTime(sMapHour);
         _PeilutReka.dFullShatYetzia = DateTime.Parse(_PeilutReka.dFullShatYetzia.ToShortDateString() + " " + _PeilutReka.sShatYetzia);
         _PeilutReka.lMakatNesia = lMakatTnua;
         _PeilutReka.sMakatDescription = dsSidurim.Tables[1].Rows[iIndex]["teurnesiaa"].ToString();
@@ -4284,7 +4284,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 bAtLeatOneSidurIsNOTNahagutOrTnua = true;
 
-                if ((oSidur.sErevShishiChag.Equals("1")) || (oSidur.sSidurDay.Equals(clGeneral.enDay.Shishi.GetHashCode().ToString())))
+                if ((oSidur.sErevShishiChag.Equals("1")) || (oSidur.sSidurDay.Equals(enDay.Shishi.GetHashCode().ToString())))
                 {
                     if (!bAtLeastOneSidurInShabat)                    
                         bAtLeastOneSidurInShabat = IsSidurInShabat(ref oSidur);                    
@@ -4721,9 +4721,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //}
         //else
         //{
-        if (OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+        if (OvedYomAvoda.iKodHevra != enEmployeeType.enEggedTaavora.GetHashCode())
         {
-            if ((oSidur.bSidurMyuhad) && (oSidur.sZakayMichutzLamichsa == clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString()))
+            if ((oSidur.bSidurMyuhad) && (oSidur.sZakayMichutzLamichsa == enMeafyenSidur25.enZakai.GetHashCode().ToString()))
                 bOutMichsaAllowed = true;
             else
             {
@@ -4731,7 +4731,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 {
                     if (drSugSidur.Length>0)
                     {
-                        if (drSugSidur[0]["ZAKAY_MICHUTZ_LAMICHSA"].ToString() == clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString())
+                        if (drSugSidur[0]["ZAKAY_MICHUTZ_LAMICHSA"].ToString() == enMeafyenSidur25.enZakai.GetHashCode().ToString())
                             bOutMichsaAllowed = true;
                     }
                 }
@@ -4923,7 +4923,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 
     //            ////יום שישי או ערב חג
     //            ////ביום שישי/ערב חג לעובד ללא מאפיינים 5 ו- 6 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=5   (עבודה בשישי ללא הרשאה).
-    //            //if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+    //            //if ((oSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()))
     //            //{
     //            //    if ((!MeafyenyOved.IsMeafyenExist(5)) && (!MeafyenyOved.IsMeafyenExist(6)) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtFridayWithoutPremission.GetHashCode()))
     //            //    {
@@ -4932,7 +4932,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //            //    }
     //            //}
     //            ////ביום שבת/שבתון לעובד ללא מאפיינים 7 ו- 8 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=4  (עבודה בשבתון ללא הרשאה).
-    //            //if ((oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
+    //            //if ((oSidur.sSidurDay == enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
     //            //{
     //            //    if ((!MeafyenyOved.Meafyen7Exists) && (!MeafyenyOved.IsMeafyenExist(8)) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtSaturdayWithoutPremission.GetHashCode()))
     //            //    {

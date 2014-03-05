@@ -59,7 +59,7 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
             var ovedManager = ServiceLocator.Current.GetInstance<IOvedManager>();
              _MeafyeneyOved = ovedManager.CreateMeafyenyOved(int.Parse(Request.QueryString["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
              IParametersManager paramManager = ServiceLocator.Current.GetInstance<IParametersManager>();
-             _objParameters = paramManager.CreateClsParametrs(DateTime.Parse(ViewState["DateCard"].ToString()), clGeneral.GetSugYom(cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim), DateTime.Parse(ViewState["DateCard"].ToString()), cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim)));//, _MeafyeneyOved.GetMeafyen(56).IntValue));
+             _objParameters = paramManager.CreateClsParametrs(DateTime.Parse(ViewState["DateCard"].ToString()), DateHelper.GetSugYom(cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim), DateTime.Parse(ViewState["DateCard"].ToString()), cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim)));//, _MeafyeneyOved.GetMeafyen(56).IntValue));
            
             if (!Page.IsPostBack)
             {

@@ -14,6 +14,6 @@ namespace KDSCommon.Interfaces.Managers
         OrderedDictionary GetEmployeeDetails(DataTable dtDetails, DateTime dCardDate, int misparIshi, out int iLastMisaprSidur);
 
         void UpdateCardStatus(int iMisparIshi, DateTime dCardDate, CardStatus oCardStatus, int iUserId);
-       
+        bool IsOvedMatzavExists(string sKodMatzav, DataTable dtMatzavOved);
     }
 }

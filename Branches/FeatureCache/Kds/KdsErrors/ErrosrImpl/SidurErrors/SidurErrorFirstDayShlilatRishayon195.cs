@@ -23,7 +23,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             //ד. עובד הוא בשלילה (יודעים שעובד הוא בשלילה לפי ערך 1 בקוד בנתון 21 (שלילת   רשיון) בטבלת פרטי עובדים) 
             if (input.curSidur.bSidurMyuhad)
             {
-                if (input.curSidur.sSugAvoda != clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString())
+                if (input.curSidur.sSugAvoda != enSugAvoda.ActualGrira.GetHashCode().ToString())
                 {
                     if (input.curSidur.sSectorAvoda == enSectorAvoda.Nahagut.GetHashCode().ToString())
                     {
@@ -36,7 +36,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             {//סידור רגיל
                 if (input.drSugSidur.Length > 0)
                 {
-                    if (input.drSugSidur[0]["sug_Avoda"].ToString() != clGeneral.enSugAvoda.Grira.GetHashCode().ToString() && input.drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
+                    if (input.drSugSidur[0]["sug_Avoda"].ToString() != enSugAvoda.Grira.GetHashCode().ToString() && input.drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString())
                     {
                         if (input.CardDate == input.OvedDetails.dTaarichMe)
                             bError = IsOvedBShlila(input);

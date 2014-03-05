@@ -6,6 +6,7 @@ using System.Data;
 using KdsLibrary;
 using KDSCommon.DataModels;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 
 namespace KdsBatch
 {
@@ -95,7 +96,7 @@ namespace KdsBatch
                         if (IsDayExist(dTaarich) && (dTaarich >= objOved.dTchilatAvoda && dTaarich <= objOved.dSiyumAvoda))
                         {
                             objOved.Taarich = dTaarich;
-                            objOved.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
+                            objOved.SugYom = DateHelper.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
                             objOved.bMeafyen85YomMeyuchad = oCalcBL.IsOvedWithMeafyen85YomMeyuchad(objOved);
                             objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                             objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
@@ -103,7 +104,7 @@ namespace KdsBatch
                             objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim.Taarich == dTaarich));
                             objOved.sSugYechida = oCalcBL.InitSugYechida(objOved, dTaarich);
                          
-                            // oDay.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
+                            // oDay.SugYom = DateHelper.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
                             SetNetunimLeYom();
                             objOved.fTotalAruchatZaharimForDay = 0;
                             oDay.CalcRechivim();
@@ -397,7 +398,7 @@ namespace KdsBatch
             dTarAd = dTarMe.AddMonths(1).AddDays(-1);
             do
             {
-                iSugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTarMe,objOved.oGeneralData.dtSugeyYamimMeyuchadim);//, objOved.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                iSugYom = DateHelper.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTarMe, objOved.oGeneralData.dtSugeyYamimMeyuchadim);//, objOved.objMeafyeneyOved.GetMeafyen(56).IntValue);
                 if (clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom, dTarMe))
                 {
                     iSachShabatonim = iSachShabatonim + 1;
@@ -3566,7 +3567,7 @@ namespace KdsBatch
             {
                 if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30)
                 {
-                    fSumDakotRechiv = clCalcData.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Shaot100Letashlum.GetHashCode().ToString()));
+                    fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Shaot100Letashlum.GetHashCode().ToString()));
                 }
                 else
                 {

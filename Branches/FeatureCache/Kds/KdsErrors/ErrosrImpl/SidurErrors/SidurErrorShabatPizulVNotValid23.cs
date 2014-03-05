@@ -5,6 +5,7 @@ using System.Text;
 using KDSCommon.Enums;
 using KDSCommon.DataModels.Errors;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -17,7 +18,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
         }
         public override bool InternalIsCorrect(ErrorInputData input)
         {
-            if (CheckShaaton(input.iSugYom, input.CardDate, input) && (!string.IsNullOrEmpty(input.curSidur.sPitzulHafsaka)) && input.curSidur.sPitzulHafsaka != "0")
+            if (DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim) && (!string.IsNullOrEmpty(input.curSidur.sPitzulHafsaka)) && input.curSidur.sPitzulHafsaka != "0")
             {
                 AddNewError(input);
                 return false;

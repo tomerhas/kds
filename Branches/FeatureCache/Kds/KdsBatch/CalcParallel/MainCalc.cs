@@ -170,7 +170,7 @@ namespace KdsBatch
                 DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
                 DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);      
                 SaveChishuvTemp(oOved.Mispar_ishi, dCalcMonth, iTzuga, _collChishuvChodesh,_collChishuvYomi,ref  dtHeadrut, ref  dtRechivimChodshiym, ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31, ref dtAllRikuz);
-                SaveChishuvTemp2(oOved.Mispar_ishi, dCalcMonth, _collChishuvChodesh, _collChishuvYomi, ref dsRikuz2);
+              //??  SaveChishuvTemp2(oOved.Mispar_ishi, dCalcMonth, _collChishuvChodesh, _collChishuvYomi, ref dsRikuz2);
 
                 oOved.Dispose();
                 if (SingleGeneralData.GetInstance() != null)
@@ -446,6 +446,7 @@ namespace KdsBatch
             clTxDal oDal = new clTxDal();
             DataTable dt = new DataTable();
             float fErechRechiv45 = 0;
+            clCalcBL oCalcBL = new clCalcBL();
             try
             {   //   שמירת נתוני החישוב
                 oDal.TxBegin();
@@ -462,7 +463,7 @@ namespace KdsBatch
                 dtRechivimChodshiym = oOvdim.GetRechivimChodshiyimTemp(ref oDal, iMisparIshi, dCalcMonth, 0, iTzuga);
                 oDal.ClearCommand();
 
-                fErechRechiv45 = clCalcData.GetSumErechRechiv(dtRechivimChodshiym.Compute("sum(erech_rechiv)", "kod_rechiv=" + clGeneral.enRechivim.SachGmulChisachon.GetHashCode().ToString()));
+                fErechRechiv45 = oCalcBL.GetSumErechRechiv(dtRechivimChodshiym.Compute("sum(erech_rechiv)", "kod_rechiv=" + clGeneral.enRechivim.SachGmulChisachon.GetHashCode().ToString()));
                 oOvdim.GetRikuzChodshiTemp(ref oDal, iMisparIshi, dCalcMonth, 0, iTzuga, fErechRechiv45, ref  dtRikuz1To10, ref  dtRikuz11To20, ref  dtRikuz21To31, ref  dtAllRikuz);
 
                 oDal.TxCommit();

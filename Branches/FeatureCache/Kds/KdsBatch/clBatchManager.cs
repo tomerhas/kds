@@ -21,6 +21,7 @@ using KDSCommon.Interfaces.DAL;
 using KDSCommon.Interfaces.Errors;
 using KDSCommon.UDT;
 using DalOraInfra.DAL;
+using ObjectCompare;
 
 namespace KdsBatch
 {
@@ -74,6 +75,8 @@ namespace KdsBatch
         private OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd;
         private OBJ_PEILUT_OVDIM oObjPeilutOvdimDel;
         private OBJ_YAMEY_AVODA_OVDIM oObjYameyAvodaUpd;
+        private ModificationRecorder<OBJ_YAMEY_AVODA_OVDIM> oObjYameyAvodaUpdWrapper; // = new ModificationRecorder<OBJ_YAMEY_AVODA_OVDIM>(obj);
+
         private COLL_SIDURIM_OVDIM oCollSidurimOvdimUpd; //= new COLL_SIDURIM_OVDIM();
         private COLL_SIDURIM_OVDIM oCollSidurimOvdimIns; //= new COLL_SIDURIM_OVDIM();
         private COLL_SIDURIM_OVDIM oCollSidurimOvdimDel;// = new COLL_SIDURIM_OVDIM();
@@ -100,11 +103,7 @@ namespace KdsBatch
             Code3 = 3
         }
 
-        public enum SourceObj
-        {
-            Insert = 1,
-            Update = 2
-        }
+     
 
         public enum ZmanNesiotType
         {
@@ -180,7 +179,7 @@ namespace KdsBatch
                 //Get Meafyeny Ovdim
                 GetMeafyeneyOvdim(_iMisparIshi, _dCardDate);
 
-                iSugYom = clGeneral.GetSugYom(dtYamimMeyuchadim, _dCardDate, _dtSugeyYamimMeyuchadim);//, _oMeafyeneyOved.GetMeafyen(56).IntValue);
+                iSugYom = DateHelper.GetSugYom(dtYamimMeyuchadim, _dCardDate, _dtSugeyYamimMeyuchadim);//, _oMeafyeneyOved.GetMeafyen(56).IntValue);
 
                 //Set global variable with parameters
                 SetParameters(_dCardDate, iSugYom);
@@ -821,7 +820,7 @@ namespace KdsBatch
                 
                 dtSibotLedivuachYadani = cache.GetCacheItem<DataTable>(CachedItems.SibotLedivuchYadani);
 
-                iSugYom = clGeneral.GetSugYom(dtYamimMeyuchadim, dCardDate, _dtSugeyYamimMeyuchadim);//, _oMeafyeneyOved.GetMeafyen(56).IntValue);
+                iSugYom = DateHelper.GetSugYom(dtYamimMeyuchadim, dCardDate, _dtSugeyYamimMeyuchadim);//, _oMeafyeneyOved.GetMeafyen(56).IntValue);
 
                 //Set global variable with parameters
                 SetParameters(dCardDate, iSugYom);
@@ -946,8 +945,9 @@ namespace KdsBatch
             try
             {                
                 //נאתחל את אובייקט ימי עבודה לעדכון
-                oObjYameyAvodaUpd = new OBJ_YAMEY_AVODA_OVDIM();
+                oObjYameyAvodaUpd = new OBJ_YAMEY_AVODA_OVDIM();          
                 InsertToYameyAvodaForUpdate(dCardDate, ref oObjYameyAvodaUpd, ref _oOvedYomAvodaDetails);
+                oObjYameyAvodaUpdWrapper = new ModificationRecorder<OBJ_YAMEY_AVODA_OVDIM>(oObjYameyAvodaUpd);
                 //נעבור על כל הסידורים 
                 if (htEmployeeDetails != null)
                 {
@@ -1362,6 +1362,7 @@ namespace KdsBatch
                 //11 השדות - הלבשה  
                 UpdateHalbasha(dCardDate);
 
+                bool hasChange = oObjYameyAvodaUpdWrapper.HasChanged();
                 oCollYameyAvodaUpd.Add(oObjYameyAvodaUpd);
 
                 //נעדכן את ה- DataBase
@@ -1627,6 +1628,7 @@ namespace KdsBatch
             }
         }
 
+
         private OBJ_PEILUT_OVDIM GetUpdPeilutObject(int iSidurIndex, PeilutDM oPeilut, out SourceObj SourceObject, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
         {
             OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd = new OBJ_PEILUT_OVDIM();
@@ -1656,13 +1658,14 @@ namespace KdsBatch
                             break;
                         }
                     }
-                    if (oObjPeilutOvdimUpd.MISPAR_SIDUR == 0)
+                   
+                } 
+                if (oObjPeilutOvdimUpd.MISPAR_SIDUR == 0)
                     {
                         InsertToObjPeilutOvdimForUpdate(ref oPeilut, oObjSidurimOvdimUpd, ref oObjPeilutOvdimUpd);
                         oCollPeilutOvdimUpd.Add(oObjPeilutOvdimUpd);
                         SourceObject = SourceObj.Update;
                     }
-                }
             }
             catch (Exception ex)
             {
@@ -1917,7 +1920,7 @@ namespace KdsBatch
                                     }
 
                                     //ביום שישי/ערב חג (לפי ה- oracle או טבלת ימים מיוחדים) יחושב פיצול רק במידה ושעת הגמר של הסידור השני היא לפני כניסת שבת. 
-                                    if (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString() || oSidur.sErevShishiChag == "1")
+                                    if (oSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString() || oSidur.sErevShishiChag == "1")
                                     { 
                                         dShatKnisatShabat = _oParameters.dKnisatShabat;
                                         if (oNextSidur.dFullShatHatchala > dShatKnisatShabat)
@@ -1984,7 +1987,7 @@ namespace KdsBatch
             try
             {
                 if ( (oOvedYomAvodaDetails.iIsuk == 122 || oOvedYomAvodaDetails.iIsuk == 123 || oOvedYomAvodaDetails.iIsuk == 124 || oOvedYomAvodaDetails.iIsuk == 127)
-                    && oSidur.sSugAvoda==clGeneral.enSugAvoda.Shaon.GetHashCode().ToString() )
+                    && oSidur.sSugAvoda==enSugAvoda.Shaon.GetHashCode().ToString() )
                 {
                     GetMeafyeneyMafilim(oSidur,oSidur.dFullShatHatchala, oSidur.dFullShatGmar, out  bFromMeafyenHatchala, out  bFromMeafyenGmar, ref dRequiredShatHatchala, ref dRequiredShatGmar);
 
@@ -2060,57 +2063,57 @@ namespace KdsBatch
             }
         }
 
-        private void SetShaotSidurKupai(int Index,ref SidurDM oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
-        {
-            //string sug_sidur = "";
-            DataRow[] drSugSidur;
-            SidurDM ESidur;
-            DateTime dShatHatchala, dShatGmar;
-            try
-            {
-                if (oOvedYomAvodaDetails.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
-                {
-                    drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, oSidur.dSidurDate, _dtSugSidur);
+        //private void SetShaotSidurKupai(int Index,ref SidurDM oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
+        //{
+        //    //string sug_sidur = "";
+        //    DataRow[] drSugSidur;
+        //    SidurDM ESidur;
+        //    DateTime dShatHatchala, dShatGmar;
+        //    try
+        //    {
+        //        if (oOvedYomAvodaDetails.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+        //        {
+        //            drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, oSidur.dSidurDate, _dtSugSidur);
 
-                    if (oSidur.sSugAvoda == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString() || (drSugSidur.Length > 0 && drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString()))
-                    {
-                        for (int i = 0; i < htEmployeeDetails.Count; i++)
-                        {
-                            if (i != Index)
-                            {
-                                ESidur = (SidurDM)htEmployeeDetails[i];
-                                if (ESidur.sSugAvoda == clGeneral.enSugAvoda.Shaon.GetHashCode().ToString())
-                                {
-                                    if ((Math.Abs(oSidur.dFullShatHatchala.Subtract(ESidur.dFullShatHatchala).TotalMinutes) <= 60) &&
-                                        (Math.Abs(ESidur.dFullShatGmar.Subtract(oSidur.dFullShatGmar).TotalMinutes) <= 60))
-                                    {
-                                        dShatHatchala = oSidur.dFullShatHatchala > ESidur.dFullShatHatchala ? oSidur.dFullShatHatchala : ESidur.dFullShatHatchala;
-                                        dShatGmar = oSidur.dFullShatGmar < ESidur.dFullShatGmar?oSidur.dFullShatGmar : ESidur.dFullShatGmar;
+        //            if (oSidur.sSugAvoda == enSugAvoda.Kupai.GetHashCode().ToString() || (drSugSidur.Length > 0 && drSugSidur[0]["sug_avoda"].ToString() == enSugAvoda.Kupai.GetHashCode().ToString()))
+        //            {
+        //                for (int i = 0; i < htEmployeeDetails.Count; i++)
+        //                {
+        //                    if (i != Index)
+        //                    {
+        //                        ESidur = (SidurDM)htEmployeeDetails[i];
+        //                        if (ESidur.sSugAvoda == enSugAvoda.Shaon.GetHashCode().ToString())
+        //                        {
+        //                            if ((Math.Abs(oSidur.dFullShatHatchala.Subtract(ESidur.dFullShatHatchala).TotalMinutes) <= 60) &&
+        //                                (Math.Abs(ESidur.dFullShatGmar.Subtract(oSidur.dFullShatGmar).TotalMinutes) <= 60))
+        //                            {
+        //                                dShatHatchala = oSidur.dFullShatHatchala > ESidur.dFullShatHatchala ? oSidur.dFullShatHatchala : ESidur.dFullShatHatchala;
+        //                                dShatGmar = oSidur.dFullShatGmar < ESidur.dFullShatGmar?oSidur.dFullShatGmar : ESidur.dFullShatGmar;
 
-                                        if (dShatHatchala != oObjSidurimOvdimUpd.SHAT_HATCHALA)
-                                        {
-                                            UpdateShatHatchala(ref oSidur, i, dShatHatchala, ref oObjSidurimOvdimUpd);
-                                        }
-                                        if (dShatGmar != oObjSidurimOvdimUpd.SHAT_GMAR)
-                                        {
-                                            oObjSidurimOvdimUpd.SHAT_GMAR = dShatGmar;
-                                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+        //                                if (dShatHatchala != oObjSidurimOvdimUpd.SHAT_HATCHALA)
+        //                                {
+        //                                    UpdateShatHatchala(ref oSidur, i, dShatHatchala, ref oObjSidurimOvdimUpd);
+        //                                }
+        //                                if (dShatGmar != oObjSidurimOvdimUpd.SHAT_GMAR)
+        //                                {
+        //                                    oObjSidurimOvdimUpd.SHAT_GMAR = dShatGmar;
+        //                                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
 
-                                            oSidur.dFullShatGmar = oObjSidurimOvdimUpd.SHAT_GMAR;
-                                            oSidur.sShatGmar = oSidur.dFullShatGmar.ToString("HH:mm");
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-           //     clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errFirstDayShlilatRishayon195.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNAhagutValid161: " + ex.Message, null);
-            }
-        }
+        //                                    oSidur.dFullShatGmar = oObjSidurimOvdimUpd.SHAT_GMAR;
+        //                                    oSidur.sShatGmar = oSidur.dFullShatGmar.ToString("HH:mm");
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //   //     clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errFirstDayShlilatRishayon195.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNAhagutValid161: " + ex.Message, null);
+        //    }
+        //}
 
         private void MergerSiduryMapa28()
         {
@@ -3129,7 +3132,7 @@ namespace KdsBatch
         {
             try
             {
-                if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() &&
+                if (oOvedYomAvodaDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode() &&
                     oSidur.bSidurNotValidKodExists)
                 {
                     oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
@@ -5421,7 +5424,7 @@ namespace KdsBatch
                     drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
                     if (drSugSidur.Length > 0)
                     {
-                        bSidurGrira = (drSugSidur[0]["sug_Avoda"].ToString() == clGeneral.enSugAvoda.Grira.GetHashCode().ToString());
+                        bSidurGrira = (drSugSidur[0]["sug_Avoda"].ToString() == enSugAvoda.Grira.GetHashCode().ToString());
                     }
                 }
             }
@@ -5440,14 +5443,14 @@ namespace KdsBatch
             //נבדוק אם סידור הוא מסוג קופאי
             if (!oSidur.bSidurMyuhad)
             {//סידור מיוחד
-                bSidurKupai = (oSidur.sSugAvoda == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString());
+                bSidurKupai = (oSidur.sSugAvoda == enSugAvoda.Kupai.GetHashCode().ToString());
             }
             else
             {//סידור רגיל
                 drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
                 if (drSugSidur.Length > 0)
                 {
-                    bSidurKupai = (drSugSidur[0]["sug_Avoda"].ToString() == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString());
+                    bSidurKupai = (drSugSidur[0]["sug_Avoda"].ToString() == enSugAvoda.Kupai.GetHashCode().ToString());
                 }
             }
             }
@@ -5468,7 +5471,7 @@ namespace KdsBatch
                 iTypeGrira = 0;
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    if (oSidur.sSugAvoda == clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString())
+                    if (oSidur.sSugAvoda == enSugAvoda.ActualGrira.GetHashCode().ToString())
                     {
                         oSidurKonenutGrira = (SidurDM)htEmployeeDetails[iSidurKonnutGrira];
                         dKonenutShatHatchala = oSidurKonenutGrira.dFullShatHatchala;
@@ -5525,7 +5528,7 @@ namespace KdsBatch
             //const int SIDUR_NESIA  = 99300;
             //const int SIDUR_MATALA = 99301;
             int iMisparSidur = 0;
-            int iCount = 0;
+          int iCount = 0;
             PeilutDM oPeilut;
             bool bHaveNesiatNamak=false;
             enMakatType oMakatType;
@@ -5761,7 +5764,7 @@ namespace KdsBatch
 
             try
             {   //אם סידור נצר
-                if ((oSidur.sSugAvoda == clGeneral.enSugAvoda.Netzer.GetHashCode().ToString()) && (oMeafyeneyOved.IsMeafyenExist(64)) && (oSidur.iLoLetashlum == 0))
+                if ((oSidur.sSugAvoda == enSugAvoda.Netzer.GetHashCode().ToString()) && (oMeafyeneyOved.IsMeafyenExist(64)) && (oSidur.iLoLetashlum == 0))
                 {
 
                     oObjSidurimOvdimUpd.CHARIGA = 3;
@@ -5788,7 +5791,8 @@ namespace KdsBatch
                 {
                     if (!IsSidurExits(99801))
                     {
-                        dt = clWorkCard.GetMeafyeneySidurById(dCardDate, 99801);
+                        var sidurManager = ServiceLocator.Current.GetInstance<ISidurDAL>();
+                        dt = sidurManager.GetMeafyeneySidurById(dCardDate, 99801);
                         oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
                         //InsertToObjSidurimOvdimForInsert(ref oSidur, ref oObjSidurimOvdimIns);
                         oObjSidurimOvdimIns.TAARICH = dCardDate;
@@ -5882,7 +5886,7 @@ namespace KdsBatch
             int iNewMisparSidur=0;
             try
             {
-                if (oSidur.sShaonNochachut == clGeneral.enShaonNochachut.enMinhal.GetHashCode().ToString())
+                if (oSidur.sShaonNochachut == enShaonNochachut.enMinhal.GetHashCode().ToString())
                 {
                     if (oOvedYomAvodaDetails.iIsuk == clGeneral.enIsukOved.ManasSadran.GetHashCode())
                     {
@@ -6102,13 +6106,13 @@ namespace KdsBatch
         private bool Condition1Saif11(ref SidurDM oSidur)
         {
             //תנאי ראשון לסעיף 11
-            return ((oSidur.bSidurMyuhad) && (oSidur.sSugAvoda == clGeneral.enSugAvoda.VaadOvdim.GetHashCode().ToString()) && (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate)));
+            return ((oSidur.bSidurMyuhad) && (oSidur.sSugAvoda == enSugAvoda.VaadOvdim.GetHashCode().ToString()) && (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate)));
         }
 
         private bool Condition2Saif11(ref SidurDM oSidur)
         {
             //תנאי שני לסעיף 11
-            return ((oSidur.iMisparSidur == 99822) && (_oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || _oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())));
+            return ((oSidur.iMisparSidur == 99822) && (_oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || _oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && ((oSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString())));
         }
 
         private bool Condition3Saif11(ref SidurDM oSidur, int iSidurIndex)
@@ -6161,7 +6165,7 @@ namespace KdsBatch
             bool bSign = false;
             try{
 
-                if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) &&
+                if ((oSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()) &&
                     (oSidur.bSidurMyuhad && oSidur.sShaonNochachut == "1" && oSidur.sChariga == "0"))
                         //וגם לעובד אין מאפיין 5 ו- 6 ברמה האישית. 
                         if (!oMeafyeneyOved.IsMeafyenExist(5) && !oMeafyeneyOved.IsMeafyenExist(6))
@@ -6198,7 +6202,7 @@ namespace KdsBatch
                     //עובד 5 ימים 
                     if ((oMeafyeneyOved.IsMeafyenExist(56)) && ((oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode()) || (oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
                     {
-                        if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate) || (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+                        if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate) || (oSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()))
                         {
                             bSign = true;
                         }
@@ -6217,7 +6221,7 @@ namespace KdsBatch
         {
             bool bSign = false;
 
-            if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() && oSidur.bSidurNotValidKodExists)
+            if (oOvedYomAvodaDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode() && oSidur.bSidurNotValidKodExists)
             {
                 bSign = true;
             }
@@ -6234,10 +6238,10 @@ namespace KdsBatch
                 {//סידור מיוחד
                     if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod))
                     {
-                        if ((oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode().ToString()) ||
-                            (oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMilueim.GetHashCode().ToString()) ||
-                            (oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enTeuna.GetHashCode().ToString()) ||
-                            (oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enEvel.GetHashCode().ToString()))
+                        if ((oSidur.sHeadrutTypeKod == enMeafyenSidur53.enMachala.GetHashCode().ToString()) ||
+                            (oSidur.sHeadrutTypeKod == enMeafyenSidur53.enMilueim.GetHashCode().ToString()) ||
+                            (oSidur.sHeadrutTypeKod == enMeafyenSidur53.enTeuna.GetHashCode().ToString()) ||
+                            (oSidur.sHeadrutTypeKod == enMeafyenSidur53.enEvel.GetHashCode().ToString()))
                         {
                             bLoLetashlumAutomati = true;
                         }
@@ -6263,7 +6267,7 @@ namespace KdsBatch
                 if (drSugSidur.Length > 0)
                 {
                     //TODO: מחכה לתשובה ממירי
-                    bLoLetashlumAutomati = (drSugSidur[0]["lo_letashlum_automati"].ToString() == clGeneral.enMeafyen79.LoLetashlumAutomat.GetHashCode().ToString());
+                    bLoLetashlumAutomati = (drSugSidur[0]["lo_letashlum_automati"].ToString() == enMeafyen79.LoLetashlumAutomat.GetHashCode().ToString());
                 }
                 else
                 {
@@ -6456,7 +6460,7 @@ namespace KdsBatch
                 //{
                     if ((oSidur.bSidurMyuhad) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0 || (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM==1)))
                     {
-                        if ((oSidur.sZakayMichutzLamichsa == clGeneral.enMeafyenSidur25.enZakaiAutomat.GetHashCode().ToString()) )
+                        if ((oSidur.sZakayMichutzLamichsa == enMeafyenSidur25.enZakaiAutomat.GetHashCode().ToString()) )
                         {   //אם סידור הוא סידור מיוחד ויש לו ערך 3 במאפיין 25 (זכאי אוטומטית "מחוץ למכסה")
                             //וגם הוא לא מאגד תעבורה.                                               
                             oObjSidurimOvdimUpd.OUT_MICHSA = 1;
@@ -6492,7 +6496,7 @@ namespace KdsBatch
             //1. הסידור מזכה אוטומטית (ערך 3 במאפיין 35) 
             try
             {
-                if ((oObjSidurimOvdimUpd.LO_LETASHLUM == 0 || (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM == 1)) && (oSidur.sZakaiLeChariga == clGeneral.enMeafyenSidur35.enCharigaAutomat.GetHashCode().ToString()))
+                if ((oObjSidurimOvdimUpd.LO_LETASHLUM == 0 || (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM == 1)) && (oSidur.sZakaiLeChariga == enMeafyenSidur35.enCharigaAutomat.GetHashCode().ToString()))
                 {
                     oObjSidurimOvdimUpd.CHARIGA = 3;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
@@ -6528,7 +6532,7 @@ namespace KdsBatch
                     oSidur.sHashlama = "0";
                 }
 
-                if (oOvedYomAvodaDetails.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                if (oOvedYomAvodaDetails.iKodHevra != enEmployeeType.enEggedTaavora.GetHashCode())
                 {
                     //התנאים לקבלת ערך 1 - השלמה לשעה                          
                     //כל הסידורים מסומנים ללא ערך בשדה השלמה (השלמה כלשהיא, לא משנה איזה ערך), אם קיימת -  עוצרים.
@@ -6538,7 +6542,7 @@ namespace KdsBatch
                         //הסידור (101 (זמן מינימום לסידור חול להשלמה, 102 - זמן מינימום לסידור שישי/ע.ח להשלמה, 103 - זמן מינימום לסידור שבת/שבתון
                         if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate))
                         { iParamHashlama = oParam.iHashlamaShabat; }
-                        else if ((oSidur.sErevShishiChag == "1") || (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+                        else if ((oSidur.sErevShishiChag == "1") || (oSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()))
                         { iParamHashlama = oParam.iHashlamaShisi; }
                         else { iParamHashlama = oParam.iHashlamaYomRagil; }
 
@@ -6731,13 +6735,13 @@ namespace KdsBatch
                     //הפונקציה תחזיר TRUE אם הסידור זכאי לזמן נסיעות
                     if (oSidur.bSidurMyuhad)
                     {//סידור מיוחד
-                        bSidurZakaiLenesiot = ((oSidur.sShaonNochachut == clGeneral.enShaonNochachut.enMinhal.GetHashCode().ToString() || oSidur.sShaonNochachut == clGeneral.enShaonNochachut.enNetzer.GetHashCode().ToString() || oSidur.sShaonNochachut == clGeneral.enShaonNochachut.enGrira.GetHashCode().ToString()));
+                        bSidurZakaiLenesiot = ((oSidur.sShaonNochachut == enShaonNochachut.enMinhal.GetHashCode().ToString() || oSidur.sShaonNochachut == enShaonNochachut.enNetzer.GetHashCode().ToString() || oSidur.sShaonNochachut == enShaonNochachut.enGrira.GetHashCode().ToString()));
                     }
                     else
                     {//סידור רגיל
                         if (drSugSidur.Length > 0)
                         {
-                            bSidurZakaiLenesiot = (drSugSidur[0]["shaon_nochachut"].ToString() == clGeneral.enShaonNochachut.enMinhal.GetHashCode().ToString() || drSugSidur[0]["shaon_nochachut"].ToString() == clGeneral.enShaonNochachut.enNetzer.GetHashCode().ToString() || drSugSidur[0]["shaon_nochachut"].ToString() == clGeneral.enShaonNochachut.enGrira.GetHashCode().ToString());
+                            bSidurZakaiLenesiot = (drSugSidur[0]["shaon_nochachut"].ToString() == enShaonNochachut.enMinhal.GetHashCode().ToString() || drSugSidur[0]["shaon_nochachut"].ToString() == enShaonNochachut.enNetzer.GetHashCode().ToString() || drSugSidur[0]["shaon_nochachut"].ToString() == enShaonNochachut.enGrira.GetHashCode().ToString());
                         }
                     }
                 }
@@ -6811,11 +6815,11 @@ namespace KdsBatch
                 //{
                 //    oObjYameyAvodaUpd.HASHLAMA_LEYOM = 1;
                 //    oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                //    if (iHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode())
+                //    if (iHeadrutTypeKod == enMeafyenSidur53.enMachala.GetHashCode())
                 //    { oObjYameyAvodaUpd.SIBAT_HASHLAMA_LEYOM = 2; }
-                //    else if (iHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMilueim.GetHashCode())
+                //    else if (iHeadrutTypeKod == enMeafyenSidur53.enMilueim.GetHashCode())
                 //    { oObjYameyAvodaUpd.SIBAT_HASHLAMA_LEYOM = 3; }
-                //    else if (iHeadrutTypeKod == clGeneral.enMeafyenSidur53.enTeuna.GetHashCode())
+                //    else if (iHeadrutTypeKod == enMeafyenSidur53.enTeuna.GetHashCode())
                 //    { oObjYameyAvodaUpd.SIBAT_HASHLAMA_LEYOM = 4; }
                 //}
                 //else
@@ -6860,6 +6864,7 @@ namespace KdsBatch
             }
         }
 
+    
         private bool IsHeadrutMachalaMiluimTeuna(SidurDM oSidur, ref int iHeadrutTypeKod)
         {
             bool HeadrutMachalaMiluimTeuna = false;
@@ -6872,9 +6877,9 @@ namespace KdsBatch
                 {//סידור מיוחד
                     if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod))
                     {
-                      if ((oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode().ToString()) ||
-                                                    (oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMilueim.GetHashCode().ToString()) ||
-                                                    (oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enTeuna.GetHashCode().ToString()))
+                      if ((oSidur.sHeadrutTypeKod == enMeafyenSidur53.enMachala.GetHashCode().ToString()) ||
+                                                    (oSidur.sHeadrutTypeKod == enMeafyenSidur53.enMilueim.GetHashCode().ToString()) ||
+                                                    (oSidur.sHeadrutTypeKod == enMeafyenSidur53.enTeuna.GetHashCode().ToString()))
                         {
                             HeadrutMachalaMiluimTeuna=true;
                             iHeadrutTypeKod = int.Parse(oSidur.sHeadrutTypeKod);
@@ -6933,7 +6938,7 @@ namespace KdsBatch
             try
             {
                 //סידור מיוחד
-                bSidurShaonKnisa = ((oSidur.bSidurMyuhad) && ((oSidur.sSugAvoda == clGeneral.enSugAvoda.Shaon.GetHashCode().ToString())));
+                bSidurShaonKnisa = ((oSidur.bSidurMyuhad) && ((oSidur.sSugAvoda == enSugAvoda.Shaon.GetHashCode().ToString())));
             }
             catch (Exception ex)
             {
@@ -7104,7 +7109,7 @@ namespace KdsBatch
             {
                 //אם אין מאפיין נסיעות (51, 61) - נעדכן ל0- 
                
-                 if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() && (!oMeafyeneyOved.IsMeafyenExist(51)) && (!oMeafyeneyOved.IsMeafyenExist(61)))
+                 if (oOvedYomAvodaDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode() && (!oMeafyeneyOved.IsMeafyenExist(51)) && (!oMeafyeneyOved.IsMeafyenExist(61)))
                 {
                     if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
                     {
@@ -7470,7 +7475,7 @@ namespace KdsBatch
             {
                 //הלבשה
 
-                if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() )
+                if (oOvedYomAvodaDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode())
                 {
                     //עובד של אגד תעבורה לא זכאי אף פעם, גם אם הכרטיס שגוי וגם אם לא
                     if (!CheckIdkunRashemet("HALBASHA"))
@@ -7602,7 +7607,7 @@ namespace KdsBatch
                                 //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                                 //    }
                                 //}
-                                if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                                if (oOvedYomAvodaDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode())
                                 {
                                     //4. עובד מאגד תעבורה 
                                     if (!CheckIdkunRashemet("HALBASHA"))
@@ -7987,8 +7992,8 @@ namespace KdsBatch
             try{
             if (oSidur.bSidurMyuhad)
             {
-                //if ((oSidur.bHeadrutTypeKodExists) && (oSidur.sHeadrutTypeKod!=clGeneral.enMeafyenSidur53.enHeadrutWithPayment) &&
-                //    (oSidur.sHeadrutTypeKod!=clGeneral.enMeafyenSidur53.enHolidayForHours))
+                //if ((oSidur.bHeadrutTypeKodExists) && (oSidur.sHeadrutTypeKod!=enMeafyenSidur53.enHeadrutWithPayment) &&
+                //    (oSidur.sHeadrutTypeKod!=enMeafyenSidur53.enHolidayForHours))
                 //{
                 //    oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = null;
                 //    oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = null;
@@ -8001,8 +8006,8 @@ namespace KdsBatch
                 שעת גמר לתשלום = שעת גמר מאפיין (המאפיין תלוי בסוג היום, ראה הסבר בעמודה שדות מעורבים).
                 (אין לעדכן שעת התחלה ושעת גמר)*/
 
-                if ((oSidur.bHeadrutTypeKodExists) && ((oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enHeadrutWithPayment.GetHashCode().ToString()) ||
-                    (oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enHolidayForHours.GetHashCode().ToString())))
+                if ((oSidur.bHeadrutTypeKodExists) && ((oSidur.sHeadrutTypeKod == enMeafyenSidur53.enHeadrutWithPayment.GetHashCode().ToString()) ||
+                    (oSidur.sHeadrutTypeKod == enMeafyenSidur53.enHolidayForHours.GetHashCode().ToString())))
                 {
                     GetOvedShatHatchalaGmar(oObjSidurimOvdimUpd.SHAT_GMAR, oMeafyeneyOved, ref oSidur, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum, out bFromMeafyenHatchala, out bFromMeafyenGmar);
                     //אם שעת גמר המאפיין גדולה מפרמטר כללי מספר 0002  אזי שעת גמר לתשלום = פרמטר כללי 0002 (וימן 08/10/2009)
@@ -8457,11 +8462,11 @@ namespace KdsBatch
                     else
                     {
                         //יום שבת/שבתון
-                        if ((oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton == "1"))
+                        if ((oSidur.sSidurDay == enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton == "1"))
                         {
                             if (oMeafyeneyOved.IsMeafyenExist(7))
                             {
-                                dShatHatchalaLetashlum = clGeneral.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(7).Value);
+                                dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(7).Value);
                                 bFromMeafyenHatchala = true;
                             }
                             else
@@ -8470,7 +8475,7 @@ namespace KdsBatch
                             }
                             if (oMeafyeneyOved.IsMeafyenExist(8))
                             {
-                                dShatGmarLetashlum = clGeneral.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(8).Value);
+                                dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(8).Value);
                                 bFromMeafyenGmar = true;
                             }
                             else
@@ -8481,11 +8486,11 @@ namespace KdsBatch
                         else
                         {
                             //יום שישי או ערב חג
-                            if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+                            if ((oSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()))
                             {
                                 if (oMeafyeneyOved.IsMeafyenExist(5))
                                 {
-                                    dShatHatchalaLetashlum = clGeneral.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(5).Value);
+                                    dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(5).Value);
                                     bFromMeafyenHatchala = true;
                                 }
                                 else
@@ -8494,7 +8499,7 @@ namespace KdsBatch
                                 }
                                 if (oMeafyeneyOved.IsMeafyenExist(6))
                                 {
-                                    dShatGmarLetashlum = clGeneral.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(6).Value);
+                                    dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(6).Value);
                                     bFromMeafyenGmar = true;
                                 }
                                 else
@@ -8506,7 +8511,7 @@ namespace KdsBatch
                             {   //יום חול
                                 if (oMeafyeneyOved.IsMeafyenExist(3))
                                 {
-                                    dShatHatchalaLetashlum = clGeneral.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(3).Value);
+                                    dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(3).Value);
                                     bFromMeafyenHatchala = true;
                                 }
                                 else
@@ -8516,7 +8521,7 @@ namespace KdsBatch
 
                                 if (oMeafyeneyOved.IsMeafyenExist(4))
                                 {
-                                    dShatGmarLetashlum = clGeneral.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(4).Value);
+                                    dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(4).Value);
                                     bFromMeafyenGmar = true;
                                 }
                                 else
@@ -8546,19 +8551,19 @@ namespace KdsBatch
             {
                 if (_oMeafyeneyOved.IsMeafyenExist(3))
                 {
-                    dShatHatchalaLetashlum = clGeneral.ConvertMefyenShaotValid(_dCardDate, oMeafyeneyOved.GetMeafyen(3).Value);
+                    dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(_dCardDate, oMeafyeneyOved.GetMeafyen(3).Value);
                     bFromMeafyenHatchala = true;
                 }
                 if (_oMeafyeneyOved.IsMeafyenExist(4))
                 {
-                    dShatGmarLetashlum = clGeneral.ConvertMefyenShaotValid(_dCardDate, oMeafyeneyOved.GetMeafyen(4).Value);
+                    dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(_dCardDate, oMeafyeneyOved.GetMeafyen(4).Value);
                     bFromMeafyenGmar = true;
                 }
 
-                iSugYom = clGeneral.GetSugYom(_iMisparIshi, _dCardDate, _dtYamimMeyuchadim, _oOvedYomAvodaDetails.iKodSectorIsuk, _dtSugeyYamimMeyuchadim, _oMeafyeneyOved.GetMeafyen(56).IntValue);
+                iSugYom = DateHelper.GetSugYom(_iMisparIshi, _dCardDate, _dtYamimMeyuchadim, _oOvedYomAvodaDetails.iKodSectorIsuk, _dtSugeyYamimMeyuchadim, _oMeafyeneyOved.GetMeafyen(56).IntValue);
                 if (iSugYom >= enSugYom.Chol.GetHashCode() && iSugYom < enSugYom.Shishi.GetHashCode())
                 {
-                    int iSugMishmeret = clDefinitions.GetSugMishmeret(_iMisparIshi, _dCardDate, _iSugYom, firstTafkidSidur.dFullShatHatchala, lastTafkidSidur.dFullShatGmar, _oParameters);
+                    int iSugMishmeret = DateHelper.GetSugMishmeret(_iMisparIshi, _dCardDate, _iSugYom, firstTafkidSidur.dFullShatHatchala, lastTafkidSidur.dFullShatGmar, _oParameters);
 
                     switch (iSugMishmeret)
                     {
@@ -8569,12 +8574,12 @@ namespace KdsBatch
                             {
                                 if (_oMeafyeneyOved.IsMeafyenExist(23))
                                 {
-                                    dShatHatchalaLetashlum = clGeneral.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(23).Value);
+                                    dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(23).Value);
                                     bFromMeafyenHatchala = true;
                                 }
                                 if (_oMeafyeneyOved.IsMeafyenExist(24))
                                 {
-                                    dShatGmarLetashlum = clGeneral.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(24).Value);
+                                    dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(24).Value);
                                     bFromMeafyenGmar = true;
                                 }
                                 break;
@@ -8585,12 +8590,12 @@ namespace KdsBatch
                             {
                                 if (_oMeafyeneyOved.IsMeafyenExist(25))
                                 {
-                                    dShatHatchalaLetashlum = clGeneral.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(25).Value);
+                                    dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(25).Value);
                                     bFromMeafyenHatchala = true;
                                 }
                                 if (_oMeafyeneyOved.IsMeafyenExist(26))
                                 {
-                                    dShatGmarLetashlum = clGeneral.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(26).Value);
+                                    dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(26).Value);
                                     bFromMeafyenGmar = true;
                                 }
                                 break;
@@ -8605,12 +8610,12 @@ namespace KdsBatch
                     {
                         if (_oMeafyeneyOved.IsMeafyenExist(27))
                         {
-                            dShatHatchalaLetashlum = clGeneral.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(27).Value);
+                            dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(27).Value);
                             bFromMeafyenHatchala = true;
                         }
                         if (_oMeafyeneyOved.IsMeafyenExist(28))
                         {
-                            dShatGmarLetashlum = clGeneral.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(28).Value);
+                            dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(28).Value);
                             bFromMeafyenGmar = true;
                         }
                     }
@@ -8618,12 +8623,12 @@ namespace KdsBatch
                     {
                         if (_oMeafyeneyOved.IsMeafyenExist(7))
                         {
-                            dShatHatchalaLetashlum = clGeneral.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(7).Value);
+                            dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(7).Value);
                             bFromMeafyenHatchala = true;
                         }
                         if (_oMeafyeneyOved.IsMeafyenExist(8))
                         {
-                            dShatGmarLetashlum = clGeneral.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(8).Value);
+                            dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(8).Value);
                             bFromMeafyenGmar = true;
                         }
                     }

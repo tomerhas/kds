@@ -527,19 +527,22 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
          DataTable dtRikuz1To10 = new DataTable();
          DataTable dtRikuz11To20 = new DataTable();
          DataTable dtRikuz21To31 = new DataTable();
-         DataTable dsRikuzAll = new DataTable();
+         DataTable dtAllRikuz = new DataTable();
+         DataSet dsRikuz = new DataSet();
          try
          {
              dTaarich = DateTime.Parse(ViewState["Taarich"].ToString());
              iBakashaId=long.Parse(ViewState["BakashId"].ToString());
              clOvdim oOvdim = new clOvdim();
 
-             clCalculation objCalc = new clCalculation();
-             objCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich,1,ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10,ref  dtRikuz11To20,ref dtRikuz21To31,ref dsRikuzAll);
+             //clCalculation objCalc = new clCalculation();
+             //objCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich,1,ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10,ref  dtRikuz11To20,ref dtRikuz21To31,ref dsRikuzAll);
 
-             //MainCalc objMainCalc = new MainCalc();
-             //objMainCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 1, ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10, ref  dtRikuz11To20, ref dtRikuz21To31, ref dsRikuzAll);
-             
+
+             MainCalc objMainCalc = new MainCalc(); //??
+             objMainCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 1, ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10, ref  dtRikuz11To20, ref dtRikuz21To31, ref dtAllRikuz, ref dsRikuz);
+            
+
              grdAbsenceData.DataSource = dtHeadrut;
              grdAbsenceData.DataBind();
 

@@ -14,6 +14,7 @@ using KDSCommon.Interfaces.Managers;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
 using KdsErrors.DAL;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.FlowManagers
 {
@@ -50,7 +51,7 @@ namespace KdsErrors.FlowManagers
             {
                 inputData.curSidur = (SidurDM)inputData.htEmployeeDetails[i];
                 inputData.iSidur = i;
-                inputData.drSugSidur = GetOneSugSidurMeafyen(inputData);
+                inputData.drSugSidur = _container.Resolve<ISidurManager>().GetOneSugSidurMeafyen(inputData.curSidur.iSugSidurRagil, inputData.CardDate);
                 oSidurErrors.ExecuteFlow(inputData, 1);
                 for (int j = 0; j < inputData.curSidur.htPeilut.Count; j++)
                 {
@@ -183,7 +184,7 @@ namespace KdsErrors.FlowManagers
          
             inputData.SugeyYamimMeyuchadim =cacheManager.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim);
             inputData.YamimMeyuchadim = cacheManager.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim);
-            inputData.iSugYom = clGeneral.GetSugYom(inputData.YamimMeyuchadim, cardDate, inputData.SugeyYamimMeyuchadim);//, _oMeafyeneyOved.GetMeafyen(56).IntValue);
+            inputData.iSugYom = DateHelper.GetSugYom(inputData.YamimMeyuchadim, cardDate, inputData.SugeyYamimMeyuchadim);//, _oMeafyeneyOved.GetMeafyen(56).IntValue);
             inputData.ErrorsNotActive = cacheManager.GetCacheItem<DataTable>(CachedItems.ErrorTable);
             inputData.LookUp = cacheManager.GetCacheItem<DataTable>(CachedItems.LookUpTables);
 
@@ -257,18 +258,7 @@ namespace KdsErrors.FlowManagers
             }
         }
 
-        private DataRow[] GetOneSugSidurMeafyen(ErrorInputData input)
-        {
-            DataRow[] dr;
-
-            var cacheManager = _container.Resolve<IKDSCacheManager>();
-            DataTable sugSidur = cacheManager.GetCacheItem<DataTable>(CachedItems.SugeySidur);
-
-            dr = sugSidur.Select(string.Concat("sug_sidur=", input.curSidur.iSugSidurRagil.ToString(), " and Convert('", input.CardDate.ToShortDateString(), "','System.DateTime') >= me_tarich and Convert('", input.CardDate.ToShortDateString(), "', 'System.DateTime') <= ad_tarich"));
-            // dr = dtSugSidur.Select(string.Concat("sug_sidur=", iSugSidur.ToString()));
-
-            return dr;
-        }
+       
 
        
     }

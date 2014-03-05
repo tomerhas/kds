@@ -27,7 +27,7 @@ namespace KdsBatch
           DateTime dTarMe, dTarAd;
           float fErech;
           int iSugYom, iCountDays,iDay;
-
+          clCalcBL oCalcBL = new clCalcBL();
           try
           {
               if (!KayemetRitzatHefresh())
@@ -38,98 +38,98 @@ namespace KdsBatch
                   do
                   {
                       iCountDays += 1;
-                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                      fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                       if (fErech > 0)
                       {
                           sErua589.Append("R");
                       }
                       else
                       {
-                          fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomChofesh.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                          fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomChofesh.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                           if (fErech > 0)
                           {
                               sErua589.Append("G");
                           }
                           else
                           {
-                              fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomHeadrut.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                              fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomHeadrut.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                               if (fErech > 0)
                               {
                                   sErua589.Append("D");
                               }
                               else
                               {
-                                  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMiluim.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                  fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMiluim.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                   if (fErech > 0)
                                   {
                                       sErua589.Append("V");
                                   }
                                   else
                                   {
-                                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachla.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                      fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachla.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                       if (fErech > 0)
                                       {
                                           sErua589.Append("N");
                                       }
                                       else
                                       {
-                                          fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalaBoded.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                          fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalaBoded.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                           if (fErech > 0)
                                           {
                                               sErua589.Append("M");
                                           }
                                           else
                                           {
-                                              fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalaYeled.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                              fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalaYeled.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                               if (fErech > 0)
                                               {
                                                   sErua589.Append("I");
                                               }
                                               else
                                               {
-                                                  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalatHorim.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                  fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalatHorim.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                   if (fErech > 0)
                                                   {
                                                       sErua589.Append("T");
                                                   }
                                                   else
                                                   {
-                                                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalatBenZug.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                      fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalatBenZug.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                       if (fErech > 0)
                                                       {
                                                           sErua589.Append("A");
                                                       }
                                                       else
                                                       {
-                                                          fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomShmiratHerayon.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                          fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomShmiratHerayon.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                           if (fErech > 0)
                                                           {
                                                               sErua589.Append("F");
                                                           }
                                                           else
                                                           {
-                                                              fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomTipatChalav.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                              fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomTipatChalav.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                               if (fErech > 0)
                                                               {
                                                                   sErua589.Append("H");
                                                               }
                                                               else
                                                               {
-                                                                  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomHadracha.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                                  fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomHadracha.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                                   if (fErech > 0)
                                                                   {
                                                                       sErua589.Append("W");
                                                                   }
                                                                   else
                                                                   {
-                                                                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomTeuna.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                                      fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomTeuna.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                                       if (fErech > 0)
                                                                       {
                                                                           sErua589.Append("Z");
                                                                       }
                                                                       else
                                                                       {
-                                                                          fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomEvel.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                                          fErech = oCalcBL.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomEvel.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                                           if (fErech > 0)
                                                                           {
                                                                               sErua589.Append("א");

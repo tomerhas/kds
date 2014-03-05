@@ -6,6 +6,7 @@ using KDSCommon.Enums;
 using KDSCommon.DataModels.Errors;
 using KdsLibrary;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -42,13 +43,13 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                 {
                     if ((!input.curSidur.bSidurMyuhad) && (int.Parse(input.curSidur.sHashlama) > 0))
                     {
-                        if (CheckShaaton(input.iSugYom, input.CardDate, input))
+                        if (DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim))
                         {
                             iZmanMinimum = input.oParameters.iHashlamaShabat;
                         }
                         else
                         {
-                            if ((input.curSidur.sErevShishiChag == "1") || (input.curSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+                            if ((input.curSidur.sErevShishiChag == "1") || (input.curSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()))
                             {
                                 iZmanMinimum = input.oParameters.iHashlamaShisi;
                             }

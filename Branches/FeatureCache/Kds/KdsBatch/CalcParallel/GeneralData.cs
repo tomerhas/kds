@@ -9,6 +9,7 @@ using Microsoft.Practices.ServiceLocation;
 using KDSCommon.DataModels;
 using KDSCommon.Interfaces;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 namespace KdsBatch
 {
     public class SingleGeneralData  
@@ -166,7 +167,7 @@ namespace KdsBatch
                 ListParameters  = new List<clParametersDM>();
                 while (dTarMe <= _TarAd)
                 {
-                    sugYom = clGeneral.GetSugYom(dtYamimMeyuchadim, dTarMe, dtSugeyYamimMeyuchadim);
+                    sugYom = DateHelper.GetSugYom(dtYamimMeyuchadim, dTarMe, dtSugeyYamimMeyuchadim);
                     //itemParams = new clParameters(dTarMe, sugYom,"Calc", dtParameters);
                     IParametersManager clPramsManager = ServiceLocator.Current.GetInstance<IParametersManager>();
                     itemParams = clPramsManager.CreateClsParametrs(dTarMe, sugYom, "Calc", dtParameters);

@@ -10,6 +10,7 @@ using KDSCommon.DataModels;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Managers;
 using Microsoft.Practices.Unity;
+using KDSCommon.Helpers;
 
 namespace KdsErrors.ErrosrImpl.SidurErrors 
 {
@@ -30,11 +31,11 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
 
             if (input.curSidur.bSidurMyuhad)
             {//סידור מיוחד
-                if (!string.IsNullOrEmpty(input.curSidur.sHeadrutTypeKod) && input.curSidur.iSidurLebdikatRezefMachala > 0 && input.curSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode().ToString()
+                if (!string.IsNullOrEmpty(input.curSidur.sHeadrutTypeKod) && input.curSidur.iSidurLebdikatRezefMachala > 0 && input.curSidur.sHeadrutTypeKod == enMeafyenSidur53.enMachala.GetHashCode().ToString()
                     && (input.curSidur.iLoLetashlum == 0 || (input.curSidur.iLoLetashlum == 1 && input.curSidur.iKodSibaLoLetashlum == 22)))
                 {
                     dTaarichKodem = input.CardDate.AddDays(-1);
-                    if (CheckShaaton(input.iSugYom, dTaarichKodem, input) ||
+                    if (DateHelper.CheckShaaton(input.iSugYom, dTaarichKodem, input.SugeyYamimMeyuchadim) ||
                         dTaarichKodem.DayOfWeek == DayOfWeek.Friday)
                     //  (input.oMeafyeneyOved.GetMeafyen(56) == enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || input.oMeafyeneyOved.GetMeafyen(56) == enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())))
                     {
@@ -45,7 +46,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
 
                     if (!bError)
                     {
-                        if (CheckShaaton(input.iSugYom, dTaarichKodem, input) ||
+                        if (DateHelper.CheckShaaton(input.iSugYom, dTaarichKodem, input.SugeyYamimMeyuchadim) ||
                             (dTaarichKodem.DayOfWeek == DayOfWeek.Friday &&
                             (input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
                         {
@@ -96,7 +97,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                 {
                     var sidurManager = ServiceLocator.Current.GetInstance<ISidurManager>();
                     oSidur = sidurManager.CreateClsSidurFromEmployeeDetails(dr);
-                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.iSidurLebdikatRezefMachala > 0 && oSidur.sHeadrutTypeKod == clGeneral.enMeafyenSidur53.enMachala.GetHashCode().ToString()
+                    if (!string.IsNullOrEmpty(oSidur.sHeadrutTypeKod) && oSidur.iSidurLebdikatRezefMachala > 0 && oSidur.sHeadrutTypeKod == enMeafyenSidur53.enMachala.GetHashCode().ToString()
                          && (oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iKodSibaLoLetashlum == 22)))
                         return true;
                 }

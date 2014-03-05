@@ -265,6 +265,25 @@ namespace KdsLibrary
         {
             _container.Resolve<IOvedDAL>().UpdateCardStatus(iMisparIshi, dCardDate, oCardStatus,iUserId);
         }
+
+        public bool IsOvedMatzavExists(string sKodMatzav, DataTable dtMatzavOved)
+        {
+            DataRow[] dr;
+            bool bOvedMatzavExists;
+
+            try
+            {
+                sKodMatzav = NumerichHelper.Append0ToNumber(sKodMatzav);
+
+                dr = dtMatzavOved.Select(string.Concat("kod_matzav='", sKodMatzav + "'"));
+                bOvedMatzavExists = dr.Length > 0;
+                return bOvedMatzavExists;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 
