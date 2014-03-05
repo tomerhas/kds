@@ -7,6 +7,7 @@ using KdsLibrary.BL;
 using System.Data;
 using KDSCommon.DataModels;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 
 namespace KdsBatch
 {
@@ -60,7 +61,7 @@ namespace KdsBatch
                 clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
             }
 
-            iSugYom = clGeneral.GetSugYom(iMisparIshi, dTaarich, clCalcData.DtYamimMeyuchadim, objPirteyOved.iKodSectorIsuk, clCalcData.DtSugeyYamimMeyuchadim,objMeafyeneyOved.GetMeafyen(56).IntValue);
+            iSugYom = DateHelper.GetSugYom(iMisparIshi, dTaarich, clCalcData.DtYamimMeyuchadim, objPirteyOved.iKodSectorIsuk, clCalcData.DtSugeyYamimMeyuchadim, objMeafyeneyOved.GetMeafyen(56).IntValue);
             return iSugYom;
         }
 

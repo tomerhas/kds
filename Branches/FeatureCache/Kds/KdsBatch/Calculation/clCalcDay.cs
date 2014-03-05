@@ -6,6 +6,7 @@ using System.Data;
 using KdsLibrary;
 using KDSCommon.DataModels;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 
 namespace KdsBatch
 {
@@ -2107,7 +2108,7 @@ namespace KdsBatch
                           fTempZ = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Nosafot150.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                           fTempZ = fTempZ + clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Shaot50.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                     
-                          if (_oGeneralData.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() && CheckSugMishmeret() == clGeneral.enSugMishmeret.Liyla.GetHashCode() &&
+                          if (_oGeneralData.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() && CheckSugMishmeret() == enSugMishmeret.Liyla.GetHashCode() &&
                            (_oGeneralData.objPirteyOved.iIsuk == 122 || _oGeneralData.objPirteyOved.iIsuk == 123 || _oGeneralData.objPirteyOved.iIsuk == 124 || _oGeneralData.objPirteyOved.iIsuk == 127))
                           {
                               fSumDakotRechiv = fTempX;
@@ -2891,7 +2892,7 @@ namespace KdsBatch
                   {
                       if (_oGeneralData.objPirteyOved.iKodMaamdRashi== clGeneral.enMaamad.Salarieds.GetHashCode())
                       {
-                          if (CheckSugMishmeret()==clGeneral.enSugMishmeret.Liyla.GetHashCode())
+                          if (CheckSugMishmeret()==enSugMishmeret.Liyla.GetHashCode())
                           {
                           bMafilimSchirim=true;
                           }
@@ -3343,7 +3344,7 @@ namespace KdsBatch
                         {
                             if (_oGeneralData.objPirteyOved.iKodMaamdRashi== clGeneral.enMaamad.Salarieds.GetHashCode())
                             {
-                                if (CheckSugMishmeret() == clGeneral.enSugMishmeret.Liyla.GetHashCode())
+                                if (CheckSugMishmeret() == enSugMishmeret.Liyla.GetHashCode())
                                 {
                                     oSidur.CalcRechiv92(fMichsaYomit, fNochehutLetashlum);
                                     fDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Shaot50.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
@@ -3463,7 +3464,7 @@ namespace KdsBatch
                      addRowToTable(clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), (fDakotTafkidShishi + fDakotRechiv));
                 
                  }
-                 else if (_Taarich.DayOfWeek.GetHashCode() + 1 == clGeneral.enDay.Shabat.GetHashCode() || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, iSugYom, _Taarich))
+                 else if (_Taarich.DayOfWeek.GetHashCode() + 1 == enDay.Shabat.GetHashCode() || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, iSugYom, _Taarich))
                  {
                      fDakotTafkidShabat = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotTafkidShabat.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                
@@ -3686,7 +3687,7 @@ namespace KdsBatch
                             addRowToTable(clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), (fDakotTafkidShishi + fDakotRechiv));
 
                         }
-                        else if (_Taarich.DayOfWeek.GetHashCode() + 1 == clGeneral.enDay.Shabat.GetHashCode() || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, iSugYom, _Taarich))
+                        else if (_Taarich.DayOfWeek.GetHashCode() + 1 == enDay.Shabat.GetHashCode() || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, iSugYom, _Taarich))
                         {
                             fDakotTafkidShabat = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotTafkidShabat.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
@@ -4058,37 +4059,37 @@ namespace KdsBatch
                                 iSugMishmeret = CheckSugMishmeret();
                                 if (iSugYom == enSugYom.Chol.GetHashCode())
                                 {
-                                    if (iSugMishmeret == clGeneral.enSugMishmeret.Boker.GetHashCode())
+                                    if (iSugMishmeret == enSugMishmeret.Boker.GetHashCode())
                                     {
                                         fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevColBoker;
                                     }
-                                    else if (iSugMishmeret == clGeneral.enSugMishmeret.Tzaharim.GetHashCode())
+                                    else if (iSugMishmeret == enSugMishmeret.Tzaharim.GetHashCode())
                                     {
                                         fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevColTzaharim;
                                     }
-                                    else if (iSugMishmeret == clGeneral.enSugMishmeret.Liyla.GetHashCode())
+                                    else if (iSugMishmeret == enSugMishmeret.Liyla.GetHashCode())
                                     {
                                         fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevColLiyla;
                                     }
                                 }
                                 else if (iSugYom > enSugYom.Shishi.GetHashCode() && iSugYom < enSugYom.LagBaomerOrPurim.GetHashCode())
                                 {
-                                    if (iSugMishmeret == clGeneral.enSugMishmeret.Boker.GetHashCode())
+                                    if (iSugMishmeret == enSugMishmeret.Boker.GetHashCode())
                                     {
                                         fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevErevChagBoker;
                                     }
-                                    else if (iSugMishmeret == clGeneral.enSugMishmeret.Tzaharim.GetHashCode())
+                                    else if (iSugMishmeret == enSugMishmeret.Tzaharim.GetHashCode())
                                     {
                                         fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevErevChagTzaharim;
                                     }
                                 }
                                 else if (iSugYom == enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == enSugYom.Purim.GetHashCode())
                                 {
-                                    if (iSugMishmeret == clGeneral.enSugMishmeret.Boker.GetHashCode() || iSugMishmeret == clGeneral.enSugMishmeret.Tzaharim.GetHashCode())
+                                    if (iSugMishmeret == enSugMishmeret.Boker.GetHashCode() || iSugMishmeret == enSugMishmeret.Tzaharim.GetHashCode())
                                     {
                                         fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMacshevChagBoker;
                                     }
-                                    else if (iSugMishmeret == clGeneral.enSugMishmeret.Liyla.GetHashCode())
+                                    else if (iSugMishmeret == enSugMishmeret.Liyla.GetHashCode())
                                     {
                                         fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMacshevChagLiyla;
                                     }
@@ -4135,9 +4136,9 @@ namespace KdsBatch
                             }
                         }
 
-                        if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
+                        if ((dTaarich.DayOfWeek.GetHashCode() + 1) == enDay.Shabat.GetHashCode())
                         { fErechRechiv = 0; }
-                        else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shishi.GetHashCode() && !CheckShishiMuchlaf(iSugYom, dTaarich) && (_objMefyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || _objMefyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                        else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == enDay.Shishi.GetHashCode() && !CheckShishiMuchlaf(iSugYom, dTaarich) && (_objMefyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || _objMefyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
                         { fErechRechiv = 0; }
 
                     }
@@ -6635,7 +6636,7 @@ namespace KdsBatch
                       dShatHatchala = DateTime.Parse(dr[0]["SHAT_HATCHALA_LETASHLUM"].ToString());
                       dShatGmar = DateTime.Parse(dr[dr.Length - 1]["SHAT_GMAR_LETASHLUM"].ToString());
                       iSugYomLemichsa = _oGeneralData.GetSugYomLemichsa(_iMisparIshi, _Taarich);
-                      iSugMishmeret = clDefinitions.GetSugMishmeret(_iMisparIshi, _Taarich,iSugYomLemichsa, dShatHatchala, dShatGmar, _oGeneralData.objParameters);
+                      iSugMishmeret = DateHelper.GetSugMishmeret(_iMisparIshi, _Taarich, iSugYomLemichsa, dShatHatchala, dShatGmar, _oGeneralData.objParameters);
                   }
                   return iSugMishmeret;
               }

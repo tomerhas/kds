@@ -10,6 +10,7 @@ using KDSCommon.Interfaces.DAL;
 using Microsoft.Practices.ServiceLocation;
 using DalOraInfra.DAL;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 
 namespace KdsBatch
 {
@@ -95,7 +96,7 @@ namespace KdsBatch
                                                                                             });
                    // _oGeneralData.objMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dTaarich);
 
-                 //   iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                 //   iSugYom = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                     
                     _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich,"Calc");
                     _oGeneralData.objParameters = clCalcData.ListParametersMonth.Find(delegate(clParametersDM Params)
@@ -122,13 +123,13 @@ namespace KdsBatch
                  while (dTaarich <= dTarAd)
                  {
                      if (IsDayExist(dTaarich)){
-                         clCalcData.iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);
+                         clCalcData.iSugYom = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);
                          _oGeneralData.objMeafyeneyOved = clCalcData.ListMeafyeneyOvedMonth.Find(delegate(MeafyenimDM Meafyenim)
                          {
                              return (Meafyenim.Taarich == dTaarich);
                          });
                         // _oGeneralData.objMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dTaarich);
-                       //  iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                       //  iSugYom = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                          _oGeneralData.objParameters = clCalcData.ListParametersMonth.Find(delegate(clParametersDM Params)
                          {
                              return (Params._Taarich == dTaarich);
@@ -343,7 +344,7 @@ namespace KdsBatch
             dTarAd = dTarMe.AddMonths(1).AddDays(-1);
             do
             {
-                iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTarMe, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                iSugYom = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, dTarMe, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                 if (clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, iSugYom, dTarMe))
                 {
                     iSachShabatonim = iSachShabatonim + 1;
@@ -3684,7 +3685,7 @@ namespace KdsBatch
                     fDakotNochehut=clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)","KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')"));
                     fMichsaYomit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                    iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                    iSugYom = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                     bLechishuv = false;
                     if ((iSugYom == enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == enSugYom.CholHamoedSukot.GetHashCode()) && _oGeneralData.objMeafyeneyOved.GetMeafyen(85).IntValue == 1 && fDakotNochehut == 0 && fMichsaYomit>0 && bPutar)
                     {

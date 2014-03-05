@@ -2284,7 +2284,7 @@ namespace KdsBatch
 
                                     iIsuk = _oGeneralData.objPirteyOved.iIsuk;
                                     iIsuk = _oGeneralData.objPirteyOved.iIsuk;
-                                    if ((iIsuk == 122 || iIsuk == 123 || iIsuk == 124 || iIsuk == 127) && iMisparSidur == 99001 && clDefinitions.GetSugMishmeret(_iMisparIshi, dTaarich, clCalcData.iSugYom, dShatHatchalaLetashlum, dShatGmarLetashlum, _oGeneralData.objParameters) == clGeneral.enSugMishmeret.Liyla.GetHashCode())
+                                    if ((iIsuk == 122 || iIsuk == 123 || iIsuk == 124 || iIsuk == 127) && iMisparSidur == 99001 && DateHelper.GetSugMishmeret(_iMisparIshi, dTaarich, clCalcData.iSugYom, dShatHatchalaLetashlum, dShatGmarLetashlum, _oGeneralData.objParameters) == enSugMishmeret.Liyla.GetHashCode())
                                     {
                                         dZmanSiyuomTosLila = _oGeneralData.objParameters.dSiyumMishmeretLilaMafilim;
                                     }
@@ -3174,14 +3174,14 @@ namespace KdsBatch
 
                                     iSugSidur = int.Parse(drSidureyGrira[J]["sug_sidur"].ToString());
 
-                                    if (CheckSugSidur(clGeneral.enMeafyen.SugAvoda.GetHashCode(), clGeneral.enSugAvoda.Grira.GetHashCode(), dTaarich, iSugSidur))
+                                    if (CheckSugSidur(clGeneral.enMeafyen.SugAvoda.GetHashCode(), enSugAvoda.Grira.GetHashCode(), dTaarich, iSugSidur))
                                     {
                                         bNotCalc = true;
                                         break;
 
                                     }
                                 }
-                                else if (drSidureyGrira[J]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Grira.GetHashCode().ToString())
+                                else if (drSidureyGrira[J]["sug_avoda"].ToString() == enSugAvoda.Grira.GetHashCode().ToString())
                                 {
                                     bNotCalc = true;
                                     break;
@@ -3939,7 +3939,7 @@ namespace KdsBatch
                                 fDakotRechiv -= fZmanHafsaka;
                                 addRowToTable(clGeneral.enRechivim.SachDakotNehigaShishi.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fDakotRechiv);
                             }
-                            iSugYomNext = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                            iSugYomNext = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                             if (iSugYomNext == enSugYom.Shishi.GetHashCode() && fMichsaYomit == 0)
                             {
                                 CalcGlishaLeyomShishi(dShatHatchalaLetashlum, dShatGmarLetashlum, ref fDakotChol, ref fDakotRechiv, fZmanHafsaka);
@@ -4019,7 +4019,7 @@ namespace KdsBatch
                             addRowToTable(clGeneral.enRechivim.SachDakotNehigaShishi.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fDakotRechiv);
                         }
 
-                        iSugYomNext = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                        iSugYomNext = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                         if (iSugYomNext == enSugYom.Shishi.GetHashCode() && fMichsaYomit == 0)
                         {
                             CalcGlishaLeyomShishi(dShatHatchalaLetashlum, dShatGmarLetashlum, ref fDakotChol, ref fDakotRechiv, fZmanHafsaka);
@@ -4088,7 +4088,7 @@ namespace KdsBatch
                                 fDakotRechiv -= fZmanHafsaka;
                                 addRowToTable(clGeneral.enRechivim.SachDakotNihulShishi.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fDakotRechiv);
                             }
-                            iSugYomNext = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                            iSugYomNext = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                             if (iSugYomNext == enSugYom.Shishi.GetHashCode() && fMichsaYomit == 0)
                             {
                                 CalcGlishaLeyomShishi(dShatHatchalaLetashlum, dShatGmarLetashlum, ref fDakotChol, ref fDakotRechiv, fZmanHafsaka);
@@ -4127,7 +4127,7 @@ namespace KdsBatch
                         addRowToTable(clGeneral.enRechivim.SachDakotNihulShishi.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fDakotRechiv);
                     }
 
-                    iSugYomNext = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                    iSugYomNext = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                     if (iSugYomNext == enSugYom.Shishi.GetHashCode() && fMichsaYomit == 0)
                     {
                         CalcGlishaLeyomShishi(dShatHatchalaLetashlum, dShatGmarLetashlum, ref fDakotChol, ref fDakotRechiv, fZmanHafsaka);
@@ -4234,7 +4234,7 @@ namespace KdsBatch
                                 addRowToTable(clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fDakotRechiv);
                             }
 
-                            iSugYomNext = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                            iSugYomNext = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                             if (iSugYomNext == enSugYom.Shishi.GetHashCode() && fMichsaYomit == 0)
                             {
                                 CalcGlishaLeyomShishi(dShatHatchalaLetashlum, dShatGmarLetashlum, ref fDakotChol, ref fDakotRechiv, 0);
@@ -4277,7 +4277,7 @@ namespace KdsBatch
                         addRowToTable(clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fDakotRechiv);
                     }
 
-                    iSugYomNext = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                    iSugYomNext = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                     if (iSugYomNext == enSugYom.Shishi.GetHashCode() && fMichsaYomit == 0)
                     {
                         CalcGlishaLeyomShishi(dShatHatchalaLetashlum, dShatGmarLetashlum, ref fDakotChol, ref fDakotRechiv, 0);
@@ -6048,7 +6048,7 @@ namespace KdsBatch
                             iIsuk = _oGeneralData.objPirteyOved.iIsuk;
                             iSugYomLemichsa = _oGeneralData.GetSugYomLemichsa(_iMisparIshi, dTaarich);
 
-                            if ((iIsuk == 122 || iIsuk == 123 || iIsuk == 124 || iIsuk == 127) && iMisparSidur == 99001 && clDefinitions.GetSugMishmeret(_iMisparIshi, dTaarich, iSugYomLemichsa, dShatHatchalaSidur, DateTime.Parse(drSidurim[I]["shat_gmar_sidur"].ToString()), _oGeneralData.objParameters) == clGeneral.enSugMishmeret.Liyla.GetHashCode())
+                            if ((iIsuk == 122 || iIsuk == 123 || iIsuk == 124 || iIsuk == 127) && iMisparSidur == 99001 && DateHelper.GetSugMishmeret(_iMisparIshi, dTaarich, iSugYomLemichsa, dShatHatchalaSidur, DateTime.Parse(drSidurim[I]["shat_gmar_sidur"].ToString()), _oGeneralData.objParameters) == enSugMishmeret.Liyla.GetHashCode())
                             {
                                 dZmanSiyuomTosLila = _oGeneralData.objParameters.dSiyumMishmeretLilaMafilim.AddDays(-1);
                             }
@@ -6406,7 +6406,7 @@ namespace KdsBatch
                     if (!CheckErevShabatChag(iSugYom, dShatHatchalaLetashlum, dShatGmarLetashlum, ref fErech, ref fErechShabat, ZmanHafsaka))
                     {
                         //בדיקת גלישת סידור מיום חול ליום ו'/ערב חג 
-                        iSugYomNext = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
+                        iSugYomNext = DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, DateTime.Parse(dTaarich.ToShortDateString()).AddDays(1), clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue);
                         if (clCalcData.CheckErevChag(iSugYomNext) || clCalcData.CheckYomShishi(iSugYomNext))
                         {
                             fMichsaYomit126 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.AddDays(1).ToShortDateString() + "', 'System.DateTime')"));
@@ -6648,7 +6648,7 @@ namespace KdsBatch
             bNextShabat = false;
             bShabat = false;
 
-            if (iDay == clGeneral.enDay.Shabat.GetHashCode())
+            if (iDay == enDay.Shabat.GetHashCode())
             { bShabat = true; }
             else
             {
@@ -6670,9 +6670,9 @@ namespace KdsBatch
 
                 dNextDay = dTaarich.AddDays(1);
 
-                if ((dNextDay.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
+                if ((dNextDay.DayOfWeek.GetHashCode() + 1) == enDay.Shabat.GetHashCode())
                 { bNextShabat = true; }
-                else { bNextShabat = clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dNextDay, clCalcData.DtSugeyYamimMeyuchadim), dNextDay); } //, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue), dNextDay); }
+                else { bNextShabat = clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, DateHelper.GetSugYom(clCalcData.DtYamimMeyuchadim, dNextDay, clCalcData.DtSugeyYamimMeyuchadim), dNextDay); } //, _oGeneralData.objMeafyeneyOved.GetMeafyen(56).IntValue), dNextDay); }
 
                 if (bNextShabat)
                 { dShatGmarShabat = dShatGmarShabat.AddDays(1); }

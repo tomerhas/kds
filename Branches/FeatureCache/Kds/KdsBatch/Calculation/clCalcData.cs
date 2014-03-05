@@ -12,6 +12,7 @@ using KDSCommon.Interfaces.Managers;
 using KDSCommon.Interfaces.DAL;
 using DalOraInfra.DAL;
 using KDSCommon.Enums;
+using KDSCommon.Helpers;
 
 namespace KdsBatch
 {
@@ -437,7 +438,7 @@ namespace KdsBatch
                 ListParametersMonth = new List<clParametersDM>();
                 while (dTarMe <= dTarAd)
                 {
-                    sugYom = clGeneral.GetSugYom(DtYamimMeyuchadim, dTarMe, DtSugeyYamimMeyuchadim);
+                    sugYom = DateHelper.GetSugYom(DtYamimMeyuchadim, dTarMe, DtSugeyYamimMeyuchadim);
                     IParametersManager paramManager = ServiceLocator.Current.GetInstance<IParametersManager>();
                     itemParams = paramManager.CreateClsParametrs(dTarMe, sugYom, "Calc");
                     ListParametersMonth.Add(itemParams);
