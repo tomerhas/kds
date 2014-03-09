@@ -131,13 +131,12 @@ namespace KdsBatch
                        DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
                        DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
                        DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
-                       if (_iTypeCalc == clGeneral.TypeCalc.Batch || _iTypeCalc == clGeneral.TypeCalc.Premiya)
-                       {
-                           SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
-                       }
+                      
                        //שמירת נתוני החישוב לעובד
                        SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
                    }
+                   // שמירת סידורים בכל מקרה
+                   SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
                }
                _collChishuvChodesh = null;
                _collChishuvYomi = null;
