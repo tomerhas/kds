@@ -10,6 +10,7 @@ using KdsLibrary;
 using KdsLibrary.Utils;
 
 namespace KdsBatch
+
 {
     class CalcMonth
     {

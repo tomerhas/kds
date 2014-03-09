@@ -214,6 +214,7 @@ namespace KdsBatch
         public DateTime dShatHatchalaGrira; //276-התחלה מותרת-טווח עליון-גרירה בפועל
         public DateTime dTaarichHafalatMichsot; // - 277
         public DateTime dTaarichmichsatHachanatMechona; // - 278
+        public DateTime dTaarichPremiatNahagut; // - 279  תאריך שינוי לוגיקת פרמית נהגות 
 
         public float fBasisLechishuvPremia; //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
         public float fMichsatSaotChodshitET; //503 -אגד תעבורה- מכסת שעות חודשית 
@@ -1026,6 +1027,10 @@ namespace KdsBatch
                     // 278
                 sTmp = GetOneParam(278, dCardDate);
                 dTaarichmichsatHachanatMechona = String.IsNullOrEmpty(sTmp) ? DateTime.MaxValue : DateTime.Parse(sTmp);
+
+                // 279
+                sTmp = GetOneParam(279, dCardDate);
+                dTaarichPremiatNahagut = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);

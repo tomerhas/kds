@@ -108,42 +108,7 @@ namespace KdsBatch
                       
                       AddEruaToList(lBakashaId, lRequestNumToTransfer, dtOvdim.Rows[i], dsTables, ref objCollMisparIshiSugChishuv);
                       
-                      ////// iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
-                      ////// dChodesh = DateTime.Parse(dtOvdim.Rows[i]["taarich"].ToString());
-
-                      ////// //try
-                      ////// //{
-
-                      ////// if (i == 0)
-                      //////     sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString();
-                      ////// if(i % 100 ==0)
-                      //////     clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "after " + i + " ovdim" );
-                  
-                      ////// oPirteyOved = new PirteyOved(lBakashaId, lRequestNumToTransfer, dtOvdim.Rows[i]);
-                      ////// oPirteyOved.sChodeshIbud = sChodeshIbud;
-                      ////// //oPirteyOved.iCntYamim = GetCntYamimToOved(iMisparIshi, dtRechivimYomi, dChodesh);
-                      ////// //oPirteyOved._dtChishuv = GetChishuvYomiToOved(iMisparIshi, dtRechivimYomi);
-                      ////// //עובדי קייטנה 
-                      ////// //לא מבצעים להם העברה לשכר
-
-                      ////// oPirteyOved.InitializeErueyOved(dsTables);
-                      //////// oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem);
-
-                      ////// _PirteyOved.Add(oPirteyOved);
-
-                      ////// objMisparIshiSugChishuv = new OBJ_MISPAR_ISHI_SUG_CHISHUV();
-                      ////// SetSugChishuvUDT(iMisparIshi, dChodesh, oPirteyOved, ref objMisparIshiSugChishuv);
-                      ////// objCollMisparIshiSugChishuv.Add(objMisparIshiSugChishuv);
-
-                       //if (i%50 ==0)
-                       //   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer i=" + i);
-                       //}
-                       //catch (Exception ex)
-                       //{
-                       //    clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, dChodesh, "Transfer: " + ex.Message);
-                       //}
-
-                       // ClearObject();
+                     
                    }
 
                    for (i = 0; i <= dtOvdimDorB.Rows.Count - 1; i++)
