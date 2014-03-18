@@ -8,6 +8,8 @@ using KdsLibrary.BL;
 using System.IO;
 using System.Data;
 using DalOraInfra.DAL;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 namespace KdsBatch.History
 {
     public class ManagerTask
@@ -29,13 +31,16 @@ namespace KdsBatch.History
             string path, pathOld,FileNameOld;
             string[] files;
             int iStatus = 0;
+            var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
             try
             {
+               
                 FilesName = new List<string[]>();
                 patterns[0] = "BZAY"; patterns[1] = "BZAS"; patterns[2] = "BZAP";
                 path = ConfigurationSettings.AppSettings["PathFileMF"];
                 pathOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
-                clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, " START RunInsetRecordsToHistory");
+                logManager.InsertLog(_lRequestNum, "I", 0, " START RunInsetRecordsToHistory");
+               
                 if (Directory.Exists(path))
                 {
                     foreach (string pattern in patterns)
@@ -75,21 +80,22 @@ namespace KdsBatch.History
                             }
                             catch (Exception ex)
                             {
-                                clLogBakashot.InsertErrorToLog(_lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message + " file=" + file);
+
+                                logManager.InsertLog(_lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message + " file=" + file);
                             }
                         }
                     }
                     iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
                 }
-                else clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "path not exist");
+                else  logManager.InsertLog(_lRequestNum, "I", 0, "path not exist");
 
-                clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, " END RunInsetRecordsToHistory");
+                logManager.InsertLog(_lRequestNum, "I", 0, " END RunInsetRecordsToHistory");
             }
             catch (Exception ex)
             {
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 clGeneral.LogError("History Error:  " + ex);
-                clLogBakashot.InsertErrorToLog(_lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message);
+                logManager.InsertLog(_lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message);
             }
             finally
             {
@@ -140,6 +146,7 @@ namespace KdsBatch.History
             string path,pathOld, FileNameOld;
             string[] files;
             int iStatus = 0;
+            var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
             try
             {
                 FilesName = new List<string[]>();
@@ -151,7 +158,7 @@ namespace KdsBatch.History
                 patterns[5] = "KATALOG_";
                 path = ConfigurationSettings.AppSettings["PathFileMF"];
                 pathOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
-                clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, " START RunInsetRecordsToHistory");
+                logManager.InsertLog(_lRequestNum, "I", 0, " START RunInsetRecordsToHistory");
                 if (Directory.Exists(path))
                 {
                     foreach (string pattern in patterns)
@@ -195,27 +202,27 @@ namespace KdsBatch.History
                                 FileNameOld = FileNameOld.Replace(".txt", ".old");
                                 FileNameOld = pathOld + FileNameOld.Substring(FileNameOld.LastIndexOf("\\") + 1);
                                 File.Move(file, FileNameOld);
-                                clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, file.Substring(file.LastIndexOf("\\") + 1) + " saved");
+                                logManager.InsertLog(_lRequestNum, "I", 0, file.Substring(file.LastIndexOf("\\") + 1) + " saved");
                             }
                             catch (Exception ex)
                             {
                                 clGeneral.LogError("History Error:  " + ex);
-                                clLogBakashot.InsertErrorToLog(_lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message + " file=" + file.Substring(file.LastIndexOf("\\") + 1));
+                                logManager.InsertLog(_lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message + " file=" + file.Substring(file.LastIndexOf("\\") + 1));
                             }
                         }
                     }
                  
                     iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
                 }
-                else clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "path not exist");
+                else logManager.InsertLog(_lRequestNum, "I", 0, "path not exist");
 
-                clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, " END RunInsetRecordsToHistory");
+                logManager.InsertLog(_lRequestNum, "I", 0, " END RunInsetRecordsToHistory");
             }
             catch (Exception ex)
             {
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 clGeneral.LogError("History Error:  " + ex);
-                clLogBakashot.InsertErrorToLog(_lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message);
+                logManager.InsertLog(_lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message);
             }
             finally
             {

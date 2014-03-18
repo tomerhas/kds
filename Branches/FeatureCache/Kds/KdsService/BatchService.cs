@@ -19,6 +19,8 @@ using System.Diagnostics;
 using System.IO;
 using KdsBatch.History;
 using DalOraInfra.DAL;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 namespace KdsService
 {
     public class BatchService : IBatchService
@@ -78,30 +80,31 @@ namespace KdsService
             clGeneral.BatchExecutionType ExecutionTypeShguim = ((clGeneral.BatchExecutionType)Enum.Parse(typeof(clGeneral.BatchExecutionType), args[3].ToString()));
             try
             {
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "START");
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["ShinuimShguimsProcessesNb"]);
                 path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
                 exfile = (string)ConfigurationManager.AppSettings["KdsShinuimShguimsFileName"].ToString();
                 KdsCalcul = new FileInfo(path + exfile);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
 
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
                 switch (TypeShguyim)
                 {
                     case clGeneral.enCalcType.ShinuyimVeShguyim:
-                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeShguyim");
+                        ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeShguyim");
                         oUtils.PrepareNetunimToShguyimBatch(dTaarich, clGeneral.BatchRequestSource.ImportProcess.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
                     case clGeneral.enCalcType.ShinuyimVeSghuimHR:
-                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimHR");
+                        ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimHR");
                         oUtils.PrepareNetunimToShguyimBatchHR(clGeneral.BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
                     case clGeneral.enCalcType.ShinuyimVeSghuimPremiot:
-                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimPremiot");
+                        ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimPremiot");
                         oUtils.PrepareNetunimToPremiotShguyimBatch(clGeneral.BatchRequestSource.ImportProcessForPremiot.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
                 }
                 // oCalcDal.PrepareDataLeChishuv(dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
+                     
                 if (KdsCalcul.Exists)
                 {
                     sArguments = TypeShguyim.GetHashCode() + " " + lRequestNum.ToString() + " " + ExecutionTypeShguim.GetHashCode();
@@ -115,7 +118,8 @@ namespace KdsService
             {
                 clGeneral.LogError(ex);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunSinuyimVeShguimBatch: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunSinuyimVeShguimBatch: " + ex.Message);
+
                 throw ex;
             }
             finally
@@ -140,7 +144,8 @@ namespace KdsService
                     _process.StartInfo.Arguments = sArguments + " " + i.ToString();
                     _process.Start();
                     _process.PriorityClass = ProcessPriorityClass.BelowNormal;
-                    clLogBakashot.InsertErrorToLog(BakashaId, "I", 0, FileToRun.Name +" "+ i.ToString() + " was started."   );
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(BakashaId, "I", 0, FileToRun.Name + " " + i.ToString() + " was started.");
+
                     _process.Dispose();
                 }
                 return clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
@@ -148,7 +153,8 @@ namespace KdsService
             catch (Exception ex)
             {
                 clGeneral.LogError(ex.StackTrace);
-                clLogBakashot.InsertErrorToLog(BakashaId, "E", 0, "RunMultiProcesses: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(BakashaId, "E", 0, "RunMultiProcesses: " + ex.Message);
+
                 return clGeneral.enStatusRequest.Failure.GetHashCode();
             }
         }
@@ -161,7 +167,7 @@ namespace KdsService
                 List = Process.GetProcessesByName(FileToRun.Name.Split('.')[0]);
                 if (List.Count() == 0)
                 {
-                    clLogBakashot.InsertErrorToLog(BakashaID, "I", 0, "END");
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(BakashaID, "I", 0, "END");
                     clDefinitions.UpdateLogBakasha(BakashaID, DateTime.Now, Status);
                     break;
                 }
@@ -188,17 +194,19 @@ namespace KdsService
             FileInfo KdsCalcul = null;
             try
             {
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "START");             
                 iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["CalculProcessesNb"]);
                 path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
                 exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
                 KdsCalcul = new FileInfo(path + exfile);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
+
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
                 dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) - 1) * -1);
                 dAdChodesh = dAdChodesh.AddMonths(1).AddDays(-1);
                 result = oCalcDal.PrepareDataLeChishuv(lRequestNum,dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
+
                 if (result > 0)
                 {
                     if (KdsCalcul.Exists)
@@ -215,7 +223,8 @@ namespace KdsService
             {
                 clGeneral.LogError(ex);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunCalcBatchParallel: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunCalcBatchParallel: " + ex.Message);
+       
                 throw ex;
             }
             finally
@@ -236,7 +245,7 @@ namespace KdsService
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message);
             }
         } 
 
@@ -252,14 +261,14 @@ namespace KdsService
             FileInfo KdsCalcul = null;
             try
             {
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "START");             
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["PremiotProcessesNb"]);
                 path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
                 exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
                 KdsCalcul = new FileInfo(path + exfile);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);        
                 result = oCalcDal.PrepareDataLeChishuvPremiyot(iCntProcesses);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
                 if (result > 0)
                 {
                     if (KdsCalcul.Exists)
@@ -274,7 +283,7 @@ namespace KdsService
             {
                 clGeneral.LogError(ex);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunCalcBatchPremiyot: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunCalcBatchPremiyot: " + ex.Message);
                 throw ex;
             }
             finally
@@ -340,7 +349,7 @@ namespace KdsService
             clBatch oBatch = new clBatch();
             try
             {
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "START");
                 oBatch.BdikatChufshaRezifa(lRequestNum, iUserId);
                 iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
             }
@@ -348,13 +357,13 @@ namespace KdsService
             {
                 clGeneral.LogError(ex);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunBdikatChufshaRezifaThread: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunBdikatChufshaRezifaThread: " + ex.Message);
                 throw ex;
             }
             finally
             {
                 clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, iStatus);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "END");
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "END");          
             }
             LogThreadEnd("BdikatChufshaRezifa", lRequestNum);
         }
@@ -372,13 +381,15 @@ namespace KdsService
             clBatch oBatch = new clBatch();
             try
             {
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "START");
+               
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["RikuzimsProcessesNb"]);
                 path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
                 exfile = (string)ConfigurationManager.AppSettings["KdsRikuzimsFileName"].ToString();
                 KdsRikuzims = new FileInfo(path + exfile);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsRikuzims will run from " + KdsRikuzims.FullName);
-                if (KdsRikuzims.Exists)
+                 ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "KdsRikuzims will run from " + KdsRikuzims.FullName);
+               
+                 if (KdsRikuzims.Exists)
                 {
                     oBatch.DeleteRikuzimPdf(iRequestIdForRikuzim);
                     result = _ClReport.GetProPrepareOvdimRikuzim(lRequestNum,iRequestIdForRikuzim, iCntProcesses);
@@ -391,7 +402,8 @@ namespace KdsService
             {
                 clGeneral.LogError(ex);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunYeziratRikuzimThread: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunYeziratRikuzimThread: " + ex.Message);
+
                 throw ex;
             }
             finally
@@ -407,7 +419,8 @@ namespace KdsService
             long lRequestNum = (long)args[0];
             long lRequestNumToTransfer = (long)args[1];
             int iStatus;
-            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "START");
+
             clBatch oBatch = new clBatch();
             try
             {
@@ -417,9 +430,10 @@ namespace KdsService
             {
                 clGeneral.LogError(ex);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunTransferTekenNehagimThread: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunTransferTekenNehagimThread: " + ex.Message);
+
             }
-            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "End");
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "End");
             LogThreadEnd("TransferTekenNehagim", lRequestNum);
             clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, clGeneral.enStatusRequest.ToBeEnded.GetHashCode());
            

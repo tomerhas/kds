@@ -14,7 +14,7 @@ using Microsoft.Practices.Unity;
 
 namespace KdsShinuyim.ShinuyImpl
 {
-    class ShinuyShatHatchalaGmar_19_26_27 : ShinuyBase
+    public class ShinuyShatHatchalaGmar_19_26_27 : ShinuyBase
     {
 
         public ShinuyShatHatchalaGmar_19_26_27(IUnityContainer container)
@@ -28,32 +28,40 @@ namespace KdsShinuyim.ShinuyImpl
         {
             bool bIdkunRashShatHatchala;
             bool bIdkunRashShatGmar;
-            for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
+            try
             {
-                SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
-                OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
+                for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
+                {
+                    SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
+                    OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
 
-                bIdkunRashShatHatchala = false;
-                bIdkunRashShatGmar = false;
+                    bIdkunRashShatHatchala = false;
+                    bIdkunRashShatGmar = false;
 
-                if (CheckIdkunRashemet("SHAT_HATCHALA_LETASHLUM", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
-                { bIdkunRashShatHatchala = true; }
-                if (CheckIdkunRashemet("SHAT_GMAR_LETASHLUM", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
-                { bIdkunRashShatGmar = true; }
+                    if (CheckIdkunRashemet("SHAT_HATCHALA_LETASHLUM", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                    { bIdkunRashShatHatchala = true; }
+                    if (CheckIdkunRashemet("SHAT_GMAR_LETASHLUM", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                    { bIdkunRashShatGmar = true; }
 
-                //שינוי 19
-                SetHourTcurSidur19(curSidur, oObjSidurimOvdimUpd, bIdkunRashShatHatchala, bIdkunRashShatGmar, inputData);
+                    //שינוי 19
+                    SetHourToSidur19(curSidur, oObjSidurimOvdimUpd, bIdkunRashShatHatchala, bIdkunRashShatGmar, inputData);
 
-                //שינוי 26
-                FixedShatHatchalaAndGmarToMafilim26(curSidur, oObjSidurimOvdimUpd, bIdkunRashShatHatchala, bIdkunRashShatGmar, inputData);
+                    //שינוי 26
+                    FixedShatHatchalaAndGmarToMafilim26(curSidur, oObjSidurimOvdimUpd, bIdkunRashShatHatchala, bIdkunRashShatGmar, inputData);
 
-                //שינוי 27
-                FixedShatHatchalaAndGmarSidurMapa27(curSidur, oObjSidurimOvdimUpd);
+                    //שינוי 27
+                    FixedShatHatchalaAndGmarSidurMapa27(curSidur, oObjSidurimOvdimUpd);
 
+                }
+            }
+             
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyShatHatchalaGmar_19_26_27: " + ex.Message);
             }
         }
 
-        private void SetHourTcurSidur19(SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar, ShinuyInputData inputData)
+        private void SetHourToSidur19(SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar, ShinuyInputData inputData)
         {
             DateTime dShatHatchalaLetashlumToUpd;
             DateTime dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
@@ -100,36 +108,43 @@ namespace KdsShinuyim.ShinuyImpl
 
         private void ChangeShaot(SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar, DateTime dShatHatchalaLetashlumToUpd, DateTime dShatGmarLetashlumToUpd)
         {
-            if (curSidur.dShatHatchalaMenahelMusach != DateTime.MinValue)
-            {
-                oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = curSidur.dShatHatchalaMenahelMusach;
-                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                curSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
-                curSidur.sShatHatchalaLetashlum = curSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
-            }
-            else if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)// && !bLoLeadken)
-            {
-                oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = dShatHatchalaLetashlumToUpd;
-                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                curSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
-                curSidur.sShatHatchalaLetashlum = curSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
-                if (curSidur.dFullShatHatchalaLetashlum.Year < DateHelper.cYearNull)
-                    curSidur.sShatHatchalaLetashlum = "";
-            }
 
-            if (curSidur.dShatGmarMenahelMusach != DateTime.MinValue)
-            {
-                oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = curSidur.dShatGmarMenahelMusach;
-                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                curSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
-                curSidur.sShatGmarLetashlum = curSidur.dFullShatGmarLetashlum.ToString("HH:mm");
+            try{
+                if (curSidur.dShatHatchalaMenahelMusach != DateTime.MinValue)
+                {
+                    oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = curSidur.dShatHatchalaMenahelMusach;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    curSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
+                    curSidur.sShatHatchalaLetashlum = curSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
+                }
+                else if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)// && !bLoLeadken)
+                {
+                    oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = dShatHatchalaLetashlumToUpd;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    curSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
+                    curSidur.sShatHatchalaLetashlum = curSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
+                    if (curSidur.dFullShatHatchalaLetashlum.Year < DateHelper.cYearNull)
+                        curSidur.sShatHatchalaLetashlum = "";
+                }
+
+                if (curSidur.dShatGmarMenahelMusach != DateTime.MinValue)
+                {
+                    oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = curSidur.dShatGmarMenahelMusach;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    curSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
+                    curSidur.sShatGmarLetashlum = curSidur.dFullShatGmarLetashlum.ToString("HH:mm");
+                }
+                else if (!bIdkunRashShatGmar && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)// && !bLoLeadken)
+                {
+                    oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = dShatGmarLetashlumToUpd;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    curSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
+                    curSidur.sShatGmarLetashlum = curSidur.dFullShatGmarLetashlum.ToString("HH:mm");
+                }
             }
-            else if (!bIdkunRashShatGmar && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)// && !bLoLeadken)
+            catch (Exception ex)
             {
-                oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = dShatGmarLetashlumToUpd;
-                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                curSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
-                curSidur.sShatGmarLetashlum = curSidur.dFullShatGmarLetashlum.ToString("HH:mm");
+                throw ex;
             }
         }
 

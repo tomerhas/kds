@@ -25,7 +25,7 @@ namespace ObjectCompare.Metadata
             List<PropertyMetaData> attList = new List<PropertyMetaData>();
             var flags = BindingFlags.Instance | BindingFlags.Public ;
             //var properties = type.GetProperties().Where(prop => prop.(typeof(CompareAttribute), false));
-            var properties = type.GetProperties(flags).Select(prop => prop);
+            var properties = type.GetProperties(flags).Where(prop => !prop.IsDefined(typeof(DontCompareAttribute), false)); //type.GetProperties(flags).Select(prop => prop);
             foreach (var propInfo in properties)
             {
                 PropertyMetaData propMetadata = new PropertyMetaData();

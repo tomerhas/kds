@@ -31,42 +31,55 @@ namespace KdsShinuyim.ShinuyImpl
             SidurDM oSidurFirst = new SidurDM();
             SidurDM oSidurFirstSecond = new SidurDM();
             int indexSidurFirst = 0;
+            try{
+                  oSidurFirst = GetFirstSidurLetashulum(inputData.htEmployeeDetails, out  indexSidurFirst);
 
-            oSidurFirst = GetFirstSidurLetashulum(inputData.htEmployeeDetails, out  indexSidurFirst);
+                if (oSidurFirst == null)
+                    return;
 
-            if (oSidurFirst == null)
-                return;
-
-            for (int i = indexSidurFirst; i < inputData.htEmployeeDetails.Count; i++)
-            {
-                if (i < (inputData.htEmployeeDetails.Count - 1))
+                for (int i = indexSidurFirst; i < inputData.htEmployeeDetails.Count; i++)
                 {
-                    oSidurFirstSecond = (SidurDM)inputData.htEmployeeDetails[i + 1];
-                    if (oSidurFirst.iLoLetashlum == 0 && oSidurFirstSecond.iLoLetashlum == 0)
+                    if (i < (inputData.htEmployeeDetails.Count - 1))
                     {
-                        if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala,inputData))
+                        oSidurFirstSecond = (SidurDM)inputData.htEmployeeDetails[i + 1];
+                        if (oSidurFirst.iLoLetashlum == 0 && oSidurFirstSecond.iLoLetashlum == 0)
                         {
-                            FixedPitzulHafsaka06(oSidurFirst, i + 1, inputData);                       
+                            if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala,inputData))
+                            {
+                                FixedPitzulHafsaka06(oSidurFirst, i + 1, inputData);                       
+                            }
+                            oSidurFirst = oSidurFirstSecond; 
                         }
-                        oSidurFirst = oSidurFirstSecond; 
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyFixedLina07: " + ex.Message);
             }
         }
 
         private SidurDM GetFirstSidurLetashulum(OrderedDictionary htEmployeeDetails, out int indexSidurFirst)
         {
-            indexSidurFirst = -1;
-            for (int i = 0; i < htEmployeeDetails.Count; i++)
+            try
             {
-                SidurDM oSidur = (SidurDM)htEmployeeDetails[i];
-                if (oSidur.iLoLetashlum == 0)
+                indexSidurFirst = -1;
+                for (int i = 0; i < htEmployeeDetails.Count; i++)
                 {
-                    indexSidurFirst = i;
-                    return oSidur;                   
-                }     
+                    SidurDM oSidur = (SidurDM)htEmployeeDetails[i];
+                    if (oSidur.iLoLetashlum == 0)
+                    {
+                        indexSidurFirst = i;
+                        return oSidur;
+                    }
+                }
+                return null;
             }
-            return null;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
         private void FixedPitzulHafsaka06(SidurDM oSidurFirst, int iNextSidur, ShinuyInputData inputData)
@@ -85,10 +98,9 @@ namespace KdsShinuyim.ShinuyImpl
                 if (inputData.htEmployeeDetails.Count > 1)
                 {
                     iCountPitzul = 0;
-                    if (inputData.oCollSidurimOvdimUpd.Value != null)
-                    {
-                        iCountPitzul = inputData.oCollSidurimOvdimUpd.Value.Cast<OBJ_SIDURIM_OVDIM>().ToList().Count(sidur => sidur.PITZUL_HAFSAKA == 1 && sidur.UPDATE_OBJECT == 1);
-                    }
+                   
+                    iCountPitzul = inputData.oCollSidurimOvdimUpdRecorder.Count(sidur => sidur.ContainedItem.PITZUL_HAFSAKA == 1 && sidur.ContainedItem.UPDATE_OBJECT == 1);
+                    
                     // העובד זכאי למקסימום פיצולים ביום עבודה לפי פרמטר 170. 
                     if (iCountPitzul <  inputData.oParam.iMaxPitzulLeyom && (oSidurFirst.dFullShatGmar != DateTime.MinValue && oSidurFirst.dFullShatHatchala != DateTime.MinValue))
                     {
@@ -131,7 +143,6 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-               // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 6, oSidurFirst.iMisparIshi, oSidurFirst.dSidurDate, oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala, null, null, "FixedPitzulHafsaka06: " + ex.Message, null);
                 throw ex;
             }
         }
@@ -166,7 +177,6 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 6, oSidurFirst.iMisparIshi, oSidurFirst.dSidurDate, oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala, null, null, "FixedPitzulHafsaka06: " + ex.Message, null);
                 throw ex;
             }
         }
@@ -197,8 +207,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 6, oSidurFirst.iMisparIshi, oSidurFirst.dSidurDate, oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala, null, null, "FixedPitzulHafsaka06: " + ex.Message, null);
-                throw ex;
+                 throw ex;
             }
             return iMinPaar;
         }
@@ -242,7 +251,6 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-               // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 0, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNihulTnua: " + ex.Message, null);
                 throw ex;
             }
 

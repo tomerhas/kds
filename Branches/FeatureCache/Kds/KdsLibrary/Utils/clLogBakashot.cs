@@ -3,216 +3,72 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DalOraInfra.DAL;
+using KDSCommon.DataModels.Exceptions;
+using KDSCommon.DataModels.Logs;
 
 namespace KdsLibrary
 {
-    public static class clLogBakashot
+    public class clLogBakashot
     {
-        private static long _RequestId=-1;
-        private static string _SugHodaa;
-        private static int? _KodTahalich;
-        private static int _KodYeshut;
-        private static int? _MisparIshi;
-        private static DateTime? _Taarich;
-        private static int? _MisparSidur;
-        private static DateTime? _ShatHatchalaSidur;
-        private static DateTime? _ShatYetzia;
-        private static int? _MisparKnisa;
-        private static string _TeurHodaa;
-        private static int? _KodHodaa;
-
-        public static void SetError(long lRequestId,  string iSugHodaa, int? iKodTahalich, int iKodYeshut, int? iMisparIshi, DateTime? dTaarich, int? iMisparSidur, DateTime? dShatHatchalaSidur, DateTime? dShatYetzia, int? iMisparKnisa, string sTeurHodaa, int? iKodHodaa)
+        //This function will only save information from te first exception caught. 
+        //The exception itself will be placed in the inner exception for later logging
+        public static BakashotException SetError(long lRequestId,  string iSugHodaa, int? iKodTahalich, int iKodYeshut, int? iMisparIshi, DateTime? dTaarich, int? iMisparSidur, DateTime? dShatHatchalaSidur, DateTime? dShatYetzia, int? iMisparKnisa, string sTeurHodaa, int? iKodHodaa, Exception ex)
         {
-            if (_RequestId == -1)
+            BakashaLog log;
+            BakashotException excep = new BakashotException(ex);
+            if (ex is BakashotException)
             {
-                _RequestId = lRequestId;
-                _SugHodaa = iSugHodaa;
-                _KodTahalich = iKodTahalich;
-                _KodYeshut = iKodYeshut;
-                _MisparIshi = iMisparIshi;
-                _Taarich = dTaarich;
-                _MisparSidur = iMisparSidur;
-                _ShatHatchalaSidur = dShatHatchalaSidur;
-                _Taarich = dTaarich;
-                _MisparSidur = iMisparSidur;
-                _ShatHatchalaSidur = dShatHatchalaSidur;
-                _ShatYetzia = dShatYetzia;
-                _MisparKnisa = iMisparKnisa;
-                _TeurHodaa = sTeurHodaa;
-                _KodHodaa = iKodHodaa;
+                log = ((BakashotException)ex).Log;
             }
-        }
-
-        public static void SetError(long lRequestId, int? iMisparIshi, string iSugHodaa, int iKodYeshut, DateTime? dTaarich, string sTeurHodaa)
-        {
-            if (_RequestId == -1)
+            else
             {
-                _RequestId = lRequestId;
-                _SugHodaa = iSugHodaa;
-                _KodTahalich = null;
-                _KodYeshut = iKodYeshut;
-                _MisparIshi = iMisparIshi;
-                _Taarich = dTaarich;
-                _MisparSidur = null;
-                _ShatHatchalaSidur = null;
-                _Taarich = dTaarich;
-                _MisparSidur = null;
-                _ShatHatchalaSidur = null;
-                _ShatYetzia = null;
-                _MisparKnisa = null;
-                _TeurHodaa = sTeurHodaa;
-                _KodHodaa = null;
+                log = new BakashaLog();
+                
             }
+            log.RequestId = lRequestId;
+            log.SugHodaa = iSugHodaa;
+
+            log.KodYeshut = iKodYeshut;
+            log.KodTahalich = InsertIfNotNull(log.KodTahalich, iKodTahalich);
+            log.MisparIshi = InsertIfNotNull(log.MisparIshi, iMisparIshi);
+            log.Taarich = InsertIfNotNull(log.Taarich, dTaarich);
+            log.MisparSidur = InsertIfNotNull(log.MisparSidur, iMisparSidur);
+            log.ShatHatchalaSidur = InsertIfNotNull(log.ShatHatchalaSidur, dShatHatchalaSidur);
+
+            log.ShatYetzia = InsertIfNotNull(log.ShatYetzia, dShatYetzia);
+            log.MisparKnisa = InsertIfNotNull(log.MisparKnisa, iMisparKnisa);
+            log.TeurHodaa = InsertIfNotNull(log.TeurHodaa, sTeurHodaa);
+            log.KodHodaa = InsertIfNotNull(log.KodHodaa, iKodHodaa);
+            excep.Log = log;
+
+            return excep;
+            
         }
 
-        public static void SetError(long lRequestId, string iSugHodaa, int iKodYeshut,  string sTeurHodaa)
+        private static Nullable<int> InsertIfNotNull(Nullable<int> orig, Nullable<int> newVal)
         {
-            if (_RequestId == -1)
-            {
-                _RequestId = lRequestId;
-                _SugHodaa = iSugHodaa;
-                _KodTahalich = null;
-                _KodYeshut = iKodYeshut;
-                _MisparIshi = null;
-                _Taarich = null;
-                _MisparSidur = null;
-                _ShatHatchalaSidur = null;
-                _Taarich = null;
-                _MisparSidur = null;
-                _ShatHatchalaSidur = null;
-                _ShatYetzia = null;
-                _MisparKnisa = null;
-                _TeurHodaa = sTeurHodaa;
-                _KodHodaa = null;
-            }
+            return newVal.HasValue ? newVal : orig;
         }
 
-        private static void ResetError()
+        private static Nullable<DateTime> InsertIfNotNull(Nullable<DateTime> orig, Nullable<DateTime> newVal)
         {
-            _RequestId = -1;
-            _SugHodaa = null;
-            _KodTahalich = null;
-            _KodYeshut = 0;
-            _MisparIshi = null;
-            _Taarich = null;
-            _MisparSidur = null;
-            _ShatHatchalaSidur = null;
-            _Taarich = null;
-            _MisparSidur = null;
-            _ShatHatchalaSidur = null;
-            _ShatYetzia = null;
-            _MisparKnisa = null;
-            _TeurHodaa = null;
-            _KodHodaa = null;
+            return newVal.HasValue ? newVal : orig;
         }
 
-        private static void InsertLogBakasha()
+        private static string InsertIfNotNull(string orig, string newVal)
         {
-            try
-            {
-                clDal dal = new clDal();
-                dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, _RequestId, ParameterDir.pdInput);
-                dal.AddParameter("p_taarich_idkun", ParameterType.ntOracleDate, DateTime.Now, ParameterDir.pdInput);
-                dal.AddParameter("p_sug_hodaa", ParameterType.ntOracleChar, _SugHodaa, ParameterDir.pdInput, 1);
-                if (_KodTahalich.HasValue)
-                {
-                    dal.AddParameter("p_kod_tahalich", ParameterType.ntOracleInteger, _KodTahalich.Value, ParameterDir.pdInput);
-                }
-                else
-                {
-                    dal.AddParameter("p_kod_tahalich", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
-                }
-                dal.AddParameter("p_kod_yeshut", ParameterType.ntOracleInteger, _KodYeshut, ParameterDir.pdInput);
-                if (_MisparIshi.HasValue)
-                {
-                    dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, _MisparIshi.Value, ParameterDir.pdInput);
-                }
-                else
-                {
-                    dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
-                }
-                if (_Taarich.HasValue)
-                {
-                    dal.AddParameter("p_taarich", ParameterType.ntOracleDate, _Taarich.Value, ParameterDir.pdInput);
-                }
-                else
-                {
-                    dal.AddParameter("p_taarich", ParameterType.ntOracleDate, null, ParameterDir.pdInput);
-                }       
-                if (_MisparSidur.HasValue)
-                {
-                    dal.AddParameter("p_mispar_sidur", ParameterType.ntOracleInteger, _MisparSidur.Value, ParameterDir.pdInput);
-                }
-                else
-                {
-                    dal.AddParameter("p_mispar_sidur", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
-                }
-                if (_ShatHatchalaSidur.HasValue)
-                {
-                dal.AddParameter("p_shat_hatchala_sidur", ParameterType.ntOracleDate,  _ShatHatchalaSidur.Value , ParameterDir.pdInput);
-                }
-                else{dal.AddParameter("p_shat_hatchala_sidur", ParameterType.ntOracleDate, null, ParameterDir.pdInput);
-                }
-                if (_ShatYetzia.HasValue)
-               {
-                dal.AddParameter("p_shat_yetzia", ParameterType.ntOracleDate,  _ShatYetzia.Value, ParameterDir.pdInput);
-               }
-               else
-               { dal.AddParameter("p_shat_yetzia", ParameterType.ntOracleDate, null, ParameterDir.pdInput);
-               }
-                if (_MisparKnisa.HasValue)
-                {
-                dal.AddParameter("p_mispar_knisa", ParameterType.ntOracleInteger,  _MisparKnisa.Value, ParameterDir.pdInput);
-                }
-                else
-                {
-                    dal.AddParameter("p_mispar_knisa", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
-                }
-
-                if (_TeurHodaa.Length > 4000)
-                { _TeurHodaa = _TeurHodaa.Substring(0, 4000); }
-
-                dal.AddParameter("p_teur_hodaa", ParameterType.ntOracleVarchar, _TeurHodaa, ParameterDir.pdInput,4000);
-                if (_KodHodaa.HasValue)
-                {
-                    dal.AddParameter("p_kod_hodaa", ParameterType.ntOracleInteger, _KodHodaa.Value, ParameterDir.pdInput);
-                }
-                else
-                {
-                    dal.AddParameter("p_kod_hodaa", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
-                }
-                dal.AddParameter("p_mispar_siduri", ParameterType.ntOracleInteger, null, ParameterDir.pdOutput);
-                dal.ExecuteSP(KdsLibrary.clGeneral.cProInsLogBakasha);
-
-            }
-            catch (Exception ex)
-            {
-                clGeneral.LogError(ex);
-            }
+            return string.IsNullOrWhiteSpace(newVal) ? newVal : orig;
         }
 
-        public static void InsertErrorToLog()
+        public static BakashotException SetError(long lRequestId, int? iMisparIshi, string iSugHodaa, int iKodYeshut, DateTime? dTaarich, string sTeurHodaa, Exception ex)
         {
-            InsertLogBakasha();
-            ResetError();
+            return  SetError(lRequestId,iSugHodaa,null, iKodYeshut,  iMisparIshi, dTaarich,null,null,null,null,sTeurHodaa,null, ex);
         }
 
-        public static void InsertErrorToLog(long lRequestId, string iSugHodaa, int iKodYeshut, string sTeurHodaa)
+        public static BakashotException SetError(long lRequestId, string iSugHodaa, int iKodYeshut, string sTeurHodaa,  Exception ex)
         {
-            SetError(lRequestId, iSugHodaa, iKodYeshut, sTeurHodaa);
-            InsertErrorToLog();
+          return  SetError(lRequestId,iSugHodaa,null, iKodYeshut,  null, null,null,null,null,null,sTeurHodaa,null, ex);
         }
-
-        public static void InsertErrorToLog(long lRequestId, int? iMisparIshi, string iSugHodaa, int iKodYeshut, DateTime? dTaarich, string sTeurHodaa)
-        {
-            SetError(lRequestId, iMisparIshi, iSugHodaa, iKodYeshut, dTaarich, sTeurHodaa);
-            InsertErrorToLog();
-        }
-
-        public static void InsertErrorToLog(long lRequestId, string iSugHodaa, int? iKodTahalich, int iKodYeshut, int? iMisparIshi, DateTime? dTaarich, int? iMisparSidur, DateTime? dShatHatchalaSidur, DateTime? dShatYetzia, int? iMisparKnisa, string sTeurHodaa, int? iKodHodaa)
-        {
-            SetError(lRequestId, iSugHodaa, iKodTahalich, iKodYeshut, iMisparIshi, dTaarich, iMisparSidur, dShatHatchalaSidur, dShatYetzia, iMisparKnisa, sTeurHodaa, iKodHodaa);
-            InsertErrorToLog();
-        }
+      
     }
 }

@@ -23,7 +23,14 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-            FixedShatHamtana25(inputData);
+            try
+            {
+                FixedShatHamtana25(inputData);
+            } 
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyFixedShatHamtana25: " + ex.Message);
+            }
         }
 
         private void FixedShatHamtana25(ShinuyInputData inputData)
@@ -73,8 +80,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, _iMisparIshi, "E", 25, _dCardDate, "FixedShatHamtana25: " + ex.Message);
-                inputData.IsSuccsess = false; 
+                throw ex;
             }
         }
 
@@ -143,8 +149,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-              //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 25, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "FixedShatHamtana25: " + ex.Message, null);
-                throw ex;
+               throw ex;
             }
         }
 
@@ -191,18 +196,25 @@ namespace KdsShinuyim.ShinuyImpl
 
         private PeilutDM GetElement735(SidurDM curSidur, out int indexPeilut)
         {
-            indexPeilut = -1;
-            for (int j = 0; j <= curSidur.htPeilut.Values.Count - 1; j++)
+            try
             {
-                PeilutDM oPeilut = (PeilutDM)curSidur.htPeilut[j];
-                if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "735")
+                indexPeilut = -1;
+                for (int j = 0; j <= curSidur.htPeilut.Values.Count - 1; j++)
                 {
-                    indexPeilut = j;
-                     return oPeilut;
+                    PeilutDM oPeilut = (PeilutDM)curSidur.htPeilut[j];
+                    if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "735")
+                    {
+                        indexPeilut = j;
+                        return oPeilut;
+                    }
                 }
-            }
 
-            return null;
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
 
         private bool IsDuplicateShatYeziaHamtana(SidurDM curSidur)

@@ -15,6 +15,7 @@ namespace KDSCommon.UDT
     using Oracle.DataAccess.Types;
     using System.Xml.Serialization;
     using System.Xml.Schema;
+using ObjectCompare.Attributes;
     
     [Serializable]
     public class OBJ_YAMEY_AVODA_OVDIM : INullable, IOracleCustomType, IXmlSerializable {
@@ -152,6 +153,7 @@ namespace KDSCommon.UDT
             }
         }
         
+        [DontCompare]
         [OracleObjectMappingAttribute("UPDATE_OBJECT")]
         public decimal UPDATE_OBJECT {
             get {
@@ -162,7 +164,7 @@ namespace KDSCommon.UDT
                 this.m_UPDATE_OBJECTIsNull = false;
             }
         }
-        
+          [DontCompare]
         public bool UPDATE_OBJECTIsNull {
             get {
                 return this.m_UPDATE_OBJECTIsNull;

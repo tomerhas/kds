@@ -12,6 +12,10 @@ using KdsLibrary.UI;
 using System.Configuration;
 using KdsLibrary.Security;
 using System.Windows.Forms;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Managers;
+using KDSCommon.Interfaces.Logs;
+using System.Net.Mail;
 
 namespace KdsBatch.MonthlyMails
 {
@@ -54,7 +58,8 @@ namespace KdsBatch.MonthlyMails
             {
                 clGeneral.LogMessage(ex.Message, System.Diagnostics.EventLogEntryType.Error, true);
                 clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, clGeneral.enStatusRequest.Failure.GetHashCode());
-                clLogBakashot.InsertErrorToLog(iRequestId, 0, "E", 0, null, "Send Mails Fail");
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iRequestId, "E", 0, "Send Mails Fail");
+               
             }
         }
 
@@ -62,13 +67,12 @@ namespace KdsBatch.MonthlyMails
         {
             try
             {
-                // ReportMail rpt = new ReportMail();
-                string body = "";// rpt.GetMessageBody(Path);
-                clMail email = new clMail(eMail, teur, body);
-                email.attachFile(Path);
-                email.IsHtmlBody(true);
-                email.SendMail();
-                email.Dispose();
+                var mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
+
+                MailMessage message = new MailMessage("", eMail) { Subject = teur };
+                message.Attachments.Add(new Attachment(Path));
+                
+                mailManager.SendMessage(message);
             }
             catch (Exception ex)
             {

@@ -496,10 +496,17 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                  //שינויי קלט
                  if (!(hidExecInputChg.Value.Equals("0")))
                  {
-                     bInpuDataResult = oBatchManager.MainInputData(iMisparIshi, dDateCard);
+                     var result = oBatchManager.MainInputDataNew(iMisparIshi, dDateCard);
+                     bInpuDataResult = result.IsSuccess;
                      if (!bInpuDataResult)
                          //שינויי קלט
                          bResult = false;
+
+                     /**********************/
+                     //bInpuDataResult = oBatchManager.MainInputData(iMisparIshi, dDateCard);
+                     //if (!bInpuDataResult)
+                     //    //שינויי קלט
+                     //    bResult = false;
                  }
                  else { hidExecInputChg.Value = ""; }
                  if (bResult)
@@ -737,6 +744,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                      RefreshEmployeeData(iMisparIshi, dDateCard);
                      //רק אם יש סידורים 
                      Session["Sidurim"] = oBatchManager.htFullEmployeeDetails;
+
+
                      if (oBatchManager.htFullEmployeeDetails != null)
                      {
                          SD.DataSource = oBatchManager.htFullEmployeeDetails;
@@ -1425,7 +1434,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          DataTable dtLicenseNumber = new DataTable();
 
 
-         sCarNumbers = clDefinitions.GetMasharCarNumbers(htEmployeeDetails);
+         sCarNumbers = ServiceLocator.Current.GetInstance<IKavimManager>().GetMasharCarNumbers(htEmployeeDetails);
 
          if (sCarNumbers != string.Empty)
          {

@@ -113,8 +113,7 @@ namespace KdsErrors.ErrosrImpl.DayErrors
                     iMerkazErua = (String.IsNullOrEmpty(input.OvedDetails.sMercazErua) ? 0 : int.Parse(input.OvedDetails.sMercazErua));
                     if ((iMerkazErua > 0) && (iMikumYaad > 0))
                     {
-                        var ovedManager = ServiceLocator.Current.GetInstance<IOvedDAL>();
-                        iZmanNesia = ovedManager.GetZmanNesia(iMerkazErua, iMikumYaad, input.CardDate);
+                        iZmanNesia = _container.Resolve<IOvedDAL>().GetZmanNesia(iMerkazErua, iMikumYaad, input.CardDate);
                     }
                 }
             }

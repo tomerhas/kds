@@ -1996,7 +1996,8 @@ public class wsGeneral : System.Web.Services.WebService
             //update idkuney rashemet
             _Ovdim.UpdateIdkunyRashemet(iMisaprIshi, dDateCard, ref dtPakadim, iLoginUser, iStatus);
             //שינוי קלט
-            _BatchManager.MainInputData(iMisaprIshi, dDateCard);
+           // _BatchManager.MainInputData(iMisaprIshi, dDateCard);
+            _BatchManager.MainInputDataNew(iMisaprIshi, dDateCard);
             //שגויים
             _BatchManager.MainOvedErrorsNew(iMisaprIshi, dDateCard);
             //_BatchManager.MainOvedErrors(iMisaprIshi, dDateCard);

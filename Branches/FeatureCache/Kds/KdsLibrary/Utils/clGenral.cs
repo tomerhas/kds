@@ -429,11 +429,7 @@ namespace KdsLibrary
             enLoZakaiLepitzul = 0,
             enOvedHafsaka = 3
         }
-        public enum enMerchav
-        {
-            Tzafon = 25,
-            Darom = 85
-        }
+       
         public enum enMaamad
         {
             Friends = 1, Salarieds = 2

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using KDSCommon.Interfaces.Logs;
 using KdsLibrary;
+using Microsoft.Practices.ServiceLocation;
 
 namespace KdsBatch.SystemCompare
 {
@@ -128,15 +130,13 @@ namespace KdsBatch.SystemCompare
         internal static void Log(long btchRequest, string msgType, string message,
             clGeneral.enGeneralBatchType batchType, DateTime period)
         {
-            clLogBakashot.SetError(btchRequest, null, msgType, (int)batchType, period, message);
-            clLogBakashot.InsertErrorToLog();
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(btchRequest, msgType, (int)batchType, message, null,period); 
         }
 
         internal static void Log(long btchRequest, string msgType, string message,
             clGeneral.enGeneralBatchType batchType, DateTime period, int? employeeNum)
         {
-            clLogBakashot.SetError(btchRequest, employeeNum, msgType, (int)batchType, period, message);
-            clLogBakashot.InsertErrorToLog();
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(btchRequest,  msgType, (int)batchType,  message,employeeNum, period);
         }
 
         #endregion

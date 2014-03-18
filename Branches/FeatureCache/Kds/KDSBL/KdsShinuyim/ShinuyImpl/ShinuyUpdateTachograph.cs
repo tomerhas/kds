@@ -9,7 +9,7 @@ using Microsoft.Practices.Unity;
 
 namespace KdsShinuyim.ShinuyImpl
 {
-    class ShinuyUpdateTachograph: ShinuyBase
+    public class ShinuyUpdateTachograph: ShinuyBase
     {
 
         public ShinuyUpdateTachograph(IUnityContainer container)
@@ -18,13 +18,20 @@ namespace KdsShinuyim.ShinuyImpl
 
         }
 
-        public override ShinuyTypes ShinuyType { get { return ShinuyTypes.ShinuySidureyMapaWhithStatusNullLoLetashlum29; } }
+        public override ShinuyTypes ShinuyType { get { return ShinuyTypes.ShinuyUpdateTachograph; } }
 
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-            if (!CheckIdkunRashemet("TACHOGRAF",inputData))
-                UpdateTachograph(inputData);
+            try
+            {
+                if (!CheckIdkunRashemet("TACHOGRAF", inputData))
+                    UpdateTachograph(inputData);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyUpdateTachograph: " + ex.Message);
+            }
         }
 
         private void UpdateTachograph(ShinuyInputData inputData)
@@ -75,8 +82,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", 0, "UpdateTachograph: " + ex.Message);      
-                inputData.IsSuccsess = false;
+                throw ex;
             }
         }
     }

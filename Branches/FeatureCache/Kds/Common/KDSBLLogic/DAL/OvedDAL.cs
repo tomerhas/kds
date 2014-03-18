@@ -18,7 +18,7 @@ namespace KdsLibrary.KDSLogic.DAL
         public const string cProUpdCardStatus = "pkg_errors.pro_upd_card_status";
         public const string cProGetZmanNesia = "PKG_UTILS.pro_get_zman_nesia";
         public const string cProGetMeafyeneyBituaLeoved = "pkg_ovdim.pro_get_meafyeney_oved";
-
+       
         public DataTable GetOvedDetails(int iMisparIshi, DateTime dCardDate)
 
         {
@@ -142,5 +142,6 @@ namespace KdsLibrary.KDSLogic.DAL
                 throw ex;
             }
         }
+
     }
 }

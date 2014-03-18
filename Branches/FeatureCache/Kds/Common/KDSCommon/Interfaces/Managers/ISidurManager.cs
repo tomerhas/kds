@@ -21,5 +21,8 @@ namespace KDSCommon.Interfaces.Managers
         DataRow[] GetOneSugSidurMeafyen(int iSugSidurRagil, DateTime CardDate);
         DataTable GetMeafyeneySidurById(DateTime dCardDate, int iSidurNumber);
         bool IsSidurShonim(DataRow[] drSugSidur, SidurDM oSidur);
+        bool CheckHaveSidurGrira(int iMisparIshi, DateTime dDateToCheck, ref DataTable dt);
+        DataTable GetTmpSidurimMeyuchadim(DateTime dTarMe, DateTime dTarAd);
+        
     }
 }

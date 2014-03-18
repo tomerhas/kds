@@ -5,6 +5,8 @@ using System.Text;
 using System.Data;
 using KdsLibrary;
 using KdsLibrary.Utils.Reports;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsBatch.Reports
 {
@@ -31,7 +33,7 @@ namespace KdsBatch.Reports
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, iStatus);
                 clGeneral.LogMessage(ex.Message, System.Diagnostics.EventLogEntryType.Error, true);
-                clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "E", 0, null, "ClManageHeavyReport: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iRequestId, "E", 0, "ClManageHeavyReport: " + ex.Message, _loginUser,null);
                 throw;
             }
 

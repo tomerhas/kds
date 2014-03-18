@@ -8,6 +8,8 @@ using System.Configuration;
 using System.Data;
 using KdsLibrary.TaskManager;
 using System.IO;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsBatch.TaskManager
 {
@@ -170,11 +172,13 @@ namespace KdsBatch.TaskManager
 					try
 					{
 						bInpuDataResult = true;
-						bInpuDataResult = oBatchManager.MainInputData(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                        var result = oBatchManager.MainInputDataNew(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                        bInpuDataResult = result.IsSuccess;// oBatchManager.MainInputData(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                       // bInpuDataResult = oBatchManager.MainInputData(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
 
 						if (bInpuDataResult)
 						{
-                            var result = oBatchManager.MainOvedErrorsNew(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                            oBatchManager.MainOvedErrorsNew(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
                             bInpuDataResult = result.IsSuccess; 
 							//bInpuDataResult = oBatchManager.MainOvedErrors(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
 							numSucceeded += 1;
@@ -222,7 +226,12 @@ namespace KdsBatch.TaskManager
 			}
 			catch (Exception ex)
 			{
-				clGeneral.LogError(ex);
+                //++clGeneral.LogError(ex);
+                var excep =   ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(255, 75757, "E", 9, DateTime.Now, "", ex);
+                throw excep;
+                //var excep = clLogBakashot.SetError(0, "E", 0, null, ex);//--
+                // throw (excep);//--
+				
 			}
 		}
 
@@ -248,7 +257,7 @@ namespace KdsBatch.TaskManager
             {
                 if (lRequestNum > 0)
                 {
-                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, ex.Message);
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, ex.Message);
                     clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
                 }
                 else clGeneral.LogError(ex);
@@ -260,7 +269,8 @@ namespace KdsBatch.TaskManager
         }
         private void CallbackCreateNetuneyPremiyot(object sender, KdsBatch.premyot.MeshekDataInputCompletedEventArgs e, long lRequestNum)
         {
-            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "יצירת נתוני פרמיות הסתיימה");
+            var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
+            logManager.InsertLog(lRequestNum, "I", 0, "יצירת נתוני פרמיות הסתיימה");
             bool bSuccess = false;
             clBatch oBatch = new clBatch();
             premyot.wsPremyot wsPremyot = (premyot.wsPremyot)sender;
@@ -274,14 +284,14 @@ namespace KdsBatch.TaskManager
                         clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
                     else
                     {
-                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "הפעולה נכשלה - בדוק רשומות בקובץ לוג");
+                        logManager.InsertLog(lRequestNum, "I", 0, "הפעולה נכשלה - בדוק רשומות בקובץ לוג");
                         clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
                     }
                 }
                 else
                 {
                     wsPremyot.Abort();
-                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, e.Error.Message);
+                    logManager.InsertLog(lRequestNum, "I", 0, e.Error.Message);
                     clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
                 }
             }
@@ -290,7 +300,7 @@ namespace KdsBatch.TaskManager
                 wsPremyot.Abort();
                 if (lRequestNum > 0)
                 {
-                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, ex.Message);
+                    logManager.InsertLog(lRequestNum, "I", 0, ex.Message);
                     clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
                 }
                 else clGeneral.LogError(ex);
@@ -326,7 +336,7 @@ namespace KdsBatch.TaskManager
 			{
 				if (lRequestNum > 0)
 				{
-					clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, ex.Message);
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, ex.Message);
 					clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
 				}
 				else clGeneral.LogError(ex);
@@ -340,7 +350,8 @@ namespace KdsBatch.TaskManager
 
 		private void CallbackCalculPremyot(object sender,KdsBatch.premyot.CalcPremyotNihulTnuaCompletedEventArgs e,long lRequestNum)
 		{
-            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "חישוב הפרמיות הסתיים");
+            var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
+            logManager.InsertLog(lRequestNum, "I", 0, "חישוב הפרמיות הסתיים");
 			bool bSuccess = false;
 			clBatch oBatch = new clBatch();
 			premyot.wsPremyot wsPremyot = (premyot.wsPremyot)sender;
@@ -354,14 +365,14 @@ namespace KdsBatch.TaskManager
                         clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
                     else
                     {
-                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "הפעולה נכשלה - בדוק רשומות בקובץ לוג");
+                        logManager.InsertLog(lRequestNum, "I", 0, "הפעולה נכשלה - בדוק רשומות בקובץ לוג");
                         clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
                     }
                 }
                 else
                 {
                     wsPremyot.Abort();
-                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, e.Error.Message);
+                    logManager.InsertLog(lRequestNum, "I", 0, e.Error.Message);
                     clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
                 }
             }
@@ -370,7 +381,7 @@ namespace KdsBatch.TaskManager
                 wsPremyot.Abort();
                 if (lRequestNum > 0)
                 {
-                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, ex.Message);
+                    logManager.InsertLog(lRequestNum, "I", 0, ex.Message);
                     clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
                 }
                 else clGeneral.LogError(ex);

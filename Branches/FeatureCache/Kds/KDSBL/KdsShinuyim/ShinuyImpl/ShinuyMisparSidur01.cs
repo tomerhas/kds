@@ -29,16 +29,21 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-            
-            for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
+            try
             {
-                SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
-                if (!CheckIdkunRashemet("MISPAR_SIDUR", curSidur.iMisparSidur, curSidur.dFullShatHatchala,inputData))
+                for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
-                     FixedMisparSidur01(curSidur, i, inputData);
+                    SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
+                    if (!CheckIdkunRashemet("MISPAR_SIDUR", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                    {
+                        FixedMisparSidur01(curSidur, i, inputData);
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyMisparSidur01: " + ex.Message);
+            }
         }
 
         private void FixedMisparSidur01(SidurDM curSidur, int iSidurIndex, ShinuyInputData inputData)
@@ -71,8 +76,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-               // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 1, curSidur.iMisparIshi, curSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "FixedMisparSidur01: " + ex.Message, null);
-                inputData.IsSuccsess = false;
+                throw ex;
             }
         }
 
@@ -81,63 +85,69 @@ namespace KdsShinuyim.ShinuyImpl
             int iNewMisparMatala, iNewMisparSidur;
             int iMisparSidur = GetMisparSidur(oPeilut);
 
-            if (iMisparSidur > 0)
-            {
-                curSidur.bSidurMyuhad = true;
-                NewSidur oNewSidurim = FindSidurOnHtNewSidurim(curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData.htNewSidurim);
+            try{
+                if (iMisparSidur > 0)
+                {
+                    curSidur.bSidurMyuhad = true;
+                    NewSidur oNewSidurim = FindSidurOnHtNewSidurim(curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData.htNewSidurim);
 
-                iNewMisparSidur = iMisparSidur;
-                iNewMisparMatala = curSidur.iMisparSidur;
-                //    bUpdateMisparMatala = true;
+                    iNewMisparSidur = iMisparSidur;
+                    iNewMisparMatala = curSidur.iMisparSidur;
+                    //    bUpdateMisparMatala = true;
 
-                oNewSidurim.SidurIndex = iSidurIndex;
-                oNewSidurim.SidurNew = iMisparSidur;
-                oNewSidurim.ShatHatchalaNew = curSidur.dFullShatHatchala;
+                    oNewSidurim.SidurIndex = iSidurIndex;
+                    oNewSidurim.SidurNew = iMisparSidur;
+                    oNewSidurim.ShatHatchalaNew = curSidur.dFullShatHatchala;
 
-                //שינוי מקום בעקבות באג 17/05
-                var oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
+                    //שינוי מקום בעקבות באג 17/05
+                    var oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
 
-                UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpd);
-                DataRow[] drSidurMeyuchad;
+                    UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpdRecorder);
+                    DataRow[] drSidurMeyuchad;
 
-                drSidurMeyuchad = inputData.dtTmpSidurimMeyuchadim.Select("mispar_sidur=" + iNewMisparSidur);
-                var sidurManager = ServiceLocator.Current.GetInstance<ISidurManager>();
-                curSidur = sidurManager.CreateClsSidurFromSidurMeyuchad(curSidur, inputData.CardDate, iNewMisparSidur, drSidurMeyuchad[0]);
-                curSidur.sHashlama = "0";
-                curSidur.sOutMichsa = "0";
+                    drSidurMeyuchad = inputData.dtTmpSidurimMeyuchadim.Select("mispar_sidur=" + iNewMisparSidur);
+                    var sidurManager = ServiceLocator.Current.GetInstance<ISidurManager>();
+                    curSidur = sidurManager.CreateClsSidurFromSidurMeyuchad(curSidur, inputData.CardDate, iNewMisparSidur, drSidurMeyuchad[0]);
+                    curSidur.sHashlama = "0";
+                    curSidur.sOutMichsa = "0";
 
-                oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR = iNewMisparSidur;
-                oObjSidurimOvdimUpd.HASHLAMA = 0;
-                oObjSidurimOvdimUpd.OUT_MICHSA = 0;
-                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR = iNewMisparSidur;
+                    oObjSidurimOvdimUpd.HASHLAMA = 0;
+                    oObjSidurimOvdimUpd.OUT_MICHSA = 0;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                
 
-                for (int j = 0; j < ((SidurDM)(inputData.htEmployeeDetails[iSidurIndex])).htPeilut.Count; j++)
-                {
-                    //עבור שינוי 1, במידה והיה צורך לעדכן את מספר המטלה במספר הסידור הישן )מספר הסידור קיבל מספר חדש(
-                    //נעדכן את הפעילות הראשונה . במקרה כזה לא אמורה להיות יותר מפעילות אחת לסידור
-                    //נעדכן גם את הפעילויות במספר הסידור החדש
-                    SourceObj SourceObject;
-                    oPeilut = (PeilutDM)((SidurDM)(inputData.htEmployeeDetails[iSidurIndex])).htPeilut[j];
-                    GetUpdPeilutObject(iSidurIndex, oPeilut, inputData, oObjSidurimOvdimUpd, out SourceObject);
+                    for (int j = 0; j < ((SidurDM)(inputData.htEmployeeDetails[iSidurIndex])).htPeilut.Count; j++)
+                    {
+                        //עבור שינוי 1, במידה והיה צורך לעדכן את מספר המטלה במספר הסידור הישן )מספר הסידור קיבל מספר חדש(
+                        //נעדכן את הפעילות הראשונה . במקרה כזה לא אמורה להיות יותר מפעילות אחת לסידור
+                        //נעדכן גם את הפעילויות במספר הסידור החדש
+                        SourceObj SourceObject;
+                        oPeilut = (PeilutDM)((SidurDM)(inputData.htEmployeeDetails[iSidurIndex])).htPeilut[j];
+                        GetUpdPeilutObject(iSidurIndex, oPeilut, inputData, oObjSidurimOvdimUpd, out SourceObject);
 
 
-                    // OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd = GetUpdPeilutObject(iSidurIndex, oPeilut, inputData, oObjSidurimOvdimUpd, out SourceObject);
-                    //oObjPeilutOvdimUpd.MISPAR_MATALA = iNewMisparMatala;
-                    //if (SourceObject == SourceObj.Insert)
-                    //{
-                    //    oObjPeilutOvdimUpd.MISPAR_SIDUR = iNewMisparSidur;
-                    //}
-                    //else
-                    //{
-                    //    oObjPeilutOvdimUpd.NEW_MISPAR_SIDUR = iNewMisparSidur;
-                    //    oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
-                    //}
-                    //oPeilut.iPeilutMisparSidur = iNewMisparSidur;
-                    //oPeilut.lMisparMatala = iNewMisparMatala;
+                        // OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd = GetUpdPeilutObject(iSidurIndex, oPeilut, inputData, oObjSidurimOvdimUpd, out SourceObject);
+                        //oObjPeilutOvdimUpd.MISPAR_MATALA = iNewMisparMatala;
+                        //if (SourceObject == SourceObj.Insert)
+                        //{
+                        //    oObjPeilutOvdimUpd.MISPAR_SIDUR = iNewMisparSidur;
+                        //}
+                        //else
+                        //{
+                        //    oObjPeilutOvdimUpd.NEW_MISPAR_SIDUR = iNewMisparSidur;
+                        //    oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
+                        //}
+                        //oPeilut.iPeilutMisparSidur = iNewMisparSidur;
+                        //oPeilut.lMisparMatala = iNewMisparMatala;
+                    }
+                    //UpdatePeiluyotMevutalotYadani(iSidurIndex, oNewSidurim, oObjSidurimOvdimUpd);
+
                 }
-                //UpdatePeiluyotMevutalotYadani(iSidurIndex, oNewSidurim, oObjSidurimOvdimUpd);
-
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 

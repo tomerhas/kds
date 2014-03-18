@@ -15,7 +15,6 @@ namespace KDSBLLogic.Logs
         {
             LogError(exc.ToString());
         }
-
         public  void LogError(string message)
         {
             LogMessage(message, EventLogEntryType.Error);
@@ -31,7 +30,6 @@ namespace KDSBLLogic.Logs
             }
             LogMessage(StrError, entryType);
         }
-
         public  void LogMessage(string message, EventLogEntryType entryType)
         {
             try
@@ -49,7 +47,6 @@ namespace KDSBLLogic.Logs
             }
             catch (Exception) { }
         }
-
         public  void LogMessage(string message, EventLogEntryType entryType, int iEventId)
         {
             try

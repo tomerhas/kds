@@ -28,13 +28,19 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
 
     public override void ExecShinuy(ShinuyInputData inputData)
     {
-        for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
-        {
-            SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
-            if (!CheckIdkunRashemet("MISPAR_SIDUR", curSidur.iMisparSidur, curSidur.dFullShatHatchala,inputData))
+        try{
+            for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
             {
-                    FixedMisparMatalatVisa02(curSidur, i, inputData);
+                SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
+                if (!CheckIdkunRashemet("MISPAR_SIDUR", curSidur.iMisparSidur, curSidur.dFullShatHatchala,inputData))
+                {
+                        FixedMisparMatalatVisa02(curSidur, i, inputData);
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("ShinuyMisparSidurVisa02: " + ex.Message);
         }
     }
 
@@ -58,8 +64,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
         }
         catch (Exception ex)
         {
-          //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 2, _iMisparIshi, _dCardDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "FixedMisparMatalatVisa02: " + ex.Message, null);
-            inputData.IsSuccsess = false;
+            throw ex;
         }
     }
 
@@ -86,7 +91,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
            // iNewMisparSidur = oNewSidurim.SidurNew;
             oNewSidurim.ShatHatchalaNew = curSidur.dFullShatHatchala;
 
-            UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpd);
+            UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpdRecorder);
 
             DataRow[] drSidurMeyuchad;
             drSidurMeyuchad = inputData.dtTmpSidurimMeyuchadim.Select("mispar_sidur=" + oNewSidurim.SidurNew);
@@ -149,8 +154,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
         }
         catch (Exception ex)
         {
-          //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 2, _iMisparIshi, _dCardDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "FixedMisparMatalatVisa02: " + ex.Message, null);
-            throw ex;
+           throw ex;
         }
     }
     //? Fמות גדולה של פרמטרים
@@ -180,7 +184,6 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
         }
         catch (Exception ex)
         {
-           // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 2, _iMisparIshi, _dCardDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "FixedMisparMatalatVisa02: " + ex.Message, null);
             throw ex;
         }
     }

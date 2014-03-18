@@ -27,14 +27,20 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-
-            for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
+            try
             {
-                SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
-                if (!CheckIdkunRashemet("SHAT_HATCHALA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
-                    ChishuvShatHatchala30(curSidur, i, inputData);
+                    SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
+                    if (!CheckIdkunRashemet("SHAT_HATCHALA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                    {
+                        ChishuvShatHatchala30(curSidur, i, inputData);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyChishuvShatHatchala30: " + ex.Message);
             }
         }
 
@@ -97,7 +103,6 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-               // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, _iMisparIshi, "E", 30, _dCardDate, "ChishuvShatHatchala30: " + ex.Message);
                 throw ex;
             }
         }
@@ -145,7 +150,6 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, _iMisparIshi, "E", 30, _dCardDate, "ChishuvShatHatchala30: " + ex.Message);
                 throw ex;
             }
         }
@@ -167,7 +171,7 @@ namespace KdsShinuyim.ShinuyImpl
                     oNewSidurim.SidurNew = curSidur.iMisparSidur;
                     oNewSidurim.ShatHatchalaNew = dShatHatchalaNew;
 
-                    UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpd);
+                    UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpdRecorder);
                     //עדכון שעת התחלה סידור של כל הפעילויות לסידור
                     for (int j = 0; j < curSidur.htPeilut.Count; j++)
                     {
@@ -200,8 +204,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-           //     clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, _iMisparIshi, "E", 0, _dCardDate, "UpdateShatHatchala: " + ex.Message);
-                throw ex;
+              throw ex;
             }
         }
     }

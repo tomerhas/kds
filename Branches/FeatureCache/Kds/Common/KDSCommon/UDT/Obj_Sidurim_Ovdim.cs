@@ -15,8 +15,9 @@ namespace KDSCommon.UDT
     using Oracle.DataAccess.Types;
     using System.Xml.Serialization;
     using System.Xml.Schema;
-    
-    
+    using ObjectCompare.Attributes;
+
+        [Serializable]
     public class OBJ_SIDURIM_OVDIM : INullable, IOracleCustomType, IXmlSerializable {
         
         private bool m_IsNull;
@@ -691,7 +692,7 @@ namespace KDSCommon.UDT
                 this.m_HAMARAT_SHABATIsNull = value;
             }
         }
-
+         [DontCompare]
         [OracleObjectMappingAttribute("UPDATE_OBJECT")]
         public int UPDATE_OBJECT
         {
@@ -705,7 +706,7 @@ namespace KDSCommon.UDT
                 this.m_UPDATE_OBJECTIsNull = false;
             }
         }
-
+        [DontCompare]
         public bool UPDATE_OBJECTIsNull
         {
             get

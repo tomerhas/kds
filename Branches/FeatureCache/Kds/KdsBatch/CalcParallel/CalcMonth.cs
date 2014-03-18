@@ -7,6 +7,9 @@ using KdsLibrary;
 using KDSCommon.DataModels;
 using KDSCommon.Enums;
 using KDSCommon.Helpers;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsBatch
 {
@@ -28,7 +31,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", 0,  "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message,objOved.Mispar_ishi, null);
 
                 throw ex;
             }
@@ -131,8 +134,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, dTarMe, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.StackTrace + "\n message: "+ ex.Message);
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, dTarMe, "", ex);   
+             //   ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", 0, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, dTarMe);          
+                throw excep;
             }
         }
 
@@ -181,7 +185,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "SetNetunimLeYom: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", 0, "SetNetunimLeYom: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi,null);
                 throw ex;
             }  
         }
@@ -217,14 +221,15 @@ namespace KdsBatch
                     }
                     catch (Exception ex)
                     {
-                        clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, taarich, "AddRowZmanLeloHafsaka: " + ex.StackTrace + "\n message: " + ex.Message);
+                        ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", 0, "AddRowZmanLeloHafsaka: " + ex.StackTrace + "\n message: " + ex.Message,objOved.Mispar_ishi, taarich);
+               
                         throw ex;
                     }
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "AddRowZmanLeloHafsaka: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", 0, "AddRowZmanLeloHafsaka: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, null);
                 throw ex;
             }
         }
@@ -376,7 +381,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "ChangingChofeshFromShaotNosafot: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", 0, "ChangingChofeshFromShaotNosafot: " + ex.StackTrace + "\n message: " + ex.Message,objOved.Mispar_ishi, null);
                 throw ex;
             }
             finally
@@ -1391,7 +1396,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi,  _dTaarichChishuv);
                 throw (ex);
             }
         }
@@ -1406,7 +1411,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);
                 throw (ex);
             }
         }
@@ -1421,7 +1426,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);
                 throw (ex);
             }
         }
@@ -1436,7 +1441,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);
                 throw (ex);
             }
         }
@@ -1468,7 +1473,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ShaotHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ShaotHeadrut.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);
                 throw (ex);
             }
         }
@@ -1486,7 +1491,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);
                 throw (ex);
             }
         }
@@ -1532,7 +1537,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzZchutChofesh.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzZchutChofesh.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);          
                 throw (ex);
             }
         }
@@ -1580,7 +1585,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotTamritzTafkid.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotTamritzTafkid.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);
                 throw (ex);
             }
         }
@@ -1645,7 +1650,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);
                 throw (ex);
             }
         }
@@ -1661,7 +1666,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotTosefetMeshek.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotTosefetMeshek.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);
                 throw (ex);
             }
         }
@@ -1676,7 +1681,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMachlifMeshaleach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotMachlifMeshaleach.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);
                 throw (ex);
             }
         }
@@ -1691,7 +1696,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMachlifSadran.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotMachlifSadran.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);
                 throw (ex);
             }
         }
@@ -1706,7 +1711,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMachlifPakach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotMachlifPakach.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);             
                 throw (ex);
             }
         }
@@ -1721,7 +1726,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMachlifKupai.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotMachlifKupai.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);   
                 throw (ex);
             }
         }
@@ -1738,7 +1743,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMachlifRakaz.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotMachlifRakaz.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);   
                 throw (ex);
             }
         }
@@ -1753,7 +1758,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);   
                 throw (ex);
             }
         }
@@ -1815,7 +1820,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);   
                 throw (ex);
             }
         }
@@ -1830,7 +1835,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KamutGmulChisachon.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KamutGmulChisachon.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);   
                 throw (ex);
             }
         }
@@ -1845,7 +1850,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotSikun.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotSikun.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -1860,7 +1865,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -1875,7 +1881,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -1890,7 +1897,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaVisa.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotPremiaVisa.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -1905,7 +1913,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -1920,7 +1929,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -1968,7 +1978,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotRegilot.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotRegilot.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -1992,7 +2003,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotShabat.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2007,7 +2019,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNehigaShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotNehigaShabat.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2022,7 +2035,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNihulTnuaShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotNihulTnuaShabat.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2037,7 +2051,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotTafkidShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotTafkidShabat.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2052,7 +2067,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachEshelBoker.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachEshelBoker.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2067,7 +2083,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2082,7 +2099,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachEshelErev.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachEshelErev.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2098,7 +2116,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2114,7 +2133,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachEshelTzaharayim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachEshelTzaharayim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2129,7 +2149,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2182,7 +2203,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KamutGmulChisachonNosafot.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KamutGmulChisachonNosafot.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2201,7 +2223,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachGmulChisachon.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachGmulChisachon.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2217,7 +2240,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachLina.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachLina.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2233,7 +2257,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachLinaKfula.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachLinaKfula.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2260,7 +2285,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachLinaKfula.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachLinaKfula.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2275,7 +2301,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachPitzulKaful.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachPitzulKaful.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2290,7 +2317,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotLepremia.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachDakotLepremia.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2310,7 +2338,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2326,7 +2355,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2342,7 +2372,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2357,7 +2388,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomEvel.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomEvel.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2372,7 +2404,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomHadracha.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomHadracha.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2387,7 +2420,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomLeloDivuach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomLeloDivuach.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2402,7 +2436,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMachla.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomMachla.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2417,7 +2452,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMachalaBoded.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomMachalaBoded.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2432,7 +2468,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMiluim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomMiluim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2447,7 +2484,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomAvodaBechul.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomAvodaBechul.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2462,7 +2500,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomTeuna.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomTeuna.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2478,7 +2517,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomMachalatYeledHadHori.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2493,7 +2533,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomShmiratHerayon.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomShmiratHerayon.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2583,7 +2624,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomHeadrut.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2658,7 +2700,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //        clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+        //        //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
         //        throw (ex);
         //    }
         //}
@@ -2710,7 +2752,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomHeadrut.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2746,7 +2789,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomHeadrut.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2869,7 +2913,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomChofesh.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomChofesh.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -2951,7 +2996,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomChofesh.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomChofesh.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3010,7 +3056,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomChofesh.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomChofesh.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3053,7 +3100,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Nosafot100.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.Nosafot100.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3067,7 +3115,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomTipatChalav.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomTipatChalav.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3082,7 +3131,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMachalatBenZug.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomMachalatBenZug.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3097,7 +3147,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMachalatHorim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomMachalatHorim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3112,7 +3163,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMachalaYeled.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomMachalaYeled.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3127,7 +3179,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomKursHasavaLekav.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomKursHasavaLekav.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3145,7 +3198,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomShlichutBeChul.GetHashCode(), objOved.Taarich, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YomShlichutBeChul.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3161,7 +3215,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3177,7 +3232,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Nosafot125.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.Nosafot125.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3193,7 +3249,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Nosafot150.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.Nosafot150.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3203,13 +3260,15 @@ namespace KdsBatch
             float fSumDakotRechiv;
             try
             {
+
                 //ערך הרכיב = סכימת ערך הרכיב לכל הימים בחודש  
                 fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.NosafotShabat.GetHashCode());
                 addRowToTable(clGeneral.enRechivim.NosafotShabat.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NosafotShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.NosafotShabat.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3224,7 +3283,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzTafkidChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotMichutzTafkidChol.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3241,7 +3301,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzTafkidChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotSikun.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzTafkidChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -3263,7 +3325,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachNosafotChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachNosafotChol.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3285,7 +3348,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachKizuzim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachKizuzim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3311,7 +3375,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachTosefetRetzifut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachTosefetRetzifut.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3326,7 +3391,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzDakotHatchalaGmar.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzDakotHatchalaGmar.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3341,7 +3407,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3356,7 +3423,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzBevisa.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzBevisa.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3372,7 +3440,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzOvedMutam.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzOvedMutam.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3388,7 +3457,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot25.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.Shaot25.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3404,7 +3474,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot50.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.Shaot50.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3420,7 +3491,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanHalbasha.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanHalbasha.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3435,7 +3507,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanHashlama.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanHashlama.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3450,7 +3523,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanNesia.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanNesia.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3467,7 +3541,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3482,7 +3557,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3497,7 +3573,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3511,7 +3588,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3526,7 +3604,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanRetzifutBoker.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanRetzifutBoker.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3541,7 +3620,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ETMichsaMekoritBeforeHafchata.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ETMichsaMekoritBeforeHafchata.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3556,7 +3636,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3579,7 +3660,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3604,7 +3686,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot125Letashlum.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.Shaot125Letashlum.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3629,7 +3712,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot150Letashlum.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.Shaot150Letashlum.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3649,7 +3733,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot200Letashlum.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.Shaot200Letashlum.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3672,7 +3757,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachShaotNosafot.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachShaotNosafot.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachShaotNosafot.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -3701,7 +3788,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachKizuzShaotNosafot.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.SachKizuzShaotNosafot.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3739,7 +3827,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyAvoda.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YemeyAvoda.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyAvoda.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -3754,7 +3844,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyAvodaLeloMeyuchadim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.YemeyAvodaLeloMeyuchadim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyAvodaLeloMeyuchadim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -3789,7 +3881,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //         clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsaChodshit.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+        //         //clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsaChodshit.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
         //        throw (ex);
         //    }       
         //}
@@ -3804,7 +3896,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaGrira.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.PremiaGrira.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaGrira.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -3819,7 +3913,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaMachsenaim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.PremiaMachsenaim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaMachsenaim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -3835,7 +3931,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaManasim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.PremiaManasim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaManasim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
                 throw (ex);
             }
         }
@@ -3849,7 +3947,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaMeshek.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotSikun.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaMeshek.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -3864,7 +3964,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaSadranim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaSadranim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
                 throw (ex);
             }
         }
@@ -3879,7 +3981,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaPakachim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3894,7 +3997,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaRakazim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
                 throw (ex);
             }
         }
@@ -3960,8 +4064,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Kizuz100.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
-                throw (ex);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.Kizuz100.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+                 throw (ex);
             }
         }
      
@@ -4029,8 +4133,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotTnuaShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
-                throw (ex);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzNosafotTnuaShabat.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+                 throw (ex);
             }
         }
 
@@ -4049,8 +4153,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
-                throw (ex);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+                  throw (ex);
             }
         }
 
@@ -4086,7 +4190,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4109,7 +4213,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanGrirot.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ZmanGrirot.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4124,7 +4228,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMachlifTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotMachlifTnua.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4148,8 +4252,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMachlifTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
-                throw (ex);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzMachlifTnua.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+                 throw (ex);
             }
         }
 
@@ -4163,7 +4267,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ShaotShabat100.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ShaotShabat100.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4181,7 +4285,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ChofeshZchut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.ChofeshZchut.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4225,8 +4329,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyaRegila.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
-                throw (ex);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.PremyaNamlak.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+                 throw (ex);
             }
         }
 
@@ -4244,7 +4348,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyaNamlak.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.DakotSikun.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyaNamlak.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4259,8 +4365,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzKaytanaTafkid.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
-                throw (ex);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzKaytanaTafkid.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+                 throw (ex);
             }
         }
 
@@ -4274,7 +4380,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzKaytanaShivuk.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzKaytanaShivuk.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4288,8 +4394,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzKaytanaBniaPeruk.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
-                throw (ex);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzKaytanaBniaPeruk.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+               throw (ex);
             }
         }
 
@@ -4303,7 +4409,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzKaytanaYeshivatTzevet.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzKaytanaYeshivatTzevet.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4318,7 +4424,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzKaytanaYamimArukim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzKaytanaYamimArukim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4333,7 +4439,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzKaytanaMeavteach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzKaytanaMeavteach.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4348,7 +4454,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzKaytanaMatzil.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzKaytanaMatzil.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4363,8 +4469,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNochehut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
-                throw (ex);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzNochehut.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv);  
+               throw (ex);
             }
         }
 
@@ -4405,7 +4511,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsatShaotNosafotTafkidChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.MichsatShaotNosafotTafkidChol.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4420,7 +4526,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzVaadOvdim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzVaadOvdim.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4444,7 +4550,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Nosafot100.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.Nosafot100.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4505,7 +4611,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotTafkidChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.KizuzNosafotTafkidChol.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
                 throw (ex);
             }
         }
@@ -4521,8 +4627,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.HashlamaAlCheshbonPremia.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
-                throw (ex);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(objOved.iBakashaId, "E", clGeneral.enRechivim.HashlamaAlCheshbonPremia.GetHashCode(), "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message, objOved.Mispar_ishi, _dTaarichChishuv); 
+                 throw (ex);
             }
         }
 
@@ -4561,7 +4667,7 @@ namespace KdsBatch
           }
           catch (Exception ex)
           {
-              clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotTnuaChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+              //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotTnuaChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
               throw (ex);
           }
         }
@@ -4575,7 +4681,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //         clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzLemichsaPakach.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+        //         //clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzLemichsaPakach.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
         //        throw (ex);
         //    }
         //}
@@ -4589,7 +4695,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //         clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzLemichsaSadsran.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+        //         //clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzLemichsaSadsran.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
         //        throw (ex);
         //    }
         //}
@@ -4603,7 +4709,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //         clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzLemichsaRakaz.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+        //         //clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzLemichsaRakaz.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
         //        throw (ex);
         //    }
         //}
@@ -4617,7 +4723,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //         clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzLemichsaMeshaleach.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+        //         //clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzLemichsaMeshaleach.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
         //        throw (ex);
         //    }
         //}
@@ -4641,7 +4747,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //         clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotPakach.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+        //         //clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotPakach.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
         //        throw (ex);
         //    }
         //}
@@ -4665,7 +4771,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //         clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotSadran.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+        //         //clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotSadran.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
         //        throw (ex);
         //    }
         //}
@@ -4689,7 +4795,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //         clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotRakaz.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+        //         //clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotRakaz.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
         //        throw (ex);
         //    }
         //}
@@ -4713,7 +4819,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //         clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotMeshaleach.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+        //         //clLogBakashot.SetError(objOved.iBakashaId,objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotMeshaleach.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
         //        throw (ex);
         //    }
         //}
@@ -4728,7 +4834,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMachlifPakach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMachlifPakach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4743,7 +4849,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMachlifSadran.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMachlifSadran.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4758,7 +4864,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMachlifRakaz.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMachlifRakaz.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4773,7 +4879,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMachlifMeshaleach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMachlifMeshaleach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4788,7 +4894,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMachlifKupai.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMachlifKupai.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4803,7 +4909,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotPakach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotPakach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4818,7 +4924,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotSadran.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotSadran.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4833,7 +4939,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotRakaz.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotRakaz.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4848,7 +4954,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotMeshalech.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotMeshalech.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4863,7 +4969,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotKupai.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotKupai.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4879,7 +4985,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzLamichsaNihulTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMichutzLamichsaNihulTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4894,7 +5000,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMishpatChaverim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzMishpatChaverim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4909,7 +5015,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaTafkidShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaTafkidShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4924,7 +5030,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaNihulShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaNihulShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4943,7 +5049,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotNahagut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotNahagut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4958,7 +5064,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotNehigaShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotNehigaShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4979,7 +5085,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotNihulTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotNihulTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -4994,7 +5100,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotNihulShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotNihulShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5015,7 +5121,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotTafkid.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotTafkid.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5030,7 +5136,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5051,7 +5157,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5072,7 +5178,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutBeshishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutBeshishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5094,7 +5200,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5110,7 +5216,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NosafotShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NosafotShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5128,7 +5234,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5147,7 +5253,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5163,7 +5269,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5179,7 +5285,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5209,7 +5315,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaLariushum.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaLariushum.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5227,7 +5333,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaMachsanKatisim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaMachsanKatisim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5243,7 +5349,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaTafkidShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaTafkidShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5259,7 +5365,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaTnuaShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichutzLamichsaTnuaShishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5274,7 +5380,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutPremiaLerishum.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutPremiaLerishum.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5289,7 +5395,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutPremiaMevakrim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutPremiaMevakrim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5306,7 +5412,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5322,7 +5428,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutPremiaMeshekAchsana.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutPremiaMeshekAchsana.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5338,7 +5444,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5353,7 +5459,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochechutLePremiyaMeshekKonenutGrira.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochechutLePremiyaMeshekKonenutGrira.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5368,7 +5474,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachNesiot.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachNesiot.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5385,7 +5491,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotHistaglut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotHistaglut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5401,7 +5507,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachKM.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachKM.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5417,7 +5523,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5433,7 +5539,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotHagdara.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotHagdara.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5449,7 +5555,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotKisuiTor.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotKisuiTor.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5472,7 +5578,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ShaotChofesh.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ShaotChofesh.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5508,7 +5614,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5524,7 +5630,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotChofesh.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotChofesh.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5540,7 +5646,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaMachsanKartisim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaMachsanKartisim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5555,7 +5661,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatMevakrimBadrachim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatMevakrimBadrachim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5570,7 +5676,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatMifalYetzur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatMifalYetzur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5585,7 +5691,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatNehageyTovala.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatNehageyTovala.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5600,7 +5706,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatNehageyTenderim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatNehageyTenderim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5615,7 +5721,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatDfus.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatDfus.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5630,7 +5736,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatMisgarot.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatMisgarot.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5645,7 +5751,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatGifur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatGifur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5660,7 +5766,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatMusachRishonLetzyon.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatMusachRishonLetzyon.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5675,7 +5781,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatTechnayYetzur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatTechnayYetzur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5690,7 +5796,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatMifalYetzur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatMifalYetzur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5705,7 +5811,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatNehageyTovala.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatNehageyTovala.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5721,7 +5827,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5736,7 +5842,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatDfus.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatDfus.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5751,7 +5857,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatAchzaka.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatAchzaka.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5766,7 +5872,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatGifur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatGifur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5781,7 +5887,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyaRishonLetzyon.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyaRishonLetzyon.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5796,7 +5902,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyaTechnayYetzur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyaTechnayYetzur.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5811,7 +5917,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatPerukVeshiputz.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLePremyatPerukVeshiputz.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5826,7 +5932,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiyatReshetBitachon.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiyatReshetBitachon.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5841,7 +5947,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiyatPeirukVeshiputz.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiyatPeirukVeshiputz.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5872,7 +5978,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5889,7 +5995,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5905,7 +6011,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochechutLepremyaMenahel.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochechutLepremyaMenahel.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5929,7 +6035,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyaMenahel.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyaMenahel.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5945,7 +6051,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomChofeshNoDivuach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomChofeshNoDivuach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5961,7 +6067,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomHeadrutNoDivuach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomHeadrutNoDivuach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -5989,7 +6095,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachNosafotTafkidCholVeshishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachNosafotTafkidCholVeshishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6027,7 +6133,7 @@ namespace KdsBatch
           }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachNosafotTnuaCholVeshishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachNosafotTnuaCholVeshishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6060,7 +6166,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachNosafotNahagutCholVeshishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachNosafotNahagutCholVeshishi.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6099,7 +6205,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsatShaotNosafotNihul.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsatShaotNosafotNihul.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6121,7 +6227,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsatShaotNosafotTafkidShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsatShaotNosafotTafkidShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6143,7 +6249,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsatShaotNoafotNihulShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsatShaotNoafotNihulShabat.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6159,7 +6265,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6175,7 +6281,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6199,7 +6305,7 @@ namespace KdsBatch
            }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
                 throw (ex);
             }
         }
@@ -6216,7 +6322,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6232,7 +6338,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6248,7 +6354,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6264,7 +6370,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MachalaYomMale.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MachalaYomMale.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6280,7 +6386,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MachalaYomChelki.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MachalaYomChelki.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6296,7 +6402,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.HashlamaBenahagut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.HashlamaBenahagut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6312,7 +6418,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.HashlamaBenihulTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.HashlamaBenihulTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6328,7 +6434,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.HashlamaBetafkid.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.HashlamaBetafkid.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6344,7 +6450,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMiluimChelki.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMiluimChelki.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6360,7 +6466,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotElementim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotElementim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6377,7 +6483,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNesiaLepremia.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNesiaLepremia.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6393,7 +6499,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotChofeshHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotChofeshHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6410,7 +6516,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyChofeshHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyChofeshHeadrut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6426,7 +6532,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6442,7 +6548,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }
@@ -6458,7 +6564,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.HalbashaSofYom.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.HalbashaSofYom.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw (ex);
             }
         }

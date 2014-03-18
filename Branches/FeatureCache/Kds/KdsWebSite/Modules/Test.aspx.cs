@@ -29,6 +29,8 @@ using KDSCommon.DataModels;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.DAL;
 using KDSCommon.Enums;
+using KDSCommon.Interfaces.Logs;
+using KDSCommon.DataModels.Exceptions;
 
 
 public partial class Modules_Test :Page
@@ -394,7 +396,9 @@ public partial class Modules_Test :Page
         DateTime a;
         a = new DateTime(2010, 10, 03, 19, 20, 0);
         clBatchManager oBatchManager = new clBatchManager(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
-        oBatchManager.MainInputData(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
+
+        oBatchManager.MainOvedErrorsNew(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
+        //oBatchManager.MainInputData(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
       //  oBatchManager.MainOvedErrors(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
         oBatchManager.MainOvedErrorsNew(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
         
@@ -805,22 +809,23 @@ public partial class Modules_Test :Page
          //HafelShguim(26506, DateTime.Parse("15/02/2011"));
          //oBatchManager.MainOvedErrors(26506, DateTime.Parse("15/02/2011"));
 
-         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start MainOvedErrors");
+        // ServiceLocator.Current.GetInstance<ILogBakashot>().InsertErrorToLog(lRequestNum, "E", 0, "RunCalcBatchProcess " + iNumProcess + ": " + ex.Message);
+      //   clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start MainOvedErrors");
          //foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
          //{
          //   // HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
          //   //  oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
          //    oBatchManager.MainOvedErrorsNew(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
          //}
-         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End MainOvedErrors");
+      //   clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End MainOvedErrors");
 
-         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start HafelShguim");
+     //    clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start HafelShguim");
          //foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
          //{
          //    HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
          //  //  oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
          //}
-         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End HafelShguim");
+        // clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End HafelShguim");
     }
 
     private void HafelShguim(int mispar_ishi,DateTime taarich)
@@ -983,16 +988,27 @@ public partial class Modules_Test :Page
 
     protected void btnRefreshMakatim_Click(object sender, EventArgs e)
     {
-       
-        KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
-        clUtils.RunBakaratSDRN();
-        clUtils.RunRetroSpectSDRN();
-        clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
-        //clTkinutMakatim objMakat = new clTkinutMakatim();
-        // objMakat.(DateTime.Parse(clnFromDate.Text));
+        try
+        {
+            KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
+           //++ clUtils.RunBakaratSDRN();
+           //++ clUtils.RunRetroSpectSDRN();
+            clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
+            //clTkinutMakatim objMakat = new clTkinutMakatim();
+            // objMakat.(DateTime.Parse(clnFromDate.Text));
 
-        //wsBatch oBatch = new wsBatch();
-        //oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
+            //wsBatch oBatch = new wsBatch();
+            //oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
+        }
+        catch (Exception ex)
+        {
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(255, "E", 0, "",   ex);
+               
+           // var excep = clLogBakashot.SetError(0, "E", 0, null, ex);//--
+           // ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(excep.Log.RequestId, excep.Log.SugHodaa,excep.Log.KodYeshut,ex.Message );  //--
+            //++clGeneral.LogError(ex);
+        }
+        
     }
 
     protected void btnPremyot_Click(object sender, EventArgs e)

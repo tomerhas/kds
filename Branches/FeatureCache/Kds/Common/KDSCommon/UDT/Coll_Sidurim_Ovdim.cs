@@ -17,6 +17,7 @@ namespace KDSCommon.UDT
     using System.Xml.Schema;
     using KDSCommon.Helpers;
     
+        [Serializable]
     public class COLL_SIDURIM_OVDIM : INullable, IOracleCustomType, IXmlSerializable,IDisposable {
         
         private bool m_IsNull;        

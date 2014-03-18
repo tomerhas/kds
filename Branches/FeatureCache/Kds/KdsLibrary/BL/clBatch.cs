@@ -6,6 +6,8 @@ using System.Data;
 using System.Diagnostics;
 using KDSCommon.UDT;
 using DalOraInfra.DAL;
+using KDSCommon.Interfaces.Logs;
+using Microsoft.Practices.ServiceLocation;
 
 
 
@@ -677,15 +679,20 @@ namespace KdsLibrary.BL
         public void InsertKnisot(COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdim)
         {
             clDal oDal = new clDal();
+            string x = null; //--
             try
             {
+                string[] y = x.Split(';');//--
                 oDal.AddParameter("p_coll_obj_peilut_ovdim", ParameterType.ntOracleArray, oCollPeilutOvdim, ParameterDir.pdInput, "COLL_OBJ_PEILUT_OVDIM");
                 oDal.ExecuteSP(clGeneral.cProInsertKnisot);
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage(ex.Message, EventLogEntryType.Error);
-                throw ex;
+                  var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(255,75757, "E", 0, null, "", ex);   
+                  throw excep;
+              
+                //++clGeneral.LogMessage(ex.Message, EventLogEntryType.Error);
+                //++throw ex;
             }
         }
 

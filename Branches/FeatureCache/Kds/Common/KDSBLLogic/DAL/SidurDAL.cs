@@ -15,6 +15,8 @@ namespace KdsLibrary.KDSLogic.DAL
         public const string cGetSidurDetails = "KDS_SIDUR_AVODA_PACK.GetSidurDetails";
         public const string cFunGetMeshechSidurForPeriod = "pkg_sidurim.fun_get_meshech_sidur_Toperiod";
         public const string cProGetMeafyenySidurById = "pkg_sidurim.pro_get_meafyeny_sidur_by_id";
+        public const string cProCheckHaveSidurGrira = "pkg_errors.pro_check_have_sidur_grira";
+        public const string cProGetTmpSidurimMeyuchadim = "pkg_sidurim.get_tmp_sidurim_meyuchadim";
 
         public bool IsSidurChofef(int iMisparIshi, DateTime dCardDate, int iMisparSidur, DateTime dShatHatchala, DateTime dShatGmar, int iParamChafifa, DataTable dt)
         {
@@ -124,5 +126,46 @@ namespace KdsLibrary.KDSLogic.DAL
             }
         }
 
+        public bool CheckHaveSidurGrira(int iMisparIshi, DateTime dDateToCheck, ref DataTable dt)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                //בודקים אם ישנה פעילות זהה
+                //אם כן, נחזיר TRUE
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dDateToCheck, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+
+                oDal.ExecuteSP(cProCheckHaveSidurGrira, ref dt);
+
+                return dt.Rows.Count > 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataTable GetTmpSidurimMeyuchadim(DateTime dTarMe, DateTime dTarAd)
+        {
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+
+            try
+            {
+                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
+
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(cProGetTmpSidurimMeyuchadim, ref dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

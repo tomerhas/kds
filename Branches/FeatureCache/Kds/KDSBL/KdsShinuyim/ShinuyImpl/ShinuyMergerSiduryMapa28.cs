@@ -28,7 +28,14 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-            MergerSiduryMapa28(inputData);
+            try
+            {
+                 MergerSiduryMapa28(inputData);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyMergerSiduryMapa28: " + ex.Message);
+            }
         }
 
         private void MergerSiduryMapa28(ShinuyInputData inputData)
@@ -84,8 +91,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-               // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, _iMisparIshi, "E", 28, _dCardDate, "MergerSiduryMapa28: " + ex.Message);
-                inputData.IsSuccsess = false;
+                throw ex;
             }
         }
 
@@ -122,7 +128,6 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 2, _iMisparIshi, _dCardDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "FixedMisparMatalatVisa02: " + ex.Message, null);
                 throw ex;
             }
         }
@@ -136,7 +141,6 @@ namespace KdsShinuyim.ShinuyImpl
             try
             {
                 OBJ_SIDURIM_OVDIM oObjSidurimOvdimDel = InsertToObjSidurimOvdimForDelete(curSidur, inputData);
-                new OBJ_SIDURIM_OVDIM();
 
                 inputData.oCollSidurimOvdimDel.Add(oObjSidurimOvdimDel);
                 bCancelHachanatMechona = false;
@@ -155,7 +159,7 @@ namespace KdsShinuyim.ShinuyImpl
                         oObjPeilutOvdimIns.MISPAR_SIDUR = oSidurPutzal.iMisparSidur;
                         oObjPeilutOvdimIns.SHAT_HATCHALA_SIDUR = oSidurPutzal.dFullShatHatchala;
                         oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;
-                        CopyPeilutToObj( oObjPeilutOvdimIns,  oPeilut);//??
+                        CopyPeilutToObj( oObjPeilutOvdimIns,  oPeilut);
                         inputData.oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
 
                         PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oPeilut.lMakatNesia, inputData.dtTmpMeafyeneyElements);
@@ -177,7 +181,6 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 2, _iMisparIshi, _dCardDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "FixedMisparMatalatVisa02: " + ex.Message, null);
                 throw ex;
             }
         }
@@ -219,8 +222,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 2, _iMisparIshi, _dCardDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "FixedMisparMatalatVisa02: " + ex.Message, null);
-                throw ex;
+               throw ex;
             }
         }
     }

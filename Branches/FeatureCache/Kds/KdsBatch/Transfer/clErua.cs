@@ -7,6 +7,8 @@ using System.Data;
 using System.Configuration;
 using KdsLibrary.BL;
 using System.Web;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsBatch
 {
@@ -115,7 +117,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(_lBakashaId, _iMisparIshi, "E", 0, null, "SetHeaderRow: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_lBakashaId, "E", 0, "SetHeaderRow: " + ex.Message, _iMisparIshi,null);
             }
          }
 
@@ -137,7 +139,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(_lBakashaId, _iMisparIshi, "E", 0, null, "SetFooterRow: " + ex.Message);
+                 ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_lBakashaId, "E", 0, "SetFooterRow: " + ex.Message, _iMisparIshi, null);
              }
         }
 
@@ -367,8 +369,7 @@ namespace KdsBatch
 
         protected void WriteError(string sError)
         {
-        clLogBakashot.SetError(_lBakashaId, _iMisparIshi, "E", _iKodErua, _dMonth, sError);
-        clLogBakashot.InsertErrorToLog();
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_lBakashaId, "E", _iKodErua, sError, _iMisparIshi, _dMonth);
         }
 
         protected void PrepareLines()

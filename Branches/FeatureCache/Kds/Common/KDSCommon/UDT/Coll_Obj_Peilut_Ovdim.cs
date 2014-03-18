@@ -18,6 +18,7 @@ namespace KDSCommon.UDT
     using System.Collections;
     using KDSCommon.Helpers;
 
+
     public class COLL_OBJ_PEILUT_OVDIM : INullable, IOracleCustomType, IXmlSerializable, IComparable,IDisposable {
         
         private bool m_IsNull;

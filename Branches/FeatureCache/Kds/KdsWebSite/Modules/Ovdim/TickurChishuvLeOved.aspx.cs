@@ -283,7 +283,9 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 
                     try
                     {
-                        nextStep = btchMan.MainInputData(int.Parse(txtEmpId.Text), dTaarich);
+                        var resultShinuy = btchMan.MainOvedErrorsNew(int.Parse(txtEmpId.Text), dTaarich);
+                        nextStep = resultShinuy.IsSuccess; 
+                        //nextStep = btchMan.MainInputData(int.Parse(txtEmpId.Text), dTaarich);
 
                         if (nextStep)
                         {

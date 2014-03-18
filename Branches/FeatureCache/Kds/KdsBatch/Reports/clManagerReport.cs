@@ -11,6 +11,8 @@ using KdsLibrary.UI;
 using System.Configuration;
 using KdsLibrary.Security;
 using System.Windows.Forms;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 
 
 
@@ -72,7 +74,7 @@ namespace KdsBatch.Reports
                 clGeneral.LogMessage(ex.Message, System.Diagnostics.EventLogEntryType.Error,true);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, iStatus);
-                clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "E", 0, null, "clManagerReport: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iRequestId, "E", 0, "clManagerReport: " + ex.Message, _loginUser,null);
             }
 
         }

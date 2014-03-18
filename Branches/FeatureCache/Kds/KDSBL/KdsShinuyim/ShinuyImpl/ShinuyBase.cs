@@ -15,6 +15,7 @@ using KdsShinuyim.DataModels;
 using KdsShinuyim.Enums;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using ObjectCompare;
 
 namespace KdsShinuyim.ShinuyImpl
 {
@@ -24,11 +25,14 @@ namespace KdsShinuyim.ShinuyImpl
 
         protected const int SIDUR_NESIA = 99300;
         protected const int SIDUR_MATALA = 99301;
+        protected const string SIBA_LE_DIVUCH_YADANI_HALBASHA = "goremet_lebitul_zman_halbasha";
+        protected const string SIBA_LE_DIVUCH_YADANI_NESIAA = "goremet_lebitul_zman_nesiaa";
+
         //protected const int SIDUR_HEADRUT_BETASHLUM = 99801;
         //protected const int SIDUR_RETIZVUT99500 = 99500;
         //protected const int SIDUR_RETIZVUT99501 = 99501;
 
-        public ShinuyBase(IUnityContainer container) 
+        public ShinuyBase(IUnityContainer container)
         {
             _container = container;
         }
@@ -53,7 +57,6 @@ namespace KdsShinuyim.ShinuyImpl
             }
             return bHaveIdkun;
         }
-
         protected bool CheckIdkunRashemet(string sFieldToChange, ShinuyInputData inputData)
         {
             bool bHaveIdkun = false;
@@ -73,7 +76,25 @@ namespace KdsShinuyim.ShinuyImpl
             }
             return bHaveIdkun;
         }
+        protected bool CheckIdkunRashemet(string sFieldToChange, int iMisparSidur, DateTime dShatHatchala, int iMisparKnisa, DateTime dShatYetzia, ShinuyInputData inputData)
+        {
+            bool bHaveIdkun = false;
+            DataRow[] drIdkunim;
+            try
+            {
+                drIdkunim = inputData.IdkuneyRashemet.Select("shem_db='" + sFieldToChange.ToUpper() + "' AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime') ");
+                if (drIdkunim.Length > 0)
+                    bHaveIdkun = true;
 
+                //if (sFieldToChange.ToUpper() == "SHAT_HATCHALA")
+                //    bHaveIdkun = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bHaveIdkun;
+        }
 
         protected NewSidur FindSidurOnHtNewSidurim(int iMisparSidur, DateTime dShatHatchala, OrderedDictionary htNewSidurim)
         {
@@ -109,34 +130,41 @@ namespace KdsShinuyim.ShinuyImpl
         protected OBJ_SIDURIM_OVDIM GetUpdSidurObject(SidurDM oSidur, ShinuyInputData inputData)
         {
             //מביא את הסידור לפי מפתח האינדקס
-            OBJ_SIDURIM_OVDIM oObjSidurimOvdim = new OBJ_SIDURIM_OVDIM();
+            OBJ_SIDURIM_OVDIM oObjSidurimOvdim = null;
             try
             {
-                for (int i = 0; i <= inputData.oCollSidurimOvdimUpd.Count - 1; i++)
+                var sidurOvdimContainer = inputData.oCollSidurimOvdimUpdRecorder.SingleOrDefault(x =>
                 {
-                    if ((inputData.oCollSidurimOvdimUpd.Value[i].NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollSidurimOvdimUpd.Value[i].NEW_SHAT_HATCHALA == oSidur.dFullShatHatchala) && inputData.oCollSidurimOvdimUpd.Value[i].UPDATE_OBJECT == 1)
+                    if (x.ContainedItem.NEW_MISPAR_SIDUR == oSidur.iMisparSidur
+                        && x.ContainedItem.NEW_SHAT_HATCHALA == oSidur.dFullShatHatchala
+                        && x.ContainedItem.UPDATE_OBJECT == 1)
                     {
-                        oObjSidurimOvdim = inputData.oCollSidurimOvdimUpd.Value[i];
+                        return true;
+                    }
+                    return false;
+                });
+                if (sidurOvdimContainer != null)
+                {
+                    return sidurOvdimContainer.ContainedItem;
+                }
+
+                //Search for sidur ovdim in oCollSidurimOvdimIns collection
+                for (int i = 0; i <= inputData.oCollSidurimOvdimIns.Count - 1; i++)
+                {
+                    if ((inputData.oCollSidurimOvdimIns.Value[i].NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollSidurimOvdimIns.Value[i].NEW_SHAT_HATCHALA == oSidur.dFullShatHatchala))
+                    {
+                        oObjSidurimOvdim = inputData.oCollSidurimOvdimIns.Value[i];
                     }
                 }
 
-                if (oObjSidurimOvdim.MISPAR_SIDUR == 0)
+
+                if (oObjSidurimOvdim==null)
                 {
-                    for (int i = 0; i <= inputData.oCollSidurimOvdimIns.Count - 1; i++)
-                    {
-                        if ((inputData.oCollSidurimOvdimIns.Value[i].NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollSidurimOvdimIns.Value[i].NEW_SHAT_HATCHALA == oSidur.dFullShatHatchala))
-                        {
-                            oObjSidurimOvdim = inputData.oCollSidurimOvdimIns.Value[i];
-                        }
-                    }
-
-
-                    if (oObjSidurimOvdim.MISPAR_SIDUR == 0)
-                    {
-                        InsertToObjSidurimOvdimForUpdate(oSidur,oObjSidurimOvdim, inputData.UserId);
-                        inputData.oCollSidurimOvdimUpd.Add(oObjSidurimOvdim);
-                    }
+                    oObjSidurimOvdim = InsertToObjSidurimOvdimForUpdate(oSidur, inputData.UserId);
+                    ModificationRecorder<OBJ_SIDURIM_OVDIM> recorder = new ModificationRecorder<OBJ_SIDURIM_OVDIM>(oObjSidurimOvdim, true);
+                    inputData.oCollSidurimOvdimUpdRecorder.Add(recorder);
                 }
+
             }
             catch (Exception ex)
             {
@@ -144,9 +172,10 @@ namespace KdsShinuyim.ShinuyImpl
             }
             return oObjSidurimOvdim;
         }
-
-        private void InsertToObjSidurimOvdimForUpdate(SidurDM oSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, int? UserId)
+        //TODO modify the name from Insert to Create
+        protected OBJ_SIDURIM_OVDIM InsertToObjSidurimOvdimForUpdate(SidurDM oSidur,  int? UserId)
         {
+            OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd = new OBJ_SIDURIM_OVDIM();
             try
             {
                 oObjSidurimOvdimUpd.MISPAR_SIDUR = oSidur.iMisparSidur;
@@ -242,6 +271,7 @@ namespace KdsShinuyim.ShinuyImpl
                 {
                     oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN = oSidur.iHachtamaBeatarLoTakin.ToString();
                 }
+                return oObjSidurimOvdimUpd;
             }
             catch (Exception ex)
             {
@@ -249,16 +279,17 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        protected void UpdateObjectUpdSidurim(NewSidur oNewSidurim, COLL_SIDURIM_OVDIM oCollSidurimOvdimUpd)
+        protected void UpdateObjectUpdSidurim(NewSidur oNewSidurim, ModificationRecorderCollection<OBJ_SIDURIM_OVDIM> oCollSidurimOvdimRecorderUpd)
         {
             try
             {
-                for (int j = 0; j <= oCollSidurimOvdimUpd.Count - 1; j++)
+
+                for (int j = 0; j <= oCollSidurimOvdimRecorderUpd.Count - 1; j++)
                 {
-                    if ((oCollSidurimOvdimUpd.Value[j].MISPAR_SIDUR == oNewSidurim.SidurOld) && (oCollSidurimOvdimUpd.Value[j].SHAT_HATCHALA == oNewSidurim.ShatHatchalaOld))
+                    if ((oCollSidurimOvdimRecorderUpd[j].ContainedItem.MISPAR_SIDUR == oNewSidurim.SidurOld) && (oCollSidurimOvdimRecorderUpd[j].ContainedItem.SHAT_HATCHALA == oNewSidurim.ShatHatchalaOld))
                     {
-                        oCollSidurimOvdimUpd.Value[j].NEW_MISPAR_SIDUR = oNewSidurim.SidurNew;
-                        oCollSidurimOvdimUpd.Value[j].NEW_SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;
+                        oCollSidurimOvdimRecorderUpd[j].ContainedItem.NEW_MISPAR_SIDUR = oNewSidurim.SidurNew;
+                        oCollSidurimOvdimRecorderUpd[j].ContainedItem.NEW_SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;
                     }
                 }
             }
@@ -268,15 +299,15 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        protected bool TryGetPeilutFromUpdObject(SidurDM oSidur, PeilutDM oPeilut, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd, out OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd)
+        protected bool TryGetPeilutFromUpdObject(SidurDM oSidur, PeilutDM oPeilut, ModificationRecorderCollection<OBJ_PEILUT_OVDIM> oCollPeilutOvdimUpdRecorder, out OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd)
         {
             oObjPeilutOvdimUpd = null; // new OBJ_PEILUT_OVDIM();
-            for (int i = 0; i <= oCollPeilutOvdimUpd.Count - 1; i++)
+            for (int i = 0; i <= oCollPeilutOvdimUpdRecorder.Count - 1; i++)
             {
-                if ((oCollPeilutOvdimUpd.Value[i].NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (oCollPeilutOvdimUpd.Value[i].NEW_SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
-                    && (oCollPeilutOvdimUpd.Value[i].NEW_SHAT_YETZIA == oPeilut.dFullShatYetzia) && (oCollPeilutOvdimUpd.Value[i].MISPAR_KNISA == oPeilut.iMisparKnisa) && oCollPeilutOvdimUpd.Value[i].UPDATE_OBJECT == 1)
+                if ((oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
+                    && (oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_YETZIA == oPeilut.dFullShatYetzia) && (oCollPeilutOvdimUpdRecorder[i].ContainedItem.MISPAR_KNISA == oPeilut.iMisparKnisa) && oCollPeilutOvdimUpdRecorder[i].ContainedItem.UPDATE_OBJECT == 1)
                 {
-                    oObjPeilutOvdimUpd = oCollPeilutOvdimUpd.Value[i];
+                    oObjPeilutOvdimUpd = oCollPeilutOvdimUpdRecorder[i].ContainedItem;
                     return true;
                 }
             }
@@ -286,7 +317,7 @@ namespace KdsShinuyim.ShinuyImpl
         protected bool TryGetPeilutFromInsertObject(SidurDM oSidur, PeilutDM oPeilut, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns, out OBJ_PEILUT_OVDIM oObjPeilutOvdimIns)
         {
             oObjPeilutOvdimIns = null; // new OBJ_PEILUT_OVDIM();
-         
+
             for (int i = 0; i <= oCollPeilutOvdimIns.Count - 1; i++)
             {
                 if ((oCollPeilutOvdimIns.Value[i].MISPAR_SIDUR == oSidur.iMisparSidur) && (oCollPeilutOvdimIns.Value[i].SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
@@ -299,14 +330,14 @@ namespace KdsShinuyim.ShinuyImpl
             return false;
         }
 
-        protected OBJ_PEILUT_OVDIM GetUpdPeilutObject(int iSidurIndex, PeilutDM oPeilut,ShinuyInputData inputData ,OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,out SourceObj SourceObject )
+        protected OBJ_PEILUT_OVDIM GetUpdPeilutObject(int iSidurIndex, PeilutDM oPeilut, ShinuyInputData inputData, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, out SourceObj SourceObject)
         {
             OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd = null;
             SourceObject = SourceObj.Update;
             try
             {
                 SidurDM oSidur = (SidurDM)inputData.htEmployeeDetails[iSidurIndex];
-                if (TryGetPeilutFromUpdObject(oSidur, oPeilut, inputData.oCollPeilutOvdimUpd, out oObjPeilutOvdimUpd))
+                if (TryGetPeilutFromUpdObject(oSidur, oPeilut, inputData.oCollPeilutOvdimUpdRecorder, out oObjPeilutOvdimUpd))
                 {
                     SourceObject = SourceObj.Update;
                     return oObjPeilutOvdimUpd;
@@ -319,9 +350,11 @@ namespace KdsShinuyim.ShinuyImpl
                 }
 
                 oObjPeilutOvdimUpd = InsertToObjPeilutOvdimForUpdate(oPeilut, oObjSidurimOvdimUpd, inputData.UserId);
-                inputData.oCollPeilutOvdimUpd.Add(oObjPeilutOvdimUpd);
+
+                ModificationRecorder<OBJ_PEILUT_OVDIM> recorder = new ModificationRecorder<OBJ_PEILUT_OVDIM>(oObjPeilutOvdimUpd, true);
+                inputData.oCollPeilutOvdimUpdRecorder.Add(recorder);
                 SourceObject = SourceObj.Update;
-                   
+
             }
             catch (Exception ex)
             {
@@ -374,7 +407,7 @@ namespace KdsShinuyim.ShinuyImpl
                 oObjPeilutOvdimIns.MISPAR_KNISA = 0;
                 if (userid.HasValue)
                     oObjPeilutOvdimIns.MEADKEN_ACHARON = userid.Value;
-     
+
             }
             catch (Exception ex)
             {
@@ -382,19 +415,19 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-   
-        protected OBJ_SIDURIM_OVDIM InsertToObjSidurimOvdimForDelete(SidurDM oSidur,ShinuyInputData inputData)
+
+        protected OBJ_SIDURIM_OVDIM InsertToObjSidurimOvdimForDelete(SidurDM oSidur, ShinuyInputData inputData)
         {
-            OBJ_SIDURIM_OVDIM oObjSidurimOvdimDel = new OBJ_SIDURIM_OVDIM(); 
-           
+            OBJ_SIDURIM_OVDIM oObjSidurimOvdimDel = new OBJ_SIDURIM_OVDIM();
+
             try
             {
 
-                for (int i = 0; i <= inputData.oCollSidurimOvdimUpd.Count - 1; i++)
+                for (int i = 0; i <= inputData.oCollSidurimOvdimUpdRecorder.Count - 1; i++)
                 {
-                    if ((inputData.oCollSidurimOvdimUpd.Value[i].NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollSidurimOvdimUpd.Value[i].NEW_SHAT_HATCHALA == oSidur.dFullShatHatchala) && inputData.oCollSidurimOvdimUpd.Value[i].UPDATE_OBJECT == 1)
+                    if ((inputData.oCollSidurimOvdimUpdRecorder[i].ContainedItem.NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollSidurimOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_HATCHALA == oSidur.dFullShatHatchala) && inputData.oCollSidurimOvdimUpdRecorder[i].ContainedItem.UPDATE_OBJECT == 1)
                     {
-                        inputData.oCollSidurimOvdimUpd.RemoveAt(i);
+                        inputData.oCollSidurimOvdimUpdRecorder.RemoveAt(i);
                     }
                 }
 
@@ -425,7 +458,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        protected OBJ_PEILUT_OVDIM InsertToObjPeilutOvdimForDelete(PeilutDM oPeilut, SidurDM oSidur,ShinuyInputData inputData)
+        protected OBJ_PEILUT_OVDIM InsertToObjPeilutOvdimForDelete(PeilutDM oPeilut, SidurDM oSidur, ShinuyInputData inputData)
         {
             OBJ_PEILUT_OVDIM oObjPeilutOvdimDel = new OBJ_PEILUT_OVDIM();
             OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd = null;
@@ -434,16 +467,16 @@ namespace KdsShinuyim.ShinuyImpl
             DateTime dFullShatYetzia = oPeilut.dFullShatYetzia;
             try
             {
-                for (int i = 0; i <= inputData.oCollPeilutOvdimUpd.Count - 1; i++)
+                for (int i = 0; i <= inputData.oCollPeilutOvdimUpdRecorder.Count - 1; i++)
                 {
-                    if ((inputData.oCollPeilutOvdimUpd.Value[i].NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollPeilutOvdimUpd.Value[i].NEW_SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
-                        && (inputData.oCollPeilutOvdimUpd.Value[i].NEW_SHAT_YETZIA == oPeilut.dFullShatYetzia) && (inputData.oCollPeilutOvdimUpd.Value[i].MISPAR_KNISA == oPeilut.iMisparKnisa) && inputData.oCollPeilutOvdimUpd.Value[i].UPDATE_OBJECT == 1)
+                    if ((inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
+                        && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_YETZIA == oPeilut.dFullShatYetzia) && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.MISPAR_KNISA == oPeilut.iMisparKnisa) && inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.UPDATE_OBJECT == 1)
                     {
-                        oObjPeilutOvdimUpd = inputData.oCollPeilutOvdimUpd.Value[i];
+                        oObjPeilutOvdimUpd = inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem;
                         iMisparSidur = oObjPeilutOvdimUpd.MISPAR_SIDUR;
                         dShatHatchala = oObjPeilutOvdimUpd.SHAT_HATCHALA_SIDUR;
                         dFullShatYetzia = oObjPeilutOvdimUpd.SHAT_YETZIA;
-                        inputData.oCollPeilutOvdimUpd.RemoveAt(i);
+                        inputData.oCollPeilutOvdimUpdRecorder.RemoveAt(i);
                         break;
                     }
                 }
@@ -523,19 +556,20 @@ namespace KdsShinuyim.ShinuyImpl
             return manager.CreateClsPeilut(iMisparIshi, dCardDate, oObjPeilutOvdimIns, dtTmpMeafyeneyElements);
         }
 
-        protected void GetMutamut(DataTable dtMutamut, int iKodMutamut, out bool bIsurShaotNosafot)//??
+        //GetMutamut
+        protected bool HaveIsurShaotNosafotLeMutam(int iKodMutamut)
         {
             DataRow[] dr;
             int iIsurShaotNosafot = 0;
             //מקבל קוד מותאמות ומחזיר אם יש איסור של שעות נוספות
             try
             {
-                dr = dtMutamut.Select(string.Concat("kod_mutamut=", iKodMutamut));
+                dr = _container.Resolve<IKDSCacheManager>().GetCacheItem<DataTable>(CachedItems.Mutamut).Select(string.Concat("kod_mutamut=", iKodMutamut));
                 if (dr.Length > 0)
                 {
                     iIsurShaotNosafot = string.IsNullOrEmpty(dr[0]["isur_shaot_nosafot"].ToString()) ? 0 : int.Parse(dr[0]["isur_shaot_nosafot"].ToString());
                 }
-                bIsurShaotNosafot = iIsurShaotNosafot > 0;
+                return iIsurShaotNosafot > 0;
             }
             catch (Exception ex)
             {
@@ -580,11 +614,11 @@ namespace KdsShinuyim.ShinuyImpl
                     dSidurShatGmar = inputData.CardDate;
                 }
 
-              
+
                 //קביעת מאפיינים מפעילים
                 if ((inputData.OvedDetails.iIsuk == 122 || inputData.OvedDetails.iIsuk == 123 || inputData.OvedDetails.iIsuk == 124 || inputData.OvedDetails.iIsuk == 127))
                 {
-                    GetMeafyeneyMafilim(curSidur.sShabaton, dShatHatchalaSidur, dSidurShatGmar,inputData, out  bFromMeafyenHatchala, out  bFromMeafyenGmar, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum);
+                    GetMeafyeneyMafilim(curSidur.sShabaton, dShatHatchalaSidur, dSidurShatGmar, inputData, out  bFromMeafyenHatchala, out  bFromMeafyenGmar, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum);
                 }
                 else
                 {
@@ -666,7 +700,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        public void GetMeafyeneyMafilim(string sShabaton,  DateTime dShatHatchalaSidur, DateTime dSidurShatGmar, ShinuyInputData inputData, out bool bFromMeafyenHatchala, out bool bFromMeafyenGmar, ref DateTime dShatHatchalaLetashlum, ref DateTime dShatGmarLetashlum)
+        public void GetMeafyeneyMafilim(string sShabaton, DateTime dShatHatchalaSidur, DateTime dSidurShatGmar, ShinuyInputData inputData, out bool bFromMeafyenHatchala, out bool bFromMeafyenGmar, ref DateTime dShatHatchalaLetashlum, ref DateTime dShatGmarLetashlum)
         {
             SidurDM firstTafkidSidur = inputData.htEmployeeDetails.Values.Cast<SidurDM>().ToList().FirstOrDefault(sidur => sidur.iMisparSidur == 99001);
             SidurDM lastTafkidSidur = inputData.htEmployeeDetails.Values.Cast<SidurDM>().ToList().LastOrDefault(sidur => sidur.iMisparSidur == 99001);
@@ -691,7 +725,7 @@ namespace KdsShinuyim.ShinuyImpl
                 if (iSugYom >= enSugYom.Chol.GetHashCode() && iSugYom < enSugYom.Shishi.GetHashCode())
                 {
                     int iSugMishmeret = DateHelper.GetSugMishmeret(inputData.iMisparIshi, inputData.CardDate, inputData.iSugYom, firstTafkidSidur.dFullShatHatchala, lastTafkidSidur.dFullShatGmar, inputData.oParam);
-                    SetShaotYomCholMafilim(dShatHatchalaSidur, dSidurShatGmar, inputData,iSugMishmeret,ref bFromMeafyenHatchala, ref bFromMeafyenGmar, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum);
+                    SetShaotYomCholMafilim(dShatHatchalaSidur, dSidurShatGmar, inputData, iSugMishmeret, ref bFromMeafyenHatchala, ref bFromMeafyenGmar, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum);
                 }
                 else
                 {
@@ -732,7 +766,7 @@ namespace KdsShinuyim.ShinuyImpl
 
         private void SetShaotYomCholMafilim(DateTime dShatHatchalaSidur, DateTime dSidurShatGmar, ShinuyInputData inputData, int iSugMishmeret, ref bool bFromMeafyenHatchala, ref bool bFromMeafyenGmar, ref DateTime dShatHatchalaLetashlum, ref DateTime dShatGmarLetashlum)
         {
-          
+
             switch (iSugMishmeret)
             {
                 case 1:// בוקר                            
@@ -919,6 +953,57 @@ namespace KdsShinuyim.ShinuyImpl
             }
             return bExist;
         }
+        protected void UpdateIdkunRashemet(int iMisparSidur, DateTime dShatHatchala, int iMisparKnisa, DateTime dShatYetzia, DateTime dShatYetziaNew, int flag, ShinuyInputData inputData)
+        {
+            DataRow[] drIdkunim;
+            OBJ_IDKUN_RASHEMET ObjIdkunRashemet;
+
+            try
+            {
+                //drIdkunim = _dtIdkuneyRashemet.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime')");
+                if (flag > 0)
+                    drIdkunim = inputData.IdkuneyRashemet.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime') and update_machine=1");
+                else
+                    drIdkunim = inputData.IdkuneyRashemet.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime') and update_machine is null");
+                for (int i = 0; i < drIdkunim.Length; i++)
+                {
+                    ObjIdkunRashemet = FillIdkunRashemet(drIdkunim[i], inputData);
+                    ObjIdkunRashemet.NEW_SHAT_YETZIA = dShatYetziaNew;
+                    drIdkunim[i]["SHAT_YETZIA"] = dShatYetziaNew;
+                    if (flag == 0)
+                        drIdkunim[i]["update_machine"] = "1";
+                    inputData.oCollIdkunRashemet.Add(ObjIdkunRashemet);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        protected void UpdateIdkunRashemet(int iMisparSidur, DateTime dShatHatchala, int iMisparKnisa, DateTime dShatYetzia, DateTime dShatYetziaNew, ShinuyInputData inputData)
+        {
+            DataRow[] drIdkunim;
+            OBJ_IDKUN_RASHEMET ObjIdkunRashemet;
+
+            try
+            {
+
+                drIdkunim = inputData.IdkuneyRashemet.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime')");
+                for (int i = 0; i < drIdkunim.Length; i++)
+                {
+                    ObjIdkunRashemet = FillIdkunRashemet(drIdkunim[i], inputData);
+                    ObjIdkunRashemet.NEW_SHAT_YETZIA = dShatYetziaNew;
+                    drIdkunim[i]["SHAT_YETZIA"] = dShatYetziaNew;
+                    inputData.oCollIdkunRashemet.Add(ObjIdkunRashemet);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         protected void UpdateIdkunRashemet(int iMisparSidur, DateTime dShatHatchala, DateTime dShatHatchalaNew, ShinuyInputData inputData)
         {
@@ -930,7 +1015,7 @@ namespace KdsShinuyim.ShinuyImpl
                 drIdkunim = inputData.IdkuneyRashemet.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')");
                 for (int i = 0; i < drIdkunim.Length; i++)
                 {
-                    ObjIdkunRashemet = FillIdkunRashemet(drIdkunim[i],inputData);
+                    ObjIdkunRashemet = FillIdkunRashemet(drIdkunim[i], inputData);
                     ObjIdkunRashemet.NEW_SHAT_HATCHALA = dShatHatchalaNew;
                     drIdkunim[i]["SHAT_HATCHALA"] = dShatHatchalaNew;
 
@@ -942,11 +1027,13 @@ namespace KdsShinuyim.ShinuyImpl
                 throw ex;
             }
         }
+
+
         private OBJ_IDKUN_RASHEMET FillIdkunRashemet(DataRow drIdkun, ShinuyInputData inputData)
         {
             OBJ_IDKUN_RASHEMET ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
             ObjIdkunRashemet.UPDATE_OBJECT = 1;
-            if(inputData.UserId.HasValue)
+            if (inputData.UserId.HasValue)
                 ObjIdkunRashemet.GOREM_MEADKEN = inputData.UserId.Value;
             ObjIdkunRashemet.MISPAR_ISHI = inputData.iMisparIshi;
             ObjIdkunRashemet.MISPAR_SIDUR = int.Parse(drIdkun["MISPAR_SIDUR"].ToString());
@@ -971,7 +1058,7 @@ namespace KdsShinuyim.ShinuyImpl
                 drIdkunim = inputData.ApprovalError.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')");
                 for (int i = 0; i < drIdkunim.Length; i++)
                 {
-                    ObjShgiotMeusharot = FillApprovalErrors(drIdkunim[i],inputData);
+                    ObjShgiotMeusharot = FillApprovalErrors(drIdkunim[i], inputData);
                     ObjShgiotMeusharot.NEW_SHAT_HATCHALA = dShatHatchalaNew;
                     drIdkunim[i]["SHAT_HATCHALA"] = dShatHatchalaNew;
 
@@ -999,58 +1086,6 @@ namespace KdsShinuyim.ShinuyImpl
             return ObjShgiotMeusharot;
         }
 
-        //protected void UpdateIdkunRashemet(int iMisparSidur, DateTime dShatHatchala, int iMisparKnisa, DateTime dShatYetzia, DateTime dShatYetziaNew, int flag, ShinuyInputData inputData)
-        //{
-        //    DataRow[] drIdkunim;
-        //    OBJ_IDKUN_RASHEMET ObjIdkunRashemet;
-
-        //    try
-        //    {
-        //        //drIdkunim = _dtIdkuneyRashemet.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime')");
-        //        if (flag > 0)
-        //            drIdkunim = inputData.IdkuneyRashemet.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime') and update_machine=1");
-        //        else
-        //            drIdkunim = inputData.IdkuneyRashemet.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime') and update_machine is null");
-        //        for (int i = 0; i < drIdkunim.Length; i++)
-        //        {
-        //            ObjIdkunRashemet = FillIdkunRashemet(drIdkunim[i], inputData);
-        //            ObjIdkunRashemet.NEW_SHAT_YETZIA = dShatYetziaNew;
-        //            drIdkunim[i]["SHAT_YETZIA"] = dShatYetziaNew;
-        //            if (flag == 0)
-        //                drIdkunim[i]["update_machine"] = "1";
-        //            inputData.oCollIdkunRashemet.Add(ObjIdkunRashemet);
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-
-        protected void UpdateIdkunRashemet(int iMisparSidur, DateTime dShatHatchala, int iMisparKnisa, DateTime dShatYetzia, DateTime dShatYetziaNew, ShinuyInputData inputData)
-        {
-            DataRow[] drIdkunim;
-            OBJ_IDKUN_RASHEMET ObjIdkunRashemet;
-
-            try
-            {
-
-                drIdkunim = inputData.IdkuneyRashemet.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime')");
-                for (int i = 0; i < drIdkunim.Length; i++)
-                {
-                    ObjIdkunRashemet = FillIdkunRashemet(drIdkunim[i], inputData);
-                    ObjIdkunRashemet.NEW_SHAT_YETZIA = dShatYetziaNew;
-                    drIdkunim[i]["SHAT_YETZIA"] = dShatYetziaNew;
-                    inputData.oCollIdkunRashemet.Add(ObjIdkunRashemet);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
         protected void UpdateApprovalErrors(int iMisparSidur, DateTime dShatHatchala, int iMisparKnisa, DateTime dShatYetzia, DateTime dShatYetziaNew, ShinuyInputData inputData)
         {
             DataRow[] drIdkunim;
@@ -1079,11 +1114,11 @@ namespace KdsShinuyim.ShinuyImpl
             OBJ_SIDURIM_OVDIM oObjSidurimOvdim = new OBJ_SIDURIM_OVDIM();
             try
             {
-                for (int i = 0; i <= inputData.oCollSidurimOvdimUpd.Count - 1; i++)
+                for (int i = 0; i <= inputData.oCollSidurimOvdimUpdRecorder.Count - 1; i++)
                 {
-                    if ((inputData.oCollSidurimOvdimUpd.Value[i].NEW_MISPAR_SIDUR == iMisparSidur) && (inputData.oCollSidurimOvdimUpd.Value[i].NEW_SHAT_HATCHALA == dShatHatchala) && inputData.oCollSidurimOvdimUpd.Value[i].UPDATE_OBJECT == 1)
+                    if ((inputData.oCollSidurimOvdimUpdRecorder[i].ContainedItem.NEW_MISPAR_SIDUR == iMisparSidur) && (inputData.oCollSidurimOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_HATCHALA == dShatHatchala) && inputData.oCollSidurimOvdimUpdRecorder[i].ContainedItem.UPDATE_OBJECT == 1)
                     {
-                        oObjSidurimOvdim = inputData.oCollSidurimOvdimUpd.Value[i];
+                        oObjSidurimOvdim = inputData.oCollSidurimOvdimUpdRecorder[i].ContainedItem;
                     }
                 }
 
@@ -1104,7 +1139,125 @@ namespace KdsShinuyim.ShinuyImpl
             }
             return oObjSidurimOvdim;
         }
-      
-       
+
+
+        protected bool IsKnisaValid(SidurDM curSidur, string sBitulTypeField, bool bSidurHaveNahagut, MeafyenimDM oMeafyeneyOved)
+        {
+            bool bKnisaValid = false;
+            bool bSidurShaonNotValid = false;
+            try
+            {
+                if (!String.IsNullOrEmpty(curSidur.sShatHatchala))
+                {  //אם הוחתם שעון וגם יש ערך במיקום כניסה - החתמת שעון ידנית 
+                    if (!String.IsNullOrEmpty(curSidur.sMikumShaonKnisa) && curSidur.sMikumShaonKnisa != "0")
+                    {
+                        bKnisaValid = true;
+                    }
+                    else if ((sBitulTypeField == SIBA_LE_DIVUCH_YADANI_NESIAA && oMeafyeneyOved.IsMeafyenExist(51)) || (sBitulTypeField != SIBA_LE_DIVUCH_YADANI_NESIAA))
+                    {
+
+                        if ((!String.IsNullOrEmpty(curSidur.sShatHatchala)) && (String.IsNullOrEmpty(curSidur.sMikumShaonKnisa) || curSidur.sMikumShaonKnisa == "0"))
+                        {  //אם הוחתם שעון ואין ערך במיקום כניסה - החתמת שעון ידנית                                                 
+                            bSidurShaonNotValid = IsIshurYadaniValid(curSidur.iKodSibaLedivuchYadaniIn, sBitulTypeField);
+                        }
+                        if (bSidurShaonNotValid)
+                        {
+                            //קיום אישור לדיווח החתמת שעון (קוד אישור 1 או 3 עם סטטוס אישור 1 (מאושר)).
+                            if (sBitulTypeField == SIBA_LE_DIVUCH_YADANI_NESIAA)
+                            {
+                                if (!bSidurHaveNahagut)// && CheckApprovalStatus("111,1,3,101,301", curSidur.iMisparSidur, curSidur.dFullShatHatchala) == 1)
+                                    bKnisaValid = true;
+                            }
+                            else // if (CheckApprovalStatus("111,1,3,101,301", curSidur.iMisparSidur, curSidur.dFullShatHatchala) == 1)
+                                bKnisaValid = true;
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bKnisaValid;
+        }
+
+        protected bool IsYetizaValid(SidurDM curSidur, string sBitulTypeField, bool bSidurHaveNahagut, MeafyenimDM oMeafyeneyOved)
+        {
+            bool bYetizaValid = false;
+            bool bSidurShaonNotValid = false;
+            try
+            {
+                if (!String.IsNullOrEmpty(curSidur.sShatGmar))
+                {  //אם הוחתם שעון וגם יש ערך במיקום יציאה - החתמת שעון ידנית 
+                    if (!String.IsNullOrEmpty(curSidur.sMikumShaonYetzia) && curSidur.sMikumShaonYetzia != "0")
+                    {
+                        bYetizaValid = true;
+                    }
+                    else if ((sBitulTypeField == SIBA_LE_DIVUCH_YADANI_NESIAA && oMeafyeneyOved.IsMeafyenExist(51)) || (sBitulTypeField != SIBA_LE_DIVUCH_YADANI_NESIAA))
+                    {
+                        if ((!String.IsNullOrEmpty(curSidur.sShatGmar)) && (String.IsNullOrEmpty(curSidur.sMikumShaonYetzia) || curSidur.sMikumShaonYetzia == "0"))
+                        {  //אם הוחתם שעון וגם אין ערך במיקום יציאה - החתמת שעון ידנית                                                 
+
+                            bSidurShaonNotValid = IsIshurYadaniValid(curSidur.iKodSibaLedivuchYadaniOut, sBitulTypeField);
+                        }
+
+                        if (bSidurShaonNotValid)
+                        {
+                            //קיום אישור לדיווח החתמת שעון (קוד אישור 1 או 3 עם סטטוס אישור 1 (מאושר)).
+                            if (sBitulTypeField == SIBA_LE_DIVUCH_YADANI_NESIAA)
+                            {
+                                if (!bSidurHaveNahagut)// &&(CheckApprovalStatus("111,1,3,102,302", curSidur.iMisparSidur, curSidur.dFullShatHatchala) == 1))
+                                    bYetizaValid = true;
+                            }
+                            else  //if (CheckApprovalStatus("111,1,3,102,302", curSidur.iMisparSidur, curSidur.dFullShatHatchala) == 1)
+                                bYetizaValid = true;
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 0, curSidur.iMisparIshi, curSidur.dSidurDate, curSidur.iMisparSidur, curSidur.dFullShatHatchala, null, null, "IsYetizaValid: " + ex.Message, null);
+                throw ex;
+            }
+            return bYetizaValid;
+        }
+
+        private bool IsIshurYadaniValid(int iKodSibaLedivuckYadani, string sBitulTypeField)
+        {
+            bool bHasIshur = false;
+            try
+            {
+                DataRow[] drSidurSibotLedivuchYadani;
+                drSidurSibotLedivuchYadani = GetOneSibotLedivuachYadani(iKodSibaLedivuckYadani, _container.Resolve<IKDSCacheManager>().GetCacheItem<DataTable>(CachedItems.SibotLedivuchYadani));
+                if (drSidurSibotLedivuchYadani.Length > 0)
+                {
+                    if (!System.Convert.IsDBNull(drSidurSibotLedivuchYadani[0][sBitulTypeField]))
+                    {
+                        if (int.Parse(drSidurSibotLedivuchYadani[0][sBitulTypeField].ToString()) != 1)
+                        {
+                            bHasIshur = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bHasIshur;
+        }
+
+        private DataRow[] GetOneSibotLedivuachYadani(int iKodSiba, DataTable drSidurSibotLedivuchYadani)
+        {   //הפונקציה מקבלת קוד סיבה ומחזירה גורמים לביטול  
+
+            DataRow[] dr;
+
+            dr = drSidurSibotLedivuchYadani.Select(string.Concat("kod_siba=", iKodSiba.ToString()));
+
+            return dr;
+        }
     }
 }

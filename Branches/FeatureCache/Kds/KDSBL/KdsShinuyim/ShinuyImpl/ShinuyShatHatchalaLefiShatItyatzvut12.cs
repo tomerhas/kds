@@ -31,12 +31,17 @@ namespace KdsShinuyim.ShinuyImpl
         public override void ExecShinuy(ShinuyInputData inputData)
         {
            
-         
-            for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
-            {
-                SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
-                FixedShatHatchalaLefiShatItyatzvut12(curSidur,i, inputData);             
-            }
+          try{
+                for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
+                {
+                    SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
+                    FixedShatHatchalaLefiShatItyatzvut12(curSidur,i, inputData);             
+                }
+          }
+          catch (Exception ex)
+          {
+              throw new Exception("ShinuyMisparSidurVisa02: " + ex.Message);
+          }
 
         }
 
@@ -81,7 +86,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                inputData.IsSuccsess = false; 
+                throw ex;
             }
         }
 
@@ -100,7 +105,7 @@ namespace KdsShinuyim.ShinuyImpl
                     oNewSidurim.SidurNew = curSidur.iMisparSidur;
                     oNewSidurim.ShatHatchalaNew = dShatHatchalaNew;
 
-                    UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpd);
+                    UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpdRecorder);
                     //עדכון שעת התחלה סידור של כל הפעילויות לסידור
                     for (int j = 0; j < curSidur.htPeilut.Count; j++)
                     {
@@ -132,13 +137,12 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 12, _iMisparIshi, _dCardDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "FixedShatHatchalaLefiShatHachtamatItyatzvut12: " + ex.Message, null);
                 throw ex;
             }
         }
 
         private void FixedShatHatchalaLefiShatHachtamatItyatzvut12(ShinuyInputData inputData, PeilutDM oPeilut, SidurDM oSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd, SourceObj SourceObject, ref int j, ref bool bUpdateShatHatchala, ref DateTime dShatHatchalaNew)
-        {//?? לחלק לפונקציות
+        {
             string sTempTime, sNewTempTime;
             PeilutDM oNextPeilut = null;
             int iTempTime;
@@ -187,13 +191,13 @@ namespace KdsShinuyim.ShinuyImpl
                                 oSidur.htPeilut.RemoveAt(j);
                                 j = j - 1;
 
-                                for (i = 0; i <= inputData.oCollPeilutOvdimUpd.Count - 1; i++)
+                                for (i = 0; i <= inputData.oCollPeilutOvdimUpdRecorder.Count - 1; i++)
                                 {
-                                    if ((inputData.oCollPeilutOvdimUpd.Value[i].NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollPeilutOvdimUpd.Value[i].NEW_SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
-                                        && (inputData.oCollPeilutOvdimUpd.Value[i].NEW_SHAT_YETZIA == oPeilut.dFullShatYetzia) && (inputData.oCollPeilutOvdimUpd.Value[i].MISPAR_KNISA == oPeilut.iMisparKnisa))
+                                    if ((inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
+                                        && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_YETZIA == oPeilut.dFullShatYetzia) && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.MISPAR_KNISA == oPeilut.iMisparKnisa))
                                     {
                                         //oCollPeilutOvdimUpd.Value[i].UPDATE_OBJECT = 0;
-                                        inputData.oCollPeilutOvdimUpd.RemoveAt(i);
+                                        inputData.oCollPeilutOvdimUpdRecorder.RemoveAt(i);
                                     }
                                 }
                                 i = 0;
@@ -233,13 +237,13 @@ namespace KdsShinuyim.ShinuyImpl
                                         inputData.oCollPeilutOvdimDel.Add(oObjPeilutOvdimDel);
                                         oSidur.htPeilut.RemoveAt(j);
                                         j = j - 1;
-                                        for (i = 0; i <= inputData.oCollPeilutOvdimUpd.Count - 1; i++)
+                                        for (i = 0; i <= inputData.oCollPeilutOvdimUpdRecorder.Count - 1; i++)
                                         {
-                                            if ((inputData.oCollPeilutOvdimUpd.Value[i].NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollPeilutOvdimUpd.Value[i].NEW_SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
-                                                && (inputData.oCollPeilutOvdimUpd.Value[i].NEW_SHAT_YETZIA == oPeilut.dFullShatYetzia) && (inputData.oCollPeilutOvdimUpd.Value[i].MISPAR_KNISA == oPeilut.iMisparKnisa))
+                                            if ((inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
+                                                && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_YETZIA == oPeilut.dFullShatYetzia) && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.MISPAR_KNISA == oPeilut.iMisparKnisa))
                                             {
                                                 //oCollPeilutOvdimUpd.Value[i].UPDATE_OBJECT = 0;
-                                                inputData.oCollPeilutOvdimUpd.RemoveAt(i);
+                                                inputData.oCollPeilutOvdimUpdRecorder.RemoveAt(i);
                                             }
                                         }
                                         i = 0;
@@ -309,7 +313,6 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-              //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 12, _iMisparIshi, _dCardDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "FixedShatHatchalaLefiShatHachtamatItyatzvut12: " + ex.Message, null);
                 throw ex;
             }
         }

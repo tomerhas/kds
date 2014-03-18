@@ -10,6 +10,9 @@ using System.IO;
 using KdsLibrary.Utils;
 using System.Configuration;
 using System.Threading;
+using KDSCommon.Interfaces.Managers;
+using Microsoft.Practices.ServiceLocation;
+using System.Net.Mail;
 
 
 namespace KdsTaskManager
@@ -74,24 +77,21 @@ namespace KdsTaskManager
         }
         public static void WriteLog(string Message, SeverityLevel severityLevel)
         {
-            clMail omail;
+            var mail = ServiceLocator.Current.GetInstance<IMailManager>();
+            var mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
+           // clMail omail;
             switch (severityLevel)
             {
                 case SeverityLevel.Fatal:
                     EventLog.WriteEntry(Utilities.EventLogSource, Message, EventLogEntryType.Error);
-                    RecipientsList.ToList().ForEach(recipient =>
-                    {
-                        omail = new clMail(recipient, "Fatal event" , Message);
-                        omail.SendMail();
-                    });
+                    mailManager.SendMessage(new MailMessage("", string.Join(";", RecipientsList)) { Subject = "Fatal event", Body = Message });
+
+                    
                     break;
                 case SeverityLevel.Critical:
                     EventLog.WriteEntry(Utilities.EventLogSource, Message, EventLogEntryType.Error);
-                    RecipientsList.ToList().ForEach(recipient =>
-                    {
-                        omail = new clMail(recipient, "Critical event", Message);
-                        omail.SendMail();
-                    });
+                    mailManager.SendMessage(new MailMessage("", string.Join(";", RecipientsList)) { Subject = "Critical event", Body = Message });
+                   
                     break;
                 case SeverityLevel.Information:
                     if (Utilities.Debug)

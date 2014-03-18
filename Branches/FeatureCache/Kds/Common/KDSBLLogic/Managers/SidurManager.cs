@@ -663,6 +663,17 @@ namespace KdsLibrary.KDSLogic.Managers
             return _container.Resolve<ISidurDAL>().GetMeafyeneySidurById(dCardDate, iSidurNumber);
         }
         
+        public bool CheckHaveSidurGrira(int iMisparIshi, DateTime dDateToCheck, ref DataTable dt)
+        {
+            return _container.Resolve<ISidurDAL>().CheckHaveSidurGrira(iMisparIshi, dDateToCheck, ref dt);
+        }
+
+        public DataTable GetTmpSidurimMeyuchadim(DateTime dTarMe, DateTime dTarAd)
+        {
+            return _container.Resolve<ISidurDAL>().GetTmpSidurimMeyuchadim(dTarMe, dTarAd);
+        }
+
+       
     }
 }
 

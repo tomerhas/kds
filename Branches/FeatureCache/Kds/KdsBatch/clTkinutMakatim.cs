@@ -13,6 +13,9 @@ using KDSCommon.Enums;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.DAL;
 using KDSCommon.UDT;
+using KDSCommon.Interfaces.Managers;
+using KDSCommon.Interfaces.Logs;
+using System.Net.Mail;
 
 namespace KdsBatch
 {
@@ -31,6 +34,7 @@ namespace KdsBatch
             string Line;
             string sPathFile = ConfigurationSettings.AppSettings["PathFilePrintReports"] + "Tkinut_Makatim.txt";
             string sPathFileMail = ConfigurationSettings.AppSettings["PathFileReportsTemp"] + "Tkinut_Makatim.txt";
+            var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
             try
             {
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromUI, "CheckTkinutMakatim", -12);
@@ -38,7 +42,7 @@ namespace KdsBatch
                 dtMakatim = kavimDal.GetMakatimLeTkinut(dTaarich);
 
                 oFileMakat = new StreamWriter(sPathFile , false, Encoding.Default);
-                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "count= " + dtMakatim.Rows.Count);
+                logManager.InsertLog(lRequestNum, "I", 0, "count= " + dtMakatim.Rows.Count, 0, null);
                
                 for (int i = 0; i < dtMakatim.Rows.Count; i++)
                 {
@@ -67,10 +71,10 @@ namespace KdsBatch
                             oFileMakat.WriteLine(Line);
                             oFileMakat.Flush();
                             invalidMakat++;
-                            clLogBakashot.InsertErrorToLog(lRequestNum, 0, "E", 0, null, "invalid makat:" + Line);
+                            logManager.InsertLog(lRequestNum,"E", 0,  "invalid makat:" + Line);
                         }
                         if (i % 1000 == 0)
-                            clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "Tkinut Makatim: Num=" + i);
+                            logManager.InsertLog(lRequestNum, "I", 0,  "Tkinut Makatim: Num=" + i);
                                  
                         numSucceeded += 1;      
                     }
@@ -85,7 +89,7 @@ namespace KdsBatch
                 }
                 SendMail(sPathFileMail, dTaarich.ToString("MM/yyyy"), "meravn@Egged.co.il");
                 SendMail(sPathFileMail, dTaarich.ToString("MM/yyyy"), "RutyBe@Egged.co.il");
-                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "end CheckTkinutMakatim: Total Makats=" + dtMakatim.Rows.Count + "; numFaildException=" + numFaild + "; InvalidMakat=" + invalidMakat + ";  numSucceeded=" + numSucceeded);
+                logManager.InsertLog(lRequestNum, "I", 0, "end CheckTkinutMakatim: Total Makats=" + dtMakatim.Rows.Count + "; numFaildException=" + numFaild + "; InvalidMakat=" + invalidMakat + ";  numSucceeded=" + numSucceeded, 0, null);
                 clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, KdsLibrary.BL.RecordStatus.Finish.GetHashCode());
             }
             catch (Exception ex)
@@ -94,7 +98,7 @@ namespace KdsBatch
                 {
                     oFileMakat.Close();
                 }
-                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "CheckTkinutMakatim:" + ex.Message);
+                logManager.InsertLog(lRequestNum,  "I", 0,  "CheckTkinutMakatim:" + ex.Message,0,null);
                 clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, KdsLibrary.BL.RecordStatus.Faild.GetHashCode());
             } 
         }
@@ -103,13 +107,13 @@ namespace KdsBatch
         {
             try
             {
-                // ReportMail rpt = new ReportMail();
-                //string body = "";// rpt.GetMessageBody(Path);
-                clMail email = new clMail(sTo, " קובץ מקטים שגויים מהתנועה לחודש " + sMonth, "");
-                email.attachFile(Path);
-                email.IsHtmlBody(true);
-                email.SendMail();
-                email.Dispose();
+               
+                var mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
+
+                MailMessage message = new MailMessage("", sTo) { Subject = " קובץ מקטים שגויים מהתנועה לחודש " + sMonth };
+                message.Attachments.Add(new Attachment(Path));
+
+                mailManager.SendMessage(message);
             }
             catch (Exception ex)
             {
@@ -132,12 +136,13 @@ namespace KdsBatch
             int numFaild = 0;
             int numFaildEx = 0;
             int numSucceeded = 0;
+            var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
             try
             {
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.RifreshKnisot, "RunRefreshKnisot", -12);
-                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "Taarich= " + dTaarich.ToShortDateString());
+                logManager.InsertLog(lRequestNum, "I", 0,  "Taarich= " + dTaarich.ToShortDateString(),0,null);
                 dtMakatim = oBatch.GetMakatimToRefresh(dTaarich);
-                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "count makat av= " + dtMakatim.Rows.Count);
+                logManager.InsertLog(lRequestNum,  "I", 0,  "count makat av= " + dtMakatim.Rows.Count,0,null);
 
                 for (int i = 0; i < dtMakatim.Rows.Count; i++)
                 {
@@ -180,7 +185,7 @@ namespace KdsBatch
                                     catch (Exception ex)
                                     {
                                         numFaildEx += 1;
-                                        clLogBakashot.InsertErrorToLog(lRequestNum, int.Parse(dtMakatim.Rows[i]["MISPAR_ISHI"].ToString()), "E", 0, null, "RunRefreshKnisot:" + ex.Message);
+                                        logManager.InsertLog(lRequestNum,  "E", 0,  "RunRefreshKnisot:" + ex.Message, int.Parse(dtMakatim.Rows[i]["MISPAR_ISHI"].ToString()),null);
                                     }
                                 }
                                 numSucceeded += 1;
@@ -188,34 +193,38 @@ namespace KdsBatch
                             else
                             {
                                 numFaild += 1;
-                                clLogBakashot.InsertErrorToLog(lRequestNum, int.Parse(dtMakatim.Rows[i]["MISPAR_ISHI"].ToString()), "E", 0, null, "RunRefreshKnisot: dsKavim.Tables[0].Rows.Count=0");                                 
+                                logManager.InsertLog(lRequestNum,  "E", 0,  "RunRefreshKnisot: dsKavim.Tables[0].Rows.Count=0", int.Parse(dtMakatim.Rows[i]["MISPAR_ISHI"].ToString()),null);                                 
                             }
 
                             if (i % 100 == 0)
-                                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "Refresh Knisot: Num=" + i);
+                                logManager.InsertLog(lRequestNum,  "I", 0,  "Refresh Knisot: Num=" + i);
                         }
                         else
                         {
                             numFaild += 1;
-                            clLogBakashot.InsertErrorToLog(lRequestNum, int.Parse(dtMakatim.Rows[i]["MISPAR_ISHI"].ToString()), "E", 0, null, "RunRefreshKnisot: iResult=1");  
+                            logManager.InsertLog(lRequestNum, "E", 0,  "RunRefreshKnisot: iResult=1" , int.Parse(dtMakatim.Rows[i]["MISPAR_ISHI"].ToString()),null);  
                         }
                     }
                     catch (Exception ex)
                     {
                         numFaildEx += 1;
-                        clLogBakashot.InsertErrorToLog(lRequestNum, 0, "E", 0, null, "RunRefreshKnisot er: " + ex.Message);
+                        logManager.InsertLog(lRequestNum, "E", 0,  "RunRefreshKnisot er: " + ex.Message);
                     }
                 }
-                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "Num Knisot to insert=" + oCollPeilutOvdim.Count);
+                logManager.InsertLog(lRequestNum,  "I", 0,  "Num Knisot to insert=" + oCollPeilutOvdim.Count);
                 oBatch.InsertKnisot(oCollPeilutOvdim);
-                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "End RunRefreshKnisot");
+                logManager.InsertLog(lRequestNum,  "I", 0,  "End RunRefreshKnisot");
                 clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, KdsLibrary.BL.RecordStatus.Finish.GetHashCode());  
            }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "E", 0, null, "RunRefreshKnisot Faild:" + ex.Message);
-                oBatch.UpdateProcessLog(int.Parse(lRequestNum.ToString()), KdsLibrary.BL.RecordStatus.Faild, "RunRefreshKnisot Faild: "+ ex.Message, 0);
+              //++  logManager.InsertLog(lRequestNum,  "E", 0,  "RunRefreshKnisot Faild:" + ex.Message);
+              //++  oBatch.UpdateProcessLog(int.Parse(lRequestNum.ToString()), KdsLibrary.BL.RecordStatus.Faild, "RunRefreshKnisot Faild: "+ ex.Message, 0);
               //  throw new Exception("RunRefreshKnisot:" + ex.Message);
+                //var excep = clLogBakashot.SetError(lRequestNum, "E", 0, null, ex);//--
+                //throw (excep);//--
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(255, 75757, "E", 0, DateTime.Now, "", ex);
+                throw excep;
             }
             finally
             {

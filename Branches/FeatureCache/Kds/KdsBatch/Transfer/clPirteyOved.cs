@@ -5,6 +5,8 @@ using System.Text;
 using System.Data;
 using KdsLibrary;
 using DalOraInfra.DAL;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 namespace KdsBatch
 {
     public class PirteyOved
@@ -57,7 +59,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(iBakashaId, int.Parse(drPirteyOved["mispar_ishi"].ToString()), "E", 0, null, "PirteyOved ctor: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "PirteyOved ctor: " + ex.Message, int.Parse(drPirteyOved["mispar_ishi"].ToString()), null);
                 throw (ex);
             }
         }
@@ -122,7 +124,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //   clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
+                //   //clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
                 throw ex;
             }
         }
@@ -155,7 +157,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "GetChishuvYomiToOved: " + ex.Message, iMisparIshi,null);
                 throw ex;
             }
         }
@@ -188,7 +190,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
+                //clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
                 throw ex;
             }
         }*/

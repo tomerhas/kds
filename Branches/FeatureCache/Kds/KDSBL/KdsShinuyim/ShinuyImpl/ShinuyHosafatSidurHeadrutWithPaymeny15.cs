@@ -26,7 +26,14 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-            NewSidurHeadrutWithPaymeny15(inputData);
+            try
+            {
+                NewSidurHeadrutWithPaymeny15(inputData);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyHosafatSidurHeadrutWithPaymeny15: " + ex.Message);
+            }
         }
 
         private void NewSidurHeadrutWithPaymeny15(ShinuyInputData inputData)
@@ -61,8 +68,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", 15, dCardDate, "NewSidurHeadrutWithPaymeny15: " + ex.Message);
-                inputData.IsSuccsess = false;
+                throw ex;
             }
         }
 

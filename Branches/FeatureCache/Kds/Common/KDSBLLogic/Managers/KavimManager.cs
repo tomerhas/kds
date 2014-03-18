@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
 using System.Text;
+using KDSCommon.DataModels;
 using KDSCommon.Enums;
 using KDSCommon.Helpers;
 using KDSCommon.Interfaces.DAL;
@@ -103,6 +105,30 @@ namespace KdsLibrary.KDSLogic.Managers
             {
                 throw ex;
             }
+        }
+
+        public  string GetMasharCarNumbers(OrderedDictionary htEmployeeDetails)
+        {
+            string sCarNumbers = "";
+            PeilutDM oPeilut;
+            SidurDM oSidur;
+
+            //נשרשר את כל מספרי הרכב, כדי לפנות למש"ר עם פחות נתונים
+            for (int i = 0; i < htEmployeeDetails.Count; i++)
+            {
+                oSidur = (SidurDM)htEmployeeDetails[i];
+                for (int j = 0; j < oSidur.htPeilut.Count; j++)
+                {
+                    oPeilut = (PeilutDM)oSidur.htPeilut[j];
+                    sCarNumbers += oPeilut.lOtoNo.ToString() + ",";
+                }
+            }
+
+            if (sCarNumbers.Length > 0)
+            {
+                sCarNumbers = sCarNumbers.Substring(0, sCarNumbers.Length - 1);
+            }
+            return sCarNumbers;
         }
     }
 }

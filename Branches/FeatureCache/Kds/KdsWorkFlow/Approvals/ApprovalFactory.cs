@@ -5,6 +5,8 @@ using System.Text;
 using System.Data;
 using KdsLibrary;
 using DalOraInfra.DAL;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsWorkFlow.Approvals
 {
@@ -167,9 +169,7 @@ namespace KdsWorkFlow.Approvals
         /// <param name="message">Error message</param>
         internal static void LogErrorOfApprovalBatchPrc(long btchRequest, string msgType, string message)
         {
-            clLogBakashot.SetError(btchRequest, msgType, (int)clGeneral.enGeneralBatchType.Approvals,
-                       message);
-            clLogBakashot.InsertErrorToLog();
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(btchRequest, msgType, (int)clGeneral.enGeneralBatchType.Approvals, message);
         }
 
         internal static void LogErrorOfApprovalBatchPrc(long btchRequest, string msgType, string message,
@@ -177,9 +177,9 @@ namespace KdsWorkFlow.Approvals
         {
             int? logEmpNumber = null;
             if (employeeNumber != 0) logEmpNumber = employeeNumber;
-            clLogBakashot.SetError(btchRequest, logEmpNumber, msgType, (int)clGeneral.enGeneralBatchType.Approvals,
-                       workDate, message);
-            clLogBakashot.InsertErrorToLog();
+
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(btchRequest, msgType, (int)clGeneral.enGeneralBatchType.Approvals, message,logEmpNumber, workDate);
+     
         }
 
     }

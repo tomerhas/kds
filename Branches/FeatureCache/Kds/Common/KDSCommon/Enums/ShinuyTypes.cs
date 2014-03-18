@@ -7,9 +7,12 @@ namespace KdsShinuyim.Enums
 {
     public enum ShinuyTypes
     {
-        ShinuyMisparSidur01=1,
+        DeleteSidureyRetzifut=1,
+        IpusArachimBeforeTahalich,
+        ShinuyMisparSidur01,
         ShinuyMisparSidurVisa02,
         ShinuyMergerSiduryMapa28,
+        ShinuyAddElementMechine05,
         ShinuyFixedShatGmar10,
         ShinuySetSidurLoLetashlum11,
         ShinuySidureyMapaWhithStatusNullLoLetashlum29,
@@ -17,14 +20,20 @@ namespace KdsShinuyim.Enums
         ShinuyChishuvShatHatchala30,
         ShinuyFixedSidurHours08,
         ShinuyFixedItyatzvutNahag23,
-        ShinuyShatHatchalaLefiShatItyatzvut12,
         ShinuyimOutMichsaHashlamaChariga,
-        ShinuyDeleteElementRechev07,
+        DeleteElementRechev07,
+        ShinuyShatHatchalaLefiShatItyatzvut12,
         ShinuyFixedShatHamtana25,
         ShinuyShatHatchalaGmar_19_26_27,
+        SetBooleanParams,
         ShinuyHosafatSidurHeadrutWithPaymeny15,
         ShinuyUpdateTachograph,
         ShinuyHashlamaForYomAvoda,
-        ShinuyFixedLina07
+        ShinuyUpdateBitulZmanNesiot,
+        ShinuyKonnutGrira03,
+        ShinuyFixedLina07,
+        SetSidurObjects,
+        ShinuyUpdateHalbasha
+        
     }
 }

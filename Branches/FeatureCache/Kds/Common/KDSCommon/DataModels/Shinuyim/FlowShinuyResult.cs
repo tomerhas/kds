@@ -14,5 +14,6 @@ namespace KDSCommon.DataModels.Shinuyim
 
         //This property will be set to false when an error occured in one of the error cards
         public bool IsSuccess { get; set; }
+        public bool bHaveCount { get; set; } 
     }
 }

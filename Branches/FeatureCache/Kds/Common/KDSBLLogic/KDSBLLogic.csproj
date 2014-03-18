@@ -47,6 +47,7 @@
       <HintPath>..\..\KdsWebSite\ExternalDlls\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -57,11 +58,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\KavimDAL.cs" />
+    <Compile Include="DAL\LogDAL.cs" />
     <Compile Include="DAL\OvedDAL.cs" />
     <Compile Include="DAL\ParametersDAL.cs" />
     <Compile Include="DAL\PeilutDAL.cs" />
+    <Compile Include="DAL\ShinuyimDAL.cs" />
     <Compile Include="DAL\SidurDAL.cs" />
+    <Compile Include="Logs\LogBakashot.cs" />
     <Compile Include="Logs\Logger.cs" />
+    <Compile Include="Managers\MailManager.cs" />
+    <Compile Include="Managers\ShinuyimManager.cs" />
     <Compile Include="Managers\KavimManager.cs" />
     <Compile Include="Managers\OvedManager.cs" />
     <Compile Include="Managers\ParametersManager.cs" />
@@ -73,6 +79,10 @@
     <ProjectReference Include="..\..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
       <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
       <Name>DalOraInfra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ObjectCompare\ObjectCompare.csproj">
+      <Project>{e4dbf1bd-f8e5-430f-bc25-8064954cebee}</Project>
+      <Name>ObjectCompare</Name>
     </ProjectReference>
     <ProjectReference Include="..\KDSCommon\KDSCommon.csproj">
       <Project>{1cf6ed40-3036-4b17-ab5a-35f5c265c28c}</Project>

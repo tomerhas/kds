@@ -16,6 +16,8 @@ using KdsLibrary;
 using KdsLibrary.UI;
 using KdsLibrary.Security;
 using KDSCommon.UDT;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Managers;
 
 
 public partial class Modules_Ovdim_ZmaniNesiot : KdsLibrary.UI.KdsPage
@@ -336,7 +338,7 @@ public partial class Modules_Ovdim_ZmaniNesiot : KdsLibrary.UI.KdsPage
                     FillObjIdkuneyRashemet(ref _ObjIdkunRashemet);
                     oCollIdkunRashemet.Add(_ObjIdkunRashemet);
                 }
-                clDefinitions.SaveIdkunRashemet(oCollIdkunRashemet);
+                ServiceLocator.Current.GetInstance<IShinuyimManager>().SaveIdkunRashemet(oCollIdkunRashemet);
             }
             catch (Exception ex)
             {

@@ -8,6 +8,7 @@ using KdsLibrary;
 using KDSCommon.DataModels;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Managers;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsBatch
 {
@@ -113,7 +114,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "SetNetunimLeOved: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "SetNetunimLeOved: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
         }
@@ -148,7 +149,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitPremyotYadaniyot: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "InitPremyotYadaniyot: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
             finally
@@ -187,7 +188,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitPremyotYadaniyot: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "InitPremyotYadaniyot: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
             finally
@@ -225,7 +226,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitPremyot: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "InitPremyot: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
             finally
@@ -262,7 +263,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitPirteyOvedList: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "InitPirteyOvedList: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
         }
@@ -289,7 +290,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMatzavOvdimList: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "InitMatzavOvdimList: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
         }
@@ -323,7 +324,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtYemeyAvoda: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "InitDtYemeyAvoda: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
             finally
@@ -361,7 +362,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtPeiluyotFromTnua: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "InitDtPeiluyotFromTnua: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
             finally
@@ -399,7 +400,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtPeiluyotLeOved: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "InitDtPeiluyotLeOved: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
             finally
@@ -455,7 +456,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMeafyenyOved: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "InitMeafyenyOved: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
         }
@@ -477,7 +478,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitSugeyYechida: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "InitSugeyYechida: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
             finally
@@ -513,7 +514,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMatzavOved: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iBakashaId, "E", 0, "InitMatzavOved: " + ex.Message, Mispar_ishi, Month);
                 throw ex;
             }
             finally

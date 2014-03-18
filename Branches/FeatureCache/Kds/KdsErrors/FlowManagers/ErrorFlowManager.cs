@@ -15,6 +15,7 @@ using KdsLibrary;
 using Microsoft.Practices.Unity;
 using KdsErrors.DAL;
 using KDSCommon.Helpers;
+using System.Collections.Specialized;
 
 namespace KdsErrors.FlowManagers
 {
@@ -176,6 +177,8 @@ namespace KdsErrors.FlowManagers
         private ErrorInputData FillInputData(int misparIshi, DateTime cardDate, long? btchRequest = null, int? userId = null)
         {
             var inputData = new ErrorInputData();
+            OrderedDictionary htFullSidurimDetails = new OrderedDictionary();
+            OrderedDictionary htSpecialEmployeeDetails = new OrderedDictionary();
 
             inputData.iMisparIshi = misparIshi;
             inputData.CardDate = cardDate;
@@ -207,7 +210,7 @@ namespace KdsErrors.FlowManagers
 
             int iLast = 0;
             var ovedDetails = ovedManager.GetOvedDetails(misparIshi, cardDate);
-            inputData.htEmployeeDetails = ovedManager.GetEmployeeDetails(ovedDetails, inputData.CardDate, misparIshi, out iLast);
+            inputData.htEmployeeDetails = ovedManager.GetEmployeeDetails(ovedDetails, inputData.CardDate, misparIshi, out iLast,out htSpecialEmployeeDetails,out htFullSidurimDetails);
             inputData.iLastMisaprSidur = iLast;
             inputData.dtErrors = BuildErrorDataTable();
 

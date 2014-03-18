@@ -56,10 +56,10 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                inputData.IsSuccsess = false;
+                throw new Exception("ShinuyFixedItyatzvutNahag23: " + ex.Message);
             }
         }
-        //?? מלא פרמטרים
+        
         private void FixedItyatzvutNahag23(int iIndexSidur, SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, ShinuyInputData inputData, ref SidurDM oSidurNidrashHityatvut, ref bool bFirstHayavHityazvut, ref bool bSecondHayavHityazvut)
         {
             bool bNidrashHityazvut = false;
@@ -125,37 +125,42 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 23, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "FixedItyatzvutNahag23: " + ex.Message, null);
                 throw ex;
             }
         }
 
         private void IpusFields(SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
         {
-            if (!oObjSidurimOvdimUpd.PTOR_MEHITIATZVUTIsNull)
-            {
-                oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT = 0;
-                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-            }
+            try{
+                if (!oObjSidurimOvdimUpd.PTOR_MEHITIATZVUTIsNull)
+                {
+                    oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT = 0;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                }
 
-            if (!oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUTIsNull)
-            {
-                oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT = 0;
-                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-            }
+                if (!oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUTIsNull)
+                {
+                    oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT = 0;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                }
 
-            if (!oObjSidurimOvdimUpd.SHAT_HITIATZVUTIsNull)
-            {
-                oObjSidurimOvdimUpd.SHAT_HITIATZVUT = DateTime.MinValue;
-                oObjSidurimOvdimUpd.SHAT_HITIATZVUTIsNull = true;
-                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-            }
+                if (!oObjSidurimOvdimUpd.SHAT_HITIATZVUTIsNull)
+                {
+                    oObjSidurimOvdimUpd.SHAT_HITIATZVUT = DateTime.MinValue;
+                    oObjSidurimOvdimUpd.SHAT_HITIATZVUTIsNull = true;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                }
 
-            if (!oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKINIsNull)
+                if (!oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKINIsNull)
+                {
+                    oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN = "";
+                    curSidur.iHachtamaBeatarLoTakin = 0;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                }
+            }
+            catch (Exception ex)
             {
-                oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN = "";
-                curSidur.iHachtamaBeatarLoTakin = 0;
-                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                throw ex;
             }
         }
 

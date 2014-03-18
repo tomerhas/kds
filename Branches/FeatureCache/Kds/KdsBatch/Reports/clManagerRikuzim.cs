@@ -14,6 +14,8 @@ using KdsLibrary.Security;
 using System.Windows.Forms;
 using KDSCommon.UDT;
 using KDSCommon.Enums;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsBatch.Reports
 {
@@ -56,7 +58,7 @@ namespace KdsBatch.Reports
                 clGeneral.LogMessage(ex.Message, System.Diagnostics.EventLogEntryType.Error, true);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, iStatus);
-                clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "E", 0, null, "clManagerReport: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iRequestId, "E", 0, "clManagerReport: " + ex.Message, _loginUser, null);
             }
 
         }
@@ -235,6 +237,7 @@ namespace KdsBatch.Reports
             int iStatus = 0, iCntDone = 0;
             bool flag = false;
             _RptModule = new ReportModule();
+            var logManager= ServiceLocator.Current.GetInstance<ILogBakashot>();
             try
             {
                 pathAda = ConfigurationManager.AppSettings["PhysPathRikuzimAda"];
@@ -256,7 +259,7 @@ namespace KdsBatch.Reports
                             flag = true;
                             string Msg = ex.Message + "\n" + ex.StackTrace + ((ex.InnerException != null)? ex.InnerException.ToString() : "");
                             clGeneral.LogMessage(Msg, System.Diagnostics.EventLogEntryType.Error, true);
-                            clLogBakashot.InsertErrorToLog(iRequestId, drRikuz.MisparIshi, "E", 0, null, "MakeReports: " + ex.Message);
+                            logManager.InsertLog(iRequestId, "E", 0, "MakeReports: " + ex.Message, drRikuz.MisparIshi, null);
                             fileReport = null;
                         }
 
@@ -278,14 +281,14 @@ namespace KdsBatch.Reports
                         _BlReport.SaveRikuzmPdf(oCollRikuzPdf, oObjRikuzPdf.BAKASHA_ID, _NumOfProcess);
                 }
                 if (flag)
-                    clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "I", 0, null, "Process " + _NumOfProcess + " finished his job :(" + iCntDone + "/" + _Reports.Count + " records) , with warning .");
+                    logManager.InsertLog(iRequestId,  "I", 0, "Process " + _NumOfProcess + " finished his job :(" + iCntDone + "/" + _Reports.Count + " records) , with warning .", _loginUser,null);
                 else
-                    clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "I", 0, null, "Process " + _NumOfProcess + " finished his job (" + iCntDone + "/" + _Reports.Count + " records).");
+                    logManager.InsertLog(iRequestId, "I", 0, "Process " + _NumOfProcess + " finished his job (" + iCntDone + "/" + _Reports.Count + " records).", _loginUser, null);
             }
             catch (Exception ex)
             {
                 clGeneral.LogMessage(ex.Message + "\n" + ex.StackTrace, System.Diagnostics.EventLogEntryType.Error, true);
-                clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "E", 0, null, "MakeReports: " + ex.Message + ((name != string.Empty) ? " for report :" + name : ""));
+                logManager.InsertLog(iRequestId,  "E", 0, "MakeReports: " + ex.Message + ((name != string.Empty) ? " for report :" + name : ""),_loginUser, null);
             }
         }
 
@@ -314,7 +317,7 @@ namespace KdsBatch.Reports
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "E", 0, null, "TransferFileToAda:" + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iRequestId, "E", 0, "TransferFileToAda:" + ex.Message, _loginUser, null);
             }
             finally
             {

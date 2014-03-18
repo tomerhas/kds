@@ -11,15 +11,15 @@ using Microsoft.Practices.Unity;
 
 namespace KdsShinuyim.ShinuyImpl
 {
-    class ShinuyDeleteElementRechev07: ShinuyBase
+    public class DeleteElementRechev07: ShinuyBase
     {
 
-        public ShinuyDeleteElementRechev07(IUnityContainer container)
+        public DeleteElementRechev07(IUnityContainer container)
             : base(container)
         {
 
         }
-        public override ShinuyTypes ShinuyType { get { return ShinuyTypes.ShinuyDeleteElementRechev07; } }
+        public override ShinuyTypes ShinuyType { get { return ShinuyTypes.DeleteElementRechev07; } }
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
@@ -44,7 +44,7 @@ namespace KdsShinuyim.ShinuyImpl
                             PeilutDM oPeilut = (PeilutDM)((SidurDM)(inputData.htEmployeeDetails[i])).htPeilut[j];
                             oObjPeilutOvdimUpd = GetUpdPeilutObject(i, oPeilut, inputData, oObjSidurimOvdimUpd, out SourceObject);
 
-                            DeleteElementRechev07(curSidur, oPeilut, j, oObjSidurimOvdimUpd, inputData);
+                            DeleteElementRechev(curSidur, oPeilut, j, oObjSidurimOvdimUpd, inputData);
                             //ChangeElement06(ref oPeilut, ref oSidur, j);
 
                             j += 1;
@@ -56,12 +56,11 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 2, _iMisparIshi, _dCardDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "FixedMisparMatalatVisa02: " + ex.Message, null);
-                inputData.IsSuccsess = false;
+                throw new Exception("DeleteElementRechev07: " + ex.Message);
             }
         }
 
-        private void DeleteElementRechev07(SidurDM oSidur, PeilutDM oPeilut, int iIndexPeilut, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, ShinuyInputData inputData)
+        private void DeleteElementRechev(SidurDM oSidur, PeilutDM oPeilut, int iIndexPeilut, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, ShinuyInputData inputData)
         {
             //ביטול אלמנט השאלת רכב
             //תמיד לבטל  אלמנט "השאלת רכב" (73800000). 
@@ -98,9 +97,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                throw ex;
-                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 7, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "DeleteElementRechev07: " + ex.Message, null);
-                //_bSuccsess = false;
+                throw ex; 
             }
         }
 

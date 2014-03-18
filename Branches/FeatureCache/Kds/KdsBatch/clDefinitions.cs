@@ -180,6 +180,45 @@ namespace KdsBatch
             }
         }
 
+        public static void ShinuyKelet(COLL_YAMEY_AVODA_OVDIM oCollYameyAvodaUpd, COLL_SIDURIM_OVDIM oCollSidurimOvdimUpd, COLL_SIDURIM_OVDIM oCollSidurimOvdimIns, COLL_SIDURIM_OVDIM oCollSidurimOvdimDel,
+                                   COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimDel)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                //EventLog kdsLog = new EventLog();
+                //kdsLog.Source = "KDS";
+
+                oDal.AddParameter("p_coll_yamey_avoda_ovdim", ParameterType.ntOracleArray, oCollYameyAvodaUpd, ParameterDir.pdInput, "COLL_YAMEY_AVODA_OVDIM");
+                oDal.AddParameter("p_coll_sidurim_ovdim_upd", ParameterType.ntOracleArray, oCollSidurimOvdimUpd, ParameterDir.pdInput, "COLL_SIDURIM_OVDIM");
+                oDal.AddParameter("p_coll_sidurim_ovdim_ins", ParameterType.ntOracleArray, oCollSidurimOvdimIns, ParameterDir.pdInput, "COLL_SIDURIM_OVDIM");
+                oDal.AddParameter("p_coll_sidurim_ovdim_del", ParameterType.ntOracleArray, oCollSidurimOvdimDel, ParameterDir.pdInput, "COLL_SIDURIM_OVDIM");
+                oDal.AddParameter("p_coll_obj_peilut_ovdim_upd", ParameterType.ntOracleArray, oCollPeilutOvdimUpd, ParameterDir.pdInput, "COLL_OBJ_PEILUT_OVDIM");
+                oDal.AddParameter("p_coll_obj_peilut_ovdim_ins", ParameterType.ntOracleArray, oCollPeilutOvdimIns, ParameterDir.pdInput, "COLL_OBJ_PEILUT_OVDIM");
+                oDal.AddParameter("p_coll_obj_peilut_ovdim_del", ParameterType.ntOracleArray, oCollPeilutOvdimDel, ParameterDir.pdInput, "COLL_OBJ_PEILUT_OVDIM");
+                //kdsLog.WriteEntry("10.1", EventLogEntryType.Error);
+                oDal.ExecuteSP(cProShinuyKelet);
+                //kdsLog.WriteEntry("10.2", EventLogEntryType.Error);
+            }
+            catch (Exception ex)
+            {
+                //var mail = ServiceLocator.Current.GetInstance<IMailManager>();
+                //string[] RecipientsList = (ConfigurationSettings.AppSettings["MailErrorWorkCard"].ToString()).Split(';');
+                
+                //mail.SendMail(RecipientsList, "תקלה בשמירת נתונים למספר אישי: " + oCollYameyAvodaUpd.Value[0].MISPAR_ISHI + "  תאריך:" + oCollYameyAvodaUpd.Value[0].TAARICH.ToShortDateString(), ex.Message);
+
+                //clMail omail;
+                //string[] RecipientsList = (ConfigurationManager.AppSettings["MailErrorWorkCard"].ToString()).Split(';');
+                //RecipientsList.ToList().ForEach(recipient =>
+                //{
+                //    omail = new clMail(recipient, "תקלה בשמירת נתונים למספר אישי: " + oCollYameyAvodaUpd.Value[0].MISPAR_ISHI + "  תאריך:" + oCollYameyAvodaUpd.Value[0].TAARICH.ToShortDateString(), ex.Message);
+                //    omail.SendMail();
+                //});
+
+                throw ex;
+            }
+        }
+
         public static void UpdateLogBakasha(long lRequestNum, DateTime dZmanSiyum, int iStatus, int iHuavraLesachar, DateTime dTarHaavaraLesachar, int ishurHilan)
         {
             clDal oDal = new clDal();
@@ -492,39 +531,7 @@ namespace KdsBatch
                 throw ex;
             }
         }
-        public static void ShinuyKelet(COLL_YAMEY_AVODA_OVDIM oCollYameyAvodaUpd, COLL_SIDURIM_OVDIM oCollSidurimOvdimUpd, COLL_SIDURIM_OVDIM oCollSidurimOvdimIns, COLL_SIDURIM_OVDIM oCollSidurimOvdimDel,
-                                       COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimDel)
-        {
-            clDal oDal = new clDal();
-            try
-            {
-                //EventLog kdsLog = new EventLog();
-                //kdsLog.Source = "KDS";
-
-                oDal.AddParameter("p_coll_yamey_avoda_ovdim", ParameterType.ntOracleArray, oCollYameyAvodaUpd, ParameterDir.pdInput, "COLL_YAMEY_AVODA_OVDIM");
-                oDal.AddParameter("p_coll_sidurim_ovdim_upd", ParameterType.ntOracleArray, oCollSidurimOvdimUpd, ParameterDir.pdInput, "COLL_SIDURIM_OVDIM");
-                oDal.AddParameter("p_coll_sidurim_ovdim_ins", ParameterType.ntOracleArray, oCollSidurimOvdimIns, ParameterDir.pdInput, "COLL_SIDURIM_OVDIM");
-                oDal.AddParameter("p_coll_sidurim_ovdim_del", ParameterType.ntOracleArray, oCollSidurimOvdimDel, ParameterDir.pdInput, "COLL_SIDURIM_OVDIM");
-                oDal.AddParameter("p_coll_obj_peilut_ovdim_upd", ParameterType.ntOracleArray, oCollPeilutOvdimUpd, ParameterDir.pdInput, "COLL_OBJ_PEILUT_OVDIM");
-                oDal.AddParameter("p_coll_obj_peilut_ovdim_ins", ParameterType.ntOracleArray, oCollPeilutOvdimIns, ParameterDir.pdInput, "COLL_OBJ_PEILUT_OVDIM");
-                oDal.AddParameter("p_coll_obj_peilut_ovdim_del", ParameterType.ntOracleArray, oCollPeilutOvdimDel, ParameterDir.pdInput, "COLL_OBJ_PEILUT_OVDIM");
-                //kdsLog.WriteEntry("10.1", EventLogEntryType.Error);
-                oDal.ExecuteSP(cProShinuyKelet);
-                //kdsLog.WriteEntry("10.2", EventLogEntryType.Error);
-            }
-            catch (Exception ex)
-            {
-                clMail omail;
-                string[] RecipientsList = (ConfigurationManager.AppSettings["MailErrorWorkCard"].ToString()).Split(';');
-                RecipientsList.ToList().ForEach(recipient =>
-                {
-                    omail = new clMail(recipient, "תקלה בשמירת נתונים למספר אישי: " + oCollYameyAvodaUpd.Value[0].MISPAR_ISHI + "  תאריך:" + oCollYameyAvodaUpd.Value[0].TAARICH.ToShortDateString(), ex.Message);
-                    omail.SendMail();
-                });
-               
-                throw ex;
-            }
-        }
+       
         public static DataTable GetSugeySidur()
         {
             clDal oDal = new clDal();
@@ -543,26 +550,7 @@ namespace KdsBatch
             }
         }
 
-        public static DataTable GetTmpSidurimMeyuchadim(DateTime dTarMe, DateTime dTarAd)
-        {
-            clDal oDal = new clDal();
-            DataTable dt = new DataTable();
-
-            try
-            {
-                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
-                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
-              
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clDefinitions.cProGetTmpSidurimMeyuchadim, ref dt);
-
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+      
 
         public static DataTable GetApprovalToEmploee(int iMisparIshi, DateTime dTaarich)
         {
@@ -585,72 +573,6 @@ namespace KdsBatch
             }
         }
 
-        public static DataTable GetIdkuneyRashemet(int iMisparIshi, DateTime dTaarich)
-        {
-            clDal oDal = new clDal();
-            DataTable dt = new DataTable();
-
-            try
-            {
-                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
-                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
-
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clDefinitions.cProGetIdkuneyRashemet, ref dt);
-
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static DataTable GetApprovalErrors(int iMisparIshi, DateTime dTaarich)
-        {
-            clDal oDal = new clDal();
-            DataTable dt = new DataTable();
-
-            try
-            {
-                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
-                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
-
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clGeneral.cProGetApprovalErrors, ref dt);
-
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static DataTable GetTmpMeafyeneyElements(DateTime dTarMe, DateTime dTarAd)
-        {
-            clDal oDal = new clDal();
-            DataTable dt = new DataTable();
-
-            try
-            {
-                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
-                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
-
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clDefinitions.cProGetMeafyeneyElements, ref dt);
-
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-     
-
-      
 
         public static float GetTimeBetweenTwoSidurimInMinuts(SidurDM oPrevSidur, SidurDM oSidur)
         {
@@ -723,29 +645,7 @@ namespace KdsBatch
             else return Date1;
         }
 
-        public static string GetMasharCarNumbers(OrderedDictionary htEmployeeDetails)
-        {
-            string sCarNumbers = "";
-            PeilutDM oPeilut;
-            SidurDM oSidur;
-
-            //נשרשר את כל מספרי הרכב, כדי לפנות למש"ר עם פחות נתונים
-            for (int i = 0; i < htEmployeeDetails.Count; i++)
-            {
-                oSidur = (SidurDM)htEmployeeDetails[i];
-                for (int j = 0; j < oSidur.htPeilut.Count; j++)
-                {
-                    oPeilut = (PeilutDM)oSidur.htPeilut[j];
-                    sCarNumbers += oPeilut.lOtoNo.ToString() + ",";
-                }
-            }
-
-            if (sCarNumbers.Length > 0)
-            {
-                sCarNumbers = sCarNumbers.Substring(0, sCarNumbers.Length - 1);
-            }
-            return sCarNumbers;
-        }
+       
         public static DataSet GetErrorsForFields(bool bProfileRashemet, int iMisparIshi, DateTime dCardDate,
                                                  int iMisparSidur, DateTime dFullShatHatchala, 
                                                  DateTime dPeilutShatYetiza, int iMisparKnisa, 
@@ -972,41 +872,6 @@ namespace KdsBatch
             }
         }
 
-        public static void SaveIdkunRashemet(COLL_IDKUN_RASHEMET oCollIdkunRashemet)
-        {
-            clDal Dal = new clDal();
-            try
-            {
-                Dal.AddParameter("p_coll_idkun_rashemet", ParameterType.ntOracleArray, oCollIdkunRashemet, ParameterDir.pdInput, "COLL_IDKUN_RASHEMET");
-                Dal.ExecuteSP(clGeneral.cProUpdIdkunRashemet);
-            }
-            catch (Exception ex)
-            {
-                clMail omail;
-                string[] RecipientsList = (ConfigurationManager.AppSettings["MailErrorWorkCard"].ToString()).Split(';');
-                RecipientsList.ToList().ForEach(recipient =>
-                {
-                    omail = new clMail(recipient, "תקלה בשמירת עדכוני רשמת למספר אישי: " + oCollIdkunRashemet.Value[0].MISPAR_ISHI + "  תאריך:" + oCollIdkunRashemet.Value[0].TAARICH.ToShortDateString(), ex.Message);
-                    omail.SendMail();
-                });
-
-                throw ex;
-            } 
-        }
-
-        public static void UpdateAprrovalErrors(COLL_SHGIOT_MEUSHAROT oCollShgiotMeusharot)
-        {
-            clDal Dal = new clDal();
-            try
-            {
-                Dal.AddParameter("p_coll_shgiot_meusharot", ParameterType.ntOracleArray, oCollShgiotMeusharot, ParameterDir.pdInput, "COLL_SHGIOT_MEUSHAROT");
-                Dal.ExecuteSP(clDefinitions.cProUpdApprovalErrors);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
         public static bool IsExceptionAllowedForSidurMyuchad(ref SidurDM oSidur, ref string sCharigaType, ref MeafyenimDM oMeafyenyOved, ref clParametersDM KdsParameters)
         {

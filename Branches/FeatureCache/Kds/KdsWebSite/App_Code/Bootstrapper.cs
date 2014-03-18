@@ -22,6 +22,11 @@ using KdsErrors.FlowManagers;
 using KdsErrors.FlowManagers.Factories;
 using KDSCommon.Interfaces.Logs;
 using KDSBLLogic.Logs;
+using KDSCommon.Interfaces.Shinuyim;
+using KDSBLLogic.DAL;
+using KDSBLLogic.Managers;
+using KdsShinuyim;
+using KdsShinuyim.FlowManager;
 
 
 /// <summary>
@@ -40,13 +45,13 @@ public class Bootstrapper
         //Register interfaces
 
         //container.RegisterInstance<ISimpleCacheManager<CachedItems>>(new SimpleCacheManager<CachedItems>());//the object will be singelton
-        IKDSCacheManager kdsManager = container.Resolve<KDSCacheManager>();
 
-        //container.RegisterInstance<IKDSCacheManager>(new KDSCacheManager());
-        container.RegisterInstance<IKDSCacheManager>(kdsManager);
+        container.RegisterInstance<IKDSCacheManager>(container.Resolve<KDSCacheManager>());
         var manager= new KDSAgedQueueParameters();
         manager.Init(20);
+        
         container.RegisterInstance<IKDSAgedQueueParameters>(manager);
+        container.RegisterInstance<IMailManager>(container.Resolve<MailManager>());
         //container.RegisterInstance<ICacheBuilder>(container.Resolve<CacheBuilder>());
 
         //Managers
@@ -58,6 +63,10 @@ public class Bootstrapper
         container.RegisterType<IErrorFlowManager, ErrorFlowManager>();
         container.RegisterType<ISubErrorFlowFactory, SubErrorFlowFactory>();
         container.RegisterType<ILogger, Logger>();
+        container.RegisterType<IShinuyimManager, ShinuyimManager>();
+        container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
+        container.RegisterType<ILogBakashot, LogBakashot>();
+        
         //Containers
         
         //DAL
@@ -65,7 +74,10 @@ public class Bootstrapper
         container.RegisterType<IKavimDAL, KavimDAL>();
         container.RegisterType<ISidurDAL, SidurDAL>();
         container.RegisterType<IPeilutDAL,PeilutDAL>();
+        container.RegisterType<IPeilutDAL, PeilutDAL>();
+        container.RegisterType<IShinuyimDAL, ShinuyimDAL>();
         container.RegisterType<IParametersDAL, ParametersDAL>();
+        container.RegisterType<ILogDAL, LogDAL>();
         
         //var manager = container.Resolve<ISimpleCacheManager<int>>();
         //var item = container.Resolve<ISimpleCacheManager<string>>();

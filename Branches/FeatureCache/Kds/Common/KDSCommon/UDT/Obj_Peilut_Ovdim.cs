@@ -3,9 +3,11 @@ using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
 using System.Xml.Serialization;
 using System.Xml.Schema;
+using ObjectCompare.Attributes;
 
 namespace KDSCommon.UDT
 {
+        [Serializable]
     public class OBJ_PEILUT_OVDIM : INullable, IOracleCustomType, IXmlSerializable, IComparable
     {
 
@@ -1013,6 +1015,7 @@ namespace KDSCommon.UDT
             }
         }
 
+        [DontCompare]
         [OracleObjectMappingAttribute("UPDATE_OBJECT")]
         public int UPDATE_OBJECT
         {
@@ -1026,7 +1029,7 @@ namespace KDSCommon.UDT
                 this.m_UPDATE_OBJECTIsNull = false;
             }
         }
-
+        [DontCompare]
         public bool UPDATE_OBJECTIsNull
         {
             get

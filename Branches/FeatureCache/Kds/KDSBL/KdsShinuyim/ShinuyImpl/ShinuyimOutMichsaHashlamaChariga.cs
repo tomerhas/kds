@@ -26,24 +26,31 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-            for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
+            try
             {
-                SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
-                OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
+                for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
+                {
+                    SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
+                    OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
 
-                //מחוץ למכסה
-                if (!CheckIdkunRashemet("OUT_MICHSA", curSidur.iMisparSidur, curSidur.dFullShatHatchala,inputData))
-                    UpdateOutMichsa(curSidur, oObjSidurimOvdimUpd);
+                    //מחוץ למכסה
+                    if (!CheckIdkunRashemet("OUT_MICHSA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                        UpdateOutMichsa(curSidur, oObjSidurimOvdimUpd);
 
-                //חריגה
-                if (!CheckIdkunRashemet("CHARIGA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData)) //!CheckApproval("2,4,5,6,10", oSidur.iMisparSidur, oSidur.dFullShatHatchala) &&
-                    UpdateChariga(curSidur, oObjSidurimOvdimUpd);
+                    //חריגה
+                    if (!CheckIdkunRashemet("CHARIGA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData)) //!CheckApproval("2,4,5,6,10", oSidur.iMisparSidur, oSidur.dFullShatHatchala) &&
+                        UpdateChariga(curSidur, oObjSidurimOvdimUpd);
 
-                //השלמה
-                if (!CheckIdkunRashemet("HASHLAMA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
-                    UpdateHashlamaForSidur(curSidur, i, oObjSidurimOvdimUpd, inputData);
+                    //השלמה
+                    if (!CheckIdkunRashemet("HASHLAMA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                        UpdateHashlamaForSidur(curSidur, i, oObjSidurimOvdimUpd, inputData);
 
-            }           
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyimOutMichsaHashlamaChariga: " + ex.Message);
+            }
         }
 
         private void UpdateOutMichsa(SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
@@ -78,7 +85,6 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 0, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "UpdateOutMichsa: " + ex.Message, null);
                 throw ex;
             }
         }
@@ -101,8 +107,7 @@ namespace KdsShinuyim.ShinuyImpl
             catch (Exception ex)
             {
                 throw ex;
-                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 0, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "UpdateChariga: " + ex.Message, null);
-                //_bSuccsess = false;
+                
             }
         }
 

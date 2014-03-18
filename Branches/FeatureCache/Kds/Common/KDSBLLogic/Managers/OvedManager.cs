@@ -162,7 +162,7 @@ namespace KdsLibrary
         /// <param name="misparIshi"></param>
         /// <param name="iLastMisaprSidur"></param>
         /// <returns></returns>
-        public OrderedDictionary GetEmployeeDetails(DataTable dtDetails, DateTime dCardDate, int misparIshi,out int iLastMisaprSidur)
+        public OrderedDictionary GetEmployeeDetails(DataTable dtDetails, DateTime dCardDate, int misparIshi, out int iLastMisaprSidur, out OrderedDictionary htSpecialEmployeeDetails, out OrderedDictionary htFullSidurimDetails)
         {
             int iMisparSidur, iPeilutMisparSidur;
             int iKey = 0;
@@ -173,12 +173,15 @@ namespace KdsLibrary
             SidurDM oSidur = null;
             PeilutDM oPeilut = null;
             OrderedDictionary htEmployeeDetails = new OrderedDictionary();
-            var htSpecialEmployeeDetails = new OrderedDictionary();
+            //OrderedDictionary htSpecialEmployeeDetails = new OrderedDictionary();
             string sLastShilut = "";
             DataTable dtPeiluyot;
             enMakatType _MakatType;
             try
             {
+                htSpecialEmployeeDetails = new OrderedDictionary();
+                htFullSidurimDetails = new OrderedDictionary();
+              
                 //נשלוף את נתוני הפעילויות לאותו יום
                 var kavimDal = _container.Resolve<IKavimDAL>();
                 dtPeiluyot = kavimDal.GetKatalogKavim(misparIshi, dCardDate, dCardDate);
@@ -211,7 +214,7 @@ namespace KdsLibrary
                                 htEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
                             }
 
-                            //htFullSidurimDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+                            htFullSidurimDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
                         }
                         iMisparSidurPrev = iMisparSidur;
                         dShatHatchalaPrev = dShatHatchala;
@@ -284,6 +287,8 @@ namespace KdsLibrary
                 throw ex;
             }
         }
+
+        
     }
 }
 

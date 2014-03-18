@@ -15,7 +15,7 @@ using Microsoft.Practices.Unity;
 
 namespace KdsShinuyim.ShinuyImpl
 {
-    class ShinuySetSidurLoLetashlum11 : ShinuyBase
+    public class ShinuySetSidurLoLetashlum11 : ShinuyBase
     {
 
         public ShinuySetSidurLoLetashlum11(IUnityContainer container)
@@ -29,13 +29,20 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-            for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
+            try
             {
-                SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
-                if (!CheckIdkunRashemet("LO_LETASHLUM", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
-                    SidurLoLetashlum11(curSidur,i, inputData);
+                    SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
+                    if (!CheckIdkunRashemet("LO_LETASHLUM", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                    {
+                        SidurLoLetashlum11(curSidur, i, inputData);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuySetSidurLoLetashlum11: " + ex.Message);
             }
         }
 
@@ -162,8 +169,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 11, curSidur.iMisparIshi, curSidur.dSidurDate, curSidur.iMisparSidur, curSidur.dFullShatHatchala, null, null, "SidurLoLetashlum11: " + ex.Message, null);
-                inputData.IsSuccsess = false;
+                throw ex;
             }
         }
         private bool Condition1Saif11(SidurDM curSidur, ShinuyInputData inputData)
@@ -255,8 +261,8 @@ namespace KdsShinuyim.ShinuyImpl
             {
                 if (!String.IsNullOrEmpty(inputData.OvedDetails.sMutamut))
                 {
-                    var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-                    GetMutamut(cache.GetCacheItem<DataTable>(CachedItems.Mutamut), int.Parse(inputData.OvedDetails.sMutamut), out bIsurShaotNosafot);
+                   // var cache = _container.Resolve<IKDSCacheManager>();
+                    bIsurShaotNosafot = HaveIsurShaotNosafotLeMutam(int.Parse(inputData.OvedDetails.sMutamut));
 
                     if (bIsurShaotNosafot)
                     {
@@ -289,82 +295,109 @@ namespace KdsShinuyim.ShinuyImpl
         private bool ConditionSidurHeadrut(SidurDM curSidur, ShinuyInputData inputData)
         {
             bool bLoLetashlumAutomati = false;
-            if (inputData.iSugYom > 19 || (inputData.iSugYom == 10 && (inputData.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || inputData.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+            try
             {
-                if (curSidur.bSidurMyuhad)
-                {//סידור מיוחד
-                    if (!string.IsNullOrEmpty(curSidur.sHeadrutTypeKod))
-                    {
-                        if ((curSidur.sHeadrutTypeKod == enMeafyenSidur53.enMachala.GetHashCode().ToString()) ||
-                            (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enMilueim.GetHashCode().ToString()) ||
-                            (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enTeuna.GetHashCode().ToString()) ||
-                            (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enEvel.GetHashCode().ToString()))
+                if (inputData.iSugYom > 19 || (inputData.iSugYom == 10 && (inputData.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || inputData.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+                {
+                    if (curSidur.bSidurMyuhad)
+                    {//סידור מיוחד
+                        if (!string.IsNullOrEmpty(curSidur.sHeadrutTypeKod))
                         {
-                            bLoLetashlumAutomati = true;
+                            if ((curSidur.sHeadrutTypeKod == enMeafyenSidur53.enMachala.GetHashCode().ToString()) ||
+                                (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enMilueim.GetHashCode().ToString()) ||
+                                (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enTeuna.GetHashCode().ToString()) ||
+                                (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enEvel.GetHashCode().ToString()))
+                            {
+                                bLoLetashlumAutomati = true;
+                            }
                         }
                     }
+
                 }
+                //תנאי שביעי לסעיף 11
 
+                return bLoLetashlumAutomati;
             }
-            //תנאי שביעי לסעיף 11
-
-            return bLoLetashlumAutomati;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
        
         private bool Condition7Saif11(DataRow[] drSugSidur, SidurDM curSidur)
         {
             bool bLoLetashlumAutomati;
 
-            //תנאי שביעי לסעיף 11
-            if (curSidur.bSidurMyuhad)
+            try
             {
-                bLoLetashlumAutomati = curSidur.bLoLetashlumAutomatiExists;
-            }
-            else
-            {
-                if (drSugSidur.Length > 0)
+                //תנאי שביעי לסעיף 11
+                if (curSidur.bSidurMyuhad)
                 {
-                    //TODO: מחכה לתשובה ממירי
-                    bLoLetashlumAutomati = (drSugSidur[0]["lo_letashlum_automati"].ToString() == enMeafyen79.LoLetashlumAutomat.GetHashCode().ToString());
+                    bLoLetashlumAutomati = curSidur.bLoLetashlumAutomatiExists;
                 }
                 else
                 {
-                    bLoLetashlumAutomati = false;
+                    if (drSugSidur.Length > 0)
+                    {
+                        //TODO: מחכה לתשובה ממירי
+                        bLoLetashlumAutomati = (drSugSidur[0]["lo_letashlum_automati"].ToString() == enMeafyen79.LoLetashlumAutomat.GetHashCode().ToString());
+                    }
+                    else
+                    {
+                        bLoLetashlumAutomati = false;
+                    }
                 }
+                return bLoLetashlumAutomati;
             }
-            return bLoLetashlumAutomati;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private bool Condition8Saif11(DataRow[] drSugSidur, SidurDM curSidur, ShinuyInputData inputData)
         {
             bool bLoLetashlumAutomati = false;
-
-            // וגם מדובר בסידור מיוחד עם עם מאפיין לסידורים מיוחדים קוד = 54 עם ערך 1.
-            if (curSidur.bSidurMyuhad && curSidur.sShaonNochachut == "1" && curSidur.sChariga == "0") // && oOvedYomAvodaDetails.iIsuk.ToString().Substring(0,1) == "5")
+            try
             {
-                //וגם לעובד אין מאפיין 3 ו- 4 ברמה האישית. 
-                if (!inputData.oMeafyeneyOved.IsMeafyenExist(3) && !inputData.oMeafyeneyOved.IsMeafyenExist(4))
+                // וגם מדובר בסידור מיוחד עם עם מאפיין לסידורים מיוחדים קוד = 54 עם ערך 1.
+                if (curSidur.bSidurMyuhad && curSidur.sShaonNochachut == "1" && curSidur.sChariga == "0") // && oOvedYomAvodaDetails.iIsuk.ToString().Substring(0,1) == "5")
                 {
-                    bLoLetashlumAutomati = true;
+                    //וגם לעובד אין מאפיין 3 ו- 4 ברמה האישית. 
+                    if (!inputData.oMeafyeneyOved.IsMeafyenExist(3) && !inputData.oMeafyeneyOved.IsMeafyenExist(4))
+                    {
+                        bLoLetashlumAutomati = true;
+                    }
                 }
-            }
 
-            return bLoLetashlumAutomati;
+                return bLoLetashlumAutomati;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private bool Condition9Saif11(DataRow[] drSugSidur, SidurDM curSidur, ShinuyInputData inputData)
         {
-            bool bLoLetashlumAutomati = true;
-            DateTime dShatHatchalaLetashlum, dShatGmarLetashlum;
-            dShatHatchalaLetashlum = curSidur.dFullShatHatchala;
-            dShatGmarLetashlum = curSidur.dFullShatGmar;
-            bool bFromMeafyenHatchala, bFromMeafyenGmar;
+            try
+            {
+                bool bLoLetashlumAutomati = true;
+                DateTime dShatHatchalaLetashlum, dShatGmarLetashlum;
+                dShatHatchalaLetashlum = curSidur.dFullShatHatchala;
+                dShatGmarLetashlum = curSidur.dFullShatGmar;
+                bool bFromMeafyenHatchala, bFromMeafyenGmar;
 
-            //??
-            GetOvedShatHatchalaGmar(curSidur.dFullShatGmar, inputData.oMeafyeneyOved, curSidur,inputData, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum, out bFromMeafyenHatchala, out bFromMeafyenGmar);
-            bLoLetashlumAutomati = CheckLoLetashlumMeafyenim(drSugSidur, curSidur, inputData, dShatHatchalaLetashlum, dShatGmarLetashlum, bFromMeafyenHatchala, bFromMeafyenGmar);
 
-            return bLoLetashlumAutomati;
+                GetOvedShatHatchalaGmar(curSidur.dFullShatGmar, inputData.oMeafyeneyOved, curSidur, inputData, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum, out bFromMeafyenHatchala, out bFromMeafyenGmar);
+                bLoLetashlumAutomati = CheckLoLetashlumMeafyenim(drSugSidur, curSidur, inputData, dShatHatchalaLetashlum, dShatGmarLetashlum, bFromMeafyenHatchala, bFromMeafyenGmar);
+
+                return bLoLetashlumAutomati;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private bool CheckLoLetashlumMeafyenim(DataRow[] drSugSidur, SidurDM oSidur, ShinuyInputData inputData,DateTime dShatHatchalaLetashlum, DateTime dShatGmarLetashlum, bool bFromMeafyenHatchala, bool bFromMeafyenGmar)
@@ -372,46 +405,53 @@ namespace KdsShinuyim.ShinuyImpl
             bool bLoLetashlumAutomati = false;
             string sMeafyenKizuz = "";
             DateTime shaa;
-            if (oSidur.bSidurMyuhad)
+            try
             {
-                sMeafyenKizuz = oSidur.sKizuzAlPiHatchalaGmar;
-            }
-            else
-            {
-                if (drSugSidur.Length > 0)
+                if (oSidur.bSidurMyuhad)
                 {
-                    sMeafyenKizuz = drSugSidur[0]["kizuz_al_pi_hatchala_gmar"].ToString();
+                    sMeafyenKizuz = oSidur.sKizuzAlPiHatchalaGmar;
                 }
-            }
-
-            if (!string.IsNullOrEmpty(sMeafyenKizuz) && oSidur.iLoLetashlum == 0)
-            {
-                if (sMeafyenKizuz == "1")
+                else
                 {
-                    if (bFromMeafyenHatchala && bFromMeafyenGmar)
+                    if (drSugSidur.Length > 0)
                     {
-                        if (((oSidur.dFullShatGmar != DateTime.MinValue && (oSidur.dFullShatGmar <= dShatHatchalaLetashlum)) || (oSidur.dFullShatHatchala != DateTime.MinValue && oSidur.dFullShatHatchala >= dShatGmarLetashlum)) && oSidur.sChariga == "0")
+                        sMeafyenKizuz = drSugSidur[0]["kizuz_al_pi_hatchala_gmar"].ToString();
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(sMeafyenKizuz) && oSidur.iLoLetashlum == 0)
+                {
+                    if (sMeafyenKizuz == "1")
+                    {
+                        if (bFromMeafyenHatchala && bFromMeafyenGmar)
                         {
-                            shaa = DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString() + " 18:00:00");
-                            if (!inputData.oMeafyeneyOved.IsMeafyenExist(42) && inputData.oMeafyeneyOved.IsMeafyenExist(23) && inputData.oMeafyeneyOved.IsMeafyenExist(24))
+                            if (((oSidur.dFullShatGmar != DateTime.MinValue && (oSidur.dFullShatGmar <= dShatHatchalaLetashlum)) || (oSidur.dFullShatHatchala != DateTime.MinValue && oSidur.dFullShatHatchala >= dShatGmarLetashlum)) && oSidur.sChariga == "0")
                             {
-                                if ((oSidur.dFullShatHatchala.Hour >= 11 && oSidur.dFullShatHatchala.Hour <= 17 && oSidur.dFullShatGmar > shaa)
-                                    && (oSidur.sShabaton != "1" && (inputData.iSugYom >= enSugYom.Chol.GetHashCode() && inputData.iSugYom < enSugYom.Shishi.GetHashCode())))
-                                    bLoLetashlumAutomati = false;
-                                else bLoLetashlumAutomati = true;
+                                shaa = DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString() + " 18:00:00");
+                                if (!inputData.oMeafyeneyOved.IsMeafyenExist(42) && inputData.oMeafyeneyOved.IsMeafyenExist(23) && inputData.oMeafyeneyOved.IsMeafyenExist(24))
+                                {
+                                    if ((oSidur.dFullShatHatchala.Hour >= 11 && oSidur.dFullShatHatchala.Hour <= 17 && oSidur.dFullShatGmar > shaa)
+                                        && (oSidur.sShabaton != "1" && (inputData.iSugYom >= enSugYom.Chol.GetHashCode() && inputData.iSugYom < enSugYom.Shishi.GetHashCode())))
+                                        bLoLetashlumAutomati = false;
+                                    else bLoLetashlumAutomati = true;
+                                }
+                                else
+                                    bLoLetashlumAutomati = true;
                             }
-                            else
-                                bLoLetashlumAutomati = true;
+                        }
+                        else if ((bFromMeafyenHatchala && !bFromMeafyenGmar) || (!bFromMeafyenHatchala && bFromMeafyenGmar))
+                        {
+                            bLoLetashlumAutomati = true;
                         }
                     }
-                    else if ((bFromMeafyenHatchala && !bFromMeafyenGmar) || (!bFromMeafyenHatchala && bFromMeafyenGmar))
-                    {
-                        bLoLetashlumAutomati = true;
-                    }
                 }
-            }
 
-            return bLoLetashlumAutomati;
+                return bLoLetashlumAutomati;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }

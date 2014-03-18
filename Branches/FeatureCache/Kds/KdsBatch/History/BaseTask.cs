@@ -10,6 +10,8 @@ using System.Diagnostics;
 using System.IO;
 using KdsLibrary;
 using DalOraInfra.DAL;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsBatch.History
 {
@@ -72,14 +74,14 @@ namespace KdsBatch.History
                         FillItemsToCollection(oBuild.Items[i], i);
                     }
                     //  oBuild.Items.ForEach(item => FillItemsToCollection(item,0));
-                    clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "Items Count= " + oBuild.Items.Count.ToString());
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_lRequestNum, "I", 0, "Items Count= " + oBuild.Items.Count.ToString());
                     oBuild.Dispose();
                     SetCollection();
                     InsertToDB(_filename);
                   //  MoveFileToOld(_filename);
                     Dispose();
 
-                    clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, _filename + " saved");
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_lRequestNum, "I", 0, _filename + " saved");
                 
             }
             catch (Exception ex)
@@ -125,7 +127,7 @@ namespace KdsBatch.History
             try
             {
                 _files = Directory.GetFiles(PathDirectory, Pattern + "*.txt", SearchOption.TopDirectoryOnly);
-                clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "pattern=" + Pattern + " Files=" + _files.Length);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_lRequestNum, "I", 0, "pattern=" + Pattern + " Files=" + _files.Length);
             }
             catch (Exception ex)
             {

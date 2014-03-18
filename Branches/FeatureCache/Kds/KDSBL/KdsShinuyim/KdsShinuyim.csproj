@@ -58,9 +58,12 @@
     <Compile Include="DataModels\NewSidur.cs" />
     <Compile Include="FlowManager\ShinuyimFlowManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShinuyImpl\DeleteSidureyRetzifut.cs" />
+    <Compile Include="ShinuyImpl\SetBooleanParams.cs" />
+    <Compile Include="ShinuyImpl\ShinuyAddElementMechine05.cs" />
     <Compile Include="ShinuyImpl\ShinuyBase.cs" />
     <Compile Include="ShinuyImpl\ShinuyChishuvShatHatchala30.cs" />
-    <Compile Include="ShinuyImpl\ShinuyDeleteElementRechev07.cs" />
+    <Compile Include="ShinuyImpl\DeleteElementRechev07.cs" />
     <Compile Include="ShinuyImpl\ShinuyFixedItyatzvutNahag23.cs" />
     <Compile Include="ShinuyImpl\ShinuyFixedLina07.cs" />
     <Compile Include="ShinuyImpl\ShinuyFixedPitzulHafsaka06.cs" />
@@ -70,15 +73,19 @@
     <Compile Include="ShinuyImpl\ShinuyHashlamaForYomAvoda.cs" />
     <Compile Include="ShinuyImpl\ShinuyHosafatSidurHeadrutWithPaymeny15.cs" />
     <Compile Include="ShinuyImpl\ShinuyimOutMichsaHashlamaChariga.cs" />
+    <Compile Include="ShinuyImpl\ShinuyKonnutGrira03.cs" />
     <Compile Include="ShinuyImpl\ShinuyMergerSiduryMapa28.cs" />
     <Compile Include="ShinuyImpl\ShinuyMisparSidur01.cs" />
     <Compile Include="ShinuyImpl\ShinuyMisparSidurVisa02.cs" />
     <Compile Include="ShinuyImpl\ShinuySetSidurLoLetashlum11.cs" />
+    <Compile Include="ShinuyImpl\SetSidurObjects.cs" />
     <Compile Include="ShinuyImpl\ShinuyShatHatchalaGmar_19_26_27.cs" />
     <Compile Include="ShinuyImpl\ShinuyShatHatchalaLefiShatItyatzvut12.cs" />
     <Compile Include="ShinuyImpl\ShinuySidureyMapaWhithStatusNullLoLetashlum29.cs" />
+    <Compile Include="ShinuyImpl\ShinuyUpdateBitulZmanNesiot.cs" />
     <Compile Include="ShinuyImpl\ShinuyUpdateHalbasha.cs" />
     <Compile Include="ShinuyImpl\ShinuyUpdateTachograph.cs" />
+    <Compile Include="ShinuyImpl\IpusArachimBeforeTahalich.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\KDSCommon\KDSCommon.csproj">
@@ -92,6 +99,10 @@
     <ProjectReference Include="..\..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
       <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
       <Name>DalOraInfra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ObjectCompare\ObjectCompare.csproj">
+      <Project>{e4dbf1bd-f8e5-430f-bc25-8064954cebee}</Project>
+      <Name>ObjectCompare</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

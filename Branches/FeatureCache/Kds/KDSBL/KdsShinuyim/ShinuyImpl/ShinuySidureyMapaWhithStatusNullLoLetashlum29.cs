@@ -25,7 +25,14 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-            SiduryMapaWhithStatusNullLoLetashlum29(inputData);
+            try
+            {
+                SiduryMapaWhithStatusNullLoLetashlum29(inputData);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuySidureyMapaWhithStatusNullLoLetashlum29: " + ex.Message);
+            }
         }
 
         private void SiduryMapaWhithStatusNullLoLetashlum29(ShinuyInputData inputData)
@@ -86,8 +93,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, _iMisparIshi, "E", 29, _dCardDate, "SiduryMapaLoLetashlum29: " + ex.Message);
-                inputData.IsSuccsess = false;
+                throw ex;
             }
         }
     }

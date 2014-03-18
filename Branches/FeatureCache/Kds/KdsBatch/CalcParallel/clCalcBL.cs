@@ -527,7 +527,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(oved.iBakashaId, oved.Mispar_ishi, "E", 0, oved.Month, "clCalcBL: " + ex.StackTrace + "\n message: " + ex.StackTrace + "\n message: " + ex.Message);
+                //clLogBakashot.SetError(oved.iBakashaId, oved.Mispar_ishi, "E", 0, oved.Month, "clCalcBL: " + ex.StackTrace + "\n message: " + ex.StackTrace + "\n message: " + ex.Message);
                 throw ex;
             }
         }
@@ -569,7 +569,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(), objOved.Taarich, "CalcDay:ChishuvTosefetGil " + ex.StackTrace + "\n message: " + ex.Message);
+                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(), objOved.Taarich, "CalcDay:ChishuvTosefetGil " + ex.StackTrace + "\n message: " + ex.Message);
                 throw (ex);
             }
         }

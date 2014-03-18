@@ -7,6 +7,8 @@ using KdsLibrary.BL;
 using KdsLibrary;
 using KDSCommon.UDT;
 using DalOraInfra.DAL;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsBatch
 {
@@ -52,7 +54,7 @@ namespace KdsBatch
             catch (Exception ex)
             {
 
-                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "E", 0, _dTarMe, "MainCalc: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_iBakashaId, "E", 0, "MainCalc: " + ex.StackTrace + "\n message: " + ex.Message, 0, _dTarMe);
             }
                
         }
@@ -76,7 +78,7 @@ namespace KdsBatch
                     _Ovdim.Add(ItemOved);
                 }
 
-                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc Process Num" + numProcess + ". Mispar Ovdim:" + oGeneralData.dtOvdimLechishuv.Rows.Count);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_iBakashaId, "I", 0, "MainCalc Process Num" + numProcess + ". Mispar Ovdim:" + oGeneralData.dtOvdimLechishuv.Rows.Count, 0, dTarMe);
             }
             catch (Exception ex)
             {
@@ -146,7 +148,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_iBakashaId, oOved.Mispar_ishi, "E", 0, oOved.Month, "MainCalc,CalcOved: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_iBakashaId,  "E", 0, "",oOved.Mispar_ishi, oOved.Month,ex);
                 oOved.Dispose();
                 throw(ex);
             }
@@ -170,7 +172,7 @@ namespace KdsBatch
                 DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
                 DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);      
                 SaveChishuvTemp(oOved.Mispar_ishi, dCalcMonth, iTzuga, _collChishuvChodesh,_collChishuvYomi,ref  dtHeadrut, ref  dtRechivimChodshiym, ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31, ref dtAllRikuz);
-              //??  SaveChishuvTemp2(oOved.Mispar_ishi, dCalcMonth, _collChishuvChodesh, _collChishuvYomi, ref dsRikuz2);
+                SaveChishuvTemp2(oOved.Mispar_ishi, dCalcMonth, _collChishuvChodesh, _collChishuvYomi, ref dsRikuz2);
 
                 oOved.Dispose();
                 if (SingleGeneralData.GetInstance() != null)
@@ -181,7 +183,7 @@ namespace KdsBatch
             {
                 if (SingleGeneralData.GetInstance() != null)
                     SingleGeneralData.ResetObject();
-                clLogBakashot.InsertErrorToLog(_iBakashaId, iMisparIshi, "E", 0, dCalcMonth, "MainCalc,MainCalcOved: " + ex.StackTrace + "\n message: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_iBakashaId, "E", 0, "MainCalc,MainCalcOved: " + ex.StackTrace + "\n message: " + ex.Message, iMisparIshi, dCalcMonth);
             }
         }
 
@@ -203,8 +205,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                bStatus = false;
-                clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, null, "MainCalc: " + ex.Message);
+                bStatus = false;    
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lBakashaId, "E", 0,  "MainCalc: " + ex.Message, iMisparIshi,null);
                 return null;
             }
         }
@@ -238,7 +240,7 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 SingleGeneralData.ResetObject();
-                clLogBakashot.InsertErrorToLog(_iBakashaId, iMisparIshi, "E", 0, StartMonth, "MainCalc: " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_iBakashaId,  "E", 0, "MainCalc: " + ex.Message, iMisparIshi, StartMonth);
             }
         }
 
@@ -576,10 +578,11 @@ namespace KdsBatch
             int numFailed = 0;
             int numSucceed = 0;
             int result=0;
+            var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
             try
             {
 
-                clLogBakashot.InsertErrorToLog(_iBakashaId, "I", 0, "Start PremiaCalc");
+                logManager.InsertLog(_iBakashaId, "I", 0, "Start PremiaCalc");
                 result = oCalcDal.PrepareDataLeChishuvPremiyot(_numProcess);
                 clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
                
@@ -607,7 +610,7 @@ namespace KdsBatch
                                 catch (Exception ex)
                                 {
                                     numFailed += 1;
-                                    //clLogBakashot.SetError(_iBakashaId, CurrentOved.Mispar_ishi, "E",
+                                    ////clLogBakashot.SetError(_iBakashaId, CurrentOved.Mispar_ishi, "E",
                                     //    (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
                                     //    CurrentOved.Month, ex.Message);
                                     //clLogBakashot.InsertErrorToLog();
@@ -629,13 +632,13 @@ namespace KdsBatch
                         {
                             status = clGeneral.enBatchExecutionStatus.Failed;
                             KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId, status);
-                            clLogBakashot.InsertErrorToLog(_iBakashaId, "E", 0, "PremiaCalc Faild Ovdim is null");
+                            logManager.InsertLog(_iBakashaId, "E", 0, "PremiaCalc Faild Ovdim is null");
                         }
                         else if (Ovdim.Count == 0)
                         {
                             status = clGeneral.enBatchExecutionStatus.Succeeded;
                             KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId, status);
-                            clLogBakashot.InsertErrorToLog(_iBakashaId, "E", 0, "PremiaCalc: No Ovdim Lechishuv");
+                            logManager.InsertLog(_iBakashaId, "E", 0, "PremiaCalc: No Ovdim Lechishuv");
                       
                         }
                       
@@ -644,7 +647,7 @@ namespace KdsBatch
                     {
                         status = clGeneral.enBatchExecutionStatus.Failed;
                         KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId, status);
-                        clLogBakashot.InsertErrorToLog(_iBakashaId, "E", 0, "PremiaCalc Faild: " + ex.Message);
+                        logManager.InsertLog(_iBakashaId, "E", 0, "PremiaCalc Faild: " + ex.Message);
                         throw (ex);
                     }
                     finally
@@ -655,12 +658,12 @@ namespace KdsBatch
                 else status = clGeneral.enBatchExecutionStatus.Failed;
 
                 KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId, status);
-                clLogBakashot.InsertErrorToLog(_iBakashaId, "I", 0, "End PremiaCalc");
+                logManager.InsertLog(_iBakashaId, "I", 0, "End PremiaCalc");
              }
             catch (Exception ex)
             {
                 KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId,  clGeneral.enBatchExecutionStatus.Failed);
-                clLogBakashot.InsertErrorToLog(_iBakashaId, "E", 0, "PremiaCalc Faild: " + ex.Message);
+                logManager.InsertLog(_iBakashaId, "E", 0, "PremiaCalc Faild: " + ex.Message);
                 throw(ex);
             }
 
@@ -683,7 +686,7 @@ namespace KdsBatch
             //            catch (Exception ex)
             //            {
             //                numFailed += 1;
-            //                clLogBakashot.SetError(lBakashaId, oOved.Mispar_ishi, "E",
+            //                //clLogBakashot.SetError(lBakashaId, oOved.Mispar_ishi, "E",
             //                    (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
             //                    oOved.Month, ex.Message);
             //                clLogBakashot.InsertErrorToLog();
@@ -697,7 +700,7 @@ namespace KdsBatch
             //}
             //catch (Exception ex)
             //{
-            //    clLogBakashot.SetError(lBakashaId, null, "E",
+            //    //clLogBakashot.SetError(lBakashaId, null, "E",
             //                (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
             //                DateTime.Now, ex.Message);
             //    clLogBakashot.InsertErrorToLog();

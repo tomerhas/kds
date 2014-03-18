@@ -49,9 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\CompareAttribute.cs" />
+    <Compile Include="Attributes\DontCompareAttribute.cs" />
     <Compile Include="Helper\CloneHelper.cs" />
     <Compile Include="Metadata\CompareMetadataFactory.cs" />
     <Compile Include="ModificationRecorder.cs" />
+    <Compile Include="ModificationRecorderCollection.cs" />
     <Compile Include="Results\CompareResult.cs" />
     <Compile Include="Results\CompareResultContainer.cs" />
     <Compile Include="ObjectComparer.cs" />

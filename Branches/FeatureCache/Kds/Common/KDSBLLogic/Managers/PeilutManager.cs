@@ -605,7 +605,7 @@ namespace KdsLibrary.KDSLogic.Managers
         public DataTable GetTmpMeafyeneyElements(DateTime dTarMe, DateTime dTarAd)
         {
             return _container.Resolve<IPeilutDAL>().GetTmpMeafyeneyElements(dTarMe, dTarAd);
-    
         }
+
     }
 }

@@ -13,6 +13,10 @@ using System.Configuration;
 using KdsLibrary.Security;
 using System.Windows.Forms;
 using KDSCommon.UDT;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Managers;
+using KDSCommon.Interfaces.Logs;
+using System.Net.Mail;
 namespace KdsBatch.Reports
 {
 
@@ -87,13 +91,16 @@ namespace KdsBatch.Reports
         {
             try
             {
-                // ReportMail rpt = new ReportMail();
-                string body = "";// rpt.GetMessageBody(Path);
-                clMail email = new clMail(eMail, teur, body);
-                email.attachFile(Path);
-                email.IsHtmlBody(true);
-                email.SendMail();
-                email.Dispose();
+              
+
+                var mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
+
+                MailMessage message = new MailMessage("", eMail) { Subject = teur };
+                message.Attachments.Add(new Attachment(Path));
+                
+                mailManager.SendMessage(message);
+
+                
             }
             catch (Exception ex)
             {
@@ -120,6 +127,7 @@ namespace KdsBatch.Reports
             bool flag = false;
             FileInfo info;
             _RptModule = new ReportModule();// ReportModule.GetInstance();
+            var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
             try
             {
                 path = ConfigurationSettings.AppSettings["PathFileReports"];
@@ -135,7 +143,7 @@ namespace KdsBatch.Reports
                     catch (Exception ex)
                     {
                         flag = true;
-                        clLogBakashot.InsertErrorToLog(iRequestId, drReport.MisparIshi, "E", 0, null, "MakeReports: " + ex.Message);
+                        logManager.InsertLog(iRequestId, "E", 0, "MakeReports: " + ex.Message, drReport.MisparIshi, null);
                         fileReport = null;
                     }
 
@@ -153,7 +161,7 @@ namespace KdsBatch.Reports
                         {
                             ErrorMessage = "MakeReports::No Destination found for report kod:" + drReport.KodReport + ",BakashaId:" + drReport.BakashaId;
                             clGeneral.LogMessage(ErrorMessage, System.Diagnostics.EventLogEntryType.Warning);
-                            clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "W", 0, null, ErrorMessage);
+                            logManager.InsertLog(iRequestId, "W", 0, ErrorMessage, _loginUser,null);
                         }
                         foreach (clDestinationReport dest in tempDest)
                         {
@@ -182,7 +190,7 @@ namespace KdsBatch.Reports
                 clGeneral.LogMessage(ex.Message, System.Diagnostics.EventLogEntryType.Error, true);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, iStatus);
-                clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "E", 0, null, "MakeReports: " + ex.Message + ((name != string.Empty) ? " for report :" + name : ""));
+                logManager.InsertLog(iRequestId, "E", 0, "MakeReports: " + ex.Message + ((name != string.Empty) ? " for report :" + name : ""), _loginUser,null);
             }
         }
 

@@ -23,8 +23,15 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-            if (!CheckIdkunRashemet("HASHLAMA_LEYOM", inputData))
-                UpdateHashlamaForYomAvoda(inputData);
+            try
+            {
+                if (!CheckIdkunRashemet("HASHLAMA_LEYOM", inputData))
+                    UpdateHashlamaForYomAvoda(inputData);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyHashlamaForYomAvoda: " + ex.Message);
+            }
         }
 
         private void UpdateHashlamaForYomAvoda(ShinuyInputData inputData)
@@ -72,8 +79,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", 0, "UpdateHashlamaForYomAvoda: " + ex.Message);
-                inputData.IsSuccsess = false;
+                throw ex;
             }
         }
 

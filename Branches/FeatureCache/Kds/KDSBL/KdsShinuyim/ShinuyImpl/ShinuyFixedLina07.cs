@@ -9,7 +9,7 @@ using Microsoft.Practices.Unity;
 
 namespace KdsShinuyim.ShinuyImpl
 {
-    class ShinuyFixedLina07 : ShinuyBase
+    public class ShinuyFixedLina07 : ShinuyBase
     {
 
         public ShinuyFixedLina07(IUnityContainer container)
@@ -22,8 +22,15 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-            if (!CheckIdkunRashemet("LINA", inputData))
-                FixedLina07(inputData);
+            try
+            {
+                if (!CheckIdkunRashemet("LINA", inputData))
+                    FixedLina07(inputData);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyFixedLina07: " + ex.Message);
+            }
         }
 
         private void FixedLina07(ShinuyInputData inputData)
@@ -52,8 +59,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-               // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", 7, "FixedLina07: " + ex.Message);
-                inputData.IsSuccsess = false; 
+                throw ex;
             }
         }
 

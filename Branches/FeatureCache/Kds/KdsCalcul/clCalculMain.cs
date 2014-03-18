@@ -9,6 +9,8 @@ using KdsLibrary;
 using KdsLibrary.BL;
 using System.Threading.Tasks;
 using System.Data;
+using KDSCommon.Interfaces.Logs;
+using Microsoft.Practices.ServiceLocation;
 namespace KdsCalcul
 {
     public class clCalculMain
@@ -79,7 +81,7 @@ namespace KdsCalcul
             MainCalc oMainCalc;
             try
             {
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START PROCESS " + iNumProcess);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "START PROCESS " + iNumProcess);
                 oMainCalc = (bRitzatTest) ? new MainCalc(lRequestNum, dFromChodesh, dAdChodesh, sMaamad, bRitzaGorefet, clGeneral.TypeCalc.Test, iNumProcess) :
                                             new MainCalc(lRequestNum, dFromChodesh, dAdChodesh, sMaamad, bRitzaGorefet, clGeneral.TypeCalc.Batch, iNumProcess);
                 if ((oMainCalc != null) && (oMainCalc.Ovdim != null) && (oMainCalc.Ovdim.Count > 0))
@@ -110,13 +112,13 @@ namespace KdsCalcul
                     //});
                     //#endregion
                 }
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "END PROCESS " + iNumProcess);
-
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "END PROCESS " + iNumProcess);
+              
             }
             catch (Exception ex)
             {
                 clGeneral.LogError(ex);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunCalcBatchProcess " + iNumProcess + ": " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunCalcBatchProcess " + iNumProcess + ": " + ex.Message);
             }
             finally
             {
@@ -135,7 +137,8 @@ namespace KdsCalcul
            //  int seq = 0;
             try
             {
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "PREMIYOT START PROCESS " + iNumProcess);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "PREMIYOT START PROCESS " + iNumProcess);
+
                 oMainCalc = new MainCalc(lRequestNum, iNumProcess);
                                            
                 if ((oMainCalc != null) && (oMainCalc.Ovdim != null) && (oMainCalc.Ovdim.Count > 0))
@@ -153,25 +156,27 @@ namespace KdsCalcul
                         catch (Exception ex)
                         {
                             numFailed += 1;
-                            clLogBakashot.InsertErrorToLog(lRequestNum, CurrentOved.Mispar_ishi, "E", 0,CurrentOved.Taarich, "RunCalcBatchProcessPremiyot: " + ex.Message);
+                            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunCalcBatchProcessPremiyot: " + ex.Message, CurrentOved.Mispar_ishi, CurrentOved.Taarich);
+
                         }
                     });
                     #endregion
 
                     oCalcDal.UpdatePremiaBakashaID(lRequestNum, iNumProcess);
                 }
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "PREMIYOT END PROCESS " + iNumProcess);
-
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "PREMIYOT END PROCESS " + iNumProcess);
             }
             catch (Exception ex)
             {
                 clGeneral.LogError(ex);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunCalcBatchProcessPremiyot " + iNumProcess + ": " + ex.Message);
-            }
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunCalcBatchProcessPremiyot " + iNumProcess + ": " + ex.Message);
+        }
             finally
             {
                 SingleGeneralData.ResetObject();
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed);
+
+
             }
         }
 
@@ -204,7 +209,8 @@ namespace KdsCalcul
             catch (Exception ex)
             {
                 clGeneral.LogError(ex);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "clCalculMain.RunShinuyimVeShguimHR " + iNumProcess + ": " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "clCalculMain.RunShinuyimVeShguimHR " + iNumProcess + ": " + ex.Message);
+         
             }
         }
 
@@ -221,7 +227,7 @@ namespace KdsCalcul
             catch (Exception ex)
             {
                 clGeneral.LogError(ex);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "clCalculMain.RunShinuyimVeShguimPremiot " + iNumProcess + ": " + ex.Message);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "clCalculMain.RunShinuyimVeShguimPremiot " + iNumProcess + ": " + ex.Message);
             }
         }
     }

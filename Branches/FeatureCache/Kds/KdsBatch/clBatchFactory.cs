@@ -7,6 +7,8 @@ using System.Data;
 using System.Web;
 using KdsLibrary;
 using DalOraInfra.DAL;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsBatch
 {
@@ -30,6 +32,7 @@ namespace KdsBatch
         public static void ExecuteInputDataAndErrors(clGeneral.BatchRequestSource requestSource,
             clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest, bool logPopulationOnly)
         {
+            var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
             clBatchProcess btchProc = GetBatchProcess(requestSource, execType, workDate, btchRequest);
             if (btchProc != null)
             {
@@ -40,17 +43,15 @@ namespace KdsBatch
                 }
                 else if (btchProc.IsEmptyData)
                 {
-                    clLogBakashot.SetError(btchRequest, "W", (int)requestSource,
+                    logManager.InsertLog(btchRequest, "W", (int)requestSource,
                        String.Format("Empty data for batch {0}", requestSource.ToString()));
-                    clLogBakashot.InsertErrorToLog();
                     clGeneral.CloseBatchRequest(btchRequest,
                         clGeneral.enBatchExecutionStatus.Failed);
                 }
                 else
                 {
-                    clLogBakashot.SetError(btchRequest, "E", (int)requestSource,
+                    logManager.InsertLog(btchRequest, "E", (int)requestSource,
                        btchProc.ErrorMessage);
-                    clLogBakashot.InsertErrorToLog();
                     clGeneral.CloseBatchRequest(btchRequest,
                         clGeneral.enBatchExecutionStatus.Failed);
                 }
@@ -122,9 +123,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(_btchRequest, "E", (int)_batchSource,
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_btchRequest, "E", (int)_batchSource,
                          ex.ToString());
-                clLogBakashot.InsertErrorToLog();
             }
             return dt;
         }
@@ -153,11 +153,11 @@ namespace KdsBatch
                 double successParam = GetSuccessBatchParam(DateTime.Now.Date);
                 double successRatio = ((double)successCount / (double)(_data.Rows.Count - notIncludeInTotal))
                     * 100.0;
-                clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_btchRequest, "I", (int)_batchSource,
                     String.Format(@"Total rows to process={0}. Succesful rows={1}. I(HR) rows={4}. Parameter={2}. 
                             Ratio={3}",
                     _data.Rows.Count, successCount, successParam, successRatio, notIncludeInTotal));
-                clLogBakashot.InsertErrorToLog();
+          
                 if (successRatio >= successParam)
                 {
                     status = successCount == _data.Rows.Count ?
@@ -215,8 +215,11 @@ namespace KdsBatch
                 if (_executionType == clGeneral.BatchExecutionType.InputData ||
                     _executionType == clGeneral.BatchExecutionType.All)
                 {
-                    nextStep = btchMan.MainInputData(employeeID, date, out successCount);
-                    //clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
+                   // nextStep = btchMan.MainInputData(employeeID, date, out successCount);
+                    var resultShinuyim = btchMan.MainInputDataNew(employeeID, date);
+                    nextStep = resultShinuyim.IsSuccess;
+                    successCount = resultShinuyim.bHaveCount;
+                    ////clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
                     //   String.Format("{0}: InputData result:{1}",
                     //   employeeID, nextStep));
                     //clLogBakashot.InsertErrorToLog();
@@ -231,7 +234,7 @@ namespace KdsBatch
                    //  nextStep = btchMan.MainOvedErrors(employeeID, date);
                    // nextStep = oErrors.HafelShguim(employeeID, date);
                     
-                    //clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
+                    ////clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
                     //   String.Format("{0}: OvedErrors result:{1}",
                     //   employeeID, nextStep));
                     //clLogBakashot.InsertErrorToLog();

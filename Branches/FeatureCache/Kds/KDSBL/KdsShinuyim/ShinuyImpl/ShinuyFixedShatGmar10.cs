@@ -25,13 +25,19 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
-            for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
-            {
-                SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
-                if (!CheckIdkunRashemet("SHAT_GMAR", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+            try{
+                for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
-                    FixedShatGmar10(curSidur, i, inputData);
+                    SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
+                    if (!CheckIdkunRashemet("SHAT_GMAR", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                    {
+                        FixedShatGmar10(curSidur, i, inputData);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("ShinuyFixedLina07: " + ex.Message);
             }
         }
 
@@ -85,7 +91,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                inputData.IsSuccsess = false; 
+                throw ex;
             }
         }
 

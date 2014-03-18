@@ -13,6 +13,7 @@ using KDSCommon.DataModels;
 using KDSCommon.Interfaces.Managers;
 using System.Diagnostics;
 using Microsoft.Practices.Unity;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsErrors
 {
@@ -88,8 +89,8 @@ namespace KdsErrors
             long btchId = 0;
             if (input.BtchRequestId.HasValue)
                 btchId= input.BtchRequestId.Value;
-            clLogBakashot.InsertErrorToLog(btchId, input.iMisparIshi, "E"
-                , (int)CardErrorType, input.CardDate, CardErrorType.ToString()+ ": " + ex.Message);
+
+            _container.Resolve<ILogBakashot>().InsertLog(btchId, "W", (int)CardErrorType, CardErrorType.ToString() + ": " + ex.Message, input.iMisparIshi, input.CardDate);
         }
 
         protected string GetLookUpKods(string sTableName, ErrorInputData input)

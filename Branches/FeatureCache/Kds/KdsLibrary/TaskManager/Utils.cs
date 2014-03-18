@@ -7,6 +7,11 @@ using System.Configuration;
 using System.IO;
 using KdsLibrary.BL;
 using KdsLibrary.Utils;
+using KDSCommon.Interfaces.Managers;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Enums;
+using System.Net.Mail;
+
 
 
 namespace KdsLibrary.TaskManager
@@ -95,36 +100,47 @@ namespace KdsLibrary.TaskManager
             string Body = string.Empty, Subject = string.Empty;
             if (dt.Rows.Count > 0)
             {
-                foreach (DataRow Row in dt.Rows)
+                var mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
+                foreach (DataRow row in dt.Rows)
                 {
-                    GroupDesc = Row["GroupDesc"].ToString();
-                    ActionDesc = Row["ActionDesc"].ToString();
-                    Delta = Row["Delta"].ToString();
-                    clMail omail;
-                    Subject = "פעילות תקועה";
-                    Body = "פעולה: " + ActionDesc + "<br/>" + "קבוצה: " + GroupDesc + "<br/>" + "זמן ריצה: " + Delta;
-                    Body += "<br/>" + "לידיעתך," + "<br/>" + "מנהל משימות -TaskManager";
-                    string[] RecipientsList = (ConfigurationSettings.AppSettings["RecipientsMailList"].ToString()).Split(';');
-                    RecipientsList.ToList().ForEach(recipient =>
+                    string rcipientsList = ConfigurationManager.AppSettings["RecipientsMailList"];
+                    mailManager.SendMessage(new MailMessage("", rcipientsList)
                     {
-                        omail = new clMail(recipient, Subject, Body, clMail.DirectionType.Rtl);
-                        omail.SendMail();
-                    });
+                        Subject = "פעילות תקועה",
+                        Body = GetMailBody(row),
+
+                    }, DirectionType.Rtl);
+
                 }
             }
         }
+
+        private string GetMailBody(DataRow Row)
+        {
+            var GroupDesc = Row["GroupDesc"].ToString();
+            var ActionDesc = Row["ActionDesc"].ToString();
+            var Delta = Row["Delta"].ToString();
+
+            
+            string body = "פעולה: " + ActionDesc + "<br/>" + "קבוצה: " + GroupDesc + "<br/>" + "זמן ריצה: " + Delta;
+            body += "<br/>" + "לידיעתך," + "<br/>" + "מנהל משימות -TaskManager";
+
+            return body;
+        }
         public void SendNotice(int GroupId, int ActionId, string Message)
         {
-            string Subject = string.Empty;
-            clMail omail;
-            Subject = " התראה מקבוצה " + GroupId + ",פעולה:" + ActionId;
-            string[] RecipientsList = (ConfigurationManager.AppSettings["RecipientsMailList"].ToString()).Split(';');
-            RecipientsList.ToList().ForEach(recipient =>
-            {
-                omail = new clMail(recipient, Subject, Message, clMail.DirectionType.Rtl);
-                omail.SendMail();
-            });
+            var mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
+            string subject = " התראה מקבוצה " + GroupId + ",פעולה:" + ActionId;
 
+            string rcipientsList = ConfigurationManager.AppSettings["RecipientsMailList"];
+            mailManager.SendMessage(new MailMessage("", rcipientsList)
+            {
+                Subject = subject,
+                Body = Message,
+
+            }, DirectionType.Rtl);
+
+            
         }
     }
 }

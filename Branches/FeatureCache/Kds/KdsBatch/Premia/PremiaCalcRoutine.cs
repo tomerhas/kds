@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KDSCommon.Interfaces.Logs;
 using KdsLibrary;
+using Microsoft.Practices.ServiceLocation;
 
 namespace KdsBatch.Premia
 {
@@ -70,16 +72,15 @@ namespace KdsBatch.Premia
         internal void Log(long btchRequest, string msgType, string message,
             clGeneral.enGeneralBatchType batchType, DateTime period)
         {
-            clLogBakashot.SetError(btchRequest, null, msgType, (int)batchType, period, message);
-            clLogBakashot.InsertErrorToLog();
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(btchRequest, msgType, (int)batchType, message, null, period);
+           
         }
         internal void Log(long btchRequest, string msgType, string message,
            clGeneral.enGeneralBatchType batchType, DateTime period, int employeeNumber)
         {
             int? logEmpNumber = null;
             if (employeeNumber != 0) logEmpNumber = employeeNumber;
-            clLogBakashot.SetError(btchRequest, logEmpNumber, msgType, (int)batchType, period, message);
-            clLogBakashot.InsertErrorToLog();
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(btchRequest, msgType, (int)batchType, message, logEmpNumber,period);
         }  
         #endregion
 
