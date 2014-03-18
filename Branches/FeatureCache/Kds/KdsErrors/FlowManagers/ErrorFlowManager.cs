@@ -30,14 +30,21 @@ namespace KdsErrors.FlowManagers
 
         public FlowErrorResult ExecuteFlow(int misparIshi, DateTime cardDate, long? btchRequest = null, int? userId = null)
         {
-            var flowResult = new FlowErrorResult();
+            
             var inputData = FillInputData(misparIshi, cardDate, btchRequest, userId);
-
             ExecuteFlow(inputData);
+    
+            return FillResult( inputData);
+        }
 
+        private FlowErrorResult FillResult(ErrorInputData inputData)
+        {
+            FlowErrorResult flowResult = new FlowErrorResult();
             flowResult.Errors = inputData.dtErrors;
             flowResult.IsSuccess = inputData.IsSuccsess;
             flowResult.CardStatus = GetCardStatus(inputData);
+            flowResult.htEmployeeDetails = inputData.htEmployeeDetails;
+            //flowResult.htFullEmployeeDetails = inputData.htFullEmployeeDetails;
             return flowResult;
         }
 

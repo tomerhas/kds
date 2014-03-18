@@ -11,7 +11,7 @@ using System.Collections.Specialized;
 using KDSCommon.Enums;
 using KDSCommon.Helpers;
 
-namespace KdsLibrary
+namespace KDSBLLogic.Managers
 {
     public class OvedManager : IOvedManager
     {

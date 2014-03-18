@@ -395,7 +395,7 @@ public partial class Modules_Test :Page
         arrDate = clnFromDate.Text.Split(char.Parse("/"));
         DateTime a;
         a = new DateTime(2010, 10, 03, 19, 20, 0);
-        clBatchManager oBatchManager = new clBatchManager(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
+       clBatchManager oBatchManager = new clBatchManager();
 
         oBatchManager.MainOvedErrorsNew(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
         //oBatchManager.MainInputData(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
@@ -804,7 +804,7 @@ public partial class Modules_Test :Page
        // string sMisparim = "77319";
        // DateTime dTaarich = DateTime.Parse("25/08/2011");
         // string[] iMisparim = sMisparim.Split(',');
-         clBatchManager oBatchManager = new clBatchManager();
+        // clBatchManager oBatchManager = new clBatchManager();
 
          //HafelShguim(26506, DateTime.Parse("15/02/2011"));
          //oBatchManager.MainOvedErrors(26506, DateTime.Parse("15/02/2011"));

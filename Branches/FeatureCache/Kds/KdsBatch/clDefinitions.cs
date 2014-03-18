@@ -651,21 +651,21 @@ namespace KdsBatch
                                                  DateTime dPeilutShatYetiza, int iMisparKnisa, 
                                                  string sFieldName)
         {
-            clBatchManager oBatchManager = new clBatchManager(iMisparIshi, dCardDate);
+            clBatchManager oBatchManager = new clBatchManager();
             DataSet ds;
             int iErrorNum;
             int iShgiotLeoved = bProfileRashemet ? 0 : 1; //אם םרופיל של רשמת/רשמת על/מנהל מערכת- לא נסנן שגיאות לפי שדה 'שגיאות לעובד' אחרת נראה שגיאות לעובד בלבד
             ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
 
             //רוטינת שגויים
-            oBatchManager.MainOvedErrorsNew(iMisparIshi, dCardDate);
+            var result =oBatchManager.MainOvedErrorsNew(iMisparIshi, dCardDate);
           //oBatchManager.MainOvedErrors(iMisparIshi, dCardDate);
 
             //רמת פעילות
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 iErrorNum = int.Parse(dr["KOD_SHGIA"].ToString());
-                if (KdsLibrary.BL.clWorkCard.IsErrorExists(oBatchManager.dtErrors, iErrorNum, iMisparIshi, dCardDate, iMisparSidur, dFullShatHatchala, dPeilutShatYetiza, iMisparKnisa))
+                if (KdsLibrary.BL.clWorkCard.IsErrorExists(result.Errors, iErrorNum, iMisparIshi, dCardDate, iMisparSidur, dFullShatHatchala, dPeilutShatYetiza, iMisparKnisa))
                 {
                     dr["SHOW_ERROR"] = "1";
                     dr["ERR_KEY"] = string.Concat(dr["ERR_KEY"].ToString(), "|", iMisparSidur.ToString(), "|", dFullShatHatchala.ToString(), "|", dPeilutShatYetiza.ToString(), "|", iMisparKnisa.ToString());
@@ -717,7 +717,7 @@ namespace KdsBatch
                                                  int iMisparSidur, DateTime dFullShatHatchala, 
                                                  string sFieldName, ref DataTable dtErr)
         {
-            clBatchManager oBatchManager = new clBatchManager(iMisparIshi, dCardDate);
+            clBatchManager oBatchManager = new clBatchManager();
             DataSet ds;
             int iErrorNum;
             int iShgiotLeoved = bProfileRashemet ? 0 : 1;//אם םרופיל של רשמת/רשמת על/מנהל מערכת- לא נסנן שגיאות לפי שדה 'שגיאות לעובד' אחרת נראה שגיאות לעובד בלבד 
@@ -730,7 +730,7 @@ namespace KdsBatch
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 iErrorNum = int.Parse(dr["KOD_SHGIA"].ToString());
-                if (KdsLibrary.BL.clWorkCard.IsErrorExists(oBatchManager.dtErrors, iErrorNum, iMisparIshi, dCardDate, iMisparSidur, dFullShatHatchala))
+                if (KdsLibrary.BL.clWorkCard.IsErrorExists(result.Errors, iErrorNum, iMisparIshi, dCardDate, iMisparSidur, dFullShatHatchala))
                 {
                     dr["SHOW_ERROR"] = "1";
                     dr["ERR_KEY"] = string.Concat(dr["ERR_KEY"].ToString(), "|", iMisparSidur.ToString(), "|", dFullShatHatchala.ToString());
@@ -815,19 +815,19 @@ namespace KdsBatch
 
         public static DataSet GetErrorsForFields(bool bProfileRashemet, int iMisparIshi, DateTime dCardDate, string sFieldName)
         {
-            clBatchManager oBatchManager = new clBatchManager(iMisparIshi, dCardDate);
+            clBatchManager oBatchManager = new clBatchManager();
             DataSet ds;
             int iErrorNum;
             int iShgiotLeoved = bProfileRashemet ? 0 :1; //אם םרופיל של רשמת/רשמת על/מנהל מערכת- לא נסנן שגיאות לפי שדה 'שגיאות לעובד' אחרת נראה שגיאות לעובד בלבד
             ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
 
             //רוטינת שגויים
-            oBatchManager.MainOvedErrorsNew(iMisparIshi, dCardDate);
+            var result = oBatchManager.MainOvedErrorsNew(iMisparIshi, dCardDate);
            // oBatchManager.MainOvedErrors(iMisparIshi, dCardDate);
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 iErrorNum = int.Parse(dr["KOD_SHGIA"].ToString());
-                if (KdsLibrary.BL.clWorkCard.IsErrorExists(oBatchManager.dtErrors, iErrorNum, iMisparIshi, dCardDate))
+                if (KdsLibrary.BL.clWorkCard.IsErrorExists(result.Errors, iErrorNum, iMisparIshi, dCardDate))
                 {
                     dr["SHOW_ERROR"] = "1";
                     dr["USER_PROFILE"] = iShgiotLeoved;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,9 @@ namespace KDSCommon.DataModels.Errors
         //This property will be set to false when an error occured in one of the error cards
         public bool IsSuccess { get; set; }
         public CardStatus CardStatus { get; set; }
+
+        /********************/
+        public OrderedDictionary htEmployeeDetails { get; set; }
+        public OrderedDictionary htFullEmployeeDetails { get; set; } 
     }
 }

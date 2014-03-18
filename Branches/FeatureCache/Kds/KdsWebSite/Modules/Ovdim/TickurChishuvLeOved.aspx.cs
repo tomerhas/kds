@@ -304,10 +304,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                     {
                         throw ex;
                     }
-                    finally
-                    {
-                        btchMan.Dispose();
-                    }
+                  
                 }
 
                 dtOvdim = oOvdim.GetOvedErrorsCards(int.Parse(txtEmpId.Text), dTarMe, dTarAd);

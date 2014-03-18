@@ -153,9 +153,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="BL\clUtils.cs" />
-    <Compile Include="Utils\clLogBakashot.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Utils\KdsErrorHttpModule.cs" />
     <Compile Include="Utils\KdsExtensions.cs" />
     <Compile Include="Utils\MatchList.cs" />

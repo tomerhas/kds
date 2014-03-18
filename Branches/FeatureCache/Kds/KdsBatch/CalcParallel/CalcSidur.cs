@@ -154,7 +154,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-              var excep =ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                
+              var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
               throw (excep);
             }
              finally{
@@ -163,6 +164,11 @@ namespace KdsBatch
             }
         }
 
+        private Exception SetError(long lRequestId, string iSugHodaa, int? iKodTahalich, int iKodYeshut, int? iMisparIshi, DateTime? dTaarich, int? iMisparSidur, DateTime? dShatHatchalaSidur, DateTime? dShatYetzia, int? iMisparKnisa, string sTeurHodaa, int? iKodHodaa, Exception ex)
+        { 
+           return ServiceLocator.Current.GetInstance<ILogBakashot>().SetError( lRequestId,  iSugHodaa,  iKodTahalich,  iKodYeshut,  iMisparIshi,  dTaarich,  iMisparSidur,  dShatHatchalaSidur,  dShatYetzia,  iMisparKnisa, sTeurHodaa,  iKodHodaa,  ex);
+        }
+      
         public float CalcRechiv1BySidur(DataRow drSidur, float fMichsaYomit, CalcPeilut oPeilut)
         {
             float fErechRechiv, fErechPeiluyot,fErech;
@@ -509,8 +515,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcRechiv1BySidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
         }
 
@@ -601,8 +607,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -653,8 +659,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null,"", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -715,8 +721,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {

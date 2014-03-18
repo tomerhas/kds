@@ -92,10 +92,7 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
                 {
                     throw ex;
                 }
-                finally
-                {
-                    btchMan.Dispose();
-                }
+               
             }
             sMessage = "ההרצה בוצעה בהצלחה";
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Err", "alert('" + sMessage + "');", true);

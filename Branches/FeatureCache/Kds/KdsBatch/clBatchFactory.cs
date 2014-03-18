@@ -245,11 +245,7 @@ namespace KdsBatch
             {
                 throw ex;
             }
-            finally
-            {
-                btchMan.Dispose();
-                
-            }
+           
             return nextStep;
         }
         #endregion

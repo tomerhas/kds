@@ -37,17 +37,9 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         Lina,
         Mispar_shiurey_nehiga    
     }
-    public DataTable ErrorsList
-    {
-        set
-        {
-            _ErrorsList = value;
-        }
-        get
-        {
-            return oBatchManager.dtErrors;// _ErrorsList;
-        }
-    }
+    public DataTable ErrorsList {get;set;}
+    
+ 
     protected void Page_Load(object sender, EventArgs e)
     {
         DataTable dtSadotNosafimLesidur = new DataTable();

@@ -32,8 +32,7 @@ namespace KdsShinuyim.FlowManager
 
         public FlowShinuyResult ExecShinuyim(int misparIshi, DateTime cardDate, long? btchRequest = null, int? userId = null)
         {
-            FlowShinuyResult ShinuyResult = new FlowShinuyResult();
-            ShinuyInputData inputData = null;
+             ShinuyInputData inputData = null;
             try
             {
                  inputData = FillInputData(misparIshi, cardDate, btchRequest, userId);
@@ -61,8 +60,15 @@ namespace KdsShinuyim.FlowManager
             {
                 inputData.IsSuccsess = false;
             }
+            return FillResult(inputData);
+        }
+
+        private FlowShinuyResult FillResult( ShinuyInputData inputData)
+        {
+            FlowShinuyResult ShinuyResult = new FlowShinuyResult();
             ShinuyResult.IsSuccess = inputData.IsSuccsess;
             ShinuyResult.bHaveCount = inputData.bHaveCount;
+          
             return ShinuyResult;
         }
 

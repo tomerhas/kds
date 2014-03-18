@@ -235,11 +235,7 @@ namespace KdsCalcul
             {
                 throw ex;
             }
-            finally
-            {
-                btchMan.Dispose();
-
-            }
+           
             return nextStep;
         }
         #endregion
