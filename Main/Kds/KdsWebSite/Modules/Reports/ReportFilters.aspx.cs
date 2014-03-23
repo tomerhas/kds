@@ -43,9 +43,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
                 LoadKdsDynamicReport();
-                dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
-                Param100.Value = dtParametrim.Rows[0]["ERECH_PARAM"].ToString();
-
+                dtParametrim = oUtils.getErechParamByKod("100,280", DateTime.Now.ToShortDateString());
+                Param100.Value = dtParametrim.Select("KOD_PARAM=100")[0]["ERECH_PARAM"].ToString();
+                Param280.Value = dtParametrim.Select("KOD_PARAM=280")[0]["ERECH_PARAM"].ToString();
             }
             SetProfilUser();
             FillFilterToForm();
@@ -232,9 +232,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //case ReportName.AverageOvdimBeSnif:
                 //    SetWorkerViewLevel(ReportName.AverageOvdimBeSnif);
                 //    break;
-                case ReportName.FindWorkerCard:
+                case ReportName.RptIturim:
                     if (!Page.IsPostBack)
-                        CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
+                        CtrlStartDate = DateTime.Now.AddMonths(-1).ToString("dd/MM/yyyy");
                     break;
                 //case ReportName.HashvaatRizotChishuv:
                 //case ReportName.HashvaatChodsheyRizotChishuv:
@@ -557,11 +557,11 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         {
             switch (Report.NameReport)
             {
-                case ReportName.FindWorkerCard:
-                    Makat.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
-                    SidurNumber.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
-                    WorkerID.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
-                    break;
+                //case ReportName.FindWorkerCard:
+                //    Makat.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
+                //    SidurNumber.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
+                //    WorkerID.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
+                //    break;
                 case ReportName.Presence:
                 case ReportName.IshurimLerashemet:
                     MisparIshi.ContextKey = _sProfilUser + "," + LoginUser.UserInfo.EmployeeNumber + ","
@@ -831,7 +831,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             });
             AddSpecificReportParameters(Report, ref ReportParameters);
             ChangeReportParameters(Report, ref ReportParameters);
-            Session["ReportParameters"] = ReportParameters;
+             Session["ReportParameters"] = ReportParameters;
         }
         catch (Exception ex)
         {

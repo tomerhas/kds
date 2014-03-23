@@ -553,7 +553,7 @@ namespace KdsLibrary.Utils.Reports
         RikuzAvodaChodshi2=4,
         RikuzAvodaChodshiOnLine2=5,
         IshurimLerashemet=900,
-        FindWorkerCard=300,
+        RptIturim = 300,
         Presence=200,
         DriverWithoutTacograph=500,
         DriverWithoutSignature=600,

@@ -109,6 +109,7 @@
                 </tr>
             </table>
             <input type="hidden" id="Param100" name="Param100" runat="server" />
+            <input type="hidden" id="Param280" name="Param280" runat="server" />
             <input type="hidden" id="MisRashamot" name="MisRashamot" runat="server" />
         </ContentTemplate>
    <%--  <Triggers><asp:PostBackTrigger ControlID="btnDisplay"  /></Triggers>--%>
@@ -309,6 +310,35 @@
                 args.IsValid = true;
                 //                if (mis != "")
                 //                    checkRashemet(mis, args);
+            }
+        }
+
+
+        function IsAlowedDateIturim(sender, args) {
+          //  debugger
+            var chodesh_me = document.getElementById('ctl00_KdsContent_P_STARTDATE').value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
+            var chodesh_ad = document.getElementById('ctl00_KdsContent_P_ENDDATE').value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "AD").value;
+
+            var MeDate, AdDate;
+            MeDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1]) - 1, Number(chodesh_me[0]), '00', '00', '00');
+            AdDate = new Date(Number(chodesh_ad[2]), Number(chodesh_ad[1]) - 1, Number(chodesh_ad[0]), '00', '00', '00');
+            var Param280 = document.getElementById("ctl00_KdsContent_Param280").value;
+
+            if (DateDiff.inDays(MeDate, AdDate) > parseInt(Param280)) {
+                args.IsValid = false;
+                args.Text = "ggg";
+            }
+            else
+                args.IsValid = true;
+        }
+
+        var  DateDiff = {
+
+            inDays: function(d1, d2) {
+                var t2 = d2.getTime();
+                var t1 = d1.getTime();
+
+                return parseInt((t2-t1)/(24*3600*1000));
             }
         }
 
