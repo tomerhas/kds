@@ -8476,7 +8476,12 @@ namespace KdsBatch
                             fDakotNochehutSidur = oCalcBL.GetSumErechRechiv(_dtChishuvSidur.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
                         }
                         if (kodRechiv == clGeneral.enRechivim.ShaotShabat100 && (iMisparSidur == 99011 || iMisparSidur == 99207 || iMisparSidur == 99007) && fDakotNochehutSidur >= fMichsaYomit)
+                        {
+                            if (fMichsaYomit ==0 && oCalcBL.CheckYomShishi(objOved.SugYom))
+                                fMichsaYomit = 390;
+                       
                             fErechSidur = fMichsaYomit;
+                        }
                         else
                             fErechSidur = fDakotNochehutSidur;
 
