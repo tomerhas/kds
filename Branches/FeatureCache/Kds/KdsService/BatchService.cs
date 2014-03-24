@@ -63,9 +63,9 @@ namespace KdsService
             {
                 logger.InsertLog(lRequestNum, "I", 0, "START");
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["ShinuimShguimsProcessesNb"]);
-                path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
+                //path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
                 exfile = (string)ConfigurationManager.AppSettings["KdsShinuimShguimsFileName"].ToString();
-                KdsCalcul = new FileInfo(path + exfile);
+                KdsCalcul = new FileInfo(exfile);
 
                 logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
                 switch (TypeShguyim)
@@ -249,9 +249,9 @@ namespace KdsService
             {
                 logger.InsertLog(lRequestNum, "I", 0, "START");             
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["PremiotProcessesNb"]);
-                path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
+                //path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
                 exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
-                KdsCalcul = new FileInfo(path + exfile);
+                KdsCalcul = new FileInfo( exfile);
                 logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);        
                 result = oCalcDal.PrepareDataLeChishuvPremiyot(iCntProcesses);
                 logger.InsertLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
@@ -399,9 +399,9 @@ namespace KdsService
                 ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "START");
                
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["RikuzimsProcessesNb"]);
-                path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
+                //path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
                 exfile = (string)ConfigurationManager.AppSettings["KdsRikuzimsFileName"].ToString();
-                KdsRikuzims = new FileInfo(path + exfile);
+                KdsRikuzims = new FileInfo(exfile);
                  ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "KdsRikuzims will run from " + KdsRikuzims.FullName);
                
                 if (KdsRikuzims.Exists)

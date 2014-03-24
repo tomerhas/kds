@@ -48,6 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedLib", "SharedLib", "{
 	ProjectSection(SolutionItems) = preProject
 		..\SharedLib\Microsoft.Practices.ServiceLocation.dll = ..\SharedLib\Microsoft.Practices.ServiceLocation.dll
 		..\SharedLib\Microsoft.Practices.Unity.dll = ..\SharedLib\Microsoft.Practices.Unity.dll
+		..\SharedLib\Topshelf.dll = ..\SharedLib\Topshelf.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{4DA23671-7C5A-4FF7-86B8-A22FE56F5D5B}"
@@ -78,9 +79,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectComparerTester", "Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsBatch", "KdsBatch\KdsBatch.csproj", "{482BDA70-9AF2-4498-9627-E9C43EE44FDF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KDSBatchTester", "Tests\KDSBatchTester\KDSBatchTester.csproj", "{7B74C39D-09A2-4820-BDB1-A43186F127EE}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 20
+		SccNumberOfProjects = 21
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
 		SccLocalPath0 = .
@@ -153,6 +156,10 @@ Global
 		SccProjectUniqueName19 = KdsBatch\\KdsBatch.csproj
 		SccProjectName19 = KdsBatch
 		SccLocalPath19 = KdsBatch
+		SccProjectUniqueName20 = Tests\\KDSBatchTester\\KDSBatchTester.csproj
+		SccProjectTopLevelParentUniqueName20 = Kds.sln
+		SccProjectName20 = Tests/KDSBatchTester
+		SccLocalPath20 = Tests\\KDSBatchTester
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -407,6 +414,18 @@ Global
 		{482BDA70-9AF2-4498-9627-E9C43EE44FDF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{482BDA70-9AF2-4498-9627-E9C43EE44FDF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{482BDA70-9AF2-4498-9627-E9C43EE44FDF}.Release|x86.ActiveCfg = Release|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Release|.NET.ActiveCfg = Release|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -422,5 +441,6 @@ Global
 		{99802F09-7707-4AE2-8120-7F2DAAF871D7} = {A6620A11-F241-4F85-994D-C9158FAD93EF}
 		{FD6ABF10-65F1-4091-A046-31681A93D563} = {A6620A11-F241-4F85-994D-C9158FAD93EF}
 		{ECF904B0-35DE-4570-86BA-7676D617F07B} = {6F053E40-5E3D-4B67-B748-8B51AF74C5D5}
+		{7B74C39D-09A2-4820-BDB1-A43186F127EE} = {6F053E40-5E3D-4B67-B748-8B51AF74C5D5}
 	EndGlobalSection
 EndGlobal

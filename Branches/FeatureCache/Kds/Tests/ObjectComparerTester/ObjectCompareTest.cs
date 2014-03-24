@@ -18,7 +18,7 @@ namespace ObjectComparerTester
             OBJ_YAMEY_AVODA_OVDIM obj = new OBJ_YAMEY_AVODA_OVDIM();
             obj.BITUL_ZMAN_NESIOT = 1.1m;
             obj.MEADKEN_ACHARON = 3;
-            ModificationRecorder<OBJ_YAMEY_AVODA_OVDIM> wrapper = new ModificationRecorder<OBJ_YAMEY_AVODA_OVDIM>(obj);
+            ModificationRecorder<OBJ_YAMEY_AVODA_OVDIM> wrapper = new ModificationRecorder<OBJ_YAMEY_AVODA_OVDIM>(obj,true);
 
             wrapper.ContainedItem.BITUL_ZMAN_NESIOT = 2;
 
