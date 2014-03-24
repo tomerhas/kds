@@ -84,5 +84,10 @@ namespace KdsService
 
         [OperationContract]
         void TkinutMakatimBatch(DateTime dTaarich);
+
+        [OperationContract]
+        void BdikatYemeyMachala(long lRequestNum, int iUserId);
+        //[OperationContract]
+        //void SleepUntillProccessEnd(long lRequestNumTahalic ,long lRequestNum);
     }
 }

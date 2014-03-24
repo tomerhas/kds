@@ -5,6 +5,7 @@ var MKT_SHERUT = 1;
 var MKT_EMPTY = 2;
 var MKT_NAMAK = 3;
 var MKT_ELEMENT = 5;
+var SIDUR_GRIRA = 99220;
 function chkMkt(oRow) {
        var iMisparIshi = $get("txtId").value;
        var dCardDate = $get("clnDate").value;    
@@ -568,7 +569,8 @@ function chkMkt(oRow) {
         SetSidurStatus(iIndex,false);       
         $get(id).className = "ImgChecked";
         $get("SD_lblSidurCanceled".concat(iIndex)).value="0";
-     }
+    }
+   
      return false;
     }
     function SetPeilutStatus(RowId, bFlag, iSidur, iSidurIndex, PeilutAv)
@@ -1046,13 +1048,15 @@ function chkMkt(oRow) {
         }
     }
     function SetHashlama(iSidurIndex) {
-        var sCardDate = $get("clnDate").value;
+        var sCardDate = $get("clnDate").value;        
         var sShatGmar = $get("SD_txtSG".concat(iSidurIndex)).value;
         var iAddDay = $get("SD_txtDayAdd".concat(iSidurIndex)).value;
         if ((sShatGmar == '') || (sShatGmar == "__:__"))
             $get("SD_ddlHashlama" + iSidurIndex).disabled = true;
-        else
-            wsGeneral.UpdateShatGmar(iSidurIndex, sCardDate, sShatGmar, iAddDay, callBackHashlama, null, iSidurIndex);
+        else {
+            //if (sShatGmar.indexOf("_") == -1)
+                wsGeneral.UpdateShatGmar(iSidurIndex, sCardDate, sShatGmar, iAddDay, callBackHashlama, null, iSidurIndex);
+        }
     }
     function callBackHashlama(result, iSidurIndex) {
         result = result.split(",");
@@ -1160,7 +1164,8 @@ function chkMkt(oRow) {
     }
     function IsSHBigSG(val,args)
     {//נבדוק אם שעת ההתחלה קטנה משעת הגמר  
-       var iIndex = String(val.id).substr(String(val.id).length-1,1);
+       var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
+       var isSidurGrira = ($("#SD_lblSidur".concat(iIndex)).html()==SIDUR_GRIRA);
        var sShatHatchala = $get("SD_txtSH".concat(iIndex)).value; 
        var sShatGmar = $get("SD_txtSG".concat(iIndex));
        if ((sShatGmar.value == '') || (sShatHatchala == ''))
@@ -1168,7 +1173,7 @@ function chkMkt(oRow) {
        else {
            var sSidurDate;
            var dCardDate = $get("clnDate").value;
-           if (((IsShatHatchalaInNextDay(sShatHatchala)) || (sShatHatchala == '00:00'))) {
+           if (((IsShatHatchalaInNextDay(sShatHatchala, isSidurGrira)) || (sShatHatchala == '00:00'))) {
                sSidurDate = $get("SD_lblDate".concat(iIndex)).innerHTML;
            }
            else {
@@ -1577,7 +1582,7 @@ function chkMkt(oRow) {
         }        
     }
    function SidurTimeChanged(id)
-   {//שעת התחלה השתנתה, נבדוק שוב את התנאים לשדה השלמה
+   { //שעת התחלה השתנתה, נבדוק שוב את התנאים לשדה השלמה
     var sSidurDate = $get("SD_lblDate".concat(id)).innerHTML; 
     var ddlChariga = $get("SD_ddlException".concat(id));          
     var sYear = Number(sSidurDate.substr(6,4));
@@ -1649,8 +1654,10 @@ function chkMkt(oRow) {
             var dEndHour = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(oSG.substr(0, 2)), Number(oSG.substr(3, 2)));
            
             dEndHour.setDate(dEndHour.getDate() + Number(iSDayToAdd));
-            $get("SD_lblSidur".concat(id)).title = "  משך הסידור: " + GetTimeInMinuts(dStartHour, dEndHour) + " דקות";          
-        }}}    
+            $get("SD_lblSidur".concat(id)).title = "  משך הסידור: " + GetTimeInMinuts(dStartHour, dEndHour) + " דקות";
+        } 
+    } 
+}    
    function GetSidurTime(dStartHour,dEndHour)
    {
      var diff= new Date();     

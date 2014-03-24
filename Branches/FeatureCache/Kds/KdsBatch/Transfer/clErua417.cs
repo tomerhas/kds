@@ -10,10 +10,10 @@ namespace KdsBatch
   public  class clErua417:clErua
     {
       private DataTable _dtPrem;
-      public clErua417(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, DataTable dtPrem)
-          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,417)
+      public clErua417(long lBakashaId, DataRow drPirteyOved, DataSet dsNetunim)
+          : base(lBakashaId, drPirteyOved, dsNetunim, 417)
       {
-          _dtPrem = dtPrem;
+          _dtPrem = dsNetunim.Tables[2];
           _sBody = SetBody();
           if (_sBody != null)
             PrepareLines();
@@ -50,7 +50,11 @@ namespace KdsBatch
                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode()),4,0));
 
 
-              if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+              if (MaamadDorB())
+              {
+                  sErua417.Append(FormatNumber(GetErechRechivDorB(clGeneral.enRechivim.YomMachalatHorim.GetHashCode()), 4, 2));
+              }
+              else if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               {
                   sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotTosefetMeshek.GetHashCode()), 4, 0));
               }

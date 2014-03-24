@@ -28,7 +28,7 @@ namespace KDSCommon.DataModels.Shinuyim
             oCollIdkunRashemet = new COLL_IDKUN_RASHEMET();
             oCollApprovalErrors = new COLL_SHGIOT_MEUSHAROT();
             htNewSidurim = new OrderedDictionary();
-
+            htEmployeeDetails = new OrderedDictionary();
            
             oCollYameyAvodaUpdRecorder = new ModificationRecorderCollection<OBJ_YAMEY_AVODA_OVDIM>();
             oCollSidurimOvdimUpdRecorder = new ModificationRecorderCollection<OBJ_SIDURIM_OVDIM>();

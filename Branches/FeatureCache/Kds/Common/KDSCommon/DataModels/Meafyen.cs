@@ -10,6 +10,9 @@ namespace KDSCommon.DataModels
         public int Kod { get; set; }
         public bool IsExist { get; set; }
         public string Value { get; set; }
+        public string ErechIshi { get; set; }
+
+        
         public int IntValue
         {
             get

@@ -74,7 +74,11 @@ namespace KdsLibrary.Utils.Reports
         private List<KdsUserControl> _UserControls;
         private Orientation _Orientation;
         private ProductionType _ProductionType;
+        private string _RSVersion;
         private int _ZoomPercent = 90 ;
+        private string _SERVICE_URL_CONFIG_KEY;
+        private string _URL_CONFIG_KEY;
+        private string _EXTENSION;
 
         public KdsReport() { }
 
@@ -141,6 +145,30 @@ namespace KdsLibrary.Utils.Reports
             set { _UserControls = value; }
         }
 
+        [XmlAttribute("RSVersion")]
+        public string RSVersion
+        {
+            get { return _RSVersion; }
+            set { _RSVersion = value; }
+        }
+        [XmlAttribute("URL_CONFIG_KEY")]
+        public string URL_CONFIG_KEY
+        {
+            get { return _URL_CONFIG_KEY; }
+            set { _URL_CONFIG_KEY = value; }
+        }
+        [XmlAttribute("SERVICE_URL_CONFIG_KEY")]
+        public string SERVICE_URL_CONFIG_KEY
+        {
+            get { return _SERVICE_URL_CONFIG_KEY; }
+            set { _SERVICE_URL_CONFIG_KEY = value; }
+        }
+        [XmlAttribute("EXTENSION")]
+        public string EXTENSION
+        {
+            get { return _EXTENSION; }
+            set { _EXTENSION = value; }
+        }
         [XmlIgnore]
         public ReportName NameReport
         {
@@ -518,45 +546,52 @@ namespace KdsLibrary.Utils.Reports
 
     public enum ReportName
     {
-        IshurimLekartisAvoda,
-        IshurimLerashemet,
-        FindWorkerCard,
-        Presence,
-        DriverWithoutTacograph,
-        DriverWithoutSignature,
-        DisregardDrivers,
-        DisregardDriversVisot,
-        PremiotPresence,
-        HashvaatRizotChishuv,
-        AbsentWorkers,
-        HashvaatChodsheyRizotChishuv,
-        IdkuneyRashemet,
-        Average,
-        DescriptionAllComponents,
-        AverageLeOved,
-        HityazvutBePundakimHitchashbenut,
-        HityazvutBePundakimTlunot,
-        HityazvutBePundakimKalkalit,
-        PrintWorkCard,
-        DriverWithPlaints,
-        ChafifotSidureyNihulTnua,
-        ReportNesiotKfulot,
-        IdkuneyRashemetMasach4,
-        Query4,
-        DayDataEggt,
-        RikuzAvodaChodshi2,
-        SpecificAverage,
-        ProfitOfLinesDetailed,
-        ProfitOfLinesGroup,
-        RdlPrecenceOvdeyMeshekShishiShabat,
-        RdlCountOvdeyMeshekShabat,
-        RdlReportMushalimDetails,
-        KamutIdkuneyRashemet,
-        Tigburim,
-        AverageSnifEzor,
-        AverageSnifInEzor, 
-        AverageOvdimBeSnif,
-        Keytanot
+        IshurimLekartisAvoda=0,
+        PrintWorkCard=1,
+        WorkCard=2,
+        WorkCardVisa=3,
+        RikuzAvodaChodshi2=4,
+        RikuzAvodaChodshiOnLine2=5,
+        IshurimLerashemet=900,
+        RptIturim = 300,
+        Presence=200,
+        DriverWithoutTacograph=500,
+        DriverWithoutSignature=600,
+        DisregardDrivers=400,
+        DisregardDriversVisot=401,
+        PremiotPresence=800,
+        HashvaatRizotChishuv=1000,
+        AbsentWorkers=700,
+        HashvaatChodsheyRizotChishuv=1001,
+        IdkuneyRashemet=901,
+        Average=100,
+        DescriptionAllComponents=2000,
+        AverageLeOved=100,
+        HityazvutBePundakimHitchashbenut=310,
+        HityazvutBePundakimTlunot=311,
+        HityazvutBePundakimKalkalit=312,
+      //  PrintWorkCard=1,
+        DriverWithPlaints=601,
+        ChafifotSidureyNihulTnua=955,
+        ReportNesiotKfulot=950,
+        IdkuneyRashemetMasach4=902,
+        Query4=956,
+        DayDataEggt=316,
+     //   RikuzAvodaChodshi2=4,
+        SpecificAverage=110,
+        ProfitOfLinesDetailed=812,
+        ProfitOfLinesGroup=813,
+        RdlPrecenceOvdeyMeshekShishiShabat=302,
+        RdlCountOvdeyMeshekShabat=304,
+        RdlReportMushalimDetails=201,
+        KamutIdkuneyRashemet=903,
+        Tigburim=202,
+        AverageSnifEzor=113,
+        AverageSnifInEzor=112,
+        AverageOvdimBeSnif=111,
+        Keytanot=957,
+        RptRitzatChishuv=1002,
+        RptSidureyVaadOvdim=301
 
     }
     public enum Orientation
@@ -569,6 +604,4 @@ namespace KdsLibrary.Utils.Reports
         Normal,
         Heavy
     }
-
-
 }

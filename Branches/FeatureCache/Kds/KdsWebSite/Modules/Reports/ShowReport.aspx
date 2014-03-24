@@ -8,9 +8,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
+     <meta http-equiv="X-UA-Compatible" content="IE=8" />
     <base target="_self" />
     <title runat="server" id="TitleWindow">דו"חות</title>
     <link id="Link1" runat="server" href="../../StyleSheet.css" type="text/css" rel="stylesheet" />
+
     </head>
 <body dir="rtl">
     <form id="form1" runat="server" style="margin:0px">
@@ -27,6 +29,7 @@
             </tr>
         </table>
         <div style="left:40px;top:10px;position:absolute; z-index:1000">
+        <asp:Label ID="lblRsVersion" runat="server" />
           <asp:Button ID="CloseWindow" CssClass="ImgButtonSearch" runat="server" Text="סגור" OnClientClick="window.close()" />
         </div>
     </form>

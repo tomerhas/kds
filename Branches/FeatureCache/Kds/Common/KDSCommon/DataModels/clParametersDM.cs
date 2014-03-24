@@ -178,7 +178,10 @@ namespace KDSCommon.DataModels
         public int iMaxNuchehutVisaPnimRishon1; //224 - מקסימום הנוכחות  לויזה  - יום ראשון- עד 14:00
         public int iMinNuchehutVisaPnimRishon1; //225- מינימום הנוכחות לויזה  יום ראשון- עד-  14:00
         public int iMaxNuchehutVisaPnimRishon2; //226 - מקסימום הנוכחות לויזה  יום ראשון- מ- 14:00
+
         public int iMinNuchehutVisaPnimRishon2; //227 - מינימום הנוכחות לויזה - יום ראשון-   מ- 14:00
+
+        public DateTime dTaarichPremiatNahagut; // - 279  תאריך שינוי לוגיקת פרמית נהגות 
         public int iMaxNochehutVisaPnim; //228 - ויזה פנים -יום ראשון - מקסימום נוכחות
         public int iMinNochehutVisaPnim; //229 - ויזה פנים -יום ראשון - מינימום נוכחות
         public int iNochehutVisaPnimNoShabaton; //230 - ויזה פנים נוכחות - לא שבתון
@@ -204,6 +207,11 @@ namespace KDSCommon.DataModels
         public int iVisutMustRechevWC; //261 - ויסות דורש רכב בכרטיס עבוד
         public int iDaysToViewWorkCard;//263 - מספר הימים שניתן לראות כרטיס עבודה ללא סידורים (נהג או משתמש רגיל)
         public DateTime dTaarichTokefShgiotHachtamatShaon;//272 - תאריך תוקף לבדיקת שגיאות החתמת שעון
+        public DateTime dTaarichBitulTamrizNahagut;//273 - תאריך ביטול תמריץ נהגות
+        public DateTime dShaaGrirotChol; //-  274   
+        public DateTime dShaaGrirotErevChagShishi; // - 275
+        public DateTime dShatHatchalaGrira; //276-התחלה מותרת-טווח עליון-גרירה בפועל
+        public DateTime dTaarichHafalatMichsot; // - 277
         public float fBasisLechishuvPremia; //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
         public float fMichsatSaotChodshitET; //503 -אגד תעבורה- מכסת שעות חודשית 
         public float fMaxPremiatNehiga; //505 - אגד תעבורה - מקסימום פרמיית נהיגה

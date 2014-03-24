@@ -290,13 +290,14 @@ namespace KdsLibrary.BL
             }
         }
 
-        public DataTable GetOvdimLefiRikuzim(string sPrefix)
+        public DataTable GetOvdimLefiRikuzim(string sPrefix, int userId)
         {
             clDal oDal = new clDal();
             DataTable dt = new DataTable();
             try
             {   //מחזיר מספרים אישיים
                 oDal.AddParameter("p_prefix", ParameterType.ntOracleVarchar, sPrefix, ParameterDir.pdInput);
+                oDal.AddParameter("p_user_id", ParameterType.ntOracleInteger, userId, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(clGeneral.cProGetOvdimLefiRikuzim, ref dt);
 
@@ -1795,6 +1796,27 @@ namespace KdsLibrary.BL
            }
        }
 
+       public int GetCountWCLoLetashlumWithMeafyenim(DateTime dTarMe, DateTime dTarAd)
+       {
+           clDal oDal = new clDal();
+           int iCount;
+           try
+           {
+               oDal.AddParameter("p_count", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+               oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+               oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
+
+               oDal.ExecuteSP(clGeneral.GetCountWCLoLetashlumWithMeafyenim);
+
+               iCount= int.Parse(oDal.GetValParam("p_count"));
+
+               return iCount;
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
        public DataTable GetWorkCardNoShaotLetashlum(DateTime dTarMe, DateTime dTarAd, string sMaamad)
        {
            DataTable dt = new DataTable();

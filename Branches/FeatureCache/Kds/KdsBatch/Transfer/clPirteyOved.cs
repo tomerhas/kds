@@ -64,45 +64,45 @@ namespace KdsBatch
             }
         }
 
-        public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtRechivimYomiim, DataTable dtChufshaRezufa)
+        public void InitializeErueyOved(DataSet dsTables)
         //public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem)
         {
-            _dtRechivim = dtDetailsChishuv;
-            _dtRechiveyPrem = dtPrem;
+            _dtRechivim =dsTables.Tables[0];
+            _dtRechiveyPrem = dsTables.Tables[2];
             try
             {
                 //_dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()), dtRechivimYomiim);
                 if (iDirug == 85 && iDarga == 30)
                 {
                     if (sChodeshIbud == DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy"))
-                        oDataEt = new clEruaDataEt(iBakashaId, _drPirteyOved, _dtRechivim);
+                        oDataEt = new clEruaDataEt(iBakashaId, _drPirteyOved, dsTables);
 
-                    oBakaraEt = new clEruaBakaraEt(iBakashaId, _drPirteyOved, _dtRechivim, sChodeshIbud);
+                    oBakaraEt = new clEruaBakaraEt(iBakashaId, _drPirteyOved, dsTables, sChodeshIbud);
                 }
                 else
                 {
-                    _iCntYamim = GetCntYamimToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()), dtRechivimYomiim, DateTime.Parse(_drPirteyOved["taarich"].ToString()));
-                    oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim, _iCntYamim);
+                    _iCntYamim = GetCntYamimToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()), dsTables.Tables[3], DateTime.Parse(_drPirteyOved["taarich"].ToString()));
+                    oErua462 = new clErua462(iBakashaId, _drPirteyOved, dsTables, _iCntYamim);
                     //oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim);
 
                  //   if (iMakorNetunim != 2) //לא הגיע מרכיבי פרמיה בלבד
                  //       oErua589 = new clErua589(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
-                    oErua413 = new clErua413(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem);
-                
-                    oErua415 = new clErua415(iBakashaId, _drPirteyOved, _dtRechivim);
-                    
-                    oErua416 = new clErua416(iBakashaId, _drPirteyOved, _dtRechivim);
-                    oErua417 = new clErua417(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem);
-                    oErua460 = new clErua460(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem, dtChufshaRezufa);
+                    oErua413 = new clErua413(iBakashaId, _drPirteyOved, dsTables);
+
+                    oErua415 = new clErua415(iBakashaId, _drPirteyOved, dsTables);
+
+                    oErua416 = new clErua416(iBakashaId, _drPirteyOved, dsTables);
+                    oErua417 = new clErua417(iBakashaId, _drPirteyOved, dsTables);
+                    oErua460 = new clErua460(iBakashaId, _drPirteyOved, dsTables);
 
                     if (iMaamadRashi != clGeneral.enMaamad.Salarieds.GetHashCode())
                     {
-                        oErua418 = new clErua418(iBakashaId, _drPirteyOved, _dtRechivim);
+                        oErua418 = new clErua418(iBakashaId, _drPirteyOved, dsTables);
                     }
 
                     if (iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
                     {
-                        oErua419 = new clErua419(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem);
+                        oErua419 = new clErua419(iBakashaId, _drPirteyOved, dsTables);
                     }
                 }
             }

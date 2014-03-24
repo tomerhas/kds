@@ -21,9 +21,11 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
         auchlusia,
         tkufa,
         tkufa_date,
-        ritza_gorfet,
+      //  ritza_gorfet,
         status_chufsha_rezifa,
         btn_chufsha_rezifa,
+        status_machala,
+        btn_yemey_machala,
         HUAVRA_LESACHAR,
         ISHUR_HILAN,
         btns_kvazim,
@@ -31,7 +33,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
         status,
         btn_Rikuzim,
         status_yezirat_rikuzim,
-        btn_send,
+       // btn_send,
         rizot_zehot,
         btns_ishur_hilan,
         param1
@@ -149,13 +151,14 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
  protected void grdRitzot_RowDataBound(object sender, GridViewRowEventArgs e)
  {
      int iColSort;
-     string huavara_lesachar, status_haavara_lesachar, status_chufsha_rezifa;
+     string huavara_lesachar, status_haavara_lesachar, status_chufsha_rezifa,status_machala;
      if (e.Row.RowType == DataControlRowType.Header)
      {
          System.Web.UI.WebControls.Label lbl = new System.Web.UI.WebControls.Label();
          e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.status_machala.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
@@ -198,6 +201,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.status_machala.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
@@ -208,6 +212,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          huavara_lesachar =e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text.Trim() ;
          status_haavara_lesachar = e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Text.Trim();
          status_chufsha_rezifa = e.Row.Cells[enGrdRitzot.status_chufsha_rezifa.GetHashCode()].Text;
+         status_machala = e.Row.Cells[enGrdRitzot.status_machala.GetHashCode()].Text;
          switch (status_haavara_lesachar)
          {
              case "1": e.Row.Cells[enGrdRitzot.status.GetHashCode()].Text ="ממתין";
@@ -221,14 +226,18 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          if (status_chufsha_rezifa == "1" || status_haavara_lesachar == "1" || status_haavara_lesachar == "2")
              ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).Enabled = false;
 
+         if (status_machala == "1" || status_haavara_lesachar == "1" || status_haavara_lesachar == "2")
+             ((Button)e.Row.Cells[enGrdRitzot.btn_yemey_machala.GetHashCode()].Controls[1]).Enabled = false;
+
          if (huavara_lesachar == "0" || huavara_lesachar =="&nbsp;" )
          {
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Style["display"] = "inline";
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Style["display"] = "none";
-             if (status_haavara_lesachar == "1" || status_chufsha_rezifa != "2")
+             if (status_haavara_lesachar == "1" || status_chufsha_rezifa != "2" || status_machala != "2")
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = false;
-             else if (status_chufsha_rezifa == "2") 
+             else if (status_chufsha_rezifa == "2" && status_machala == "2") 
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = true;
+ 
          }
          else
          {
@@ -244,8 +253,8 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          //if (e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text == "1")
          //((Button)e.Row.Cells[enGrdRitzot.btn_Rikuzim.GetHashCode()].Controls[1]).Enabled = true;
 
-         if (e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Text == "2" && huavara_lesachar == "1")
-             ((Button)e.Row.Cells[enGrdRitzot.btn_send.GetHashCode()].Controls[1]).Enabled = true;
+       //  if (e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Text == "2" && huavara_lesachar == "1")
+         //    ((Button)e.Row.Cells[enGrdRitzot.btn_send.GetHashCode()].Controls[1]).Enabled = true;
 
          if (e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Text == "1")
          {
@@ -263,10 +272,11 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).Enabled = false;  
          }
          ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + status_chufsha_rezifa;
+         ((Button)e.Row.Cells[enGrdRitzot.btn_yemey_machala.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + status_machala;
          ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Text ;
          ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
          ((Button)e.Row.Cells[enGrdRitzot.btn_Rikuzim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
-         ((Button)e.Row.Cells[enGrdRitzot.btn_send.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
+     //    ((Button)e.Row.Cells[enGrdRitzot.btn_send.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
          ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + e.Row.Cells[enGrdRitzot.tkufa_date.GetHashCode()].Text + "," + e.Row.Cells[enGrdRitzot.param1.GetHashCode()].Text.Replace(",","|"); ;
          ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
           
@@ -357,6 +367,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
                  btnYesTransfer.Style.Add("Display", "None");
                  btnNoTransfer.Style.Add("Display", "inline");
                  btnYesChufsha.Style.Add("Display", "inline");
+                 btnYesMachala.Style.Add("Display", "none");
                  paMessage.Style["Width"] = "450px";
                  paMessage.Style["Height"] = "150px";
                  ModalPopupEx.X = 250;
@@ -396,6 +407,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          btnNoTransfer.Style.Add("Display", "none");
          btnYesHilan.Style.Add("Display", "None");
          btnYesChufsha.Style.Add("Display", "none");
+         btnYesMachala.Style.Add("Display", "none");
          paMessage.Style["Width"] = "220px";
          paMessage.Style["Height"] = "115px";
          ModalPopupEx.X = 400;
@@ -408,6 +420,90 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          clGeneral.BuildError(Page, ex.Message);
      }
  }
+
+ protected void BdikatYemeyMachala(object sender, EventArgs e)
+ {
+     long iRequestToTransfer;
+     string[] commandArgsAccept;
+     string sHaveMachala;
+     clBatch objBatch = new clBatch();
+     wsBatch obach = new wsBatch();
+     try
+     {
+
+         commandArgsAccept = ((Button)sender).CommandArgument.ToString().Split(new char[] { ',' });
+         inputHiddenBakasha.Value = commandArgsAccept[0];
+         sHaveMachala = commandArgsAccept[1].ToString();
+
+
+         iRequestToTransfer = long.Parse(inputHiddenBakasha.Value);
+         if (sHaveMachala != "2")
+         {
+             HafelBdikatMachalot(sender, e);
+         }
+         else if (sHaveMachala == "2")
+         {
+
+             btnConfirm.Style.Add("Display", "None");
+             btnYesHilan.Style.Add("Display", "None");
+             btnYesTransfer.Style.Add("Display", "None");
+             btnNoTransfer.Style.Add("Display", "inline");
+             btnYesChufsha.Style.Add("Display", "None");
+             btnYesMachala.Style.Add("Display", "inline");
+             paMessage.Style["Width"] = "450px";
+             paMessage.Style["Height"] = "150px";
+             ModalPopupEx.X = 250;
+             //sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
+             lblMessage.Text = "קיימת בקשה לבדיקת ימי מחלה, האם ליצור בקשה חדשה?";
+
+             btnShowMessage_Click(this, new EventArgs());
+
+             // ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessage('" + RizotZehot + "');", true);
+         }
+
+     }
+     catch (Exception ex)
+     {
+         clGeneral.BuildError(Page, ex.Message);
+     }
+ }
+
+ public void HafelBdikatMachalot(object sender, EventArgs e)
+ {
+     long iRequestId=0, iRequestToTransfer;
+     string sMessage;
+     int iUserId;
+     clBatch objBatch = new clBatch();
+     wsBatch obach = new wsBatch();
+     try
+     {
+         iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+         iRequestToTransfer = long.Parse(inputHiddenBakasha.Value); //((Button)sender).CommandArgument);  // long.Parse(((Button)sender).CommandArgument);
+         iRequestId = objBatch.InsBakashatChufshaRezifa(clGeneral.enGeneralBatchType.BdikatYemeyMachala, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestToTransfer);
+         ViewState["iRequestId"] = iRequestId;
+
+         obach.BdikatYemeyMachala(iRequestId, iUserId);
+
+         btnConfirm.Style.Add("Display", "inline");
+         btnYesTransfer.Style.Add("Display", "none");
+         btnNoTransfer.Style.Add("Display", "none");
+         btnYesHilan.Style.Add("Display", "None");
+         btnYesChufsha.Style.Add("Display", "none");
+         btnYesMachala.Style.Add("Display", "none");
+
+         paMessage.Style["Width"] = "220px";
+         paMessage.Style["Height"] = "115px";
+         ModalPopupEx.X = 400;
+         sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
+         lblMessage.Text = sMessage;
+         btnShowMessage_Click(this, new EventArgs());
+     }
+     catch (Exception ex)
+     {
+         clGeneral.BuildError(Page, ex.Message);
+     }
+ }
+
  protected void TransferRitza(object sender, EventArgs e)
  {
      string RizotZehot;
@@ -425,8 +521,10 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              btnConfirm.Style.Add("Display", "None");
              btnYesHilan.Style.Add("Display", "inline");
              btnYesTransfer.Style.Add("Display", "none");
+             btnYesMachala.Style.Add("Display", "none");
              btnNoTransfer.Style.Add("Display", "inline");
              btnYesChufsha.Style.Add("Display", "none");
+
              paMessage.Style["Width"] = "450px";
              paMessage.Style["Height"] = "100px";
              ModalPopupEx.X = 250;
@@ -444,6 +542,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              btnYesTransfer.Style.Add("Display", "none");
              btnNoTransfer.Style.Add("Display", "inline");
              btnYesChufsha.Style.Add("Display", "none");
+             btnYesMachala.Style.Add("Display", "none");
              paMessage.Style["Width"] = "450px";
              paMessage.Style["Height"] = "100px";
              ModalPopupEx.X = 380;
@@ -471,6 +570,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
                  btnYesTransfer.Style.Add("Display", "inline");
                  btnNoTransfer.Style.Add("Display", "inline");
                  btnYesChufsha.Style.Add("Display", "none");
+                 btnYesMachala.Style.Add("Display", "none");
                  paMessage.Style["Width"] = "450px";
                  paMessage.Style["Height"] = "150px";
                  ModalPopupEx.X = 250;
@@ -541,6 +641,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          btnNoTransfer.Style.Add("Display", "none");
          btnYesHilan.Style.Add("Display", "None");
          btnYesChufsha.Style.Add("Display", "none");
+         btnYesMachala.Style.Add("Display", "none");
          paMessage.Style["Width"] ="220px";
          paMessage.Style["Height"] = "115px";
          ModalPopupEx.X = 400;
@@ -593,6 +694,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          btnNoTransfer.Style.Add("Display", "none");
          btnYesHilan.Style.Add("Display", "None");
          btnYesChufsha.Style.Add("Display", "none");
+         btnYesMachala.Style.Add("Display", "none");
          paMessage.Style["Width"] = "220px";
          paMessage.Style["Height"] = "115px";
          ModalPopupEx.X = 400;
@@ -628,6 +730,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          btnConfirm.Style.Add("Display", "inline");
          btnYesHilan.Style.Add("Display", "None");
          btnYesChufsha.Style.Add("Display", "none");
+         btnYesMachala.Style.Add("Display", "none");
          paMessage.Style["Width"] = "220px";
          paMessage.Style["Height"] = "115px";
          ModalPopupEx.X = 400;

@@ -786,9 +786,36 @@ namespace KdsLibrary
 
                 sTmp = GetOneParam(272, dCardDate);
                 cls.dTaarichTokefShgiotHachtamatShaon = String.IsNullOrEmpty(sTmp) ? DateTime.MaxValue : DateTime.Parse(sTmp);
+
+                // תאריך ביטול תמריץ נהגות
+                sTmp = GetOneParam(273, dCardDate);
+                cls.dTaarichBitulTamrizNahagut = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+                // 274
+                sTmp = GetOneParam(274, dCardDate);
+                cls.dShaaGrirotChol = GetParamHour(sTmp, dCardDate);
+               
+                // 275
+                sTmp = GetOneParam(275, dCardDate);
+                cls.dShaaGrirotErevChagShishi = GetParamHour(sTmp, dCardDate);
+
+
                 //252 - מספר ימים בתוקף 45 יום                
                 sTmp = GetOneParam(252, dCardDate);
                 cls.iValidDays = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //276- התחלה מותרת-טווח עליון-גרירה           
+                sTmp = GetOneParam(276, dCardDate);
+                cls.dShatHatchalaGrira = GetParamHour(sTmp, dCardDate.AddDays(1));
+                          
+                // 277
+                sTmp = GetOneParam(277, dCardDate);
+                cls.dTaarichHafalatMichsot = String.IsNullOrEmpty(sTmp) ? DateTime.MaxValue : DateTime.Parse(sTmp);
+        
+                // 279
+                sTmp = GetOneParam(279, dCardDate);
+                cls.dTaarichPremiatNahagut = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
 
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);

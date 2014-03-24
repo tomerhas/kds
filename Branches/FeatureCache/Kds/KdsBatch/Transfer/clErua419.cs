@@ -10,10 +10,10 @@ namespace KdsBatch
   public  class clErua419:clErua
     {
       private DataTable _dtPrem;
-      public clErua419(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, DataTable dtPrem)
-          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,419)
+      public clErua419(long lBakashaId, DataRow drPirteyOved, DataSet dsNetunim)
+          : base(lBakashaId, drPirteyOved, dsNetunim, 419)
       {
-          _dtPrem = dtPrem;
+          _dtPrem = dsNetunim.Tables[2];
           _sBody = SetBody();
           if (_sBody != null)
           PrepareLines();
@@ -29,7 +29,11 @@ namespace KdsBatch
           {
              
               sErua419.Append(GetBlank(32));
-              if (_iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() ||
+              if (MaamadDorB())
+              {
+                  sErua419.Append(FormatNumber(GetErechRechivDorB(clGeneral.enRechivim.YomShmiratHerayon.GetHashCode()), 4, 2));
+              }
+              else  if (_iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() ||
                   _iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode() ||
                   (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode() && _dMonth >= dTakanonSoziali))
               {

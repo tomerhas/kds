@@ -9,6 +9,7 @@ using KdsLibrary.UI;
 using KdsLibrary.BL;
 using System.Data;
 using KdsLibrary.Security;
+using KdsLibrary.Utils.Reports;
 
 public partial class Modules_Reports_ReportsList : KdsPage
 {
@@ -23,7 +24,7 @@ public partial class Modules_Reports_ReportsList : KdsPage
             if (!Page.IsPostBack)
             {
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
-                PageHeader = "רשימת דוחו''ת";
+                PageHeader = "רשימת דו''חות";
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
 
                 MasterPage mp = (MasterPage)Page.Master;
@@ -49,12 +50,33 @@ public partial class Modules_Reports_ReportsList : KdsPage
         clReport objReports = clReport.GetInstance();
         DataView dvReport;
         DataTable dtReport;
-       
+        KdsDynamicReport _ConstDynamicReportParam;
+      //  _ConstDynamicReportParam.ReportList = new List<KdsReport>();
+        KdsReport _ConstReportParam;
+        _ConstDynamicReportParam = new KdsDynamicReport();
+        _ConstDynamicReportParam.ReportList = new List<KdsReport>();
         dtReport = objReports.GetListReports(profil);
+        foreach (DataRow row in dtReport.Rows)
+        {
+            _ConstReportParam= new KdsReport();
+
+            _ConstReportParam.PageHeader = row["TEUR_DOCH_2"].ToString();
+            _ConstReportParam.RSVersion = row["RS_VERSION"].ToString();
+            _ConstReportParam.URL_CONFIG_KEY = row["URL_CONFIG_KEY"].ToString();
+            _ConstReportParam.SERVICE_URL_CONFIG_KEY = row["SERVICE_URL_CONFIG_KEY"].ToString();
+            _ConstReportParam.EXTENSION = row["EXTENSION"].ToString();
+            _ConstReportParam.RdlName = row["SHEM_DOCH_BAKOD"].ToString();
+
+            _ConstDynamicReportParam.ReportList.Add(_ConstReportParam);
+        }
+
+        Session["ConstDynamicReportParam"] = _ConstDynamicReportParam;
+        clReport _Report = new clReport();
         dvReport = new DataView(dtReport);
 
         grdReports.DataSource = dvReport;
         grdReports.DataBind();
+
 
     }
 

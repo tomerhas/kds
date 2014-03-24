@@ -137,7 +137,8 @@ namespace KDSBLLogic.Managers
                            {
                                kod = Int32.Parse(c.Field<string>("kod_meafyen").ToString()),
                                exist = Int32.Parse(c.Field<string>("source_meafyen").ToString()),
-                               value = c.Field<string>("value_erech_ishi")
+                               value = c.Field<string>("value_erech_ishi"),
+                               erech_ishi = c.Field<string>("erech_ishi_partany")
                            };
                 Dictionary<int, Meafyen> Meafyenim = List.ToDictionary(item => item.kod, item =>
                 {

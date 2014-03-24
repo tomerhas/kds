@@ -30,6 +30,7 @@ using KDSCommon.Interfaces.Managers;
 using KDSCommon.Interfaces.DAL;
 using KDSCommon.UDT;
 using KDSCommon.Helpers;
+using KdsBatch.Reports;
 
 public partial class Modules_Ovdim_WorkCard : KdsPage
 {
@@ -72,9 +73,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     public const int SIDUR_CONTINUE_NOT_NAHAGUT = 99501;
     public const int SIDUR_HITYAZVUT = 99200;
     private bool bAddSidur;
-
-    private WorkCardResult _wcResult;
    
+    private WorkCardResult _wcResult;
+    
     
     protected override void CreateUser()
     {
@@ -160,7 +161,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //לא קיים סידור המפה או סידור מיוחד שמקורו במטלה שמסומנים כלא לתשלום עם קוד סיבה 16
         //במידה והפונקציה מחזירה אמת, נאפשר מאשר מסתייג
         //bool bAllSidurimLoLetashlum = true;
-
+        bool isOk = true;
         SidurDM _Sidur;
         if (_wcResult.htFullEmployeeDetails != null)
         {
@@ -168,8 +169,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             {
                 _Sidur = ((SidurDM)_wcResult.htFullEmployeeDetails[i]);
 
-                if ((_Sidur.bSidurMyuhad && IsSidurMatala(ref _Sidur)) || _Sidur.iSugSidurRagil != clGeneral.enSugSidur.SugSidur73.GetHashCode())//אם סידור מיוחד שמקורו במטלה או סידור מפה
+                if ((_Sidur.bSidurMyuhad && IsSidurMatala(ref _Sidur)) || (!_Sidur.bSidurMyuhad && _Sidur.iSugSidurRagil != clGeneral.enSugSidur.SugSidur73.GetHashCode()))//אם סידור מיוחד שמקורו במטלה או סידור מפה
                 {
+                    isOk = false;
                     if (IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))// סידור לא לתשלום עם סיבה 16
                     {
                         return true;
@@ -204,7 +206,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //}
             }
         }
-        return false;
+        return isOk;
      }
     protected bool IsSidurMatalaNotValidExists()
     {
@@ -239,7 +241,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              //אם בחישוב שכר - מאשר מסתייג יהיה חסום   
              //אם הועבר לשכר - מאשר מסתייג יהיה חסום
              //אז מאשר מסתייג יהיה חסום - 99200  אם מספר הימים קטן מ72 שעות (פרמטר 263?) וגם אין סידורים או שיש סידור אחד והוא התייצבות 
-
+            
              bParam252 = clDefinitions.GetDiffDays(dDateCard, DateTime.Now) + 1 > _wcResult.oParam.iValidDays;
              int iDays = clDefinitions.GetDiffDays(dDateCard, DateTime.Now);
              bParam263 = (iDays <= _wcResult.oParam.iDaysToViewWorkCard);//טווח של 72 שעות
@@ -253,7 +255,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              {                                   
                  //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                  //רק במידה ולא נעשה שינוי בכרטיס    
-                 //או שנעשה שינוי בכרטיס וגם כל סידורי המפה והסידורים המיוחדים (שמקורם במטלה) מסומנים כלא לתשלום עם קוד סיבה 16             
+                 // או שנעשה שינוי בכרטיס וקיים סידור מפה או סידורים המיוחדים (שמקורם במטלה) מסומנים כלא לתשלום עם קוד סיבה 16 או שלא קיים כלל סידור מפה או מיוחד (שמקורו במטלה             
                  bool bSidurimLoLetashlum = IsSidurimLoLetashlumAndLoHitychasut();
                  btnApprove.Disabled = (bWorkCardWasUpdate) && (!bSidurimLoLetashlum);
                  btnNotApprove.Disabled = (bWorkCardWasUpdate) && (!bSidurimLoLetashlum);
@@ -376,7 +378,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
          return bDisable;
      }
-  
+
 
      protected void SetDDLToolTip(){
          clUtils.SetDDLToolTip(ddlLina);
@@ -532,13 +534,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
              if (ViewState["LoadNewCard"] != null)
                  bLoadNewCard = (bool.Parse(ViewState["LoadNewCard"].ToString()) == true);
-             if ( (hidChanges.Value.ToLower() != "true")  && 
-                 (((oOvedYomAvodaDetails.iStatus == CardStatus.Calculate.GetHashCode()) && (!Page.IsPostBack) && (Request.QueryString["WCardUpdate"] == null))
-                 || ((Request.QueryString["WCardUpdate"]==null) && (oOvedYomAvodaDetails.iStatus == CardStatus.Calculate.GetHashCode()))
+             if ((hidChanges.Value.ToLower() != "true") &&
+                 (((oOvedYomAvodaDetails.iStatus == CardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()) && (!Page.IsPostBack) && (Request.QueryString["WCardUpdate"] == null))
+                 || ((Request.QueryString["WCardUpdate"] == null) && (oOvedYomAvodaDetails.iStatus == CardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
                  ))     
-                       
+             // || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()     
              {       
-                // oBatchManager.InitGeneralData();
+                 // oBatchManager.InitGeneralData();
                  _wcResult.CardStatus = CardStatus.Calculate;
                 // _StatusCard = CardStatus.Calculate;
                  ViewState["CardStatus"] = CardStatus.Calculate;
@@ -547,6 +549,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              }
              else
              {
+                 if (oOvedYomAvodaDetails.iBechishuvSachar != clGeneral.enBechishuvSachar.bsActive.GetHashCode())
+                 {
                  //שינויי קלט
                  if (!(hidExecInputChg.Value.Equals("0")))
                  {
@@ -583,11 +587,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                          //ViewState["CardStatus"] = oBatchManager.CardStatus;
                          //Session["Errors"] = oBatchManager.dtErrors;
                      }
-                     else { 
+                         else
+                         {
                          hidErrChg.Value = "0";
                          _wcResult.CardStatus = (CardStatus)ViewState["CardStatus"];
                      } //נחזיר את הדגל כך שיקראו לשגויים בפעם הבאה }
                  }
+             }
              }
              if (!bResult)
              {                
@@ -603,6 +609,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                      ScriptManager.RegisterStartupScript(Page, this.GetType(), "InputDataFailed", sScript, true);
                  }
              }
+
+             if (bResult) 
+                 FillWorkCardResult(_wcResult, iMisparIshi, dDateCard);
              return bResult;
          }
          catch (Exception ex)
@@ -678,7 +687,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          else
              sToolTip = "שעת התחלה מותרת (3): 0 \n";
 
-
+        
          if (_wcResult.oMeafyeneyOved.IsMeafyenExist(4))
              sToolTip = sToolTip + "שעת גמר מותרת (4): " + DateHelper.ConvertToValidHour(_wcResult.oMeafyeneyOved.GetMeafyen(4).Value);
          else
@@ -737,13 +746,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
            //  oBatchManager.iLoginUserId =int.Parse(LoginUser.UserInfo.EmployeeNumber);
              Session["LoginUserEmp"] = LoginUser.UserInfo.EmployeeNumber;
-
+            
              _wcResult = new WorkCardResult() { Succeeded = true };
              SetParameters(dDateCard);
              //שינויי קלט ושגויים
              if (RunBatchFunctions())
              {
-                  FillWorkCardResult(_wcResult, iMisparIshi, dDateCard);
+                 
                  //רוטינת שגויים                            
                  //נתונים כללים שמגיעים מאובייקט שגויים ושינויי קלט
                  //SetGeneralData(oBatchManager);
@@ -804,7 +813,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                      RefreshEmployeeData(iMisparIshi, dDateCard);
                      //רק אם יש סידורים 
                      Session["Sidurim"] = _wcResult.htFullEmployeeDetails;
-
+                        
 
                      if (_wcResult.htFullEmployeeDetails != null)
                      {
@@ -825,7 +834,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                      SD.CardDate = dDateCard;
                      SD.DataSource = (OrderedDictionary)Session["Sidurim"];
                      SD.Mashar = (DataTable)Session["Mashar"];
-
+                    
                      _wcResult.dtErrors = (DataTable)Session["Errors"];
                      _wcResult.oParam = (clParametersDM)Session["Parameters"];
                      dtPakadim = (DataTable)Session["Pakadim"];
@@ -1496,7 +1505,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      }
 
      //private void SetGeneralData(clBatchManager oBatchManager)
-     //{
+         //{
      //    //if (oBatchManager.CardStatus!= enCardStatus.Calculate) 
      //    //{
      //    if (_wcResult.htFullEmployeeDetails == null)
@@ -1920,6 +1929,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         SD.Param103 = _wcResult.oParam.iHashlamaShabat;
         SD.Param242 = _wcResult.oParam.dShatGmarNextDay;
         SD.Param244 = _wcResult.oParam.dShatHatchalaNahagutNihulTnua;
+        SD.Param276 = _wcResult.oParam.dShatHatchalaGrira;
         SD.Param252 = _wcResult.oParam.iValidDays;
         SD.RefreshBtn = (hidRefresh.Value!=string.Empty) ? int.Parse(hidRefresh.Value) : 0;
         
@@ -2641,31 +2651,24 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 string sIp;
                 string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
                 byte[] s;
+                clReportOnLine oReportOnLine = new clReportOnLine("PrintWorkCard", eFormat.PDF);
 
                 //EventLog.WriteEntry("Kds", "PathFileReportsTemp: " + sPathFilePrint, EventLogEntryType.Error);
-                ReportModule Report = new ReportModule();
-                Report.AddParameter("P_MISPAR_ISHI", iMisparIshi.ToString());
-                Report.AddParameter("P_TAARICH", dDateCard.ToShortDateString());
-                Report.AddParameter("P_EMDA", "0");
-                Report.AddParameter("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
-                Report.AddParameter("P_URL_BARCODE", urlBarcode);
-               
-                
-                //if (bWorkCardWasUpdate)
-                //{
+                oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", iMisparIshi.ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_TAARICH", dDateCard.ToShortDateString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_EMDA", "0"));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_URL_BARCODE", urlBarcode));
                     //במידה ויש ערך בטבלת מעדכן אחרון והכרטיס עלה ללא התייחסות ולחצו על מאשר או מסתייג נשלח תיקון 0, שלא היה תיקון
                     if ((iOldMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull.GetHashCode()) && (oMeasherMistayeg != clGeneral.enMeasherOMistayeg.ValueNull))
-                        Report.AddParameter("P_TIKUN", "0");
-                    else
-                        Report.AddParameter("P_TIKUN", "1");
-                //}
-                //else
-                //{   //אם אין ערך המעדכן אחרון, לא נשלח תיקון, כלומר 0
-                //    Report.AddParameter("P_TIKUN",  "0");
-                //}
-                
+                    oReportOnLine.ReportParams.Add(new clReportParam("P_TIKUN", "0"));
 
-                s = Report.CreateReport("/KdsReports/PrintWorkCard", eFormat.PDF, true);
+                    else
+                    oReportOnLine.ReportParams.Add(new clReportParam("P_TIKUN", "1"));
+                
+                oReportOnLine.ReportParams.Add(new clReportParam("P_DT", DateTime.Now.ToString()));
+
+                s = oReportOnLine.CreateFile();
                 string sFileName, sPathFile;
                 FileStream fs;
                 sIp = "";// arrParams[1];
@@ -4069,7 +4072,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         bool bValid = true;
         GridViewRow oGridRow;
-        OBJ_PEILUT_OVDIM oObjPeiluyotOvdim;
+        OBJ_PEILUT_OVDIM oObjPeiluyotOvdim;      
         PeilutDM _Peilut;
         int iCancelPeilut;
 
@@ -4089,7 +4092,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     continue;
                 else
                 {
-
+                   
                     if (_Peilut.oPeilutStatus.Equals(PeilutDM.enPeilutStatus.enNew))
                     {
                         //פעילות חדשה
@@ -5053,8 +5056,21 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         _KdsDynamicReport = KdsDynamicReport.GetKdsReport();
         _Report = new KdsReport();
         _Report = _KdsDynamicReport.FindReport(sRdlName);
-        Session["Report"] = _Report;
 
+        KdsLibrary.BL.clReport rep = new KdsLibrary.BL.clReport();
+        DataTable dt = rep.GetReportDetails(((ReportName)Enum.Parse(typeof(ReportName), sRdlName)).GetHashCode());
+        if(dt!=null && dt.Rows.Count>0)
+        {
+            DataRow dr = dt.Rows[0];
+            //_Report.PageHeader = dr["PageHeader"].ToString();
+            _Report.RSVersion = dr["RS_VERSION"].ToString();
+            _Report.URL_CONFIG_KEY = dr["URL_CONFIG_KEY"].ToString();
+            _Report.SERVICE_URL_CONFIG_KEY = dr["SERVICE_URL_CONFIG_KEY"].ToString();
+            _Report.EXTENSION = dr["EXTENSION"].ToString();
+            //_Report.RdlName = RdlName;
+        }
+
+        Session["Report"] = _Report;
         Session["ReportParameters"] = ReportParameters;
 
         sDomain = clGeneral.AsDomain(Request.UrlReferrer.ToString()) + Request.ApplicationPath;

@@ -29,8 +29,8 @@ namespace KdsBatch
 {
     public class clBatchManager  
     {
-         private long? _btchRequest;
-         private int _iUserId;
+        private long? _btchRequest;
+        private int _iUserId;
 
         public clBatchManager(long? btchRequest):this()
         {
@@ -62,8 +62,8 @@ namespace KdsBatch
             FlowShinuyResult shinuyResults = shinuyFlowManager.ExecShinuyim(iMisparIshi, dCardDate,_btchRequest,_iUserId);
 
             return shinuyResults;
-        }
-        
-    }
+            }
+
+                }
 }
 

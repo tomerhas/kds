@@ -133,13 +133,12 @@ namespace KdsBatch
                        DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
                        DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
                        DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
-                       if (_iTypeCalc == clGeneral.TypeCalc.Batch || _iTypeCalc == clGeneral.TypeCalc.Premiya)
-                       {
-                           SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
-                       }
+                      
                        //שמירת נתוני החישוב לעובד
                        SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
                    }
+                   // שמירת סידורים בכל מקרה
+                   SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
                }
                _collChishuvChodesh = null;
                _collChishuvYomi = null;
@@ -275,8 +274,40 @@ namespace KdsBatch
             {
                 drChanges = null;
             }
-
         }
+        //private void SaveSidurim(int iMisparIshi, DataTable dtYemeyAvoda)
+        //{
+        //    clTxDal oDal = new clTxDal();
+        //    DataRow[] drChanges;
+        //    int J;
+        //    try
+        //    {   //   שמירת סימון לא לתשלום
+        //        drChanges = dtYemeyAvoda.Select("lo_letashlum=1", "", DataViewRowState.ModifiedCurrent);
+        //        oDal.TxBegin();
+        //        for (J = 0; J < drChanges.Length; J++)
+        //        {
+        //            oDal.ClearCommand();
+        //            oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+        //            oDal.AddParameter("p_taarich", ParameterType.ntOracleDate,drChanges[J]["taarich"].ToString(), ParameterDir.pdInput);
+        //            oDal.AddParameter("p_mispar_sidur", ParameterType.ntOracleInteger, drChanges[J]["mispar_sidur"].ToString(), ParameterDir.pdInput);
+        //            oDal.AddParameter("p_shat_hatchala", ParameterType.ntOracleDate, drChanges[J]["shat_hatchala_sidur"].ToString(), ParameterDir.pdInput);
+        //            oDal.AddParameter("p_kod_siba", ParameterType.ntOracleInteger, drChanges[J]["kod_siba_lo_letashlum"], ParameterDir.pdInput);
+
+        //            oDal.ExecuteSP(clDefinitions.cProUpdateSidurimLoLetashlum);
+        //        }
+        //        oDal.TxCommit();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        oDal.TxRollBack();
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        drChanges = null;
+        //    }
+
+        //}
 
         private void SaveChishuv(COLL_CHISHUV_CHODESH _collChishuvChodesh,COLL_CHISHUV_YOMI _collChishuvYomi,COLL_CHISHUV_SIDUR _collChishuvSidur)
         {
@@ -506,6 +537,8 @@ namespace KdsBatch
                 names += ",Num_Rechivim";
                 oDal.AddParameter("p_cur_Rechivey_kizuz", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Rechivey_Kizuz";
+                oDal.AddParameter("p_cur_Rechivey_kizuz_Neemanim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Rechivey_kizuz_Neemanim";
 
                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
                 oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dCalcMonth, ParameterDir.pdInput);

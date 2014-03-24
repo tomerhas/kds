@@ -10,6 +10,7 @@ using KdsLibrary.Utils.Reports;
 using KdsLibrary;
 using System.Configuration;
 using System.IO;
+using KdsBatch.Reports;
 
 
 public partial class Modules_Reports_PresenceReport : KdsPage
@@ -79,18 +80,23 @@ public partial class Modules_Reports_PresenceReport : KdsPage
     private void CreatReport()
     {
         byte[] s;
-        ReportModule Report = new ReportModule();// ReportModule.GetInstance();
+      //  ReportModule Report = new ReportModule();// ReportModule.GetInstance();
         DateTime dFromDate, dToDate;
+        clReportOnLine oReportOnLine = new clReportOnLine("Presence", eFormat.PDF);
+
         try
         {
             dFromDate = new DateTime(int.Parse(arrParams[3].ToString().Substring(0, 4)), int.Parse(arrParams[3].ToString().Substring(4, 2)), 1);
             dToDate = dFromDate.AddMonths(1).AddDays(-1);
 
-            Report.AddParameter("P_STARTDATE", dFromDate.ToShortDateString());
-            Report.AddParameter("P_ENDDATE", dToDate.ToShortDateString());
-            Report.AddParameter("P_MISPAR_ISHI", LoginUser.UserInfo.EmployeeNumber);
+            oReportOnLine.ReportParams.Add(new clReportParam("P_STARTDATE", dFromDate.ToShortDateString()));
+            oReportOnLine.ReportParams.Add(new clReportParam("P_ENDDATE", dToDate.ToShortDateString()));
+            oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", LoginUser.UserInfo.EmployeeNumber));
+            
+            oReportOnLine.ReportParams.Add(new clReportParam("P_DT", DateTime.Now.ToString()));
 
-            s = Report.CreateReport("/KdsReports/Presence", eFormat.PDF, true);
+            s = oReportOnLine.CreateFile();
+          
             Session["BinaryResult"] = s;
             Session["Report"] = s;
             Session["TypeReport"] = "PDF";

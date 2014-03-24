@@ -11,6 +11,7 @@ using KdsLibrary.BL;
 using KdsLibrary.Utils;
 using KdsLibrary.Utils.Reports;
 using System.Data;
+using KdsBatch.Reports;
 
 public partial class Modules_Ovdim_NetuneyOved : KdsPage
 {
@@ -303,7 +304,9 @@ public partial class Modules_Ovdim_NetuneyOved : KdsPage
     {
         byte[] s;
         string sScript;
-        ReportModule Report = new ReportModule();//  ReportModule.GetInstance();
+       // ReportModule Report = new ReportModule();//  ReportModule.GetInstance();
+        clReportOnLine oReportOnLine = new clReportOnLine("NetuneyOved", eFormat.PDF);
+
         try
         {
             if (Page.IsValid)
@@ -311,10 +314,15 @@ public partial class Modules_Ovdim_NetuneyOved : KdsPage
                 if (txtEmpId.Text.Length > 0)
                 {
 
-                    Report.AddParameter("P_MISPAR_ISHI", txtEmpId.Text);
-                    Report.AddParameter("P_TAARICH", clGeneral.GetEndMonthFromStringMonthYear(1, ddlMonth.SelectedValue).ToString());
+                    oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", txtEmpId.Text));
+                    oReportOnLine.ReportParams.Add(new clReportParam("P_TAARICH", clGeneral.GetEndMonthFromStringMonthYear(1, ddlMonth.SelectedValue).ToString()));
+                    oReportOnLine.ReportParams.Add(new clReportParam("P_DT", DateTime.Now.ToString()));
 
-                    s = Report.CreateReport("/KdsReports/NetuneyOved", eFormat.PDF, true);
+                    s = oReportOnLine.CreateFile();
+                    //Report.AddParameter("P_MISPAR_ISHI", txtEmpId.Text);
+                    //Report.AddParameter("P_TAARICH", clGeneral.GetEndMonthFromStringMonthYear(1, ddlMonth.SelectedValue).ToString());
+
+                    //s = Report.CreateReport("/KdsReports/NetuneyOved", eFormat.PDF, true);
 
                     Session["BinaryResult"] = s;
                     Session["TypeReport"] = "PDF";

@@ -60,6 +60,7 @@ namespace KdsBatch
         public const string cProUpdBakashaAllfields = "pkg_batch.pro_upd_bakasha_all_fields";
         public const string cProShinuyKelet = "pkg_errors.pro_shinuy_kelet";
         public const string cProGetOvdimToTransfer = "pkg_batch.pro_get_ovdim_to_transfer";
+        public const string cProGetNetuneyDorB = "pkg_batch.get_netuney_machala_dor_b";
         public const string cProCheckOvedPutar = "pkg_calc.pro_get_oved_putar";
         public const string cProGetAllYameiAvoda = "pkg_batch.pro_get_all_yamei_avoda";
         public const string cProUpdCardStatus = "pkg_errors.pro_upd_card_status";
@@ -199,7 +200,7 @@ namespace KdsBatch
                 //kdsLog.WriteEntry("10.1", EventLogEntryType.Error);
                 oDal.ExecuteSP(cProShinuyKelet);
                 //kdsLog.WriteEntry("10.2", EventLogEntryType.Error);
-            }
+        }
             catch (Exception ex)
             {
                 //var mail = ServiceLocator.Current.GetInstance<IMailManager>();
@@ -333,7 +334,7 @@ namespace KdsBatch
                     iKey = 1;
                     i++;
                     //נתונים ברמת סידור
-
+                   
                     var sidurManager = ServiceLocator.Current.GetInstance<ISidurManager>();
                     oSidur = sidurManager.CreateClsSidurFromEmployeeDetails(dr);
                    
@@ -531,7 +532,7 @@ namespace KdsBatch
                 throw ex;
             }
         }
-       
+
         public static DataTable GetSugeySidur()
         {
             clDal oDal = new clDal();
@@ -550,8 +551,8 @@ namespace KdsBatch
             }
         }
 
-      
 
+              
         public static DataTable GetApprovalToEmploee(int iMisparIshi, DateTime dTaarich)
         {
             clDal oDal = new clDal();
@@ -575,7 +576,7 @@ namespace KdsBatch
 
 
         public static float GetTimeBetweenTwoSidurimInMinuts(SidurDM oPrevSidur, SidurDM oSidur)
-        {
+            {
             float fDiffSidurTime = 0;
             try
             {   //מחזיר הפרש זמן בין שני סידורים חופפים
@@ -645,7 +646,7 @@ namespace KdsBatch
             else return Date1;
         }
 
-       
+
         public static DataSet GetErrorsForFields(bool bProfileRashemet, int iMisparIshi, DateTime dCardDate,
                                                  int iMisparSidur, DateTime dFullShatHatchala, 
                                                  DateTime dPeilutShatYetiza, int iMisparKnisa, 
@@ -869,7 +870,7 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw ex;
-            }
+            } 
         }
 
 

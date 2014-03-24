@@ -12,10 +12,10 @@ namespace KdsBatch
       private DataTable _dtPrem;
       private List<string> _ListErua;
 
-      public clErua413(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, DataTable dtPrem)
-          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,413)
+      public clErua413(long lBakashaId, DataRow drPirteyOved, DataSet dsNetunim)
+          : base(lBakashaId, drPirteyOved, dsNetunim, 413)
       {
-          _dtPrem = dtPrem;
+          _dtPrem = dsNetunim.Tables[2];
           _sBody = SetBody();
           if (_sBody != null)
           PrepareLines();

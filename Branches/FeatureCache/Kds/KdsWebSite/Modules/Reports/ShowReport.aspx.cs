@@ -25,11 +25,12 @@ public partial class Modules_Reports_ShowReport : System.Web.UI.Page
         SetObjectParameter();
     }
 
-    private void SetReportViewerDefaultValues()
+    private void SetReportViewerDefaultValues() 
     {
         try
         {
             KdsReport _Report = (KdsReport)Session["Report"];
+            lblRsVersion.Text = _Report.RSVersion;
             RptViewer.Width = (_Report.Orientation == KdsLibrary.Utils.Reports.Orientation.Portrait) ? 790 : 1160;
             RptViewer.PromptAreaCollapsed = true;
             RptViewer.ShowBackButton = false;
@@ -45,7 +46,8 @@ public partial class Modules_Reports_ShowReport : System.Web.UI.Page
                 RptViewer.Attributes.Add("style", "margin-bottom: 30px;");
 
             RptViewer.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote;
-            RptViewer.ServerReport.ReportServerUrl = new System.Uri(ConfigurationSettings.AppSettings["ServerReports"]);
+            //RptViewer.ServerReport.ReportServerUrl = new System.Uri(ConfigurationSettings.AppSettings["ServerReports"]);
+            RptViewer.ServerReport.ReportServerUrl = _Report.URL_CONFIG_KEY != null ? new System.Uri(ConfigurationSettings.AppSettings[_Report.URL_CONFIG_KEY]) : new System.Uri(ConfigurationSettings.AppSettings["url_2008"]);
             RptViewer.ServerReport.ReportServerCredentials = new ReportServerCredentials(ConfigurationSettings.AppSettings["RSUserName"], ConfigurationSettings.AppSettings["RSPassword"], ConfigurationSettings.AppSettings["RSDomain"]);
             RptViewer.ServerReport.ReportPath = ConfigurationSettings.AppSettings["RSFolderApplication"] + RdlName;
             RptViewer.SizeToReportContent = false;
@@ -124,14 +126,16 @@ public partial class Modules_Reports_ShowReport : System.Web.UI.Page
 
     public void SetListRenderingExtensions()
     {
+        KdsReport _Report = (KdsReport)Session["Report"];
+
         FieldInfo infoVisible , infoName;
         foreach (RenderingExtension extension in RptViewer.ServerReport.ListRenderingExtensions())
         {
             infoVisible =  extension.GetType().GetField("m_isVisible", BindingFlags.NonPublic | BindingFlags.Instance);
             infoName = extension.GetType().GetField("m_localizedName", BindingFlags.NonPublic | BindingFlags.Instance);
-            if ((extension.Name != "EXCEL") && (extension.Name != "PDF") && (infoVisible != null) )
+            if ((extension.Name != _Report.EXTENSION) && (extension.Name != "PDF") && (infoVisible != null))
                     infoVisible.SetValue(extension, false);
-            if ((extension.Name == "EXCEL") && (infoName != null))
+            if ((extension.Name == _Report.EXTENSION) && (infoName != null))
                     infoName.SetValue(extension, "אקסל - Excel");
             if ((extension.Name == "PDF") && (infoName != null))
                 infoName.SetValue(extension, "Pdf");

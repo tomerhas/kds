@@ -8,6 +8,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
   
    <script type="text/javascript" language="javascript">
+       var oTxtId = "<%=txtEmpId.ClientID%>";
+       var userId = iUserId;
 </script>
 <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:2000;width:150px" >
         <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
@@ -99,8 +101,37 @@
      <iframe runat="server" id="iFramePrint" style="display:none" height="5px" width="5px"></iframe>
 <script language="javascript" type="text/javascript">
     function txtEmpId_txtChange() {
-            document.getElementById("ctl00_KdsContent_btnShow").disabled = false;
+        //   debugger;
+        document.getElementById("ctl00_KdsContent_btnShow").disabled = true;
+        document.getElementById("ctl00_KdsContent_divNetunim").style.display = "none";
+      // $("#divNetunim").hide();
+        //  $("#divNetunim").hide();
+        iKodOved = document.getElementById(oTxtId).value;
+            if (userId > 0)
+                wsGeneral.GetOvedToUser(iKodOved, userId, GetOvedNameByIdSucceeded);
+            else
+                wsGeneral.GetOvedName(iKodOved, GetOvedNameByIdSucceeded);
+           
+    }
+    function GetOvedNameByIdSucceeded(result) {
+       // debugger;
+        // alert(result);
+        if (result == '') {
+            alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');
+            document.getElementById(oTxtId).focus();
+            document.getElementById(oTxtId).value = "";
+            document.getElementById("ctl00_KdsContent_btnShow").disabled = true;
+          //  $("#divNetunim").hide();
+           // $("#divNetunim").css("display", "none");
+            document.getElementById("ctl00_KdsContent_divNetunim").style.display = "none";
         }
+        else {
+            document.getElementById("ctl00_KdsContent_btnShow").disabled = false;
+            document.getElementById("ctl00_KdsContent_divNetunim").style.display = "inline";
+            // $("#divNetunim").show();
+         //   $("#divNetunim").css("display", "inline");
+        }
+    }
         function onclick_ShowReport(mispar_ishi, bakasha_id, taarich) {
             var sQueryString = "?EmpID=" + mispar_ishi + "&bakashaID=" + bakasha_id + "&taarich=" + taarich;
             document.all.ctl00_KdsContent_iFramePrint.src = "ShowRikuz.aspx" + sQueryString;

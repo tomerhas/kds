@@ -25,6 +25,7 @@ using System.IO;
 using System.Threading.Tasks;
 using KdsLibrary.Utils.Reports;
 using System.Collections.Generic;
+using System.Timers;
 using KDSCommon.DataModels;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.DAL;
@@ -59,6 +60,44 @@ public partial class Modules_Test :Page
     //private clBatchManager oBatchManager;
     public int iMisparIshi;
     public DateTime dDateCard;
+      public int _sug_bakasha;
+      System.Timers.Timer _timer = new System.Timers.Timer(5000); 
+     public void Test()
+     {
+        
+     }
+
+     //void OnTimerAwake(object sender, EventArgs e)
+     //{
+     //    //DataTable dt;
+     //    clRequest oRequest= new clRequest();
+     //    //try{
+     //        // dt= oRequest.
+     //        _timer.Stop();
+        
+       
+     //       if (!oRequest.CheckTahalichEnd(_sug_bakasha))
+     //       {
+     //           _timer.Start();
+     //       }
+
+          
+     //    //}
+     //   //catch
+     //   //{
+          
+     //   //    throw ex;
+     //   //}
+     //}
+
+    protected void SleepUntillProccessEnd(int sug_bakasha)
+    {
+
+        _sug_bakasha = sug_bakasha;
+        
+        _timer.Start();
+
+    }
     protected void Page_PreRender(object sender, EventArgs e)
     {
 
@@ -69,9 +108,19 @@ public partial class Modules_Test :Page
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        long dateNumber = 1297380023295;
-        long beginTicks = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks;
+        //long dateNumber = 1297380023295;
+        //long beginTicks = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks;
 
+        //_timer = new System.Timers.Timer(5000);
+        //_timer.Interval = 5000;
+        //_timer.Tick += OnTimerAwake;
+        //_timer.Enabled = true;
+        //_timer.Elapsed += OnTimerAwake;
+        //SleepUntillProccessEnd(1);
+        //_sug_bakasha = 1;
+        //_timer.Start();
+    //    OnTimerAwake(sender, e);
+      //  SleepUntillProccessEnd(1);
        
         //txtId.Attributes.Add("onfocus", "alert('')");
         //DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse("26/08/2011"), DateTimeKind.Utc); 
@@ -396,7 +445,7 @@ public partial class Modules_Test :Page
         DateTime a;
         a = new DateTime(2010, 10, 03, 19, 20, 0);
        clBatchManager oBatchManager = new clBatchManager();
-
+        
         oBatchManager.MainOvedErrorsNew(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
         //oBatchManager.MainInputData(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
       //  oBatchManager.MainOvedErrors(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
@@ -826,7 +875,7 @@ public partial class Modules_Test :Page
          //  //  oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
          //}
         // clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End HafelShguim");
-    }
+         }
 
     private void HafelShguim(int mispar_ishi,DateTime taarich)
     {
@@ -842,7 +891,7 @@ public partial class Modules_Test :Page
             //Day oDay = new Day(mispar_ishi, taarich,true);// new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
             //oDay.btchRequest = 0;
             //if (oDay.oOved.bOvedDetailsExists)
-            //{
+                    //{
             //    try
             //    {
             //        foreach (Sidur oSidur in oDay.Sidurim)
@@ -994,12 +1043,12 @@ public partial class Modules_Test :Page
            //++ clUtils.RunBakaratSDRN();
            //++ clUtils.RunRetroSpectSDRN();
             clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
-            //clTkinutMakatim objMakat = new clTkinutMakatim();
-            // objMakat.(DateTime.Parse(clnFromDate.Text));
+        //clTkinutMakatim objMakat = new clTkinutMakatim();
+        // objMakat.(DateTime.Parse(clnFromDate.Text));
 
-            //wsBatch oBatch = new wsBatch();
-            //oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
-        }
+        //wsBatch oBatch = new wsBatch();
+        //oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
+    }
         catch (Exception ex)
         {
             ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(255, "E", 0, "",   ex);

@@ -191,5 +191,51 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+
+        public bool CheckTahalichEnd(long p_bakasha_id)
+        {
+            clDal _Dal = new clDal();
+            int count;
+
+            try
+            {
+                _Dal.AddParameter("p_count", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                _Dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInteger, p_bakasha_id, ParameterDir.pdInput);
+
+                _Dal.ExecuteSP(clGeneral.cFunCheckTahalichEnd);
+
+                count = int.Parse(_Dal.GetValParam("p_count").ToString());
+                if (count > 0)
+                    return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public long get_max_bakasha_id(int p_sug_bakasha)
+        {
+            clDal _Dal = new clDal();
+            long bakasha_id;
+
+            try
+            {
+                _Dal.AddParameter("p_bakasha", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                _Dal.AddParameter("p_sug_bakasha", ParameterType.ntOracleInteger, p_sug_bakasha, ParameterDir.pdInput);
+
+                _Dal.ExecuteSP(clGeneral.cFunGetMaxBakasaBySug);
+
+                bakasha_id = long.Parse(_Dal.GetValParam("p_bakasha").ToString());
+                if (bakasha_id > 0)
+                    return bakasha_id;
+                else return 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

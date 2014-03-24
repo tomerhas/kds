@@ -155,6 +155,7 @@
     <Compile Include="Reports\clManagerReport.cs" />
     <Compile Include="Reports\clManagerRikuzim.cs" />
     <Compile Include="Reports\clReport.cs" />
+    <Compile Include="Reports\clReportOnLine.cs" />
     <Compile Include="Reports\clReportParam.cs" />
     <Compile Include="Reports\clDestinationReport.cs" />
     <Compile Include="Premia\SystemCompare\CompareScope.cs" />
@@ -193,6 +194,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\ReportMail.xsl" />
+    <None Include="Service References\KdsServiceProxy\KdsLocalService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\KdsServiceProxy\KdsLocalService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\KdsServiceProxy\KdsLocalService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\KdsServiceProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -200,6 +210,7 @@
     <None Include="Service References\KdsServiceProxy\configuration.svcinfo" />
     <None Include="Service References\KdsServiceProxy\configuration91.svcinfo" />
     <None Include="Service References\KdsServiceProxy\BatchService.wsdl" />
+    <None Include="Service References\KdsServiceProxy\KdsLocalService.disco" />
     <None Include="Web References\premyot\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -268,6 +279,16 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
+      <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
+      <Name>KdsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsWorkFlow\KdsWorkFlow.csproj">
+      <Project>{8979010C-FE5C-4652-8027-FFF2378353E3}</Project>
+      <Name>KdsWorkFlow</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\KdsServiceProxy\" />

@@ -13,8 +13,8 @@ namespace KdsBatch
       //private DataTable dtChishuvYomi;
       //public clErua462(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv,DataTable dtChishuv)
       //    : base(lBakashaId, drPirteyOved, dtDetailsChishuv,462)
-      public clErua462(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, int iCntYamim)
-          : base(lBakashaId, drPirteyOved, dtDetailsChishuv, 462)
+      public clErua462(long lBakashaId, DataRow drPirteyOved, DataSet dsNetunim, int iCntYamim)
+          : base(lBakashaId, drPirteyOved, dsNetunim, 462)
       {
           //dtChishuvYomi = dtChishuv;
           _iCntYamim = iCntYamim;

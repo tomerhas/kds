@@ -53,6 +53,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private int _Param98;
     private DateTime _Param242;
     private DateTime _Param244;
+    private DateTime _Param276;
     private float _Param43;
     private float _Param42;
     private int _NumOfHashlama;
@@ -243,6 +244,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hidParam98.Value = Param98.ToString();
         hidParam242.Value = Param242.ToShortTimeString();
         hidParam244.Value = Param244.ToShortTimeString(); 
+        hidParam276.Value = Param276.ToShortTimeString(); 
         hidNumOfHashlama.Value = NumOfHashlama.ToString();
         
     }
@@ -768,6 +770,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         dcSidur = new DataColumn();
         dcSidur.ColumnName = "sidur_nihul_tnua";
+        dcSidur.DataType = System.Type.GetType("System.Int32");
+        dtUpdatedSidurim.Columns.Add(dcSidur);
+
+        dcSidur = new DataColumn();
+        dcSidur.ColumnName = "sidur_grira";
         dcSidur.DataType = System.Type.GetType("System.Int32");
         dtUpdatedSidurim.Columns.Add(dcSidur);
     }
@@ -3218,7 +3225,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }
     private void AddNewSidurToHashTable()
     {
-        SidurDM _Sidur = null;
+        SidurDM _Sidur = new SidurDM();
 
         if (_DataSource == null)
             _DataSource = new OrderedDictionary ();
@@ -4240,6 +4247,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         drSidur["sidur_date"] = oSidur.dFullShatHatchala;
         drSidur["sidur_nahagut"] = IsSidurNahagut(ref oSidur, drSugSidur).GetHashCode();
         drSidur["sidur_nihul_tnua"] = IsSidurNihul(ref oSidur, drSugSidur).GetHashCode();
+        drSidur["sidur_grira"] = IsSidurGrira(ref oSidur, drSugSidur).GetHashCode();
         dtUpdatedSidurim.Rows.Add(drSidur);
        
     }
@@ -4745,7 +4753,20 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         return (!((oSidur.bSidurMyuhad) && (oSidur.sZakaiLehamara == clGeneral.enMeafyen32.enLoZakai.GetHashCode().ToString())));
     }
+    protected bool IsSidurGrira(ref SidurDM oSidur, DataRow[] drSugSidur)
+    {
+        bool bSidurGrira = false;
+        //מחזיר אם סידור גרירה
+        if (oSidur.bSidurMyuhad)            
+            bSidurGrira = (oSidur.sSugAvoda == enSugAvoda.ActualGrira.GetHashCode().ToString());
+        else
+        {
+            if (drSugSidur.Length > 0)
+                bSidurGrira = (drSugSidur[0]["sug_avoda"].ToString() == enSugAvoda.ActualGrira.GetHashCode().ToString());
+        }
 
+        return bSidurGrira;
+    }
     protected bool IsSidurNihul(ref SidurDM oSidur, DataRow[] drSugSidur)
     {
         bool bSidurNihul = false;
@@ -5343,7 +5364,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             if (EnabledValidator())
             {
                 oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-                oTextBox.Attributes.Add("onchange", "MovePanel(" + iIndex + "); SetHashlama(" + iIndex + ");");
+                oTextBox.Attributes.Add("onchange", "MovePanel(" + iIndex + ");");
                 oTextBox.Attributes.Add("onkeyup", "SetDay('1|" + iIndex + "'); SidurTimeChanged(" + iIndex + ");");
                 oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
                 oTextBox.Attributes.Add("onfocus", "this.className='WCSidurTxtF';");
@@ -6997,6 +7018,17 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         get
         {
             return _Param244;
+        }
+    }
+    public DateTime Param276
+    {
+        set
+        {
+            _Param276 = value;
+        }
+        get
+        {
+            return _Param276;
         }
     }
     public int Param252

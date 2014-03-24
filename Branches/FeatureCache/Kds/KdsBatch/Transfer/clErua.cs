@@ -18,6 +18,7 @@ namespace KdsBatch
         protected int _iKodErua;
         protected int _iMisparIshi;
         protected DateTime _dMonth;
+        protected DateTime _dChodeshIbud;
         protected int _iMaamad;
         protected int _iMaamadRashi;
         protected int _iMushhe;
@@ -28,21 +29,24 @@ namespace KdsBatch
         protected DateTime dTakanonSoziali;
         protected List<string> _sBody;
         protected DataTable _dtDetailsChishuv;
+        protected DataTable _dtNetuneyDorB;
         protected DataRow _drPirteyOved;
         private List<string> _sLine;
         public bool bKayamEfreshBErua=false;
         
         protected bool _sadeLeloErech;
 
-        public clErua(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, int iKodErua)
+        public clErua(long lBakashaId, DataRow drPirteyOved, DataSet DsNetunim , int iKodErua)
         {
              _sadeLeloErech = ConfigurationSettings.AppSettings["SadeLeloErech"] =="true" ? true :false;
 
              _lBakashaId = lBakashaId;
              _drPirteyOved = drPirteyOved;
-             _dtDetailsChishuv = dtDetailsChishuv;
+             _dtDetailsChishuv = DsNetunim.Tables[0];
+             _dtNetuneyDorB = DsNetunim.Tables[1];
              _iKodErua = iKodErua;
 
+             _dChodeshIbud = DateTime.Parse(drPirteyOved["chodesh_ibud"].ToString());
              _iMisparIshi = int.Parse(drPirteyOved["mispar_ishi"].ToString());
              _dMonth = DateTime.Parse(drPirteyOved["taarich"].ToString());
              _iMaamad = int.Parse(drPirteyOved["maamad"].ToString());
@@ -261,8 +265,12 @@ namespace KdsBatch
             if (dtPrem.Rows.Count>0)
             {
                 dr = dtPrem.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + iKodRechiv + " AND TAARICH=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
-                if (dr.Length>0)
+                if (dr.Length > 0)
+                {
                     erech = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
+                    if (_dChodeshIbud != _dMonth)
+                        bKayamEfreshBErua = true;
+                }
             }
             return erech;
         }
@@ -326,6 +334,41 @@ namespace KdsBatch
             return fErech;
         }
 
+        protected float GetErechRechivDorB(int iKodRechiv)
+        {
+            return GetErechRechivDorB(iKodRechiv, "erech_rechiv");
+        }
+        protected float GetErechRechivDorB(int iKodRechiv,string col)
+        {
+            DataRow[] drRechiv;
+            float fErech = 0;
+
+            drRechiv = _dtNetuneyDorB.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + iKodRechiv + " and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
+
+            if (drRechiv.Length > 0)
+            {
+                fErech = float.Parse(drRechiv[0][col].ToString());
+
+                if (fErech != 0 && col == "erech_rechiv" && (!bKayamEfreshBErua && _iKodErua != 162 && _iKodErua != 462 && _iKodErua != 589))
+                {
+                    CheckHefresh(drRechiv[0]);
+                }
+                else if (!bKayamEfreshBErua && (_iKodErua == 462 || _iKodErua == 589))
+                {
+                    drRechiv = _dtNetuneyDorB.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=126 and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
+
+                    if (drRechiv[0]["bakasha_id_2"] != null)
+                    {
+                        if (drRechiv[0]["bakasha_id_2"].ToString() != "")
+                            bKayamEfreshBErua = true;
+                        else if (drRechiv[0]["bakasha_id_2"].ToString() == "" && drRechiv[0]["taarich"].ToString() != drRechiv[0]["chodesh_ibud"].ToString())
+                            bKayamEfreshBErua = true;
+                    }
+                }
+            }
+            return fErech;
+        }
+
         public bool CheckBakashatHefreshExists(int iKodRechiv)
         {
             DataRow[] drRechiv;
@@ -367,6 +410,16 @@ namespace KdsBatch
             else return false;
         }
 
+        protected bool MaamadDorB()
+        {
+            if(_iMaamad ==  clGeneral.enKodMaamad.OvedBechoze.GetHashCode() || _iMaamad ==  clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode() || 
+               _iMaamad ==  clGeneral.enKodMaamad.Aray.GetHashCode() || _iMaamad ==  clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode() || 
+               _iMaamad ==  clGeneral.enKodMaamad.Chanich.GetHashCode() || _iMaamad ==  clGeneral.enKodMaamad.PensyonerBechoze.GetHashCode() || 
+               _iMaamad ==  clGeneral.enKodMaamad.GimlayTaktziviBechoze.GetHashCode() || _iMaamad ==  clGeneral.enKodMaamad.PensyonerTakziviBechoze.GetHashCode() ||
+               _iMaamad == clGeneral.enKodMaamad.Shtachim.GetHashCode())
+                return true;
+            else return false;
+        }
         protected void WriteError(string sError)
         {
             ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_lBakashaId, "E", _iKodErua, sError, _iMisparIshi, _dMonth);

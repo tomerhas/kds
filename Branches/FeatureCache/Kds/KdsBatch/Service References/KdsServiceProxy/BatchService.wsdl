@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="BatchService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="BatchService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -344,6 +344,44 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_TransferToHilan_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_BdikatChufshaRezifa_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_BdikatChufshaRezifa_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -895,406 +933,11 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsdl:types>
-    <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-      <xs:import namespace="http://schemas.datacontract.org/2004/07/KdsLibrary" />
-      <xs:element name="ExecuteInputDataAndErrors">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="requestSource" type="xs:int" />
-            <xs:element minOccurs="0" name="execType" type="xs:int" />
-            <xs:element minOccurs="0" name="workDate" type="xs:dateTime" />
-            <xs:element minOccurs="0" name="btchRequest" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="ExecuteInputDataAndErrorsResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CalcBatchParallel">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-            <xs:element minOccurs="0" name="dAdChodesh" type="xs:dateTime" />
-            <xs:element minOccurs="0" name="sMaamad" nillable="true" type="xs:string" />
-            <xs:element minOccurs="0" name="bRitzatTest" type="xs:boolean" />
-            <xs:element minOccurs="0" name="bRitzaGorefet" type="xs:boolean" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CalcBatchParallelResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="ShinuyimVeShguimBatch">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-            <xs:element minOccurs="0" name="dTaarich" type="xs:dateTime" />
-            <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/KdsLibrary" minOccurs="0" name="TypeShguyim" type="q1:clGeneral.enCalcType" />
-            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/KdsLibrary" minOccurs="0" name="ExecutionTypeShguim" type="q2:clGeneral.BatchExecutionType" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="ShinuyimVeShguimBatchResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CalcBatchPremiyot">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CalcBatchPremiyotResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="InsetRecordsToHistory">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="InsetRecordsToHistoryResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CalcBatch">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-            <xs:element minOccurs="0" name="dAdChodesh" type="xs:dateTime" />
-            <xs:element minOccurs="0" name="sMaamad" nillable="true" type="xs:string" />
-            <xs:element minOccurs="0" name="bRitzatTest" type="xs:boolean" />
-            <xs:element minOccurs="0" name="bRitzaGorefet" type="xs:boolean" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CalcBatchResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="TransferToHilan">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-            <xs:element minOccurs="0" name="lRequestNumToTransfer" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="TransferToHilanResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="YeziratRikuzim">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-            <xs:element minOccurs="0" name="iRequestIdForRikuzim" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="YeziratRikuzimResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="TransferTekenNehagim">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-            <xs:element minOccurs="0" name="iRequestIdForTransfer" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="TransferTekenNehagimResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="ShlichatRikuzimMail">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-            <xs:element minOccurs="0" name="iRequestIdForRikuzim" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="ShlichatRikuzimMailResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CreateConstantsReports">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-            <xs:element minOccurs="0" name="sMonth" nillable="true" type="xs:string" />
-            <xs:element minOccurs="0" name="iUserId" type="xs:int" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CreateConstantsReportsResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CreateHeavyReports">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CreateHeavyReportsResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CreatePremiaInputFile">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="btchRequest" type="xs:long" />
-            <xs:element minOccurs="0" name="period" type="xs:dateTime" />
-            <xs:element minOccurs="0" name="userId" type="xs:int" />
-            <xs:element minOccurs="0" name="processBtchNumber" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="CreatePremiaInputFileResponse">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="CreatePremiaInputFileResult" nillable="true" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="RunPremiaCalculation">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="period" type="xs:dateTime" />
-            <xs:element minOccurs="0" name="userId" type="xs:int" />
-            <xs:element minOccurs="0" name="processBtchNumber" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="RunPremiaCalculationResponse">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="RunPremiaCalculationResult" nillable="true" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="StorePremiaCalculationOutput">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="btchRequest" type="xs:long" />
-            <xs:element minOccurs="0" name="period" type="xs:dateTime" />
-            <xs:element minOccurs="0" name="userId" type="xs:int" />
-            <xs:element minOccurs="0" name="processBtchNumber" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="StorePremiaCalculationOutputResponse">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="StorePremiaCalculationOutputResult" nillable="true" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="RefreshMatzavOvdim">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="RefreshMatzavOvdimResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="TahalichHrChanges">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="iseq" type="xs:int" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="TahalichHrChangesResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="TahalichSadran">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="taarich" nillable="true" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="TahalichSadranResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="RefreshMeafyenim">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="RefreshMeafyenimResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="RefreshPirteyOvdim">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="RefreshPirteyOvdimResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="TkinutMakatimBatch">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element minOccurs="0" name="dTaarich" type="xs:dateTime" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="TkinutMakatimBatchResponse">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-    </xs:schema>
-    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-      <xs:element name="anyType" nillable="true" type="xs:anyType" />
-      <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
-      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
-      <xs:element name="boolean" nillable="true" type="xs:boolean" />
-      <xs:element name="byte" nillable="true" type="xs:byte" />
-      <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
-      <xs:element name="decimal" nillable="true" type="xs:decimal" />
-      <xs:element name="double" nillable="true" type="xs:double" />
-      <xs:element name="float" nillable="true" type="xs:float" />
-      <xs:element name="int" nillable="true" type="xs:int" />
-      <xs:element name="long" nillable="true" type="xs:long" />
-      <xs:element name="QName" nillable="true" type="xs:QName" />
-      <xs:element name="short" nillable="true" type="xs:short" />
-      <xs:element name="string" nillable="true" type="xs:string" />
-      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
-      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
-      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
-      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
-      <xs:element name="char" nillable="true" type="tns:char" />
-      <xs:simpleType name="char">
-        <xs:restriction base="xs:int" />
-      </xs:simpleType>
-      <xs:element name="duration" nillable="true" type="tns:duration" />
-      <xs:simpleType name="duration">
-        <xs:restriction base="xs:duration">
-          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
-          <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
-          <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:element name="guid" nillable="true" type="tns:guid" />
-      <xs:simpleType name="guid">
-        <xs:restriction base="xs:string">
-          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:attribute name="FactoryType" type="xs:QName" />
-      <xs:attribute name="Id" type="xs:ID" />
-      <xs:attribute name="Ref" type="xs:IDREF" />
-    </xs:schema>
-    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/KdsLibrary" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/KdsLibrary" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xs:simpleType name="clGeneral.enCalcType">
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="MonthlyCalc">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-          <xs:enumeration value="PremiotCalc">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-          <xs:enumeration value="ShinuyimVeShguyim">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-          <xs:enumeration value="ShinuyimVeSghuimHR">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-          <xs:enumeration value="ShinuyimVeSghuimPremiot">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-          <xs:enumeration value="Rikuzim">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:element name="clGeneral.enCalcType" nillable="true" type="tns:clGeneral.enCalcType" />
-      <xs:simpleType name="clGeneral.BatchExecutionType">
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="InputData">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-          <xs:enumeration value="ErrorIdentification">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-          <xs:enumeration value="All">
-            <xs:annotation>
-              <xs:appinfo>
-                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
-              </xs:appinfo>
-            </xs:annotation>
-          </xs:enumeration>
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:element name="clGeneral.BatchExecutionType" nillable="true" type="tns:clGeneral.BatchExecutionType" />
-    </xs:schema>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8731/KdsLocalService?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8731/KdsLocalService?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8731/KdsLocalService?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/KdsLibrary" />
+    </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IBatchService_ExecuteInputDataAndErrors_InputMessage">
     <wsdl:part name="parameters" element="tns:ExecuteInputDataAndErrors" />
@@ -1337,6 +980,12 @@
   </wsdl:message>
   <wsdl:message name="IBatchService_TransferToHilan_OutputMessage">
     <wsdl:part name="parameters" element="tns:TransferToHilanResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBatchService_BdikatChufshaRezifa_InputMessage">
+    <wsdl:part name="parameters" element="tns:BdikatChufshaRezifa" />
+  </wsdl:message>
+  <wsdl:message name="IBatchService_BdikatChufshaRezifa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BdikatChufshaRezifaResponse" />
   </wsdl:message>
   <wsdl:message name="IBatchService_YeziratRikuzim_InputMessage">
     <wsdl:part name="parameters" element="tns:YeziratRikuzim" />
@@ -1450,6 +1099,10 @@
     <wsdl:operation name="TransferToHilan">
       <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/TransferToHilan" message="tns:IBatchService_TransferToHilan_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBatchService/TransferToHilanResponse" message="tns:IBatchService_TransferToHilan_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BdikatChufshaRezifa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/BdikatChufshaRezifa" message="tns:IBatchService_BdikatChufshaRezifa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBatchService/BdikatChufshaRezifaResponse" message="tns:IBatchService_BdikatChufshaRezifa_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="YeziratRikuzim">
       <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/YeziratRikuzim" message="tns:IBatchService_YeziratRikuzim_InputMessage" />
@@ -1585,6 +1238,17 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_TransferToHilan_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BdikatChufshaRezifa">
+      <soap12:operation soapAction="http://tempuri.org/IBatchService/BdikatChufshaRezifa" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_BdikatChufshaRezifa_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_BdikatChufshaRezifa_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

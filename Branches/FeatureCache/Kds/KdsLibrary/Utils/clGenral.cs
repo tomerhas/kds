@@ -34,7 +34,7 @@ namespace KdsLibrary
         #region pkg_rikuz_avoda constants
         public const string cProGetRikuzAvodaChodshiTemp = "PKG_RIKUZ_AVODA.pro_get_rikuz_chodshi_temp";
         #endregion
-
+        
         #region pkg_batch constants
         public const string cProInsBakasha = "pkg_batch.pro_ins_bakasha";
         public const string cProInsLogBakasha = "pkg_batch.pro_ins_log_bakasha";
@@ -45,6 +45,7 @@ namespace KdsLibrary
         public const string cProGetAllYameiAvoda = "pkg_batch.pro_get_all_yamei_avoda";
         public const string cProGetYameiAvodaShinuiHR = "pkg_batch.pro_get_yamei_avoda_shinui_hr";
         public const string cProInsertDebugBathcPopulation = "pkg_batch.pro_insert_debug_maatefet";
+        public const string cProInsertLogMaatefet = "pkg_batch.pro_insert_log_maatefet";
         public const string cProGetShinuyMatsavOvdim = "pkg_batch.pro_get_shinuy_matsav_ovdim";
         public const string cProGetShinuyMeafyeneyBizua = "pkg_batch.pro_get_Shinuy_meafyeney_bizua";
         public const string cProGetShinuyPireyOved = "pkg_batch.pro_get_shinuy_pirey_oved";
@@ -77,6 +78,7 @@ namespace KdsLibrary
         public const string cProDeleteBakashotYeziratRikuzim = "pkg_batch.DeleteBakashotYeziratRikuzim";
         public const string cProRefreshTable = "PKG_BATCH.pro_RefreshMv";
         public const string cProGetMakatimLeTkinut = "PKG_BATCH.pro_Get_Makatim_LeTkinut";
+        public const string cProInsMachalotLoMeturgamot = "PKG_BATCH.pro_ins_machalot_lo_meturgamot";
 
         public const string cProInsYameyAvodaHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Yamim";
         public const string cProInsSidurimOvdimHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Sidurim";
@@ -84,7 +86,8 @@ namespace KdsLibrary
         public const string cProInsNetuneyHistoryHodshi = "PKG_MF_HISTORY.Pro_Ins_historiya_chodshi";
         public const string cProInsNetuneyHistoryYomi = "PKG_MF_HISTORY.Pro_Ins_historiya_yomi";
         public const string cProInsNetuneyHistoryCatalog = "PKG_MF_HISTORY.Ins_netuney_historiya_Catalog";
-        #endregion
+      
+#endregion 
         #region pkg_sdrn constants
         public const string cProGetKnisotToRefresh = "PKG_sdrn.pro_get_Knisot_sdrm";
         public const string cProInsertKnisot = "PKG_sdrn.pro_insert_knisot";
@@ -96,32 +99,32 @@ namespace KdsLibrary
         public const string cProCheckOvedPutar = "pkg_calc.pro_get_oved_putar";
         public const string cProGetPeiluyotLeoved = "pkg_calc.pro_get_peiluyot_leoved";
         public const string cProGetPirteyOvedForMonth = "pkg_calc.pro_get_pirtey_oved_ForMonth";
-        #endregion
+#endregion
 
-        #region kds_catalog_pack constants
+#region kds_catalog_pack constants
         public const string cGetKavDetails = "kds_catalog_pack.GetKavDetails";
         public const string cGetRekaDetails = "kds_catalog_pack.GetRekaDetails";
         public const string cGetNamakDetails = "kds_catalog_pack.GetNamakDetails";
         public const string cGetRekaDetailsByXY = "kds_catalog_pack.GetRekaDetailsByXY";
-        #endregion
+#endregion 
 
-        #region PKG_COMPONENT_SIDURIM constant
+#region PKG_COMPONENT_SIDURIM constant
         public const string cProGetMatchingComponentSidurDesc = "PKG_COMPONENT_SIDURIM.pro_get_matching_description";
         public const string cProGetMatchingComponentSidurKod = "PKG_COMPONENT_SIDURIM.pro_get_matching_kod";
         public const string cProGetComponentSidurDescByKod = "PKG_COMPONENT_SIDURIM.pro_get_description_by_kod";
         public const string cProGetKodByComponentSidurDesc = "PKG_COMPONENT_SIDURIM.pro_get_kod_by_description";
         public const string cProGetHistoryOfComponentSidur = "PKG_COMPONENT_SIDURIM.pro_get_history";
-        #endregion
+#endregion 
 
-        #region PKG_COMPONENT_SUG_SIDUR constant
+#region PKG_COMPONENT_SUG_SIDUR constant
         public const string cProGetMatchingComponentTypeSidurDesc = "PKG_COMPONENT_SUG_SIDUR.pro_get_matching_description";
         public const string cProGetMatchingComponentTypeSidurKod = "PKG_COMPONENT_SUG_SIDUR.pro_get_matching_kod";
         public const string cProGetComponentTypeSidurDescByKod = "PKG_COMPONENT_SUG_SIDUR.pro_get_description_by_kod";
         public const string cProGetKodByComponentTypeSidurDesc = "PKG_COMPONENT_SUG_SIDUR.pro_get_kod_by_description";
         public const string cProGetHistoryOfComponentTypeSidur = "PKG_COMPONENT_SUG_SIDUR.pro_get_history";
-        #endregion
-
-        #region PKG_ELEMENTS constants
+#endregion 
+        
+#region PKG_ELEMENTS constants
         public const string cProGetDataByKodElement = "PKG_ELEMENTS.pro_get_data_by_kod_element";
         public const string cProGetElementsVeMeafyenim = "PKG_ELEMENTS.pro_get_elements_vemeafyenim";
         public const string cProGetTeurElements = "PKG_ELEMENTS.pro_get_teur_elements";
@@ -134,9 +137,9 @@ namespace KdsLibrary
         public const string cProGetAllElementsKod = "PKG_ELEMENTS.pro_get_all_elements_kod";
         public const string cProGetElementDetails = "PKG_ELEMENTS.pro_get_element_details";
         public const string cProGetVisutDetails = "PKG_ELEMENTS.pro_get_visut_details";
-        #endregion
+#endregion
 
-        #region PKG_ERRORS constants
+#region PKG_ERRORS constants
         public const string cFnIsOtoNumberExists = "pkg_errors.fn_is_oto_number_exists";
         public const string cProGetOvedSidurimPeilut = "pkg_errors.pro_get_oved_sidurim_peilut";
         public const string cProGetLastUpdateData = "PKG_ERRORS.pro_oved_update_fields";
@@ -149,10 +152,10 @@ namespace KdsLibrary
         public const string cProInsPeilutOvdim = "pkg_errors.pro_ins_peilut_ovdim";
         public const string cProGetAllErrorsAndFields = "pkg_errors.pro_get_all_shgiot";
         public const string cProGetApprovalErrors = "pkg_errors.get_approval_errors";
+        
+#endregion
 
-        #endregion
-
-        #region pkg_ovdim constants
+#region pkg_ovdim constants
         public const string cProGetHistoriatMeafyenLeoved = "pkg_ovdim.pro_get_historiat_meafyen";
         public const string cProGetMonthWorkToOved = "pkg_ovdim.pro_get_month_year_to_oved";
         public const string cProGetMonthHuavarLesacharToOved = "pkg_ovdim.pro_get_months_huavar_lesachar";
@@ -215,33 +218,35 @@ namespace KdsLibrary
         public const string cProSaveMeasherOmistayeg = "pkg_ovdim.pro_save_measher_O_mistayeg";
         public const string cProGetPakadId = "pkg_ovdim.pro_get_pakad_id";
         public const string cFunCheckPeilutExist = "pkg_ovdim.fun_check_peilut_exist";
-        public const string cFunCheckSidurExist = "pkg_ovdim.fun_check_sidur_exist";
+        public const string cFunCheckSidurExist = "pkg_ovdim.fun_check_sidur_exist";       
         public const string cFunIsCardLastUpdate = "pkg_ovdim.func_is_card_last_updated";
         public const string cProUpdSadotNosafim = "pkg_ovdim.pro_upd_sadot_nosafim";
         public const string cProDelKnisotPeilut = "pkg_ovdim.pro_del_knisot_peilut";
         public const string cProDelHachanotMechona = "pkg_ovdim.pro_del_hachanot_mechona";
         public const string cProGetArachimLeoved = "pkg_ovdim.pro_get_arachim_by_misIshi";
         public const string cProUpdIdkunRashemet = "pkg_ovdim.pro_ins_idkuney_rashemet";
+        public const string cProDeleteIdkunRashemet = "pkg_ovdim.pro_delete_idkuney_rashemet";
 
         public const string cProGetPirteyOvedLetkufot = "pkg_ovdim.pro_get_pirtey_oved_letkufot";
         public const string cProGetMeafyenOvedLetkufot = "pkg_ovdim.pro_get_meafyen_oved_letkufot";
         public const string cProGetRikuzeyAvodaLeoved = "pkg_ovdim.pro_get_rikuzey_avoda_leoved";
         public const string cProGetOvdimLefiRikuzim = "pkg_ovdim.get_ovdim_by_Rikuzim";
         public const string cProGetCountWorkCardNoShaotLetahlum = "pkg_ovdim.fun_get_count_no_val_letashlum";
+        public const string GetCountWCLoLetashlumWithMeafyenim = "pkg_ovdim.fun_count_lo_letashlum_meafyen";
         public const string cProGetWorkCardNoShaotLetahlum = "pkg_ovdim.pro_get_workcad_no_val_letash";
+        
+#endregion
 
-        #endregion
-
-        #region PKG_PARAMETERS constants
+#region PKG_PARAMETERS constants
         public const string cProGetErechParameterByKod = "PKG_PARAMETERS.pro_get_erech_by_kod";
         public const string cProGetMatchingParametersDesc = "PKG_PARAMETERS.pro_get_matching_description";
         public const string cProGetMatchingParametersKod = "PKG_PARAMETERS.pro_get_matching_kod";
         public const string cProGetParameterDescByKod = "PKG_PARAMETERS.pro_get_description_by_kod";
         public const string cProGetKodByParametersDesc = "PKG_PARAMETERS.pro_get_kod_by_description";
         public const string cProGetHistoryOfParameters = "PKG_PARAMETERS.pro_get_history";
-        #endregion
+#endregion
 
-        #region PKG_REQUEST constants
+#region PKG_REQUEST constants
         public const string cProGetRequests = "PKG_REQUEST.pro_get_requests";
         public const string cProGetRequestsList = "PKG_REQUEST.pro_get_requests_list";
         public const string cProGetStatusRequest = "PKG_REQUEST.pro_get_status_request";
@@ -251,9 +256,11 @@ namespace KdsLibrary
         public const string cProGetListOvdimFromLogBakashot = "PKG_REQUEST.pro_get_ovdim_log_bakashot";
         public const string cProGetTahalichKlita = "PKG_REQUEST.pro_get_tahalich_klita";
         public const string cProGetLogTahalich = "PKG_REQUEST.pro_get_log_tahalich";
-        #endregion
+        public const string cFunCheckTahalichEnd = "PKG_REQUEST.fun_check_tahalich_beEnd";
+        public const string cFunGetMaxBakasaBySug = "PKG_REQUEST.fun_get_max_bakasa_by_sug";
+#endregion
 
-        #region PKG_REPORTS constants
+#region PKG_REPORTS constants
         public const string cProGetIdOfYameyAvoda = "PKG_REPORTS.pro_get_Id_of_Yamey_Avoda";
         public const string cProGetRizotChishuvLechodeshSucceeded = "PKG_REPORTS.pro_get_rizot_chishuv_lehodesh";
         public const string cProGetListReports = "PKG_REPORTS.pro_get_reports_list";
@@ -273,15 +280,16 @@ namespace KdsLibrary
         public const string cProGetHeavyReportsToDelete = "PKG_REPORTS.pro_get_HeavyReportsToDelete";
         public const string cProGetProfilToDisplay = "PKG_REPORTS.pro_get_ProfilToDisplay";
         public const string cProGetSnifeyTnuaByEzor = "PKG_REPORTS.pro_GetSnifeyTnuaByEzor";
-        #endregion
+        public const string cProGetReportDetails = "PKG_REPORTS.pro_get_Report_Details";
+#endregion
 
-        #region PKG_SIDURIM constants
+#region PKG_SIDURIM constants
         public const string cProGetSidurimLeoved = "PKG_SIDURIM.pro_get_sidurim_leoved";
         public const string cProInsUpdSidurimLeoved = "pkg_sidurim.pro_ins_upd_sidurim_ovdim";
         public const string cProGetMeafyeneySidur = "PKG_SIDURIM.pro_get_meafyen_sidur_by_kod";
         public const string cProTeurSidurWhithOutList = "PKG_SIDURIM.pro_get_teur_whithoutlist";
         public const string cProGetKodElement = "PKG_SIDURIM.pro_get_kod_element";
-        public const string cProKodSidurWhithOutList = "PKG_SIDURIM.pro_get_kod_whithoutlist";
+        public const string cProKodSidurWhithOutList = "PKG_SIDURIM.pro_get_kod_whithoutlist"; 
         public const string cProGetCtbSidurimWithMeafyen = "PKG_SIDURIM.pro_get_ctb_sidurim_meafyen";
         public const string cProGetMatchingSidurDesc = "PKG_SIDURIM.pro_get_matching_description";
         public const string cProGetMatchingSidurKod = "PKG_SIDURIM.pro_get_matching_kod";
@@ -296,11 +304,12 @@ namespace KdsLibrary
         public const string cProGetMeafyenySidurById = "pkg_sidurim.pro_get_meafyeny_sidur_by_id";
         public const string cProGetSibaLoLetashlum = "pkg_sidurim.pro_get_siba_lo_letashlum";
         public const string cProGetSidurimMeyuchadim = "pkg_sidurim.get_sidurim_meyuchadim_all";
+        public const string cFunGetMeshechSidurForPeriod = "pkg_sidurim.fun_get_meshech_sidur_Toperiod";
         public const string cFuncGetNextErrCard = "pkg_ovdim.func_get_next_err_card";
-        //  public const string cProGetMeafyenimLesidurRagil = "PKG_SIDURIM.pro_get_meafyen_sidur_ragil";
-        #endregion
+      //  public const string cProGetMeafyenimLesidurRagil = "PKG_SIDURIM.pro_get_meafyen_sidur_ragil";
+#endregion
 
-        #region PKG_SUG_SIDUR constant
+#region PKG_SUG_SIDUR constant
         public const string cProGetMeafyeneySugSidur = "PKG_SUG_SIDUR.get_meafyeney_sug_sidur_all";
         public const string cProGetMatchingTypeSidurDesc = "PKG_SUG_SIDUR.pro_get_matching_description";
         public const string cProGetMatchingTypeSidurKod = "PKG_SUG_SIDUR.pro_get_matching_kod";
@@ -310,36 +319,38 @@ namespace KdsLibrary
         public const string cProRefreshSugSidur = "PKG_SUG_SIDUR.calling_Pivot_Meafyeney_S";
         public const string cProGetSugeySidurFromTnua = "PKG_SUG_SIDUR.pro_get_sugey_sidur_tnua";
         public const string cFunGetSugSidur = "PKG_SUG_SIDUR.fun_get_sug_sidur";
-        #endregion
+#endregion 
 
 
-        public const string cProGetYamimMeyuchadim = "pkg_utils.pro_get_yamim_meyuchadim";
-        public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim_meyuchadim";
+public const string cProGetYamimMeyuchadim = "pkg_utils.pro_get_yamim_meyuchadim";
+public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim_meyuchadim";
+     
 
 
-
-        #region KDS_SIDUR_AVODA_PACK constants
+#region KDS_SIDUR_AVODA_PACK constants 
         public const string cGetSidurDetails = "KDS_SIDUR_AVODA_PACK.GetSidurDetails";
-        #endregion
-
-        #region pkg_tnua constants
-        public const string cGetKatalogKavim = "pkg_tnua.pro_get_kavim_details";
+#endregion
+       
+#region pkg_tnua constants
+        public const string cGetKatalogKavim = "pkg_tnua.pro_get_kavim_details";        
         public const string cProGetMasharBusLicenseNum = "pkg_tnua.pro_get_mashar_bus_license_num";
         public const string cProGetMasharData = "PKG_TNUA.pro_get_mashar_data";
         public const string cProGetBusesDetails = "PKG_TNUA.pro_get_buses_details";
+       
+#endregion
 
-        #endregion
 
-
-        #region tnua function constants
+#region tnua function constants
         public const string cCheckHityatzvutNehag = "kds.KdsVerifyDriverCheckIn";
-        public const string cProInsTekenDriversToTnua = "KDSADMIN.pro_ins_amount_of_drivers_tnua";
-        #endregion
-        public const string cProBdikatChufshaRezifa = "KDSADMIN.pro_bdikat_chufsha_rezifa";
-        #region pkg_task_Manager
+        public const string cProInsTekenDriversToTnua = "KDSADMIN.pro_ins_amount_of_drivers_tnua";          
+#endregion
+        public const string cProBdikatChufshaRezifa = "KDSADMIN.pro_bdikat_chufsha_rezifa"; 
+        public const string cProIdkunMachalotOvdim = "KDSADMIN.pro_idkun_machalot_ovdim";
+        public const string cProBdikatYemeyMachala = "KDSADMIN.pro_bdikat_machalot_dor_B";
+        #region pkg_task_Manager 
         public const string cGetStuckGroup = "pkg_task_Manager.GetStuckGroup";
         public const string cGetLogKvuzotByKod = "pkg_task_Manager.GetLogKvuzotByKod";
-        #endregion
+        #endregion 
         #region pkg_utils constants
         public const string cProGetPremiaYadanit = "pkg_utils.pro_get_premia_yadanit";
         public const string cProGetOvdimLeritza = "pkg_utils.pro_get_ovdim_leRitza";
@@ -372,20 +383,20 @@ namespace KdsLibrary
         public const string cProGetTavlaotToRefresh = "PKG_UTILS.pro_get_tavlaot_to_refresh";
         public const string cProGetOvdimLeBakashatChishuv = "PKG_UTILS.pro_get_ovdim_by_bakasha";
 
-
-
-        #endregion
+        
+     
+#endregion
         #region PKG_APPROVALS constants
-        public const string cFnIsOvedMusach = "PKG_APPROVALS.fn_is_oved_musach";
+        public const string cFnIsOvedMusach = "PKG_APPROVALS.fn_is_oved_musach";       
         #endregion
 
 
-        #region PKG_DEMANDS
+#region PKG_DEMANDS
         public const string cProGetMachalaDays = "PKG_DEMANDS.pro_get_machala_days_rivon";
-        #endregion
+#endregion 
         public static string[] arrCalcType = new string[] { "רגיל", "הפרשים", "חודש פתוח" };
         public static string[] arrDays = new string[] { "א", "ב", "ג", "ד", "ה", "ו", "ש" };
-        
+
 
 
         public const int cSuccessBatchRecordsParameterCode = 204;
@@ -396,7 +407,7 @@ namespace KdsLibrary
             enRashemet = 2,
             enRashemetAll = 3,
             enMenahelImKfufim = 5,
-            enVaadatPikuah = 6
+            enVaadatPikuah = 6 
         }
         public enum enOnatiut
         {
@@ -408,7 +419,7 @@ namespace KdsLibrary
         }
         public enum enHityazvutErrorInSite
         {
-            enHityazvutErrorInSite = 1
+            enHityazvutErrorInSite = 1          
         }
         public enum enHityazvut
         {
@@ -465,7 +476,7 @@ namespace KdsLibrary
         {
             YemeyAvoda = 56, MichsaLeShaotNosafot = 12
         }
-
+    
         public enum enRishyonAutobus
         {
             //לעובד אין רישיון אוטובוס
@@ -509,7 +520,7 @@ namespace KdsLibrary
         //{
         //    KnisaByDemand = 3
         //}
-       
+
         public enum enKodGil
         {
             enTzair = 0,
@@ -557,12 +568,22 @@ namespace KdsLibrary
             All = 3
         }
 
+        public enum enSugeyMeadkenShinuyim
+        {
+            WorkCard = -2,
+            MasachChishuvBatch = -3,
+            MasachTichkurChishuvOnLine = -4,
+            ShnuyimShguimBatchPrem = -5,
+            ShnuyimShguimBatchHR = -6,
+            ShnuyimShguimBatchSdrn = -7,
+            Default=-9
+        }
         public enum enVehicleType
         {
             NoTachograph = 1064
         }
 
-       
+
 
         public enum enRechivim
         {
@@ -821,15 +842,16 @@ namespace KdsLibrary
             NochechutLePremiyaMeshekKonenutGrira = 277,
             ETPaarBetweenMichsaRegilaAndMuktenet = 278,
             ETMichsaMekoritBeforeHafchata = 279,
-            YomMachalatYeledHadHori = 280,
-            HalbashaTchilatYom = 931,
-            HalbashaSofYom = 932,
-            TosefetGririoTchilatSidur = 1281,
-            TosefetGrirotSofSidur = 1282
+            YomMachalatYeledHadHori=280,
+            NosafotBeNeemanut=281,
+            HalbashaTchilatYom=931,
+            HalbashaSofYom=932,
+            TosefetGririoTchilatSidur=1281,
+            TosefetGrirotSofSidur=1282
         }
         public enum TypeCalc
         { Batch = 1, OnLine = 2, Test = 3, Premiya = 4 }
-      
+
 
         public enum enMeafyenim
         {
@@ -845,7 +867,7 @@ namespace KdsLibrary
         public enum enSugSidur
         {
             //סוג סידור
-            SugSidur73 = 73
+           SugSidur73 = 73
         }
 
 
@@ -866,7 +888,7 @@ namespace KdsLibrary
             HistayemTipul = 1,
             Betipul = 0
         }
-      
+
        
 
         public enum enMeafyen
@@ -875,7 +897,7 @@ namespace KdsLibrary
             SugAvoda = 52
         }
 
-       
+
 
         public enum enDemandType
         {
@@ -885,12 +907,12 @@ namespace KdsLibrary
 
         public enum enCalcType
         {
-            MonthlyCalc = 1,
-            PremiotCalc = 2,
-            ShinuyimVeShguyim = 3,
-            ShinuyimVeSghuimHR = 4,
+            MonthlyCalc = 1, 
+            PremiotCalc = 2, 
+            ShinuyimVeShguyim = 3, 
+            ShinuyimVeSghuimHR = 4, 
             ShinuyimVeSghuimPremiot = 5,
-            Rikuzim = 6
+            Rikuzim = 6 
 
         }
         public enum enYechidaIrgunit
@@ -916,13 +938,16 @@ namespace KdsLibrary
             MetaemTikshoret = 124
         }
 
-  
+
 
        
 
         public enum enKodMaamad
         {
             ChaverSofi = 11,
+            MoamadB=12,
+            MoamadA=13,
+            GimlayTakzivi=15,
             ChozeMeyuchad = 23,
             SachirKavua = 22,
             Sachir12 = 21,
@@ -934,12 +959,13 @@ namespace KdsLibrary
             Chanich = 29,
             PensyonerBechoze = 38,
             GimlayTaktziviBechoze = 48,
-            PensyonerTakziviBechoze = 58
+            PensyonerTakziviBechoze = 58,
+            Shtachim = 86
         }
         public enum enHrMaamad
-        {
+        {            
             SalariedEmployee12 = 221,
-            PermanentSalariedEmployee = 222
+            PermanentSalariedEmployee = 222            
         }
         public enum enEzor
         {
@@ -1000,7 +1026,7 @@ namespace KdsLibrary
             VaadatPnim = 4
         }
 
-       
+
 
         public enum enGeneralBatchType
         {
@@ -1021,9 +1047,15 @@ namespace KdsLibrary
             RifreshKnisot = 15,
             TransferTekenNehagim = 16,
             HasavatNetuniToOracle = 17,
-            RetroSpectSDRN = 18,
-            LoadNetuneyMeshekForPremyot = 19,
-            BdikatChufshaRezifa = 20
+            RetroSpectSDRN =18,
+            LoadNetuneyMeshekForPremyot=19,
+            BdikatChufshaRezifa=20,
+            ShguimOfPremiyotMusachimNihulTnuaYadaniyot=21,
+            ShguimOfHR=22,
+            Sleep=23,
+            ShguimOfRetroSpaectSdrn = 24,
+            IdkunMachalotOvdim=25,
+            BdikatYemeyMachala=26
         }
         public enum enBechishuvSachar
         {
@@ -1048,7 +1080,7 @@ namespace KdsLibrary
         }
         public enum enMeafyenElementim23
         {
-            ElementTimeNesiaReka = 1
+            ElementTimeNesiaReka = 1            
         }
         public enum enMeafyenElementim35
         {
@@ -1061,7 +1093,7 @@ namespace KdsLibrary
             ValueNull = -1
         }
 
-
+   
         public enum enNetuneyPeilut
         {
             SugPeilut = 0, //0-element, 1-nesiaa
@@ -1084,7 +1116,7 @@ namespace KdsLibrary
         {
             HimSelf,
             UnderManager,
-            All
+            All 
         }
 
         public enum enReportType
@@ -1331,12 +1363,12 @@ namespace KdsLibrary
                             StrListValues += Item.Value.ToString() + ",";
                     return (StrListValues.Length > 0) ? StrListValues.Remove(StrListValues.Length - 1) : "";
                 case "KdsLibrary.Controls.ListBoxExtended":
-                    return ((ListBoxExtended)ctl).ListOfValues;
+                    return ((ListBoxExtended)ctl).ListOfValues; 
                 case "System.Web.UI.WebControls.RadioButtonList":
                     foreach (ListItem Item in ((RadioButtonList)ctl).Items)
                         if (Item.Selected)
                             StrListValues = Item.Value;
-                    return StrListValues;
+                    return StrListValues; 
                 default: return null;
             }
 
@@ -1507,6 +1539,12 @@ namespace KdsLibrary
                 throw ex;
             }
         }
+        //public static void LogBatchPopulation(int employeeID, DateTime date, DateTime btchExecutionDate,
+        // long btchRequest,  clGeneral.enSugeyMeadkenShinuyim enMeadken)
+        //{
+        //    LogBatchPopulation(employeeID, date, btchExecutionDate, btchRequest,null ,null, enMeadken);
+        //}
+
         public static void LogBatchPopulation(int employeeID, DateTime date, DateTime btchExecutionDate,
            long btchRequest, enGeneralBatchType batchType)
         {
@@ -1558,7 +1596,7 @@ namespace KdsLibrary
 
             if (System.Web.HttpContext.Current != null)
                 foreach (UserProfile Profile in LoginUser.GetLoginUser().UserProfiles)
-                    Result += Profile.ProfileGroup + ",";
+                        Result += Profile.ProfileGroup + ",";
             return (Result == string.Empty) ? string.Empty : Result.Substring(0, Result.Length - 1);
         }
 
@@ -1639,7 +1677,7 @@ namespace KdsLibrary
                 dDate = dDate.Date;
                 arrTime = sShaa.Split(char.Parse(":"));
                 if (arrTime.Length > 1)
-                {
+                {                    
                     dTemp = dDate.AddHours(double.Parse(arrTime[0])).AddMinutes(double.Parse(arrTime[1]));
                     if (arrTime.Length > 2)
                     {
@@ -1650,7 +1688,7 @@ namespace KdsLibrary
                 {
                     sShaa = sShaa.PadLeft(4, (char)48);
                     dTemp = dDate.AddHours(double.Parse(sShaa.Substring(0, 2))).AddMinutes(double.Parse(sShaa.Substring(2, 2)));
-                }
+                 }
 
                 return dTemp;
             }
@@ -1725,7 +1763,7 @@ namespace KdsLibrary
             return result;
         }
 
-       
+
 
         public static DataTable FilterDataTable(DataTable dtTable, string sFilter)
         {
@@ -1737,7 +1775,7 @@ namespace KdsLibrary
             dtTableNew = dtTable.Clone();
             foreach (DataRow dRow in dr)
                 dtTableNew.ImportRow(dRow);
-
+            
             return dtTableNew;
         }
 
@@ -1778,7 +1816,7 @@ namespace KdsLibrary
         }
 
 
-      
+
         public static string AsDomain(string url)
         {
             if (string.IsNullOrEmpty(url))

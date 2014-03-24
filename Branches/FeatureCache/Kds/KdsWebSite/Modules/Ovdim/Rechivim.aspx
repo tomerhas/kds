@@ -7,7 +7,7 @@
     <link href="../../StyleSheet.css"type="text/css" rel="stylesheet" />
    <script src="../../Js/GeneralFunction.js" type="text/javascript"></script>  
    <script type="text/javascript">
-       function window.onload() {
+       window.onload = function () {
            if (window.dialogArguments != undefined) {
                if (window.dialogArguments.document.getElementById("divHourglass") != null)
                    window.dialogArguments.document.getElementById("divHourglass").style.display = 'none';

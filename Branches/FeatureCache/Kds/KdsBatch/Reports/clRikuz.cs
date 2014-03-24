@@ -45,8 +45,8 @@ namespace KdsBatch.Reports
         {
             get { return _TarChishuv; }
         }
-     
-        public clRikuz(long BakashaId, int MisparIshi, DateTime Month, int sug_chishuv, int iEzor, int iMaamad, int iHevra, DateTime dTarChishuv)
+
+        public clRikuz(long BakashaId, int MisparIshi, DateTime Month, int sug_chishuv, int iEzor, int iMaamad, int iHevra, DateTime dTarChishuv, string sRSVersion, string sUrlRSConfig, string sServiceUrlConfig)
             : base(ConfigurationSettings.AppSettings["RikuzRdlName"], eFormat.PDF, BakashaId, MisparIshi, 0)//for rikuzim
         {
             _sTeur = " ריכוזים ל " + Month.ToShortDateString();
@@ -56,6 +56,10 @@ namespace KdsBatch.Reports
             _maamad = iMaamad;
             _hevra = iHevra;
             _TarChishuv = dTarChishuv;
+
+            RSVersion = sRSVersion;
+            UrlConfigKey = sUrlRSConfig;
+            ServiceUrlConfigKey = sServiceUrlConfig;
         }
     }
 }

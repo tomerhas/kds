@@ -47,6 +47,18 @@ namespace KDSCommon.UDT
             }
         }
 
+        public bool IsExists(OBJ_OVDIM_IM_SHINUY_HR item)
+        {
+            //bool exists = false;
+            return Array.Exists(m_OBJ_OVDIM_IM_SHINUY_HR, element => element != null && element.MISPAR_ISHI == item.MISPAR_ISHI && element.TAARICH == item.TAARICH);
+            //foreach (OBJ_OVDIM_IM_SHINUY_HR obj in m_OBJ_OVDIM_IM_SHINUY_HR)
+            //{
+            //    if (obj.MISPAR_ISHI == item.MISPAR_ISHI && obj.TAARICH == item.TAARICH)
+            //        return true;
+            //}
+
+            //return exists;
+        }
 
         public long Count
         {

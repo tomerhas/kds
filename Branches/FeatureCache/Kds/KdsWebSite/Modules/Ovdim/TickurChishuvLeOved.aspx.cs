@@ -16,6 +16,7 @@ using KdsLibrary.Security;
 using KdsLibrary.BL;
 using KdsLibrary.Utils.Reports;
 using KdsBatch;
+using KdsBatch.Reports;
 using KDSCommon.Enums;
 
 public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
@@ -148,7 +149,6 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
      {
          byte[] s;
          string sScript;
-         ReportModule Report = new ReportModule();// ReportModule.GetInstance();
 
          if (Page.IsValid)
          {
@@ -156,15 +156,20 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
              {
                  if (ddlRitzatChishuv.SelectedItem.Text.LastIndexOf("-") == -1)
                  {
-                     Report.AddParameter("P_MISPAR_ISHI", txtEmpId.Text);
-                     Report.AddParameter("P_TAARICH", ViewState["Taarich"].ToString());
-                     Report.AddParameter("P_Tar_chishuv", ViewState["TarChishuv"].ToString());
-                     Report.AddParameter("P_sug_chishuv", ViewState["SugChishuv"].ToString());
-                     Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
-                     Report.AddParameter("P_SIKUM_CHODSHI", "0");
-                      Report.AddParameter("P_DT_RIKUZ", ((DataSet)Session["dsRikuz"]));
 
-                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshiOnLine2", eFormat.PDF, true);
+                     clReportOnLine oReportOnLine = new clReportOnLine("RikuzAvodaChodshiOnLine2", eFormat.PDF);
+
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", txtEmpId.Text));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_TAARICH", ViewState["Taarich"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_Tar_chishuv", ViewState["TarChishuv"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_sug_chishuv", ViewState["SugChishuv"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_Oved_5_Yamim", ViewState["WorkDay"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_SIKUM_CHODSHI", "0"));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_DT_RIKUZ", ((DataSet)Session["dsRikuz"])));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_USER", KdsLibrary.Security.LoginUser.GetLoginUser().UserInfo.EmployeeFullName));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_DT", DateTime.Now.ToString()));
+
+                     s = oReportOnLine.CreateFile();
 
                   //   s = Report.CreateReport("/KdsReports/RikuzAvodaChodshiOnLine", eFormat.PDF, true);
 
@@ -181,16 +186,18 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                  }
                  else if (ViewState["BakashId"] != null)
                  {
+                     clReportOnLine oReportOnLine = new clReportOnLine("RikuzAvodaChodshi2", eFormat.PDF);
 
-                     Report.AddParameter("P_MISPAR_ISHI", txtEmpId.Text);
-                     Report.AddParameter("P_TAARICH", ViewState["Taarich"].ToString());
-                     Report.AddParameter("P_BAKASHA_ID", ViewState["BakashId"].ToString());
-                     Report.AddParameter("P_Tar_chishuv", ViewState["TarChishuv"].ToString());
-                     Report.AddParameter("P_sug_chishuv", ViewState["SugChishuv"].ToString());
-                     Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
-                     Report.AddParameter("P_SIKUM_CHODSHI", "0");
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", txtEmpId.Text));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_TAARICH", ViewState["Taarich"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_BAKASHA_ID", ViewState["BakashId"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_Tar_chishuv", ViewState["TarChishuv"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_sug_chishuv", ViewState["SugChishuv"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_Oved_5_Yamim", ViewState["WorkDay"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_SIKUM_CHODSHI", "0"));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_DT", DateTime.Now.ToString()));
 
-                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshi2", eFormat.PDF, true);
+                     s = oReportOnLine.CreateFile(); ;// Report.CreateReport("/KdsReports/RikuzAvodaChodshi2", eFormat.PDF, true);
 
                      Session["BinaryResult"] = s;
                      Session["TypeReport"] = "PDF";
@@ -209,7 +216,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
     {
          byte[] s ;
          string sScript;
-         ReportModule Report = new ReportModule();// ReportModule.GetInstance();
+       //  ReportModule Report = new ReportModule();// ReportModule.GetInstance();
 
          if (Page.IsValid)
          {
@@ -217,15 +224,19 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
              {
                  if (ddlRitzatChishuv.SelectedItem.Text.LastIndexOf("-") == -1)
                  {
-                     Report.AddParameter("P_MISPAR_ISHI", txtEmpId.Text);
-                     Report.AddParameter("P_TAARICH", ViewState["Taarich"].ToString());
-                     Report.AddParameter("P_Tar_chishuv", ViewState["TarChishuv"].ToString());
-                     Report.AddParameter("P_sug_chishuv", ViewState["SugChishuv"].ToString());
-                     Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
-                     Report.AddParameter("P_SIKUM_CHODSHI", "0");
-                     Report.AddParameter("P_DT_RIKUZ", ((DataSet)Session["dsRikuz"]));
+                     clReportOnLine oReportOnLine = new clReportOnLine("RikuzAvodaChodshiOnLine2", eFormat.EXCEL);
 
-                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshiOnLine2", eFormat.EXCEL, true);
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", txtEmpId.Text));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_TAARICH", ViewState["Taarich"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_Tar_chishuv", ViewState["TarChishuv"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_sug_chishuv", ViewState["SugChishuv"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_Oved_5_Yamim", ViewState["WorkDay"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_SIKUM_CHODSHI", "0"));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_DT_RIKUZ", ((DataSet)Session["dsRikuz"])));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_USER", KdsLibrary.Security.LoginUser.GetLoginUser().UserInfo.EmployeeFullName));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_DT", DateTime.Now.ToString()));
+
+                     s = oReportOnLine.CreateFile();
 
                      Session["BinaryResult"] = s;
                      Session["TypeReport"] = "EXCEL";
@@ -239,14 +250,19 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                  }
                  else if (ViewState["BakashId"] != null)
                  {
-                     Report.AddParameter("P_MISPAR_ISHI", txtEmpId.Text);
-                     Report.AddParameter("P_TAARICH", ViewState["Taarich"].ToString());
-                     Report.AddParameter("P_BAKASHA_ID", ViewState["BakashId"].ToString());
-                     Report.AddParameter("P_Tar_chishuv", ViewState["TarChishuv"].ToString());
-                     Report.AddParameter("P_sug_chishuv", ViewState["SugChishuv"].ToString());
-                     Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
-                     Report.AddParameter("P_SIKUM_CHODSHI", "0");
-                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshi2", eFormat.EXCEL, true);
+                     clReportOnLine oReportOnLine = new clReportOnLine("RikuzAvodaChodshi2", eFormat.EXCEL);
+
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", txtEmpId.Text));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_TAARICH", ViewState["Taarich"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_BAKASHA_ID", ViewState["BakashId"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_Tar_chishuv", ViewState["TarChishuv"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_sug_chishuv", ViewState["SugChishuv"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_Oved_5_Yamim", ViewState["WorkDay"].ToString()));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_SIKUM_CHODSHI", "0"));
+                     oReportOnLine.ReportParams.Add(new clReportParam("P_DT", DateTime.Now.ToString()));
+
+                     s = oReportOnLine.CreateFile(); ;// Report.CreateReport("/KdsReports/RikuzAvodaChodshi2", eFormat.PDF, true);
+
 
                      Session["BinaryResult"] = s;
                      Session["TypeReport"] = "EXCEL";
@@ -279,7 +295,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 
                 while (dTaarich <= dTarAd)
                 {
-                    clBatchManager btchMan = new clBatchManager(0);
+                    clBatchManager btchMan = new clBatchManager(0, clGeneral.enSugeyMeadkenShinuyim.MasachTichkurChishuvOnLine.GetHashCode());
 
                     try
                     {

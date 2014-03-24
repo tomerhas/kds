@@ -19,6 +19,7 @@ using KdsBatch;
 using System.IO;
 using System.Collections.Generic;
 using KDSCommon.Enums;
+using KdsBatch.Reports;
 
 public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
 {
@@ -177,22 +178,25 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
     {
         byte[] s;
         string sScript;
-        ReportModule Report = new ReportModule();// ReportModule.GetInstance();
+       // ReportModule Report = new ReportModule();// ReportModule.GetInstance();
         string sIp = "";
         string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
+        clReportOnLine oReportOnLine = new clReportOnLine("RikuzAvodaChodshi2", eFormat.PDF);
 
         if (Page.IsValid)
         {
             if (ViewState["BakashId"] != null)
             {
-                Report.AddParameter("P_MISPAR_ISHI", txtEmpId.Text);
-                Report.AddParameter("P_TAARICH", ViewState["Taarich"].ToString());
-                Report.AddParameter("P_BAKASHA_ID", ViewState["BakashId"].ToString());
-                Report.AddParameter("P_Tar_chishuv", ViewState["TarChishuv"].ToString());
-                Report.AddParameter("P_sug_chishuv", ViewState["SugChishuv"].ToString());
-                Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
-                Report.AddParameter("P_SIKUM_CHODSHI", "1");
-                s = Report.CreateReport("/KdsReports/RikuzAvodaChodshi2", eFormat.PDF, true);
+                oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", txtEmpId.Text));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_TAARICH", ViewState["Taarich"].ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_BAKASHA_ID", ViewState["BakashId"].ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_Tar_chishuv", ViewState["TarChishuv"].ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_sug_chishuv", ViewState["SugChishuv"].ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_Oved_5_Yamim", ViewState["WorkDay"].ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_SIKUM_CHODSHI", "1"));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_DT", DateTime.Now.ToString()));
+
+                s = oReportOnLine.CreateFile();
 
                 if (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1")
                 {
@@ -235,20 +239,24 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
     {
         byte[] s;
         string sScript;
-        ReportModule Report = new ReportModule();//  ReportModule.GetInstance();
+      //  ReportModule Report = new ReportModule();//  ReportModule.GetInstance();
 
         if (Page.IsValid)
         {
             if (ViewState["BakashId"] != null)
             {
-                Report.AddParameter("P_MISPAR_ISHI", txtEmpId.Text);
-                Report.AddParameter("P_TAARICH", ViewState["Taarich"].ToString());
-                Report.AddParameter("P_BAKASHA_ID", ViewState["BakashId"].ToString());
-                Report.AddParameter("P_Tar_chishuv", ViewState["TarChishuv"].ToString());
-                Report.AddParameter("P_sug_chishuv", ViewState["SugChishuv"].ToString());
-                Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
-                Report.AddParameter("P_SIKUM_CHODSHI", "1");
-                s = Report.CreateReport("/KdsReports/RikuzAvodaChodshi2", eFormat.EXCEL, true);
+                clReportOnLine oReportOnLine = new clReportOnLine("RikuzAvodaChodshi2", eFormat.EXCEL);
+  
+                oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", txtEmpId.Text));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_TAARICH", ViewState["Taarich"].ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_BAKASHA_ID", ViewState["BakashId"].ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_Tar_chishuv", ViewState["TarChishuv"].ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_sug_chishuv", ViewState["SugChishuv"].ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_Oved_5_Yamim", ViewState["WorkDay"].ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_SIKUM_CHODSHI", "1"));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_DT", DateTime.Now.ToString()));
+
+                s = oReportOnLine.CreateFile();
 
                 Session["BinaryResult"] = s;
                 Session["TypeReport"] = "EXCEL";
@@ -286,6 +294,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                 {
                     divNetunim.Visible = true;
                     btnPrint.Enabled = true;
+                    btnPrint.CssClass = "ImgButtonSearch";
 
                     lblEmployeId.Text = dtPirteyOved.Rows[0]["MISPAR_ISHI"].ToString();
                     lblFirstName.Text = dtPirteyOved.Rows[0]["SHEM_PRAT"].ToString();
@@ -541,8 +550,8 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
 
              MainCalc objMainCalc = new MainCalc(); //??
              objMainCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 1, ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10, ref  dtRikuz11To20, ref dtRikuz21To31, ref dtAllRikuz, ref dsRikuz);
-            
 
+             
              grdAbsenceData.DataSource = dtHeadrut;
              grdAbsenceData.DataBind();
 
@@ -572,7 +581,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
          LoadDdlMonth();
          divNetunim.Visible = false;
          btnPrint.Enabled = false;
-
+         btnPrint.CssClass = "ImgButtonSearchDisable";
          if (rdoId.Checked)
          {
              txtName.Enabled = false;
@@ -593,5 +602,6 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
          ViewState["BakashId"] = null;
          divNetunim.Visible = false;
          btnPrint.Enabled = false;
+         btnPrint.CssClass = "ImgButtonSearchDisable";
      }
 }

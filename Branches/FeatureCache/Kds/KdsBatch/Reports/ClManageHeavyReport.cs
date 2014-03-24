@@ -46,11 +46,17 @@ namespace KdsBatch.Reports
                 foreach (DataRow dr in _dtReportDefinitions.Rows)
                 {
                     _Reports.Add(new clReport(dr["NAME"].ToString(),
-                                 clGeneral.GetIntegerValue(dr["KOD"].ToString()),
-                                 dr["TEUR_DOCH"].ToString(),
-                                 long.Parse(dr["BAKASHA_ID"].ToString()),
-                                 (eFormat)Enum.Parse(typeof(eFormat),clGeneral.GetIntegerValue(dr["EXTENSION_TYPE"].ToString()).ToString()),
-                                 clGeneral.GetIntegerValue(dr["MISPAR_ISHI"].ToString())));
+                                              clGeneral.GetIntegerValue(dr["KOD"].ToString()),
+                                              dr["TEUR_DOCH"].ToString(),
+                                              long.Parse(dr["BAKASHA_ID"].ToString()),
+                                              (eFormat)Enum.Parse(typeof(eFormat),clGeneral.GetIntegerValue(dr["EXTENSION_TYPE"].ToString()).ToString()),
+                                              clGeneral.GetIntegerValue(dr["MISPAR_ISHI"].ToString()),
+                                              dr["RS_VERSION"].ToString(),
+                                              dr["URL_CONFIG_KEY"].ToString(),
+                                              dr["SERVICE_URL_CONFIG_KEY"].ToString()
+                                            )
+                                 
+                                 );
                 }
                 FillReports();
             }

@@ -250,8 +250,7 @@ function ChangeKeyCode()
    <input type="hidden" id="Params" name="Params"  runat="server" />
    <input type="hidden" id="InputHiddenBack" name="InputHiddenBack" value="false" runat="server" />
    <script language="javascript" type="text/javascript">
-    function window.onload()
-    {
+     window.onload = function () {  
        SetTextBox();
     }
     function SetTextBox() {
@@ -270,6 +269,7 @@ function ChangeKeyCode()
     }
     function CheckSnif()
     {
+       // debugger;
         var sSnifName = document.getElementById("ctl00_KdsContent_txtSnif").value;
        // alert(sSnifName);
         //document.getElementById("ctl00_KdsContent_btnSearch").disabled = true;
@@ -307,8 +307,8 @@ function ChangeKeyCode()
    //  
  }
     function onChange_FromDate() {
-      
-        var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
+      //  debugger;
+        var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes["Param100"].value;//($('[id$=Params]')[0]).attributes["Param100"].value;// document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
         var StartDateSplit = document.getElementById('ctl00_KdsContent_clnFromDate').value.split('/');
         var StartDate = new Date(StartDateSplit[2], StartDateSplit[1]-1, StartDateSplit[0], 0, 0, 0, 0);
         var minDate = new Date();

@@ -605,9 +605,9 @@ namespace KdsLibrary.BL
                 oDal.AddParameter("p_KodTahalich", ParameterType.ntOracleInt64, KodTahalich, ParameterDir.pdInput);
                 oDal.AddParameter("p_KodPeilut", ParameterType.ntOracleInt64, KodPeilut, ParameterDir.pdInput);
                 oDal.AddParameter("p_KodStatus", ParameterType.ntOracleInt64, KodStatus, ParameterDir.pdInput);
-                if (TeurTech.Trim().Length > 100)
-                    TeurTech = TeurTech.Trim().Substring(0, 100);
-                else
+                //if (TeurTech.Trim().Length > 100)
+                //    TeurTech = TeurTech.Trim().Substring(0, 100);
+                //else
                     TeurTech = TeurTech.Trim();
                 oDal.AddParameter("p_TeurTech", ParameterType.ntOracleVarchar, TeurTech, ParameterDir.pdInput);
 
@@ -634,9 +634,7 @@ namespace KdsLibrary.BL
             {
                 oDal.AddParameter("p_seqTahalich", ParameterType.ntOracleInt64, seqTahalich, ParameterDir.pdInput);
                 oDal.AddParameter("p_KodStatus", ParameterType.ntOracleInt64, KodStatus, ParameterDir.pdInput);
-                if (TeurTech.Trim().Length > 100)
-                    TeurTech = TeurTech.Trim().Substring(0, 100);
-                else
+                
                     TeurTech = TeurTech.Trim();
                 oDal.AddParameter("p_TeurTech", ParameterType.ntOracleVarchar, TeurTech, ParameterDir.pdInput);
                 
@@ -731,6 +729,58 @@ namespace KdsLibrary.BL
             }
         }
 
+        public void BdikatYemeyMachala(long lRequestId, int iUserId)
+        {
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestId, ParameterDir.pdInput);
+                oDal.AddParameter("p_user_id", ParameterType.ntOracleInteger, iUserId, ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cProBdikatYemeyMachala);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void IdkunMachalotOvdim(long lRequestNum)
+        {
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cProIdkunMachalotOvdim);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool InsMachalotLoMeturgamot(long p_bakasha_id)
+        {
+            clDal oDal = new clDal();
+            int iNum = 0;
+            try
+            {
+
+                oDal.AddParameter("p_return_value", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, p_bakasha_id, ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cProInsMachalotLoMeturgamot);
+
+                iNum = Int32.Parse(oDal.GetValParam("p_return_value"));
+                if (iNum > 0)
+                    return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
     public enum RecordStatus
     {

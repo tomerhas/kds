@@ -9,8 +9,8 @@ namespace KdsBatch
 {
   public  class clErua418:clErua
     {
-      public clErua418(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
-          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,418)
+      public clErua418(long lBakashaId, DataRow drPirteyOved, DataSet dsNetunim)
+          : base(lBakashaId, drPirteyOved, dsNetunim, 418)
       {
           _sBody = SetBody();
           if (_sBody != null)

@@ -123,6 +123,7 @@ namespace KdsCalcul
         public clGeneral.enBatchExecutionStatus Execute(bool logPopulationOnly)
         {
             var status = clGeneral.enBatchExecutionStatus.Failed;
+            clGeneral.enSugeyMeadkenShinuyim enMeadken;
             if (_data != null)
             {
                 //LogPopulation();
@@ -130,12 +131,16 @@ namespace KdsCalcul
                 int successCount = 0;
                 bool isSuccessForCount = false;
                 int notIncludeInTotal = 0;
+                enMeadken = getMeadkenShinuyim();
                 foreach (DataRow dr in _data.Rows)
                 {
                     int employeeID = Convert.ToInt32(dr["mispar_ishi"]);
                     DateTime date = Convert.ToDateTime(dr["taarich"]);
-                    if (ExecuteProcessForEmployee(employeeID, date, out isSuccessForCount))
+                    if (ExecuteProcessForEmployee(employeeID, date, out isSuccessForCount, enMeadken))
+                    {
+                      //  InsertLogMaatefet(employeeID, date, enMeadken);
                         successCount++;
+                    }
                     if (!isSuccessForCount) notIncludeInTotal++;
 
                 }
@@ -157,6 +162,42 @@ namespace KdsCalcul
             return status;
         }
 
+        private clGeneral.enSugeyMeadkenShinuyim getMeadkenShinuyim()
+        {
+            switch (this._batchSource)
+            {
+                case clGeneral.BatchRequestSource.ImportProcessForPremiot:
+                    return clGeneral.enSugeyMeadkenShinuyim.ShnuyimShguimBatchPrem;
+                    break;
+                case clGeneral.BatchRequestSource.ImportProcessForChangesInHR:
+                    return clGeneral.enSugeyMeadkenShinuyim.ShnuyimShguimBatchHR;
+                    break;
+                case clGeneral.BatchRequestSource.ImportProcess:
+                    return clGeneral.enSugeyMeadkenShinuyim.ShnuyimShguimBatchSdrn;
+                    break;
+                default: return clGeneral.enSugeyMeadkenShinuyim.Default;
+            }
+         }
+        private void InsertLogMaatefet(int employeeID, DateTime date, clGeneral.enSugeyMeadkenShinuyim enMeadken)
+        {
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, employeeID, ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, date,ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich_ritza", ParameterType.ntOracleDate, ExecutionDate,ParameterDir.pdInput);
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInteger, _btchRequest,ParameterDir.pdInput);
+                //oDal.AddParameter("p_sug_bakasha", ParameterType.ntOracleInteger, (int)batchType,ParameterDir.pdInput);
+                oDal.AddParameter("p_comments", ParameterType.ntOracleVarchar, _batchSource.ToString(),ParameterDir.pdInput, 50);
+                oDal.AddParameter("p_meadken", ParameterType.ntOracleInteger, (int)enMeadken, ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cProInsertLogMaatefet);
+            }
+            catch (Exception ex)
+            {
+                throw(ex);
+            }
+        }
         //private void LogPopulation()
         //{
         //    foreach (DataRow dr in _data.Rows)
@@ -166,7 +207,7 @@ namespace KdsCalcul
         //        clGeneral.LogBatchPopulation(employeeID, date, ExecutionDate, _btchRequest,
         //        _batchSource == BatchRequestSource.ErrorExecutionFromUI ?
         //                KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromUI :
-        //                KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess);
+        //                KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess,);
         //    }
         //}
 
@@ -194,12 +235,12 @@ namespace KdsCalcul
             return (_data != null && _data.Rows.Count > 0);
         }
 
-        private bool ExecuteProcessForEmployee(int employeeID, DateTime date, out bool successCount)
+        private bool ExecuteProcessForEmployee(int employeeID, DateTime date, out bool successCount, clGeneral.enSugeyMeadkenShinuyim enMeadken)
         {
             bool nextStep = false;
             //   bool nextStep1 = false;
             successCount = false;
-            clBatchManager btchMan = new clBatchManager(this._btchRequest);
+            clBatchManager btchMan = new clBatchManager(this._btchRequest, enMeadken.GetHashCode());
             //    MainErrors oErrors = new MainErrors(date);
             try
             {

@@ -9,8 +9,8 @@ namespace KdsBatch
 {
   public  class clErua415:clErua
     {
-      public clErua415(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
-          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,415)
+      public clErua415(long lBakashaId, DataRow drPirteyOved, DataSet dsNetunim)
+          : base(lBakashaId, drPirteyOved, dsNetunim, 415)
       {
            _sBody = SetBody();
           if (_sBody != null)
@@ -118,7 +118,11 @@ namespace KdsBatch
             fErech += GetErechRechiv(clGeneral.enRechivim.SachLinaKfula.GetHashCode());
             sErua415.Append(FormatNumber(fErech, 4, 1));
 
-            if ((_iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode())
+            if (MaamadDorB())
+            {
+                sErua415.Append(FormatNumber(GetErechRechivDorB(clGeneral.enRechivim.YomMachalatBenZug.GetHashCode()), 4, 2));
+            }
+            else if ((_iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode())
                 || (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode() && _dMonth >= dTakanonSoziali))
             {
                 sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachalatBenZug.GetHashCode()), 4, 2));

@@ -3846,6 +3846,135 @@ Public Class ClKds
 
         Return taarich
     End Function
+    Public Sub TryKdsFilePundakim()
+
+        'in web.config & app.config key="KdsInputFileNamePundakim" default value="Pundakim*.TXT"
+        Dim FileName As String = ConfigurationSettings.AppSettings("KdsInputFileNamePundakim") 'collectmodem.dat
+        If Trim(FileName) = "" Then
+            FileName = "collectmodem.dat" 'Pundakim*.DAT"
+        End If
+        'Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePath") '"\\kdstst01\Files\"
+        'Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPath") '"inkds_old\"
+        Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePathPundakim") '"\\kiwi\"
+        Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPathPundakim") '"synel\"
+        Dim FileNameOld As String
+        Dim MyFile As String
+        Dim ShaonimNumber As Integer
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim strErrorOfFiles As String = String.Empty
+        Dim ErrorCounter As Integer = 0
+
+        Try
+            MyFile = Dir(InPath & SubFolder & FileName)
+            If Not MyFile = "" Then
+                ShaonimNumber = oBatch.InsertProcessLog(2, 2, KdsLibrary.BL.RecordStatus.Wait, "Pundakim", 0)
+
+                While Not MyFile = ""
+                    Try
+                        LoadKdsFilePundakim(MyFile, ShaonimNumber)
+                    Catch ex As Exception
+                        ErrorCounter = ErrorCounter + 1
+                        strErrorOfFiles = strErrorOfFiles & ErrorCounter.ToString() & "." & ex.Message & vbCr
+                    End Try
+                    FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
+                    File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
+                    File.Delete(InPath & MyFile)
+                    MyFile = Dir()
+                End While
+                oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, "Pundakim", 0)
+                If (strErrorOfFiles <> String.Empty) Then
+                    Throw New Exception(strErrorOfFiles)
+                End If
+            End If
+
+        Catch ex As Exception
+            oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Pundakim aborted" & ex.Message, 3)
+            Throw ex
+        End Try
+    End Sub
+    Public Sub LoadKdsFilePundakim(ByVal InFileName, ByVal ShaonimNumber)
+
+        Dim oDal As clDal
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim sr As StreamReader
+        Dim dt As DataTable
+        Dim ErrFileName As String
+        Dim line As String
+        Dim InPathNFile As String
+        Dim SRV_D_ISHI As String
+        Dim SRV_D_TAARICH As String
+        Dim SRV_D_KNISA_X As String
+        Dim SRV_D_MIKUM_KNISA As String
+        Dim Restline As String
+        Dim Outline As String
+        Dim i As Integer
+        Dim previousday As String
+
+        Try
+
+            ErrFileName = ConfigurationSettings.AppSettings("KdsFilePath") & "Pundakim" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & CStr(Now.Second) & ".err"
+            InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & InFileName
+            sr = New StreamReader(InPathNFile)
+
+            line = sr.ReadLine
+            If Trim(line) = "" Then
+                line = sr.ReadLine
+            End If
+            oDal = New clDal
+            While Not ((Trim(line) Is Nothing) Or (Trim(line) = ""))
+                Try
+                    SRV_D_MIKUM_KNISA = Mid(line, 1, 3)
+                    If Not CInt(SRV_D_MIKUM_KNISA) = 147 Then
+                        SRV_D_TAARICH = "20" & Mid(line, 16, 2) & Mid(line, 14, 2) & Mid(line, 12, 2)  'convert from format=ddmmyy 
+                        previousday = SRV_D_TAARICH
+
+                        dt = Nothing
+                        dt = New DataTable
+                        oDal.ClearCommand()
+                        oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                        oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
+                        oDal.ExecuteSP("PKG_BATCH.pro_GetRowDt", dt)
+                        previousday = dt.Rows(0).Item("previousday").ToString
+
+                        i = 0
+                        Restline = Mid(line, 18 + 14 * i, 14)
+                        While Not ((Trim(Restline) Is Nothing) Or (Trim(Restline) = "") Or i > 7)
+                            'prepare line for old pundakim:
+                            '7769062013111846100074902106115180000000000000000000000000000000000000000        99001000000000100  
+                            Outline = ""
+                            SRV_D_ISHI = Mid(Restline, 5, 5)
+                            SRV_D_KNISA_X = Mid(Restline, 11, 4) 'format=hhmm
+                            Outline = SRV_D_ISHI & Mid(Restline, 10, 1)
+                            If CInt(Mid(Restline, 11, 2)) < 5 Then
+                                Outline = Outline & previousday & "00000"
+                                Outline = Outline & (CInt(SRV_D_KNISA_X) + 2400).ToString & "00000000"
+                            Else
+                                Outline = Outline & SRV_D_TAARICH & "00000"
+                                Outline = Outline & SRV_D_KNISA_X & "00000000"
+                            End If
+                            Outline = Outline & SRV_D_MIKUM_KNISA & "00"
+                            Outline = Outline & "000000000000000000000000000000000000000        "
+                            'Outline = Outline & "99214" & "000000000" & Mid(line, 5, 1) & "00  "
+                            Outline = Outline & "99214" & "000000000100  "
+                            LoadPundakim(Outline)
+                            i = i + 1
+                            Restline = Mid(line, 18 + 14 * i, 14)
+                        End While
+                    Else
+                        'todo: send the record to sidur hityazvut 99200
+                    End If
+
+                Catch ex As Exception
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Pundakim aborted" & ex.Message, 3)
+                    Throw ex
+                End Try
+                line = sr.ReadLine
+            End While
+        Catch ex As Exception
+            oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Pundakim aborted" & ex.Message, 3)
+            Throw ex
+        End Try
+    End Sub
 
 #End Region
 

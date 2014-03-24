@@ -22,14 +22,20 @@
                     this.ezor.attr('disabled', 'disabled');
                     this.snif.attr('disabled', 'disabled');
                     var k = this;
-                                        if ($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val() != undefined) {
-                                            DisabledRashemetOrSnif($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val(), k);
-                                        }
+
+                    if ($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val() != undefined) {
+                        DisabledRashemetOrSnif($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val(), k);
+                    }
+                    else {
+                        $("#ctl00_KdsContent_P_TEZUGA_0").attr('checked', true);
+                        DisabledRashemetOrSnif($("input[name='ctl00$KdsContent$P_TEZUGA']:checked").val(), k);
+                    }
+
 
                     $("input[name='ctl00$KdsContent$P_TEZUGA'").click(function () {
-                        if (queries['RdlName'] == 'KamutIdkuneyRashemet') {
-                            DisabledRashemetOrSnif($(this).val(), k);
-                        }
+                        // if (queries['RdlName'] == 'KamutIdkuneyRashemet') {
+                        DisabledRashemetOrSnif($(this).val(), k);
+                        // }
                     });
                 }
             }
@@ -103,11 +109,10 @@
                 </tr>
             </table>
             <input type="hidden" id="Param100" name="Param100" runat="server" />
+            <input type="hidden" id="Param280" name="Param280" runat="server" />
             <input type="hidden" id="MisRashamot" name="MisRashamot" runat="server" />
         </ContentTemplate>
-       <%-- <Triggers>
-            <asp:PostBackTrigger ControlID="btnDisplay" />
-        </Triggers> --%>
+   <%--  <Triggers><asp:PostBackTrigger ControlID="btnDisplay"  /></Triggers>--%>
     </asp:UpdatePanel>
     <script language="javascript" type="text/javascript">
         function CancelAllSelectedItems() {
@@ -231,12 +236,18 @@
                 if (mis == "") {
                     args.IsValid = false;
                 }
-                else checkRashemet(mis, args);
+                else {
+                    var str = mis.split(',');
+                    for (i = 0; i < str.length; i++) {
+                        if(str[i].length>0)
+                            checkRashemet(str[i], args);
+                    }
+                }
             }
         }
         function checkRashemet(mis, args) {
             if (document.getElementById("ctl00_KdsContent_MisRashamot").value.indexOf("," + mis + ",") == -1) {
-                alert("מספר אישי של רשמת לא קיים או לא פעיל לתאריך הנבחר");
+                alert("מספר אישי של רשמת " + mis + " לא קיים או לא פעיל לתאריך הנבחר");
                 document.getElementById("ctl00_KdsContent_P_MIS_RASHEMET").value = "";
                 args.IsValid = false;
             }
@@ -280,7 +291,7 @@
         }
 
         function IsAlowedDate(sender, args) {
-            // debugger
+             //debugger
             var CurrentObj = sender.controltovalidate;
             var chodesh_me = document.getElementById(CurrentObj).value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
             var FromDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1] - 1), Number(chodesh_me[0]), '00', '00', '00');
@@ -299,6 +310,35 @@
                 args.IsValid = true;
                 //                if (mis != "")
                 //                    checkRashemet(mis, args);
+            }
+        }
+
+
+        function IsAlowedDateIturim(sender, args) {
+          //  debugger
+            var chodesh_me = document.getElementById('ctl00_KdsContent_P_STARTDATE').value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
+            var chodesh_ad = document.getElementById('ctl00_KdsContent_P_ENDDATE').value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "AD").value;
+
+            var MeDate, AdDate;
+            MeDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1]) - 1, Number(chodesh_me[0]), '00', '00', '00');
+            AdDate = new Date(Number(chodesh_ad[2]), Number(chodesh_ad[1]) - 1, Number(chodesh_ad[0]), '00', '00', '00');
+            var Param280 = document.getElementById("ctl00_KdsContent_Param280").value;
+
+            if (DateDiff.inDays(MeDate, AdDate) > parseInt(Param280)) {
+                args.IsValid = false;
+                args.Text = "ggg";
+            }
+            else
+                args.IsValid = true;
+        }
+
+        var  DateDiff = {
+
+            inDays: function(d1, d2) {
+                var t2 = d2.getTime();
+                var t1 = d1.getTime();
+
+                return parseInt((t2-t1)/(24*3600*1000));
             }
         }
 

@@ -25,6 +25,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 {
     private KdsDynamicReport _KdsDynamicReport;
     private KdsReport _Report;
+    private KdsDynamicReport _ConstDynamicReportParam;
+    private KdsReport _ConstReportParam;
     private PanelFilters _PanelFilters;
     private List<string> _ControlsList;
     private string _sProfilUser="0";
@@ -40,9 +42,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
                 LoadKdsDynamicReport();
-                dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
-                Param100.Value = dtParametrim.Rows[0]["ERECH_PARAM"].ToString();
-
+                dtParametrim = oUtils.getErechParamByKod("100,280", DateTime.Now.ToShortDateString());
+                Param100.Value = dtParametrim.Select("KOD_PARAM=100")[0]["ERECH_PARAM"].ToString();
+                Param280.Value = dtParametrim.Select("KOD_PARAM=280")[0]["ERECH_PARAM"].ToString();
             }
             SetProfilUser();
             FillFilterToForm();
@@ -194,6 +196,23 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         for (int i = 0; i < dtMisRashemet.Rows.Count; i++)
                             MisRashamot.Value = MisRashamot.Value + dtMisRashemet.Rows[i]["MISPAR_ISHI"].ToString() + ",";
                     }
+                    if (!Page.IsPostBack)
+                    {
+                        //var trigger = new PostBackTrigger();
+                        //trigger.ControlID = "ctl00_KdsContent_btnDisplay";
+                        //PnlFilter.Triggers.Add(trigger);
+
+                        //var trigger = new AsyncPostBackTrigger();
+
+                        //trigger.ControlID = "ctl00_KdsContent_btnDisplay";
+
+                        //trigger.EventName = "Click";
+
+                        //this.PnlFilter.Triggers.Add(trigger);
+                        ScriptManager.GetCurrent(Page).RegisterPostBackControl(btnDisplay);
+
+
+                    }
                     //if (!Page.IsPostBack)
                     //    CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
                    // SetTezuga(ReportName.KamutIdkuneyRashemet);
@@ -212,9 +231,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //case ReportName.AverageOvdimBeSnif:
                 //    SetWorkerViewLevel(ReportName.AverageOvdimBeSnif);
                 //    break;
-                case ReportName.FindWorkerCard:
+                case ReportName.RptIturim:
                     if (!Page.IsPostBack)
-                        CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
+                        CtrlStartDate = DateTime.Now.AddMonths(-1).ToString("dd/MM/yyyy");
                     break;
                 //case ReportName.HashvaatRizotChishuv:
                 //case ReportName.HashvaatChodsheyRizotChishuv:
@@ -479,9 +498,33 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 
     private void LoadKdsDynamicReport()
     {
+        //_KdsDynamicReport = KdsDynamicReport.GetKdsReport();
+        //_ConstDynamicReportParam = (KdsDynamicReport)Session["ConstDynamicReportParam"];
+        //_ConstReportParam = _ConstDynamicReportParam.FindReport(RdlName);
+        //_Report = new KdsReport();
+        //_Report = _KdsDynamicReport.FindReport(RdlName);
+        //_Report.PageHeader = _ConstReportParam.PageHeader;
+        //_Report.RSVersion = _ConstReportParam.RSVersion;
+        //_Report.URL_CONFIG_KEY = _ConstReportParam.URL_CONFIG_KEY;
+        //_Report.SERVICE_URL_CONFIG_KEY = _ConstReportParam.SERVICE_URL_CONFIG_KEY;
+        //_Report.EXTENSION = _ConstReportParam.EXTENSION;
+        //_Report.RdlName = _ConstReportParam.RdlName;
+        //Session["Report"] = _Report;
+        //Session["Resources"] = (KdsSysManResources)_KdsDynamicReport.Resources;
+
+
+
         _KdsDynamicReport = KdsDynamicReport.GetKdsReport();
         _Report = new KdsReport();
         _Report = _KdsDynamicReport.FindReport(RdlName);
+        clReport rep = new clReport();
+        DataTable dt = rep.GetReportDetails(((ReportName)Enum.Parse(typeof(ReportName), RdlName)).GetHashCode());
+        _Report.PageHeader = dt.Rows[0]["PageHeader"].ToString() ;
+        _Report.RSVersion = dt.Rows[0]["RS_VERSION"].ToString();
+        _Report.URL_CONFIG_KEY = dt.Rows[0]["URL_CONFIG_KEY"].ToString();
+        _Report.SERVICE_URL_CONFIG_KEY = dt.Rows[0]["SERVICE_URL_CONFIG_KEY"].ToString();
+        _Report.EXTENSION = dt.Rows[0]["EXTENSION"].ToString();
+        _Report.RdlName = RdlName;
         Session["Report"] = _Report;
         Session["Resources"] = (KdsSysManResources)_KdsDynamicReport.Resources;
         
@@ -513,11 +556,11 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         {
             switch (Report.NameReport)
             {
-                case ReportName.FindWorkerCard:
-                    Makat.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
-                    SidurNumber.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
-                    WorkerID.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
-                    break;
+                //case ReportName.FindWorkerCard:
+                //    Makat.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
+                //    SidurNumber.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
+                //    WorkerID.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
+                //    break;
                 case ReportName.Presence:
                 case ReportName.IshurimLerashemet:
                     MisparIshi.ContextKey = _sProfilUser + "," + LoginUser.UserInfo.EmployeeNumber + ","
@@ -787,7 +830,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             });
             AddSpecificReportParameters(Report, ref ReportParameters);
             ChangeReportParameters(Report, ref ReportParameters);
-            Session["ReportParameters"] = ReportParameters;
+             Session["ReportParameters"] = ReportParameters;
         }
         catch (Exception ex)
         {

@@ -30,9 +30,18 @@
                    <asp:Button  ID="btnCount" runat="server" Width="300px" CausesValidation="false"  Text="כמות כ''ע עם ש. התחלה/גמר לתשלום חסרה"  CssClass="ImgButtonSearch"  onclick="btnCount_Click" />  
                    </ContentTemplate>
               </asp:UpdatePanel> </td>
-        <td>  <asp:UpdatePanel ID="upBtnCount" runat="server" RenderMode="Inline">
+        <td>    </td>
+    </tr>
+    <tr>
+        <td colspan="5" ></td>
+          <td>  <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline">
+                  <ContentTemplate>
+                   <asp:Button  ID="Button2" runat="server" Width="370px" CausesValidation="false"  Text="כמות כע סידור לא לתשלום ולעובד מאפייני התחלה/גמר"   CssClass="ImgButtonSearch"  onclick="btnCountMeafyen_Click" />  
+                   </ContentTemplate>
+              </asp:UpdatePanel> </td>
+        <td>  <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                   <ContentTemplate> 
-                  <asp:Button  ID="btnRunShinuyKelet" runat="server" Width="80px" CausesValidation="false"  Text="הרצה"  CssClass="ImgButtonSearch"  onclick="btnRunShinuyKelet_Click"  /> 
+                  <asp:Button  ID="Button3" runat="server" Width="80px" CausesValidation="false"  Text="הרצה"  CssClass="ImgButtonSearch"  onclick="btnRunShinuyKelet_Click"  /> 
                    </ContentTemplate>
               </asp:UpdatePanel> </td>
     </tr>
@@ -48,7 +57,7 @@
          <asp:TextBox ID="txtDescription" runat="server"  MaxLength="100"   TextMode="MultiLine" Width="320" Height="100px" ></asp:TextBox></td>
      </tr>
       <tr>
-        <td colspan="3"><asp:CheckBox ID="chkRunAll" runat="server"  />&nbsp; ריצה גורפת</td>
+        <td colspan="3"><div id="divRizaGorefet" runat="server"><asp:CheckBox ID="chkRunAll" runat="server"  />&nbsp; ריצה גורפת</div></td>
          <td></td>
          <td align="left"> 
             <asp:UpdatePanel ID="upButton" runat="server">

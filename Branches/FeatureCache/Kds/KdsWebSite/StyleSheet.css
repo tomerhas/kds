@@ -1016,6 +1016,7 @@ select
 	font-size:23px;
 	font-weight:bolder;
 	border:none;
+    white-space:pre-wrap;
 }
 
 legend

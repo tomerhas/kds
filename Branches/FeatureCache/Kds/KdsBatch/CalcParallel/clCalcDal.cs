@@ -33,6 +33,7 @@ namespace KdsBatch
         private const string cProGetOvdimShguimLechishuv = "Pkg_Calculation.pro_ovdim_kelet_lechishuv";
         private const string cProPrepareNetunimLechishuv = "Pkg_Calculation.pro_prepare_netunim_lechishuv";
         private const string cProPrepareNetunimLechishuvPremiyot = "Pkg_Calculation.pro_get_ovdim_lehishuv_premiot";
+        private const string cProPrepareKavimLechishuv = "Pkg_Calculation.pro_kavim_details_lechishuv";
 
         private const string cGetNetunryChishuv = "Pkg_Calc_worker.pro_get_netunim_lechishuv";
         private const string cGetNetunimLeprocess = "Pkg_Calculation.pro_get_netunim_leprocess";
@@ -473,11 +474,32 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                return 0;
                 throw (ex);
             }
         }
 
+        public int FillKavimDetailsLechishuv(long lRequestNum, DateTime dFrom, DateTime dAd, int NumProcesse)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
+
+                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dFrom, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dAd, ParameterDir.pdInput);
+
+                oDal.AddParameter("p_num_processe", ParameterType.ntOracleInteger, NumProcesse, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(cProPrepareKavimLechishuv);
+
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+        
         public DataSet GetNetuneyChishuvDS(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi,int numProcess)
         {
             DataSet ds = new DataSet();
@@ -515,13 +537,15 @@ namespace KdsBatch
                 names += ",Peiluyot_Ovdim";
                 dal.AddParameter("p_Cur_Mutamut", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Ctb_Mutamut";
+                dal.AddParameter("p_Cur_Michsat_sidur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Michsat_Sidur_Meafyen";
                 dal.AddParameter("p_Cur_Matzav", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Matzav_Ovdim";
                 dal.AddParameter("p_Cur_Buses_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Buses_Details";
                 dal.AddParameter("p_Cur_Kavim_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Kavim_Details";
-
+                
                 dal.AddParameter("p_tar_me", ParameterType.ntOracleDate, TarMe, ParameterDir.pdInput);
                 dal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, TarAd, ParameterDir.pdInput);
 

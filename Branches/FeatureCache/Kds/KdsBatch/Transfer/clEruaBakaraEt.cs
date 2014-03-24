@@ -20,8 +20,8 @@ namespace KdsBatch
           Hefreshim = 2
       }
 
-      public clEruaBakaraEt(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, string sChodeshIbud)
-          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,162)
+      public clEruaBakaraEt(long lBakashaId, DataRow drPirteyOved,DataSet dsNetunim, string sChodeshIbud)
+          : base(lBakashaId, drPirteyOved, dsNetunim,162)
       {
           if (sChodeshIbud == DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy"))
               TypeFile = enTypeFile.Ragil.GetHashCode();
@@ -73,8 +73,9 @@ namespace KdsBatch
               fErech += GetErechRechiv(clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), "erech_rechiv_a");
               sBakaraEt.Append(FormatNumberWithPoint((fErech/60), 5, 1) + ";");
               sBakaraEt.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode(), "erech_rechiv_a"), 2, 0) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode(), "erech_rechiv_a")/60, 6, 2));
-
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode(), "erech_rechiv_a") / 60, 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), "erech_rechiv_a") / 60, 6, 2));
+          
               if (!IsEmptyErua(sBakaraEt.ToString().Replace(";", "").Replace(".", "")) )
               {
                   ListErua.Add(sBakaraEt.ToString());

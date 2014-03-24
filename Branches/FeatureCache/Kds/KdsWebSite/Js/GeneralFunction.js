@@ -167,12 +167,17 @@ function IsShatGmarInNextDay(shaa){
     else
         return false;
 }
-function IsShatHatchalaInNextDay(shaa) {
-    var sParam244 = document.getElementById("SD_hidParam244").value;
+function IsShatHatchalaInNextDay(shaa, isSidurGrira) {
+    var sParam;
+    if (isSidurGrira)
+        sParam= document.getElementById("SD_hidParam276").value;
+    else
+      sParam= document.getElementById("SD_hidParam244").value;
+
     var Time = shaa.split(':');
     var hours = Time[0];
     var minuts = Time[1];
-    if ((Number(hours) > 0 && Number(hours) <= Number(sParam244.substr(0,2))) ||
+    if ((Number(hours) > 0 && Number(hours) <= Number(sParam.substr(0,2))) ||
          (Number(hours) == 0 && Number(minuts) > 0))
         return true;
     else

@@ -34,8 +34,8 @@ function SetNameOfObject(ObjectInServer,ObjNameInServer) {
 function EnableButtonAdd(source, eventArgs) {
     ObjTextBoxId = source.get_element().id;
     ObjTextBox = document.getElementById(ObjTextBoxId);
-    ObjButtonId = ObjTextBox.BtnAdd;
-    ObjValidTextBoxId = ObjTextBox.ValidText;
+    ObjButtonId = ObjTextBox.attributes["BtnAdd"].value;// ObjTextBox.BtnAdd;
+    ObjValidTextBoxId = ObjTextBox.attributes["ValidText"].value; //ObjTextBox.ValidText;
     ObjValidTextBox = document.getElementById(ObjValidTextBoxId);
     ObjValidTextBox.value = eventArgs.get_text();
     ObjButton = document.getElementById(ObjButtonId);
@@ -43,15 +43,16 @@ function EnableButtonAdd(source, eventArgs) {
 }
 function SetButtonAdd(ObjTextBoxId) {
     ObjTextBox = document.getElementById(ObjTextBoxId);
-    ObjButtonId = ObjTextBox.BtnAdd;
+    ObjButtonId = ObjTextBox.attributes["BtnAdd"].value;  //ObjTextBox.BtnAdd;
     ObjButton = document.getElementById(ObjButtonId);
     ObjButton.disabled = (ObjTextBox.value == "") ;
 }
 
 function ClearValidText(ObjTextBoxId) {
+   // debugger;
     ObjTextBox = document.getElementById(ObjTextBoxId);
-    ObjValidTextBoxId = ObjTextBox.ValidText;
-    ObjButtonId = ObjTextBox.BtnAdd;
+    ObjValidTextBoxId = ObjTextBox.attributes["ValidText"].value; //ObjTextBox.ValidText;
+    ObjButtonId = ObjTextBox.attributes["BtnAdd"].value;// ObjTextBox.BtnAdd;
     ObjTextBox = document.getElementById(ObjValidTextBoxId);
     ObjButton = document.getElementById(ObjButtonId);
     ObjButton.disabled = true;
