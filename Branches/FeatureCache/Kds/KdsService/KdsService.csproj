@@ -119,6 +119,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootsrapper.cs" />
     <Compile Include="IBatchService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,9 +148,21 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\KDSBLLogic\KDSBLLogic.csproj">
+      <Project>{ba5c4914-3d29-4b2b-83af-d43389dfed17}</Project>
+      <Name>KDSBLLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\KDSCache\KDSCache.csproj">
+      <Project>{f2f12cc6-7b61-4b62-a364-cf1e132d2bf9}</Project>
+      <Name>KDSCache</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\KDSCommon\KDSCommon.csproj">
       <Project>{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}</Project>
       <Name>KDSCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\CacheInfra\CacheInfra.csproj">
+      <Project>{96aa16ad-dc40-43df-807d-c1f20ecd7c02}</Project>
+      <Name>CacheInfra</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
       <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
@@ -159,6 +172,10 @@
       <Project>{482BDA70-9AF2-4498-9627-E9C43EE44FDF}</Project>
       <Name>KdsBatch</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KDSBL\KdsShinuyim\KdsShinuyim.csproj">
+      <Project>{fd6abf10-65f1-4091-a046-31681a93d563}</Project>
+      <Name>KdsShinuyim</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsCalcul\KdsCalcul.csproj">
       <Project>{48efb3db-ead6-43a8-aced-c5c8340fe244}</Project>
       <Name>KdsCalcul</Name>
@@ -166,6 +183,10 @@
     <ProjectReference Include="..\KdsDataImport\KdsDataImport.vbproj">
       <Project>{d4a152ec-27eb-4c8c-bdab-4012680da683}</Project>
       <Name>KdsDataImport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsErrors\KdsErrors.csproj">
+      <Project>{99802f09-7707-4ae2-8120-7f2daaf871d7}</Project>
+      <Name>KdsErrors</Name>
     </ProjectReference>
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
       <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>

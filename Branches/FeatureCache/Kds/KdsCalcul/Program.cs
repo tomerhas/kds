@@ -11,12 +11,14 @@ namespace KdsCalcul
     {
         static void Main(string[] args)
         {
+            Bootstrapper b = new Bootstrapper();
+            b.Init();
             clCalculMain oCalculMain;
             int DelayBetweenConnections = Int32.Parse(ConfigurationSettings.AppSettings["DelayBetweenConnections"].ToString());
             switch ((clGeneral.enCalcType)int.Parse(args[0]))
             {
                 case clGeneral.enCalcType.MonthlyCalc:
-                    Thread.Sleep(int.Parse(args[7]) * DelayBetweenConnections * 1000);
+                    //Thread.Sleep(int.Parse(args[7]) * DelayBetweenConnections * 1000);
                     oCalculMain = new clCalculMain((long)int.Parse(args[1]), DateTime.Parse(args[2]), DateTime.Parse(args[3]), (string)args[4],
                                                        (int.Parse(args[5]) == 1), (int.Parse(args[6]) == 1), int.Parse(args[7]));
 

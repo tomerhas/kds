@@ -58,6 +58,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLib\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SharedLib\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\KdsWebSite\ExternalDlls\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -69,6 +77,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootsrapper.cs" />
     <Compile Include="clCalculMain.cs" />
     <Compile Include="clShinuimVeShguimBatch.cs" />
     <Compile Include="clTask.cs" />
@@ -79,9 +88,21 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\KDSBLLogic\KDSBLLogic.csproj">
+      <Project>{ba5c4914-3d29-4b2b-83af-d43389dfed17}</Project>
+      <Name>KDSBLLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\KDSCache\KDSCache.csproj">
+      <Project>{f2f12cc6-7b61-4b62-a364-cf1e132d2bf9}</Project>
+      <Name>KDSCache</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\KDSCommon\KDSCommon.csproj">
       <Project>{1cf6ed40-3036-4b17-ab5a-35f5c265c28c}</Project>
       <Name>KDSCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\CacheInfra\CacheInfra.csproj">
+      <Project>{96aa16ad-dc40-43df-807d-c1f20ecd7c02}</Project>
+      <Name>CacheInfra</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
       <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
@@ -91,9 +112,21 @@
       <Project>{482BDA70-9AF2-4498-9627-E9C43EE44FDF}</Project>
       <Name>KdsBatch</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KDSBL\KdsShinuyim\KdsShinuyim.csproj">
+      <Project>{fd6abf10-65f1-4091-a046-31681a93d563}</Project>
+      <Name>KdsShinuyim</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsErrors\KdsErrors.csproj">
+      <Project>{99802f09-7707-4ae2-8120-7f2daaf871d7}</Project>
+      <Name>KdsErrors</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
       <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
       <Name>KdsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectCompare\ObjectCompare.csproj">
+      <Project>{e4dbf1bd-f8e5-430f-bc25-8064954cebee}</Project>
+      <Name>ObjectCompare</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +150,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

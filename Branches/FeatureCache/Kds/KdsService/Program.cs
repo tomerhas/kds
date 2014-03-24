@@ -16,6 +16,8 @@ namespace KdsService
            
             public void Start() 
             {
+                Bootstrapper b = new Bootstrapper();
+                b.Init();
                 Console.WriteLine("Opening service...");
                 var serviceHost = new ServiceHost(typeof(BatchService));
                 // Open the ServiceHost to start listening for messages.

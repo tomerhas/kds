@@ -179,9 +179,9 @@ namespace KdsService
             {
                 logger.InsertLog(lRequestNum, "I", 0, "START");             
                 iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["CalculProcessesNb"]);
-                path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
+               // path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
                 exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
-                KdsCalcul = new FileInfo(path + exfile);
+                KdsCalcul = new FileInfo(exfile);
 
                 logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
