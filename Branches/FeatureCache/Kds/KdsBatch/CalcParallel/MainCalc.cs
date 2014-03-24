@@ -183,7 +183,7 @@ namespace KdsBatch
             {
                 if (SingleGeneralData.GetInstance() != null)
                     SingleGeneralData.ResetObject();
-                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_iBakashaId, "E", 0, "MainCalc,MainCalcOved: " + ex.StackTrace + "\n message: " + ex.Message, iMisparIshi, dCalcMonth);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_iBakashaId, "E", 0, "MainCalcOved: "+ ex.Message, iMisparIshi, dCalcMonth);
             }
         }
 
@@ -205,8 +205,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                bStatus = false;    
-                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lBakashaId, "E", 0,  "MainCalc: " + ex.Message, iMisparIshi,null);
+                bStatus = false;
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lBakashaId, "E", 0, "MainCalc-->CalcDayInMonth ", iMisparIshi, dCalcDay, ex);
                 return null;
             }
         }

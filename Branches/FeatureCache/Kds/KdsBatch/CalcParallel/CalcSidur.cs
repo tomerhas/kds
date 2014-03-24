@@ -850,8 +850,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             //finally
             //{
@@ -917,8 +917,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotTamritzTafkid.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotTamritzTafkid.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -944,7 +944,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotTamritzTafkid.GetHashCode(), objOved.Taarich, "CalcSidur-->CalcRechiv12", ex);
+                throw (excep);
             }
         }
 
@@ -958,7 +959,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMachlifMeshaleach.GetHashCode(), objOved.Taarich, "CalcSidur-->CalcRechiv13", ex);
+                throw (excep);
             }
         }
 
@@ -972,7 +974,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMachlifSadran.GetHashCode(), objOved.Taarich, "CalcSidur-->CalcRechiv14", ex);
+                throw (excep);
             }
         }
 
@@ -987,7 +990,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMachlifPakach.GetHashCode(), objOved.Taarich, "CalcSidur-->CalcRechiv15", ex);
+                throw (excep);
             }
         }
 
@@ -1002,7 +1006,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMachlifKupai.GetHashCode(), objOved.Taarich, "CalcSidur-->CalcRechiv16", ex);
+                throw (excep);
             }
         }
 
@@ -1017,7 +1022,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotMachlifRakaz.GetHashCode(), objOved.Taarich, "CalcSidur-->CalcRechiv17", ex);
+                throw (excep);
             }
         }
 
@@ -1051,8 +1057,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -1227,8 +1233,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -1270,8 +1276,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotSikun.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotSikun.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -1376,8 +1382,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -1489,8 +1495,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -1530,8 +1536,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaVisa.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaVisa.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -1575,8 +1581,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -1684,8 +1690,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -1809,8 +1815,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -1957,8 +1963,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNehigaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNehigaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2012,8 +2018,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNihulTnuaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNihulTnuaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2105,8 +2111,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotTafkidShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotTafkidShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2139,7 +2145,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur: GetSumMinutsBeforeShabat", ex);
+                throw (excep);
             }
         }
 
@@ -2178,8 +2185,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelBoker.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelBoker.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2307,8 +2314,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelErev.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelErev.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2354,8 +2361,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelTzaharayim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelTzaharayim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2524,8 +2531,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2597,8 +2604,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2639,8 +2646,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2677,8 +2684,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotLepremia.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotLepremia.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2746,8 +2753,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enMeafyenim.HamaratShaot.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enMeafyenim.HamaratShaot.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2820,8 +2827,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -2856,8 +2863,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
         }
 
@@ -2976,8 +2983,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3012,8 +3019,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
         }
         public float CalcRechiv62(out int iCount)
@@ -3045,8 +3052,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomMiluim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomMiluim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3084,8 +3091,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomAvodaBechul.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomAvodaBechul.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3123,8 +3130,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomChofesh.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomChofesh.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3167,8 +3174,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotMichutzTafkidChol.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotMichutzTafkidChol.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3202,8 +3209,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotMichutzLamichsaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotMichutzLamichsaShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3237,8 +3244,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachTosefetRetzifut.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachTosefetRetzifut.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3274,8 +3281,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.KizuzDakotHatchalaGmar.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.KizuzDakotHatchalaGmar.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3374,8 +3381,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3409,8 +3416,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.KizuzBevisa.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.KizuzBevisa.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3459,8 +3466,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.Shaot50.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.Shaot50.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3525,8 +3532,8 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //        //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanHashlama.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-        //        throw (ex);
+        //        var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanHashlama.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+        //        throw (excep);
         //    }
         //}
 
@@ -3636,8 +3643,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3672,8 +3679,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
         }
         private bool isSidurNihulTnuaOrTafkidMezakeRezifut(ref DataRow drSidurim)
@@ -3724,8 +3731,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             //finally
             //{
@@ -3772,8 +3779,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: isSidurNihulTnua-" + ex.StackTrace + "\n message: " + ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3820,8 +3827,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: isSidurTafkid-" + ex.StackTrace + "\n message: " + ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "" + ex.Message, null,ex);
+                throw (excep);
             }
             finally
             {
@@ -3957,8 +3964,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4039,8 +4046,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4164,8 +4171,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanGrirot.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanGrirot.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4343,8 +4350,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ShaotShabat100.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ShaotShabat100.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4379,8 +4386,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ChofeshZchut.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ChofeshZchut.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4416,8 +4423,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.PremyaRegila.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.PremyaRegila.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4453,8 +4460,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.PremyaNamlak.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.PremyaNamlak.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4489,8 +4496,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.KizuzNochehut.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.KizuzNochehut.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4507,7 +4514,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //        throw (ex);
+        //        throw (excep);
         //    }
         //}
 
@@ -4521,7 +4528,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //        throw (ex);
+        //        throw (excep);
         //    }
         //}
 
@@ -4534,7 +4541,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //        throw (ex);
+        //        throw (excep);
         //    }
         //}
 
@@ -4546,7 +4553,7 @@ namespace KdsBatch
         //    }
         //    catch (Exception ex)
         //    {
-        //        throw (ex);
+        //        throw (excep);
         //    }
         //}
 
@@ -4558,7 +4565,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotPakach.GetHashCode(), objOved.Taarich, "CalcSidur-->CalcRechiv179", ex);
+                throw (excep);
             }
         }
 
@@ -4570,7 +4578,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotSadran.GetHashCode(), objOved.Taarich, "CalcSidur-->CalcRechiv180", ex);
+                throw (excep);
             }
         }
 
@@ -4582,7 +4591,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotRakaz.GetHashCode(), objOved.Taarich, "CalcSidur-->CalcRechiv181", ex);
+                throw (excep);
             }
         }
 
@@ -4594,7 +4604,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotMeshalech.GetHashCode(), objOved.Taarich, "CalcSidur-->CalcRechiv182", ex);
+                throw (excep);
             }
         }
 
@@ -4606,7 +4617,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachDakotKupai.GetHashCode(), objOved.Taarich, "CalcSidur-->CalcRechiv183", ex);
+                throw (excep);
             }
         }
 
@@ -4643,8 +4655,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotMichutzLamichsaNihulTnua.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotMichutzLamichsaNihulTnua.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4684,8 +4696,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaTafkidShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaTafkidShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4726,8 +4738,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaNihulShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaNihulShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4793,8 +4805,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -4950,8 +4962,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotNehigaShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotNehigaShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5062,8 +5074,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotNihulShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotNihulShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
         }
 
@@ -5096,8 +5108,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotTafkid.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotTafkid.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5233,8 +5245,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5271,8 +5283,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutChol.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutChol.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5308,8 +5320,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutBeshishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutBeshishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5345,8 +5357,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutShabat.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5437,8 +5449,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5541,8 +5553,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5586,8 +5598,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
              finally
             {
@@ -5630,8 +5642,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaTafkidShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaTafkidShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5673,8 +5685,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaTnuaShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaTnuaShishi.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5723,8 +5735,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutPremiaLerishum.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutPremiaLerishum.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5818,8 +5830,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutPremiaMevakrim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutPremiaMevakrim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5950,8 +5962,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -5991,8 +6003,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6031,8 +6043,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochechutLePremiyaMeshekKonenutGrira.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: "+ ex.Message);
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochechutLePremiyaMeshekKonenutGrira.GetHashCode(), objOved.Taarich, "", ex);
+                throw (excep);
             }
         }
         public void CalcRechiv213()
@@ -6062,8 +6074,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachNesiot.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachNesiot.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6106,8 +6118,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHistaglut.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHistaglut.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6144,8 +6156,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKM.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKM.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6185,8 +6197,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6235,8 +6247,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHagdara.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHagdara.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6273,8 +6285,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotKisuiTor.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotKisuiTor.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6323,8 +6335,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaMachsanKartisim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaMachsanKartisim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6381,8 +6393,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6432,8 +6444,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochechutLepremyaMenahel.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochechutLepremyaMenahel.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6503,8 +6515,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6562,7 +6574,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->CalcZmaneyAruchot", ex);
+                throw (excep);
             }
         }
 
@@ -6619,8 +6632,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6659,8 +6672,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomShlichutBeChul.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomShlichutBeChul.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6766,8 +6779,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6863,8 +6876,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -6974,8 +6987,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7048,8 +7061,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HashlamaBenahagut.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HashlamaBenahagut.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7122,8 +7135,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HashlamaBenihulTnua.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HashlamaBenihulTnua.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7196,8 +7209,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HashlamaBetafkid.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HashlamaBetafkid.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7235,8 +7248,8 @@ namespace KdsBatch
 
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomMiluimChelki.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomMiluimChelki.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7273,8 +7286,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotElementim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotElementim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7311,8 +7324,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNesiaLepremia.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNesiaLepremia.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7406,8 +7419,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7443,8 +7456,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
         }
 
@@ -7492,8 +7505,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7549,8 +7562,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HalbashaSofYom.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HalbashaSofYom.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7642,8 +7655,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7695,8 +7708,8 @@ namespace KdsBatch
 
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7740,8 +7753,8 @@ namespace KdsBatch
 
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7801,8 +7814,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null,ex);
+                throw (excep);
             }
             finally
             {
@@ -7877,7 +7890,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->CheckSidurCholToAdd", ex);
+                throw (excep);
             }
         }
         private void ChishuvShatYeziatShabat(int iMisparSidur, bool bCheckMafil, ref DateTime dShatGmarShabat)
@@ -7986,7 +8000,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->CheckSidurShabatToAdd", ex);
+                throw (excep);
             }
         }
 
@@ -8030,7 +8045,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->CheckSugSidur", ex);
+                throw (excep);
             }
             finally
             {
@@ -8058,7 +8074,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->IsSidur100", ex);
+                throw (excep);
             }
             finally
             {
@@ -8077,7 +8094,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->IsSidurShaon", ex);
+                throw (excep);
             }
            
         }
@@ -8439,7 +8457,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->GetSumSidurim100", ex);
+                throw (excep);
             }
             finally
             {
@@ -8514,7 +8533,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->CheckSidurBySectorAvoda", ex);
+                throw (excep);
             }
             finally
             {
@@ -8571,7 +8591,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->GetSumShaotShabat100", ex);
+                throw (excep);
             }
             finally
             {
@@ -8613,7 +8634,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->getDakotRezifutLayla", ex);
+                throw (excep);
             }
         }
 
@@ -8640,7 +8662,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw ex;
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->getDakotRezifutBoker", ex);
+                throw (excep);
             }
         }
 
@@ -8717,8 +8740,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //  //clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(),  objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.StackTrace + "\n message: "+ ex.Message, null);
-                throw (ex);
+                var excep = ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcSidur-->getPeiluyot", ex);
+                throw (excep);
             }
             
         }
