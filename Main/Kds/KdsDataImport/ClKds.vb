@@ -3854,7 +3854,8 @@ Public Class ClKds
         'Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePath") '"\\kdstst01\Files\"
         'Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPath") '"inkds_old\"
         Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePathPundakim") '"\\kiwi\"
-        Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPathPundakim") '"synel\"
+        'Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPathPundakim") '"synel\"
+        Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPath") '"inkds_old\"
         Dim FileNameOld As String
         Dim MyFile As String
         Dim ShaonimNumber As Integer
@@ -3863,7 +3864,7 @@ Public Class ClKds
         Dim ErrorCounter As Integer = 0
 
         Try
-            MyFile = Dir(InPath & SubFolder & FileName)
+            MyFile = Dir(InPath & FileName)
             If Not MyFile = "" Then
                 ShaonimNumber = oBatch.InsertProcessLog(2, 2, KdsLibrary.BL.RecordStatus.Wait, "Pundakim", 0)
 
