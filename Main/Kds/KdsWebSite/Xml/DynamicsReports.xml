@@ -68,7 +68,7 @@
     <Filter ClassName="כרטיס עבודה"  ParameterName="P_MAKAT" Caption="מקט" BoxeType="ListBoxExtended" DataType="System.Int32">
       <!--<DropDownList Select="GetMakatOfActivity" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />-->
     </Filter>
-    <Filter ClassName="כרטיס עבודה"  ParameterName="P_MISPARVISA" Caption="מספר ויזה " BoxeType="ListBoxExtended" DataType="System.Int32">
+    <Filter ClassName="כרטיס עבודה"  ParameterName="P_MISPARVISA" Caption="מספר ויזה "  BoxeType="ListBoxExtended" DataType="System.Int32">
       <!--<DropDownList QueryType="AjaxAutoComplete" Select="GetSidurimOvdim" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />-->
     </Filter>
     <Filter ClassName="כרטיס עבודה"  ParameterName="P_CARNUMBER" Caption="מס' רכב פנימי" BoxeType="ListBoxExtended" DataType="System.Int32">
