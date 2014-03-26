@@ -329,8 +329,8 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>5.18705cm</Top>
-        <Left>2.48722cm</Left>
+        <Top>5.58509cm</Top>
+        <Left>2.52863cm</Left>
         <Height>0.46373cm</Height>
         <Width>16.92904cm</Width>
         <ZIndex>3</ZIndex>
@@ -1121,8 +1121,8 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>5.31219cm</Top>
-        <Left>0.30599cm</Left>
+        <Top>5.71023cm</Top>
+        <Left>0.3474cm</Left>
         <Height>0.29819cm</Height>
         <Width>1.26948cm</Width>
         <ZIndex>5</ZIndex>
@@ -2765,8 +2765,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsHeadruyot</DataSetName>
-        <Top>5.96108cm</Top>
-        <Left>9.70887cm</Left>
+        <Top>6.35912cm</Top>
+        <Left>9.75028cm</Left>
         <Height>1.24282cm</Height>
         <Width>19.63905cm</Width>
         <ZIndex>7</ZIndex>
@@ -8441,8 +8441,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsPirteyOved</DataSetName>
-        <Top>3.06902in</Top>
-        <Left>3.67695in</Left>
+        <Top>3.22573in</Top>
+        <Left>3.69325in</Left>
         <Height>0.47013in</Height>
         <Width>4.40866in</Width>
         <ZIndex>10</ZIndex>
@@ -8676,8 +8676,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsKizuz</DataSetName>
-        <Top>3.61947in</Top>
-        <Left>3.67695in</Left>
+        <Top>3.77618in</Top>
+        <Left>3.69325in</Left>
         <Height>0.47013in</Height>
         <Width>4.42199in</Width>
         <ZIndex>11</ZIndex>
@@ -10495,8 +10495,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <FixedColumnHeaders>true</FixedColumnHeaders>
         <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>dsRechiveyShonot</DataSetName>
-        <Top>5.96108cm</Top>
-        <Left>0.26458cm</Left>
+        <Top>6.35912cm</Top>
+        <Left>0.30599cm</Left>
         <Height>1.24282cm</Height>
         <Width>21.50297cm</Width>
         <ZIndex>12</ZIndex>
@@ -10520,8 +10520,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>3.28915in</Top>
-        <Left>0.52149in</Left>
+        <Top>3.44586in</Top>
+        <Left>0.53779in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
         <ZIndex>13</ZIndex>
@@ -10557,8 +10557,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox84</rd:DefaultName>
-        <Top>2.90563in</Top>
-        <Left>0.12047in</Left>
+        <Top>3.06234in</Top>
+        <Left>0.13677in</Left>
         <Height>0.11458in</Height>
         <Width>1.58763in</Width>
         <ZIndex>14</ZIndex>
@@ -10575,11 +10575,317 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Textbox Name="Textbox99">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=" העדרות משרד הביטחון " &amp; " * "</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox84</rd:DefaultName>
+        <Top>2.01483in</Top>
+        <Left>0.02663in</Left>
+        <Height>0.11458in</Height>
+        <Width>1.58763in</Width>
+        <ZIndex>15</ZIndex>
+        <Visibility>
+          <Hidden>=iif(Sum(Fields!SIMUN.Value, "DsRechivim")=0, True, False)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox102">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=" הודפס ע''י " &amp; Parameters!P_USER.Value</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox84</rd:DefaultName>
+        <Top>4.9234in</Top>
+        <Left>6.34473in</Left>
+        <Height>0.11458in</Height>
+        <Width>1.7543in</Width>
+        <ZIndex>16</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Tablix Name="Tablix5">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>2.21141in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2.21141in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.17014in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox64">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>קיזוזים מעל המכסה בסידורי נאמנות</Value>
+                              <Style>
+                                <FontStyle>Normal</FontStyle>
+                                <FontWeight>Bold</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox64</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>2</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.15972in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox106">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>ערך</Value>
+                              <Style>
+                                <FontStyle>Normal</FontStyle>
+                                <FontWeight>Bold</FontWeight>
+                                <Format>0.0;(0.0)</Format>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox106</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox107">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>תאור סידור נאמנות</Value>
+                              <Style>
+                                <FontStyle>Normal</FontStyle>
+                                <FontWeight>Bold</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox107</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.18056in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="DAKOT">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!DAKOT.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>DAKOT</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="TEUR_SIDUR_MEYCHAD">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!TEUR_SIDUR_MEYCHAD.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>TEUR_SIDUR_MEYCHAD</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+            </TablixMember>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+            </TablixMember>
+            <TablixMember>
+              <Group Name="Details5" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>dsKizuzNeemanim</DataSetName>
+        <Top>4.35742in</Top>
+        <Left>3.69325in</Left>
+        <Height>0.51042in</Height>
+        <Width>4.42282in</Width>
+        <ZIndex>17</ZIndex>
+        <Visibility>
+          <Hidden>=iif(CountRows("dsKizuzNeemanim")&gt;0 ,false,true)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
     </ReportItems>
-    <Height>4.0896in</Height>
+    <Height>5.09006in</Height>
     <Style />
   </Body>
-  <Width>11.5543in</Width>
+  <Width>11.5706in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -11025,6 +11331,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <DataField>HEARA</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="SIMUN">
+          <DataField>SIMUN</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
     <DataSet Name="dsHeadruyot">
@@ -11301,6 +11611,32 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Field>
       </Fields>
     </DataSet>
+    <DataSet Name="dsKizuzNeemanim">
+      <Query>
+        <DataSourceName>DsLocalReport</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@DataSource">
+            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>Rechivey_kizuz_Neemanim</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="TEUR_SIDUR_MEYCHAD">
+          <DataField>TEUR_SIDUR_MEYCHAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="DAKOT">
+          <DataField>DAKOT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
   </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_MISPAR_ISHI">
@@ -11335,6 +11671,12 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Values>
       </DefaultValue>
       <Prompt>P_DT_RIKUZ</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_USER">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_USER</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
