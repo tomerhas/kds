@@ -3877,9 +3877,9 @@ Public Class ClKds
                     End Try
                     FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
                     File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
-                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after copy Pundakim " & MyFile, 0)
+                    'oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after copy Pundakim " & MyFile, 0)
                     File.Delete(InPath & MyFile)
-                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete Pundakim " & MyFile, 0)
+                    'oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete Pundakim " & MyFile, 0)
                     MyFile = Dir()
                 End While
                 oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, "Pundakim", 0)
@@ -3914,7 +3914,8 @@ Public Class ClKds
         Try
 
             ErrFileName = ConfigurationSettings.AppSettings("KdsFilePath") & "Pundakim" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & CStr(Now.Second) & ".err"
-            InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & InFileName
+            'InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & InFileName
+            InPathNFile = ConfigurationSettings.AppSettings("KdsInputFileNamePundakim") & InFileName 'collectmodem.dat
             sr = New StreamReader(InPathNFile)
 
             line = sr.ReadLine
