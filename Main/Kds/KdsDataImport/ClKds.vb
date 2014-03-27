@@ -3877,7 +3877,9 @@ Public Class ClKds
                     End Try
                     FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
                     File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after copy Pundakim " & MyFile, 0)
                     File.Delete(InPath & MyFile)
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete Pundakim " & MyFile, 0)
                     MyFile = Dir()
                 End While
                 oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, "Pundakim", 0)
@@ -3972,6 +3974,8 @@ Public Class ClKds
         Catch ex As Exception
             oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Pundakim aborted" & ex.Message, 3)
             Throw ex
+        Finally
+            sr.Close()
         End Try
     End Sub
 
