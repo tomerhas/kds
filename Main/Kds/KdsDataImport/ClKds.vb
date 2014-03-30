@@ -3915,7 +3915,7 @@ Public Class ClKds
 
             ErrFileName = ConfigurationSettings.AppSettings("KdsFilePath") & "Pundakim" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & CStr(Now.Second) & ".err"
             'InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & InFileName
-            InPathNFile = ConfigurationSettings.AppSettings("KdsInputFileNamePundakim") & InFileName 'collectmodem.dat
+            InPathNFile = ConfigurationSettings.AppSettings("KdsFilePathPundakim") & InFileName 'collectmodem.dat
             sr = New StreamReader(InPathNFile)
 
             line = sr.ReadLine
