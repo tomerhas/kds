@@ -22,7 +22,8 @@
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="P_COMPANYID">
-            <Value>=Parameters!p_CompanyId.Value</Value>
+            <Value>=Parameters!P_COMPANYID.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
@@ -69,12 +70,16 @@
           <DataField>TAARICH</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="TEUR_HEVRA">
+          <DataField>TEUR_HEVRA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="YEMEY_NOCHECHUT">
           <DataField>YEMEY_NOCHECHUT</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="ZMAN_BAFOAL_EGD_TAVURA">
-          <DataField>ZMAN_BAFOAL_EGD_TAVURA</DataField>
+        <Field Name="ZMAN_HEVRAT_BAT">
+          <DataField>ZMAN_HEVRAT_BAT</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="SHAOT_REGILOT_TAFKID">
@@ -111,6 +116,9 @@
           <Tablix Name="tbMushalim">
             <TablixBody>
               <TablixColumns>
+                <TablixColumn>
+                  <Width>2.5cm</Width>
+                </TablixColumn>
                 <TablixColumn>
                   <Width>2.5cm</Width>
                 </TablixColumn>
@@ -227,6 +235,43 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox180</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Direction>RTL</Direction>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>חברה</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Language>he-IL</Language>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -398,7 +443,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>עיסוק</Value>
+                                  <Value>קוד עיסוק</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -546,7 +591,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>זמן בפועל באגד תעבורה</Value>
+                                  <Value>זמן בפועל בחברת בת</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -556,6 +601,27 @@
                               </TextRuns>
                               <Style>
                                 <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontStyle>Normal</FontStyle>
+                                    <FontFamily>David</FontFamily>
+                                    <FontSize>12pt</FontSize>
+                                    <FontWeight>Normal</FontWeight>
+                                    <TextDecoration>None</TextDecoration>
+                                    <Color>#000000</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <RightIndent>0cm</RightIndent>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                                <LineHeight>18pt</LineHeight>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -620,7 +686,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>סה"כ שעות רגילות בנהגות</Value>
+                                  <Value>סה"כ שעות רגילות נהגות</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -694,7 +760,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>סה"כ זמן רציפות</Value>
+                                  <Value>זמן רציפות</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -858,6 +924,41 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>SHEM</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Direction>RTL</Direction>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TEUR_HEVRA">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!TEUR_HEVRA.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <Language>he-IL</Language>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>TEUR_HEVRA</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1153,14 +1254,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ZMAN_BAFOAL_EGD_TAVURA1">
+                        <Textbox Name="ZMAN_HEVRAT_BAT">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ZMAN_BAFOAL_EGD_TAVURA.Value</Value>
+                                  <Value>=Fields!ZMAN_HEVRAT_BAT.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Language>he-IL</Language>
@@ -1172,7 +1273,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ZMAN_BAFOAL_EGD_TAVURA1</rd:DefaultName>
+                          <rd:DefaultName>ZMAN_HEVRAT_BAT</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1184,6 +1285,7 @@
                             <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1419,6 +1521,7 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -1462,7 +1565,7 @@
             </PageBreak>
             <PageName>=First(Fields!TAARICH.Value, "DtMushalim")</PageName>
             <Height>1.076cm</Height>
-            <Width>42.5cm</Width>
+            <Width>45cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1474,7 +1577,7 @@
         <Height>0.43525in</Height>
         <Style />
       </Body>
-      <Width>16.73228in</Width>
+      <Width>17.71654in</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
@@ -1506,9 +1609,9 @@
       </DefaultValue>
       <Prompt>P_ENDDATE</Prompt>
     </ReportParameter>
-    <ReportParameter Name="p_CompanyId">
+    <ReportParameter Name="P_COMPANYID">
       <DataType>Integer</DataType>
-      <Prompt>p_CompanyId</Prompt>
+      <Prompt>P_COMPANYID</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
