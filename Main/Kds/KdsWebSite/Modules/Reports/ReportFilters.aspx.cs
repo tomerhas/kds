@@ -233,6 +233,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //    SetWorkerViewLevel(ReportName.AverageOvdimBeSnif);
                 //    break;
                 case ReportName.RptIturim:
+                    fsFilter.Style["width"] = "1105px";
                     if (!Page.IsPostBack)
                         CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
                     MisparVisa.TextBoxe.MaxLength = 10;

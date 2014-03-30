@@ -224,18 +224,28 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          }
 
          if (status_chufsha_rezifa == "1" || status_haavara_lesachar == "1" || status_haavara_lesachar == "2")
+         {
              ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).Enabled = false;
+             ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).ForeColor = System.Drawing.Color.Gray;
+         }
 
          if (status_machala == "1" || status_haavara_lesachar == "1" || status_haavara_lesachar == "2")
+         {
              ((Button)e.Row.Cells[enGrdRitzot.btn_yemey_machala.GetHashCode()].Controls[1]).Enabled = false;
+             ((Button)e.Row.Cells[enGrdRitzot.btn_yemey_machala.GetHashCode()].Controls[1]).ForeColor = System.Drawing.Color.Gray;
+
+         }
 
          if (huavara_lesachar == "0" || huavara_lesachar =="&nbsp;" )
          {
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Style["display"] = "inline";
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Style["display"] = "none";
              if (status_haavara_lesachar == "1" || status_chufsha_rezifa != "2" || status_machala != "2")
+             {
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = false;
-             else if (status_chufsha_rezifa == "2" && status_machala == "2") 
+                 ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).ForeColor = System.Drawing.Color.Gray;
+             }
+             else if (status_chufsha_rezifa == "2" && status_machala == "2")
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = true;
  
          }
@@ -244,8 +254,11 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Style["display"] = "none";
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Style["display"] = "inline";
              if (e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Text == "1" || huavara_lesachar == "2")
+             {
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Enabled = false;
-             else 
+                 ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).ForeColor = System.Drawing.Color.Gray;
+             }
+             else
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Enabled = true;
          }
 
@@ -259,17 +272,20 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          if (e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Text == "1")
          {
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).Enabled = false;
+             ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).ForeColor = System.Drawing.Color.Gray;
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).Enabled = true;    
          }
          else
          {
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).Enabled = true;
-             ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).Enabled = false;  
+             ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).Enabled = false;
+             ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).ForeColor = System.Drawing.Color.Gray;
          }
          if (huavara_lesachar != "1")
          {
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).Enabled = false;
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).Enabled = false;  
+             ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).ForeColor = System.Drawing.Color.Gray;
          }
          ((Button)e.Row.Cells[enGrdRitzot.btn_chufsha_rezifa.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + status_chufsha_rezifa;
          ((Button)e.Row.Cells[enGrdRitzot.btn_yemey_machala.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + status_machala;
