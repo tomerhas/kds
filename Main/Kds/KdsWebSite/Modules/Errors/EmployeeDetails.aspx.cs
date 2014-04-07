@@ -32,11 +32,12 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
             ViewState["SortExp"] = "taarich";
             lblMisparIshi.Text = (string)Request.QueryString["ID"];
             iMisparIshi = int.Parse(lblMisparIshi.Text);
+            InputHiddenBack.Value = Session["Params"].ToString();
             SetOvedDetailsDB(iMisparIshi);
             SetOvedCards(iMisparIshi, "taarich", "ASC");           
             divPeriod.InnerText = string.Concat("פרטי העובד לתקופה: ", (string)Request.QueryString["FromDate"], " - ", (string)Request.QueryString["ToDate"]);
             LoadMessages((DataList)Master.FindControl("lstMessages"));
-            InputHiddenBack.Value = Session["Params"].ToString();
+            
         }
         GetMisparimIshi();
         SetButtons();        
@@ -108,12 +109,17 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
         DataView dv;
         DateTime from = new DateTime();
         DateTime to = new DateTime();
+        string[] param;
+        int iKodStatus=0;
         try
         {
+            param = InputHiddenBack.Value.Split(';');
             //(string)Request.QueryString["FromDate"], " - ", (string)Request.QueryString["ToDate"]);
             from = DateTime.Parse((string)Request.QueryString["FromDate"]);      
             to = DateTime.Parse((string)Request.QueryString["ToDate"]);
-            dt = oOvdim.GetOvedErrorsCards(iMisparIshi, from, to);
+            if (param[3] != "-1")
+                iKodStatus = int.Parse(param[3]);
+            dt = oOvdim.GetOvedErrorsCards(iMisparIshi, from, to, iKodStatus, param[4]);
             dv = new DataView(dt);
             if (sSortExp.Length > 0)
             {

@@ -321,7 +321,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                     }
                 }
 
-                dtOvdim = oOvdim.GetOvedErrorsCards(int.Parse(txtEmpId.Text), dTarMe, dTarAd);
+                dtOvdim = oOvdim.GetOvedErrorsCards(int.Parse(txtEmpId.Text), dTarMe, dTarAd,0,"");
                 drErrors = dtOvdim.Select("status_card=0","taarich asc");
                 if (drErrors.Length>0)
                     sError = DateTime.Parse(drErrors[0]["taarich"].ToString()).ToShortDateString();

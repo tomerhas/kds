@@ -2234,3 +2234,12 @@ a
 	text-align:right;
 }
 
+.ddlCB
+{
+    font-size:14px;
+	font-family:Arial;
+	text-align:right;
+	direction:rtl;	
+}
+
+

@@ -182,7 +182,7 @@ namespace KdsLibrary.BL
             }
         }
 
-        public DataTable GetErrorOvdim(int iKodHevra, int iKodEzor, int iKodSnif, int iKodMaamad, DateTime dFrom, DateTime dTo)
+        public DataTable GetErrorOvdim(int iKodHevra, int iKodEzor, int iKodSnif, int iKodMaamad, int iKodStatus,string sShgiot, DateTime dFrom, DateTime dTo)
         {
             DataTable dt = new DataTable();
             clDal oDal = new clDal();
@@ -228,6 +228,25 @@ namespace KdsLibrary.BL
                     oDal.AddParameter("p_kod_maamad", ParameterType.ntOracleInteger, iKodMaamad, ParameterDir.pdInput);
                 }
 
+                if (iKodStatus == 0)
+                {
+                    oDal.AddParameter("p_kod_status", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+                }
+                else
+                {
+                    oDal.AddParameter("p_kod_status", ParameterType.ntOracleInteger, iKodStatus, ParameterDir.pdInput);
+                }
+
+                if (sShgiot == "")
+                {
+                    oDal.AddParameter("p_kod_shgia", ParameterType.ntOracleVarchar, null, ParameterDir.pdInput);
+                }
+                else
+                {
+                    oDal.AddParameter("p_kod_shgia", ParameterType.ntOracleVarchar, sShgiot, ParameterDir.pdInput);
+                }
+                
+
                 oDal.AddParameter("p_from_date", ParameterType.ntOracleDate, dFrom, ParameterDir.pdInput);
                 oDal.AddParameter("p_to_date", ParameterType.ntOracleDate, dTo, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
@@ -249,7 +268,7 @@ namespace KdsLibrary.BL
             }
         }
 
-        public DataTable GetOvedErrorsCards(int iMisparIshi, DateTime from, DateTime to)
+        public DataTable GetOvedErrorsCards(int iMisparIshi, DateTime from, DateTime to, int iKodStatus, string sShgiot)
         {
             try
             {
@@ -259,6 +278,24 @@ namespace KdsLibrary.BL
                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
                 oDal.AddParameter("p_from", ParameterType.ntOracleDate, from, ParameterDir.pdInput);
                 oDal.AddParameter("p_to", ParameterType.ntOracleDate, to, ParameterDir.pdInput);
+
+                if (iKodStatus == 0)
+                {
+                    oDal.AddParameter("p_kod_status", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+                }
+                else
+                {
+                    oDal.AddParameter("p_kod_status", ParameterType.ntOracleInteger, iKodStatus, ParameterDir.pdInput);
+                }
+
+                if (sShgiot == "")
+                {
+                    oDal.AddParameter("p_kod_shgia", ParameterType.ntOracleVarchar, null, ParameterDir.pdInput);
+                }
+                else
+                {
+                    oDal.AddParameter("p_kod_shgia", ParameterType.ntOracleVarchar, sShgiot, ParameterDir.pdInput);
+                }
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
 
                 oDal.ExecuteSP(clGeneral.cProGetOvedErrorsCards, ref dt);

@@ -740,6 +740,24 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+
+        public  DataTable GetErrorsActive()
+        {
+            clDal _Dal = new clDal();
+            DataTable dt = new DataTable();
+            try
+            {
+                _Dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                _Dal.ExecuteSP(clGeneral.cProGetShgiotNoActive, ref dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void IdkunMachalotOvdim(long lRequestNum)
         {
             clDal oDal = new clDal();

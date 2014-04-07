@@ -109,7 +109,23 @@ function ChangeKeyCode()
                 <td align="right" dir="ltr" style="width:150px">  
                     <KdsCalendar:KdsCalendar runat="server"  ID="clnToDate" CalenderTabIndex="5"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>                             
                     <%--<wccEgged:wccCalendar runat="server" ID="clnToDate" BasePath="../../EggedFramework" AutoPostBack="false" Width="110px" dir="rtl"></wccEgged:wccCalendar>--%>                                                                                                                      
-                </td>               
+                </td> 
+                <td class="InternalLabel" style="width:50px">
+                    סטטוס כרטיס:
+                </td>
+                <td>
+                    <asp:DropDownList ID="ddlStatus" runat="server" ></asp:DropDownList>
+                </td> 
+                 <td class="InternalLabel" style="width:50px">
+                    סוג שגיאה:
+                </td>
+                
+                <td>
+                       <asp:DropDownCheckBoxes ID="DDLShgiot" runat="server" AddJQueryReference="True" UseButtons="False" UseSelectAllNode="True" TextAlign="Right" >
+                            <Style SelectBoxWidth="250"  DropDownBoxBoxWidth="250" DropDownBoxBoxHeight="150" DropDownBoxCssClass="ddlCB" SelectBoxCssClass="ddlCB" />
+                            <Texts SelectBoxCaption="" SelectAllNode="הכל" SelectAllStyle="Style='font-weight:bold; '"  />                          
+                        </asp:DropDownCheckBoxes>
+                  </td>                 
                 <td>
                     <asp:UpdatePanel ID="upExecute" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                          <ContentTemplate>
@@ -122,6 +138,7 @@ function ChangeKeyCode()
                 <td>                                       
                    <asp:CustomValidator id="vldCmpDates" runat="server" ClientValidationFunction="CheckDates"  ErrorMessage="תאריך סיום קטן מתאריך התחלה" Display="Dynamic"    ></asp:CustomValidator>
                 </td>
+               
             </tr>                   
          </table>                
    </fieldset>

@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Test4.aspx.cs" Inherits="Modules_Test4" %>
-
+<%@ Register Assembly="KdsLibrary" Namespace="KdsLibrary.Controls" TagPrefix="cc1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -7,10 +7,32 @@
      <title>click() event</title>
     <script src='../js/jquery.js' type='text/javascript'></script>
      <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>  <link rel="stylesheet" href="/resources/demos/style.css" />
-    <style type="text/css">    .selected {      color: red;    }  </style>
+
+    <style type="text/css">
+        .selected {      color: red;    }
+        .ddlchklst
+        {
+            width: 170px;
+            border:solid 1px silver;
+        }
+        .ddlchklst ul
+        {
+          margin:0;
+          padding:0;
+           border-top:solid 1px silver;
+            }
+        .ddlchklst li
+        {
+            list-style: none;
+        }
+    </style>
+
+
 </head>
 <body>
     <form id="form1" runat="server">
+   
+
     <div>
         <input type="text" id="txt1" value="562" />
         <input type="text" id="txt2"  title="enter your age"/>

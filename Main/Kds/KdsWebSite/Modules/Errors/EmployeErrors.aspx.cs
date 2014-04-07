@@ -68,9 +68,11 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         InputHiddenBack.Attributes.Add("Ezor", ParamsBack[0]);
         InputHiddenBack.Attributes.Add("Snif", ParamsBack[1]);
         InputHiddenBack.Attributes.Add("Maamad", ParamsBack[2]);
-        InputHiddenBack.Attributes.Add("From", ParamsBack[3]);
-        InputHiddenBack.Attributes.Add("To", ParamsBack[4]);
-        InputHiddenBack.Attributes.Add("PageIndex", ParamsBack[5]);
+        InputHiddenBack.Attributes.Add("Status", ParamsBack[3]);
+        InputHiddenBack.Attributes.Add("Shgiot", ParamsBack[4]);
+        InputHiddenBack.Attributes.Add("From", ParamsBack[5]);
+        InputHiddenBack.Attributes.Add("To", ParamsBack[6]);
+        InputHiddenBack.Attributes.Add("PageIndex", ParamsBack[7]);
     }
     private void SetDatesDefaults()
     {
@@ -111,6 +113,8 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             rdoName.Attributes.Add("onclick", "SetTextBox();");
             SetDatesDefaults();
             LoadMaamad();
+            LoadStatus();
+            LoadShgiot();
             if (Session["SortExp"] == null)
                 Session["SortExp"] = "mispar_ishi";
 
@@ -187,6 +191,71 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         }
     }
 
+    private void LoadStatus()
+    {
+        DataTable dt;
+        clUtils oUtils = new clUtils();
+        try
+        {
+            dt = oUtils.GetStatus();
+            ddlStatus.DataTextField = "teur";
+            ddlStatus.DataValueField = "kod";
+            ddlStatus.DataSource = dt;
+
+            DataRow dr;
+
+            dr = dt.NewRow();
+            dr["teur"] = "הכל";
+            dr["kod"] = "-1";
+            dt.Rows.InsertAt(dr, 0);
+            ddlStatus.DataBind();
+
+            if (InputHiddenBack.Value == "true")
+                ddlStatus.SelectedValue = InputHiddenBack.Attributes["Status"];
+        }
+        catch (Exception ex)
+        {
+            KdsLibrary.clGeneral.BuildError(Page, ex.Message);
+        }
+    }
+
+    private void LoadShgiot()
+    {
+        DataTable dt;
+        clBatch oBatch = new clBatch();
+        try
+        {
+            dt = oBatch.GetErrorsActive();
+            foreach (DataRow dr in dt.Rows)
+            {
+                dr["teur_shgia"] = dr["kod_shgia"] + "-" + dr["teur_shgia"]; 
+            }
+            DDLShgiot.DataTextField = "teur_shgia";
+            DDLShgiot.DataValueField = "kod_shgia";
+            DDLShgiot.DataSource = dt;
+            DDLShgiot.DataBind();
+
+            if (InputHiddenBack.Value == "true")
+            {
+                var shgiot = InputHiddenBack.Attributes["shgiot"];
+                if (shgiot.Length>0)
+                {
+                    shgiot = ","+ shgiot +",";
+                    foreach (ListItem item in (DDLShgiot as ListControl).Items)
+                    {
+                        if (shgiot.IndexOf("," + item.Value + ",") > -1)
+                            item.Selected = true;
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            KdsLibrary.clGeneral.BuildError(Page, ex.Message);
+        }
+    }
+
+    
     private void LoadMaamad()
     {
         DataTable dt;
@@ -380,7 +449,9 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         int iKodMaamad=0;
         int iKodEzor = 0;
         int iKodHevra = 0;
+        int iKodStatus = 0;
         string[] arrMaamadHevraKeys;
+        string shgiot;
 
         try
         {   //שליפת קוד איזור, קוד חברה, קוד סניף וקוד מעמד מהמסך         
@@ -402,9 +473,14 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                         iKodMaamad = int.Parse(ddlMaamad.SelectedItem.Value);
                         iKodHevra = 0;
                     }
+            if (ddlStatus.SelectedValue != "-1")
+                iKodStatus = int.Parse(ddlStatus.SelectedValue);
+
             dFrom = DateTime.Parse(clnFromDate.Text);
             dTo = DateTime.Parse(clnToDate.Text);
-            dt = oOvdim.GetErrorOvdim(iKodHevra,iKodEzor, iKodSnif, iKodMaamad, dFrom, dTo);
+            shgiot = DDLShgiot.getValues();
+
+            dt = oOvdim.GetErrorOvdim(iKodHevra, iKodEzor, iKodSnif, iKodMaamad, iKodStatus,shgiot, dFrom, dTo);
             
             InsertMisparIshiToSession(dt);
 
@@ -434,8 +510,8 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                 btnSearch.Enabled = true;
             }
             Session["Params"] = ddlSite.SelectedValue + ";" + txtSnif.Text + ";" +
-                        ddlMaamad.SelectedValue + ";" + clnFromDate.Text + ";" +
-                        clnToDate.Text + ";" + grdEmployee.PageIndex;
+                        ddlMaamad.SelectedValue + ";" + ddlStatus.SelectedValue + ";" + shgiot + ";" +
+                        clnFromDate.Text + ";" +  clnToDate.Text + ";" + grdEmployee.PageIndex;
             FillPirteySinun();
             btnSearch.ControlStyle.CssClass = "ImgButtonSearch";
             btnSearch.Enabled = true;

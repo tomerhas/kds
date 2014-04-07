@@ -13,6 +13,7 @@ using KdsLibrary.Security;
 
 using KdsLibrary;
 using System.Configuration;
+using System.Data;
 //using Lesnikowski.Barcode; 
 
 public partial class Modules_Test2 : System.Web.UI.Page
@@ -20,7 +21,52 @@ public partial class Modules_Test2 : System.Web.UI.Page
     
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+        checkBoxes1.DataTextField = "Value";
+        checkBoxes1.DataValueField = "ID";
+        checkBoxes1.DataSource = GetListItem();
+        checkBoxes1.DataBind();
+
+        DropDownCheckBoxes1.DataTextField = "Value";
+        DropDownCheckBoxes1.DataValueField = "ID";
+        DropDownCheckBoxes1.DataSource = GetListItem();
+        DropDownCheckBoxes1.DataBind();
+       
+        //usTest.kodNameCol = "ID";
+        //usTest.valNameCol = "Value";
+        //usTest.SetDataSource(GetListItem());
+     //   CheckBoxListDropDown.SetDataSource(GetListItem()); 
+        //DropDownList ddl = new DropDownList();
+        //ddl.ID = "ddlChkList";
+        //ListItem lstItem = new ListItem();
+        //ddl.Items.Insert(0, lstItem);
+        //ddl.Width = new Unit(155);
+        //ddl.Attributes.Add("onmousedown", "showdivonClick()");
+        //CheckBoxList chkBxLst = new CheckBoxList();
+        //chkBxLst.ID = "chkLstItem";
+        //chkBxLst.Attributes.Add("onmouseover", "showdiv()");
+        //DataTable dtListItem = GetListItem();
+        //int rowNo = dtListItem.Rows.Count;
+        //string lstValue = string.Empty;
+        //string lstID = string.Empty;
+        //for (int i = 0; i < rowNo - 1; i++)
+        //{
+        //    lstValue = dtListItem.Rows[i]["Value"].ToString();
+        //    lstID = dtListItem.Rows[i]["ID"].ToString();
+        //    lstItem = new ListItem("<a href=\"javascript:void(0)\" id=\"alst\" style=\"text-decoration:none;color:Black; \" onclick=\"getSelectedItem(' " + lstValue + "','" + i + "','" + lstID + "','anchor');\">" + lstValue + "</a>", dtListItem.Rows[i]["ID"].ToString());
+        //    lstItem.Attributes.Add("onclick", "getSelectedItem('" + lstValue + "','" + i + "','" + lstID + "','listItem');");
+        //    chkBxLst.Items.Add(lstItem);
+        //}
+        //System.Web.UI.HtmlControls.HtmlGenericControl div = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
+        //div.ID = "divChkList";
+        //div.Controls.Add(chkBxLst);
+        //div.Style.Add("border", "black 1px solid");
+        //div.Style.Add("width", "160px");
+        //div.Style.Add("height", "180px");
+        //div.Style.Add("overflow", "AUTO");
+        //div.Style.Add("display", "none");
+        //phDDLCHK.Controls.Add(ddl);
+        //phDDLCHK.Controls.Add(div);
+
         //List<ListItem> Items = new List<ListItem>();
         //Items.Add(new ListItem("אגב", "1"));
         //Items.Add(new ListItem("אכב", "2"));
@@ -32,8 +78,35 @@ public partial class Modules_Test2 : System.Web.UI.Page
         //    ListBox1.Items.Add(Item);
         //});
        //btnHeadrut.Attributes.Add("onClick", "OpenDivuachHeadrut()");
+        //string[] ds = new string[] { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
+        //ddlchklst.DataSource = ds;
+        //ddlchklst.DataBind();
+        ////ddlchklst.DataSource = ds;
+        ////this.ddlchklst.DataBind();
+
+        //ListItem itemL = new ListItem();
+        //CheckBox item = new CheckBox();
+        //item.ID = "1"  ;
+        //item.Text = "sunday";
+ 
+        //ddyom.Items.Add(item);
     }
 
+    DataTable GetListItem()
+    {
+        DataTable table = new DataTable();
+        table.Columns.Add("ID", typeof(int));
+        table.Columns.Add("Value", typeof(string));
+        table.Rows.Add(1, "ListItem1");
+        table.Rows.Add(2, "ListItem2");
+        table.Rows.Add(3, "ListItem3");
+        table.Rows.Add(4, "My ListItem Wraps also");
+        table.Rows.Add(5, "My New ListItem5");
+        table.Rows.Add(6, "ListItem6");
+        table.Rows.Add(7, "ListItem7");
+        table.Rows.Add(8, "ListItem8");
+        return table;
+    }
     protected void Page_PreRender(object sender, EventArgs e)
     { 
     }
@@ -41,6 +114,9 @@ public partial class Modules_Test2 : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
+        string a = checkBoxes1.getValues();
+        string b = DropDownCheckBoxes1.getValues();
+        //CheckBoxListDropDown.GetSelectedItemsList();
         KdsBatch.TaskManager.Utils oUtils = new KdsBatch.TaskManager.Utils();
         oUtils.RunShguimLechishuv();
     //    int num;

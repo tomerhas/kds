@@ -150,7 +150,7 @@ namespace KdsLibrary
         public const string cProInsPeilutOvdim = "pkg_errors.pro_ins_peilut_ovdim";
         public const string cProGetAllErrorsAndFields = "pkg_errors.pro_get_all_shgiot";
         public const string cProGetApprovalErrors = "pkg_errors.get_approval_errors";
-        
+        public const string cProGetShgiotNoActive = "Pkg_Errors.pro_get_shgiot_active";
 #endregion
 
 #region pkg_ovdim constants
@@ -357,6 +357,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const string cProGetProfil = "pkg_utils.pro_get_profil";
         public const string cProGetHarshaotToProfil = "pkg_utils.pro_get_harshaot_to_profil";
         public const string cProGetMaamad = "pkg_utils.pro_get_maamad";
+        public const string cProGetCardStatuses = "pkg_utils.pro_get_status_card";
         public const string cProGetHodaotToProfil = "pkg_utils.pro_get_hodaot_to_profil";
         public const string cProGetStatusIshurMaxLevel = "pkg_utils.pro_get_status_ishur_max_level";
         public const string cProCheckIshur = "pkg_utils.pro_check_ishur";
@@ -2010,7 +2011,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             }
         }
 
-
+       
         public static int GetSugYom(int iMisparIshi, DateTime dTaarich, DataTable dtYamimMeyuchadim, int iSectorOved, DataTable dtSugeyYamimMeyuchadim, int iMeafyen56)
         {
             DataRow[] drYaminMeyuchadim;
