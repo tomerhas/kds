@@ -30,12 +30,13 @@ div.dd_chk_select div#caption
 {
 	overflow: hidden;
 	height: 16px;
-	margin-right: 20px;
+	margin-right: 4px;
 	margin-left: 2px;
-	text-align: left;  
+	text-align: right;  
 	vertical-align: middle;
 	position: relative;
 	top: 1px;
+    font-weight:bold
 }
 
 div.dd_chk_drop
@@ -80,3 +81,6 @@ div.dd_chk_drop div#buttons input:hover
 {
 	background-image: url("<%= WebResource("Saplin.Controls.EmbeddedResources.actionButtonHover.gif")%>");
 }
+
+
+

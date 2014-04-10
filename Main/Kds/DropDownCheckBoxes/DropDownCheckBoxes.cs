@@ -28,6 +28,20 @@ namespace Saplin.Controls
             ReseteParentProperties();
         }
 
+        public bool SelectAllIsChecked()
+        {
+            int numChecked = 0;
+          
+            foreach (ListItem item in ((ListControl)(this)).Items)
+            {
+                if (item.Selected)
+                    numChecked++;
+            }
+           
+            if (numChecked == ((ListControl)(this)).Items.Count)
+                return true;
+            else return false; 
+        }
         public string getValues()
         {
             string SelectedValues="";
@@ -351,13 +365,14 @@ namespace Saplin.Controls
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
             // Add caption
-            if (!string.IsNullOrEmpty(Texts.SelectBoxCaption))
-            {
+            //if (!string.IsNullOrEmpty(Texts.SelectBoxCaption))
+            //{
                 writer.AddAttribute(HtmlTextWriterAttribute.Id, "caption");
                 writer.RenderBeginTag(HtmlTextWriterTag.Div);
+              //  writer.AddAttribute(HtmlTextWriterAttribute.Class, !string.IsNullOrEmpty(Style.SelectBoxCssClass) ? Style.SelectBoxCssClass + " " + selectCssClass : selectCssClass);
                 writer.WriteEncodedText(Texts.SelectBoxCaption);
                 writer.RenderEndTag();
-            }
+            //}
 
             // Add dropdown div markup
             writer.AddAttribute(HtmlTextWriterAttribute.Id, ClientID + divPstfx);
@@ -376,10 +391,10 @@ namespace Saplin.Controls
             if (UseSelectAllNode)
             {
 
-                var selectAllHtml = @"<input type='checkbox'  name='{0}'><label for='{0}' {2} >{1}</label>";
+                var selectAllHtml = @"<input type='checkbox'  name='{0}' {3}><label for='{0}' {2} >{1}</label>";
 
                 if (!string.IsNullOrEmpty(Texts.SelectAllNode))
-                    selectAllHtml = string.Format(selectAllHtml, ClientID + selectAllPstfx, Texts.SelectAllNode,Texts.SelectAllStyle);
+                    selectAllHtml = string.Format(selectAllHtml, ClientID + selectAllPstfx, Texts.SelectAllNode, Texts.SelectAllStyle, Texts.OnClickSelectAll);
 
 
                 writer.AddStyleAttribute(HtmlTextWriterStyle.Display, "block");

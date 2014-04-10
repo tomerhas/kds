@@ -31,7 +31,7 @@ function ChangeKeyCode()
        var flag = false;
        var userId = iUserId;
    </script>     
-    <fieldset class="FilterFieldSet" >          
+    <fieldset class="FilterFieldSet" style="width:970px;height:100px"  >          
         <legend>חיתוך לפי</legend>
          
         <table class="FilterTable" cellpadding="0" cellspacing="2" dir="rtl"  width="970px" >
@@ -121,17 +121,27 @@ function ChangeKeyCode()
                 </td>
                 
                 <td>
-                       <asp:DropDownCheckBoxes ID="DDLShgiot" runat="server" AddJQueryReference="True" UseButtons="False" UseSelectAllNode="True" TextAlign="Right" >
-                            <Style SelectBoxWidth="250"  DropDownBoxBoxWidth="250" DropDownBoxBoxHeight="150" DropDownBoxCssClass="ddlCB" SelectBoxCssClass="ddlCB" />
-                            <Texts SelectBoxCaption="" SelectAllNode="הכל" SelectAllStyle="Style='font-weight:bold; '"  />                          
+                   <%--  <asp:UpdatePanel ID="UpdatePanel3" runat="server" RenderMode="Inline" UpdateMode="Always"   >
+                        <ContentTemplate>    --%>
+                        
+                       <asp:DropDownCheckBoxes ID="DDLShgiot" runat="server" AddJQueryReference="True"  UseButtons="False"  UseSelectAllNode="True" TextAlign="Right" >
+                            <Style SelectBoxWidth="250"  DropDownBoxBoxWidth="250" DropDownBoxBoxHeight="150"  />
+                            <Texts SelectBoxCaption="" OnClickSelectAll="onclick='ClickHiddenButton(-1);'" SelectAllNode="הכל" SelectAllStyle="Style='font-weight:bold; '"   />                          
                         </asp:DropDownCheckBoxes>
+                      
+
+                         <%--   </ContentTemplate>
+                          
+                          </asp:UpdatePanel>--%>
+                   
+                    <%-- <input type="button" ID="hidButDDlCB" runat="server" onserverclick="UpdateDDLShgiot_text" />--%>
                   </td>                 
                 <td>
                     <asp:UpdatePanel ID="upExecute" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                          <ContentTemplate>
                             <asp:Button Text="הצג" ID="btnExecute" runat="server"  CssClass ="ImgButtonSearch" autopostback="true" onclick="btnExecute_Click" TabIndex="6"
                             onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />                            
-                            <input type="hidden" id="hidMisparIshi" runat="server" />                                                            
+                            <input type="hidden" id="hidMisparIshi" runat="server"  />                                                            
                        </ContentTemplate>                                              
                     </asp:UpdatePanel >          
                 </td>                    
@@ -143,7 +153,7 @@ function ChangeKeyCode()
          </table>                
    </fieldset>
       
-   <fieldset class="FilterFieldSet"> 
+   <fieldset class="FilterFieldSet"  style="width:970px"  >    
         <legend >חיפוש לפי</legend>      
         <table class="FilterTable">
             <tr>
@@ -266,10 +276,81 @@ function ChangeKeyCode()
    </table>
    <input type="hidden" id="Params" name="Params"  runat="server" />
    <input type="hidden" id="InputHiddenBack" name="InputHiddenBack" value="false" runat="server" />
+   <input type="hidden" id="inputAllShgiot" name="inputAllShgiot" runat="server" />
    <script language="javascript" type="text/javascript">
      window.onload = function () {  
        SetTextBox();
-    }
+     }
+
+     function ClickHiddenButton(val) {
+        // debugger;
+         var arrValue=null;
+         var sThisVal="";
+         var ipos=-1,i;
+         
+         if (val == "-1") {
+             var allitems = $('#checks input:checkbox');
+             var items = $('#checks input:checked');
+             if (items.length < (allitems.length-1))
+                 $('#caption')[0].innerText = "הכל";
+             else $('#caption')[0].innerText = "";
+         }
+         else {
+                if ($('#caption')[0].innerText != "") 
+                {
+                    if ($('#caption')[0].innerText.indexOf('הכל')>-1)
+                    $('#caption')[0].innerText =  document.getElementById("ctl00_KdsContent_inputAllShgiot").value;
+
+                    arrValue = $('#caption')[0].innerText.split(",");
+                }
+              
+             
+
+             if (arrValue != null) {
+                 for (i = 0; i < arrValue.length; i++) {
+                     if (arrValue[i] == val)
+                         ipos = i;
+                 }
+
+                 if (ipos > -1) {
+                     for (i = 0; i < arrValue.length; i++) {
+                         if (i != ipos)
+                             sThisVal += "," + arrValue[i];
+                     }
+                 }
+                 else {
+                     for (i = 0; i < arrValue.length; i++)
+                         if (Number(arrValue[i]) < Number(val))
+                             sThisVal += "," + arrValue[i];
+                         else {
+                             if ((sThisVal + ",").indexOf("," + val + ",") == -1)
+                                 sThisVal += "," + val;
+                             sThisVal += "," + arrValue[i];
+                         }
+
+                     if (sThisVal.indexOf("," + val + ",") == -1)
+                         sThisVal += "," + val;
+                 }
+                 $('#caption')[0].innerText = sThisVal.substring(1, sThisVal.length);
+             }
+             else {
+                 sThisVal = val;
+                 $('#caption')[0].innerText = sThisVal;
+             }
+         }
+       //  $('#checks input:checkbox').each(function () {
+         //$('#checks input:checked').each(function () {
+         //    if (this.checked)
+         //        sThisVal = $(this).val();
+         //});
+         //var text
+         //var items = $("#DDLShgiot input[type='checkbox']");
+         //for (var i = 0; i < items.length; i++)
+         //    text = items[i].textContent;
+        // debugger;
+         // $("#hidButDDlCB").click();
+        // document.getElementById("ctl00_KdsContent_hidButDDlCB").click();
+     }
     function SetTextBox() {
 
         var rdo = document.getElementById("ctl00_KdsContent_rdoId");
@@ -320,7 +401,7 @@ function ChangeKeyCode()
  }
  function getMassege() {
      var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
-     return "jjj";
+   //  return "jjj";
    //  
  }
     function onChange_FromDate() {

@@ -56,6 +56,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                 for (int i = 0; i < dtParametrim.Rows.Count; i++)
                     Params.Attributes.Add("Param" + dtParametrim.Rows[i]["KOD_PARAM"].ToString(), dtParametrim.Rows[i]["ERECH_PARAM"].ToString());
             }
+            RefreshDDLShgiot_text();
         }
         catch (Exception ex)
         {
@@ -235,17 +236,29 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             DDLShgiot.DataSource = dt;
             DDLShgiot.DataBind();
 
+          //  DDLShgiot.Texts.SelectBoxCaption = "בחר";
+       //     DDLShgiot.Attributes.Add("onclick", "ClickHiddenButton();");
+            foreach (ListItem item in (DDLShgiot as ListControl).Items)
+            {
+                
+               // item.Attributes.Add("valueAsNumber", item.Value);
+                item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value +");");
+            }
             if (InputHiddenBack.Value == "true")
             {
                 var shgiot = InputHiddenBack.Attributes["shgiot"];
                 if (shgiot.Length>0)
                 {
-                    shgiot = ","+ shgiot +",";
+                    if (shgiot.Split((char.Parse(","))).Length != ((DDLShgiot as ListControl).Items).Count)
+                        DDLShgiot.Texts.SelectBoxCaption = shgiot;
+                    else DDLShgiot.Texts.SelectBoxCaption = "הכל";
+                    
+                    shgiot = "," + shgiot + ",";
                     foreach (ListItem item in (DDLShgiot as ListControl).Items)
                     {
                         if (shgiot.IndexOf("," + item.Value + ",") > -1)
                             item.Selected = true;
-                    }
+                    }   
                 }
             }
         }
@@ -255,7 +268,35 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         }
     }
 
-    
+    protected void RefreshDDLShgiot_text()
+    {
+        
+        DDLShgiot.Texts.SelectBoxCaption = "";
+
+        if (!DDLShgiot.SelectAllIsChecked())
+        {
+            foreach (ListItem item in (DDLShgiot as ListControl).Items)
+            {
+                if (item.Selected)
+                    DDLShgiot.Texts.SelectBoxCaption += "," + item.Value;
+            }
+            if (DDLShgiot.Texts.SelectBoxCaption.Length > 0)
+                DDLShgiot.Texts.SelectBoxCaption = DDLShgiot.Texts.SelectBoxCaption.Substring(1, DDLShgiot.Texts.SelectBoxCaption.Length - 1);
+        }
+        else
+        {
+            DDLShgiot.Texts.SelectBoxCaption = "הכל";  
+        }
+        inputAllShgiot.Value = "";
+        foreach (ListItem item in (DDLShgiot as ListControl).Items)
+            inputAllShgiot.Value += "," + item.Value;   
+        if (inputAllShgiot.Value.Length>0)
+            inputAllShgiot.Value = inputAllShgiot.Value.Substring(1, inputAllShgiot.Value.Length - 1);
+        
+    }
+
+
+   
     private void LoadMaamad()
     {
         DataTable dt;
@@ -449,7 +490,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         int iKodMaamad=0;
         int iKodEzor = 0;
         int iKodHevra = 0;
-        int iKodStatus = 0;
+        int iKodStatus = -1;
         string[] arrMaamadHevraKeys;
         string shgiot;
 

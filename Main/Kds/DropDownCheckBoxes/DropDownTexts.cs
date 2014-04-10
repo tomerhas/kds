@@ -108,5 +108,20 @@ namespace Saplin.Controls
                 ViewState["SelectAllStyle"] = value;
             }
         }
+
+        [Localizable(true)]
+        [DefaultValue("")]
+        [NotifyParentProperty(true)]
+        public string OnClickSelectAll
+        {
+            get
+            {
+                return ViewState["OnClickSelectAll"] as string;
+            }
+            set
+            {
+                ViewState["OnClickSelectAll"] = value;
+            }
+        }
     }
 }

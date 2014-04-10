@@ -228,7 +228,7 @@ namespace KdsLibrary.BL
                     oDal.AddParameter("p_kod_maamad", ParameterType.ntOracleInteger, iKodMaamad, ParameterDir.pdInput);
                 }
 
-                if (iKodStatus == 0)
+                if (iKodStatus == -1)
                 {
                     oDal.AddParameter("p_kod_status", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
                 }
