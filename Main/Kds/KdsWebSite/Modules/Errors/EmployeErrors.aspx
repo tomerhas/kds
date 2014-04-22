@@ -31,7 +31,7 @@ function ChangeKeyCode()
        var flag = false;
        var userId = iUserId;
    </script>     
-    <fieldset class="FilterFieldSet" style="width:970px;height:100px"  >          
+    <fieldset class="FilterFieldSet" style="width:970px;height:120px"  >          
         <legend>חיתוך לפי</legend>
          
         <table class="FilterTable" cellpadding="0" cellspacing="2" dir="rtl"  width="970px" >
