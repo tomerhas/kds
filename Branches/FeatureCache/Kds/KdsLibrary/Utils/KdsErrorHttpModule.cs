@@ -21,26 +21,25 @@ namespace KdsLibrary.Utils
 
         public void application_Error(object sender, EventArgs e)
         {
-            Exception exc = HttpContext.Current.Server.GetLastError();
-            if (exc != null)
-            {
-                if (!exc.IsFileNotFoundException())
-                {
-                    clGeneral.LogError(exc);
-                    if (HttpContext.Current.Session != null)
-                        HttpContext.Current.Session["LastError"] = exc;
-                }
-                string qString = GetQueryStringForErrorPage(exc);
-                //string redirectUrl = String.Format("{0}/ErrorPage.aspx?{1}",
-                //    HttpContext.Current.Request.ApplicationPath,
-                //    qString);
-                string redirectUrl = String.Format("{0}/ErrorPage.aspx?{1}",
-                   "~",
-                   qString);
-                HttpContext.Current.Server.ClearError();
-                //HttpContext.Current.Response.Redirect(redirectUrl);
-                HttpContext.Current.Server.Transfer(redirectUrl);
-            }
+            //Exception exc = HttpContext.Current.Server.GetLastError();
+            //if (exc != null)
+            //{
+            //    if (!exc.IsFileNotFoundException())
+            //    {
+            //        clGeneral.LogError(exc);
+            //        if (HttpContext.Current.Session != null)
+            //            HttpContext.Current.Session["LastError"] = exc;
+            //    }
+            //    string qString = GetQueryStringForErrorPage(exc);
+            //    //string redirectUrl = String.Format("{0}/ErrorPage.aspx?{1}",
+            //    //    HttpContext.Current.Request.ApplicationPath,
+            //    //    qString);
+            //    string redirectUrl = String.Format("ErrorPage.aspx?{0}",
+            //       qString);
+            //    //HttpContext.Current.Server.ClearError();
+            //    //HttpContext.Current.Response.Redirect(redirectUrl);
+            //    HttpContext.Current.Server.Transfer(redirectUrl);
+            //}
         }
       
         private string GetQueryStringForErrorPage(Exception exc)
