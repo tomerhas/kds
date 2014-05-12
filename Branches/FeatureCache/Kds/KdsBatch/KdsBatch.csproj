@@ -61,6 +61,29 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\Test\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'KdsTest|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\KdsTest\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'KdsProd01|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\KdsProd01\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.Excel, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -162,11 +185,6 @@
     <Compile Include="Premia\SystemCompare\ImportColumn.cs" />
     <Compile Include="Premia\SystemCompare\ImportStructure.cs" />
     <Compile Include="Reports\clRikuz.cs" />
-    <Compile Include="Service References\KdsServiceProxy\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="TaskManager\Utils.cs" />
     <Compile Include="Transfer\clErua.cs" />
     <Compile Include="Transfer\clErua416.cs" />
@@ -194,31 +212,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\ReportMail.xsl" />
-    <None Include="Service References\KdsServiceProxy\KdsLocalService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\KdsServiceProxy\KdsLocalService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\KdsServiceProxy\KdsLocalService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\KdsServiceProxy\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\KdsServiceProxy\configuration.svcinfo" />
-    <None Include="Service References\KdsServiceProxy\configuration91.svcinfo" />
-    <None Include="Service References\KdsServiceProxy\BatchService.wsdl" />
-    <None Include="Service References\KdsServiceProxy\KdsLocalService.disco" />
     <None Include="Web References\premyot\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\premyot\wsPremyot.disco" />
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -289,9 +287,6 @@
       <Project>{8979010C-FE5C-4652-8027-FFF2378353E3}</Project>
       <Name>KdsWorkFlow</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\KdsServiceProxy\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\KDSCache\KDSCache.csproj">

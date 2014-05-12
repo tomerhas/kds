@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Data;
 using KDSCommon.Interfaces.Logs;
 using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Enums;
 namespace KdsCalcul
 {
     public class clCalculMain
@@ -23,7 +24,7 @@ namespace KdsCalcul
         private bool bRitzaGorefet;
         private int iNumProcess;
 
-        clGeneral.BatchExecutionType eExecutionType; 
+        BatchExecutionType eExecutionType; 
         #region Properties
         public long RequestNum
         {
@@ -68,7 +69,7 @@ namespace KdsCalcul
             lRequestNum = RequestNum;
             iNumProcess = numProcess;
         }
-        public clCalculMain(long RequestNum, int numProcess, clGeneral.BatchExecutionType ExecutionType)
+        public clCalculMain(long RequestNum, int numProcess, BatchExecutionType ExecutionType)
         {
             lRequestNum = RequestNum;
             iNumProcess = numProcess;
@@ -222,7 +223,7 @@ namespace KdsCalcul
             try
             {
                 //  lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "clCalculMain.RunShinuyimVeShguimHR", -12);
-                clShinuimVeShguimBatch.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcessForPremiot, eExecutionType, DateTime.Now, lRequestNum, iNumProcess);
+                clShinuimVeShguimBatch.ExecuteInputDataAndErrors(KdsLibrary.clGeneral.BatchRequestSource.ImportProcessForPremiot, eExecutionType, DateTime.Now, lRequestNum, iNumProcess);
             }
             catch (Exception ex)
             {

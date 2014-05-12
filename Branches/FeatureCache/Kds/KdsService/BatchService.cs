@@ -6,7 +6,6 @@ using System.ServiceModel;
 using System.Text;
 using KdsBatch;
 using System.Threading;
-using KdsLibrary;
 using KdsBatch.Reports;
 using KdsBatch.Premia;
 using KdsBatch.MonthlyMails;
@@ -21,6 +20,9 @@ using KdsBatch.History;
 using DalOraInfra.DAL;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Logs;
+using KDSCommon.Interfaces.Service;
+using KDSCommon.Enums;
+using KdsLibrary;
 namespace KdsService
 {
     public class BatchService : IBatchService
@@ -31,7 +33,7 @@ namespace KdsService
         {
             object[] args = param as object[];
             clGeneral.BatchRequestSource requestSource = (clGeneral.BatchRequestSource)args[0];
-            clGeneral.BatchExecutionType execType = (clGeneral.BatchExecutionType)args[1];
+            BatchExecutionType execType = (BatchExecutionType)args[1];
             DateTime workDate = (DateTime)args[2];
             long btchRequest = (long)args[3];
 
@@ -57,8 +59,8 @@ namespace KdsService
             string path, exfile;
             FileInfo KdsCalcul = null;
             var logger = ServiceLocator.Current.GetInstance<ILogBakashot>();
-            clGeneral.enCalcType TypeShguyim = ((clGeneral.enCalcType)Enum.Parse(typeof(clGeneral.enCalcType), args[2].ToString()));
-            clGeneral.BatchExecutionType ExecutionTypeShguim = ((clGeneral.BatchExecutionType)Enum.Parse(typeof(clGeneral.BatchExecutionType), args[3].ToString()));
+            enCalcType TypeShguyim = ((enCalcType)Enum.Parse(typeof(enCalcType), args[2].ToString()));
+            BatchExecutionType ExecutionTypeShguim = ((BatchExecutionType)Enum.Parse(typeof(BatchExecutionType), args[3].ToString()));
             try
             {
                 logger.InsertLog(lRequestNum, "I", 0, "START");
@@ -70,15 +72,15 @@ namespace KdsService
                 logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
                 switch (TypeShguyim)
                 {
-                    case clGeneral.enCalcType.ShinuyimVeShguyim:
+                    case enCalcType.ShinuyimVeShguyim:
                         logger.InsertLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeShguyim");
                         oUtils.PrepareNetunimToShguyimBatch(dTaarich, clGeneral.BatchRequestSource.ImportProcess.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
-                    case clGeneral.enCalcType.ShinuyimVeSghuimHR:
+                    case enCalcType.ShinuyimVeSghuimHR:
                         logger.InsertLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimHR");
                         oUtils.PrepareNetunimToShguyimBatchHR(clGeneral.BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
-                    case clGeneral.enCalcType.ShinuyimVeSghuimPremiot:
+                    case enCalcType.ShinuyimVeSghuimPremiot:
                         logger.InsertLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimPremiot");
                         oUtils.PrepareNetunimToPremiotShguyimBatch(clGeneral.BatchRequestSource.ImportProcessForPremiot.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
@@ -195,7 +197,7 @@ namespace KdsService
                 {
                     if (KdsCalcul.Exists)
                     {
-                        sArguments = clGeneral.enCalcType.MonthlyCalc.GetHashCode() + " " + lRequestNum.ToString() + " " + dFrom.ToShortDateString() + " " + dAdChodesh.ToShortDateString() + " " +
+                        sArguments = enCalcType.MonthlyCalc.GetHashCode() + " " + lRequestNum.ToString() + " " + dFrom.ToShortDateString() + " " + dAdChodesh.ToShortDateString() + " " +
                                                  sMaamad + " " + bRitzatTest.GetHashCode().ToString() + " " + bRitzaGorefet.GetHashCode().ToString();
                         //  iStatus = oUtils.RunKdsCalcul(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
                         iStatus = RunMultiProcesses(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
@@ -259,7 +261,7 @@ namespace KdsService
                 {
                     if (KdsCalcul.Exists)
                     {
-                        sArguments = clGeneral.enCalcType.PremiotCalc.GetHashCode() + " " + lRequestNum.ToString();
+                        sArguments = enCalcType.PremiotCalc.GetHashCode() + " " + lRequestNum.ToString();
                         iStatus = RunMultiProcesses(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
                     }
                     else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
@@ -408,7 +410,7 @@ namespace KdsService
                 {
                     oBatch.DeleteRikuzimPdf(iRequestIdForRikuzim);
                     result = _ClReport.GetProPrepareOvdimRikuzim(lRequestNum,iRequestIdForRikuzim, iCntProcesses);
-                    sArguments = clGeneral.enCalcType.Rikuzim.GetHashCode() + " " + lRequestNum.ToString() + " " + iRequestIdForRikuzim.ToString();
+                    sArguments = enCalcType.Rikuzim.GetHashCode() + " " + lRequestNum.ToString() + " " + iRequestIdForRikuzim.ToString();
                     iStatus = RunMultiProcesses(lRequestNum, KdsRikuzims, sArguments, iCntProcesses);
                 }
                 else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
@@ -655,7 +657,7 @@ namespace KdsService
                 btchRequest);
             LogThreadStart("ExecuteInputDataAndErrors", btchRequest);
             runThread.Start(new object[] { (clGeneral.BatchRequestSource)requestSource, 
-                (clGeneral.BatchExecutionType)execType, 
+                (BatchExecutionType)execType, 
                 workDate, btchRequest });
 
         }
@@ -826,14 +828,14 @@ namespace KdsService
             runThread.Start(new object[] { });
         }
 
-        public void ShinuyimVeShguimBatch(long lRequestNum, DateTime dTaarich, clGeneral.enCalcType TypeShguyim, clGeneral.BatchExecutionType ExecutionTypeShguim)
+        public void ShinuyimVeShguimBatch(long lRequestNum, DateTime dTaarich, enCalcType TypeShguyim, BatchExecutionType ExecutionTypeShguim)
         {
             Thread runThread = new Thread(new ParameterizedThreadStart(RunShinuyimVeShguimBatch));
             LogThreadStart("ShinuyimVeShguimBatch", lRequestNum);
             runThread.Start(new object[] { lRequestNum, dTaarich, TypeShguyim, ExecutionTypeShguim });
         }
 
-        public void TkinutMakatimBatch(DateTime dTaarich)
+             public void TkinutMakatimBatch(DateTime dTaarich)
         {
             Thread runThread = new Thread(new ParameterizedThreadStart(RunTkinutMakatimThread));
             runThread.Start(new object[] { dTaarich });
@@ -846,5 +848,8 @@ namespace KdsService
         //}
         
         #endregion
+
+
+       
     }
 }

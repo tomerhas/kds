@@ -62,6 +62,28 @@
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'KdsProd01|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\KdsProd01\</OutputPath>
+    <DocumentationFile>KdsDataImport.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'KdsTest|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\KdsTest\</OutputPath>
+    <DocumentationFile>KdsDataImport.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -141,20 +163,24 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\KDSCommon\KDSCommon.csproj">
+      <Project>{1cf6ed40-3036-4b17-ab5a-35f5c265c28c}</Project>
+      <Name>KDSCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
       <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
       <Name>DalOraInfra</Name>
     </ProjectReference>
     <ProjectReference Include="..\KdsBatch\KdsBatch.csproj">
-      <Project>{482BDA70-9AF2-4498-9627-E9C43EE44FDF}</Project>
+      <Project>{482bda70-9af2-4498-9627-e9c43ee44fdf}</Project>
       <Name>KdsBatch</Name>
     </ProjectReference>
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
-      <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
+      <Project>{b3e759ec-2a7b-4c38-9013-730c3a628aa8}</Project>
       <Name>KdsLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\KdsWorkFlow\KdsWorkFlow.csproj">
-      <Project>{8979010C-FE5C-4652-8027-FFF2378353E3}</Project>
+      <Project>{8979010c-fe5c-4652-8027-fff2378353e3}</Project>
       <Name>KdsWorkFlow</Name>
     </ProjectReference>
   </ItemGroup>

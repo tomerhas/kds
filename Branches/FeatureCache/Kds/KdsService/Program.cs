@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceProcess;
@@ -36,6 +37,9 @@ namespace KdsService
         /// </summary>
         static void Main()
         {
+            var serviceName = ConfigurationManager.AppSettings["ServiceName"];
+            if(string.IsNullOrWhiteSpace(serviceName))
+                throw new Exception("The service name property is empty or does not exist in app settings. Please add it");
             HostFactory.Run(x =>                                
             {
                 x.Service<AppInit>(s =>                        
@@ -46,25 +50,11 @@ namespace KdsService
                 });
                 x.RunAsLocalSystem();                          
 
-                x.SetDescription("KDS For Development");       
-                x.SetDisplayName("KDSDev");                       
-                x.SetServiceName("KDSDev");                       
+                x.SetDescription(serviceName);       
+                x.SetDisplayName(serviceName);                       
+                x.SetServiceName(serviceName);                       
             });       
 
-
-//#if  DEBUG
-//            var service = new Listener();
-//            service.StartListener();
-//            System.Windows.Forms.Application.Run(new System.Windows.Forms.Form());
-//            service.StopListener();
-//            return;
-//#endif
-//            ServiceBase[] ServicesToRun;
-//            ServicesToRun = new ServiceBase[] 
-//            { 
-//                new Listener() 
-//            };
-//            ServiceBase.Run(ServicesToRun);
         }
     }
 }

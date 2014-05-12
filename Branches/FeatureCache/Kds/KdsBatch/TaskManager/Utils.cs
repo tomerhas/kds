@@ -12,6 +12,8 @@ using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Logs;
 
 using System.Threading;
+using KDSCommon.Enums;
+using KDSCommon.Proxies;
 
 
 
@@ -56,9 +58,9 @@ namespace KdsBatch.TaskManager
 			long lRequestNum = 0;
 			try
 			{
-				KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+				BatchProxy client = new BatchProxy();
 				lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfSdrn", -12);
-				client.ShinuyimVeShguimBatch(lRequestNum, DateTime.Now.AddDays(-1), clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
+				client.ShinuyimVeShguimBatch(lRequestNum, DateTime.Now.AddDays(-1), enCalcType.ShinuyimVeShguyim, BatchExecutionType.All);
 			   // oUtils.RunSinuyimVeShguimBatch(lRequestNum, DateTime.Now.AddDays(-1), clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
 			   // KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, clGeneral.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
 				
@@ -76,9 +78,9 @@ namespace KdsBatch.TaskManager
             long lRequestNum = 0;
             try
             {
-                KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+                BatchProxy client = new BatchProxy();
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.ShguimOfRetroSpaectSdrn, "RunShguimOfRetroSpectSdrn", -12);
-                client.ShinuyimVeShguimBatch(lRequestNum, dTaarich, clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
+                client.ShinuyimVeShguimBatch(lRequestNum, dTaarich, enCalcType.ShinuyimVeShguyim, BatchExecutionType.All);
                 wait4process2end(KdsLibrary.clGeneral.enGeneralBatchType.ShguimOfRetroSpaectSdrn.GetHashCode());
             }
             catch (Exception ex)
@@ -93,9 +95,9 @@ namespace KdsBatch.TaskManager
 			long lRequestNum = 0;
 			try
 			{
-				KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+				BatchProxy client = new BatchProxy();
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.ShguimOfPremiyotMusachimNihulTnuaYadaniyot, "RunShguimOfPremiyotMusachim&NihulTnua&Yadaniyot", -12);
-				client.ShinuyimVeShguimBatch(lRequestNum, DateTime.Now, clGeneral.enCalcType.ShinuyimVeSghuimPremiot, clGeneral.BatchExecutionType.All);
+				client.ShinuyimVeShguimBatch(lRequestNum, DateTime.Now, enCalcType.ShinuyimVeSghuimPremiot, BatchExecutionType.All);
 			   // oUtils.RunSinuyimVeShguimBatch(lRequestNum, DateTime.Now, clGeneral.enCalcType.ShinuyimVeSghuimPremiot, clGeneral.BatchExecutionType.All);
 				// KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, clGeneral.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
 
@@ -112,7 +114,7 @@ namespace KdsBatch.TaskManager
 			long lRequestNum = 0;
 			try
 			{
-				KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+				BatchProxy client = new BatchProxy();
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "RunCalcPremiyotMusachim&NihulTnua&Yadaniyot", -12);
 				client.CalcBatchPremiyot(lRequestNum);
 			  
@@ -145,7 +147,7 @@ namespace KdsBatch.TaskManager
 			clUtils oUtils = new clUtils();
 			try
 			{
-				KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+				BatchProxy client = new BatchProxy();
 				iSeqThreadHr = oBatch.InsertProcessLog(8, 3, KdsLibrary.BL.RecordStatus.Wait, "start RunThreadHrChainges", 0);
 				//(0,0)=no record at all ->run
 				if (!oBatch.CheckViewEmpty("NEW_MATZAV_OVDIM") && !oBatch.CheckViewEmpty("NEW_PIRTEY_OVDIM") &&
@@ -162,7 +164,7 @@ namespace KdsBatch.TaskManager
 						oBatch.UpdateProcessLog(iSeqNum, KdsLibrary.BL.RecordStatus.Finish, "after OpenBatchRequest hr", 0);
 						//'** KdsWriteProcessLog(8, 3, 1, "after OpenBatchRequest before shguyim")
 						iSeqNum = oBatch.InsertProcessLog(8, 4, KdsLibrary.BL.RecordStatus.Wait, "before shguyim hr", 0);
-						client.ShinuyimVeShguimBatch(lRequestNum, dTaarich, clGeneral.enCalcType.ShinuyimVeSghuimHR, clGeneral.BatchExecutionType.All);
+						client.ShinuyimVeShguimBatch(lRequestNum, dTaarich, enCalcType.ShinuyimVeSghuimHR, BatchExecutionType.All);
 						//oUtils.RunSinuyimVeShguimBatch(lRequestNum, dTaarich, clGeneral.enCalcType.ShinuyimVeSghuimHR, clGeneral.BatchExecutionType.All);
 						// KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcessForChangesInHR, clGeneral.BatchExecutionType.All, dTaarich, lRequestNum);
 						oBatch.UpdateProcessLog(iSeqNum, KdsLibrary.BL.RecordStatus.Finish, "after shguyim from hr", 0);

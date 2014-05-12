@@ -400,6 +400,10 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
 
         public const int cSuccessBatchRecordsParameterCode = 204;
+
+
+      
+
         public enum enProfile
         {
             enDefault = 0,
@@ -561,14 +565,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ImportProcessForPremiot = 4
         }
 
-        public enum BatchExecutionType
-        {
-            InputData = 1,
-            ErrorIdentification = 2,
-            All = 3
-        }
-
-        public enum enSugeyMeadkenShinuyim
+       public enum enSugeyMeadkenShinuyim
         {
             WorkCard = -2,
             MasachChishuvBatch = -3,
@@ -905,16 +902,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             Treated = 1
         }
 
-        public enum enCalcType
-        {
-            MonthlyCalc = 1, 
-            PremiotCalc = 2, 
-            ShinuyimVeShguyim = 3, 
-            ShinuyimVeSghuimHR = 4, 
-            ShinuyimVeSghuimPremiot = 5,
-            Rikuzim = 6 
-
-        }
+       
         public enum enYechidaIrgunit
         {
             RishumArtzi = 63321,

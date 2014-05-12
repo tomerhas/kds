@@ -10,18 +10,19 @@ using System.Data;
 using DalOraInfra.DAL;
 using KDSCommon.Interfaces.Logs;
 using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Enums;
 
 namespace KdsCalcul
 {
     public static class clShinuimVeShguimBatch
     {
         public static void ExecuteInputDataAndErrors(clGeneral.BatchRequestSource requestSource,
-          clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest, int iNumProcess)
+          BatchExecutionType execType, DateTime workDate, long btchRequest, int iNumProcess)
         {
             ExecuteInputDataAndErrors(requestSource, execType, workDate, btchRequest, false, iNumProcess);
         }
         public static void ExecuteInputDataAndErrors(clGeneral.BatchRequestSource requestSource,
-            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest, bool logPopulationOnly, int iNumProcess)
+            BatchExecutionType execType, DateTime workDate, long btchRequest, bool logPopulationOnly, int iNumProcess)
         {
             clBatchProcess btchProc = GetBatchProcess(requestSource, execType, workDate, btchRequest);
             if (btchProc != null)
@@ -48,7 +49,7 @@ namespace KdsCalcul
         }
 
         private static clBatchProcess GetBatchProcess(clGeneral.BatchRequestSource requestSource,
-            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest)
+            BatchExecutionType execType, DateTime workDate, long btchRequest)
         {
             switch (requestSource)
             {
@@ -76,7 +77,7 @@ namespace KdsCalcul
         #region Fields
         private string _errorMessage;
         private DataTable _dtParameters;
-        protected clGeneral.BatchExecutionType _executionType;
+        protected BatchExecutionType _executionType;
         protected int _userID;
         protected DataTable _data;
         protected clGeneral.BatchRequestSource _batchSource;
@@ -84,7 +85,7 @@ namespace KdsCalcul
         #endregion
 
         #region Constractor
-        public clBatchProcess(clGeneral.BatchRequestSource batchSource, clGeneral.BatchExecutionType execType, long btchRequest)
+        public clBatchProcess(clGeneral.BatchRequestSource batchSource, BatchExecutionType execType, long btchRequest)
         {
             _executionType = execType;
             _batchSource = batchSource;
@@ -244,8 +245,8 @@ namespace KdsCalcul
             //    MainErrors oErrors = new MainErrors(date);
             try
             {
-                if (_executionType == clGeneral.BatchExecutionType.InputData ||
-                    _executionType == clGeneral.BatchExecutionType.All)
+                if (_executionType == BatchExecutionType.InputData ||
+                    _executionType == BatchExecutionType.All)
                 {
                     //var result = btchMan.MainInputDataNew(iMisparIshi, dDateCard);
                     var resultShinuyim = btchMan.MainInputDataNew(employeeID, date);
@@ -257,8 +258,8 @@ namespace KdsCalcul
                     //clLogBakashot.InsertErrorToLog();
                 }
 
-                if (_executionType == clGeneral.BatchExecutionType.ErrorIdentification ||
-                    (_executionType == clGeneral.BatchExecutionType.All && nextStep))
+                if (_executionType == BatchExecutionType.ErrorIdentification ||
+                    (_executionType == BatchExecutionType.All && nextStep))
                 {
                     var result = btchMan.MainOvedErrorsNew(employeeID, date);
                     nextStep = result.IsSuccess;
@@ -312,7 +313,7 @@ namespace KdsCalcul
         private DateTime _workdate;
 
         public clBatchProcessFromInput(clGeneral.BatchRequestSource batchSource,
-            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest) :
+            BatchExecutionType execType, DateTime workDate, long btchRequest) :
             base(batchSource, execType, btchRequest)
         {
             _workdate = workDate;
@@ -388,7 +389,7 @@ namespace KdsCalcul
     public class clBatchProcessFromInputForChangesInHR : clBatchProcessFromInput //שגויים אחרי hr
     {
         public clBatchProcessFromInputForChangesInHR(clGeneral.BatchRequestSource batchSource,
-            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest) :
+            BatchExecutionType execType, DateTime workDate, long btchRequest) :
             base(batchSource, execType, workDate, btchRequest)
         {
 
@@ -426,7 +427,7 @@ namespace KdsCalcul
     public class clBatchProcessFromInputForPremiot : clBatchProcessFromInput //שגויים לפרמיות
     {
         public clBatchProcessFromInputForPremiot(clGeneral.BatchRequestSource batchSource,
-            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest) :
+            BatchExecutionType execType, DateTime workDate, long btchRequest) :
             base(batchSource, execType, workDate, btchRequest)
         {
 

@@ -1,0 +1,222 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="MasterPage" Codebehind="MasterPage.master.cs" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="AjxToolKit" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>מערכת קדם שכר</title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link id="Link1" runat="server" href="StyleSheet.css" type="text/css" rel="stylesheet" />
+    <link rel="icon" href="Images/kds.ico" type="image/x-icon"/> 
+    <link rel="shortcut icon" href="Images/kds.ico" type="image/x-icon"/>   
+    <%--<meta http-equiv="X-UA-Compatible" content="IE=8" />--%>
+</head>
+<body dir="rtl" id="MasterBody" runat="server"> 
+   <script type="text/javascript" language="javascript">
+       var iUserId = "<%=UserId%>";
+    </script>
+    <form id="form1" runat="server">
+<%--    <AjxToolKit:ToolkitScriptManager ID="ScriptManagerKds" runat="server" EnablePartialRendering="true" EnablePageMethods="true"  EnableScriptGlobalization="true"  EnableScriptLocalization="true" >--%>
+    <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true"  EnableScriptGlobalization="true"  EnableScriptLocalization="true" >        
+    <Scripts>
+    <asp:ScriptReference Path="~/Js/String.js" />
+    <asp:ScriptReference Path="~/Js/GeneralFunction.js" />
+    <asp:ScriptReference Path="~/Js/jquery.js" />
+    <asp:ScriptReference Path="~/Js/jquery.simplemodal.js" />
+    <asp:ScriptReference Path="~/Js/basic.js" />
+
+    </Scripts>
+  </asp:ScriptManager>
+<%--</AjxToolKit:ToolkitScriptManager>--%>
+<asp:UpdateProgress  runat="server" id="Progress1" DisplayAfter="0" >
+    <ProgressTemplate>
+        <div id="divProgress" class="Progress"  style="text-align:right;position:absolute;left:52%;top:48%; z-index:1000" >
+              <asp:Image runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" />
+        </div>        
+    </ProgressTemplate>
+ </asp:UpdateProgress>
+                                 
+
+    <table width="780px" cellpadding="0" cellspacing="0" border="0">                              
+        <tr>
+            <td>
+                <asp:Image runat="server" ID="imgTopBanner" ImageUrl="~/Images/head.jpg"  ImageAlign="Top"   />
+            </td>    
+        </tr>           
+     </table>
+  
+     <asp:UpdatePanel runat="server" id="UpMenu" UpdateMode="Conditional" RenderMode="Inline"> 
+        <ContentTemplate>  
+ <script language="javascript" type="text/javascript">
+     function ShowMessageReport(PureUrl) {
+         var retvalue;
+         retvalue = window.showModalDialog(PureUrl + '/Modules/Reports/ShowMessageReport.aspx?Dt=" + DateTime.Now.ToString() + "', '', 'dialogwidth:400px;dialogheight:100px;center:yes;status:no;resizable:no;scroll:no;');
+         if (retvalue == "open")
+             window.location.href = PureUrl + "/Modules/Reports/ShowHeavyReportsList.aspx";
+     }
+     function ShowDetailsServer(ServerName, VersionNumber) {
+         alert("מספר גרסה" + VersionNumber + "\n" + "שם שרת:" + ServerName );
+     }
+
+     function ImgHelp_Click() {
+       //  debugger;
+         $find("ModalPopupEx").show();
+     }
+     function btnConfirm_Click() {
+         $find("ModalPopupEx").hide();
+     }
+    </script>
+            <table width="998px" border="0" cellpadding="0" cellspacing="0" id="tblMenuMain">
+                <tr>
+                    <td style="background-color:#CE950F;"> 
+                        <asp:Menu ID="MenuMain"  runat="server" Orientation="Horizontal"  ItemWrap="True" StaticEnableDefaultPopOutImage="false"  DataSourceID="SiteMapDataSource1" CssClass="clLevel0"> 	                                                                      
+                            <StaticHoverStyle  CssClass="clLevel0over"  />                       
+                            <StaticItemTemplate>
+                               <table border="0" id="MainLevel0" class="clLevel0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                 <td style="width:3px"><br /></td>
+                                 <td style="width:100%" align="center"><a class="HeaderLink" href="<%# (string.IsNullOrEmpty((String)Eval("NavigateUrl"))) ? "#" : Eval("NavigateUrl")%>"><%# Eval("Text")%></a></td>
+                                <td style="width:3px"><br /></td>
+                                <td><asp:Image class="spaceMenu" runat="server" ID="imgHelp" ImageUrl="~/Images/space-menu.png"  ImageAlign="Top"/>
+                                 
+                                </td>
+                                </tr>
+                                </table>
+                            </StaticItemTemplate>   
+                            <DynamicMenuItemStyle CssClass="clLevel1"  />
+                            <DynamicHoverStyle  CssClass="clLevel1over" />          
+                        </asp:Menu>
+                    </td>                
+                </tr>               
+             </table>
+                
+         </ContentTemplate>
+      </asp:UpdatePanel>
+    
+     
+
+     <table border="0" cellpadding="0" cellspacing="2" width="998px">
+        <tr>
+            <td class="HeaderBody" >
+                <table border="0" cellpadding="0" cellspacing="0" width="98%">
+                    <tr>
+                        <td align="right"> 
+                          <asp:UpdatePanel ID="upHeader" runat="server" RenderMode="Inline" UpdateMode="Always">
+                            <ContentTemplate>
+                                <asp:Label ID="lblHeader" runat="server"></asp:Label>
+                            </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </td>                        
+                        <td align="left" class="SubTitleLabel">  <asp:Label ID="lblTaarich" runat="server"></asp:Label> </td>
+                    </tr>
+                </table>
+            </td>  
+           
+            <td> <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
+                   <ContentTemplate>
+                <asp:ImageButton runat="server" ID="ImagePrint" ImageUrl="~/Images/icon-print.jpg"  ImageAlign="Top" ToolTip="הדפסה" />                
+                </ContentTemplate>
+                                  </asp:UpdatePanel>
+            </td>
+            <td><asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline">
+                   <ContentTemplate>
+                <asp:ImageButton runat="server" ID="ImageExcel" 
+                    ImageUrl="~/Images/icon-excel.jpg"  ImageAlign="Top" ToolTip="יצירת Excel"  />
+                    </ContentTemplate>
+                                  </asp:UpdatePanel>
+            </td>
+            <td> 
+                <asp:ImageButton runat="server" ID="ImageHome" 
+                    ImageUrl="~/Images/icon-home.jpg"  ImageAlign="Top" ToolTip="דף הבית" 
+                    onclick="ImageHome_Click"  CausesValidation="false" />                
+            </td>
+            <td>
+               <asp:ImageButton runat="server" ID="ImgHelpBtn" ImageUrl="~/Images/icon-help.jpg"  
+                    ImageAlign="Top" ToolTip="אודות" OnClientClick="ImgHelp_Click"  />
+            </td>
+            <td> 
+                <asp:Image runat="server" ID="ImageExit" ImageUrl="~/Images/icon-exit.jpg"  ImageAlign="Top" ToolTip="יציאה מהמערכת"  />                
+            </td>
+        </tr>   
+     </table>
+
+
+      <div>
+               <AjxToolKit:ModalPopupExtender ID="ModalPopupEx" OkControlID="ImgHelpBtn" CancelControlID="btnConfirm" 
+                        DropShadow="false" X="400" Y="200" PopupControlID="paMessage" TargetControlID="ImgHelpBtn"  runat="server" >
+                </AjxToolKit:ModalPopupExtender>
+                <asp:Panel runat="server" style="display:none"   ID="paMessage" CssClass="PanelMessage"  >
+                <asp:Label ID="lblHeaderMessage" runat ="server" Font-Bold="true" Width="97%" Text="אודות:" BackColor="#696969"></asp:Label>
+                <br /><br />
+                <asp:Label ID="lblGirsa" Font-Bold="true"  runat ="server" Width="90%"></asp:Label>
+                <br />  
+                <asp:Label ID="lblServerName" Font-Bold="true"  runat ="server" Width="90%"></asp:Label>
+                <br /><br />
+                <asp:Button ID="btnConfirm" runat="server" Text="אישור" CssClass="ImgButtonMake" OnClientClick="btnConfirm_Click"/>
+                </asp:Panel>
+       </div>
+
+
+     <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="XmlSiteMapProvider" ShowStartingNode="false"/>
+     
+     <table style="height:480px;width:985px;border:solid 1px lightgray;margin:4px;">
+            <tr>
+                <td style="width:5px"></td>
+                <td valign="top" align="right">
+                    <table style="height:380px;width:980px">
+                        <tr>
+                            <td valign="top" align="right">
+                                  <asp:UpdatePanel ID="UpdatePanelValidation" runat="server" RenderMode="Inline">
+                                       <ContentTemplate>
+                                       <div>
+                                            <asp:ValidationSummary ID="vldGeneral" DisplayMode="BulletList"  runat="server" CssClass="ErrorMessage"  ValidationGroup="ErrGeneral"/>
+                                        </div>
+                                        <div>
+                                            <asp:Panel ID="pnlImpersonate" runat="server" Visible="false">
+                                                <asp:Label runat="server" Text="מספר אישי להתחזות:"></asp:Label>
+                                                <asp:TextBox runat="server" ID="txtImpersonate"></asp:TextBox>
+                                                <asp:RequiredFieldValidator ID="ValidTxtImperNum_1" runat="server" ControlToValidate="txtImpersonate"
+                                                    Text="The field cannot be empty" 
+                                                    ValidationGroup="impersonate"></asp:RequiredFieldValidator>
+                                                <asp:RangeValidator ID="ValidTxtImperNum_2" runat="server" ControlToValidate="txtImpersonate" 
+                                                    ValidationGroup="impersonate" MinimumValue="0" MaximumValue="9999999"
+                                                    Text="The field must be number" ></asp:RangeValidator>
+                                                <asp:Button runat="server" ID="btnImpersonate" Text="החלף מ.א." ValidationGroup="impersonate" />
+                                            </asp:Panel>
+                                        </div>
+                                       </ContentTemplate>
+                                  </asp:UpdatePanel>
+                                <asp:ContentPlaceHolder id="KdsContent" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </td>
+                        </tr>
+                    </table>  
+                    <div id="DivMessages" runat="server" style="border:none">
+                        הודעות מערכת:
+                        <table style="border:solid 1px lightgray;width:960px; height:50px;margin-bottom:4px">
+                            <tr>
+                                <td  style="height:50px;" valign="top">                                        
+                                    <asp:DataList ID="lstMessages" runat="server" Width="920px" ItemStyle-ForeColor="#028831">
+                                     <ItemTemplate> * <asp:Label ID="lblMessage" runat="server" ><%#DataBinder.Eval(Container.DataItem, "Melel_Hodaa")%></asp:Label></ItemTemplate>
+                                    </asp:DataList>                                            
+                                </td> 
+                            </tr>
+                        </table>
+                    </div>
+                </td> 
+              </tr>
+         </table>
+
+
+    </form>
+</body>
+ <script language="javascript" type="text/javascript">
+//    if (document.getElementsByName("MainLevel0").length>0)
+     //        document.getElementsByName("MainLevel0").item(document.getElementsById("MainLevel0").length - 1).lastChild.lastChild.lastChild.style.display = "none";
+//    $($("Image[name='spaceMenu']")[$("Image[name='spaceMenu']").size()-1]).css('display','none');
+     $(".spaceMenu:last").css('display', 'none');
+
+ </script>
+</html>

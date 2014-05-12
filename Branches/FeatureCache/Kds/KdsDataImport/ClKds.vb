@@ -7,6 +7,10 @@ Imports KdsLibrary
 Imports KdsLibrary.DAL
 Imports System.Threading
 Imports DalOraInfra.DAL
+Imports KDSCommon.Enums
+Imports KdsLibrary.clGeneral
+
+
 
 'Imports kernel32
 'Imports Oracle.DataAccess.Client
@@ -2208,7 +2212,7 @@ Public Class ClKds
                 'todo: when after sdrn should 
                 teur = "shguyim"
                 iNumSeq = oBatch.InsertProcessLog(8, 1, KdsLibrary.BL.RecordStatus.Wait, "shguyim", 0)
-                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, clGeneral.BatchExecutionType.All, dTaarich, lRequestNum)
+                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(BatchRequestSource.ImportProcess, BatchExecutionType.All, dTaarich, lRequestNum)
                 'todo: when after rfrsh should 
                 'KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcessForChangesInHR , KdsBatch.BatchExecutionType.All, dTaarich, lRequestNum)
                 'todo: check table tb_log_bakashot for errors etc
@@ -2738,7 +2742,7 @@ Public Class ClKds
                                 oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "retro OpenBatchRequest", 0)
                                 ''**KdsWriteProcessLog(8, 2, 1, "after retro OpenBatchRequest before shguyim")
                                 iSeqChkSdrnRetro = oBatch.InsertProcessLog(8, 2, KdsLibrary.BL.RecordStatus.Wait, "retro shguyim", 0)
-                                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, clGeneral.BatchExecutionType.All, dTaarich, lRequestNum)
+                                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, BatchExecutionType.All, dTaarich, lRequestNum)
                                 'todo: check table tb_log_bakashot for errors etc
                                 oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "retro shguyim", 0)
                                 ''**KdsWriteProcessLog(8, 2, 2, "after retro shguyim")
@@ -3638,7 +3642,7 @@ Public Class ClKds
                                                 oBatch.UpdateProcessLog(iSeqNum, KdsLibrary.BL.RecordStatus.Finish, "after OpenBatchRequest hr", 0)
                                                 ''** KdsWriteProcessLog(8, 3, 1, "after OpenBatchRequest before shguyim")
                                                 iSeqNum = oBatch.InsertProcessLog(8, 4, KdsLibrary.BL.RecordStatus.Wait, "before shguyim hr", 0)
-                                                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcessForChangesInHR, clGeneral.BatchExecutionType.All, dTaarich, lRequestNum)
+                                                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcessForChangesInHR, BatchExecutionType.All, dTaarich, lRequestNum)
                                                 oBatch.UpdateProcessLog(iSeqNum, KdsLibrary.BL.RecordStatus.Finish, "after shguyim from hr", 0)
                                                 oBatch.UpdateProcessLog(iSeqThreadHr, KdsLibrary.BL.RecordStatus.Finish, "end RunThreadHrChainges", 0)
                                                 ''**KdsWriteProcessLog(8, 3, 2, "after shguyim from hr")
