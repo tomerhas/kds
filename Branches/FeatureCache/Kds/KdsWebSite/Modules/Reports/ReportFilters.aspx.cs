@@ -232,8 +232,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //    SetWorkerViewLevel(ReportName.AverageOvdimBeSnif);
                 //    break;
                 case ReportName.RptIturim:
+                    fsFilter.Style["width"] = "1105px";
                     if (!Page.IsPostBack)
-                        CtrlStartDate = DateTime.Now.AddMonths(-1).ToString("dd/MM/yyyy");
+                        CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
+                    MisparVisa.TextBoxe.MaxLength = 10;
                     break;
                 //case ReportName.HashvaatRizotChishuv:
                 //case ReportName.HashvaatChodsheyRizotChishuv:
@@ -679,6 +681,11 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         get { return (ListBoxExtended)TdFilter.FindControl("P_MAKAT"); }
     }
 
+    
+    private ListBoxExtended MisparVisa
+    {
+        get { return (ListBoxExtended)TdFilter.FindControl("P_MISPARVISA"); }
+    }
     //private ListBoxExtended RishuyRechev
     //{
     //    get { return (ListBoxExtended)TdFilter.FindControl("P_RISHUYCAR"); }

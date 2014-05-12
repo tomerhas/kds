@@ -3860,7 +3860,8 @@ Public Class ClKds
         'Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePath") '"\\kdstst01\Files\"
         'Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPath") '"inkds_old\"
         Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePathPundakim") '"\\kiwi\"
-        Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPathPundakim") '"synel\"
+        'Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPathPundakim") '"synel\"
+        Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPath") '"inkds_old\"
         Dim FileNameOld As String
         Dim MyFile As String
         Dim ShaonimNumber As Integer
@@ -3869,7 +3870,7 @@ Public Class ClKds
         Dim ErrorCounter As Integer = 0
 
         Try
-            MyFile = Dir(InPath & SubFolder & FileName)
+            MyFile = Dir(InPath & FileName)
             If Not MyFile = "" Then
                 ShaonimNumber = oBatch.InsertProcessLog(2, 2, KdsLibrary.BL.RecordStatus.Wait, "Pundakim", 0)
 
@@ -3882,7 +3883,9 @@ Public Class ClKds
                     End Try
                     FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
                     File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
+                    'oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after copy Pundakim " & MyFile, 0)
                     File.Delete(InPath & MyFile)
+                    'oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete Pundakim " & MyFile, 0)
                     MyFile = Dir()
                 End While
                 oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, "Pundakim", 0)
@@ -3917,7 +3920,8 @@ Public Class ClKds
         Try
 
             ErrFileName = ConfigurationSettings.AppSettings("KdsFilePath") & "Pundakim" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & CStr(Now.Second) & ".err"
-            InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & InFileName
+            'InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & InFileName
+            InPathNFile = ConfigurationSettings.AppSettings("KdsFilePathPundakim") & InFileName 'collectmodem.dat
             sr = New StreamReader(InPathNFile)
 
             line = sr.ReadLine
@@ -3977,6 +3981,8 @@ Public Class ClKds
         Catch ex As Exception
             oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Pundakim aborted" & ex.Message, 3)
             Throw ex
+        Finally
+            sr.Close()
         End Try
     End Sub
 

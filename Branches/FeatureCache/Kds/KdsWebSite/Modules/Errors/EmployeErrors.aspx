@@ -8,12 +8,12 @@
     <script src="../../Js/GeneralFunction.js" type="text/javascript"></script>
 <script type="text/javascript">
 
-$(document).ready(function(){
-    EnlargeFieldSetsForIE8("0", null, 80);    
-});
-document.onkeydown = ChangeKeyCode;
-function ChangeKeyCode()
-{ if (event.keyCode == 107)  event.keyCode = 9;   }
+    $(document).ready(function () {
+        EnlargeFieldSetsForIE8("0", null, 80);
+    });
+    document.onkeydown = ChangeKeyCode;
+    function ChangeKeyCode()
+    { if (event.keyCode == 107) event.keyCode = 9; }
 </script>
     <style type="text/css">
         .style1
@@ -31,10 +31,10 @@ function ChangeKeyCode()
        var flag = false;
        var userId = iUserId;
    </script>     
-    <fieldset class="FilterFieldSet" >          
+    <fieldset class="FilterFieldSet" style="width:970px"  >          
         <legend>חיתוך לפי</legend>
          
-        <table class="FilterTable" cellpadding="0" cellspacing="2" dir="rtl"  width="970px" >
+        <table  cellpadding="0" cellspacing="2" dir="rtl"  width="970px" >
             <tr>
                 <td class="InternalLabel" style="width:40px">
                     איזור:
@@ -109,24 +109,51 @@ function ChangeKeyCode()
                 <td align="right" dir="ltr" style="width:150px">  
                     <KdsCalendar:KdsCalendar runat="server"  ID="clnToDate" CalenderTabIndex="5"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>                             
                     <%--<wccEgged:wccCalendar runat="server" ID="clnToDate" BasePath="../../EggedFramework" AutoPostBack="false" Width="110px" dir="rtl"></wccEgged:wccCalendar>--%>                                                                                                                      
-                </td>               
+                </td> 
+                <td class="InternalLabel" style="width:50px">
+                    סטטוס כרטיס:
+                </td>
+                <td>
+                    <asp:DropDownList ID="ddlStatus" runat="server" ></asp:DropDownList>
+                </td> 
+                 <td class="InternalLabel" style="width:50px">
+                    סוג שגיאה:
+                </td>
+                
+                <td>
+                   <%--  <asp:UpdatePanel ID="UpdatePanel3" runat="server" RenderMode="Inline" UpdateMode="Always"   >
+                        <ContentTemplate>    --%>
+                        
+                       <asp:DropDownCheckBoxes ID="DDLShgiot" runat="server" AddJQueryReference="True"  UseButtons="False"  UseSelectAllNode="True" TextAlign="Right" >
+                            <Style SelectBoxWidth="250"  DropDownBoxBoxWidth="250" DropDownBoxBoxHeight="150"  />
+                            <Texts SelectBoxCaption="" OnClickSelectAll="onclick='ClickHiddenButton(-1);'" SelectAllNode="הכל" SelectAllStyle="Style='font-weight:bold; '"   />                          
+                        </asp:DropDownCheckBoxes>
+                      
+
+                         <%--   </ContentTemplate>
+                          
+                          </asp:UpdatePanel>--%>
+                   
+                    <%-- <input type="button" ID="hidButDDlCB" runat="server" onserverclick="UpdateDDLShgiot_text" />--%>
+                  </td>                 
                 <td>
                     <asp:UpdatePanel ID="upExecute" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                          <ContentTemplate>
                             <asp:Button Text="הצג" ID="btnExecute" runat="server"  CssClass ="ImgButtonSearch" autopostback="true" onclick="btnExecute_Click" TabIndex="6"
                             onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />                            
-                            <input type="hidden" id="hidMisparIshi" runat="server" />                                                            
+                            <input type="hidden" id="hidMisparIshi" runat="server"  />                                                            
                        </ContentTemplate>                                              
                     </asp:UpdatePanel >          
                 </td>                    
                 <td>                                       
                    <asp:CustomValidator id="vldCmpDates" runat="server" ClientValidationFunction="CheckDates"  ErrorMessage="תאריך סיום קטן מתאריך התחלה" Display="Dynamic"    ></asp:CustomValidator>
                 </td>
+               
             </tr>                   
          </table>                
    </fieldset>
       
-   <fieldset class="FilterFieldSet"> 
+   <fieldset class="FilterFieldSet"  style="width:970px"  >    
         <legend >חיפוש לפי</legend>      
         <table class="FilterTable">
             <tr>
@@ -249,166 +276,224 @@ function ChangeKeyCode()
    </table>
    <input type="hidden" id="Params" name="Params"  runat="server" />
    <input type="hidden" id="InputHiddenBack" name="InputHiddenBack" value="false" runat="server" />
+   <input type="hidden" id="inputAllShgiot" name="inputAllShgiot" runat="server" />
    <script language="javascript" type="text/javascript">
-     window.onload = function () {  
-       SetTextBox();
-    }
-    function SetTextBox() {
+       window.onload = function () {
+           SetTextBox();
+       }
 
-        var rdo = document.getElementById("ctl00_KdsContent_rdoId");
-        if (rdo.checked)
-        {           
-         document.getElementById("ctl00_KdsContent_txtId").disabled=false;           
-         document.getElementById("ctl00_KdsContent_txtName").disabled=true;
-        }
-        else{         
-            document.getElementById("ctl00_KdsContent_txtName").disabled=false;           
-            document.getElementById("ctl00_KdsContent_txtId").disabled=true;
-        }
-        document.getElementById("ctl00_KdsContent_txtSnif").focus();
-    }
-    function CheckSnif()
-    {
-       // debugger;
-        var sSnifName = document.getElementById("ctl00_KdsContent_txtSnif").value;
-       // alert(sSnifName);
-        //document.getElementById("ctl00_KdsContent_btnSearch").disabled = true;
-       if (sSnifName!='')
-       {
-           if (sSnifName.indexOf(')')==-1) 
-           {
-               alert('סניף לא נמצא');
-               // document.getElementById("ctl00_KdsContent_txtSnif").value='';
-               document.getElementById("ctl00_KdsContent_txtSnif").select();
-               document.getElementById("ctl00_KdsContent_txtSnif").focus();
-           } else document.getElementById("ctl00_KdsContent_btnMaamad").click();  
-       }   
-    }
-    function GetMaamad() {
-        document.getElementById("ctl00_KdsContent_btnMaamad").click();        
-    }
-    
-    function CheckDates(src,args)
-    {
-      var StartDateString = document.getElementById('ctl00_KdsContent_clnFromDate').value;
-     var EndDateString = document.getElementById('ctl00_KdsContent_clnToDate').value;
- 
-     var StartDateSplit = StartDateString.split('/');
-     var EndDateSplit = EndDateString.split('/');
+       function ClickHiddenButton(val) {
+           // debugger;
+           var arrValue = null;
+           var sThisVal = "";
+           var ipos = -1, i;
 
-     var StartDate = new Date  (StartDateSplit[2],StartDateSplit[1],StartDateSplit[0],0,0,0,0);
-     var EndDate = new Date  (EndDateSplit[2],EndDateSplit[1],EndDateSplit[0],0,0,0,0);
-     
-     args.IsValid = (StartDate <= EndDate);
- }
- function getMassege() {
-     var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
-     return "jjj";
-   //  
- }
-    function onChange_FromDate() {
-      //  debugger;
-        var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes["Param100"].value;//($('[id$=Params]')[0]).attributes["Param100"].value;// document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
-        var StartDateSplit = document.getElementById('ctl00_KdsContent_clnFromDate').value.split('/');
-        var StartDate = new Date(StartDateSplit[2], StartDateSplit[1]-1, StartDateSplit[0], 0, 0, 0, 0);
-        var minDate = new Date();
-        minDate.setDate(1);
-        minDate.setMonth(minDate.getMonth() - Param100);
-        minDate.setHours(0);
-        minDate.setMinutes(0);
-        minDate.setSeconds(0);
-        minDate.setMilliseconds(0);
+           if (val == "-1") {
+               var allitems = $('#checks input:checkbox');
+               var items = $('#checks input:checked');
+               if (items.length < (allitems.length - 1))
+                   $('#caption')[0].innerText = "הכל";
+               else $('#caption')[0].innerText = "";
+           }
+           else {
+               if ($('#caption')[0].innerText != "") {
+                   if ($('#caption')[0].innerText.indexOf('הכל') > -1)
+                       $('#caption')[0].innerText = document.getElementById("ctl00_KdsContent_inputAllShgiot").value;
 
-        if (StartDate.getTime() < minDate.getTime()) {
-            var sBehaviorId = 'vldExFromDate';
-            document.getElementById("ctl00_KdsContent_vldFrom").errormessage = " לא ניתן להזין תאריך מעבר ל " + Param100  + " חודשים אחורה";
-            $find(sBehaviorId)._ensureCallout();
-            $find(sBehaviorId).show(true);
-            document.getElementById("ctl00_KdsContent_btnExecute").disabled = true;
-        }
-        else 
-            document.getElementById("ctl00_KdsContent_btnExecute").disabled = false;
-          
-    }
- 
-    function onClientHiddenHandler_getID(sender, eventArgs)
-    {
-     GetOvedName(document.getElementById("ctl00_KdsContent_txtId"));
-    }     
-    
-    function onClientHiddenHandler_getName(sender, eventArgs)
-    {
-     //GetOvedMisparIshi(document.getElementById("ctl00_KdsContent_txtName"));
-     var iMisparIshi, iPos;
-     var sOvedName=document.getElementById("ctl00_KdsContent_txtName").value;  
-     if (sOvedName!='')
-      {  
-         iPos = sOvedName.indexOf('(');
-         if (iPos==-1)
-         {           
-          //  alert('שם לא נמצא');                        
-//            document.getElementById("ctl00_KdsContent_txtId").value='';
-//            document.getElementById("ctl00_KdsContent_txtName").value='';
-//            document.getElementById("ctl00_KdsContent_txtName").select();
-         }
-         else{
-            iMisparIshi = sOvedName.substr(iPos+1, sOvedName.length-iPos-2);
-            document.getElementById("ctl00_KdsContent_txtId").value=iMisparIshi;
-            document.getElementById("ctl00_KdsContent_txtName").value=sOvedName.substr(0,iPos-1);
-            }
-       }     
-    }
-      
-     function GetOvedMisparIshiByName()
-     {
-      GetOvedMisparIshi(document.getElementById("ctl00_KdsContent_txtName"));
-     } 
-   
-    function GetOvedMisparSucc(result)
-    {
-        if (result==''){
-            alert('שם לא נמצא');                                    
-            document.getElementById("ctl00_KdsContent_txtName").value='';
-            document.getElementById("ctl00_KdsContent_txtName").select();
-        }
-        else{
-            document.getElementById("ctl00_KdsContent_txtId").value=result;
-        }
-    }
-    
-    function GetOvedNameSucceeded(result) {
-     if (result==''){
-        alert('מספר אישי לא קיים');                        
-        document.getElementById("ctl00_KdsContent_txtId").select();
-     }
-     else{
-         document.getElementById("ctl00_KdsContent_txtName").value=result;
-     }
-    }
-  
-    function OpenOvedDetails(RowIndex)
-    {
-      
-//         var RowSelection,sQuryString,sLeft;
-         
-         //RowSelection=eval(document.all.ctl00_KdsContent_grdEmployee.children(0).children(RowIndex+1));
-         //this.CommandArgument = RowSelection.children(0).children(0).innerHTML;          
-         //RowSelection=eval(document.all.ctl00_KdsContent_grdEmployee.children(0).children(RowIndex+1).firstChild.innerText);
-         document.getElementById("ctl00_KdsContent_txtRowSelected").value=RowIndex;//RowSelection;
-         var btn= document.getElementById("ctl00_KdsContent_btnRedirect");   
-         btn.click();
-         
-//         sQuryString="?dt=" + Date();
-//         sQuryString = sQuryString + "&OvedId=" + RowSelection.children(0).children(0).innerHTML;
-//         
-//         sLeft=(document.body.clientWidth/2)-400;
-//         window.open("EmployeeDetails.aspx" + sQuryString,"","dialogwidth:960px;dialogheight:690px;dialogtop:" + (document.body.clientWidth/10) + "px;dialogleft:" + sLeft + "px;status:no")
-     }
+                   arrValue = $('#caption')[0].innerText.split(",");
+               }
 
-     function continue_click() {
-        
-        // SetTextBox();
-     }  
+
+
+               if (arrValue != null) {
+                   for (i = 0; i < arrValue.length; i++) {
+                       if (arrValue[i] == val)
+                           ipos = i;
+                   }
+
+                   if (ipos > -1) {
+                       for (i = 0; i < arrValue.length; i++) {
+                           if (i != ipos)
+                               sThisVal += "," + arrValue[i];
+                       }
+                   }
+                   else {
+                       for (i = 0; i < arrValue.length; i++)
+                           if (Number(arrValue[i]) < Number(val))
+                               sThisVal += "," + arrValue[i];
+                           else {
+                               if ((sThisVal + ",").indexOf("," + val + ",") == -1)
+                                   sThisVal += "," + val;
+                               sThisVal += "," + arrValue[i];
+                           }
+
+                       if (sThisVal.indexOf("," + val + ",") == -1)
+                           sThisVal += "," + val;
+                   }
+                   $('#caption')[0].innerText = sThisVal.substring(1, sThisVal.length);
+               }
+               else {
+                   sThisVal = val;
+                   $('#caption')[0].innerText = sThisVal;
+               }
+           }
+           //  $('#checks input:checkbox').each(function () {
+           //$('#checks input:checked').each(function () {
+           //    if (this.checked)
+           //        sThisVal = $(this).val();
+           //});
+           //var text
+           //var items = $("#DDLShgiot input[type='checkbox']");
+           //for (var i = 0; i < items.length; i++)
+           //    text = items[i].textContent;
+           // debugger;
+           // $("#hidButDDlCB").click();
+           // document.getElementById("ctl00_KdsContent_hidButDDlCB").click();
+       }
+       function SetTextBox() {
+
+           var rdo = document.getElementById("ctl00_KdsContent_rdoId");
+           if (rdo.checked) {
+               document.getElementById("ctl00_KdsContent_txtId").disabled = false;
+               document.getElementById("ctl00_KdsContent_txtName").disabled = true;
+           }
+           else {
+               document.getElementById("ctl00_KdsContent_txtName").disabled = false;
+               document.getElementById("ctl00_KdsContent_txtId").disabled = true;
+           }
+           document.getElementById("ctl00_KdsContent_txtSnif").focus();
+       }
+       function CheckSnif() {
+           // debugger;
+           var sSnifName = document.getElementById("ctl00_KdsContent_txtSnif").value;
+           // alert(sSnifName);
+           //document.getElementById("ctl00_KdsContent_btnSearch").disabled = true;
+           if (sSnifName != '') {
+               if (sSnifName.indexOf(')') == -1) {
+                   alert('סניף לא נמצא');
+                   // document.getElementById("ctl00_KdsContent_txtSnif").value='';
+                   document.getElementById("ctl00_KdsContent_txtSnif").select();
+                   document.getElementById("ctl00_KdsContent_txtSnif").focus();
+               } else document.getElementById("ctl00_KdsContent_btnMaamad").click();
+           }
+       }
+       function GetMaamad() {
+           document.getElementById("ctl00_KdsContent_btnMaamad").click();
+       }
+
+       function CheckDates(src, args) {
+           var StartDateString = document.getElementById('ctl00_KdsContent_clnFromDate').value;
+           var EndDateString = document.getElementById('ctl00_KdsContent_clnToDate').value;
+
+           var StartDateSplit = StartDateString.split('/');
+           var EndDateSplit = EndDateString.split('/');
+
+           var StartDate = new Date(StartDateSplit[2], StartDateSplit[1], StartDateSplit[0], 0, 0, 0, 0);
+           var EndDate = new Date(EndDateSplit[2], EndDateSplit[1], EndDateSplit[0], 0, 0, 0, 0);
+
+           args.IsValid = (StartDate <= EndDate);
+       }
+       function getMassege() {
+           var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
+           //  return "jjj";
+           //  
+       }
+       function onChange_FromDate() {
+           //  debugger;
+           var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes["Param100"].value;//($('[id$=Params]')[0]).attributes["Param100"].value;// document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
+           var StartDateSplit = document.getElementById('ctl00_KdsContent_clnFromDate').value.split('/');
+           var StartDate = new Date(StartDateSplit[2], StartDateSplit[1] - 1, StartDateSplit[0], 0, 0, 0, 0);
+           var minDate = new Date();
+           minDate.setDate(1);
+           minDate.setMonth(minDate.getMonth() - Param100);
+           minDate.setHours(0);
+           minDate.setMinutes(0);
+           minDate.setSeconds(0);
+           minDate.setMilliseconds(0);
+
+           if (StartDate.getTime() < minDate.getTime()) {
+               var sBehaviorId = 'vldExFromDate';
+               document.getElementById("ctl00_KdsContent_vldFrom").errormessage = " לא ניתן להזין תאריך מעבר ל " + Param100 + " חודשים אחורה";
+               $find(sBehaviorId)._ensureCallout();
+               $find(sBehaviorId).show(true);
+               document.getElementById("ctl00_KdsContent_btnExecute").disabled = true;
+           }
+           else
+               document.getElementById("ctl00_KdsContent_btnExecute").disabled = false;
+
+       }
+
+       function onClientHiddenHandler_getID(sender, eventArgs) {
+           GetOvedName(document.getElementById("ctl00_KdsContent_txtId"));
+       }
+
+       function onClientHiddenHandler_getName(sender, eventArgs) {
+           //GetOvedMisparIshi(document.getElementById("ctl00_KdsContent_txtName"));
+           var iMisparIshi, iPos;
+           var sOvedName = document.getElementById("ctl00_KdsContent_txtName").value;
+           if (sOvedName != '') {
+               iPos = sOvedName.indexOf('(');
+               if (iPos == -1) {
+                   //  alert('שם לא נמצא');                        
+                   //            document.getElementById("ctl00_KdsContent_txtId").value='';
+                   //            document.getElementById("ctl00_KdsContent_txtName").value='';
+                   //            document.getElementById("ctl00_KdsContent_txtName").select();
+               }
+               else {
+                   iMisparIshi = sOvedName.substr(iPos + 1, sOvedName.length - iPos - 2);
+                   document.getElementById("ctl00_KdsContent_txtId").value = iMisparIshi;
+                   document.getElementById("ctl00_KdsContent_txtName").value = sOvedName.substr(0, iPos - 1);
+               }
+           }
+       }
+
+       function GetOvedMisparIshiByName() {
+           GetOvedMisparIshi(document.getElementById("ctl00_KdsContent_txtName"));
+       }
+
+       function GetOvedMisparSucc(result) {
+           if (result == '') {
+               alert('שם לא נמצא');
+               document.getElementById("ctl00_KdsContent_txtName").value = '';
+               document.getElementById("ctl00_KdsContent_txtName").select();
+           }
+           else {
+               document.getElementById("ctl00_KdsContent_txtId").value = result;
+           }
+       }
+
+       function GetOvedNameSucceeded(result) {
+           if (result == '') {
+               alert('מספר אישי לא קיים');
+               document.getElementById("ctl00_KdsContent_txtId").select();
+           }
+           else {
+               document.getElementById("ctl00_KdsContent_txtName").value = result;
+           }
+       }
+
+       function OpenOvedDetails(RowIndex) {
+
+           //         var RowSelection,sQuryString,sLeft;
+
+           //RowSelection=eval(document.all.ctl00_KdsContent_grdEmployee.children(0).children(RowIndex+1));
+           //this.CommandArgument = RowSelection.children(0).children(0).innerHTML;          
+           //RowSelection=eval(document.all.ctl00_KdsContent_grdEmployee.children(0).children(RowIndex+1).firstChild.innerText);
+           document.getElementById("ctl00_KdsContent_txtRowSelected").value = RowIndex;//RowSelection;
+           var btn = document.getElementById("ctl00_KdsContent_btnRedirect");
+           btn.click();
+
+           //         sQuryString="?dt=" + Date();
+           //         sQuryString = sQuryString + "&OvedId=" + RowSelection.children(0).children(0).innerHTML;
+           //         
+           //         sLeft=(document.body.clientWidth/2)-400;
+           //         window.open("EmployeeDetails.aspx" + sQuryString,"","dialogwidth:960px;dialogheight:690px;dialogtop:" + (document.body.clientWidth/10) + "px;dialogleft:" + sLeft + "px;status:no")
+       }
+
+       function continue_click() {
+
+           // SetTextBox();
+       }
    </script>
 </asp:Content>
 

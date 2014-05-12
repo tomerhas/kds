@@ -50,6 +50,24 @@ namespace KdsLibrary.BL
             }
         }
 
+
+
+        public DataTable GetStatus()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                clDal oDal = new clDal();
+
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(clGeneral.cProGetCardStatuses, ref dt);
+                return dt;                
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
         public DataTable GetSnifAv(int iKodEzor)
         {
             DataTable dt = new DataTable();

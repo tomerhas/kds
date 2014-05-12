@@ -29,12 +29,12 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     private KdsReport _ConstReportParam;
     private PanelFilters _PanelFilters;
     private List<string> _ControlsList;
-    private string _sProfilUser="0";
+    private string _sProfilUser = "0";
     protected void Page_Load(object sender, EventArgs e)
     {
         DataTable dtParametrim = new DataTable();
         clUtils oUtils = new clUtils();
-        UserId.Text =LoginUser.UserInfo.EmployeeNumber;
+        UserId.Text = LoginUser.UserInfo.EmployeeNumber;
         try
         {
             if (!Page.IsPostBack)
@@ -75,13 +75,13 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     profil = int.Parse(drProfil["KOD_PROFIL"].ToString());
                     if (profil == clGeneral.enProfile.enSystemAdmin.GetHashCode() || profil == clGeneral.enProfile.enRashemet.GetHashCode() || profil == clGeneral.enProfile.enRashemetAll.GetHashCode())
                     {
-                        _sProfilUser= profil.ToString();
+                        _sProfilUser = profil.ToString();
                         break;
                     }
                     else if (profil == clGeneral.enProfile.enMenahelImKfufim.GetHashCode())
-                        _sProfilUser=  profil.ToString();
+                        _sProfilUser = profil.ToString();
                 }
-            }                    
+            }
         }
         catch (Exception ex)
         {
@@ -101,7 +101,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     ListBoxExtended CurrentControl = (ListBoxExtended)TdFilter.FindControl(Filter.ParameterName);
                     CurrentControl.AddAttributes();
                     if ((!Page.IsPostBack) && ((Report.NameReport == ReportName.Presence) ||
-                                               (Report.NameReport == ReportName.IshurimLerashemet) ))
+                                               (Report.NameReport == ReportName.IshurimLerashemet)))
                         CurrentControl.SetDefaultValue(LoginUser.UserInfo.EmployeeNumber.ToString());
                     if (CurrentControl.ListOfValues != "")
                     {
@@ -124,12 +124,12 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         {
             switch (Report.NameReport)
             {
-                
+
                 case ReportName.HashvaatRizotChishuv:
                 case ReportName.HashvaatChodsheyRizotChishuv:
                     Ritza.SelectedIndexChanged += new EventHandler(ddlRitza_SelectedIndexChanged);
                     break;
-                case ReportName.ChafifotSidureyNihulTnua: 
+                case ReportName.ChafifotSidureyNihulTnua:
                 case ReportName.ReportNesiotKfulot:
                     Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
                     break;
@@ -141,7 +141,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             }
             //if (TdFilter.FindControl("P_STARTDATE") != null && TdFilter.FindControl("P_STARTDATE").GetType().Name == "TextBox")
             //    ((TextBox)TdFilter.FindControl("P_STARTDATE")).TextChanged += new EventHandler(EndDate_OnChanged);
-                 
+
         }
         catch (Exception ex)
         {
@@ -175,7 +175,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     SnifLabel.Style.Add("Display", "none");
                     if (_sProfilUser == "0")
                         MisparIshi.Attributes.Add("Disabled", "Disabled");
-                    else if(_sProfilUser == "1")
+                    else if (_sProfilUser == "1")
                     {
                         Snif.Style.Add("Display", "inline");
                         SnifLabel.Style.Add("Display", "inline");
@@ -215,7 +215,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     }
                     //if (!Page.IsPostBack)
                     //    CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
-                   // SetTezuga(ReportName.KamutIdkuneyRashemet);
+                    // SetTezuga(ReportName.KamutIdkuneyRashemet);
 
                     break;
                 case ReportName.Average:
@@ -232,8 +232,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //    SetWorkerViewLevel(ReportName.AverageOvdimBeSnif);
                 //    break;
                 case ReportName.RptIturim:
+                    fsFilter.Style["width"] = "1105px";
                     if (!Page.IsPostBack)
-                        CtrlStartDate = DateTime.Now.AddMonths(-1).ToString("dd/MM/yyyy");
+                        CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
+                    MisparVisa.TextBoxe.MaxLength = 10;
                     break;
                 //case ReportName.HashvaatRizotChishuv:
                 //case ReportName.HashvaatChodsheyRizotChishuv:
@@ -263,15 +265,15 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         CtrlEndDate = DateTime.Now.ToString("dd/MM/yyyy");
                     }
                     break;
-                
-                    //if (!Page.IsPostBack)
-                    //{
-                    //    CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.AddMonths(-1).Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
-                    //    CtrlEndDate = DateTime.Parse(CtrlStartDate).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
-                    //}
-                    ////Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
 
-               //     break;
+                //if (!Page.IsPostBack)
+                //{
+                //    CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.AddMonths(-1).Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
+                //    CtrlEndDate = DateTime.Parse(CtrlStartDate).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
+                //}
+                ////Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
+
+                //     break;
                 //case ReportName.IdkuneyRashemetMasach4:
                 //    Auto_P_MIS_RASHEMET.ContextKey = "6,0133," + CtrlTaarichCa.ToShortDateString(); //kod_natun=6; Erech=0133=רשם
                 //    Shaa.Items[0].Text = "00:01";
@@ -304,8 +306,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 
     private void SetWorkerViewLevel(ReportName p_report_name)
     {
-       
-        if ( (!Page.IsPostBack) && WorkerViewLevel.Items.Count < 2)
+
+        if ((!Page.IsPostBack) && WorkerViewLevel.Items.Count < 2)
         {
             WorkerViewLevel.Style.Add("Display", "none");
             WorkerViewLevelLabel.Style.Add("Display", "none");
@@ -325,14 +327,14 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         }
                     }
                     break;
-            //    case ReportName.AverageSnifEzor:
-            //    case ReportName.AverageSnifInEzor:
-            ////    case ReportName.AverageOvdimBeSnif:
-            //        if (!Page.IsPostBack)
-            //            WorkerViewLevel.Items.RemoveAt(0);
-            //          WorkerViewLevel.Style.Add("Display", "none");
-            //          WorkerViewLevelLabel.Style.Add("Display", "none");
-            //    break;
+                //    case ReportName.AverageSnifEzor:
+                //    case ReportName.AverageSnifInEzor:
+                ////    case ReportName.AverageOvdimBeSnif:
+                //        if (!Page.IsPostBack)
+                //            WorkerViewLevel.Items.RemoveAt(0);
+                //          WorkerViewLevel.Style.Add("Display", "none");
+                //          WorkerViewLevelLabel.Style.Add("Display", "none");
+                //    break;
             }
         }
 
@@ -341,7 +343,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     }
     private void SetTezuga(ReportName p_report_name)
     {
-        
+
         if (!Page.IsPostBack)
         {
             Snif.Attributes.Add("Disabled", "Disabled");
@@ -378,7 +380,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             if (Report.NameReport == ReportName.HashvaatRizotChishuv)
                 dt = oReport.GetRizotChishuvSucceeded((string)(clGeneral.GetControlValue(Chodesh)));
             else if (Report.NameReport == ReportName.HashvaatChodsheyRizotChishuv)
-                dt =  oReport.GetRizotChishuvLechodeshSucceeded((string)(clGeneral.GetControlValue(ChodeshLehashvaa)));
+                dt = oReport.GetRizotChishuvLechodeshSucceeded((string)(clGeneral.GetControlValue(ChodeshLehashvaa)));
 
             RitzaLeHashvaa.Items.Clear();
             RitzaLeHashvaa.DataSource = dt;
@@ -402,10 +404,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         {
             if (CtrlStartDate != "")
             {
-                tarMe =  DateTime.Parse(CtrlStartDate);
+                tarMe = DateTime.Parse(CtrlStartDate);
                 if (tarMe >= DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy")))
-                    CtrlEndDate =  DateTime.Now.ToString("dd/MM/yyyy");
-              //  else CtrlEndDate = DateTime.Parse("01/" + tarMe.ToString("MM/yyyy")).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
+                    CtrlEndDate = DateTime.Now.ToString("dd/MM/yyyy");
+                //  else CtrlEndDate = DateTime.Parse("01/" + tarMe.ToString("MM/yyyy")).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
             }
         }
         catch (Exception ex)
@@ -472,11 +474,11 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 dt = oUtils.GetOvdimLeRitza(clGeneral.GetIntegerValue(clGeneral.GetControlValue(Ritza).ToString()), (string)clGeneral.GetControlValue(Maamad), (string)clGeneral.GetControlValue(Isuk), "");
                 break;
             case ReportName.Average:
-                dt = oReport.GetIdOfYameyAvoda(DateTime.Parse(EndMonth.ToString("dd/MM/yyyy")).AddDays(1).AddMonths(-7),EndMonth, (string)clGeneral.GetControlValue(CompanyId));
+                dt = oReport.GetIdOfYameyAvoda(DateTime.Parse(EndMonth.ToString("dd/MM/yyyy")).AddDays(1).AddMonths(-7), EndMonth, (string)clGeneral.GetControlValue(CompanyId));
                 break;
             case ReportName.HityazvutBePundakimTlunot:
             case ReportName.HityazvutBePundakimKalkalit:
-                dt = oReport.GetOvdim(DateTime.Parse(CtrlStartDate),DateTime.Parse(CtrlEndDate));
+                dt = oReport.GetOvdim(DateTime.Parse(CtrlStartDate), DateTime.Parse(CtrlEndDate));
                 break;
         }
         return dt;
@@ -485,10 +487,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 
     private void SetSecurityLevel()
     {
-        if (WorkerID != null )   
+        if (WorkerID != null)
             WorkerID.ContextKey = "";
-//        if (MisparIshi != null)
-//            MisparIshi.ContextKey = ""; 
+        //        if (MisparIshi != null)
+        //            MisparIshi.ContextKey = ""; 
         if ((PageModule.SecurityLevel == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (PageModule.SecurityLevel == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
         {
             MisparIshi.ContextKey = LoginUser.UserInfo.EmployeeNumber;
@@ -519,7 +521,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         _Report = _KdsDynamicReport.FindReport(RdlName);
         clReport rep = new clReport();
         DataTable dt = rep.GetReportDetails(((ReportName)Enum.Parse(typeof(ReportName), RdlName)).GetHashCode());
-        _Report.PageHeader = dt.Rows[0]["PageHeader"].ToString() ;
+        _Report.PageHeader = dt.Rows[0]["PageHeader"].ToString();
         _Report.RSVersion = dt.Rows[0]["RS_VERSION"].ToString();
         _Report.URL_CONFIG_KEY = dt.Rows[0]["URL_CONFIG_KEY"].ToString();
         _Report.SERVICE_URL_CONFIG_KEY = dt.Rows[0]["SERVICE_URL_CONFIG_KEY"].ToString();
@@ -527,7 +529,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         _Report.RdlName = RdlName;
         Session["Report"] = _Report;
         Session["Resources"] = (KdsSysManResources)_KdsDynamicReport.Resources;
-        
+
     }
     private KdsReport Report
     {
@@ -605,11 +607,11 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         try
         {
-                PageHeader = Report.PageHeader;
-                _PanelFilters = new PanelFilters(Report, Resources, ScriptManager);
-                Session["PanelFilters"] = _PanelFilters;
-                TdFilter.Controls.Add(_PanelFilters);
-                _PanelFilters.FillControls();
+            PageHeader = Report.PageHeader;
+            _PanelFilters = new PanelFilters(Report, Resources, ScriptManager);
+            Session["PanelFilters"] = _PanelFilters;
+            TdFilter.Controls.Add(_PanelFilters);
+            _PanelFilters.FillControls();
         }
         catch (Exception ex)
         {
@@ -664,21 +666,26 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             return DateTime.ParseExact("01/" + clGeneral.GetControlValue(TdFilter.FindControl("P_ENDDATE")), "dd/MM/yyyy", null).AddMonths(1).AddDays(-1);
         }
     }
-    private ListBoxExtended WorkerID 
+    private ListBoxExtended WorkerID
     {
         get { return (ListBoxExtended)TdFilter.FindControl("P_WORKERID"); }
     }
-        
+
     private ListBoxExtended SidurNumber
     {
         get { return (ListBoxExtended)TdFilter.FindControl("P_SIDURNUMBER"); }
     }
 
-    private ListBoxExtended Makat 
+    private ListBoxExtended Makat
     {
         get { return (ListBoxExtended)TdFilter.FindControl("P_MAKAT"); }
     }
 
+
+    private ListBoxExtended MisparVisa
+    {
+        get { return (ListBoxExtended)TdFilter.FindControl("P_MISPARVISA"); }
+    }
     //private ListBoxExtended RishuyRechev
     //{
     //    get { return (ListBoxExtended)TdFilter.FindControl("P_RISHUYCAR"); }
@@ -704,11 +711,11 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get
         {
-            return ((TextBox)TdFilter.FindControl("P_STARTDATE")).Text  ;
+            return ((TextBox)TdFilter.FindControl("P_STARTDATE")).Text;
         }
         set
         {
-            ((TextBox)TdFilter.FindControl("P_STARTDATE")).Text = value; 
+            ((TextBox)TdFilter.FindControl("P_STARTDATE")).Text = value;
         }
     }
     private string CtrlEndDate
@@ -748,7 +755,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get { return (DropDownList)TdFilter.FindControl("P_MAMAD"); }
     }
-    
+
     private ListBox MaamadHr
     {
         get { return (ListBox)TdFilter.FindControl("P_MAMAD_HR"); }
@@ -790,7 +797,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get { return (ListBox)TdFilter.FindControl("P_KOD_YECHIDA"); }
     }
-    
+
 
 
     private AjaxControlToolkit.AutoCompleteExtender Auto_P_MIS_RASHEMET
@@ -811,7 +818,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get { return (DropDownList)TdFilter.FindControl("P_EZOR"); }
     }
-  //  ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete
+    //  ctl00_KdsContent_PMISRASHEMETTxtbxAutoComplete
     #endregion
 
     private void PrepareReportParameters()
@@ -830,7 +837,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             });
             AddSpecificReportParameters(Report, ref ReportParameters);
             ChangeReportParameters(Report, ref ReportParameters);
-             Session["ReportParameters"] = ReportParameters;
+            Session["ReportParameters"] = ReportParameters;
         }
         catch (Exception ex)
         {
@@ -842,7 +849,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         clReport oReports = new clReport();
         DataTable dtProfils = new DataTable();
         int profil;
-        try{
+        try
+        {
             switch (rpt.NameReport)
             {
                 case ReportName.DisregardDrivers:
@@ -864,8 +872,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
                     Params.Add("P_WORKERVIEWLEVEL", _sProfilUser);
                     if (rpt.NameReport == ReportName.Average)
-                        Params.Add("p_type_rpt", null); 
-                   break;
+                        Params.Add("p_type_rpt", null);
+                    break;
             }
         }
         catch (Exception ex)
@@ -876,7 +884,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 
     private void ChangeReportParameters(KdsReport rpt, ref Dictionary<string, string> Params)
     {
-     
+
         try
         {
             switch (rpt.NameReport)
@@ -890,13 +898,13 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.AverageOvdimBeSnif:
                     Params["P_STARTDATE"] = StartMonth.ToShortDateString();
                     Params["P_ENDDATE"] = EndMonth.ToShortDateString();
-                 break;
+                    break;
                 case ReportName.Presence:
-                 if (Params["P_MISPAR_ISHI"] != "")
-                      Report.ProductionType = ProductionType.Normal;
-                 else 
-                     Report.ProductionType = ProductionType.Heavy;
-                 break;
+                    if (Params["P_MISPAR_ISHI"] != "")
+                        Report.ProductionType = ProductionType.Normal;
+                    else
+                        Report.ProductionType = ProductionType.Heavy;
+                    break;
             }
         }
         catch (Exception ex)

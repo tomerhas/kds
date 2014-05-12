@@ -129,6 +129,24 @@ public partial class Modules_Errors_EmployeErrors {
     protected global::KdsLibrary.Controls.KdsCalendar clnToDate;
     
     /// <summary>
+    /// ddlStatus control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
+    
+    /// <summary>
+    /// DDLShgiot control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::Saplin.Controls.DropDownCheckBoxes DDLShgiot;
+    
+    /// <summary>
     /// upExecute control.
     /// </summary>
     /// <remarks>
@@ -325,4 +343,13 @@ public partial class Modules_Errors_EmployeErrors {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.HtmlControls.HtmlInputHidden InputHiddenBack;
+    
+    /// <summary>
+    /// inputAllShgiot control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.HtmlControls.HtmlInputHidden inputAllShgiot;
 }

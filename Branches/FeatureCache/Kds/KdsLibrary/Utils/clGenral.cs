@@ -152,7 +152,7 @@ namespace KdsLibrary
         public const string cProInsPeilutOvdim = "pkg_errors.pro_ins_peilut_ovdim";
         public const string cProGetAllErrorsAndFields = "pkg_errors.pro_get_all_shgiot";
         public const string cProGetApprovalErrors = "pkg_errors.get_approval_errors";
-        
+        public const string cProGetShgiotNoActive = "Pkg_Errors.pro_get_shgiot_active";
 #endregion
 
 #region pkg_ovdim constants
@@ -344,7 +344,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const string cCheckHityatzvutNehag = "kds.KdsVerifyDriverCheckIn";
         public const string cProInsTekenDriversToTnua = "KDSADMIN.pro_ins_amount_of_drivers_tnua";          
 #endregion
-        public const string cProBdikatChufshaRezifa = "KDSADMIN.pro_bdikat_chufsha_rezifa"; 
+        public const string cProBdikatChufshaRezifa = "KDSADMIN.pro_bdikat_chufsha_rezifa";
         public const string cProIdkunMachalotOvdim = "KDSADMIN.pro_idkun_machalot_ovdim";
         public const string cProBdikatYemeyMachala = "KDSADMIN.pro_bdikat_machalot_dor_B";
         #region pkg_task_Manager 
@@ -359,6 +359,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const string cProGetProfil = "pkg_utils.pro_get_profil";
         public const string cProGetHarshaotToProfil = "pkg_utils.pro_get_harshaot_to_profil";
         public const string cProGetMaamad = "pkg_utils.pro_get_maamad";
+        public const string cProGetCardStatuses = "pkg_utils.pro_get_status_card";
         public const string cProGetHodaotToProfil = "pkg_utils.pro_get_hodaot_to_profil";
         public const string cProGetStatusIshurMaxLevel = "pkg_utils.pro_get_status_ishur_max_level";
         public const string cProCheckIshur = "pkg_utils.pro_check_ishur";
@@ -565,7 +566,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ImportProcessForPremiot = 4
         }
 
-       public enum enSugeyMeadkenShinuyim
+        public enum enSugeyMeadkenShinuyim
         {
             WorkCard = -2,
             MasachChishuvBatch = -3,
@@ -902,7 +903,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             Treated = 1
         }
 
-       
+
         public enum enYechidaIrgunit
         {
             RishumArtzi = 63321,
@@ -1804,7 +1805,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         }
 
 
-
+                   
         public static string AsDomain(string url)
         {
             if (string.IsNullOrEmpty(url))

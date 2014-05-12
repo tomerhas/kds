@@ -1,14 +1,65 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Test2.aspx.cs" Inherits="Modules_Test2" Title="Untitled Page" AsyncTimeout=10000 %>
 <%@ Register Assembly="KdsLibrary" Namespace="KdsLibrary.Controls" TagPrefix="KdsCalendar"%>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Register Assembly="KdsLibrary" Namespace="KdsLibrary.Controls" TagPrefix="CheckBoxListDropDown" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+   
+    <style type="text/css">
+        .ddlchklst
+        {
+            width: 170px;
+            height: 100px;
+            border:solid 1px silver;
+        }
+        .ddlchklst ul
+        {
+          margin:0;
+          padding:0;
+           border-top:solid 1px silver;
+            }
+        .ddlchklst li
+        {
+            list-style: none;
+        }
+    </style>
+
 </asp:Content>
 <asp:Content ID="Content2" runat="Server" ContentPlaceHolderID="KdsContent" >
+  <%--  <CheckBoxListDD:usTest runat="server" ID="usTest" />--%>
+   
+    <asp:DropDownCheckBoxes ID="checkBoxes1" runat="server" 
+                AddJQueryReference="True" UseButtons="False" UseSelectAllNode="True">
+                <Style SelectBoxWidth="160" DropDownBoxBoxWidth="160" DropDownBoxBoxHeight="80" />
+                  <Texts SelectBoxCaption="הכל" />
+            </asp:DropDownCheckBoxes>
+    
+     
+    <asp:DropDownCheckBoxes ID="DropDownCheckBoxes1" runat="server" 
+                AddJQueryReference="True" UseButtons="False" UseSelectAllNode="True">
+                <Style SelectBoxWidth="160" DropDownBoxBoxWidth="160" DropDownBoxBoxHeight="80" />
+                  <Texts SelectBoxCaption="הכל" />
+            </asp:DropDownCheckBoxes>
+    
+    <%--<CheckBoxListDD:CheckBoxListDropDown runat="server" ID="CheckBoxListDropDown" />--%>
 
 <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
     </asp:ScriptManagerProxy>
-            
+
+   <%--  <div >
+        <KdsCalendar:CheckBoxListDropDown ID="ddlchklst"  runat="server" 
+	    Title="Select what you need" >
+        </KdsCalendar:CheckBoxListDropDown>
+    </div>--%>
+
+    <%--<div>
+         <asp:PlaceHolder ID="phDDLCHK" runat="server"></asp:PlaceHolder>
+       <%-- <asp:DropDownList ID="ddyom" runat="server"></asp:DropDownList>--%>
+    </div>--%>
+    <asp:HiddenField ID="hidList" runat="server" />
+    <br />
+    <br />
         <table>
             <tr>
                 <td style="padding-top:150px">בדיקת תאריך
@@ -320,4 +371,8 @@
 //       // }
 //    }
  </script>
---%></asp:Content>
+--%>
+
+
+
+</asp:Content>

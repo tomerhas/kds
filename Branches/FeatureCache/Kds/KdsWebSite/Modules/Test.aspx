@@ -2,6 +2,9 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1"%>
 <%@ Register Assembly="KdsLibrary" Namespace="KdsLibrary.Controls" TagPrefix="KdsCalendar"%>
 <%@ Register TagPrefix="uc"   Src="~/Modules/UserControl/ucSidurim.ascx" TagName="ucSidurim"%>
+
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -12,6 +15,15 @@
     <script src="../../Js/GeneralFunction.js" type="text/javascript">
     
     </script>
+     <style type="text/css">  
+        .block {  
+            height:150px;  
+            width:200px;  
+            border:1px solid aliceblue;  
+            overflow-y:scroll;  
+        }  
+    </style> 
+
     <script type="text/vbscript" language="vbscript">
    
        
@@ -48,8 +60,12 @@
 </head>
 <body>
     <form id="form1" runat="server">
+
+       
     <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true">        
    </asp:ScriptManager>
+         
+             
     <div>    
        <%-- <asp:GridView ID="grdEmployee" runat="server" AllowSorting="true" 
                 AllowPaging="true" PageSize="8" AutoGenerateColumns="false" CssClass="Grid"  
@@ -68,8 +84,15 @@
             <EmptyDataRowStyle CssClass="GridEmptyData" height="10px" Wrap="False"/>                                                            
         </asp:GridView>   
     </div>--%>
-   
-        
+  <%--  <uc:ucTestCB runat="server" ID="ucTestCB" />--%>
+      <%-- <div id="dddlcb" runat="server">
+           <asp:Label ID="lblddl" runat="server"  width="160px"></asp:Label>  
+           <asp:ImageButton ID="imgddl" runat="server" ImageUrl="../../Images/icon-print.jpg" />
+           <div class="block">  
+             <asp:CheckBoxList ID="CheckBoxList1" runat="server" >     </asp:CheckBoxList> 
+          </div>
+       </div>--%>
+
        <asp:Panel ID="pnlHeader" runat="server"></asp:Panel>
         <table runat="server" id="tblTest">
             <tr>               

@@ -9,6 +9,7 @@ using System.Threading;
 using KdsBatch;
 using System.Data;
 using KdsLibrary;
+using KDSCommon.Enums;
 
 delegate void CalcBatchDelegate(long lRequestNum, DateTime dAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet);
 delegate void TransferToHilanDelegate(long lRequestNum, long lRequestNumToTransfer);
@@ -37,7 +38,7 @@ public class wsBatch : System.Web.Services.WebService
         KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
         client.ExecuteInputDataAndErrors(
             (int)clGeneral.BatchRequestSource.ErrorExecutionFromUI,
-            (int)clGeneral.BatchExecutionType.All,
+            (int)BatchExecutionType.All,
             DateTime.Now, lRequestNum);
         client.Close();
         return "OK";

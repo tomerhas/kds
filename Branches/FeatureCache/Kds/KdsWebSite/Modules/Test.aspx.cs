@@ -64,7 +64,7 @@ public partial class Modules_Test :Page
       System.Timers.Timer _timer = new System.Timers.Timer(5000); 
      public void Test()
      {
-        
+         
      }
 
      //void OnTimerAwake(object sender, EventArgs e)
@@ -108,6 +108,17 @@ public partial class Modules_Test :Page
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        DataTable dt;
+        clBatch oBatch = new clBatch();
+
+        dt = oBatch.GetErrorsActive();
+        //chkList.DataSource = dt; 
+        //chkList.DataBind();
+
+        //CheckBoxList1.DataSource = dt;
+        //CheckBoxList1.DataTextField = "teur_shgia";
+        //CheckBoxList1.DataValueField = "kod_shgia";
+        //CheckBoxList1.DataBind(); 
         //long dateNumber = 1297380023295;
         //long beginTicks = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks;
 

@@ -387,7 +387,9 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Xml\DynamicsReports.xml" />
+    <Content Include="Xml\DynamicsReports.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Xml\Sysman.xml" />
     <None Include="Properties\PublishProfiles\KdsProd01Profile.pubxml" />
     <None Include="Properties\PublishProfiles\KdsTestProfile.pubxml" />
@@ -982,6 +984,10 @@
     <ProjectReference Include="..\Common\KDSCommon\KDSCommon.csproj">
       <Project>{1cf6ed40-3036-4b17-ab5a-35f5c265c28c}</Project>
       <Name>KDSCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DropDownCheckBoxes\DropDownCheckBoxes.csproj">
+      <Project>{dc5fd4c5-70c8-4ec1-a9ea-b0a3fb7ae1d3}</Project>
+      <Name>DropDownCheckBoxes</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure\CacheInfra\CacheInfra.csproj">
       <Project>{96aa16ad-dc40-43df-807d-c1f20ecd7c02}</Project>
