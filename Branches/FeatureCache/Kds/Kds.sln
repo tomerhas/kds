@@ -58,9 +58,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KDSBatchTester", "Tests\KDS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsWebApplication", "KdsWebApplication\KdsWebApplication.csproj", "{EC1368EE-E9EB-45D4-B252-1329A077AD06}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "KdsWebSite", "KdsWebSite", "{843B4135-4020-415E-8111-8103603BD1AB}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "SAK"
+		SccAuxPath = "SAK"
+		SccLocalPath = "SAK"
+		SccProvider = "SAK"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/KdsWebSite"
+		Debug.AspNetCompiler.PhysicalPath = "KdsWebSite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\KdsWebSite\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/KdsWebSite"
+		Release.AspNetCompiler.PhysicalPath = "KdsWebSite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\KdsWebSite\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "33233"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 21
+		SccNumberOfProjects = 22
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
 		SccLocalPath0 = .
@@ -135,6 +159,11 @@ Global
 		SccProjectUniqueName20 = KdsWebApplication\\KdsWebApplication.csproj
 		SccProjectName20 = KdsWebApplication
 		SccLocalPath20 = KdsWebApplication
+		SccWebProject21 = true
+		SccProjectUniqueName21 = KdsWebSite
+		SccProjectName21 = KdsWebSite
+		SccLocalPath21 = KdsWebSite
+		SccProjectEnlistmentChoice21 = 2
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -712,6 +741,30 @@ Global
 		{EC1368EE-E9EB-45D4-B252-1329A077AD06}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{EC1368EE-E9EB-45D4-B252-1329A077AD06}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EC1368EE-E9EB-45D4-B252-1329A077AD06}.Release|x86.ActiveCfg = Release|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsProd01|.NET.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsProd01|Any CPU.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsProd01|Any CPU.Build.0 = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsProd01|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsProd01|Mixed Platforms.Build.0 = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsProd01|x86.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsTest|.NET.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsTest|Any CPU.Build.0 = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsTest|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsTest|Mixed Platforms.Build.0 = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.KdsTest|x86.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Release|.NET.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{843B4135-4020-415E-8111-8103603BD1AB}.Release|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
