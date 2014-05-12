@@ -24,7 +24,7 @@ namespace KdsService
                 // Open the ServiceHost to start listening for messages.
                 serviceHost.Open();
 
-                
+              
             }
             public void Stop() 
             {

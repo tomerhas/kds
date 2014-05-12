@@ -56,20 +56,18 @@ namespace KdsService
             object[] args = param as object[];
             long lRequestNum = (long)args[0];
             DateTime dTaarich = (DateTime)args[1];
-            string path, exfile;
-            FileInfo KdsCalcul = null;
             var logger = ServiceLocator.Current.GetInstance<ILogBakashot>();
             enCalcType TypeShguyim = ((enCalcType)Enum.Parse(typeof(enCalcType), args[2].ToString()));
             BatchExecutionType ExecutionTypeShguim = ((BatchExecutionType)Enum.Parse(typeof(BatchExecutionType), args[3].ToString()));
+            Tuple<bool,FileInfo> KdsCalcul = null;
             try
             {
                 logger.InsertLog(lRequestNum, "I", 0, "START");
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["ShinuimShguimsProcessesNb"]);
-                //path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
-                exfile = (string)ConfigurationManager.AppSettings["KdsShinuimShguimsFileName"].ToString();
-                KdsCalcul = new FileInfo(exfile);
+                KdsCalcul = GetCalculPath();
 
-                logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
+                if(KdsCalcul.Item1==true)
+                    logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.Item2.FullName);
                 switch (TypeShguyim)
                 {
                     case enCalcType.ShinuyimVeShguyim:
@@ -88,10 +86,10 @@ namespace KdsService
                 // oCalcDal.PrepareDataLeChishuv(dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
                 logger.InsertLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
                      
-                if (KdsCalcul.Exists)
+                if (KdsCalcul.Item1)
                 {
                     sArguments = TypeShguyim.GetHashCode() + " " + lRequestNum.ToString() + " " + ExecutionTypeShguim.GetHashCode();
-                    iStatus = RunMultiProcesses(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
+                    iStatus = RunMultiProcesses(lRequestNum, KdsCalcul.Item2, sArguments, iCntProcesses);
                     //  iStatus = RunKdsCalcul(KdsCalcul, lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzatTest, bRitzaGorefet, iCntProcesses);
                 }
                 else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
@@ -108,7 +106,7 @@ namespace KdsService
             }
             finally
             {
-                CheckProcessesTerminated(KdsCalcul, lRequestNum, iStatus);
+                CheckProcessesTerminated(KdsCalcul.Item2, lRequestNum, iStatus);
             }
             //LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
@@ -174,18 +172,16 @@ namespace KdsService
             bool bRitzatTest = (bool)args[3];
             bool bRitzaGorefet = (bool)args[4];
             int iCntProcesses;
-            string path, exfile;
-            FileInfo KdsCalcul = null;
+            
+            Tuple<bool,FileInfo> KdsCalcul = null;
             var logger = ServiceLocator.Current.GetInstance<ILogBakashot>();
             try
             {
                 logger.InsertLog(lRequestNum, "I", 0, "START");             
                 iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["CalculProcessesNb"]);
-               // path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
-                exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
-                KdsCalcul = new FileInfo(exfile);
-
-                logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
+                KdsCalcul = GetCalculPath();
+                if(KdsCalcul.Item1)
+                    logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.Item2.FullName);
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
                 dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString())) * -1);
                 dAdChodesh = dAdChodesh.AddMonths(1).AddDays(-1);
@@ -195,12 +191,12 @@ namespace KdsService
 
                 if (result > 0 && resultK > 0)
                 {
-                    if (KdsCalcul.Exists)
+                    if (KdsCalcul.Item1)
                     {
                         sArguments = enCalcType.MonthlyCalc.GetHashCode() + " " + lRequestNum.ToString() + " " + dFrom.ToShortDateString() + " " + dAdChodesh.ToShortDateString() + " " +
                                                  sMaamad + " " + bRitzatTest.GetHashCode().ToString() + " " + bRitzaGorefet.GetHashCode().ToString();
                         //  iStatus = oUtils.RunKdsCalcul(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
-                        iStatus = RunMultiProcesses(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
+                        iStatus = RunMultiProcesses(lRequestNum, KdsCalcul.Item2, sArguments, iCntProcesses);
                     }
                     else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 }
@@ -216,7 +212,7 @@ namespace KdsService
             }
             finally
             {
-                CheckProcessesTerminated(KdsCalcul, lRequestNum, iStatus);
+                CheckProcessesTerminated(KdsCalcul.Item2, lRequestNum, iStatus);
             }
             //LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
@@ -251,7 +247,7 @@ namespace KdsService
             {
                 logger.InsertLog(lRequestNum, "I", 0, "START");             
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["PremiotProcessesNb"]);
-                //path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
+                path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
                 exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
                 KdsCalcul = new FileInfo( exfile);
                 logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);        
@@ -308,6 +304,20 @@ namespace KdsService
         //    }
         //    LogThreadEnd("CalcBatch", lRequestNum);
         //}
+
+        public Tuple<bool, FileInfo> GetCalculPath()
+        {
+            var calculExePath = ConfigurationManager.AppSettings["KdsCalculFileName"];
+            FileInfo f = new FileInfo(calculExePath);
+            if (File.Exists(f.FullName))
+            {
+                return new Tuple<bool, FileInfo>(true, f);
+            }
+            else
+            {
+                return new Tuple<bool, FileInfo>(false, null);
+            }
+        }
 
         private void RunTransferToHilanThread(object param)
         {
@@ -392,26 +402,26 @@ namespace KdsService
             long iRequestIdForRikuzim = (long)args[1];
             KdsLibrary.BL.clReport _ClReport= new KdsLibrary.BL.clReport();
             string path, exfile, sArguments;
-            FileInfo KdsRikuzims = null;
             int iStatus = 0;
             bool result = false;
             clBatch oBatch = new clBatch();
+            Tuple<bool,FileInfo> calculPath = null;
             try
             {
                 ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "START");
                
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["RikuzimsProcessesNb"]);
-                //path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
-                exfile = (string)ConfigurationManager.AppSettings["KdsRikuzimsFileName"].ToString();
-                KdsRikuzims = new FileInfo(exfile);
-                 ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "KdsRikuzims will run from " + KdsRikuzims.FullName);
-               
-                if (KdsRikuzims.Exists)
+
+                calculPath = GetCalculPath();
+                if(calculPath.Item1)
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "KdsRikuzims will run from " + calculPath.Item2.FullName);
+                 
+                 if (calculPath.Item1==true)
                 {
                     oBatch.DeleteRikuzimPdf(iRequestIdForRikuzim);
                     result = _ClReport.GetProPrepareOvdimRikuzim(lRequestNum,iRequestIdForRikuzim, iCntProcesses);
                     sArguments = enCalcType.Rikuzim.GetHashCode() + " " + lRequestNum.ToString() + " " + iRequestIdForRikuzim.ToString();
-                    iStatus = RunMultiProcesses(lRequestNum, KdsRikuzims, sArguments, iCntProcesses);
+                    iStatus = RunMultiProcesses(lRequestNum, calculPath.Item2, sArguments, iCntProcesses);
                 }
                 else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
             }
@@ -425,7 +435,7 @@ namespace KdsService
             }
             finally
             {
-                CheckProcessesTerminated(KdsRikuzims, lRequestNum, iStatus);
+                CheckProcessesTerminated(calculPath.Item2, lRequestNum, iStatus);
             }
             LogThreadEnd("YeziratRikuzim", lRequestNum);
         }
