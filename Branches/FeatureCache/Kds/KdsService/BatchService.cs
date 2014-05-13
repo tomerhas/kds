@@ -191,14 +191,24 @@ namespace KdsService
 
                 if (result > 0 && resultK > 0)
                 {
+                    logger.InsertLog(lRequestNum, "I", 0, "result: " + result + " resultK:" + resultK);
                     if (KdsCalcul.Item1)
                     {
+                        logger.InsertLog(lRequestNum, "I", 0, "KdsCalcul is Exists:" + KdsCalcul.Item1.ToString());
                         sArguments = enCalcType.MonthlyCalc.GetHashCode() + " " + lRequestNum.ToString() + " " + dFrom.ToShortDateString() + " " + dAdChodesh.ToShortDateString() + " " +
                                                  sMaamad + " " + bRitzatTest.GetHashCode().ToString() + " " + bRitzaGorefet.GetHashCode().ToString();
                         //  iStatus = oUtils.RunKdsCalcul(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
                         iStatus = RunMultiProcesses(lRequestNum, KdsCalcul.Item2, sArguments, iCntProcesses);
                     }
-                    else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                    else
+                    {
+                        iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                        logger.InsertLog(lRequestNum, "I", 0, "KdsCalcul is Exists:" + KdsCalcul.Item1.ToString());
+                    }
+                }
+                else
+                {
+                    logger.InsertLog(lRequestNum, "I", 0, "result: " + result + " resultK:" + resultK);
                 }
             }
             catch (Exception ex)
