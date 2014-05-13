@@ -326,7 +326,7 @@
 
             if (DateDiff.inDays(MeDate, AdDate) > parseInt(Param280)) {
                 args.IsValid = false;
-                args.Text = "ggg";
+                document.getElementById("ctl00_KdsContent_P_STARTDATE_Validator_01").errormessage = "טווח התאריכים הנבחר גדול מ-" + Param280 + " יום, יש להקליד טווח תאריכים נמוך יותר";
             }
             else
                 args.IsValid = true;
