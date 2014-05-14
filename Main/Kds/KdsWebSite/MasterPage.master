@@ -11,7 +11,7 @@
     <link id="Link1" runat="server" href="StyleSheet.css" type="text/css" rel="stylesheet" />
     <link rel="icon" href="Images/kds.ico" type="image/x-icon"/> 
     <link rel="shortcut icon" href="Images/kds.ico" type="image/x-icon"/>   
-    <%--<meta http-equiv="X-UA-Compatible" content="IE=8" />--%>
+   <meta http-equiv="X-UA-Compatible" content="IE=10" />
 </head>
 <body dir="rtl" id="MasterBody" runat="server"> 
    <script type="text/javascript" language="javascript">
@@ -47,8 +47,7 @@
         </tr>           
      </table>
   
-     <asp:UpdatePanel runat="server" id="UpMenu" UpdateMode="Conditional" RenderMode="Inline"> 
-        <ContentTemplate>  
+   
  <script language="javascript" type="text/javascript">
      function ShowMessageReport(PureUrl) {
          var retvalue;
@@ -61,13 +60,17 @@
      }
 
      function ImgHelp_Click() {
-       //  debugger;
-         $find("ModalPopupEx").show();
+        // debugger;
+         //$find("ModalPopupEx").show();
+         $("ModalPopupEx").show();
      }
      function btnConfirm_Click() {
-         $find("ModalPopupEx").hide();
+         $("ModalPopupEx").hide();
      }
     </script>
+
+          <asp:UpdatePanel runat="server" id="UpMenu" UpdateMode="Conditional" RenderMode="Inline"> 
+        <ContentTemplate>  
             <table width="998px" border="0" cellpadding="0" cellspacing="0" id="tblMenuMain">
                 <tr>
                     <td style="background-color:#CE950F;"> 
@@ -134,7 +137,7 @@
             </td>
             <td>
                <asp:ImageButton runat="server" ID="ImgHelpBtn" ImageUrl="~/Images/icon-help.jpg"  
-                    ImageAlign="Top" ToolTip="אודות" OnClientClick="ImgHelp_Click"  />
+                    ImageAlign="Top" ToolTip="אודות" OnClientClick="ImgHelp_Click();"  />
             </td>
             <td> 
                 <asp:Image runat="server" ID="ImageExit" ImageUrl="~/Images/icon-exit.jpg"  ImageAlign="Top" ToolTip="יציאה מהמערכת"  />                
