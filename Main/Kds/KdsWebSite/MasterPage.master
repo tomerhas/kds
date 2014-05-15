@@ -48,26 +48,6 @@
      </table>
   
    
- <script language="javascript" type="text/javascript">
-     function ShowMessageReport(PureUrl) {
-         var retvalue;
-         retvalue = window.showModalDialog(PureUrl + '/Modules/Reports/ShowMessageReport.aspx?Dt=" + DateTime.Now.ToString() + "', '', 'dialogwidth:400px;dialogheight:100px;center:yes;status:no;resizable:no;scroll:no;');
-         if (retvalue == "open")
-             window.location.href = PureUrl + "/Modules/Reports/ShowHeavyReportsList.aspx";
-     }
-     function ShowDetailsServer(ServerName, VersionNumber) {
-         alert("מספר גרסה" + VersionNumber + "\n" + "שם שרת:" + ServerName );
-     }
-
-     function ImgHelp_Click() {
-        // debugger;
-         //$find("ModalPopupEx").show();
-         $("ModalPopupEx").show();
-     }
-     function btnConfirm_Click() {
-         $("ModalPopupEx").hide();
-     }
-    </script>
 
           <asp:UpdatePanel runat="server" id="UpMenu" UpdateMode="Conditional" RenderMode="Inline"> 
         <ContentTemplate>  
@@ -144,11 +124,9 @@
             </td>
         </tr>   
      </table>
-
-
       <div>
-               <AjxToolKit:ModalPopupExtender ID="ModalPopupEx" OkControlID="ImgHelpBtn" CancelControlID="btnConfirm" 
-                        DropShadow="false" X="400" Y="200" PopupControlID="paMessage" TargetControlID="ImgHelpBtn"  runat="server" >
+               <AjxToolKit:ModalPopupExtender ID="ModalPopupEx"   CancelControlID="btnConfirm" 
+                        DropShadow="false" X="400" Y="200"  PopupControlID="paMessage" TargetControlID="ImgHelpBtn"  runat="server" >
                 </AjxToolKit:ModalPopupExtender>
                 <asp:Panel runat="server" style="display:none"   ID="paMessage" CssClass="PanelMessage"  >
                 <asp:Label ID="lblHeaderMessage" runat ="server" Font-Bold="true" Width="97%" Text="אודות:" BackColor="#696969"></asp:Label>
@@ -220,6 +198,28 @@
      //        document.getElementsByName("MainLevel0").item(document.getElementsById("MainLevel0").length - 1).lastChild.lastChild.lastChild.style.display = "none";
 //    $($("Image[name='spaceMenu']")[$("Image[name='spaceMenu']").size()-1]).css('display','none');
      $(".spaceMenu:last").css('display', 'none');
+
+
+  
+    function ShowMessageReport(PureUrl) {
+        var retvalue;
+        retvalue = window.showModalDialog(PureUrl + '/Modules/Reports/ShowMessageReport.aspx?Dt=" + DateTime.Now.ToString() + "', '', 'dialogwidth:400px;dialogheight:100px;center:yes;status:no;resizable:no;scroll:no;');
+        if (retvalue == "open")
+            window.location.href = PureUrl + "/Modules/Reports/ShowHeavyReportsList.aspx";
+    }
+     function ShowDetailsServer(ServerName, VersionNumber) {
+         alert("מספר גרסה" + VersionNumber + "\n" + "שם שרת:" + ServerName );
+     }
+
+     function ImgHelp_Click() {
+         // debugger;
+         //$find("ModalPopupEx").show();
+         $("ModalPopupEx").show();
+     }
+     function btnConfirm_Click() {
+         $("ModalPopupEx").hide();
+     }
+ 
 
  </script>
 </html>
