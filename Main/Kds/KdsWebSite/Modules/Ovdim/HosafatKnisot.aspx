@@ -102,17 +102,20 @@
         var col_HosefPeilut = "<%=HOSEF_PEILUT %>";
         var col_Mispar_Knisa = "<%=MISPAR_KNISA %>";
         var col_Sug_Knisa = "<%=SUG_KNISA %>";
+        var grid = document.getElementById("grdKnisot");
         function SamenHakol_OnClick() {
-            var num = document.getElementById("grdKnisot").childNodes[0].length;
-            for (var i = 1; i <= num; i++) {
-                document.getElementById("grdKnisot").childNodes[1].childNodes[i].cells[col_HosefPeilut].childNodes[1].checked = true;
+            var child = (grid.firstElementChild || grid.firstChild);
+            var num = child.children.length;
+            for (var i = 1; i < num; i++) {
+                child.childNodes[i].cells[col_HosefPeilut].children[0].checked = true;
             }
         }
         function NakeHakol_OnClick() {
-            var num = document.getElementById("grdKnisot").childNodes[0].length;
-            for (var i = 1; i <= num; i++) {
-                if (document.getElementById("grdKnisot").childNodes[1].childNodes[i].cells[col_Sug_Knisa].innerHTML != "2")
-                    document.getElementById("grdKnisot").childNodes[1].childNodes[i].cells[col_HosefPeilut].childNodes[1].checked = false;
+            var child = (grid.firstElementChild || grid.firstChild);
+            var num = child.children.length;
+            for (var i = 1; i < num; i++) {
+                if (child.childNodes[i].cells[col_Sug_Knisa].innerHTML != "2")
+                    child.childNodes[i].cells[col_HosefPeilut].children[0].checked = false;
             }
         }
 
@@ -148,13 +151,14 @@
         }
 
         function checkFileds() {
-            var numRows = document.getElementById("grdKnisot").childNodes[0].length; 
+            var child = (grid.firstElementChild || grid.firstChild);
+            var numRows = child.children.length;
             var row; 
             var is_valid = true;
             var iCountLinesChk = 0;
-            for (var i = 1; i <= numRows; i++) {
-                row = document.getElementById("grdKnisot").childNodes[1].childNodes[i];
-                if (document.getElementById("grdKnisot").childNodes[1].childNodes[i].cells[col_HosefPeilut].childNodes[1].checked != false) {
+            for (var i = 1; i < numRows; i++) {
+                row = child.childNodes[i];
+                if (row.cells[col_HosefPeilut].childNodes[1].checked != false) {
                     iCountLinesChk += 1;
                    
                     is_valid = onchange_txtDakot(row);
