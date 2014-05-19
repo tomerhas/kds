@@ -158,7 +158,7 @@
             var iCountLinesChk = 0;
             for (var i = 1; i < numRows; i++) {
                 row = child.childNodes[i];
-                if (row.cells[col_HosefPeilut].childNodes[1].checked != false) {
+                if (row.cells[col_HosefPeilut].children[0].checked != false) {
                     iCountLinesChk += 1;
                    
                     is_valid = onchange_txtDakot(row);
