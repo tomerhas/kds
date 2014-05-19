@@ -599,7 +599,7 @@ namespace KdsBatch
                 drSidur = null;
             }
         }
-
+        //סידורי נאמנות
         private void SimunSidurimLoLetashlumByMeafyen()
         {
             DataRow[] drSidurim;

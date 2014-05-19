@@ -4925,8 +4925,8 @@ namespace KdsBatch
                     {
                         if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == clGeneral.enSugYom.Purim.GetHashCode()))
                             fErechRechiv = 444;
-                        else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode() && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == clGeneral.enSugYom.Purim.GetHashCode()))
-                            fErechRechiv = 462;
+                      //  else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode() && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == clGeneral.enSugYom.Purim.GetHashCode()))
+                      //      fErechRechiv = 462;
                         else if ((iSugYom >= 13 && iSugYom <= 18) || iSugYom == 11)
                             fErechRechiv = 300;
                         else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && iSugYom == clGeneral.enSugYom.ErevYomKipur.GetHashCode())

@@ -29,6 +29,21 @@
 <asp:Content ID="Content2" runat="Server" ContentPlaceHolderID="KdsContent" >
   <%--  <CheckBoxListDD:usTest runat="server" ID="usTest" />--%>
    
+    <div>
+               <cc1:ModalPopupExtender ID="ModalPopupEx" OkControlID="ImgHelpBtn" CancelControlID="btnConfirm" 
+                        DropShadow="false" X="400" Y="200" PopupControlID="paMessage" TargetControlID="ImgHelpBtn"  runat="server" >
+                </cc1:ModalPopupExtender>
+                <asp:Panel runat="server" style="display:none"   ID="paMessage" CssClass="PanelMessage"  >
+                <asp:Label ID="lblHeaderMessage" runat ="server" Font-Bold="true" Width="97%" Text="אודות:" BackColor="#696969"></asp:Label>
+                <br /><br />
+                <asp:Label ID="lblGirsa" Font-Bold="true"  runat ="server" Width="90%"></asp:Label>
+                <br />  
+                <asp:Label ID="lblServerName" Font-Bold="true"  runat ="server" Width="90%"></asp:Label>
+                <br /><br />
+                <asp:Button ID="btnConfirm" runat="server" Text="אישור" CssClass="ImgButtonMake" OnClientClick="btnConfirm_Click"/>
+                </asp:Panel>
+       </div>
+
     <asp:DropDownCheckBoxes ID="checkBoxes1" runat="server" 
                 AddJQueryReference="True" UseButtons="False" UseSelectAllNode="True">
                 <Style SelectBoxWidth="160" DropDownBoxBoxWidth="160" DropDownBoxBoxHeight="80" />
