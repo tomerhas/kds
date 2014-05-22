@@ -245,7 +245,8 @@ namespace KdsBatch
             errSidurAsurBeyomShishiLeoved5Yamim204=204,
             errTipatChalavMealMichsa205=205,
             errOvedMutaamLeloShaotNosafot206 = 206,
-            errShatHatchalaBiggerShatYetzia=207
+            errShatHatchalaBiggerShatYetzia=207,
+            errMushalETWithSidurNotAllowET = 208
         }
 
         private enum errNesiaMeshtana
@@ -1186,8 +1187,9 @@ namespace KdsBatch
                 if (CheckErrorActive(172)) IsOvedPeilutValid172(dCardDate, iMisparIshi, ref dtErrors);
 
                 if (CheckErrorActive(203)) CheckNumGririotInDay203(dCardDate, iMisparIshi, ref dtErrors);
-                
 
+               
+                
                 for (int i = 0; i < htEmployeeDetails.Count; i++)
                 {
                     oSidur = (clSidur)htEmployeeDetails[i];
@@ -1290,7 +1292,7 @@ namespace KdsBatch
                      if (CheckErrorActive(186)) MutamLoBeNahagut186(oSidur,dCardDate, bSidurNahagut, ref dtErrors);
                      if (CheckErrorActive(187)) KupaiWithNihulTnua187(oSidur, dCardDate,drSugSidur, ref dtErrors);
                      if (CheckErrorActive(188)) ChofeshAlCheshbonShaotNosafot188(oSidur, dCardDate, ref dtErrors);
-
+                     if (CheckErrorActive(208)) CheckMushalETWithSidurNotAllowET208(oSidur, dCardDate, ref dtErrors);
                     clSidur prevSidur = null;
                     if (i > 0) prevSidur = htEmployeeDetails[i - 1] as clSidur;
                     if (prevSidur != null)
@@ -2787,6 +2789,32 @@ namespace KdsBatch
             }
 
             return isValid;
+        }
+
+        private void CheckMushalETWithSidurNotAllowET208(clSidur oSidur, DateTime dCardDate, ref DataTable dtErrors)
+        {
+           // int iCountSidurim = 0;
+            try
+            {
+                if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEgged.GetHashCode() && oOvedYomAvodaDetails.iKodHevraSnifAv == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                {
+                    if (oSidur.bSidurMyuhad)
+                    {
+                        if (oSidur.iMisparSidur == 99300 || oSidur.iMisparSidur == 99301 || oSidur.bSidurNotValidKodExists)
+                        {
+                            drNew = dtErrors.NewRow();
+                            InsertErrorRow(oSidur, ref drNew, "", enErrors.errMushalETWithSidurNotAllowET.GetHashCode());
+                            dtErrors.Rows.Add(drNew);
+                
+                        }
+                    }
+                }  
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", enErrors.errMushalETWithSidurNotAllowET.GetHashCode(), dCardDate, "errMushalETWithSidurNotAllowET208: " + ex.Message);
+                _bSuccsess = false;
+            }
         }
         private bool IsHrStatusValid01(DateTime dCardDate, int iMisparIshi, ref DataTable dtErrors)
         {                      

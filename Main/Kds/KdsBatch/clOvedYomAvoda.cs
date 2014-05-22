@@ -16,6 +16,7 @@ namespace KdsBatch
         public string sTachograf = "";
         public string sKodHaver = "";
         public int iKodHevra;
+        public int iKodHevraSnifAv;
         public string sMutamut = "";
         public bool bMutamutExists;
         public string sMercazErua = "";
@@ -110,6 +111,7 @@ namespace KdsBatch
                 sBitulZmanNesiot = dtOvedCardDetails.Rows[0]["bitul_zman_nesiot"].ToString();
                 sTachograf = dtOvedCardDetails.Rows[0]["Tachograf"].ToString();
                 iKodHevra = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["kod_hevra"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["kod_hevra"].ToString());
+                iKodHevraSnifAv = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["kod_hevra_snif_av"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["kod_hevra_snif_av"].ToString());
                 sLina = dtOvedCardDetails.Rows[0]["lina"].ToString();
                 sMercazErua = dtOvedCardDetails.Rows[0]["mercaz_erua"].ToString();
                 bMercazEruaExists = !(String.IsNullOrEmpty(dtOvedCardDetails.Rows[0]["mercaz_erua"].ToString()));
