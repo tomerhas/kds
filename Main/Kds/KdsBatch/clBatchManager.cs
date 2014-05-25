@@ -2796,7 +2796,7 @@ namespace KdsBatch
            // int iCountSidurim = 0;
             try
             {
-                if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEgged.GetHashCode() && oOvedYomAvodaDetails.iKodHevraSnifAv == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEgged.GetHashCode() && oOvedYomAvodaDetails.iKodHevraHashala == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
                 {
                     if (oSidur.bSidurMyuhad)
                     {

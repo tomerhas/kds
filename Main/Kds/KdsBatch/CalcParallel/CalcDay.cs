@@ -3179,7 +3179,7 @@ namespace KdsBatch
                                 {
                                     if ((fErechRechiv == 1 || (bflag && fErechRechiv == float.Parse("0.6")) ||
                                         (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() && fErechRechiv == float.Parse(Math.Round((1 * objOved.fMekademNipuach), 2).ToString())))
-                                        && objOved.objMatzavOved.iKod_Headrut == 1)
+                                        && (objOved.objMatzavOved.iKod_Headrut == 1 || (objOved.objMatzavOved.sKod_Matzav == "10" && objOved.Taarich.Month == objOved.oGeneralData._dTaarichHefreshim.Month && objOved.Taarich.Year == objOved.oGeneralData._dTaarichHefreshim.Year)))
                                     {
                                         bChangeTo67 = true;
                                     }
@@ -3191,6 +3191,7 @@ namespace KdsBatch
                                 if (bflag && fErechRechiv==float.Parse("0.6") && bMaamadChange)
                                     bChangeTo67 = true;
                                 
+
 
                                 if (!bMutaam && bMaamadChange && fErechRechiv > 0 && fErechRechiv < 1 && fDakotNochehut > 0 &&
                                     !(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30) && (objOved.objMeafyeneyOved.Meafyen33Ei != "1") )
