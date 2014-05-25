@@ -3033,6 +3033,15 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
       </DefaultValue>
       <Prompt>P_EMDA</Prompt>
     </ReportParameter>
+    <ReportParameter Name="P_URL_BARCODE">
+      <DataType>String</DataType>
+      <Prompt>P_URL_BARCODE</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_TIKUN">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Prompt>P_TIKUN</Prompt>
+    </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
       <DefaultValue>
@@ -3041,16 +3050,6 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
         </Values>
       </DefaultValue>
       <Prompt>P_DT</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_URL_BARCODE">
-      <DataType>String</DataType>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>P_URL_BARCODE</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_TIKUN">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <Prompt>P_TIKUN</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Code>public function Barcode(byval Input As String) as byte()

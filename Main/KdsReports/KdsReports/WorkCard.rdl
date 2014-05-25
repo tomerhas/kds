@@ -3416,7 +3416,6 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -4007,6 +4006,15 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
       </DefaultValue>
       <Prompt>P_EMDA</Prompt>
     </ReportParameter>
+    <ReportParameter Name="P_URL_BARCODE">
+      <DataType>String</DataType>
+      <Prompt>P_URL_BARCODE</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_TIKUN">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Prompt>P_TIKUN</Prompt>
+    </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
       <DefaultValue>
@@ -4015,21 +4023,6 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
         </Values>
       </DefaultValue>
       <Prompt>P_DT</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_URL_BARCODE">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>""</Value>
-        </Values>
-      </DefaultValue>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>P_URL_BARCODE</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_TIKUN">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <Prompt>P_TIKUN</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Code>public function Barcode(byval Input As String) as byte()
