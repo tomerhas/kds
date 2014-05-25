@@ -46,6 +46,7 @@
                 <CellContents>
                   <Textbox Name="Textbox34">
                     <CanGrow>true</CanGrow>
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -82,6 +83,7 @@
                 <CellContents>
                   <Textbox Name="Textbox36">
                     <CanGrow>true</CanGrow>
+                    <CanShrink>true</CanShrink>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
@@ -149,7 +151,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>0.89104cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1481,10 +1483,11 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.90577cm</Size>
+                    <Size>2.56723cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox35">
                         <CanGrow>true</CanGrow>
+                        <CanShrink>true</CanShrink>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
@@ -1517,10 +1520,11 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.90577cm</Size>
+                        <Size>2.46139cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox37">
                             <CanGrow>true</CanGrow>
+                            <CanShrink>true</CanShrink>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
@@ -1597,10 +1601,11 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.90577cm</Size>
+                    <Size>2.56723cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox63">
                         <CanGrow>true</CanGrow>
+                        <CanShrink>true</CanShrink>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
@@ -1634,10 +1639,11 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.90577cm</Size>
+                        <Size>2.46139cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox2">
                             <CanGrow>true</CanGrow>
+                            <CanShrink>true</CanShrink>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
@@ -1713,10 +1719,11 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.90577cm</Size>
+                    <Size>2.56723cm</Size>
                     <CellContents>
                       <Textbox Name="TICKETS1">
                         <CanGrow>true</CanGrow>
+                        <CanShrink>true</CanShrink>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
@@ -1751,10 +1758,11 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.90577cm</Size>
+                        <Size>2.46139cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox41">
                             <CanGrow>true</CanGrow>
+                            <CanShrink>true</CanShrink>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
@@ -1799,8 +1807,8 @@
         <NoRowsMessage>לא נמצאו רשומות</NoRowsMessage>
         <DataSetName>DsIdkuneyRashemet</DataSetName>
         <Top>2.65875cm</Top>
-        <Height>2.4cm</Height>
-        <Width>21.1759cm</Width>
+        <Height>2.69104cm</Height>
+        <Width>22.39298cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1825,10 +1833,10 @@
         </Style>
       </Subreport>
     </ReportItems>
-    <Height>1.99163in</Height>
+    <Height>2.10622in</Height>
     <Style />
   </Body>
-  <Width>8.33697in</Width>
+  <Width>8.81614in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
