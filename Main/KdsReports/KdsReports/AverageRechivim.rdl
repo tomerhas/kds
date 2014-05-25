@@ -458,7 +458,6 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <KeepTogether>true</KeepTogether>
         <DataSetName>DsRechivim</DataSetName>
-        <Left>0cm</Left>
         <Height>1.09417cm</Height>
         <Width>11.42027cm</Width>
         <Style>
@@ -555,11 +554,6 @@
     </ReportParameter>
     <ReportParameter Name="P_END_DATE">
       <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>05/01/2013 00:00:00</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>P END DATE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_MISPAR_ISHI">

@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>19.62408cm</Width>
+              <Width>19.70174cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -662,6 +662,7 @@
                           </TablixRowHierarchy>
                           <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
                           <Top>0.85703cm</Top>
+                          <Left>0.07766cm</Left>
                           <Height>1.2cm</Height>
                           <Width>19.62407cm</Width>
                           <Style>
@@ -707,7 +708,7 @@
                             </Paragraph>
                           </Paragraphs>
                           <Top>2.26869cm</Top>
-                          <Left>15.04873cm</Left>
+                          <Left>15.12639cm</Left>
                           <Height>0.55877cm</Height>
                           <Width>2.59292cm</Width>
                           <ZIndex>2</ZIndex>
@@ -736,6 +737,7 @@
                               </Value>
                             </Parameter>
                           </Parameters>
+                          <Left>0.07766cm</Left>
                           <Height>0.82175cm</Height>
                           <Width>19.62407cm</Width>
                           <ZIndex>3</ZIndex>
@@ -787,7 +789,7 @@
         <Top>1.48653cm</Top>
         <Left>0.07766cm</Left>
         <Height>3.1571cm</Height>
-        <Width>19.62407cm</Width>
+        <Width>19.70174cm</Width>
         <Visibility>
           <Hidden>=iif(Parameters!p_type_rpt.Value =1 ,false,true) ' 1==PDF,0=EXCLE</Hidden>
         </Visibility>
@@ -1762,7 +1764,6 @@
             <TablixMember>
               <Group Name="TAARICH">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!MISPAR_ISHI.Value</GroupExpression>
                   <GroupExpression>=Fields!TAARICH.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
@@ -1804,6 +1805,9 @@
                 </GroupExpressions>
               </Group>
               <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!MISPAR_ISHI.Value</Value>
+                </SortExpression>
                 <SortExpression>
                   <Value>=Fields!MIYUN_MEMUZAIM.Value</Value>
                 </SortExpression>
