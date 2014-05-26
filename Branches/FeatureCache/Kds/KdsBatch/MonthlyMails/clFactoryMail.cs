@@ -16,6 +16,7 @@ using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Managers;
 using KDSCommon.Interfaces.Logs;
 using System.Net.Mail;
+using KDSCommon.DataModels.Mails;
 
 namespace KdsBatch.MonthlyMails
 {
@@ -69,7 +70,7 @@ namespace KdsBatch.MonthlyMails
             {
                 var mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
 
-                MailMessage message = new MailMessage("", eMail) { Subject = teur };
+                MailMessageWrapper message = new MailMessageWrapper(eMail) { Subject = teur };
                 message.Attachments.Add(new Attachment(Path));
                 
                 mailManager.SendMessage(message);

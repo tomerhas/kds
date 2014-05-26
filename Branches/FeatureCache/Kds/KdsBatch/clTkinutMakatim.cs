@@ -16,6 +16,7 @@ using KDSCommon.UDT;
 using KDSCommon.Interfaces.Managers;
 using KDSCommon.Interfaces.Logs;
 using System.Net.Mail;
+using KDSCommon.DataModels.Mails;
 
 namespace KdsBatch
 {
@@ -110,7 +111,7 @@ namespace KdsBatch
                
                 var mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
 
-                MailMessage message = new MailMessage("", sTo) { Subject = " קובץ מקטים שגויים מהתנועה לחודש " + sMonth };
+                MailMessageWrapper message = new MailMessageWrapper(sTo) { Subject = " קובץ מקטים שגויים מהתנועה לחודש " + sMonth };
                 message.Attachments.Add(new Attachment(Path));
 
                 mailManager.SendMessage(message);

@@ -14,6 +14,7 @@ using KDSCommon.UDT;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using ObjectCompare;
+using KDSCommon.DataModels.Mails;
 
 namespace KDSBLLogic.Managers
 {
@@ -48,7 +49,7 @@ namespace KDSBLLogic.Managers
                 var mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
                 string subject = "תקלה בשמירת עדכוני רשמת למספר אישי: " + oCollIdkunRashemet.Value[0].MISPAR_ISHI + "  תאריך:" + oCollIdkunRashemet.Value[0].TAARICH.ToShortDateString();
 
-                mailManager.SendMessage(new MailMessage("", rcipientsList)
+                mailManager.SendMessage(new MailMessageWrapper(rcipientsList)
                 {
                     Subject =subject,
                     Body = ex.Message
@@ -73,9 +74,10 @@ namespace KDSBLLogic.Managers
             catch (Exception ex)
             {
                 IMailManager mailManager = _container.Resolve<IMailManager>();
+               // string from = ConfigurationManager.AppSettings["NoRep"].ToString();
                 string RecipientsList = ConfigurationManager.AppSettings["MailErrorWorkCard"];
                 string subject = "תקלה בשמירת נתונים למספר אישי: " + inputData.iMisparIshi + "  תאריך:" + inputData.CardDate;
-                mailManager.SendMessage(new MailMessage("", RecipientsList) { Subject = subject, Body = ex.Message });
+                mailManager.SendMessage(new MailMessageWrapper(RecipientsList) { Subject = subject, Body = ex.Message });
                 throw ex;
             }
 

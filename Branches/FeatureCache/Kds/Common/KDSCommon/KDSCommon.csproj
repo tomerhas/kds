@@ -75,6 +75,7 @@
     <Compile Include="DataModels\Errors\FlowErrorResult.cs" />
     <Compile Include="DataModels\Exceptions\BakashotException.cs" />
     <Compile Include="DataModels\Logs\BakashaLog.cs" />
+    <Compile Include="DataModels\Mails\MailMessageWrapper.cs" />
     <Compile Include="DataModels\Meafyen.cs" />
     <Compile Include="DataModels\MeafyenimDM.cs" />
     <Compile Include="DataModels\PeilutDM.cs" />

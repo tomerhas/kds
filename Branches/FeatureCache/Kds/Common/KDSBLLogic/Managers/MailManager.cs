@@ -7,13 +7,14 @@ using KDSCommon.Enums;
 using System.Configuration;
 using System.Web;
 using KDSCommon.Interfaces.Managers;
+using KDSCommon.DataModels.Mails;
 
 namespace KDSBLLogic.Managers
 {
     public class MailManager : IMailManager
     {
         private SmtpClient client;
-        private MailAddress _mailFromAddress;
+        private string _mailFromAddress;
         public MailManager()
         {
             SetSMTP();
@@ -23,8 +24,9 @@ namespace KDSBLLogic.Managers
         private void InitFromMail()
         {
             var displayNameServer = ConfigurationManager.AppSettings["DisplayNameServer"];
-            var fromMail = displayNameServer + "<" + ConfigurationManager.AppSettings["NoRep"].ToString() + ">";
-            _mailFromAddress = new MailAddress(fromMail);
+         //   var fromMail = displayNameServer + "<" + ConfigurationManager.AppSettings["NoRep"].ToString() + ">";
+         //   _mailFromAddress = new MailAddress(fromMail);
+            _mailFromAddress = displayNameServer + "<" + ConfigurationManager.AppSettings["NoRep"].ToString() + ">";
         }
 
 
@@ -39,15 +41,19 @@ namespace KDSBLLogic.Managers
            // _attachFilePath = "";
         }
 
-        public void SendMessage(MailMessage message, DirectionType direction= DirectionType.Ltr)
+        public void SendMessage(MailMessageWrapper message, DirectionType direction = DirectionType.Ltr)
         {
+            MailMessage mm = new MailMessage(_mailFromAddress, message.RcipientsList);
+            mm.Body = message.Body;
+            mm.Subject = message.Subject;
+
             if (direction == DirectionType.Rtl)
             {
-                message.Body = "<div dir='rtl' style='Text-align:Right'>" + message.Body + "</Div>";
+                mm.Body = "<div dir='rtl' style='Text-align:Right'>" + mm.Body + "</Div>";
             }
-            message.Body = message.Body.Replace("\n", "<br/>");
-            message.From = _mailFromAddress;
-            client.Send(message);
+            mm.Body = message.Body.Replace("\n", "<br/>");
+            message.Attachments.ForEach(at => mm.Attachments.Add(at));
+            client.Send(mm);
         }
 
         public MailAddressCollection CreateAddressesFromAppSettings(string appSettingKey)

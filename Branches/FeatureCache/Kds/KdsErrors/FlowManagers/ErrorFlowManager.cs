@@ -16,6 +16,7 @@ using Microsoft.Practices.Unity;
 using KdsErrors.DAL;
 using KDSCommon.Helpers;
 using System.Collections.Specialized;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsErrors.FlowManagers
 {
@@ -54,44 +55,51 @@ namespace KdsErrors.FlowManagers
             ISubErrorFlowManager oSidurErrors = _container.Resolve<ISubErrorFlowFactory>().GetFlowManager(SubFlowManagerTypes.OvedSidurErrorFlowManager);
             ISubErrorFlowManager oPeilutErrors = _container.Resolve<ISubErrorFlowFactory>().GetFlowManager(SubFlowManagerTypes.OvedPeilutErrorFlowManager);
 
-            oYomErrors.ExecuteFlow(inputData, 1);
-            for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
+            try
             {
-                inputData.curSidur = (SidurDM)inputData.htEmployeeDetails[i];
-                inputData.iSidur = i;
-                inputData.drSugSidur = _container.Resolve<ISidurManager>().GetOneSugSidurMeafyen(inputData.curSidur.iSugSidurRagil, inputData.CardDate);
-                oSidurErrors.ExecuteFlow(inputData, 1);
-                for (int j = 0; j < inputData.curSidur.htPeilut.Count; j++)
+                oYomErrors.ExecuteFlow(inputData, 1);
+                for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
-                    inputData.curPeilut = (PeilutDM)inputData.curSidur.htPeilut[j];
-                    inputData.iPeilut = j;
-                    oPeilutErrors.ExecuteFlow(inputData,1);
+                    inputData.curSidur = (SidurDM)inputData.htEmployeeDetails[i];
+                    inputData.iSidur = i;
+                    inputData.drSugSidur = _container.Resolve<ISidurManager>().GetOneSugSidurMeafyen(inputData.curSidur.iSugSidurRagil, inputData.CardDate);
+                    oSidurErrors.ExecuteFlow(inputData, 1);
+                    for (int j = 0; j < inputData.curSidur.htPeilut.Count; j++)
+                    {
+                        inputData.curPeilut = (PeilutDM)inputData.curSidur.htPeilut[j];
+                        inputData.iPeilut = j;
+                        oPeilutErrors.ExecuteFlow(inputData, 1);
+                    }
+                    oSidurErrors.ExecuteFlow(inputData, 2);
                 }
-                oSidurErrors.ExecuteFlow(inputData, 2);
+                oYomErrors.ExecuteFlow(inputData, 2);
+
+                ErrorsDal errDal = _container.Resolve<ErrorsDal>();
+
+                //Delete errors from shgiot
+                errDal.DeleteErrorsFromTbShgiot(inputData.iMisparIshi, inputData.CardDate);
+                //Remove shgiot meusharot
+                string sArrKodShgia = RemoveShgiotMeusharotFromDt(inputData.dtErrors);
+                bool haveShgiot = false;
+                //Validate shgiot letezuga
+                if (sArrKodShgia.Length > 0)
+                {
+                    sArrKodShgia = sArrKodShgia.Substring(0, sArrKodShgia.Length - 1);
+                    haveShgiot = errDal.CheckShgiotLetzuga(sArrKodShgia);
+                }
+                //Insert errors to shgiot
+
+                if (inputData.dtErrors.Rows.Count > 0)
+                    errDal.InsertErrorsToTbShgiot(inputData.dtErrors, inputData.CardDate);
+
+                //Update 
+                errDal.UpdateRitzatShgiotDate(inputData.iMisparIshi, inputData.CardDate, haveShgiot);
             }
-            oYomErrors.ExecuteFlow(inputData, 2);
-
-            ErrorsDal errDal = _container.Resolve<ErrorsDal>();
-
-            //Delete errors from shgiot
-            errDal.DeleteErrorsFromTbShgiot(inputData.iMisparIshi, inputData.CardDate);
-            //Remove shgiot meusharot
-            string sArrKodShgia = RemoveShgiotMeusharotFromDt(inputData.dtErrors);
-            bool haveShgiot = false;
-            //Validate shgiot letezuga
-            if (sArrKodShgia.Length > 0)
+            catch (Exception ex)
             {
-                sArrKodShgia = sArrKodShgia.Substring(0, sArrKodShgia.Length - 1);
-                haveShgiot = errDal.CheckShgiotLetzuga(sArrKodShgia);
+                _container.Resolve<ILogBakashot>().InsertLog(inputData.BtchRequestId.HasValue ? inputData.BtchRequestId.Value : 0, "E", 0, "ExecuteErrors: " + ex.Message, inputData.iMisparIshi, inputData.CardDate, null);
+                inputData.IsSuccsess = false;
             }
-            //Insert errors to shgiot
-
-            if (inputData.dtErrors.Rows.Count > 0)
-                errDal.InsertErrorsToTbShgiot(inputData.dtErrors, inputData.CardDate);
-
-            //Update 
-            errDal.UpdateRitzatShgiotDate(inputData.iMisparIshi, inputData.CardDate, haveShgiot);
-            
         }
 
         private string  RemoveShgiotMeusharotFromDt(DataTable dtErrors)

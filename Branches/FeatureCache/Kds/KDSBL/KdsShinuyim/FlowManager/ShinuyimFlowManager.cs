@@ -58,7 +58,8 @@ namespace KdsShinuyim.FlowManager
             }
             catch (Exception ex)
             {
-                inputData.IsSuccsess = false;
+                _container.Resolve<ILogBakashot>().InsertLog(btchRequest.HasValue ? btchRequest.Value : 0, "E",0,"ExecShinuyim: " + ex.Message,misparIshi, cardDate, null);
+                 inputData.IsSuccsess = false;
             }
             return FillResult(inputData);
         }

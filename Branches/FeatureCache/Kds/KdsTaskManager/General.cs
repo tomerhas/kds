@@ -13,6 +13,7 @@ using System.Threading;
 using KDSCommon.Interfaces.Managers;
 using Microsoft.Practices.ServiceLocation;
 using System.Net.Mail;
+using KDSCommon.DataModels.Mails;
 
 
 namespace KdsTaskManager
@@ -84,13 +85,13 @@ namespace KdsTaskManager
             {
                 case SeverityLevel.Fatal:
                     EventLog.WriteEntry(Utilities.EventLogSource, Message, EventLogEntryType.Error);
-                    mailManager.SendMessage(new MailMessage("", string.Join(";", RecipientsList)) { Subject = "Fatal event", Body = Message });
+                    mailManager.SendMessage(new MailMessageWrapper(string.Join(";", RecipientsList)) { Subject = "Fatal event", Body = Message });
 
                     
                     break;
                 case SeverityLevel.Critical:
                     EventLog.WriteEntry(Utilities.EventLogSource, Message, EventLogEntryType.Error);
-                    mailManager.SendMessage(new MailMessage("", string.Join(";", RecipientsList)) { Subject = "Critical event", Body = Message });
+                    mailManager.SendMessage(new MailMessageWrapper(string.Join(";", RecipientsList)) { Subject = "Critical event", Body = Message });
                    
                     break;
                 case SeverityLevel.Information:

@@ -11,6 +11,7 @@ using KDSCommon.Interfaces.Managers;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Enums;
 using System.Net.Mail;
+using KDSCommon.DataModels.Mails;
 
 
 
@@ -104,7 +105,7 @@ namespace KdsLibrary.TaskManager
                 foreach (DataRow row in dt.Rows)
                 {
                     string rcipientsList = ConfigurationManager.AppSettings["RecipientsMailList"];
-                    mailManager.SendMessage(new MailMessage("", rcipientsList)
+                    mailManager.SendMessage(new MailMessageWrapper(rcipientsList)
                     {
                         Subject = "פעילות תקועה",
                         Body = GetMailBody(row),
@@ -133,7 +134,7 @@ namespace KdsLibrary.TaskManager
             string subject = " התראה מקבוצה " + GroupId + ",פעולה:" + ActionId;
 
             string rcipientsList = ConfigurationManager.AppSettings["RecipientsMailList"];
-            mailManager.SendMessage(new MailMessage("", rcipientsList)
+            mailManager.SendMessage(new MailMessageWrapper(rcipientsList)
             {
                 Subject = subject,
                 Body = Message,

@@ -155,7 +155,7 @@ namespace KdsShinuyim.ShinuyImpl
                         sMakat = oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3);
 
                         OBJ_PEILUT_OVDIM oObjPeilutOvdimIns = new OBJ_PEILUT_OVDIM();
-                        oObjPeilutOvdimIns = InsertToObjPeilutOvdimForUpdate(oPeilut, oObjSidurimOvdimDel, inputData.UserId);
+                        InsertToObjPeilutOvdimForUpdate(oPeilut, oObjSidurimOvdimDel,oObjPeilutOvdimIns, inputData.UserId);
                         oObjPeilutOvdimIns.MISPAR_SIDUR = oSidurPutzal.iMisparSidur;
                         oObjPeilutOvdimIns.SHAT_HATCHALA_SIDUR = oSidurPutzal.dFullShatHatchala;
                         oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;

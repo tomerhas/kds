@@ -348,12 +348,15 @@ namespace KdsShinuyim.ShinuyImpl
                     SourceObject = SourceObj.Insert;
                     return oObjPeilutOvdimUpd;
                 }
-
-                oObjPeilutOvdimUpd = InsertToObjPeilutOvdimForUpdate(oPeilut, oObjSidurimOvdimUpd, inputData.UserId);
+                
+                oObjPeilutOvdimUpd = new OBJ_PEILUT_OVDIM();
+                InsertToObjPeilutOvdimForUpdate(oPeilut, oObjSidurimOvdimUpd,oObjPeilutOvdimUpd, inputData.UserId,false);
 
                 ModificationRecorder<OBJ_PEILUT_OVDIM> recorder = new ModificationRecorder<OBJ_PEILUT_OVDIM>(oObjPeilutOvdimUpd, true);
                 inputData.oCollPeilutOvdimUpdRecorder.Add(recorder);
                 SourceObject = SourceObj.Update;
+
+                InsertToObjPeilutOvdimForUpdate(oPeilut, oObjSidurimOvdimUpd,oObjPeilutOvdimUpd, inputData.UserId, true);
 
             }
             catch (Exception ex)
@@ -363,15 +366,14 @@ namespace KdsShinuyim.ShinuyImpl
             return oObjPeilutOvdimUpd;
         }
 
-        protected OBJ_PEILUT_OVDIM InsertToObjPeilutOvdimForUpdate(PeilutDM oPeilut, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, int? userid)
+        protected void InsertToObjPeilutOvdimForUpdate(PeilutDM oPeilut, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd, int? userid, bool insertNewFields = true)
         {
-            OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd = new OBJ_PEILUT_OVDIM();
+           // OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd = new OBJ_PEILUT_OVDIM();
             try
             {
                 oObjPeilutOvdimUpd.MISPAR_SIDUR = oObjSidurimOvdimUpd.MISPAR_SIDUR;
                 oObjPeilutOvdimUpd.MISPAR_ISHI = oObjSidurimOvdimUpd.MISPAR_ISHI;
-                oObjPeilutOvdimUpd.SHAT_HATCHALA_SIDUR = oObjSidurimOvdimUpd.SHAT_HATCHALA;
-                oObjPeilutOvdimUpd.NEW_SHAT_HATCHALA_SIDUR = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
+                oObjPeilutOvdimUpd.SHAT_HATCHALA_SIDUR = oObjSidurimOvdimUpd.SHAT_HATCHALA;       
                 oObjPeilutOvdimUpd.SHAT_YETZIA = oPeilut.dFullShatYetzia;
                 oObjPeilutOvdimUpd.NEW_SHAT_YETZIA = oPeilut.dFullShatYetzia;
                 oObjPeilutOvdimUpd.TAARICH = oObjSidurimOvdimUpd.TAARICH.Date;
@@ -380,19 +382,24 @@ namespace KdsShinuyim.ShinuyImpl
                 oObjPeilutOvdimUpd.MAKAT_NESIA = oPeilut.lMakatNesia;
                 oObjPeilutOvdimUpd.MISPAR_MATALA = oPeilut.lMisparMatala;
                 oObjPeilutOvdimUpd.BITUL_O_HOSAFA = oPeilut.iBitulOHosafa;
-                oObjPeilutOvdimUpd.NEW_MISPAR_SIDUR = oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR;
                 oObjPeilutOvdimUpd.KM_VISA = oPeilut.iKmVisa;
                 oObjPeilutOvdimUpd.KOD_SHINUY_PREMIA = oPeilut.iKodShinuyPremia;
                 oObjPeilutOvdimUpd.MISPAR_SIDURI_OTO = oPeilut.lMisparSiduriOto;
                 if (userid.HasValue)
                     oObjPeilutOvdimUpd.MEADKEN_ACHARON = userid.Value;
+
+                if (insertNewFields)
+                {
+                    oObjPeilutOvdimUpd.NEW_SHAT_HATCHALA_SIDUR = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
+                    oObjPeilutOvdimUpd.NEW_MISPAR_SIDUR = oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR;
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
-            return oObjPeilutOvdimUpd;
+           // return oObjPeilutOvdimUpd;
         }
 
         protected void InsertToObjPeilutOvdimForInsert(SidurDM oSidur, OBJ_PEILUT_OVDIM oObjPeilutOvdimIns, int? userid)
