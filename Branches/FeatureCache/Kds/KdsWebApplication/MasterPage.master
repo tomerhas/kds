@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="MasterPage" Codebehind="MasterPage.master.cs" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="AjxToolKit" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -11,7 +11,7 @@
     <link id="Link1" runat="server" href="StyleSheet.css" type="text/css" rel="stylesheet" />
     <link rel="icon" href="Images/kds.ico" type="image/x-icon"/> 
     <link rel="shortcut icon" href="Images/kds.ico" type="image/x-icon"/>   
-    <%--<meta http-equiv="X-UA-Compatible" content="IE=8" />--%>
+   <meta http-equiv="X-UA-Compatible" content="IE=10" />
 </head>
 <body dir="rtl" id="MasterBody" runat="server"> 
    <script type="text/javascript" language="javascript">
@@ -37,7 +37,27 @@
         </div>        
     </ProgressTemplate>
  </asp:UpdateProgress>
-                                 
+     
+         <script language="javascript" type="text/javascript">
+             function ShowMessageReport(PureUrl) {
+                 var retvalue;
+                 retvalue = window.showModalDialog(PureUrl + '/Modules/Reports/ShowMessageReport.aspx?Dt=" + DateTime.Now.ToString() + "', '', 'dialogwidth:400px;dialogheight:100px;center:yes;status:no;resizable:no;scroll:no;');
+                 if (retvalue == "open")
+                     window.location.href = PureUrl + "/Modules/Reports/ShowHeavyReportsList.aspx";
+             }
+             function ShowDetailsServer(ServerName, VersionNumber) {
+                 alert("מספר גרסה" + VersionNumber + "\n" + "שם שרת:" + ServerName);
+             }
+
+             function ImgHelp_Click() {
+                 // debugger;
+                 //$find("ModalPopupEx").show();
+                 $("ModalPopupEx").show();
+             }
+             function btnConfirm_Click() {
+                 $("ModalPopupEx").hide();
+             }
+    </script>                            
 
     <table width="780px" cellpadding="0" cellspacing="0" border="0">                              
         <tr>
@@ -47,27 +67,10 @@
         </tr>           
      </table>
   
-     <asp:UpdatePanel runat="server" id="UpMenu" UpdateMode="Conditional" RenderMode="Inline"> 
-        <ContentTemplate>  
- <script language="javascript" type="text/javascript">
-     function ShowMessageReport(PureUrl) {
-         var retvalue;
-         retvalue = window.showModalDialog(PureUrl + '/Modules/Reports/ShowMessageReport.aspx?Dt=" + DateTime.Now.ToString() + "', '', 'dialogwidth:400px;dialogheight:100px;center:yes;status:no;resizable:no;scroll:no;');
-         if (retvalue == "open")
-             window.location.href = PureUrl + "/Modules/Reports/ShowHeavyReportsList.aspx";
-     }
-     function ShowDetailsServer(ServerName, VersionNumber) {
-         alert("מספר גרסה" + VersionNumber + "\n" + "שם שרת:" + ServerName );
-     }
+   
 
-     function ImgHelp_Click() {
-       //  debugger;
-         $find("ModalPopupEx").show();
-     }
-     function btnConfirm_Click() {
-         $find("ModalPopupEx").hide();
-     }
-    </script>
+          <asp:UpdatePanel runat="server" id="UpMenu" UpdateMode="Conditional" RenderMode="Inline"> 
+        <ContentTemplate>  
             <table width="998px" border="0" cellpadding="0" cellspacing="0" id="tblMenuMain">
                 <tr>
                     <td style="background-color:#CE950F;"> 
@@ -134,18 +137,16 @@
             </td>
             <td>
                <asp:ImageButton runat="server" ID="ImgHelpBtn" ImageUrl="~/Images/icon-help.jpg"  
-                    ImageAlign="Top" ToolTip="אודות" OnClientClick="ImgHelp_Click"  />
+                    ImageAlign="Top" ToolTip="אודות" OnClientClick="ImgHelp_Click();"  />
             </td>
             <td> 
                 <asp:Image runat="server" ID="ImageExit" ImageUrl="~/Images/icon-exit.jpg"  ImageAlign="Top" ToolTip="יציאה מהמערכת"  />                
             </td>
         </tr>   
      </table>
-
-
       <div>
-               <AjxToolKit:ModalPopupExtender ID="ModalPopupEx" OkControlID="ImgHelpBtn" CancelControlID="btnConfirm" 
-                        DropShadow="false" X="400" Y="200" PopupControlID="paMessage" TargetControlID="ImgHelpBtn"  runat="server" >
+               <AjxToolKit:ModalPopupExtender ID="ModalPopupEx"   CancelControlID="btnConfirm"  
+                        DropShadow="false" X="400" Y="200"  PopupControlID="paMessage" TargetControlID="ImgHelpBtn"  runat="server" >
                 </AjxToolKit:ModalPopupExtender>
                 <asp:Panel runat="server" style="display:none"   ID="paMessage" CssClass="PanelMessage"  >
                 <asp:Label ID="lblHeaderMessage" runat ="server" Font-Bold="true" Width="97%" Text="אודות:" BackColor="#696969"></asp:Label>
@@ -217,6 +218,11 @@
      //        document.getElementsByName("MainLevel0").item(document.getElementsById("MainLevel0").length - 1).lastChild.lastChild.lastChild.style.display = "none";
 //    $($("Image[name='spaceMenu']")[$("Image[name='spaceMenu']").size()-1]).css('display','none');
      $(".spaceMenu:last").css('display', 'none');
+
+
+  
+  
+ 
 
  </script>
 </html>

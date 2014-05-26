@@ -873,6 +873,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     if (rpt.NameReport == ReportName.Average)
                         Params.Add("p_type_rpt", null); 
                    break;
+                case ReportName.RptIturim:
+                   Params.Add("p_type_rpt", null);
+                   break;
             }
         }
         catch (Exception ex)

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Modules_Ovdim_HosafatKnisot" Codebehind="HosafatKnisot.aspx.cs" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="HosafatKnisot.aspx.cs" Inherits="Modules_Ovdim_HosafatKnisot" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -9,7 +9,7 @@
       <script src='../../js/jquery.js' type='text/javascript'></script>
    <link id="Link1" runat="server" href="~/StyleSheet.css" type="text/css" rel="stylesheet" />
    <base target="_self" />
- </head>
+ </head> 
 <body  dir="rtl" class="WorkCardRechivim" onkeydown="if (event.keyCode==107) {event.keyCode=9; return event.keyCode }">
     <form id="form1" runat="server">
     <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true">        
@@ -102,17 +102,20 @@
         var col_HosefPeilut = "<%=HOSEF_PEILUT %>";
         var col_Mispar_Knisa = "<%=MISPAR_KNISA %>";
         var col_Sug_Knisa = "<%=SUG_KNISA %>";
+        var grid = document.getElementById("grdKnisot");
         function SamenHakol_OnClick() {
-            var num = document.getElementById("grdKnisot").childNodes.item(0).childNodes.length;
+            var child = (grid.firstElementChild || grid.firstChild);
+            var num = child.children.length;
             for (var i = 1; i < num; i++) {
-                document.getElementById("grdKnisot").childNodes.item(0).childNodes.item(i).childNodes.item(col_HosefPeilut).childNodes.item(0).checked = true;
+                child.childNodes[i].cells[col_HosefPeilut].children[0].checked = true;
             }
         }
         function NakeHakol_OnClick() {
-            var num = document.getElementById("grdKnisot").childNodes.item(0).childNodes.length;
+            var child = (grid.firstElementChild || grid.firstChild);
+            var num = child.children.length;
             for (var i = 1; i < num; i++) {
-                if (document.getElementById("grdKnisot").childNodes.item(0).childNodes.item(i).childNodes.item(col_Sug_Knisa).innerHTML!="2")
-                document.getElementById("grdKnisot").childNodes.item(0).childNodes.item(i).childNodes.item(col_HosefPeilut).childNodes.item(0).checked = false;
+                if (child.childNodes[i].cells[col_Sug_Knisa].innerHTML != "2")
+                    child.childNodes[i].cells[col_HosefPeilut].children[0].checked = false;
             }
         }
 
@@ -120,13 +123,13 @@
         function onchange_txtDakot(row) {
             var vld = document.getElementById(row.id + "_vldDakot");
            var dakotBafoal = document.getElementById(row.id + "_txtDakotBafoal").value;
-            var Param98 = document.getElementById("Params").attributes("Param98").value;
+            var Param98 = document.getElementById("Params").attributes["Param98"].value;
             //כניסה (mispar_knisa>0) -  יש לאפשר להקליד ערך רק עבור כניסות מסוג לפי צורך (SugKnisa= 3), ערך בין 0  ולא גדול מהערך בפרמטר 98 (מכסימום זמן כניסה לישוב).
             if (trim(dakotBafoal) == "")
                 dakotBafoal = 0;
             if (IsNumeric(dakotBafoal)) {
                 if (Number(dakotBafoal) > Number(Param98)) {
-                    if (Number(row.childNodes.item(col_Mispar_Knisa).innerText) > 0)
+                    if (Number(row.cells[col_Mispar_Knisa].innerText) > 0)
                         vld.errormessage = "ערך דקות בפועל לא יכול לחרוג ממקסימום " + Param98 + "  דקות ";
                    
                     ShowValidatorCalloutExtender(row.id + "_vldExvldDakot");
@@ -148,13 +151,14 @@
         }
 
         function checkFileds() {
-            var numRows = document.getElementById("grdKnisot").childNodes.item(0).childNodes.length; 
+            var child = (grid.firstElementChild || grid.firstChild);
+            var numRows = child.children.length;
             var row; 
             var is_valid = true;
             var iCountLinesChk = 0;
             for (var i = 1; i < numRows; i++) {
-                row = document.getElementById("grdKnisot").childNodes.item(0).childNodes.item(i);
-                if (document.getElementById("grdKnisot").childNodes.item(0).childNodes.item(i).childNodes.item(col_HosefPeilut).childNodes.item(0).checked != false) {
+                row = child.childNodes[i];
+                if (row.cells[col_HosefPeilut].children[0].checked != false) {
                     iCountLinesChk += 1;
                    
                     is_valid = onchange_txtDakot(row);
