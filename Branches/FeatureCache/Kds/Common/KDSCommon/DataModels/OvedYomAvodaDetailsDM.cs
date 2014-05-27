@@ -14,6 +14,7 @@ namespace KDSCommon.DataModels
         public string sTachograf = "";
         public string sKodHaver = "";
         public int iKodHevra;
+        public int iKodHevraHashala;
         public string sMutamut = "";
         public bool bMutamutExists;
         public string sMercazErua = "";

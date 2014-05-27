@@ -58,6 +58,7 @@ namespace KDSBLLogic.Managers
                 ovedYomAvodaDatails.sBitulZmanNesiot = dtOvedCardDetails.Rows[0]["bitul_zman_nesiot"].ToString();
                 ovedYomAvodaDatails.sTachograf = dtOvedCardDetails.Rows[0]["Tachograf"].ToString();
                 ovedYomAvodaDatails.iKodHevra = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["kod_hevra"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["kod_hevra"].ToString());
+                ovedYomAvodaDatails.iKodHevraHashala = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["KOD_HEVRA_HASHALA"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["KOD_HEVRA_HASHALA"].ToString());
                 ovedYomAvodaDatails.sLina = dtOvedCardDetails.Rows[0]["lina"].ToString();
                 ovedYomAvodaDatails.sMercazErua = dtOvedCardDetails.Rows[0]["mercaz_erua"].ToString();
                 ovedYomAvodaDatails.bMercazEruaExists = !(String.IsNullOrEmpty(dtOvedCardDetails.Rows[0]["mercaz_erua"].ToString()));

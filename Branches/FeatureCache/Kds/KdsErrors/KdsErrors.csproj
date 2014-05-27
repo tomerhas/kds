@@ -118,6 +118,7 @@
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsTimeForPrepareMechineValid86.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsZakaiLina31.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorKisuyTorLifneyHatchalatSidur189.cs" />
+    <Compile Include="ErrosrImpl\SidurErrors\SidurErrorMushalETWithSidurNotAllowET208.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorShatHatchalaBiggerShatYetzia207.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidirErrorPitzulSidurInShabatValid24.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorAvodaByemeyEvel200.cs" />

@@ -117,6 +117,7 @@ namespace KdsErrors
             Add(_container.Resolve<SidurErrorTipatChalavMealMichsa205>());
             Add(_container.Resolve<SidurErrorOvedMutaamLeloShaotNosafot206>());
             Add(_container.Resolve<SidurErrorShatHatchalaBiggerShatYetzia207>());
+            Add(_container.Resolve<SidurErrorMushalETWithSidurNotAllowET208>());
             Add(_container.Resolve<SidurErrorMisparElementimMealHamutar185>());
             Add(_container.Resolve<SidurErrorSidurEilatValid55>());
             Add(_container.Resolve<SidurErrorCntMechineInSidurNotValid184>());
