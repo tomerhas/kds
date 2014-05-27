@@ -110,7 +110,7 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
         DateTime from = new DateTime();
         DateTime to = new DateTime();
         string[] param;
-        int iKodStatus = -;
+        int iKodStatus = -1;
         try
         {
             param = InputHiddenBack.Value.Split(';');
