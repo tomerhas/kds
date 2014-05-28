@@ -67,7 +67,7 @@ namespace KdsLibrary.UI.SystemManager
             {
                 if (String.IsNullOrEmpty(Request.QueryString["sourceID"]) ||
                     Session[Request.QueryString["sourceID"]] == null)
-                    Response.Redirect(String.Format("~/{0}", NotAuthorizedRedirectPage));
+                    Response.Redirect(String.Format("~/{0}", NotAuthorizedRedirectPage),false);
                 
             }
 
