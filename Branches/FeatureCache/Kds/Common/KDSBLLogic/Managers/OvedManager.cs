@@ -185,8 +185,8 @@ namespace KDSBLLogic.Managers
                 htFullSidurimDetails = new OrderedDictionary();
               
                 //נשלוף את נתוני הפעילויות לאותו יום
-                var kavimDal = _container.Resolve<IKavimDAL>();
-                dtPeiluyot = kavimDal.GetKatalogKavim(misparIshi, dCardDate, dCardDate);
+                var kavimManager = _container.Resolve<IKavimManager>();
+                dtPeiluyot = kavimManager.GetKatalogKavim(misparIshi, dCardDate, dCardDate);
 
                 //HashTable-הכנסת כל הסידורים והפעילויות של עובד בתאריך הנתון ל
                 foreach (DataRow dr in dtDetails.Rows)

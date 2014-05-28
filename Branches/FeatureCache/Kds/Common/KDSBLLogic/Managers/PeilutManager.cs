@@ -87,8 +87,8 @@ namespace KdsLibrary.KDSLogic.Managers
                 cls.sMakatDescription = oPeilutOld.sMakatDescription;
 
                 //TODO - need to try get from cahce and also save to peilut to cache
-                var kavimDal = _container.Resolve<IKavimDAL>();
-                dtPeiluyot = kavimDal.GetKatalogKavim(iMisparIshi, dDateCard, dDateCard);
+                var kavimManager = _container.Resolve<IKavimManager>();
+                dtPeiluyot = kavimManager.GetKatalogKavim(iMisparIshi, dDateCard, dDateCard);
 
                 SetKavDetails(cls, dtPeiluyot, cls.lMakatNesia);
 
@@ -168,8 +168,8 @@ namespace KdsLibrary.KDSLogic.Managers
                 cls.lOtoNo = oObjPeilutOvdimIns.OTO_NO;
                 cls.lOldOtoNo = cls.lOtoNo;
 
-                var kavimDal = _container.Resolve<IKavimDAL>();
-                dtPeiluyot = kavimDal.GetKatalogKavim(iMisparIshi, dDateCard, dDateCard);
+                var kavimManager = _container.Resolve<IKavimManager>();
+                dtPeiluyot = kavimManager.GetKatalogKavim(iMisparIshi, dDateCard, dDateCard);
 
                 SetKavDetails(cls, dtPeiluyot, cls.lMakatNesia);
 

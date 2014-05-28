@@ -273,8 +273,9 @@ namespace KdsBatch
 
             if (_Peiluyot == null)
             {
-                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
-                _Peiluyot = kavimDal.GetKatalogKavim(iMisparIshi, dCardDate, dCardDate);
+               // var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                var kavimManager  = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                _Peiluyot = kavimManager.GetKatalogKavim(iMisparIshi, dCardDate, dCardDate);
                 HttpRuntime.Cache.Insert(sCacheKey, _Peiluyot, null, DateTime.MaxValue, TimeSpan.FromMinutes(int.Parse((ConfigurationSettings.AppSettings["PeilyutCacheTimeOutMinutes"]))));
             }
 

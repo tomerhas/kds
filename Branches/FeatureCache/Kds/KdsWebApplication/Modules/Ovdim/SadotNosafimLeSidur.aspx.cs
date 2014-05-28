@@ -15,6 +15,7 @@ using KDSCommon.Enums;
 using KDSCommon.Interfaces.DAL;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.UDT;
+using KDSCommon.Interfaces.Managers;
 
 
 public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
@@ -93,8 +94,9 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                
                 dtSadotNosafimLePeilut = oUtils.GetSadotNosafimLePeilut();
                 dtPeiluyotLesidur = oOvdim.GetPeiluyotLeOved(int.Parse(txtId.Value), int.Parse(MisSidur.Value),DateTime.Parse(clnDate.Value), DateTime.Parse(ShatHatchala.Value));
-                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
-                Session["dtMakatimCatalog"] = kavimDal.GetKatalogKavim(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value), DateTime.Parse(clnDate.Value));
+               // var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                var kavimManager = ServiceLocator.Current.GetInstance<IKavimManager>();
+                Session["dtMakatimCatalog"] = kavimManager.GetKatalogKavim(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value), DateTime.Parse(clnDate.Value));
            //     cheackEilatTrip(ref dtSadotNosafimLesidur, dtPeiluyotLesidur);
                 Session["dtPeiluyot"] = dtPeiluyotLesidur;
                 Session["dtSadotNosafimLesidur"] = dtSadotNosafimLesidur;
@@ -102,6 +104,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
 
                
             }
+            oBatchManager = new clBatchManager();
             var result = oBatchManager.MainOvedErrorsNew(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value));
             ErrorsList = result.Errors;
             //oBatchManager = new clBatchManager(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value));

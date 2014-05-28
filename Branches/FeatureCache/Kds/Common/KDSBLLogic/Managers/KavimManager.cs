@@ -10,6 +10,8 @@ using KDSCommon.Helpers;
 using KDSCommon.Interfaces.DAL;
 using KDSCommon.Interfaces.Managers;
 using Microsoft.Practices.Unity;
+using System.Web;
+using System.Configuration;
 
 namespace KdsLibrary.KDSLogic.Managers
 {
@@ -129,6 +131,30 @@ namespace KdsLibrary.KDSLogic.Managers
                 sCarNumbers = sCarNumbers.Substring(0, sCarNumbers.Length - 1);
             }
             return sCarNumbers;
+        }
+
+        public DataTable GetKatalogKavim(int iMisparIshi, DateTime dFromDate, DateTime dToDate)
+        {
+            DataTable _Peiluyot;
+            string sCacheKey = iMisparIshi + dFromDate.ToShortDateString();
+
+            try
+            {
+                _Peiluyot = (DataTable)HttpRuntime.Cache.Get(sCacheKey);
+            }
+            catch (Exception ex)
+            {
+                _Peiluyot = null;
+            }
+
+            if (_Peiluyot == null)
+            {
+                var kavimDal = _container.Resolve<IKavimDAL>();
+                _Peiluyot = kavimDal.GetKatalogKavim(iMisparIshi, dFromDate, dToDate);
+                HttpRuntime.Cache.Insert(sCacheKey, _Peiluyot, null, DateTime.MaxValue, TimeSpan.FromMinutes(int.Parse((ConfigurationManager.AppSettings["PeilyutCacheTimeOutMinutes"]))));
+            }
+
+            return _Peiluyot;
         }
     }
 }
