@@ -758,7 +758,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             sFromDate = clnFromDate.Text;
            // Session["OvedDetails"] = sName + ";" + sEzor + ";" + sSnif + ";" + sMaamad;
             //Response.Redirect(string.Concat("EmployeeDetails.aspx?ID=", sMisparIshi,"&Name=",sName,"&Ezor=",sEzor,"&Snif=",sSnif,"&Maamad=",sMaamad,"&ToDate=",sToDate));
-            Response.Redirect(string.Concat("EmployeeDetails.aspx?ID=", sMisparIshi,  "&ToDate=", sToDate, "&FromDate=", sFromDate));
+            Response.Redirect(string.Concat("EmployeeDetails.aspx?ID=", sMisparIshi, "&ToDate=", sToDate, "&FromDate=", sFromDate), false);
         }
         catch (Exception ex)
         {

@@ -104,7 +104,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     protected void ImageHome_Click(object sender, ImageClickEventArgs e)
     {
-        Response.Redirect("~/Main.aspx");
+        Response.Redirect("~/Main.aspx", false);
     }
 
 }

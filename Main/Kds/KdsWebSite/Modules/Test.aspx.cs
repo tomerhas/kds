@@ -463,7 +463,7 @@ public partial class Modules_Test :Page
     {
         //Response.Redirect("~/Modules/Ovdim/WorkCard.aspx");
         //Response.Redirect("~/Modules/Ovdim/WorkCard.aspx?MisparIshi=74480&CardDate=29/11/2009");
-        Response.Redirect("~/Modules/Ovdim/WorkCard.aspx?EmpID=77840&WCardDate=12/09/2010");
+        Response.Redirect("~/Modules/Ovdim/WorkCard.aspx?EmpID=77840&WCardDate=12/09/2010", false);
        // Server.MapPath("~/Modules/Ovdim/WorkCard.aspx?EmpID=74220&WCardDate=26/05/2009");
     }
     protected void btnApproval_click(object sender, EventArgs e)

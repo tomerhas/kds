@@ -314,7 +314,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
             //    NotAuthorizedRedirectPage));
             HttpContext.Current.Response.Redirect(String.Format("{0}/{1}",
                "~",
-               NotAuthorizedRedirectPage));
+               NotAuthorizedRedirectPage), false);
         }
 
         if (!IsPostBack)

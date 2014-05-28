@@ -279,7 +279,7 @@ namespace KdsLibrary.BL
                 oDal.AddParameter("p_from", ParameterType.ntOracleDate, from, ParameterDir.pdInput);
                 oDal.AddParameter("p_to", ParameterType.ntOracleDate, to, ParameterDir.pdInput);
 
-                if (iKodStatus == 0)
+                if (iKodStatus == -1)
                 {
                     oDal.AddParameter("p_kod_status", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
                 }

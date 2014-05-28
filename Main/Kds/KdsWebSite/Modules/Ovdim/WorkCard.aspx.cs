@@ -2701,10 +2701,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     switch (int.Parse(Request.QueryString["Page"]))
                     {
                         case 1:
-                            Response.Redirect("EmployeeCards.aspx?EmpID=" + iMisparIshi.ToString() + "&WCardDate=" + dDateCard.ToShortDateString());
+                            Response.Redirect("EmployeeCards.aspx?EmpID=" + iMisparIshi.ToString() + "&WCardDate=" + dDateCard.ToShortDateString(), false);
                             break;
                         case 2:
-                            Response.Redirect("EmployeTotalMonthly.aspx?EmpID=" + iMisparIshi.ToString() + "&WCardDate=" + dDateCard.ToShortDateString());
+                            Response.Redirect("EmployeTotalMonthly.aspx?EmpID=" + iMisparIshi.ToString() + "&WCardDate=" + dDateCard.ToShortDateString(), false);
                             break;
                     }
                 }
