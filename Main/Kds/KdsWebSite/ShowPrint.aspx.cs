@@ -43,7 +43,8 @@ public partial class ShowPrint : System.Web.UI.Page
             Session["BinaryResult"] = null;
             Session["TypeReport"] = null;
             Session["FileName"] = null;
-            Response.End();
+          //  Response.End();
+            HttpContext.Current.ApplicationInstance.CompleteRequest();
            
         }
         catch (Exception ex)
