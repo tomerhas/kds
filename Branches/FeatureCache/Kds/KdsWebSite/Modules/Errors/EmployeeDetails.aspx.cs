@@ -110,7 +110,7 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
         DateTime from = new DateTime();
         DateTime to = new DateTime();
         string[] param;
-        int iKodStatus=0;
+        int iKodStatus=-1;
         try
         {
             param = InputHiddenBack.Value.Split(';');
@@ -429,7 +429,7 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
         try
         {
              Session["Params"] = InputHiddenBack.Value;
-             Response.Redirect("EmployeErrors.aspx?Back=true");
+             Response.Redirect("EmployeErrors.aspx?Back=true", false);
         }
         catch (Exception ex)
         {
@@ -443,7 +443,7 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
         dFrom = Request.QueryString["FromDate"];
         dTo = Request.QueryString["ToDate"];
 
-        Response.Redirect(string.Concat("EmployeeDetails.aspx?ID=", lblMisparIshi.Text, "&ToDate=", dTo, "&FromDate=", dFrom));   
+        Response.Redirect(string.Concat("EmployeeDetails.aspx?ID=", lblMisparIshi.Text, "&ToDate=", dTo, "&FromDate=", dFrom), false);   
     }
 
     //*******Pager Functions*********/

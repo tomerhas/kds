@@ -75,7 +75,7 @@ public partial class Modules_Batches_CreateConstantReports : KdsPage
     protected void btnConfirm_Click(object sender, EventArgs e)
     {
         ModalPopupEx.Hide();
-        Page.Response.Redirect("~/Modules/Requests/MaakavBakashot.aspx?RequestId=" + ViewState["iRequestId"]);
+        Page.Response.Redirect("~/Modules/Requests/MaakavBakashot.aspx?RequestId=" + ViewState["iRequestId"], false);
     }
 
 
