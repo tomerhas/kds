@@ -246,7 +246,8 @@ namespace KdsBatch
             errTipatChalavMealMichsa205=205,
             errOvedMutaamLeloShaotNosafot206 = 206,
             errShatHatchalaBiggerShatYetzia=207,
-            errMushalETWithSidurNotAllowET = 208
+            errMushalETWithSidurNotAllowET = 208,
+            errShatHatchalaLetashlumBiggerShatGmar = 209,
         }
 
         private enum errNesiaMeshtana
@@ -1230,6 +1231,8 @@ namespace KdsBatch
                     if (CheckErrorActive(14)) IsSidurStartHourValid14(dCardDate, ref oSidur, ref dtErrors);
                     if (CheckErrorActive(173)) IsSidurEndHourValid173(dCardDate, ref oSidur, ref dtErrors);
                     if (CheckErrorActive(207)) IsShatHatchalaBiggerShatYetzia207(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(209)) IsShatHatchalaLetashlumBiggerShatGmar209(ref oSidur, ref dtErrors);
+                                      
                     if (CheckErrorActive(49)) IsHashlamatHazmanaValid49(fSidurTime, ref oSidur, ref dtErrors);
                     //IsYomVisaValid56(ref oSidur, ref dtErrors);                    
                     //IsZakaiLehamara44(drSugSidur,ref oSidur, ref dtErrors);
@@ -3139,6 +3142,32 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errShatHatchalaBiggerShatYetzia.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "errShatHatchalaBiggerShatYetzia207: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+
+            return isValid;
+        }
+
+        private bool IsShatHatchalaLetashlumBiggerShatGmar209(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            bool isValid = true;
+            try
+            {
+
+                if (!string.IsNullOrEmpty(oSidur.sShatGmarLetashlum) && !string.IsNullOrEmpty(oSidur.sShatHatchalaLetashlum ) && oSidur.dFullShatHatchalaLetashlum >= oSidur.dFullShatGmarLetashlum)
+                {
+                    isValid = false;
+
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "שעת התחלה  לתשלום גדולה משעת גמר לתשלום", enErrors.errShatHatchalaLetashlumBiggerShatGmar.GetHashCode());
+                     dtErrors.Rows.Add(drNew);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errShatHatchalaLetashlumBiggerShatGmar.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsShatHatchalaLetashlumBiggerShatGmar209: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -10691,6 +10720,7 @@ namespace KdsBatch
              DataTable dtSidurGrira=new DataTable();
             int iTypeGrira,i;
             int iGriraNum=0;
+            int iNumSidur2 = 0;
             clSidur oSidurGrira=null;
             OBJ_SIDURIM_OVDIM oObjSidurGriraUpd=null;
             OBJ_SIDURIM_OVDIM oObjSidurimConenutGriraUpd;
@@ -10812,14 +10842,18 @@ namespace KdsBatch
                         {
                             oObjSidurimConenutGriraUpd.UPDATE_OBJECT = 1;
                             Minutes = float.Parse((oSidurKonenutGrira.dFullShatGmar - oSidurKonenutGrira.dFullShatHatchala).TotalMinutes.ToString());
+                            iNumSidur2 = int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().PadLeft(5, '0').Substring(0, 2));
                             if (Minutes > _oParameters.iMinZmanGriraDarom)
                             {
-                                if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().PadLeft(5, '0').Substring(0, 2)) >= 25)
+                                if (iNumSidur2 >= 25 || iNumSidur2 == 4 || (iNumSidur2 == 22 && 
+                                    (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString() || oSidur.sErevShishiChag == "1" || oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString() || oSidur.sShabaton == "1")))
                                 {
                                     oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
                                     oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala.AddMinutes(_oParameters.iMinZmanGriraDarom);
                                 }
-                                else
+                                else if (iNumSidur2 < 25 && (iNumSidur2 == 1 || iNumSidur2 == 22) && (oSidur.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString() &&
+                                                oSidur.sSidurDay != clGeneral.enDay.Shishi.GetHashCode().ToString() &&
+                                                !oSidur.sErevShishiChag.Equals("1") && !oSidur.sShabaton.Equals("1")))
                                 {
                                     oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
                                     oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala.AddMinutes(_oParameters.iMinZmanGriraTzafon);
@@ -10827,12 +10861,15 @@ namespace KdsBatch
                             }
                             else if (Minutes > _oParameters.iMinZmanGriraTzafon && Minutes < _oParameters.iMinZmanGriraDarom)
                             {
-                                if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().PadLeft(5, '0').Substring(0, 2)) >= 25)
+                                if (iNumSidur2 >= 25 || iNumSidur2 == 4 || (iNumSidur2 == 22 &&
+                                     (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString() || oSidur.sErevShishiChag == "1" || oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString() || oSidur.sShabaton == "1")))
                                 {
                                     oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
                                     oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatGmar;
                                 }
-                                else
+                                else if (iNumSidur2 < 25 && (iNumSidur2 == 1 || iNumSidur2 == 22) && (oSidur.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString() &&
+                                                oSidur.sSidurDay != clGeneral.enDay.Shishi.GetHashCode().ToString() &&
+                                                !oSidur.sErevShishiChag.Equals("1") && !oSidur.sShabaton.Equals("1")))
                                 {
                                     oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
                                     oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala.AddMinutes(_oParameters.iMinZmanGriraTzafon);
