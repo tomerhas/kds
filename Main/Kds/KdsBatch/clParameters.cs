@@ -657,7 +657,7 @@ namespace KdsBatch
                 iMaxDakotNosafotSadran = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
 
                 //159 - מכסימום דקות נוספות חודשי לעבודת פקח
-                sTmp = GetOneParam(1159, dCardDate);
+                sTmp = GetOneParam(159, dCardDate);
                 iMaxDakotNosafotPakach = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
 
                 //160 - מכסימום דקות נוספות חודשי לעבודת רכז
