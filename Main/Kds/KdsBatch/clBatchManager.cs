@@ -10859,7 +10859,7 @@ namespace KdsBatch
                                     oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala.AddMinutes(_oParameters.iMinZmanGriraTzafon);
                                 }
                             }
-                            else if (Minutes > _oParameters.iMinZmanGriraTzafon && Minutes < _oParameters.iMinZmanGriraDarom)
+                            else if (Minutes > _oParameters.iMinZmanGriraTzafon && Minutes <= _oParameters.iMinZmanGriraDarom)
                             {
                                 if (iNumSidur2 >= 25 || iNumSidur2 == 4 || (iNumSidur2 == 22 &&
                                      (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString() || oSidur.sErevShishiChag == "1" || oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString() || oSidur.sShabaton == "1")))
@@ -13690,23 +13690,33 @@ namespace KdsBatch
 
         private void UpdateOutMichsa(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
         {
+            DataRow[] drSugSidur;
             //שינוי ברמת סידור
             //עדכון שדה מחוץ למכסה
             try
             {
-                //if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
-                //{
-                //    oObjSidurimOvdimUpd.OUT_MICHSA = 0;
-                //    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                //    //oObjSidurimOvdimUpd.bUpdate = true;
-                //    oSidur.sOutMichsa = "0";
-                //}
-                //else
-                //{
-                    if ((oSidur.bSidurMyuhad) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0 || (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM==1)))
+                if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                {
+                    oObjSidurimOvdimUpd.OUT_MICHSA = 0;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    //oObjSidurimOvdimUpd.bUpdate = true;
+                    oSidur.sOutMichsa = "0";
+                }
+                else
+                {
+                    if (oObjSidurimOvdimUpd.LO_LETASHLUM == 0 || (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM==1))
                     {
-                        if ((oSidur.sZakayMichutzLamichsa == clGeneral.enMeafyenSidur25.enZakaiAutomat.GetHashCode().ToString()) )
-                        {   //אם סידור הוא סידור מיוחד ויש לו ערך 3 במאפיין 25 (זכאי אוטומטית "מחוץ למכסה")
+                        if (!oSidur.bSidurMyuhad)
+                        {
+                            drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, oSidur.dSidurDate, _dtSugSidur);
+                            if (drSugSidur.Length>0)
+                            {
+                                oSidur.sZakayMichutzLamichsa = drSugSidur[0]["zakay_michutz_lamichsa"].ToString();
+                            }
+                        }
+
+                        if ((oSidur.sZakayMichutzLamichsa == clGeneral.enMeafyenSidur25.enZakaiAutomat.GetHashCode().ToString()))
+                        {   //אם סידור הוא סידור מיוחד/מפה ויש לו ערך 3 במאפיין 25 (זכאי אוטומטית "מחוץ למכסה")
                             //וגם הוא לא מאגד תעבורה.                                               
                             oObjSidurimOvdimUpd.OUT_MICHSA = 1;
                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
@@ -13725,7 +13735,7 @@ namespace KdsBatch
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                         oSidur.sOutMichsa = "0";
                     }
-             //   }
+                }
             }
             catch (Exception ex)
             {
