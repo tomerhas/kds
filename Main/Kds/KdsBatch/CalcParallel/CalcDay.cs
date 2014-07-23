@@ -4450,7 +4450,7 @@ namespace KdsBatch
                 fSachTafkid = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.SachDakotTafkid.GetHashCode(), objOved.Taarich);
                 fMichsaYomit = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsaYomitMechushevet);
 
-                if ((objOved.objPirteyOved.iIsuk.ToString()).Substring(0, 1) != "5")
+                if ((objOved.objPirteyOved.iIsuk.ToString()).PadLeft(3,'0').Substring(0, 1) != "5")
                     bLogNahag = true;
                 // תנאי מקדים לחישוב הרכיב: 
                 //אם העובד הוא קופאי - עיסוק העובד שליפת פרטי עובד (קוד נתון  HR = 6, מ.א., תאריך)  = 183, 184, 193 וגם סהכ ניהול תנועה (רכיב 190) גדול שווה 240 [שליפת פרמטר (קוד פרמטר = 238)]

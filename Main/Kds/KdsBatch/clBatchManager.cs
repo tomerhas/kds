@@ -1300,7 +1300,7 @@ namespace KdsBatch
                     if (i > 0) prevSidur = htEmployeeDetails[i - 1] as clSidur;
                     if (prevSidur != null)
                     {
-                        if (CheckErrorActive(168)) IsCurrentSidurInPrevSidur168(ref oSidur, ref prevSidur, ref dtErrors);
+                        if (CheckErrorActive(168)) IsCurrentSidurInPrevSidur168(i,ref oSidur, ref prevSidur, ref dtErrors);
                     }
                     //IsOvedExistsInWorkDay169(ref oSidur, iMisparIshi, dCardDate, ref dtErrors);
 
@@ -4348,15 +4348,28 @@ namespace KdsBatch
         {
             //בדיקה ברמת סידור           
             bool isValid = true;
+            int i;
             DataRow drNew;
-            clSidur oPrevSidur = (clSidur)htEmployeeDetails[iSidur - 1];
-            string sShatGmarPrev = oPrevSidur.sShatGmar;
+            clSidur oPrevSidur = (clSidur)htEmployeeDetails[iSidur -1];
             int iPrevLoLetashlum = oPrevSidur.iLoLetashlum;
+
+            for (i = (iSidur-1); i >= 0; i--)
+            {
+                 oPrevSidur = (clSidur)htEmployeeDetails[i];
+
+                 iPrevLoLetashlum = oPrevSidur.iLoLetashlum;
+                if (iPrevLoLetashlum == 0)
+                {
+                    break;
+                }
+            }
+            string sShatGmarPrev = oPrevSidur.sShatGmar;
+           
             DateTime dShatHatchalaSidur = oSidur.dFullShatHatchala;
             DateTime dShatGmarPrevSidur = oPrevSidur.dFullShatGmar;
             try
             {
-                if (dShatHatchalaSidur != DateTime.MinValue && dShatGmarPrevSidur != DateTime.MinValue)
+                if (dShatHatchalaSidur.Date != DateTime.MinValue.Date && dShatGmarPrevSidur.Date != DateTime.MinValue.Date)
                 {
                     DateTime dPrevTime = new DateTime(dShatGmarPrevSidur.Year, dShatGmarPrevSidur.Month, dShatGmarPrevSidur.Day, int.Parse(dShatGmarPrevSidur.ToString("HH:mm").Substring(0, 2)), int.Parse(dShatGmarPrevSidur.ToString("HH:mm").Substring(3, 2)), 0);
                     DateTime dCurrTime = new DateTime(dShatHatchalaSidur.Year, dShatHatchalaSidur.Month, dShatHatchalaSidur.Day, int.Parse(dShatHatchalaSidur.ToString("HH:mm").Substring(0, 2)), int.Parse(dShatHatchalaSidur.ToString("HH:mm").Substring(3, 2)), 0);
@@ -5898,33 +5911,47 @@ namespace KdsBatch
             return isValid;
         }
 
-        private bool IsCurrentSidurInPrevSidur168(ref clSidur oSidur, ref clSidur oPrevSidur, ref DataTable dtErrors)
+        private bool IsCurrentSidurInPrevSidur168(int iSidur,ref clSidur oSidur, ref clSidur oPrevSidur, ref DataTable dtErrors)
         {//בדיקה ברמת סידור
             
             bool isError = false;
             bool isValid = true;
+            int i;
             DateTime dShatHatchalaSidur = oSidur.dFullShatHatchala;
             DateTime dShatGmarSidur = oSidur.dFullShatGmar;
             DateTime dShatHatchalaPrevSidur = oPrevSidur.dFullShatHatchala;
             DateTime dShatGmarPrevSidur = oPrevSidur.dFullShatGmar;
             try
             {
-                if (dShatHatchalaSidur == DateTime.MinValue)
+                for (i = (iSidur - 1); i >= 0; i--)
+                {
+                    oPrevSidur = (clSidur)htEmployeeDetails[i];
+                     dShatHatchalaPrevSidur = oPrevSidur.dFullShatHatchala;
+                     dShatGmarPrevSidur = oPrevSidur.dFullShatGmar;
+                    if (oPrevSidur.iLoLetashlum == 0)
+                    {
+                        break;
+                    }
+                }
+
+                if (dShatHatchalaSidur.Date == DateTime.MinValue.Date)
                 {
                     dShatHatchalaSidur = oSidur.dFullShatGmar;
                 }
-                if (dShatGmarSidur == DateTime.MinValue)
+                if (dShatGmarSidur.Date == DateTime.MinValue.Date)
                 {
                     dShatGmarSidur = oSidur.dFullShatHatchala;
                 }
-                if (dShatHatchalaPrevSidur == DateTime.MinValue)
+                if (dShatHatchalaPrevSidur.Date == DateTime.MinValue.Date)
                 {
                     dShatHatchalaPrevSidur = oPrevSidur.dFullShatGmar;
                 }
-                if (dShatGmarPrevSidur == DateTime.MinValue)
+                if (dShatGmarPrevSidur.Date == DateTime.MinValue.Date)
                 {
                     dShatGmarPrevSidur = oPrevSidur.dFullShatHatchala;
                 }
+
+               
 
                 if ((oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iKodSibaLoLetashlum == 1)) && (oPrevSidur.iLoLetashlum==0  || (oPrevSidur.iLoLetashlum == 1 && oPrevSidur.iKodSibaLoLetashlum == 1)))
                 {
@@ -6683,7 +6710,7 @@ namespace KdsBatch
                     prevSidur = (clSidur)htEmployeeDetails[index - 1];
                     curSidur = (clSidur)htEmployeeDetails[index];
                     errorCount = dtErrors.Rows.Count;
-                    IsCurrentSidurInPrevSidur168(ref curSidur, ref prevSidur, ref dtErrors);
+                    IsCurrentSidurInPrevSidur168(index,ref curSidur, ref prevSidur, ref dtErrors);
                     if (prevSidur.bHashlamaExists && dtErrors.Rows.Count != errorCount)
                     {
                         hasHafifa = true;
@@ -14382,6 +14409,7 @@ namespace KdsBatch
             bool bSidurZakaiLnesiot = false, bSidurMezake = false; 
             DataRow[] drSugSidur;
             clSidur oSidur;
+            int iErechMeafyen = 0;
             bool bKnisaValid = false;
             bool bYetizaValid = false;
             int iSidurZakaiLenesiaKnisa = -1;
@@ -14593,8 +14621,13 @@ namespace KdsBatch
                                          }
                                          if (oMeafyeneyOved.Meafyen51Exists)
                                          {
+                                             iErechMeafyen = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().Substring(0, 1));
                                              iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.Substring(1));
-                                             if (iZmanNesia > -1)
+                                             if (iErechMeafyen == 1)
+                                             {
+                                                 oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = iZmanNesia;
+                                             }
+                                             if (iErechMeafyen == 3)
                                              {
                                                  oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
                                              }
@@ -14634,7 +14667,16 @@ namespace KdsBatch
                                          if (oMeafyeneyOved.Meafyen51Exists)
                                          {
                                              iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
-                                             oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                             iErechMeafyen = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().Substring(0, 1));
+
+                                             if (iErechMeafyen == 2)
+                                             {
+                                                 oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = iZmanNesia ;
+                                             }
+                                             if (iErechMeafyen == 3)
+                                             {
+                                                 oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                             }
                                          }
                                      }
                                  }

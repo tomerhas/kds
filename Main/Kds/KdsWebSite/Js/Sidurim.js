@@ -1313,7 +1313,7 @@ function chkMkt(oRow) {
     } 
     function AddHosafatKnisot(iSidurIndx, iPeilutIndx) {
         _bScreenChanged = bScreenChanged;
-        if ($get(iPeilutIndx.id).cells[_COL_CANCEL].childNodes[0].className == 'ImgCheckedPeilut') {
+        if ($get(iPeilutIndx.id).cells[13].childNodes[0].className == 'ImgCheckedPeilut') {
             if (_bScreenChanged) {
                 if (!ChkCardVld())
                     return false;

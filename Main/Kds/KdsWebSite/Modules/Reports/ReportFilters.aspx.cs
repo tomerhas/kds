@@ -494,7 +494,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 //            MisparIshi.ContextKey = ""; 
         if ((PageModule.SecurityLevel == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (PageModule.SecurityLevel == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
         {
-            MisparIshi.ContextKey = LoginUser.UserInfo.EmployeeNumber;
+            if (MisparIshi != null)
+            {
+                MisparIshi.ContextKey = LoginUser.UserInfo.EmployeeNumber;
+            }
         }
 
     }
