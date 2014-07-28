@@ -182,6 +182,10 @@
       <FullPath>RdlReportMushalimDetails.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>Report4.rdl</Name>
+      <FullPath>Report4.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>ReportNesiotKfulot.rdl</Name>
       <FullPath>ReportNesiotKfulot.rdl</FullPath>
     </ProjectItem>
@@ -200,6 +204,10 @@
     <ProjectItem>
       <Name>RikuzAvodaChodshiOnLine2.rdl</Name>
       <FullPath>RikuzAvodaChodshiOnLine2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RptIturim.rdl</Name>
+      <FullPath>RptIturim.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>RptRitzatChishuv.rdl</Name>
@@ -239,6 +247,10 @@
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>SubRdlIturim.rdl</Name>
+      <FullPath>SubRdlIturim.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
@@ -247,7 +259,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://kdstst02/reportserver</TargetServerURL>
+        <TargetServerURL>http://sql2012tst.egged.intra/reportserver</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>

@@ -57,6 +57,12 @@
               <Width>2.36835cm</Width>
             </TablixColumn>
             <TablixColumn>
+              <Width>2.5cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2.5cm</Width>
+            </TablixColumn>
+            <TablixColumn>
               <Width>1.99728cm</Width>
             </TablixColumn>
             <TablixColumn>
@@ -86,9 +92,11 @@
                         </Border>
                       </Style>
                     </Subreport>
-                    <ColSpan>20</ColSpan>
+                    <ColSpan>22</ColSpan>
                   </CellContents>
                 </TablixCell>
+                <TablixCell />
+                <TablixCell />
                 <TablixCell />
                 <TablixCell />
                 <TablixCell />
@@ -146,9 +154,11 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>20</ColSpan>
+                    <ColSpan>22</ColSpan>
                   </CellContents>
                 </TablixCell>
+                <TablixCell />
+                <TablixCell />
                 <TablixCell />
                 <TablixCell />
                 <TablixCell />
@@ -288,9 +298,11 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>4</ColSpan>
+                    <ColSpan>6</ColSpan>
                   </CellContents>
                 </TablixCell>
+                <TablixCell />
+                <TablixCell />
                 <TablixCell />
                 <TablixCell />
                 <TablixCell />
@@ -366,7 +378,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -948,6 +959,87 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox14</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>1pt</PaddingLeft>
+                        <PaddingRight>1pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox3">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>מעמד</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox3</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>1pt</PaddingLeft>
+                        <PaddingRight>1pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>אזור</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1637,6 +1729,72 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="TEUR_MAAMAD_HR">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!TEUR_MAAMAD_HR.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>TEUR_MAAMAD_HR</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>1pt</PaddingLeft>
+                        <PaddingRight>1pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="TEUR_EZOR">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!TEUR_EZOR.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>TEUR_EZOR</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>1pt</PaddingLeft>
+                        <PaddingRight>1pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="FULL_NAME">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -1710,7 +1868,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>= cstr(Fields!TAARICH.Value)+ cstr(" -" &amp; Fields!DAYOFWEEK.Value)</Value>
+                              <Value>= cstr(Fields!TAARICH.Value)+ cstr(" -" &amp; Fields!YOM.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Language>he-IL</Language>
@@ -1825,9 +1983,11 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>5</ColSpan>
+                    <ColSpan>7</ColSpan>
                   </CellContents>
                 </TablixCell>
+                <TablixCell />
+                <TablixCell />
                 <TablixCell />
                 <TablixCell />
                 <TablixCell />
@@ -1838,6 +1998,8 @@
         </TablixBody>
         <TablixColumnHierarchy>
           <TablixMembers>
+            <TablixMember />
+            <TablixMember />
             <TablixMember />
             <TablixMember />
             <TablixMember />
@@ -1912,7 +2074,7 @@
         <Top>0.12383cm</Top>
         <Left>0.06811cm</Left>
         <Height>5.50272cm</Height>
-        <Width>26.15691cm</Width>
+        <Width>31.15691cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsWorker_Card")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1939,7 +2101,7 @@
     <Height>2.44771in</Height>
     <Style />
   </Body>
-  <Width>10.37602in</Width>
+  <Width>12.29331in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
@@ -1976,29 +2138,17 @@
           <QueryParameter Name="P_CARNUMBER">
             <Value>=Parameters!P_CARNUMBER.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="P_MISPARVISA">
+            <Value>=Parameters!P_MISPARVISA.Value</Value>
+          </QueryParameter>
           <QueryParameter Name="P_SNIF">
             <Value>=Parameters!P_SNIF.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_WORKSTATION">
-            <Value>=Parameters!P_WORKSTATION.Value</Value>
           </QueryParameter>
           <QueryParameter Name="P_WORKERID">
             <Value>=Parameters!P_WORKERID.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="P_DAYTYPE">
-            <Value>=Parameters!P_DAYTYPE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SNIF_MASHAR">
-            <Value>=Parameters!P_SNIF_MASHAR.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="P_RISHUYCAR">
             <Value>=Parameters!P_RISHUYCAR.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SECTORISUK">
-            <Value>=Parameters!P_SECTORISUK.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_COMPANYID">
-            <Value>=Parameters!P_COMPANYID.Value</Value>
           </QueryParameter>
           <QueryParameter Name="P_MAMAD">
             <Value>=Parameters!P_MAMAD.Value</Value>
@@ -2013,12 +2163,12 @@
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_FIND_WORKER_CARD</CommandText>
+        <CommandText>PKG_REPORTS.PRO_GET_FIND_WORKER_CARD_2</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
-        <Field Name="MISPARISHI">
-          <DataField>MISPARISHI</DataField>
+        <Field Name="YOM">
+          <DataField>YOM</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="MAKAT_NESIA">
@@ -2029,8 +2179,8 @@
           <DataField>SHAT_YETZIA</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="MISPAR_KNISA">
-          <DataField>MISPAR_KNISA</DataField>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="OTO_NO">
@@ -2041,28 +2191,16 @@
           <DataField>TEUR_SNIF_AV</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="SNIF_TNUA">
-          <DataField>SNIF_TNUA</DataField>
+        <Field Name="LO_LETASHLUM">
+          <DataField>LO_LETASHLUM</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CHARIGA">
-          <DataField>CHARIGA</DataField>
+        <Field Name="SUG_SIDUR">
+          <DataField>SUG_SIDUR</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="HASHLAMA">
-          <DataField>HASHLAMA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="OUT_MICHSA">
-          <DataField>OUT_MICHSA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MEADKEN_ACHARON">
-          <DataField>MEADKEN_ACHARON</DataField>
+        <Field Name="MISPAR_VISA">
+          <DataField>MISPAR_VISA</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="TEUR_EZOR">
@@ -2077,6 +2215,10 @@
           <DataField>SHAT_HATCHALA</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="SHEM">
+          <DataField>SHEM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="SHAT_GMAR">
           <DataField>SHAT_GMAR</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
@@ -2085,36 +2227,16 @@
           <DataField>TAARICH</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="DAYOFWEEK">
-          <DataField>DAYOFWEEK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SIDUR_MEYCHAD">
-          <DataField>TEUR_SIDUR_MEYCHAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="TEUR_MAAMAD_HR">
           <DataField>TEUR_MAAMAD_HR</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="TEUR_ISUK">
-          <DataField>TEUR_ISUK</DataField>
+        <Field Name="TEUR_SIDUR">
+          <DataField>TEUR_SIDUR</DataField>
           <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="BUS_NUMBER">
-          <DataField>BUS_NUMBER</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="LICENSE_NUMBER">
           <DataField>LICENSE_NUMBER</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="ACTIVITY_DATE">
-          <DataField>ACTIVITY_DATE</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="MAKAT8">
-          <DataField>MAKAT8</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="DESCRIPTION">
@@ -2123,18 +2245,6 @@
         </Field>
         <Field Name="SHILUT">
           <DataField>SHILUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MAZAN_TASHLUM">
-          <DataField>MAZAN_TASHLUM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="KM">
-          <DataField>KM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="NIHUL_NAME">
-          <DataField>NIHUL_NAME</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -2245,6 +2355,10 @@
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
       <Prompt>P_ISUK</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_MISPARVISA">
+      <DataType>String</DataType>
+      <Prompt>P MISPARVISA</Prompt>
     </ReportParameter>
   </ReportParameters>
   <EmbeddedImages>
