@@ -114,8 +114,8 @@
             var EmpId = document.getElementById("ctl00_KdsContent_lblMisparIshi").innerHTML;
             var WCardDate = RowDate;
             var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
-            document.getElementById("divHourglass").style.display = 'block'; 
-            var ReturnWin=window.showModalDialog('../Ovdim/WorkCard.aspx' + sQuryString , window , "dialogHeight:680px; dialogWidth: 1010px;scroll:no;");
+            document.getElementById("divHourglass").style.display = 'block';
+            var ReturnWin = window.showModalDialog('../Ovdim/WorkCard.aspx' + sQuryString, window, "dialogHeight:680px; dialogWidth: 1010px;scroll:no;;status: 1;");
             if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
             //   debugger;
             document.getElementById("ctl00_KdsContent_btnRefresh").click();  

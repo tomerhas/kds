@@ -89,7 +89,7 @@
     function OpenEmpWorkCard() {
         var EmpId = <%=sUserId%>;
          var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + document.getElementById("ctl00_KdsContent_lblDate").innerHTML + "&dt=" + Date();
-        var ReturnWin = window.showModalDialog('Modules/Ovdim/WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px;");
+        var ReturnWin = window.showModalDialog('Modules/Ovdim/WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px;;status: 1;");
         if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
         return ReturnWin;
     }  
