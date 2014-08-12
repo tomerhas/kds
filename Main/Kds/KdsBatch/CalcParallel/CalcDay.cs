@@ -184,6 +184,11 @@ namespace KdsBatch
                 //מחלת ילד חד הורי   (רכיב 280) : 
                 CalcRechiv280();
 
+                //מחלת ילד עם מוגבלות ע"ח העובד (רכיב 289) 
+                CalcRechiv289();
+
+                //מחלת ילד עם מוגבלות ע"ח המעביד (רכיב 290) :
+                CalcRechiv290();
 
                 // מכסת שעות נוספות תפקיד חול (רכיב 143
                 CalcRechiv143();
@@ -599,6 +604,9 @@ namespace KdsBatch
 
                 //יום מילואים חלקי (רכיב 266) 
                 CalcRechiv266();
+
+                //נוכחות ביום מילואים (רכיב 291) :
+                CalcRechiv291();
 
                 //דקות חופש/היעדרות (רכיב 269) 
                 CalcRechiv269();
@@ -3508,6 +3516,79 @@ namespace KdsBatch
                 throw (ex);
             }
         }
+
+        private void CalcRechiv289()
+        {
+            float fErechRechiv;
+
+            try
+            {
+
+                fErechRechiv = CalcHeadruyot(clGeneral.enRechivim.MachalatYeledImMugbalutOved.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.MachalatYeledImMugbalutOved.GetHashCode(), fErechRechiv);
+
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MachalatYeledImMugbalutOved.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
+
+        private void CalcRechiv290()
+        {
+            float fErechRechiv;
+
+            try
+            {
+
+                fErechRechiv = CalcHeadruyot(clGeneral.enRechivim.MachalatYeledImMugbalutMaavid.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.MachalatYeledImMugbalutMaavid.GetHashCode(), fErechRechiv);
+
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MachalatYeledImMugbalutMaavid.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
+
+        private void CalcRechiv291()
+        {
+            float fErechRechiv, fMichsa, fDakotNocheut, fYomMiluim, fYomMiluimBoded;
+
+            try
+            {
+
+                fMichsa = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich); 
+                fErechRechiv = 0;
+                if (fMichsa>0)
+                {
+                    fDakotNocheut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
+                    fYomMiluim = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMiluim.GetHashCode(), objOved.Taarich);
+                    fYomMiluimBoded = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMiluimChelki.GetHashCode(), objOved.Taarich); 
+
+                    if (fDakotNocheut > 0 && fYomMiluim > 0)
+                    {
+                        fErechRechiv = (Math.Min(fDakotNocheut, fMichsa)) / fMichsa;
+                    }
+
+                    if (fYomMiluimBoded > 0 && fDakotNocheut >= (fMichsa/2))
+                    {
+                        fErechRechiv = (Math.Min((fMichsa / 2), fDakotNocheut-(fMichsa / 2))) / fMichsa;
+                    }
+                    addRowToTable(clGeneral.enRechivim.NochehutByameyMiluim.GetHashCode(), fErechRechiv);
+                    
+                }
+                
+                }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutByameyMiluim.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
+
         private void CalcRechiv72()
         {
             float fErechRechiv;

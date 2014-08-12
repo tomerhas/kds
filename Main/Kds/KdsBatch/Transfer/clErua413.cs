@@ -59,7 +59,7 @@ namespace KdsBatch
       protected override List<string> SetBody()
       {
           _ListErua = new List<string>();
-         
+          
           try
           {
               
@@ -72,6 +72,7 @@ namespace KdsBatch
 
               if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               {
+                  
                   CreatePremiyaData413("303", clGeneral.enRechivim.PremiaMachsenaim.GetHashCode(), 7, 2);
                   CreateData413("310", clGeneral.enRechivim.PremiaLariushum.GetHashCode(),"erech_rechiv", 7, 2);
                   //CreateData413("311", clGeneral.enRechivim.DakotPremiaYomit.GetHashCode() +
@@ -191,10 +192,19 @@ namespace KdsBatch
           float fErech=0;
           try
           {
-              if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() )
+              if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+              {
                   fErech = GetErechRechivPremiya(iKodRechiv, _dtPrem);
+
+                  if (iKodRechiv == clGeneral.enRechivim.PremiaMachsenaim.GetHashCode())
+                  { fErech += GetErechRechiv(clGeneral.enRechivim.PremyatMachsanimYadanit.GetHashCode()); }
+
+                  if (iKodRechiv == clGeneral.enRechivim.PremiaManasim.GetHashCode())
+                  { fErech += GetErechRechiv(clGeneral.enRechivim.PremyatManasYadani.GetHashCode()); }
+
+              }
              
-                CreateData(sSaifHilan,  fErech,  iLen, iNumDigit);
+              CreateData(sSaifHilan,  fErech,  iLen, iNumDigit);
           }
           catch (Exception ex)
           {

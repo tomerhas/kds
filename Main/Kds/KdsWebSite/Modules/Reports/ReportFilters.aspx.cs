@@ -874,7 +874,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     //                Params.Add("P_WORKERVIEWLEVEL", ((int)PageModule.SecurityLevel).ToString());
                     Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
                     Params.Add("P_WORKERVIEWLEVEL", _sProfilUser);
-                    if (rpt.NameReport == ReportName.Average)
+                    if (rpt.NameReport == ReportName.Average || rpt.NameReport == ReportName.AverageSnifEzor || rpt.NameReport == ReportName.AverageOvdimBeSnif || rpt.NameReport == ReportName.AverageSnifInEzor)
                         Params.Add("p_type_rpt", null); 
                    break;
                 case ReportName.RptIturim:

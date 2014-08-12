@@ -644,7 +644,14 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         DataTable dt= new DataTable();
         clOvdim oOvdim = new clOvdim();
 
-        if (contextKey != "103")
+        if (contextKey != clGeneral.enSugPremia.NehageyTenderim.GetHashCode().ToString() &&
+            contextKey != clGeneral.enSugPremia.MachsenaiYdani.GetHashCode().ToString() &&
+            contextKey != clGeneral.enSugPremia.ManasYadani.GetHashCode().ToString() &&
+              contextKey != clGeneral.enSugPremia.MeshekYadani.GetHashCode().ToString() &&
+        contextKey != clGeneral.enSugPremia.PakachYadani.GetHashCode().ToString() &&
+        contextKey != clGeneral.enSugPremia.SadranYadani.GetHashCode().ToString() &&
+        contextKey != clGeneral.enSugPremia.RakazYadani.GetHashCode().ToString() &&
+        contextKey != clGeneral.enSugPremia.GriraYadani.GetHashCode().ToString())
         {
             if (HttpContext.Current.Session[SAVED_PREMIAS] != null)
             {
@@ -682,7 +689,14 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         clOvdim oOvdim = new clOvdim();
         DataTable dt;
 
-        if (contextKey != "103")
+        if (contextKey != clGeneral.enSugPremia.NehageyTenderim.GetHashCode().ToString() &&
+            contextKey != clGeneral.enSugPremia.MachsenaiYdani.GetHashCode().ToString() &&
+            contextKey != clGeneral.enSugPremia.ManasYadani.GetHashCode().ToString() &&
+              contextKey != clGeneral.enSugPremia.MeshekYadani.GetHashCode().ToString() &&
+        contextKey != clGeneral.enSugPremia.PakachYadani.GetHashCode().ToString() &&
+        contextKey != clGeneral.enSugPremia.SadranYadani.GetHashCode().ToString() &&
+        contextKey != clGeneral.enSugPremia.RakazYadani.GetHashCode().ToString() &&
+        contextKey != clGeneral.enSugPremia.GriraYadani.GetHashCode().ToString())
         {
             if (HttpContext.Current.Session[SAVED_PREMIAS] != null)
             {

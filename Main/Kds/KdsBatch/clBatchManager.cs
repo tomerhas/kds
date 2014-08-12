@@ -88,6 +88,7 @@ namespace KdsBatch
         private clCalculation objCalc = new clCalculation();
         private const int SIDUR_NESIA = 99300;
         private const int SIDUR_MATALA = 99301;
+        private const int SIDUR_MACHALA_IM_MUGBALUT = 99819;
         private const int SIDUR_HEADRUT_BETASHLUM = 99801;
         private const int SIDUR_RETIZVUT99500 = 99500;
         private const int SIDUR_RETIZVUT99501 = 99501;
@@ -248,6 +249,7 @@ namespace KdsBatch
             errShatHatchalaBiggerShatYetzia=207,
             errMushalETWithSidurNotAllowET = 208,
             errShatHatchalaLetashlumBiggerShatGmar = 209,
+            errMichsatMachalaYeledImMugbalut = 210
         }
 
         private enum errNesiaMeshtana
@@ -1323,7 +1325,9 @@ namespace KdsBatch
                     if (CheckErrorActive(202)) MachalaLeloIshurwithSidurLetashlum202(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(204)) SidurAsurBeShisiLeoved5Yamim204(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(205)) CheckMichsatTipatChalav205(ref oSidur, ref dtErrors);
-                    if (CheckErrorActive(206)) OvedMutaamLeloShaotNosafot206(ref oSidur, ref dtErrors);  
+                    if (CheckErrorActive(206)) OvedMutaamLeloShaotNosafot206(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(210)) CheckMichsatMachalaYeledImMugbalut210(ref oSidur, ref dtErrors);
+                   
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
                     int numPrev;
@@ -2201,7 +2205,45 @@ namespace KdsBatch
                 throw ex;
             }
         }
-      
+
+        private bool CheckMichsatMachalaYeledImMugbalut210(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            bool isValid = true;
+            bool bError = false;
+            DateTime taarich_me;
+            clUtils oUtils = new clUtils();
+            float p_meshech;
+            try
+            {
+                if (oSidur.iMisparSidur == SIDUR_MACHALA_IM_MUGBALUT)
+                {
+                    taarich_me = DateTime.Parse("01/01/" + oSidur.dSidurDate.Year);
+
+                    p_meshech = oUtils.getMeshechSidur(oSidur.iMisparIshi, oSidur.iMisparSidur, taarich_me, taarich_me.AddYears(1).AddDays(-1));
+                    if (p_meshech >= 52)
+                        bError = true;
+
+                }
+
+                if (bError)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "מחלה: ילד עם מוגבלות רפואית ע''ח העובד - מיצוי מעל 52 שעות", enErrors.errMichsatMachalaYeledImMugbalut.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errMichsatMachalaYeledImMugbalut.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "errMichsatMachalaYeledImMugbalut: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+
         private bool CheckAnozerSidurExsits(clSidur oSidur)
         {
             try
