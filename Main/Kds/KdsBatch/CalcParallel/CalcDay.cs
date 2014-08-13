@@ -421,6 +421,9 @@ namespace KdsBatch
                 //קיזוז לעובד מותאם (רכיב 90
                 CalcRechiv90();
 
+                //יום מילואים חלקי (רכיב 266) 
+                CalcRechiv266();
+
                 //יום היעדרות  (רכיב 66) 
                 CalcRechiv66();
 
@@ -602,9 +605,7 @@ namespace KdsBatch
                 //נוכחות לפרמיית פקח (רכיב 260) 
                 CalcRechiv260();
 
-                //יום מילואים חלקי (רכיב 266) 
-                CalcRechiv266();
-
+            
                 //נוכחות ביום מילואים (רכיב 291) :
                 CalcRechiv291();
 
@@ -3025,7 +3026,7 @@ namespace KdsBatch
 
         private void CalcRechiv66()
         {
-            float fErechRechiv=0, fMichsaYomit, fDakotNochehut, fKizuzMeheadrut,fMichsatMutamBitachon,fErech60;
+            float fErechRechiv=0, fMichsaYomit,fMiluimBoded, fDakotNochehut, fKizuzMeheadrut,fMichsatMutamBitachon,fErech60;
             DataRow[] rowSidur;
             string sRechivim;
             bool bflag = false;
@@ -3069,7 +3070,10 @@ namespace KdsBatch
                                 fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                                 if (fMichsaYomit > 0 && fDakotNochehut == 0 && objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null").Length == 0 && objOved.objMeafyeneyOved.iMeafyen33 == 1)
                                 { fErechRechiv = 1; }
-
+                                //ד
+                                fMiluimBoded = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMiluimChelki.GetHashCode(), objOved.Taarich);
+                                if (fMichsaYomit > 0 && fDakotNochehut == 0 && objOved.objMeafyeneyOved.iMeafyen33 == 1 && fMiluimBoded == float.Parse("0.5"))
+                                { fErechRechiv = float.Parse("0.5"); }
                                 //ה
                                 if (((objOved.Taarich < objOved.objParameters.dChodeshTakanonSoziali && 
                                     (objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8 || objOved.objPirteyOved.iMutamut == 1 ||
@@ -3205,6 +3209,8 @@ namespace KdsBatch
                                     !(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30) && (objOved.objMeafyeneyOved.Meafyen33Ei != "1") )
                                         bChangeTo67 = true;
 
+                                if (fMiluimBoded == float.Parse("0.5") && fErechRechiv == float.Parse("0.5"))
+                                    bChangeTo67 = true;
                                 //if ((objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && 
                                 //     objOved.objPirteyOved.iIshurKeren ==0 && fDakotNochehut == 0 && fErechRechiv > 0 && fErechRechiv < 1 &&  !bMutaam )
                                 //{    
@@ -3241,7 +3247,7 @@ namespace KdsBatch
 
         private void CalcRechiv67()
         {
-            float fErechRechiv, fMichsaYomit,fErech60, fDakotNochehut, fMichsatMutamBitachon,fDakotNochehutLeloKizuz, fKizuzMeheadrut;
+            float fErechRechiv, fMichsaYomit, fMiluimBoded, fDakotNochehut, fMichsatMutamBitachon, fDakotNochehutLeloKizuz, fKizuzMeheadrut;
             DataRow[] rowSidur ;
             string sRechivim;
             bool flag = false;
@@ -3279,6 +3285,10 @@ namespace KdsBatch
                              if (fMichsaYomit > 0 && fDakotNochehut == 0 && objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null").Length == 0 && objOved.objMeafyeneyOved.iMeafyen33 == 0)
                              { fErechRechiv = 1; }
 
+                             //ב
+                             fMiluimBoded = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMiluimChelki.GetHashCode(), objOved.Taarich);
+                             if (fMichsaYomit > 0 && fDakotNochehut == 0 && objOved.objMeafyeneyOved.iMeafyen33 == 0 && fMiluimBoded == float.Parse("0.5"))
+                             { fErechRechiv = float.Parse("0.5"); }
                              //ג
 
                              //if (((objOved.Taarich < objOved.objParameters.dChodeshTakanonSoziali &&
