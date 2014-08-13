@@ -489,17 +489,21 @@ namespace KdsBatch
                                 dShatHatchalaLetashlum = DateTime.Parse(objOved.Taarich.ToShortDateString() + " 04:00:00");
                         }
 
-                        sQury = "MISPAR_SIDUR=" + iMisparSidur + " and SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,3)='790')";
-                        fErech = oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
-                        fErechRechiv = Math.Min(objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon,
-                            float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString()) - fErech);
-
-                        if (fErechRechiv >= objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon)
+                        if (int.Parse(drSidur["yom_VISA"].ToString()) == 1 || int.Parse(drSidur["yom_VISA"].ToString()) == 2 || int.Parse(drSidur["yom_VISA"].ToString()) == 3)
                         {
-                            sQury = "MISPAR_SIDUR=" + iMisparSidur +" and SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
-                            sQury += " and (SUBSTRING(makat_nesia,1,3) in (719,720,791,785))";
+
+                            sQury = "MISPAR_SIDUR=" + iMisparSidur + " and SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,3)='790')";
                             fErech = oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
-                            fErechRechiv += fErech;
+                            fErechRechiv = Math.Min(objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon,
+                                float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString()) - fErech);
+
+                            if (fErechRechiv >= objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon)
+                            {
+                                sQury = "MISPAR_SIDUR=" + iMisparSidur + " and SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
+                                sQury += " and (SUBSTRING(makat_nesia,1,3) in (719,720,791,785))";
+                                fErech = oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
+                                fErechRechiv += fErech;
+                            }
                         }
                     }
                 }

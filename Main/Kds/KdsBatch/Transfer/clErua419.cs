@@ -46,7 +46,12 @@ namespace KdsBatch
               sErua419.Append(GetBlank(4));
 
               if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
-                sErua419.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaMachsenaim.GetHashCode(), _dtPrem), 4, 0));
+              {
+                  fErech = GetErechRechivPremiya(clGeneral.enRechivim.PremiaMachsenaim.GetHashCode(), _dtPrem);
+                  fErech += GetErechRechiv(clGeneral.enRechivim.PremyatMachsanimYadanit.GetHashCode());
+
+                  sErua419.Append(FormatNumber(fErech, 4, 0));
+              }
               else sErua419.Append(GetBlank(4));
 
               //if (_iMaamad == clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode())
