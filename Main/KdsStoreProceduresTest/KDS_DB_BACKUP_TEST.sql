@@ -1,8 +1,406 @@
-CREATE OR REPLACE PACKAGE          PKG_ERRORS AS
-TYPE    CurType      IS    REF  CURSOR;
+CREATE OR REPLACE PROCEDURE          pro_idkun_machalot_ovdim(p_bakasha_id IN NUMBER) IS
+ 
+  num_months number;
+  param1 nvarchar2(10);
+  param2 nvarchar2(10);
+  meafyen7 nvarchar2(10);
+   meafyen8 nvarchar2(10);
+  num_days number;
+  p_shat_hatchla date;
+   p_shat_gmar date;
+   p_taarich date;
+   ecode    NUMBER(38);
+   emssg nvarchar2(500);
+ CURSOR v_Cur IS
+    with teuda as
+        (
+        (select  z.mispar_ishi,z.TAARICH, z.MISPAR_SIDUR
+        from(
+          select * from
+              (select  t.mispar_ishi,t.TAARICH_THILAT_TEUDA+COLUMN_VALUE-1 TAARICH, M.MISPAR_SIDUR ,t.MAKOR_TEUDA, t.SUG_MAHALA , T.TAARICH_TEUNA
+                     from CTB_MAHALA_MISPAR_SIDUR m ,TEUDOT_MAHALA t, TABLE(
+                            cast(
+                               multiset( select level l
+                                            from dual
+                                         connect by level <= t.TAARICH_SIUM_TEUDA-t.TAARICH_THILAT_TEUDA+1) as sys.odciNumberList )
+                                 )
+                WHERE 
+                (T.TAARICH_THILAT_TEUDA>= p_taarich   or T.TAARICH_SIUM_TEUDA>= p_taarich)
+                   
+              --     T.TAARICH_THILAT_TEUDA between to_date('01/05/2013','dd/mm/yyyy') and  to_date('30/06/2013','dd/mm/yyyy') 
+                --   and   T.TAARICH_SIUM_TEUDA between to_date('01/05/2013','dd/mm/yyyy') and  to_date('30/06/2013','dd/mm/yyyy')  
+                  and  M.MAKOR_TEUDA=t.MAKOR_TEUDA
+                  and  m.SUG_MAHALA=t.SUG_MAHALA
+                      and not (m.MAKOR_TEUDA=1 and m.SUG_MAHALA=6)) z
+          where      ( Z.MAKOR_TEUDA<>2  or (  Z.MAKOR_TEUDA=2 AND ((Z.TAARICH -TAARICH_TEUNA)+1) <=92 ))
+                  
+     union
+              
+            select  z.mispar_ishi,z.TAARICH_THILAT_TEUDA TAARICH, M.MISPAR_SIDUR ,z.MAKOR_TEUDA, z.SUG_MAHALA ,z.TAARICH_TEUNA
+                         from CTB_MAHALA_MISPAR_SIDUR m ,TEUDOT_MAHALA_FICTIVE z          
+            WHERE 
+                      z.TAARICH_THILAT_TEUDA>= p_taarich
+                     and  M.MAKOR_TEUDA=z.MAKOR_TEUDA
+                      and  m.SUG_MAHALA=z.SUG_MAHALA 
+                      and not (m.MAKOR_TEUDA=1 and m.SUG_MAHALA=6)  
+                      
+       union 
+       
+              select  t.mispar_ishi, t.TAARICH_TEUNA TAARICH,m.mispar_sidur,t.MAKOR_TEUDA, t.SUG_MAHALA ,T.TAARICH_TEUNA
+                from TEUDOT_MAHALA  t, CTB_MAHALA_MISPAR_SIDUR m
+                where T.TAARICH_TEUNA is not null
+                    and T.MAKOR_TEUDA=2
+                     and T.MAKOR_TEUDA= M.MAKOR_TEUDA
+                     and T.SUG_MAHALA = M.SUG_MAHALA
+                     and    (T.TAARICH_THILAT_TEUDA>= p_taarich   or T.TAARICH_SIUM_TEUDA>= p_taarich)                    
+              ) z
+           where  --(TAARICH_TEUNA is null or ( (Z.TAARICH -TAARICH_TEUNA)+1) <=92 )  
+                 -- ( Z.MAKOR_TEUDA<>2  or ( z.TAARICH_TEUNA is NOT NULL AND Z.MAKOR_TEUDA=2 AND ((Z.TAARICH -TAARICH_TEUNA)+1) <=92 ))
+                    z.TAARICH >=  p_taarich)
+                   
+                       ) ,
 
+        sidurim as
+        (
+               /* select s.mispar_ishi, S.TAARICH,S.MISPAR_SIDUR
+                from tb_sidurim_ovdim s, tb_sidurim_meyuchadim y
+                where S.MISPAR_SIDUR= Y.MISPAR_SIDUR
+                    and Y.KOD_MEAFYEN=53
+                    and Y.ERECH in(2,4)
+                   and S.TAARICH >= p_taarich
+                --   and S.TAARICH  between to_date('01/05/2013','dd/mm/yyyy') and  to_date('30/06/2013','dd/mm/yyyy') 
+                    and (S.LO_LETASHLUM=0 or  S.LO_LETASHLUM is null
+                        or ( S.LO_LETASHLUM=1 and S.KOD_SIBA_LO_LETASHLUM=22  ) )
+                    and s.mispar_sidur<>99814     */   
+                     select mispar_ishi, TAARICH,MISPAR_SIDUR
+                     from
+                     (select  s.mispar_ishi, S.TAARICH,S.MISPAR_SIDUR,max(case to_number(Y.KOD_MEAFYEN) when 53 then   Y.ERECH end ) M53,
+                     max(case to_number(Y.KOD_MEAFYEN) when 105 then  Y.ERECH end ) M105
+                                    from tb_sidurim_ovdim s, tb_sidurim_meyuchadim y
+                                    where S.MISPAR_SIDUR= Y.MISPAR_SIDUR
+                                        and Y.KOD_MEAFYEN in(53,105) 
+                                       and S.TAARICH >=p_taarich
+                                    and (S.LO_LETASHLUM=0 or  S.LO_LETASHLUM is null
+                                            or ( S.LO_LETASHLUM=1 and S.KOD_SIBA_LO_LETASHLUM=22  ) )
+                                     group by  s.mispar_ishi, S.TAARICH,S.MISPAR_SIDUR)
+                      where M53 in(2,4)
+                      and M105=1
+        )
+    
+     select  mispar_ishi,taarich,mispar_sidur
+      from(
+         select mispar_ishi,taarich,mispar_sidur
+         from  teuda 
+        minus 
+          select mispar_ishi,taarich , mispar_sidur
+          from sidurim)
+--where mispar_ishi=11507
+-- and taarich between  to_date('01/05/2013','dd/mm/yyyy')  and last_day(to_date('01/05/2013','dd/mm/yyyy'))   
+         ;
+          
+           v_rec v_Cur%ROWTYPE;
+begin
+
+  select (to_number(erech_param)-1) into num_months
+  from tb_parametrim
+  where kod_param=100;
+  
+  select (add_months(last_day(add_months( trunc(sysdate),-num_months)),-1)+1) into p_taarich from dual;
+  
+ select erech_param into param1
+  from tb_parametrim
+  where kod_param=1;
+  
+   select erech_param into param2
+  from tb_parametrim
+  where kod_param=2;
+ 
+insert  into  OVDIM_IM_IDKUN_MACHALA(mispar_ishi,taarich,sug_idkun,taarich_idkun_acharon)
+   with teuda as(
+      select  z.mispar_ishi,z.TAARICH, z.MISPAR_SIDUR
+        from(
+         select * from
+          ( select  t.mispar_ishi,t.TAARICH_THILAT_TEUDA+COLUMN_VALUE-1 TAARICH, M.MISPAR_SIDUR ,t.MAKOR_TEUDA, t.SUG_MAHALA , T.TAARICH_TEUNA
+                 from CTB_MAHALA_MISPAR_SIDUR m ,TEUDOT_MAHALA t, TABLE(
+                        cast(
+                           multiset( select level l
+                                        from dual
+                                     connect by level <= t.TAARICH_SIUM_TEUDA-t.TAARICH_THILAT_TEUDA+1) as sys.odciNumberList )
+                             )
+            WHERE 
+              (T.TAARICH_THILAT_TEUDA>= p_taarich   or   T.TAARICH_SIUM_TEUDA>= p_taarich)
+           --    T.TAARICH_THILAT_TEUDA between to_date('01/05/2013','dd/mm/yyyy') and  to_date('30/06/2013','dd/mm/yyyy') 
+           --    and   T.TAARICH_SIUM_TEUDA between to_date('01/05/2013','dd/mm/yyyy') and  to_date('30/06/2013','dd/mm/yyyy')  
+              and  M.MAKOR_TEUDA=t.MAKOR_TEUDA
+              and  m.SUG_MAHALA=t.SUG_MAHALA 
+              and not (m.MAKOR_TEUDA=1 and m.SUG_MAHALA=6) ) z
+        where   ( Z.MAKOR_TEUDA<>2  or ( z.TAARICH_TEUNA is NOT NULL AND Z.MAKOR_TEUDA=2 AND ((Z.TAARICH -TAARICH_TEUNA)+1) <=92 ))
+              
+         union
+              
+            select  z.mispar_ishi,z.TAARICH_THILAT_TEUDA TAARICH, M.MISPAR_SIDUR ,z.MAKOR_TEUDA, z.SUG_MAHALA ,z.TAARICH_TEUNA
+                         from CTB_MAHALA_MISPAR_SIDUR m ,TEUDOT_MAHALA_FICTIVE z          
+            WHERE 
+                      z.TAARICH_THILAT_TEUDA>= p_taarich
+                     and  M.MAKOR_TEUDA=z.MAKOR_TEUDA
+                      and  m.SUG_MAHALA=z.SUG_MAHALA 
+                      and not (m.MAKOR_TEUDA=1 and m.SUG_MAHALA=6)  
+         --     and t.TAARICH_THILAT_TEUDA+COLUMN_VALUE >=  p_taarich  
+         
+          union 
+       
+              select  t.mispar_ishi, t.TAARICH_TEUNA TAARICH,m.mispar_sidur,t.MAKOR_TEUDA, t.SUG_MAHALA ,T.TAARICH_TEUNA
+                from TEUDOT_MAHALA  t, CTB_MAHALA_MISPAR_SIDUR m
+                where T.TAARICH_TEUNA is not null
+                 and T.MAKOR_TEUDA=2
+                     and T.MAKOR_TEUDA= M.MAKOR_TEUDA
+                     and T.SUG_MAHALA = M.SUG_MAHALA
+                     and    (T.TAARICH_THILAT_TEUDA>= p_taarich   or T.TAARICH_SIUM_TEUDA>= p_taarich)     
+                ) z
+            where -- (TAARICH_TEUNA is null or ( (Z.TAARICH -TAARICH_TEUNA)+1) <=92 )  
+               z.TAARICH >=  p_taarich     
+                     ) ,
+
+        sidurim as
+        (
+              /*  select s.mispar_ishi, S.TAARICH,s.mispar_sidur --, m.MAKOR_TEUDA, m.SUG_MAHALA 
+                from tb_sidurim_ovdim s, tb_sidurim_meyuchadim y --, CTB_MAHALA_MISPAR_SIDUR m
+                where S.MISPAR_SIDUR= Y.MISPAR_SIDUR
+                    and Y.KOD_MEAFYEN=53
+                    and Y.ERECH in(2,4)
+                   and S.TAARICH >=  p_taarich
+                --    and S.TAARICH  between to_date('01/05/2013','dd/mm/yyyy') and  to_date('30/06/2013','dd/mm/yyyy') 
+                     and (S.LO_LETASHLUM=0 or  S.LO_LETASHLUM is null
+                        or ( S.LO_LETASHLUM=1 and S.KOD_SIBA_LO_LETASHLUM=22  ))
+                      and s.mispar_sidur<>99814   */
+                         select mispar_ishi, TAARICH,MISPAR_SIDUR
+                     from
+                     (select  s.mispar_ishi, S.TAARICH,S.MISPAR_SIDUR,
+                     max(case to_number(Y.KOD_MEAFYEN) when 53 then   Y.ERECH end ) M53,
+                     max(case to_number(Y.KOD_MEAFYEN) when 105 then  Y.ERECH end ) M105
+                                    from tb_sidurim_ovdim s, tb_sidurim_meyuchadim y
+                                    where S.MISPAR_SIDUR= Y.MISPAR_SIDUR
+                                        and Y.KOD_MEAFYEN in(53,105) 
+                                       and S.TAARICH >=p_taarich
+                                    and (S.LO_LETASHLUM=0 or  S.LO_LETASHLUM is null
+                                            or ( S.LO_LETASHLUM=1 and S.KOD_SIBA_LO_LETASHLUM=22  ) )
+                                     group by  s.mispar_ishi, S.TAARICH,S.MISPAR_SIDUR)
+                      where M53 in(2,4)
+                      and M105=1
+        )
+   select  mispar_ishi,taarich,1,sysdate
+      from(
+         select mispar_ishi,taarich,mispar_sidur
+         from sidurim
+        minus 
+          select mispar_ishi,taarich,mispar_sidur
+          from teuda t ) 
+    union
+     select  mispar_ishi,taarich,2,sysdate
+      from(
+         select mispar_ishi,taarich,mispar_sidur
+         from teuda 
+        minus 
+          select mispar_ishi,taarich,mispar_sidur
+          from sidurim )  ;  
+  /*********************************************/
+update tb_sidurim_ovdim s
+    set S.LO_LETASHLUM=1,
+         S.KOD_SIBA_LO_LETASHLUM=23,
+         s.taarich_idkun_acharon= sysdate,
+         s.meadken_acharon=-9
+    where exists(
+          
+          with teuda as(
+           select  z.mispar_ishi,z.TAARICH, z.MISPAR_SIDUR
+        from(
+        select * from(
+            select  t.mispar_ishi,t.TAARICH_THILAT_TEUDA+COLUMN_VALUE-1 TAARICH, M.MISPAR_SIDUR ,t.MAKOR_TEUDA, t.SUG_MAHALA , T.TAARICH_TEUNA   
+             from CTB_MAHALA_MISPAR_SIDUR m ,TEUDOT_MAHALA t, TABLE(
+                    cast(
+                       multiset( select level l
+                                    from dual
+                                 connect by level <= t.TAARICH_SIUM_TEUDA-t.TAARICH_THILAT_TEUDA+1) as sys.odciNumberList )
+                         )
+        WHERE 
+           (T.TAARICH_THILAT_TEUDA>= p_taarich or T.TAARICH_SIUM_TEUDA>= p_taarich)
+      --      T.TAARICH_THILAT_TEUDA between to_date('01/05/2013','dd/mm/yyyy') and  to_date('30/06/2013','dd/mm/yyyy') 
+       --       and   T.TAARICH_SIUM_TEUDA between to_date('01/05/2013','dd/mm/yyyy') and  to_date('30/06/2013','dd/mm/yyyy')  
+          and  M.MAKOR_TEUDA=t.MAKOR_TEUDA
+          and  m.SUG_MAHALA=t.SUG_MAHALA
+          and not (m.MAKOR_TEUDA=1 and m.SUG_MAHALA=6) ) z
+     where   ( Z.MAKOR_TEUDA<>2  or ( z.TAARICH_TEUNA is NOT NULL AND Z.MAKOR_TEUDA=2 AND ((Z.TAARICH -TAARICH_TEUNA)+1) <=92 ))
+             
+    union
+              
+            select  z.mispar_ishi,z.TAARICH_THILAT_TEUDA TAARICH, M.MISPAR_SIDUR ,z.MAKOR_TEUDA, z.SUG_MAHALA ,z.TAARICH_TEUNA
+                         from CTB_MAHALA_MISPAR_SIDUR m ,TEUDOT_MAHALA_FICTIVE z          
+            WHERE 
+                      z.TAARICH_THILAT_TEUDA>= p_taarich
+                     and  M.MAKOR_TEUDA=z.MAKOR_TEUDA
+                      and  m.SUG_MAHALA=z.SUG_MAHALA 
+                      and not (m.MAKOR_TEUDA=1 and m.SUG_MAHALA=6)     
+                      
+        union 
+       
+              select  t.mispar_ishi, t.TAARICH_TEUNA TAARICH,m.mispar_sidur,t.MAKOR_TEUDA, t.SUG_MAHALA ,T.TAARICH_TEUNA
+                from TEUDOT_MAHALA  t, CTB_MAHALA_MISPAR_SIDUR m
+                where T.TAARICH_TEUNA is not null
+                 and T.MAKOR_TEUDA=2
+                     and T.MAKOR_TEUDA= M.MAKOR_TEUDA
+                     and T.SUG_MAHALA = M.SUG_MAHALA
+                     and    (T.TAARICH_THILAT_TEUDA>= p_taarich   or T.TAARICH_SIUM_TEUDA>= p_taarich)                        
+              ) z
+           where --   (TAARICH_TEUNA is null or ( (Z.TAARICH -TAARICH_TEUNA)+1) <=92 )  
+                 z.TAARICH >=  p_taarich    ) ,
+
+        sidurim as
+        (
+            /*    select s.mispar_ishi, S.TAARICH,S.MISPAR_SIDUR
+                from tb_sidurim_ovdim s, tb_sidurim_meyuchadim y
+                where S.MISPAR_SIDUR= Y.MISPAR_SIDUR
+                    and Y.KOD_MEAFYEN=53
+                    and Y.ERECH in(2,4)
+         --      and S.TAARICH  between to_date('01/05/2013','dd/mm/yyyy') and  to_date('30/06/2013','dd/mm/yyyy') 
+                 and S.TAARICH >= p_taarich
+                 and (S.LO_LETASHLUM=0 or  S.LO_LETASHLUM is null
+                        or ( S.LO_LETASHLUM=1 and S.KOD_SIBA_LO_LETASHLUM=22  )   )
+                 and s.mispar_sidur<>99814  */
+                    select mispar_ishi, TAARICH,MISPAR_SIDUR
+                     from
+                     (select  s.mispar_ishi, S.TAARICH,S.MISPAR_SIDUR,
+                     max(case to_number(Y.KOD_MEAFYEN) when 53 then   Y.ERECH end ) M53,
+                     max(case to_number(Y.KOD_MEAFYEN) when 105 then  Y.ERECH end ) M105
+                                    from tb_sidurim_ovdim s, tb_sidurim_meyuchadim y
+                                    where S.MISPAR_SIDUR= Y.MISPAR_SIDUR
+                                        and Y.KOD_MEAFYEN in(53,105) 
+                                       and S.TAARICH >=p_taarich
+                                    and (S.LO_LETASHLUM=0 or  S.LO_LETASHLUM is null
+                                            or ( S.LO_LETASHLUM=1 and S.KOD_SIBA_LO_LETASHLUM=22  ) )
+                                     group by  s.mispar_ishi, S.TAARICH,S.MISPAR_SIDUR)
+                      where M53 in(2,4)
+                      and M105=1
+        )
+    
+     select  mispar_ishi,taarich,mispar_sidur
+      from(
+         select mispar_ishi,taarich,mispar_sidur
+         from sidurim
+        minus 
+          select mispar_ishi,taarich , mispar_sidur
+          from teuda t ) 
+          
+     where s.mispar_ishi = mispar_ishi
+          and s.taarich =taarich
+          and s.mispar_sidur= mispar_sidur
+         and (S.LO_LETASHLUM=0 or  S.LO_LETASHLUM is null
+                        or ( S.LO_LETASHLUM=1 and S.KOD_SIBA_LO_LETASHLUM=22  )   )
+    );
+   
+    /*************** insert***********************/
+     
+    OPEN  v_Cur;
+          LOOP
+      
+                FETCH  v_Cur INTO v_rec;
+                EXIT WHEN v_Cur%NOTFOUND;
+                  begin
+                        begin
+                            select count(*) into num_days
+                            from tb_yamey_avoda_ovdim y
+                            where Y.MISPAR_ISHI=v_rec.MISPAR_ISHI
+                              and Y.TAARICH=v_rec.TAARICH;
+                         EXCEPTION
+                            WHEN no_data_found THEN
+                                num_days:=0;
+                         end;
+                        if (num_days=0) then
+                            INSERT INTO  TB_YAMEY_AVODA_OVDIM (mispar_ishi,taarich,status_tipul,meadken_acharon,taarich_idkun_acharon,ritzat_shgiot_acharona)
+                            VALUES (  v_rec.MISPAR_ISHI, v_rec.TAARICH,0,-9, SYSDATE,to_date('01/01/0001','dd/mm/yyyy') );
+                        end if;
+                        
+                        select  Pkg_Sidurim.fun_get_meafyen_by_sidur(7,v_rec.TAARICH, v_rec.mispar_sidur ) into meafyen7   from dual;
+                        select  Pkg_Sidurim.fun_get_meafyen_by_sidur(8,v_rec.TAARICH, v_rec.mispar_sidur ) into meafyen8 from dual;
+                        
+                        if (meafyen7 is null) then
+                                p_shat_hatchla:= to_date( to_char(v_rec.TAARICH,'dd/mm/yyyy')  || ' ' || param1 ,'dd/mm/yyyy HH24:mi');
+                         else
+                                p_shat_hatchla:= to_date(  to_char(v_rec.TAARICH,'dd/mm/yyyy')  || ' ' || meafyen7 ,'dd/mm/yyyy HH24:mi'); 
+                         end if;
+                         
+                         if (meafyen8 is null) then
+                            --    DBMS_OUTPUT.PUT_LINE('1');
+                                p_shat_gmar:= to_date(  to_char(v_rec.TAARICH,'dd/mm/yyyy') || ' ' || param2 ,'dd/mm/yyyy HH24:mi');
+                         else
+                          --   DBMS_OUTPUT.PUT_LINE('2');
+                                p_shat_gmar:= to_date(  to_char(v_rec.TAARICH,'dd/mm/yyyy')  || ' ' || meafyen8 ,'dd/mm/yyyy HH24:mi'); 
+                         end if;
+                         
+                         num_days:=-1;
+                         while (num_days<>0)
+                         loop
+                             begin
+                                    select count(*)  into num_days
+                                    from tb_sidurim_ovdim s
+                                    where S.MISPAR_ISHI=  v_rec.MISPAR_ISHI
+                                         and S.TAARICH=  v_rec.TAARICH
+                                         and S.MISPAR_SIDUR= v_rec.mispar_sidur
+                                         and S.SHAT_HATCHALA=p_shat_hatchla;
+                              EXCEPTION
+                                WHEN no_data_found THEN
+                                    num_days:=0;
+                             end;
+                               if  (num_days>0) then
+                                p_shat_hatchla:= p_shat_hatchla +1/1440 ;   
+                         end if;
+                         end loop;
+                      
+                      
+                        INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar, chariga,meadken_acharon  ,taarich_idkun_acharon  )
+                        values(   v_rec.MISPAR_ISHI, v_rec.TAARICH, v_rec.mispar_sidur, p_shat_hatchla  , p_shat_gmar, 0,-9,sysdate);
+                    
+                  EXCEPTION
+                      WHEN OTHERS THEN
+                        ecode := SQLCODE;
+                        emssg:= SQLERRM;
+                         insert into tb_log_bakashot(MISPAR_SIDURI,bakasha_id,mispar_ishi,taarich,sug_hodaa,taarich_idkun_acharon,teur_hodaa)
+                         VALUES(  log_seq.NEXTVAL,p_bakasha_id, v_rec.MISPAR_ISHI, v_rec.TAARICH, 'E', SYSDATE, ecode ||' -ERROR- '|| emssg);
+                  end;
+          end loop;        
+      
+     CLOSE v_Cur;
+     commit;
+   EXCEPTION
+   WHEN OTHERS THEN
+       rollback;
+       RAISE;
+end pro_idkun_machalot_ovdim;
+/
+CREATE OR REPLACE PACKAGE          Pkg_Baam_Wr1 AS
 /******************************************************************************
-   NAME:       PKG_ERRORS
+   NAME:       PKG_BAAM_WR1
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        21/06/2012      meravn       1. Created this package.
+******************************************************************************/
+
+ PROCEDURE pro_ins_ovdim_lehishuv_premiot ;
+ PROCEDURE Pro_ins_baam;
+ PROCEDURE Pro_ins_wr1 ;
+ PROCEDURE tst_baam ;
+ procedure chkMusach1;
+ 
+END Pkg_Baam_Wr1;
+/
+
+
+CREATE OR REPLACE PACKAGE          Pkg_Batch AS
+TYPE    CurType      IS    REF  CURSOR;
+/******************************************************************************
+   NAME:       PKG_BATCH
    PURPOSE:
 
    REVISIONS:
@@ -11,125 +409,335 @@ TYPE    CurType      IS    REF  CURSOR;
    1.0        26/04/2009             1. Created this package.
 ******************************************************************************/
 
-/*
-Ver        Date        Author           Description
+PROCEDURE pro_ins_log_bakasha(p_bakasha_id  IN TB_LOG_BAKASHOT.bakasha_id%TYPE,
+                   p_taarich_idkun  IN TB_LOG_BAKASHOT.taarich_idkun_acharon%TYPE,
+                 p_sug_hodaa  IN TB_LOG_BAKASHOT.sug_hodaa%TYPE,
+                 p_kod_tahalich IN TB_LOG_BAKASHOT.kod_tahalich%TYPE,
+                 p_kod_yeshut IN TB_LOG_BAKASHOT.kod_yeshut%TYPE,
+              p_mispar_ishi IN TB_LOG_BAKASHOT.mispar_ishi%TYPE,
+              p_taarich IN TB_LOG_BAKASHOT.taarich%TYPE,
+              p_mispar_sidur IN TB_LOG_BAKASHOT.mispar_sidur%TYPE,
+              p_shat_hatchala_sidur IN TB_LOG_BAKASHOT.shat_hatchala_sidur%TYPE,
+              p_shat_yetzia IN TB_LOG_BAKASHOT.shat_yetzia%TYPE,
+              p_mispar_knisa IN TB_LOG_BAKASHOT.mispar_knisa%TYPE,
+              p_teur_hodaa IN TB_LOG_BAKASHOT.teur_hodaa%TYPE,
+              p_kod_hodaa IN TB_LOG_BAKASHOT.kod_hodaa%TYPE,
+              p_mispar_siduri OUT TB_LOG_BAKASHOT.mispar_siduri%TYPE);
+
+
+PROCEDURE pro_ins_log_bakasha_tran(p_bakasha_id  IN TB_LOG_BAKASHOT.bakasha_id%TYPE,
+                                                  p_taarich_idkun  IN TB_LOG_BAKASHOT.taarich_idkun_acharon%TYPE,
+                                                  p_sug_hodaa  IN TB_LOG_BAKASHOT.sug_hodaa%TYPE,
+                                                  p_teur_hodaa IN TB_LOG_BAKASHOT.teur_hodaa%TYPE,
+                                                  p_kod_hodaa IN TB_LOG_BAKASHOT.kod_hodaa%TYPE);
+PROCEDURE pro_ins_bakasha(p_sug_bakasha  IN TB_BAKASHOT.sug_bakasha%TYPE,
+                   p_teur  IN TB_BAKASHOT.teur%TYPE,
+                 p_status   IN TB_BAKASHOT.status%TYPE,
+                 p_user_id IN TB_BAKASHOT.mishtamesh_id%TYPE,
+              p_bakasha_id OUT TB_BAKASHOT.bakasha_id%TYPE);
+
+  PROCEDURE pro_upd_bakasha(p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                   p_status   IN TB_BAKASHOT.status%TYPE,
+              p_huavra_lesachar IN  TB_BAKASHOT.huavra_lesachar%TYPE,
+              p_zman_siyum   IN  TB_BAKASHOT.zman_siyum%TYPE,
+              p_tar_haavara_lesachar   IN  TB_BAKASHOT.taarich_haavara_lesachar%TYPE) ;
+
+ PROCEDURE  pro_upd_bakasha_all_fields(p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                                                              p_zman_siyum   IN  TB_BAKASHOT.zman_siyum%TYPE,
+                                                              p_status   IN TB_BAKASHOT.status%TYPE,
+                                                              p_huavra_lesachar IN  TB_BAKASHOT.huavra_lesachar%TYPE,
+                                                              p_tar_haavara_lesachar   IN  TB_BAKASHOT.taarich_haavara_lesachar%TYPE,
+                                                              p_ishur_hilan   IN TB_BAKASHOT.ISHUR_HILAN%TYPE );
+ PROCEDURE pro_ins_bakasha_param(p_bakasha_id  IN TB_BAKASHOT_PARAMS.bakasha_id%TYPE,
+                   p_param_id  IN  TB_BAKASHOT_PARAMS.param_id%TYPE,
+                 p_erech   IN  TB_BAKASHOT_PARAMS.erech%TYPE);
+
+ PROCEDURE pro_get_pirtey_ritzot(p_taarich_me IN TB_BAKASHOT.zman_hatchala%TYPE,
+             p_taarich_ad IN TB_BAKASHOT.zman_hatchala%TYPE,
+            p_get_all NUMBER,
+            p_cur OUT CurType);
+FUNCTION fun_get_status_sachar(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) RETURN NUMBER;
+FUNCTION fun_get_status_bakasha(p_sug_bakasha NUMBER,p_Param_id NUMBER,p_erech VARCHAR) RETURN NUMBER;
+FUNCTION fun_get_rizot_zehot_lesachar(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) RETURN VARCHAR;
+  PROCEDURE pro_get_ovdim_lechishuv(p_chodesh IN DATE,
+             p_maamad IN NUMBER,
+            p_ritza_gorefet IN NUMBER,
+            p_cur OUT CurType) ;
+
+  PROCEDURE pro_get_ovdim_to_transfer(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE,
+                 p_cur_list OUT CurType,
+            p_cur OUT CurType,
+            p_cur_prem OUT CurType);
+ procedure get_netuney_machala_dor_b(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE,
+         p_cur_rechivim OUT CurType,
+         p_cur_ovdim OUT CurType) ;
+procedure pro_get_ovdim_chufsha_rezifa(p_bakasha_id in number, p_cur OUT CurType );
+   PROCEDURE pro_get_chishuv_yomi(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE,
+                   p_mispar_ishi IN  TB_CHISHUV_YOMI_OVDIM.MISPAR_ISHI%TYPE,
+                    p_taarich IN TB_CHISHUV_YOMI_OVDIM.TAARICH%TYPE,
+              p_cur OUT CurType);
+
+PROCEDURE pro_get_rechivim_chishuv_yomi(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE,
+                                                                p_cur OUT CurType);
+    ----------------
+PROCEDURE pro_del_chishuv_after_transfer(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE);
+----------------
+PROCEDURE pro_upd_status_yamey_avoda(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE); 
+PROCEDURE pro_ins_yamey_avoda_ovdim ;
+     PROCEDURE pro_ins_yamey_avoda_ovdim(pDt VARCHAR);
+        PROCEDURE pro_get_premiot_ovdim(pYM VARCHAR,p_Cur OUT CurType);
+     PROCEDURE pro_upd_yamey_avoda_ovdim(pDt VARCHAR);
+ --         PROCEDURE pro_upd_yamey_avoda_1oved(pDt varchar,pIshi varchar);
+      PROCEDURE pro_get_my_attendance(pIshi VARCHAR,pDt VARCHAR,p_Cur OUT CurType);
+      PROCEDURE pro_pivot(p_ishi VARCHAR,p_Dt_from VARCHAR,p_Dt_to VARCHAR,p_Cur OUT CurType);
+           PROCEDURE pro_pivot_1Day(p_ishi VARCHAR,p_Dt VARCHAR,p_Cur OUT CurType);
+     PROCEDURE pro_ins_log_tahalich(p_KodTahalich  NUMBER  ,p_KodPeilut NUMBER ,  p_KodStatus  NUMBER ,  p_TeurTech VARCHAR  ) ;
+      PROCEDURE pro_ins_log_tahalich_takala(p_KodTahalich  NUMBER  ,p_KodPeilut NUMBER,  p_KodStatus  NUMBER ,  p_TeurTech VARCHAR  ,p_KodTakala NUMBER) ;
+	  PROCEDURE pro_GetListDs(pDt VARCHAR, pIshi VARCHAR ,psidur VARCHAR,p_cur OUT CurType) ;
+         PROCEDURE pro_GetRowDt(pDt VARCHAR, p_cur OUT CurType) ;
+      PROCEDURE pro_GetRowDtLong(pDt VARCHAR, p_cur OUT CurType);
+        PROCEDURE pro_GetRowDtVeryLong(pDt VARCHAR, p_cur OUT CurType) ;
+        PROCEDURE pro_GetRowDtVeryLong2(pDt VARCHAR, phatchala VARCHAR,pIshi VARCHAR ,psidur VARCHAR,p_cur OUT CurType)  ;
+        PROCEDURE pro_GetRowDtVeryLongPundakim2(pDt VARCHAR, phatchala VARCHAR,pIshi VARCHAR ,p_cur OUT CurType)  ; 
+	   PROCEDURE pro_RefreshMv(shem_mvew VARCHAR)  ;
+         PROCEDURE InsIntoTrailKnisa(pDt VARCHAR, pDt_N_KNISA VARCHAR,SRV_D_ISHI NUMBER,calc_D_new_sidur NUMBER,P24 NUMBER)  ;
+     PROCEDURE InsIntoTrailYetzia(pDt VARCHAR, pDt_N_YETZIA VARCHAR,SRV_D_ISHI NUMBER,calc_D_new_sidur NUMBER,P24 NUMBER)  ;
+    PROCEDURE pro_get_yamei_avoda_meshek( p_date DATE, p_bakasha_id NUMBER, p_Cur OUT CurType);
+      PROCEDURE pro_get_all_yamei_avoda(  p_Cur OUT CurType);
+   PROCEDURE pro_new_rec(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  calc_D_new_sidur VARCHAR,
+      SRV_D_KNISA_X VARCHAR,  SRV_D_MIKUM_KNISA VARCHAR,  SRV_D_SIBAT_DIVUACH_KNISA VARCHAR,
+      SRV_D_YETZIA_X VARCHAR,  SRV_D_MIKUM_YETZIA VARCHAR,  SRV_D_SIBAT_DIVUACH_YETZIA VARCHAR,
+      SRV_D_ISHI_MEADKEN VARCHAR,
+   SRV_D_KOD_BITUL_ZMAN_NESIA_X VARCHAR,
+      SRV_D_KOD_CHARIGA_X VARCHAR,  SRV_D_KOD_HALBASHA_X VARCHAR,  SRV_D_KOD_HAZMANA_X VARCHAR,
+      TAARICH_knisa_p24 NUMBER,  TAARICH_yetzia_p24 NUMBER,  DatEfes VARCHAR,
+      TAARICH_knisa_letashlum_p24 NUMBER,  SRV_D_KNISA_letashlum_X VARCHAR,
+      TAARICH_yetzia_letashlum_p24 NUMBER,  SRV_D_YETZIA_letashlum_X VARCHAR) ;
+   PROCEDURE pro_get_yamei_avoda_shinui_hr(p_date DATE, p_bakasha_id NUMBER, p_Cur OUT CurType);
+       PROCEDURE pro_measher_o_mistayeg(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  TAARICH_knisa_p24 NUMBER );
+          PROCEDURE pro_lo_letashlum(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  TAARICH_knisa_p24 NUMBER ) ;
+       PROCEDURE pro_upd_out_blank(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  calc_D_new_sidur VARCHAR,
+      SRV_D_KNISA_X VARCHAR,  SRV_D_MIKUM_KNISA VARCHAR,  SRV_D_SIBAT_DIVUACH_KNISA VARCHAR,
+      SRV_D_YETZIA_X VARCHAR,  SRV_D_MIKUM_YETZIA VARCHAR,  SRV_D_SIBAT_DIVUACH_YETZIA VARCHAR,
+      SRV_D_ISHI_MEADKEN VARCHAR,
+   SRV_D_KOD_BITUL_ZMAN_NESIA_X VARCHAR,
+      SRV_D_KOD_CHARIGA_X VARCHAR,  SRV_D_KOD_HALBASHA_X VARCHAR,  SRV_D_KOD_HAZMANA_X VARCHAR,
+      TAARICH_knisa_p24 NUMBER , TAARICH_yetzia_p24 NUMBER,  DatEfes VARCHAR,
+      TAARICH_knisa_letashlum_p24 NUMBER,  SRV_D_KNISA_letashlum_X VARCHAR,
+      TAARICH_yetzia_letashlum_p24 NUMBER,  SRV_D_YETZIA_letashlum_X VARCHAR) ;
+   PROCEDURE pro_upd_in_blank(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  calc_D_new_sidur VARCHAR,
+      SRV_D_KNISA_X VARCHAR,  SRV_D_MIKUM_KNISA VARCHAR,  SRV_D_SIBAT_DIVUACH_KNISA VARCHAR,
+      SRV_D_YETZIA_X VARCHAR,  SRV_D_MIKUM_YETZIA VARCHAR,  SRV_D_SIBAT_DIVUACH_YETZIA VARCHAR,
+      SRV_D_ISHI_MEADKEN VARCHAR,
+   SRV_D_KOD_BITUL_ZMAN_NESIA_X VARCHAR,
+      SRV_D_KOD_CHARIGA_X VARCHAR,  SRV_D_KOD_HALBASHA_X VARCHAR,  SRV_D_KOD_HAZMANA_X VARCHAR,
+      TAARICH_knisa_p24 NUMBER , TAARICH_yetzia_p24 NUMBER,  DatEfes VARCHAR,
+      TAARICH_knisa_letashlum_p24 NUMBER,  SRV_D_KNISA_letashlum_X VARCHAR,
+      TAARICH_yetzia_letashlum_p24 NUMBER,  SRV_D_YETZIA_letashlum_X VARCHAR) ;
+     PROCEDURE pro_upd_in_out_letashlum(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  calc_D_new_sidur VARCHAR,
+      SRV_D_KNISA_X VARCHAR,
+   --SRV_D_MIKUM_KNISA varchar,  SRV_D_SIBAT_DIVUACH_KNISA varchar,
+      SRV_D_YETZIA_X VARCHAR,
+   --SRV_D_MIKUM_YETZIA varchar,  SRV_D_SIBAT_DIVUACH_YETZIA varchar,
+      SRV_D_ISHI_MEADKEN VARCHAR,
+   SRV_D_KOD_BITUL_ZMAN_NESIA_X VARCHAR,
+      --SRV_D_KOD_CHARIGA_X varchar,
+   SRV_D_KOD_HALBASHA_X VARCHAR,
+   --SRV_D_KOD_HAZMANA_X varchar,
+      TAARICH_knisa_p24 NUMBER , TAARICH_yetzia_p24 NUMBER,  DatEfes VARCHAR,
+      TAARICH_knisa_letashlum_p24 NUMBER,  SRV_D_KNISA_letashlum_X VARCHAR,
+      TAARICH_yetzia_letashlum_p24 NUMBER,  SRV_D_YETZIA_letashlum_X VARCHAR) ;
+    PROCEDURE  pro_ins_yamey_avoda_1oved(SRV_D_ISHI NUMBER,  SRV_D_TAARICH VARCHAR) ;
+  PROCEDURE pro_new_rec_pundakim(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,
+                                     SRV_D_KNISA_X VARCHAR,  SRV_D_MIKUM_KNISA VARCHAR,   TAARICH_knisa_p24 NUMBER) ;
+  PROCEDURE pro_GetListDsPundakim(pDt VARCHAR, pIshi VARCHAR ,p_cur OUT CurType) ;
+ 	 PROCEDURE pro_insert_debug_maatefet(p_mispar_ishi NUMBER, p_taarich DATE, p_taarich_ritza DATE,
+                                    p_bakasha_id NUMBER, p_sug_bakasha NUMBER, 
+                                    p_comments TEST_MAATEFET.comments%TYPE DEFAULT NULL);
+ PROCEDURE pro_insert_log_maatefet(p_mispar_ishi NUMBER, p_taarich DATE, p_taarich_ritza DATE,  p_bakasha_id NUMBER,   p_comments TEST_MAATEFET.comments%TYPE DEFAULT NULL,p_meadken number);                                     
+	 PROCEDURE pro_IfSdrnManas(pDt VARCHAR,pIshi VARCHAR ,p_cur OUT CurType) ;
+PROCEDURE pro_get_shinuy_matsav_ovdim(p_Cur OUT CurType);
+PROCEDURE pro_get_Shinuy_meafyeney_bizua(p_Cur OUT CurType) ;
+PROCEDURE pro_get_shinuy_pirey_oved( p_Cur OUT CurType);
+PROCEDURE pro_get_shinuy_brerot_mechdal( p_Cur OUT CurType);
+PROCEDURE pro_ins_ovdim_im_shinuy_hr(p_coll_obj_ovdim_im_shinuy_hr IN coll_ovdim_im_shinuy_hr);
+PROCEDURE pro_ins_defaults_hr(p_coll_obj_brerot_mechdal_hr IN coll_brerot_mechdal_meafyenim);
+
+PROCEDURE inset_oved_im_shinuy_hr(p_mispar_ishi IN NUMBER,
+		  											   	   	   			  		 p_taarich IN DATE,p_tavla IN VARCHAR)	;
+PROCEDURE update_oved_im_shinuy_hr(p_mispar_ishi IN NUMBER,
+		  											   	   	   			  		 p_taarich IN DATE,
+																				 p_tavla IN VARCHAR );
+
+PROCEDURE MoveNewMatzavOvdimToOld ;
+PROCEDURE MoveNewPirteyOvedToOld ;
+PROCEDURE MoveNewMeafyenimOvdimToOld ;
+PROCEDURE MoveNewBrerotMechdalToOld ;																			 
+PROCEDURE pro_get_ovdim4rerunsdrn( pDt VARCHAR,p_cur OUT CurType) ;
+ PROCEDURE pro_sof_meafyenim( pDt VARCHAR,p_Cur OUT CurType);
+PROCEDURE pro_get_premia_input(p_taarich DATE, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE,p_Cur OUT CurType);
+PROCEDURE pro_update_calc_premia(p_taarich DATE, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE, p_mispar_ishi NUMBER,
+            p_kod_rechiv NUMBER, p_erech_rechiv NUMBER);
+PROCEDURE pro_get_premia_bakashot(p_taarich DATE,p_Cur OUT CurType);
+ PROCEDURE pro_if_start(p_Cur OUT CurType);
+  PROCEDURE pro_if_GalreadyRun(p_Cur OUT CurType) ;
+PROCEDURE pro_get_ovdim_lehishuv_premiot(p_Cur OUT CurType);
+/*procedure pro_update_chishuv_premia(p_bakasha_id tb_bakashot.bakasha_id%type,
+            p_mispar_ishi OVDIM_LECHISHUV_PREMYOT.MISPAR_ISHI%type,
+            p_chodesh ovdim_lechishuv_premyot.chodesh%type);*/
+PROCEDURE pro_update_chishuv_premia(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE,p_num_pack number);
+
+FUNCTION fun_get_num_changes_to_shguim RETURN NUMBER;
+FUNCTION pro_ins_log_tahalich_rec(p_KodTahalich  NUMBER  ,p_KodPeilut NUMBER,  
+		  										  		  			   			p_KodStatus  NUMBER ,  p_TeurTech VARCHAR ,p_KodTakala NUMBER ) RETURN NUMBER ;
+	 PROCEDURE pro_upd_log_tahalich_rec(p_seqTahalich NUMBER ,p_KodStatus NUMBER,  p_TeurTech VARCHAR ,p_KodTakala NUMBER ) ;	
+ PROCEDURE pro_delete_log_tahalich_rcds;		
+ PROCEDURE  pro_upd_yamimOfSdrn   ;				
+  PROCEDURE pro_get_meafyenim_gap(p_num_process NUMBER,   p_cur OUT CurType);
+   PROCEDURE pro_get_meafyenim_manygaps(p_num_process NUMBER,   p_cur OUT CurType) ;
+  PROCEDURE Pro_PrepareOvdimRikuzim(p_bakasha_id NUMBER,p_RequestId number , p_num_processes number  ); 
+	   PROCEDURE Pro_get_pirtey_ovdim_leRikuzim(p_bakasha_id NUMBER,p_Num_Pack number , p_cur OUT CurType) ;
+       PROCEDURE Pro_get_Email_Ovdim_LeRikuzim(p_bakasha_id NUMBER, p_cur OUT CurType);
+       
+   FUNCTION  pro_get_sug_chishuv(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
+                                                    p_taarich IN DATE,
+                                                    p_bakasha_id OUT TB_BAKASHOT.bakasha_id%TYPE ) RETURN NUMBER;  
+                                                    
+PROCEDURE pro_ins_misparishi_sug_chishuv(p_bakasha_id NUMBER,p_coll_chishuv_sug_sidur IN COLL_MISPAR_ISHI_SUG_CHISHUV);		
+PROCEDURE Prepare_yamei_avoda_meshek(p_date IN DATE, p_type IN NUMBER,p_num_process IN NUMBER, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) ;		
+PROCEDURE Prepare_yamei_avoda_shinui_hr(p_type IN NUMBER,p_num_process IN NUMBER, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE);
+PROCEDURE pro_divide_packets( p_num_process IN  NUMBER,p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE );	
+PROCEDURE pro_get_netunim_for_process( p_num_process IN  NUMBER ,  p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE, p_cur OUT CurType);	
+PROCEDURE pro_delete_tb_shguim_batch(	p_num_process IN  NUMBER ,  p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE);		
+PROCEDURE Prepare_premiot_shguim_batch(p_type IN NUMBER,p_num_process IN NUMBER, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE);
+PROCEDURE Pro_Delete_Rikuzim_Pdf(p_bakasha_id  TB_RIKUZ_PDF.bakasha_id%TYPE);
+PROCEDURE Pro_Save_Rikuz_Pdf(p_BakashatId TB_RIKUZ_PDF.bakasha_id%TYPE,p_coll_rikuz_pdf IN COLL_RIKUZ_PDF,p_Num_Pack IN NUMBER) ;
+PROCEDURE Pro_Get_Rikuz_Pdf(p_mispar_ishi IN NUMBER,p_taarich IN DATE,p_BakashatId IN NUMBER, p_cur OUT CurType); --p_rikuz OUT BLOB);
+
+FUNCTION pro_check_view_empty(p_TableName VARCHAR2) RETURN NUMBER;
+PROCEDURE DeleteBakashotYeziratRikuzim(p_BakashatId TB_BAKASHOT.bakasha_id%TYPE);
+PROCEDURE pro_Get_Makatim_LeTkinut(p_date IN DATE, p_cur OUT CurType); 
+PROCEDURE pro_retrospect_yamey_avoda;
+function pro_ins_machalot_lo_meturgamot(p_bakasha_id number) return number;
+--function fun_get_machalot_lo_meturgamot(p_bakasha_id number) return number;
+END Pkg_Batch;
+/
+
+
+CREATE OR REPLACE PACKAGE          Pkg_Calculation AS
+/******************************************************************************
+   NAME:       PKG_CALCULATION
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
    ---------  ----------  ---------------  ------------------------------------
-   1.0        27/04/2009      vered       1. ????? ????? ????? ?????
-*/
+   1.0        3/24/2011             1. Created this package.
+******************************************************************************/
+ TYPE    CurType      IS    REF  CURSOR;
+ PROCEDURE pro_insert_oved_lechishuv(p_mis_ishi IN NUMBER,p_chodesh IN DATE);
+ 
+ PROCEDURE pro_get_ovdim_lechishuv(p_tar_me IN DATE,p_tar_ad IN DATE,
+                                    p_maamad IN NUMBER, p_ritza_gorefet IN NUMBER,
+                                    p_cur OUT CurType);
+PROCEDURE pro_prepare_netunim_lechishuv(p_bakasha_id number,p_tar_me IN DATE,p_tar_ad IN DATE,
+                                    p_maamad IN NUMBER, p_ritza_gorefet IN NUMBER, p_num_processe IN  NUMBER);
+PROCEDURE pro_kavim_details_lechishuv (p_bakasha_id number, p_tar_me IN DATE,p_tar_ad IN DATE,p_num_processe IN  NUMBER);                                    
+PROCEDURE pro_InsertOvdimLechishuv(p_bakasha_id number);
+PROCEDURE pro_divide_packets( p_num_processe IN  NUMBER);
+PROCEDURE pro_get_ovdim(p_Cur_Ovdim OUT CurType,p_num_process IN NUMBER);
+PROCEDURE pro_get_michsa_yomit(p_tar_me IN  TB_MICHSA_YOMIT.me_taarich%TYPE,
+							   p_tar_ad IN  TB_MICHSA_YOMIT.ad_taarich%TYPE,
+							   p_cur OUT CurType);
 
---FUNCTION fn_find_errors(mispar_ishi in pirtey_ovdim.mispar_ishi%type, kartis_avoda_dt in date ) return integer;
---FUNCTION fn_is_hour_missing(mispar_ishi in pirtey_ovdim.mispar_ishi%type,kartis_avoda_dt in date) return integer;
---FUNCTION fn_excption_error(mispar_ishi in pirtey_ovdim.mispar_ishi%type,kartis_avoda_dt in date) return integer;
+PROCEDURE pro_get_sidurim_meyuch_rechiv(p_tar_me IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  								 p_tar_ad IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+									 p_cur OUT CurType);
+									 
+PROCEDURE pro_get_sug_sidur_rechiv( p_tar_me IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  						 p_tar_ad IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  						 p_cur OUT CurType);
+								 
+PROCEDURE pro_get_premyot_view( p_cur OUT CurType, p_num_process IN NUMBER); 	
+PROCEDURE pro_get_premyot_nihul_tnua( p_cur OUT CurType, p_num_process IN NUMBER);
+PROCEDURE pro_get_premia_yadanit(  p_Cur OUT CurType ,p_num_process IN NUMBER);
 
-PROCEDURE pro_get_oved_sidurim_peilut(p_mispar_ishi in ovdim.mispar_ishi%type, p_date in date, p_cur out CurType);
-function NahagWithSidurTafkidLeloMeafy(p_isuk in number,p_lo_tashlum in number,p_kod_siba in number) return nvarchar2 ;
-function IsSidurShaonim(p_mispar_sidur in number,p_taarich in Date) return nvarchar2 ;
-FUNCTION fun_hachtama_bemakom_haasaka(p_mispar_ishi in number,p_taarich Date, p_mispar_sidur in number,p_mikum_hachatama in number) return nvarchar2 ;
-FUNCTION fun_get_YECHIDA_AV_LENOCH(kod_yechida  in number ) return number;
-PROCEDURE pro_del_oved_errors(p_mispar_ishi in tb_shgiot.mispar_ishi%type, p_date in tb_shgiot.taarich%type);
-PROCEDURE pro_get_lookup_tables(p_cur out CurType);
+PROCEDURE pro_get_sug_yechida(  p_cur OUT CurType, p_num_process IN NUMBER);		
 
-PROCEDURE pro_get_oved_matzav(p_mispar_ishi in matzav_ovdim.mispar_ishi%type, p_taarich in matzav_ovdim.taarich_siyum%type, p_cur out CurType) ;
-PROCEDURE pro_get_oved_yom_avoda_details(p_mispar_ishi in tb_yamey_avoda_ovdim.mispar_ishi%type, p_taarich in tb_yamey_avoda_ovdim.taarich%type, p_Cur out CurType);
-FUNCTION fn_is_oto_number_exists(p_oto_no in tb_peilut_ovdim.oto_no%type, p_date in date) return number;
-FUNCTION fn_is_duplicate_shat_yetiza(p_mispar_ishi in ovdim.mispar_ishi%type, p_date in date) return number;
-FUNCTION fn_is_zman_nesia_define(p_merkaz_erua in ctb_zman_nsiaa_mishtane.merkaz_erua%type,
-                                 p_mikum_shaon_knisa in ctb_zman_nsiaa_mishtane.mikum_yaad%type,
-                                 p_mikum_shaon_yetiza in ctb_zman_nsiaa_mishtane.mikum_yaad%type) return number;
-PROCEDURE pro_get_sug_sidur_meafyenim(p_cur out CurType);
-PROCEDURE pro_get_oved_yom_avoda_UDT(p_mispar_ishi in tb_yamey_avoda_ovdim.mispar_ishi%type, p_taarich in tb_yamey_avoda_ovdim.taarich%type,
-                                             p_coll_meafeney_ovdim out coll_meafyeney_oved);
-PROCEDURE pro_ins_sidurim_ovdim(p_coll_sidurim_ovdim in coll_sidurim_ovdim);
-PROCEDURE pro_upd_sidurim_ovdim(p_coll_sidurim_ovdim in coll_sidurim_ovdim);
-PROCEDURE pro_del_sidurim_ovdim(p_coll_sidurim_ovdim in coll_sidurim_ovdim,p_type_update in  number);
---PROCEDURE pro_upd_sidurim_ovdim(p_coll_sidurim_ovdim in COLL_TEST);
-PROCEDURE pro_upd_yamey_avoda_ovdim(p_coll_yamey_avoda_ovdim in coll_yamey_avoda_ovdim);
-PROCEDURE pro_upd_peilut_ovdim(p_coll_obj_peilut_ovdim in coll_obj_peilut_ovdim);
-PROCEDURE pro_ins_peilut_ovdim(p_coll_obj_peilut_ovdim in coll_obj_peilut_ovdim);
-PROCEDURE pro_del_peilut_ovdim(p_coll_obj_peilut_ovdim in coll_obj_peilut_ovdim);
-PROCEDURE pro_ins_sidurim_ovdim_trail(p_obj_sidurim_ovdim in obj_sidurim_ovdim,p_sug_peula in trail_sidurim_ovdim.sug_peula%type);
-PROCEDURE pro_upd_sidur_oved(p_obj_sidurim_ovdim in obj_sidurim_ovdim);
-PROCEDURE pro_del_sidur_oved(p_obj_sidurim_ovdim in obj_sidurim_ovdim);
-PROCEDURE pro_ins_yom_avoda_oved_trail(p_obj_yamey_avoda_ovdim in obj_yamey_avoda_ovdim);
-PROCEDURE pro_upd_yom_avoda_oved(p_obj_yamey_avoda_ovdim in obj_yamey_avoda_ovdim);
-PROCEDURE pro_upd_peilut_oved(p_obj_peilut_ovdim in obj_peilut_ovdim);
-PROCEDURE pro_ins_peilut_ovdim_trail(p_obj_peilut_ovdim in obj_peilut_ovdim, p_sug_peula in trail_peilut_ovdim.sug_peula%type);
-PROCEDURE pro_del_peilut_oved(p_obj_peilut_ovdim in obj_peilut_ovdim);
-PROCEDURE pro_shinuy_kelet(p_coll_yamey_avoda_ovdim_upd in coll_yamey_avoda_ovdim,
-                           p_coll_sidurim_ovdim_upd     in coll_sidurim_ovdim,
-                           p_coll_sidurim_ovdim_ins       IN   coll_sidurim_ovdim,
-                           p_coll_sidurim_ovdim_del     in coll_sidurim_ovdim,
-                           p_coll_obj_peilut_ovdim_upd  in coll_obj_peilut_ovdim,
-                           p_coll_obj_peilut_ovdim_ins  in coll_obj_peilut_ovdim,
-                           p_coll_obj_peilut_ovdim_del  in coll_obj_peilut_ovdim);
-PROCEDURE pro_oved_update_fields(p_mispar_ishi in ovdim.mispar_ishi%type, p_date in date, p_cur out CurType);
-PROCEDURE pro_upd_card_status(p_mispar_ishi in tb_yamey_avoda_ovdim.mispar_ishi%type,
-                              p_card_date in tb_yamey_avoda_ovdim.taarich%type,
-                               p_status in tb_yamey_avoda_ovdim.status%type,
-							    p_user_id in tb_yamey_avoda_ovdim.meadken_acharon%type);
-PROCEDURE pro_get_ctb_shgiot(p_error_code in ctb_shgiot.kod_shgia%type, p_cur out CurType);
-PROCEDURE pro_ins_approval_errors(p_obj_shgiot_meusharot in obj_shgiot_meusharot );
+PROCEDURE pro_get_sugey_sidur_tnua(  p_Cur OUT CurType);	
+									 
+PROCEDURE pro_get_buses_details(  p_Cur OUT CurType, p_num_process IN NUMBER ,p_tar_me IN DATE,p_tar_ad IN DATE);	
 
-FUNCTION fn_is_approval_errors_exists(p_obj_shgiot_meusharot in obj_shgiot_meusharot, p_level in number) return number;
-PROCEDURE pro_get_errors_for_field(p_field_name in ctb_shgiot.natun_lebdika%type, p_shgiot_leoved in number, p_cur out CurType);
-PROCEDURE pro_upd_tar_ritzat_shgiot(p_mispar_ishi in tb_yamey_avoda_ovdim.mispar_ishi%type,
-                              p_card_date in tb_yamey_avoda_ovdim.taarich%type,
-							  p_shgiot_letzuga IN tb_yamey_avoda_ovdim.shgiot_letezuga_laoved%type);
+PROCEDURE pro_get_yemey_avoda ( p_status_tipul  IN  TB_YAMEY_AVODA_OVDIM.status_tipul%TYPE,
+													p_num_process IN NUMBER,p_cur OUT CurType,p_tar_me IN DATE,p_tar_ad IN DATE);
+PROCEDURE pro_InsertYamimLeTavla(p_bakasha_id in number,p_tar_me IN DATE,p_tar_ad IN DATE, p_num_process IN NUMBER);
+PROCEDURE pro_get_kavim_process(p_cur OUT CurType,p_num_process IN NUMBER,p_tar_me IN DATE,p_tar_ad IN DATE);														
+PROCEDURE pro_get_kavim_details(p_cur OUT CurType);	
+PROCEDURE pro_set_kavim_details_chishuv(p_tar_me IN DATE,p_tar_ad IN DATE);
+PROCEDURE pro_get_pirtey_ovdim(p_cur OUT CurType, p_num_process IN NUMBER);
 
-PROCEDURE pro_is_duplicate_travel(p_mispar_ishi in tb_peilut_ovdim.mispar_ishi%type,
-		 									  	 						 p_taarich  in tb_peilut_ovdim.taarich%type,
-																		 p_makat_nesia in tb_peilut_ovdim.makat_nesia%type,
-																		 p_shat_yetzia in tb_peilut_ovdim.shat_yetzia%type,
-																		 p_mispar_knisa in tb_peilut_ovdim.mispar_knisa%type,
-																		 p_Cur OUT CurType);
+PROCEDURE pro_get_meafyeney_ovdim(p_brerat_Mechadal  IN NUMBER, p_num_process IN NUMBER,
+                                    p_tar_me IN DATE,p_tar_ad IN DATE, p_cur OUT CurType);
+									 
+PROCEDURE pro_get_peiluyot_ovdim( p_Cur OUT CurType, p_num_process IN NUMBER,p_tar_me IN DATE,p_tar_ad IN DATE);	
+PROCEDURE pro_get_Matzav_Ovdim(p_Cur_Matzav OUT CurType,p_num_process IN NUMBER);
+PROCEDURE pro_get_ovdim_lehishuv_premiot(p_num_process IN NUMBER);				 																				 					   				 	 		  									
+/********************************/
 
-PROCEDURE pro_have_sidur_chofef(p_mispar_ishi in tb_sidurim_ovdim.mispar_ishi%type,
-		 									  	 						 p_taarich  in tb_sidurim_ovdim.taarich%type,
-																		 p_mispar_sidur in tb_sidurim_ovdim.mispar_sidur%type,
-																		 p_shat_hatchala in tb_sidurim_ovdim.shat_hatchala%type,
-																		 p_shat_gmar in tb_sidurim_ovdim.shat_gmar%type,
-																		 p_param_chafifa in number,
-																		 p_Cur OUT CurType);
+ PROCEDURE pro_get_netunim_lechishuv( p_Cur_Ovdim OUT CurType,
+  p_Cur_Michsa_Yomit OUT CurType,
+ p_Cur_SidurMeyuchadRechiv OUT CurType,
+  p_Cur_Sug_Sidur_Rechiv OUT CurType,
+ p_Cur_Premiot_View OUT CurType,
+ p_Cur_Premiot_Yadaniot OUT CurType,
+ p_Cur_Sug_Yechida OUT CurType, 
+  p_Cur_Yemey_Avoda OUT CurType,
+  p_Cur_Pirtey_Ovdim OUT CurType,
+  p_Cur_Meafyeney_Ovdim OUT CurType,
+  p_Cur_Peiluyot_Ovdim OUT CurType, 
+ p_Cur_Mutamut OUT CurType, 
+  p_Cur_Matzav  OUT CurType, 
+  p_Cur_Buses_Details OUT CurType, 
+  -- p_Cur_Sugey_Sidur_Tnua OUT CurType, 
+ p_Cur_Kavim_Details OUT CurType, 
+ p_tar_me IN DATE,p_tar_ad IN DATE,
+ p_maamad IN NUMBER, p_ritza_gorefet IN NUMBER,
+ p_status_tipul  IN  TB_YAMEY_AVODA_OVDIM.status_tipul%TYPE,
+ p_brerat_Mechadal  IN NUMBER, p_Mis_Ishi IN NUMBER);
+ 
+ PROCEDURE pro_get_netunim_leprocess( p_Cur_Ovdim OUT CurType ,
+  p_Cur_Michsa_Yomit OUT CurType,
+ p_Cur_SidurMeyuchadRechiv OUT CurType,
+ p_Cur_Sug_Sidur_Rechiv OUT CurType,
+p_Cur_Premiot_View OUT CurType,
+ p_Cur_Premiot_Yadaniot OUT CurType,
+ p_Cur_Premiot_NihulTnua OUT CurType,
+ p_Cur_Sug_Yechida OUT CurType, 
+ p_Cur_Yemey_Avoda OUT CurType,
+ p_Cur_Pirtey_Ovdim OUT CurType,
+ p_Cur_Meafyeney_Ovdim OUT CurType,
+ p_Cur_Peiluyot_Ovdim OUT CurType,   
+  p_Cur_Mutamut OUT CurType, 
+  p_Cur_Michsat_sidur OUT CurType, 
+p_Cur_Matzav  OUT CurType, 
+  p_Cur_Buses_Details OUT CurType, 
+ p_Cur_Kavim_Details OUT CurType, 
+ p_tar_me IN DATE,p_tar_ad IN DATE, 
+ p_status_tipul  IN  TB_YAMEY_AVODA_OVDIM.status_tipul%TYPE,
+ p_brerat_Mechadal  IN NUMBER,
+  p_Mis_Ishi IN NUMBER,
+ p_num_process IN NUMBER   );
+  PROCEDURE pro_ovdim_kelet_lechishuv(p_Cur_Ovdim OUT CurType);
+  
+   PROCEDURE pro_idkun_sug_sidur;--(  p_Cur OUT CurType);
+   
+PROCEDURE   pro_Ovdim_Errors(p_Cur OUT CurType);
 
-FUNCTION  fn_count_shgiot_letzuga(p_arr_Kod_Shgia IN VARCHAR2) return number;
-
-PROCEDURE get_idkuney_rashemet(p_mispar_ishi IN TB_idkun_rashemet.mispar_ishi%type,
-		  										   							       p_taarich  IN TB_idkun_rashemet.taarich%type,
-																				   p_Cur OUT CurType);
-																				   
-
-  PROCEDURE pro_check_have_sidur_grira(p_mispar_ishi in tb_sidurim_ovdim.mispar_ishi%type,
-		 									  	 						 p_taarich  in tb_sidurim_ovdim.taarich%type,
-																		 p_Cur OUT CurType) ;
-	
-	PROCEDURE pro_get_shgiot_no_active( p_cur out CurType);		
-    procedure pro_get_all_shgiot(p_cur out CurType);
-    PROCEDURE pro_get_shgiot_active(p_cur OUT CurType);
-procedure pro_upd_approval_errors(p_mispar_ishi in tb_sidurim_ovdim.mispar_ishi%type,
-                                  p_taarich  in tb_sidurim_ovdim.taarich%type,
-                                  p_mispar_sidur in tb_sidurim_ovdim.mispar_sidur%type,
-                                  p_shat_hatchala in tb_sidurim_ovdim.shat_hatchala%type,
-                                  p_shat_yetzia in tb_peilut_ovdim.shat_yetzia%type,
-                                  p_mispar_knisa in tb_peilut_ovdim.mispar_knisa%type,
-                                  p_new_mispar_sidur in tb_sidurim_ovdim.mispar_sidur%type,
-                                  p_new_shat_hatchala in tb_sidurim_ovdim.shat_hatchala%type,
-                                  p_new_shat_yetzia in tb_peilut_ovdim.shat_yetzia%type);
-procedure pro_upd_approval_errors(p_mispar_ishi in tb_sidurim_ovdim.mispar_ishi%type,
-                                  p_taarich  in tb_sidurim_ovdim.taarich%type,
-                                  p_mispar_sidur in tb_sidurim_ovdim.mispar_sidur%type,
-                                  p_shat_hatchala in tb_sidurim_ovdim.shat_hatchala%type,                                  
-                                  p_new_mispar_sidur in tb_sidurim_ovdim.mispar_sidur%type,
-                                  p_new_shat_hatchala in tb_sidurim_ovdim.shat_hatchala%type);
-                                                                    
- PROCEDURE get_approval_errors(p_mispar_ishi IN TB_idkun_rashemet.mispar_ishi%type,
-		  										   							       p_taarich  IN TB_idkun_rashemet.taarich%type,
-																				   p_Cur OUT CurType) ;
-																				   
-	  PROCEDURE pro_upd_approval_errors(p_coll_shgiot_meusharot in coll_shgiot_meusharot) ;			
-     -- PROCEDURE pro_del_sidurim_ovdim(p_coll_sidurim_ovdim_del IN coll_sidurim_ovdim,  p_coll_sidurim_ovdim_ins IN  OUT coll_sidurim_ovdim,p_type_update IN  NUMBER);
-	PROCEDURE pro_Delete_Errors(p_mispar_ishi IN NUMBER,p_date IN DATE);			
-											                                        													 																			   
-END PKG_ERRORS;
+ procedure pro_upd_yemey_avoda_bechishuv(p_tar_me IN DATE,p_tar_ad IN DATE);
+   procedure pro_upd_ymy_avoda_lo_bechishuv;
+   PROCEDURE pro_InsYamimLeTavlaRetro(p_maamad IN varchar2, p_bakasha_id in number,p_tar_me IN DATE,p_tar_ad IN DATE ) ;
+   PROCEDURE pro_HafelInsertTavlaRetro(p_maamad IN varchar2, p_bakasha_id in number,p_tar_me IN DATE,p_tar_ad IN DATE ); 
+END Pkg_Calculation;
 /
 
 
@@ -476,7 +1084,11 @@ FUNCTION func_is_card_last_updated(p_mispar_ishi in tb_peilut_ovdim.mispar_ishi%
 
  FUNCTION fun_count_lo_letashlum_meafyen(p_tar_me IN DATE,p_tar_ad IN DATE) return number;   
 PROCEDURE  pro_get_workcad_no_val_letash(p_tar_me IN DATE,p_tar_ad IN DATE,
-                                                                    p_maamad IN NUMBER,  p_cur OUT CurType);                                                                                                              																 																	 
+                                                                    p_maamad IN NUMBER,  p_cur OUT CurType);
+ 
+procedure pro_get_ovdim_to_yechida(p_tar_me IN DATE,p_tar_ad IN DATE,
+                                                                p_yechida IN NUMBER,  p_cur OUT CurType) ;
+ --procedure pro_get_ovdim_to_yechida (p_cur OUT CurType);                                                                                                                                                                                                                                                    																 																	 
 END PKG_OVDIM;
 /
 
@@ -992,1733 +1604,5641 @@ PROCEDURE Pro_get_recivey_premyot(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                                                                                                                                                                                                    
 END PKG_RIKUZ_AVODA;
 /
-CREATE OR REPLACE PACKAGE BODY          Pkg_Errors AS
 
-PROCEDURE pro_get_oved_sidurim_peilut(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
-                               p_date IN DATE, p_cur OUT CurType)
-IS
-BEGIN
-   DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'pkg_errors',action_name => 'pro_get_oved_sidurim_peilut');
-    
-    OPEN p_cur FOR
-    SELECT * FROM
-    (SELECT o.mispar_ishi, o.mispar_sidur,o.bitul_o_hosafa, o.shat_gmar, o.shat_hatchala, o.yom_visa,
-           o.chariga,NVL(o.pitzul_hafsaka,0)pitzul_hafsaka,o.taarich,o.shayah_leyom_kodem,o.mispar_shiurey_nehiga,
-           o.out_michsa ,o.mezake_halbasha,
-           o.mikum_shaon_knisa,o.mikum_shaon_yetzia,
-           o.hashlama,o.lo_letashlum,o.mivtza_visa,o.tafkid_visa,
-           o.kod_siba_ledivuch_yadani_in, o.kod_siba_ledivuch_yadani_out, o.kod_siba_lo_letashlum,
-           o.shat_hatchala_letashlum, o.shat_gmar_letashlum,o.mezake_nesiot,
-           o.tosefet_grira, o.achuz_knas_lepremyat_visa,o.achuz_viza_besikun,
-           o.mispar_musach_o_machsan,o.sug_hazmanat_visa, o.sug_hashlama,
-           o.heara, o.taarich_idkun_acharon, po.taarich_idkun_acharon taarich_idkun_acharon_peilut, o.meadken_acharon,
-           o.sector_visa, o.nidreshet_hitiatzvut, o.shat_hitiatzvut, o.ptor_mehitiatzvut,o.Hachtama_Beatar_Lo_Takin,
-           po.kisuy_tor,po.makat_nesia,po.shat_yetzia,po.oto_no,po.mispar_sidur peilut_mispar_sidur,
-          po.heara heara_peilut,  po.mikum_bhirat_nesia_netzer,  po.mispar_sidur_netzer,
-          po.oto_no_netzer,po.shat_bhirat_nesia_netzer,po.shilut_netzer,
-        po.shat_yetzia_netzer,po.kod_shinuy_premia,po.makat_netzer,
-           po.mispar_siduri_oto,po.mispar_visa,po.mispar_knisa, po.dakot_bafoal, po.imut_netzer,
-           po.bitul_o_hosafa peilut_bitul_o_hosafa,po.km_visa,  po.snif_tnua,po.mispar_matala,po.teur_nesia,
-           sug_yom.erev_shishi_chag,sug_yom.shbaton, TO_CHAR(o.taarich,'d') iDay,ym.sug_yom, --mao.kod_matzav,
-           v_sidurm.zakay_lezman_halbasha halbash_kod,
-           v_sidurm.shat_hatchala_muteret,
-           v_sidurm.shat_gmar_muteret, 
-           v_sidurm.zakay_michutz_lamichsa,
-           --v_sidurm.shat_hatchala_muteret hour_kod2,
-           v_sidurm.sidur_asur_ledaveach_peilut no_peilot_kod,
-           v_sidurm.asur_ledaveach_mispar_rechev no_oto_no,
-           v_sidurm.sidur_namlak_visa sidur_visa_kod,
-           v_sidurm.sector_avoda, v_sidurm.sidur_lo_nivdak_sofash,
-           v_sidurm.zakay_lehashlama_avur_sidur hashlama_kod,
-           v_sidurm.zakay_lechariga, v_sidurm.zakay_lehamara ,
-           v_sidurm.zakay_leaman_nesia,
-           v_sidurm.hova_ledaveach_peilut peilut_required_kod,
-           v_sidurm.asur_ledivuach_lechevrot_bat sidur_not_valid_kod,
-           --v_sidurm.sidur_netzer sidur_netzer_kod,
-           v_sidurm.hukiyut_beshabaton sidur_not_in_shabton_kod,
-           v_sidurm.sidur_misug_headrut headrut_type_kod,
-           v_sidurm.sug_avoda,v_sidurm.hova_ledaveach_mispar_machsan,
-           v_sidurm.shaon_nochachut,  v_sidurm.nitan_ledaveach_bmachala_aruc,
-           v_sidurm.mispar_sidur mispar_sidur_myuhad,
-           v_sidurm.sidur_kaytanot_veruey_kayiz sidur_in_summer,
-           v_sidurm.lo_letashlum_automati,
-           v_sidurm.zakay_lepizul, v_sidurm.lidrosh_kod_mivtza,
-           v_sidurm.rashai_ledaveach,
-           v_sidurm.kizuz_al_pi_hatchala_gmar,
-           v_sidurm.nitan_ledaveach_ad_taarich,
-           v_sidurm.element1_hova,v_sidurm.element2_hova,v_sidurm.element3_hova,
-           v_sidurm.sidur_lo_chosem,
-           v_sidurm.zakay_lelina,v_sidurm.tokef_hatchala,v_sidurm.tokef_siyum,
-           v_element.peula_o_yedia_bilvad element_for_yedia,
-           v_element.hova_mispar_rechev bus_number_must,
-           v_element.divuach_besidur_visa divuch_in_sidur_visa,
-           v_element.kod_lechishuv_premia,  v_element.lo_nizbar_leshat_gmar,
-           v_element.sector_zvira_zman_haelement element_zvira_zman,
-           v_element.erech_element element_in_minutes ,
-           v_element.mispar_sidur_matalot_tnua,v_element.divuach_besidur_meyuchad,
-           v_element.bitul_biglal_ichur_lasidur,v_element.nesia_reika,
-           v_element.lehitalem_hafifa_bein_nesiot, v_element.Hamtana element_hamtana,
-           v_element.hamtana_eilat,
-           v_element.Lershut ,v_sidurm.hovat_hityazvut  ,
-           v_element.erech_element,v_element.peilut_mashmautit,
-           v_element.lehitalem_beitur_reyka,           
-           DECODE(o.bitul_o_hosafa,1,1,3,1,0) sidur_mevutal ,
-           DECODE(po.bitul_o_hosafa,1,1,3,1,0) peilut_mevutelet,
-           sm.teur_sidur_meychad,sl.LEBDIKAT_SHGUIM,
-           nvl(O.SUG_SIDUR,0) SUG_SIDUR,
-           O.MENAHEL_MUSACH_MEADKEN,o.shat_hatchala_letashlum_musach, o.shat_gmar_letashlum_musach,
-            pkg_errors.fun_get_YECHIDA_AV_LENOCH(to_number(substr( o.MIKUM_SHAON_KNISA,0,3) ) ) mikum_av_knisa,
-             pkg_errors.fun_get_YECHIDA_AV_LENOCH(to_number(substr( o.mikum_shaon_yetzia,0,3) ) ) mikum_av_yatzia,
-            decode(pkg_errors.NahagWithSidurTafkidLeloMeafy(p.isuk,o.lo_letashlum, o.KOD_SIBA_LO_LETASHLUM ),'true','true', 
-                                                                                        pkg_errors.fun_hachtama_bemakom_haasaka(o.mispar_ishi,o.taarich,o.mispar_sidur,   nvl(TO_NUMBER(SUBSTR(LPAD( o.MIKUM_SHAON_KNISA    , 5, '0'),0,3)),0) ) ) knisa_tkina_err197 ,
-            decode(pkg_errors.NahagWithSidurTafkidLeloMeafy(p.isuk,o.lo_letashlum, o.KOD_SIBA_LO_LETASHLUM ),'true','true', 
-                                                                                        pkg_errors.fun_hachtama_bemakom_haasaka(o.mispar_ishi,o.taarich,o.mispar_sidur,  nvl(TO_NUMBER(SUBSTR(LPAD( o.MIKUM_SHAON_Yetzia    , 5, '0'),0,3)),0) )  )yatzia_tkina_err198,
-          v_sidurm.sidur_asur_beyom_shishi , V_SIDURM.MATALA_KLALIT_LELO_RECHEV  ,  V_SIDURM.LEBDIKAT_REZEF_MACHALA                                                               
-           
-    FROM TB_SIDURIM_OVDIM o,TB_PEILUT_OVDIM po,
-         TB_YAMIM_MEYUCHADIM ym,CTB_SUGEY_YAMIM_MEYUCHADIM sug_yom,
-         pivot_sidurim_meyuchadim v_sidurm,
-         pivot_MEAFYENEY_ELEMENTIM v_element,
-         CTB_SIDURIM_MEYUCHADIM  sm,
-         CTB_SIBOT_LOLETASHLUM sl,
-           pivot_pirtey_ovdim p
-    WHERE o.mispar_ishi = po.mispar_ishi(+)
-          AND o.taarich = po.taarich(+)
-          AND o.mispar_sidur= po.mispar_sidur(+)
-          AND o.shat_hatchala = po.shat_hatchala_sidur(+)
-          AND o.mispar_ishi=p_mispar_ishi
-          AND o.taarich=p_date
-         -- AND (((o.taarich=p_date)and (o.shayah_leyom_kodem<>1 or o.shayah_leyom_kodem is null)) or ((o.taarich=p_date+1) and (o.shayah_leyom_kodem=1)))
-          AND o.taarich=ym.taarich(+)
-          AND ym.sug_yom=sug_yom.sug_yom(+)
-          AND v_sidurm.mispar_sidur(+)=o.mispar_sidur
-          AND p_date BETWEEN v_sidurm.me_tarich(+) AND v_sidurm.ad_tarich(+)
-          AND TO_NUMBER(SUBSTR(po.makat_nesia,2,2)) = v_element.kod_element(+)
-          AND p_date BETWEEN v_element.me_tarich(+) AND v_element.ad_tarich(+)
-          AND sm.kod_sidur_meyuchad(+) = o.mispar_sidur
-          AND o.KOD_SIBA_LO_LETASHLUM= sl.KOD_SIBA(+)
-          AND (sl.PAIL=1 OR sl.PAIL IS NULL)
-           and o.mispar_ishi = p.mispar_ishi 
-          and p_date between P.ME_TARICH and  NVL(p.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy')) )
-    ORDER BY  sidur_mevutal ,shat_hatchala,mispar_sidur  ,peilut_mevutelet,shat_yetzia,mispar_knisa ;
 
-EXCEPTION
-        WHEN OTHERS THEN
-        RAISE;
-
-END pro_get_oved_sidurim_peilut;
-
-function NahagWithSidurTafkidLeloMeafy(p_isuk in number,p_lo_tashlum in number,p_kod_siba in number) return nvarchar2 is
-begin
-        if ((p_isuk between 500 and 600) and  p_lo_tashlum=1 and p_kod_siba in(4,5,17)) then
-            return 'true';
-       else return 'false';
-       end if;
-end NahagWithSidurTafkidLeloMeafy;
-
-
-
-function IsSidurShaonim(p_mispar_sidur in number,p_taarich in Date) return nvarchar2 is
-meafyen54 number;
-begin
-    begin
-      SELECT S.SHAON_NOCHACHUT into meafyen54
-      FROM pivot_sidurim_meyuchadim s
-      where s.mispar_sidur= p_mispar_sidur
-      and p_taarich between S.ME_TARICH and S.AD_TARICH;
-     EXCEPTION
-                     WHEN no_data_found THEN
-                            return 'false';
-      end;    
- 
-  if (meafyen54>0) then
-   return 'true';
-   else return 'false';
-   end if;
-end IsSidurShaonim;
-
-FUNCTION fun_hachtama_bemakom_haasaka(p_mispar_ishi in number,p_taarich Date, p_mispar_sidur in number,p_mikum_hachatama number) return nvarchar2 is
-p_mikum_yechida number;
-p_mikum_av_shaon number;
-p_mikum_av_yechida number;
-p_meafyen_80 number;
-p_mikum_av_meafyen_80 number;
-p_meafyen_61 number;
-p_taarich_tokef date; 
-begin
-        select to_date(erech_param,'dd/mm/yyyy')   into p_taarich_tokef from tb_parametrim where kod_param=272;
-        if (p_taarich>=p_taarich_tokef) then
-           p_meafyen_61:= nvl(pkg_ovdim.fun_get_meafyen_oved(p_mispar_ishi,61,p_taarich),0);
-           if (p_meafyen_61=0 and pkg_errors.IsSidurShaonim(p_mispar_sidur,p_taarich) ='true' and p_mispar_sidur like '99%' and p_mispar_sidur<>99200 and p_mispar_sidur <>99214 and p_mikum_hachatama>0) then
-                    begin
-                           select nvl(P.MIKUM_YECHIDA  ,0) into p_mikum_yechida
-                           from pivot_pirtey_ovdim p
-                           where P.MISPAR_ISHI= p_mispar_ishi
-                           and p_taarich between P.ME_TARICH and P.AD_TARICH;
-                         EXCEPTION
-                     WHEN no_data_found THEN
-                            p_mikum_yechida:= 0;
-                    end;        
-                      --   DBMS_OUTPUT.PUT_LINE('111' || p_mikum_hachatama );
-                    if( p_mikum_yechida=p_mikum_hachatama and p_mikum_yechida<>0 and p_mikum_hachatama<>0)then
-                        return 'true';
-                    end if;
-                            --        DBMS_OUTPUT.PUT_LINE('222' || p_mikum_hachatama );
-                    p_mikum_av_shaon:=pkg_errors.fun_get_YECHIDA_AV_LENOCH(p_mikum_hachatama);
-                    p_mikum_av_yechida:=pkg_errors.fun_get_YECHIDA_AV_LENOCH(p_mikum_yechida);
-                         --        DBMS_OUTPUT.PUT_LINE('333' || p_mikum_hachatama );
-                    if (p_mikum_av_shaon=p_mikum_av_yechida and p_mikum_av_shaon<>0 and p_mikum_av_yechida<>0) then
-                        return 'true';
-                    end if;
-                   --   DBMS_OUTPUT.PUT_LINE('444' || p_mikum_hachatama );
-                     begin
-                           select to_number(nvl(M.ERECH_ISHI  , M.ERECH_MECHDAL_PARTANY  )) into p_meafyen_80
-                           from MEAFYENIM_OVDIM M
-                           where M.MISPAR_ISHI = p_mispar_ishi
-                               and p_taarich between M.ME_TAARICH and M.AD_TAARICH
-                               and M.KOD_MEAFYEN=80;
-                           --      DBMS_OUTPUT.PUT_LINE('555' || p_mikum_hachatama );
-                                 if (p_meafyen_80=p_mikum_hachatama) then 
-                                 return 'true';
-                           
-                                 end if;
-                               
-                                        --  DBMS_OUTPUT.PUT_LINE('666' || p_mikum_hachatama );
-                               p_mikum_av_meafyen_80:=pkg_errors.fun_get_YECHIDA_AV_LENOCH(p_meafyen_80);
-                               if(p_mikum_yechida<>p_mikum_hachatama and p_mikum_av_shaon= p_mikum_av_meafyen_80) then
-                                  return 'true';
-                               end if;
-                         EXCEPTION
-                     WHEN no_data_found THEN
-                            return 'false';
-                    end;    
-
-                return 'false';
-            end if;
-            end if;
-        return 'true';
-end fun_hachtama_bemakom_haasaka;
-FUNCTION fun_get_YECHIDA_AV_LENOCH(kod_yechida  in number ) return number is
-kod number;
-begin
-
-        select nvl(Y.KOD_MIKUM_YECHIDA_AV_LENOCH,0) into kod
-        from ctb_mikum_yechida y
-        where Y.KOD_MIKUM_YECHIDA= kod_yechida;
-        
-         return kod;
-       EXCEPTION
-         WHEN no_data_found THEN
-                return 0;
-        WHEN OTHERS THEN
-        RAISE; 
-end fun_get_YECHIDA_AV_LENOCH;
-PROCEDURE pro_del_oved_errors(p_mispar_ishi IN TB_SHGIOT.mispar_ishi%TYPE, p_date IN TB_SHGIOT.taarich%TYPE)
-IS
-BEGIN
-    DELETE FROM TB_SHGIOT s
-    WHERE s.mispar_ishi=p_mispar_ishi
-          AND s.taarich= p_date;
-
-    EXCEPTION
-        WHEN OTHERS THEN
-		RAISE;
-END pro_del_oved_errors;
-PROCEDURE pro_get_lookup_tables(p_cur OUT CurType)
-IS
-BEGIN
-DBMS_APPLICATION_INFO.SET_MODULE('pkg_errors.pro_get_lookup_tables','get lookup tables');
-    OPEN p_cur FOR
-    SELECT kod_lina kod, teur_lina teur, 'ctb_lina' table_name FROM CTB_LINA
-    WHERE pail=1
-    UNION ALL
-    SELECT kod_divuch kod , teur_divuch teur, 'ctb_divuch_hariga_meshaot' table_name  FROM CTB_DIVUCH_HARIGA_MESHAOT
-    UNION ALL
-    SELECT kod_pizul_hafsaka kod,teur_pizul_hafsaka teur ,'ctb_pitzul_hafsaka' table_name FROM CTB_PITZUL_HAFSAKA
-    WHERE pail=1
-    UNION ALL
-    SELECT kod_zman_halbasha kod, teur_zman_halbasha teur,'ctb_zmaney_halbasha' table_name FROM CTB_ZMANEY_HALBASHA
-    WHERE pail=1
-    UNION ALL
-    SELECT kod_zman_nesiaa kod, teur_zman_nesiaa teur,'ctb_zmaney_nesiaa' table_name FROM CTB_ZMANEY_NESIAA
-    WHERE pail=1
-    UNION ALL
-    SELECT kod_yom_visa kod, teur_yom_visa teur,'ctb_yom_visa' FROM CTB_YOM_VISA
-    UNION ALL
-    SELECT kod_siba kod, teur_siba teur, 'ctb_sibot_hashlama_leyom' FROM CTB_SIBOT_HASHLAMA_LEYOM
-    WHERE letzuga = 1 AND pail = 1
-    UNION ALL
-    SELECT kod_status_kartis kod , teur_status_kartis teur, 'ctb_status_kartis' FROM CTB_STATUS_KARTIS
-    WHERE pail=1;
-EXCEPTION
-        WHEN OTHERS THEN
-		RAISE;
-END pro_get_lookup_tables;
-
-
-
-PROCEDURE pro_get_oved_yom_avoda_details(p_mispar_ishi IN TB_YAMEY_AVODA_OVDIM.mispar_ishi%TYPE,
-                                         p_taarich IN TB_YAMEY_AVODA_OVDIM.taarich%TYPE, p_Cur OUT CurType)
-IS
-BEGIN
-  DBMS_APPLICATION_INFO.SET_MODULE('pkg_errors.pro_get_oved_yom_avoda_details','get details yom avoda leoved');
-	   OPEN p_cur FOR
-      SELECT ymao.mispar_ishi,ymao.lina,
-            ymao.hashlama_leyom, ymao.halbasha, v_pirty_oved.snif_av,
-            ymao.bitul_zman_nesiot, ymao.tachograf,ymao.hamarat_shabat Hamara,
-            ymao.zman_nesia_haloch, ymao.zman_nesia_hazor,ymao.status,ymao.status_tipul,
-            ymao.sibat_hashlama_leyom,ymao.measher_o_mistayeg,
-            v_pirty_oved.maamad, v_pirty_oved.isuk,
-            v_pirty_oved.mutaam, v_pirty_oved.mercaz_erua,
-            v_pirty_oved.dakot_mutamut,v_pirty_oved.gil,
-            v_pirty_oved.rishyon_autobus, v_pirty_oved.shlilat_rishayon,
-            v_pirty_oved.dirug, v_pirty_oved.darga,
-            ov.kod_hevra,sug_yom.teur_yom,i.KOD_SECTOR_ISUK  ,
-            sug_yom.erev_shishi_chag,sug_yom.shbaton, TO_CHAR(ymao.taarich,'d') iDay,
-            NVL(status_card.teur_status_kartis,'שגוי')  teur_status_kartis,
-            DECODE(s.snif_tnua,NULL,v_pirty_oved.hatzava_lekav,s.snif_tnua) snif_tnua,
-            BECHISHUV_SACHAR,
-              BECHISHUV_SACHAR,v_pirty_oved.me_tarich  , v_pirty_oved.ad_tarich,
-              v_pirty_oved.mikum_yechida, 
-              nvl(k.KOD_MIKUM_YECHIDA_AV_LENOCH   ,0) KOD_MIKUM_YECHIDA_AV_LENOCH,
-              V_PIRTY_OVED.KOD_HEVRA_HASHALA
-           --   S.KOD_HEVRA kod_hevra_snif_av
-     FROM TB_YAMEY_AVODA_OVDIM ymao,
-          pivot_pirtey_ovdim v_pirty_oved,
-          OVDIM ov,
-          TB_YAMIM_MEYUCHADIM ym,
-          CTB_SUGEY_YAMIM_MEYUCHADIM sug_yom,
-          CTB_STATUS_KARTIS status_card,
-          CTB_ISUK i,
-          CTB_SNIF_AV s,
-          ctb_mikum_yechida k
-     WHERE ymao.mispar_ishi             = p_mispar_ishi
-        AND ymao.mispar_ishi            = ov.mispar_ishi
-        AND ymao.taarich                = p_taarich
-        AND ymao.taarich                = ym.taarich(+)
-        AND ym.sug_yom                  = sug_yom.sug_yom(+)
-        AND v_pirty_oved.mispar_ishi(+) = ymao.mispar_ishi
-        AND p_taarich BETWEEN v_pirty_oved.me_tarich(+) AND v_pirty_oved.ad_tarich(+)
-        AND status_card.kod_status_kartis(+) = ymao.status
-       AND (ov.kod_hevra= i.Kod_Hevra OR  i.Kod_Hevra IS NULL)
-       AND v_pirty_oved.isuk= i.Kod_Isuk(+)
-       AND (s.Kod_Hevra= ov.kod_hevra OR  s.Kod_Hevra IS NULL)
-       AND s.kod_snif_av(+)=v_pirty_oved.snif_av
-        and v_pirty_oved.MIKUM_YECHIDA = k.KOD_MIKUM_YECHIDA(+);
-
-EXCEPTION
-        WHEN OTHERS THEN
-		RAISE;
-END pro_get_oved_yom_avoda_details;
-/*FUNCTION fn_find_errors(mispar_ishi in pirtey_ovdim.mispar_ishi%type,
-                         kartis_avoda_dt in date ) return integer
-IS
- result integer;
- error_code integer;
-BEGIN
-    --The procedure finds error in employee card
-    --If error found return 0,  else return 1
-
-
-    --9 : Sidur not exists
-
-    --15: Missing start hour or end hour
-       result := fn_is_hour_missing(mispar_ishi, kartis_avoda_dt);
-       if (result<>0) then
-            error_code:=15;
-           else
-            error_code:=1;
-       end if;
-
-       --33: Execption error
-       result := fn_excption_error(mispar_ishi, kartis_avoda_dt);
-
-       return result;
-
-EXCEPTION
-        WHEN OTHERS THEN
-		RAISE;
-
-END fn_find_errors;
-
-
-FUNCTION fn_excption_error(mispar_ishi in pirtey_ovdim.mispar_ishi%type,kartis_avoda_dt in date) return integer
-IS
-    v_exeption_error number;
-BEGIN
-    SELECT chariga INTO v_exeption_error
-    FROM tb_sidurim_ovdim mm
-    WHERE mm.mispar_ishi = mispar_ishi
-          AND mm.taarich = kartis_avoda_dt;
-
-    if (v_exeption_error in (0,1,3,6,7,8)) then
-     return 1;
-     else
-      return 0; --error
-    end if;
-
-
-    EXCEPTION
-        WHEN OTHERS THEN
-		RAISE;
-END fn_excption_error;
-
-FUNCTION fn_is_hour_missing(mispar_ishi in pirtey_ovdim.mispar_ishi%type,
-                            kartis_avoda_dt in date) return integer
-IS
-    v_shat_hatchala date;
-    v_shat_gmar date;
-    result integer;
-BEGIN
-    --15: Missing start hour or end hour
-    --return 0:ok 1:missing start hour, 2:missing end hour, 3: missing start and end hour
-
-    SELECT shat_hatchala,shat_gmar INTO v_shat_hatchala,v_shat_gmar
-    FROM tb_sidurim_ovdim mm
-    WHERE mm.mispar_ishi = mispar_ishi
-          AND mm.taarich = kartis_avoda_dt;
-
-
-    IF  (v_shat_hatchala=NULL) THEN
-        IF (v_shat_gmar=NULL) THEN
-           result:=3;
-          ELSE
-           result:=1;
-        END IF;
-     ELSE
-        IF (v_shat_gmar=Null) THEN
-           result:=2;
-          ELSE
-           result:=0;
-        END IF;
-    END IF;
-
-    RETURN result;
-
-    EXCEPTION
-        WHEN OTHERS THEN
-		RAISE;
-END fn_is_hour_missing;*/
-
-PROCEDURE  pro_get_oved_matzav(p_mispar_ishi IN MATZAV_OVDIM.mispar_ishi%TYPE,
-                            p_taarich IN MATZAV_OVDIM.taarich_siyum%TYPE, p_cur OUT CurType)
-
-IS
-
-BEGIN
-	  DBMS_APPLICATION_INFO.SET_MODULE('pkg_errors.pro_get_oved_matzav','get kod matzav leoved');
-    OPEN p_Cur FOR
-    SELECT m.kod_matzav,M.TAARICH_HATCHALA,M.TAARICH_SIYUM
-    FROM MATZAV_OVDIM m
-    WHERE m.MISPAR_ISHI=p_mispar_ishi
-          AND TRUNC(p_taarich) BETWEEN TRUNC(m.TAARICH_HATCHALA) AND TRUNC(m.TAARICH_SIYUM);
-
-
-END  pro_get_oved_matzav;
-FUNCTION fn_is_oto_number_exists(p_oto_no IN TB_PEILUT_OVDIM.oto_no%TYPE, p_date DATE) RETURN NUMBER
-IS
-    v_count NUMBER;
-BEGIN
- -- SELECT COUNT(bus_number)  INTO v_count
- --   FROM VCL_GENERAL_VEHICLE_VIEW@kds2maale
- --   WHERE bus_number=p_oto_no;
-
-    --Code return 0 -valid    1- error    2- not found
-   SELECT VCL_LOADER.CheckBusNumber@kds2maale(p_date,p_oto_no) INTO v_count FROM dual ;
-  /* select count(*) INTO v_count 
-   from VEHICLE_SPECIFICATIONS v
-   where V.BUS_NUMBER=p_oto_no
-   and v.*/
-    RETURN  v_count;
-
-    EXCEPTION
-        WHEN OTHERS THEN
-        v_count:=1;
-		RAISE;
-END fn_is_oto_number_exists;
-FUNCTION fn_is_duplicate_shat_yetiza(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE, p_date IN DATE) RETURN NUMBER
-IS
-    v_count NUMBER;
-BEGIN
-    v_count:=0;
-    SELECT COUNT(shat_yetzia) INTO v_count FROM
-    (SELECT COUNT(po.shat_yetzia) shat_yetzia
-    FROM TB_SIDURIM_OVDIM o,TB_PEILUT_OVDIM po
-    WHERE o.mispar_ishi = po.mispar_ishi
-              AND o.taarich = po.taarich
-              AND o.shat_hatchala = po.shat_hatchala_sidur
-              AND o.mispar_sidur= po.mispar_sidur(+)
-              AND o.mispar_ishi=p_mispar_ishi
-              AND o.taarich=p_date
-              AND ((Pkg_Tnua.fn_get_makat_type(po.makat_nesia)<>5)
-                   OR ((Pkg_Tnua.fn_get_makat_type(po.makat_nesia)=5) AND
-                     (NOT EXISTS (SELECT kod_element
-                                  FROM TB_MEAFYENEY_ELEMENTIM o1
-                                  WHERE o1.kod_element=po.makat_nesia
-                                       AND o1.kod_meafyen=9
-                                       AND p_date BETWEEN o1.me_taarich AND o1.ad_taarich))
-                   )
-              )
-
-    GROUP BY po.shat_yetzia
-    HAVING COUNT(po.shat_yetzia) > 1);
-
-    RETURN v_count;
-EXCEPTION
-        WHEN NO_DATA_FOUND THEN
-          RETURN 0;
-        WHEN OTHERS THEN
-		RAISE;
-
-END fn_is_duplicate_shat_yetiza;
-
-FUNCTION fn_is_zman_nesia_define(p_merkaz_erua IN CTB_ZMAN_NSIAA_MISHTANE.merkaz_erua%TYPE,
-                                 p_mikum_shaon_knisa IN CTB_ZMAN_NSIAA_MISHTANE.mikum_yaad%TYPE,
-                                 p_mikum_shaon_yetiza IN CTB_ZMAN_NSIAA_MISHTANE.mikum_yaad%TYPE) RETURN NUMBER
-IS
- v_count_knisa NUMBER;
- v_count_yetiza NUMBER;
- v_res NUMBER;
-BEGIN
-    --return 0 if the two knisa and yetiza defines
-    --return 3 if both, knisa and tetiza not define
-    --return 1 if knisa not define
-    --return 2 if yetiza not define
-    IF (p_mikum_shaon_knisa=0) THEN
-        v_count_knisa:=1;
-    ELSE
-        SELECT COUNT(merkaz_erua) INTO v_count_knisa
-        FROM CTB_ZMAN_NSIAA_MISHTANE c
-        WHERE c.merkaz_erua =p_merkaz_erua
-              AND c.mikum_yaad=p_mikum_shaon_knisa;
-    END IF;
-
-    IF (p_mikum_shaon_yetiza=0) THEN
-        v_count_yetiza:=1;
-    ELSE
-        SELECT COUNT(merkaz_erua) INTO v_count_yetiza
-        FROM CTB_ZMAN_NSIAA_MISHTANE c
-        WHERE c.merkaz_erua =p_merkaz_erua
-              AND c.mikum_yaad=p_mikum_shaon_yetiza;
-    END IF;
-
-     IF (v_count_knisa=0) THEN
-        IF (v_count_yetiza=0) THEN
-            v_res:=3;
-         ELSE
-            v_res:=1;
-        END IF;
-       ELSE
-         IF (v_count_yetiza=0) THEN
-            v_res:=2;
-           ELSE
-            v_res:=0;
-         END IF;
-     END IF;
-
-     RETURN v_res;
-EXCEPTION
-        WHEN OTHERS THEN
-		RAISE;
-END fn_is_zman_nesia_define;
-PROCEDURE pro_get_sug_sidur_meafyenim(p_cur OUT CurType)
-IS
-BEGIN
-    OPEN p_cur FOR
-    SELECT sug_sidur,sug_avoda,asur_ledaveach_mispar_rechev,
-           sector_avoda,zakay_leaman_nesia,zakay_lehamara,zakay_lehashlama_avur_sidur,
-           lo_letashlum_automati,kizuz_al_pi_hatchala_gmar,shaon_nochachut,
-           me_tarich, ad_tarich,rashai_ledaveach,
-		   zakay_lepizul, lo_nidreshet_hityazvut,S.TEUR_SIDUR_AVODA,ZAKAY_MICHUTZ_LAMICHSA
-    FROM pivot_meafyeney_sug_sidur, ctb_sug_sidur s
-    WHERE pivot_meafyeney_sug_sidur.sug_sidur =s.KOD_SIDUR_AVODA(+) ;
-
-END pro_get_sug_sidur_meafyenim;
-
-PROCEDURE pro_get_oved_yom_avoda_UDT(p_mispar_ishi IN TB_YAMEY_AVODA_OVDIM.mispar_ishi%TYPE, p_taarich IN TB_YAMEY_AVODA_OVDIM.taarich%TYPE,
-                                     p_coll_meafeney_ovdim OUT coll_meafyeney_oved)
-IS
-BEGIN
-
-     SELECT obj_meafyeney_oved
-            (ymao.mispar_ishi,ymao.lina,ymao.hashlama_leyom ,ymao.halbasha, ymao.bitul_zman_nesiot,
-            v_pirty_oved.maamad,v_pirty_oved.isuk, ov.kod_hevra)--, ymao.tachograf,
-
-
-     BULK COLLECT INTO p_coll_meafeney_ovdim
-     FROM TB_YAMEY_AVODA_OVDIM ymao,viw_meafyenim_ovdim v_oved_meafynim,
-          pivot_pirtey_ovdim v_pirty_oved, OVDIM ov
-     WHERE ymao.mispar_ishi=p_mispar_ishi
-        AND ymao.mispar_ishi = ov.mispar_ishi
-        AND ymao.taarich=p_taarich
-        AND ymao.mispar_ishi=v_oved_meafynim.mispar_ishi(+)
-        AND p_taarich > v_oved_meafynim.me_taarich(+)-- and v_oved_meafynim.ad_taarich(+)
-        AND v_pirty_oved.mispar_ishi(+)=ymao.mispar_ishi
-        AND p_taarich BETWEEN v_pirty_oved.me_tarich(+) AND v_pirty_oved.ad_tarich(+);
-
-END pro_get_oved_yom_avoda_UDT;
-
-PROCEDURE pro_ins_sidurim_ovdim(p_coll_sidurim_ovdim IN COLL_SIDURIM_OVDIM) IS
-    iMinutes NUMBER;
-    iCount NUMBER;
-    bFound BOOLEAN;
-    dShatHatchala DATE;
-BEGIN
-     
-     
-      IF (p_coll_sidurim_ovdim IS NOT NULL) THEN
-          FOR i IN  1..p_coll_sidurim_ovdim.COUNT LOOP
-        --  if (p_coll_sidurim_ovdim(i).update_object <> 9) then
-             dShatHatchala:=p_coll_sidurim_ovdim(i).shat_hatchala;
-             
-             
-             IF (TO_CHAR(dShatHatchala, 'YYYY')='0001') THEN
-                  iMinutes := 1;
-                  iCount := 0; 
-                  bFound := FALSE;
-                  WHILE NOT bFound LOOP
-                    SELECT COUNT(mispar_sidur) INTO iCount
-                    FROM TB_SIDURIM_OVDIM a 
-                    WHERE  a.mispar_ishi = p_coll_sidurim_ovdim(i).mispar_ishi
-                           AND a.taarich = p_coll_sidurim_ovdim(i).taarich
-                           AND a.mispar_sidur = p_coll_sidurim_ovdim(i).mispar_sidur
-                           AND a.shat_hatchala = dShatHatchala;
-                           
-                    IF (iCount > 0) THEN 
-                        iMinutes := iMinutes + 1;
-                        dShatHatchala := TO_DATE('01/01/0001 00:0' || iMinutes ,'dd/mm/yyyy HH24:MI') ;
-                       ELSE
-                           bFound:=TRUE;   
-                    END IF;        
-                  END LOOP;                    
-              END IF;
-              
-              
-              
-              INSERT INTO TB_SIDURIM_OVDIM
-                          (mispar_ishi                 ,
-                           mispar_sidur                ,
-                           taarich                     ,
-                           shat_hatchala               ,
-                           shat_gmar                   ,
-                           meadken_acharon             ,
-                           shat_hatchala_letashlum     ,
-                           shat_gmar_letashlum         ,
-                           pitzul_hafsaka              ,
-                           chariga                     ,
-                           tosefet_grira               ,
-						   bitul_o_hosafa,
-                      --     hamarat_shabat              ,
-                           hashlama                    ,
-                           yom_visa                    ,
-                           lo_letashlum                ,
-                           out_michsa                  ,
-                           mikum_shaon_knisa           ,
-                           mikum_shaon_yetzia          ,
-                           --km_visa_lepremia          ,
-                           achuz_knas_lepremyat_visa   ,
-                           achuz_viza_besikun          ,
-                           mispar_musach_o_machsan     ,
-                           tafkid_visa                 ,
-                           mivtza_visa                 ,
-                           kod_siba_lo_letashlum       ,
-                           kod_siba_ledivuch_yadani_in ,
-                           kod_siba_ledivuch_yadani_out,
-                           shayah_leyom_kodem          ,
-                           taarich_idkun_acharon       ,
-                           heara                       ,
-                           mispar_shiurey_nehiga       ,
-                           mezake_halbasha             ,
-                           mezake_nesiot               ,
-                           sug_hazmanat_visa           ,
-                           shat_hitiatzvut,
-						   sector_visa,
-						   ptor_mehitiatzvut ,
-						   nidreshet_hitiatzvut,
-						   hachtama_beatar_lo_takin,
-						   sug_hashlama,
-                           sug_sidur,
-                           menahel_musach_meadken
-                          )
-              VALUES (p_coll_sidurim_ovdim(i).mispar_ishi,p_coll_sidurim_ovdim(i).mispar_sidur,
-                      p_coll_sidurim_ovdim(i).taarich, dShatHatchala,
-                      p_coll_sidurim_ovdim(i).shat_gmar,-2,
-                      p_coll_sidurim_ovdim(i).shat_hatchala_letashlum,p_coll_sidurim_ovdim(i).shat_gmar_letashlum,
-                      p_coll_sidurim_ovdim(i).pitzul_hafsaka,p_coll_sidurim_ovdim(i).chariga,
-                      p_coll_sidurim_ovdim(i).tosefet_grira,    p_coll_sidurim_ovdim(i).bitul_o_hosafa,--p_coll_sidurim_ovdim(i).hamarat_shabat,
-                      p_coll_sidurim_ovdim(i).hashlama,p_coll_sidurim_ovdim(i).yom_visa,
-                      p_coll_sidurim_ovdim(i).lo_letashlum,p_coll_sidurim_ovdim(i).out_michsa,
-                      p_coll_sidurim_ovdim(i).mikum_shaon_knisa,p_coll_sidurim_ovdim(i).mikum_shaon_yetzia,
-                      p_coll_sidurim_ovdim(i).achuz_knas_lepremyat_visa,
-                      p_coll_sidurim_ovdim(i).achuz_viza_besikun,
-                      p_coll_sidurim_ovdim(i).mispar_musach_o_machsan,
-                      p_coll_sidurim_ovdim(i).tafkid_visa,             
-                      p_coll_sidurim_ovdim(i).mivtza_visa, 
-                      p_coll_sidurim_ovdim(i).kod_siba_lo_letashlum,
-                      p_coll_sidurim_ovdim(i).kod_siba_ledivuch_yadani_in,p_coll_sidurim_ovdim(i).kod_siba_ledivuch_yadani_out,
-                      p_coll_sidurim_ovdim(i).shayah_leyom_kodem,SYSDATE,
-                      p_coll_sidurim_ovdim(i).heara,p_coll_sidurim_ovdim(i).mispar_shiurey_nehiga,
-                      p_coll_sidurim_ovdim(i).mezake_halbasha,p_coll_sidurim_ovdim(i).mezake_nesiot,
-                      p_coll_sidurim_ovdim(i).sug_hazmanat_visa,
-                      p_coll_sidurim_ovdim(i).shat_hitiatzvut,
-					  p_coll_sidurim_ovdim(i).sector_visa,
-					   p_coll_sidurim_ovdim(i).ptor_mehitiatzvut ,
-					  p_coll_sidurim_ovdim(i).nidreshet_hitiatzvut,
-					  p_coll_sidurim_ovdim(i).hachtama_beatar_lo_takin,
-					  p_coll_sidurim_ovdim(i).sug_hashlama,
-                      p_coll_sidurim_ovdim(i).sug_sidur,
-                      p_coll_sidurim_ovdim(i).menahel_musach_meadken);
-                      
-                      if ((p_coll_sidurim_ovdim(i).mispar_ishi <> p_coll_sidurim_ovdim(i).meadken_acharon) and (p_coll_sidurim_ovdim(i).meadken_acharon > 0) ) then
-                          pkg_utils.pro_insert_meadken_acharon(p_coll_sidurim_ovdim(i).mispar_ishi,p_coll_sidurim_ovdim(i).taarich,p_coll_sidurim_ovdim(i).meadken_acharon );
-                      end if;
-                 --        End if;
-          END LOOP;
-      
-       END IF;
-      EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_ins_sidurim_ovdim;
-
-PROCEDURE pro_upd_sidurim_ovdim(p_coll_sidurim_ovdim IN COLL_SIDURIM_OVDIM) IS
-BEGIN
-
-    IF (p_coll_sidurim_ovdim IS NOT NULL) THEN
-        FOR i IN 1..p_coll_sidurim_ovdim.COUNT LOOP
-            IF (p_coll_sidurim_ovdim(i).update_object=1) THEN               
-                pro_ins_sidurim_ovdim_trail(p_coll_sidurim_ovdim(i),3);
-                pro_upd_sidur_oved(p_coll_sidurim_ovdim(i));
-            END IF;
-          END LOOP;
-    END IF;
-      EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_upd_sidurim_ovdim;
-PROCEDURE pro_del_sidurim_ovdim(p_coll_sidurim_ovdim IN coll_sidurim_ovdim,p_type_update IN  NUMBER) IS
-BEGIN
-    IF (p_coll_sidurim_ovdim IS NOT NULL) THEN
-        FOR i IN 1..p_coll_sidurim_ovdim.COUNT LOOP           
-               IF (p_coll_sidurim_ovdim(i).update_object=p_type_update) THEN
-                    pro_ins_sidurim_ovdim_trail(p_coll_sidurim_ovdim(i),2);
-                    pro_del_sidur_oved(p_coll_sidurim_ovdim(i));
-               END IF;           
-        END LOOP;
-    END IF;
-      EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_del_sidurim_ovdim;
-PROCEDURE pro_upd_yamey_avoda_ovdim(p_coll_yamey_avoda_ovdim IN coll_yamey_avoda_ovdim) IS
-BEGIN
-      IF (p_coll_yamey_avoda_ovdim IS NOT NULL) THEN
-          FOR i IN 1..p_coll_yamey_avoda_ovdim.COUNT LOOP
-              IF (p_coll_yamey_avoda_ovdim(i).update_object=1) THEN
-                  pro_ins_yom_avoda_oved_trail(p_coll_yamey_avoda_ovdim(i));
-                  pro_upd_yom_avoda_oved(p_coll_yamey_avoda_ovdim(i));
-              END IF;
-          END LOOP;
-      END IF;
-      EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_upd_yamey_avoda_ovdim;
-
-PROCEDURE pro_upd_peilut_ovdim(p_coll_obj_peilut_ovdim IN coll_obj_peilut_ovdim) IS
-BEGIN
-
-     IF (p_coll_obj_peilut_ovdim IS NOT NULL) THEN
-         FOR i IN 1..p_coll_obj_peilut_ovdim.COUNT LOOP
-             IF (p_coll_obj_peilut_ovdim(i).update_object=1) THEN
-                 pro_ins_peilut_ovdim_trail(p_coll_obj_peilut_ovdim(i),3);
-                 pro_upd_peilut_oved(p_coll_obj_peilut_ovdim(i));
-             END IF;
-
-          END LOOP;
-      END IF;
-
-      EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_upd_peilut_ovdim;
-
-PROCEDURE pro_ins_peilut_ovdim(p_coll_obj_peilut_ovdim IN coll_obj_peilut_ovdim) IS
-    iMinutes NUMBER;
-    iCount NUMBER;
-    bFound BOOLEAN;
-    dShatYetiza DATE;
-BEGIN
-      IF (p_coll_obj_peilut_ovdim IS NOT NULL) THEN
-          FOR i IN 1..p_coll_obj_peilut_ovdim.COUNT LOOP
-          
-            dShatYetiza:=p_coll_obj_peilut_ovdim(i).shat_yetzia;
-            IF (TO_CHAR(dShatYetiza, 'YYYY')='0001') THEN
-                  iMinutes := 1;
-                  iCount := 0; 
-                  bFound := FALSE;
-                  WHILE NOT bFound LOOP
-                    SELECT COUNT(mispar_sidur) INTO iCount
-                    FROM TB_PEILUT_OVDIM a 
-                    WHERE  a.mispar_ishi = p_coll_obj_peilut_ovdim(i).mispar_ishi
-                           AND a.taarich = p_coll_obj_peilut_ovdim(i).taarich
-                           AND a.mispar_sidur = p_coll_obj_peilut_ovdim(i).mispar_sidur
-                           AND a.shat_hatchala_sidur = p_coll_obj_peilut_ovdim(i).shat_hatchala_sidur
-                           AND a.mispar_knisa = p_coll_obj_peilut_ovdim(i).mispar_knisa
-                           AND a.shat_yetzia = dShatYetiza;
-                           
-                    IF (iCount > 0) THEN 
-                        iMinutes := iMinutes + 1;
-                        dShatYetiza := TO_DATE('01/01/0001 00:0' || iMinutes ,'dd/mm/yyyy HH24:MI') ;
-                       ELSE
-                           bFound:=TRUE;   
-                    END IF;        
-                  END LOOP;                    
-            END IF;
-              
-            INSERT INTO TB_PEILUT_OVDIM
-                        (mispar_ishi,
-                         mispar_sidur,
-                         taarich,
-                         shat_hatchala_sidur,
-                         shat_yetzia,
-                         mispar_knisa,
-                         makat_nesia,
-                         oto_no,
-                         mispar_siduri_oto,
-                         kisuy_tor,
-                         bitul_o_hosafa,
-                         kod_shinuy_premia,
-                         snif_tnua,
-                         mispar_visa,
-                         imut_netzer,
-                         shat_bhirat_nesia_netzer,
-                         oto_no_netzer,
-                         mispar_sidur_netzer,
-                         shat_yetzia_netzer,
-                         makat_netzer,
-                         shilut_netzer,
-                         mikum_bhirat_nesia_netzer,
-                         mispar_matala,
-						 dakot_bafoal,
-                         taarich_idkun_acharon,
-                         meadken_acharon,
-                         heara,
-						 teur_nesia)
-                         --ishur_kfula)
-             VALUES (p_coll_obj_peilut_ovdim(i).mispar_ishi,
-                     p_coll_obj_peilut_ovdim(i).mispar_sidur,
-                     p_coll_obj_peilut_ovdim(i).taarich,
-                     p_coll_obj_peilut_ovdim(i).shat_hatchala_sidur,
-                     dShatYetiza,--p_coll_obj_peilut_ovdim(i).shat_yetzia,
-                     p_coll_obj_peilut_ovdim(i).mispar_knisa,
-                     p_coll_obj_peilut_ovdim(i).makat_nesia,
-                     p_coll_obj_peilut_ovdim(i).oto_no,
-                     p_coll_obj_peilut_ovdim(i).mispar_siduri_oto,
-                     p_coll_obj_peilut_ovdim(i).kisuy_tor,
-                     p_coll_obj_peilut_ovdim(i).bitul_o_hosafa,
-                     p_coll_obj_peilut_ovdim(i).kod_shinuy_premia,
-                     p_coll_obj_peilut_ovdim(i).snif_tnua,
-                     p_coll_obj_peilut_ovdim(i).mispar_visa,
-                     p_coll_obj_peilut_ovdim(i).imut_netzer,
-                     p_coll_obj_peilut_ovdim(i).shat_bhirat_nesia_netzer,
-                     p_coll_obj_peilut_ovdim(i).oto_no_netzer,
-                     p_coll_obj_peilut_ovdim(i).mispar_sidur_netzer,
-                     p_coll_obj_peilut_ovdim(i).shat_yetzia_netzer,
-                     p_coll_obj_peilut_ovdim(i).makat_netzer,
-                     p_coll_obj_peilut_ovdim(i).shilut_netzer,
-                     p_coll_obj_peilut_ovdim(i).mikum_bhirat_nesia_netzer,
-			         p_coll_obj_peilut_ovdim(i).mispar_matala,
-					 p_coll_obj_peilut_ovdim(i).dakot_bafoal,
-                     SYSDATE,
-                     p_coll_obj_peilut_ovdim(i).meadken_acharon,
-                     p_coll_obj_peilut_ovdim(i).heara,
-					 p_coll_obj_peilut_ovdim(i).teur_nesia
-					  );
-                    -- p_coll_obj_peilut_ovdim(i).ishur_kfula);
-                      if ((p_coll_obj_peilut_ovdim(i).mispar_ishi <> p_coll_obj_peilut_ovdim(i).meadken_acharon) and (p_coll_obj_peilut_ovdim(i).meadken_acharon > 0) ) then
-                          pkg_utils.pro_insert_meadken_acharon(p_coll_obj_peilut_ovdim(i).mispar_ishi,p_coll_obj_peilut_ovdim(i).taarich,p_coll_obj_peilut_ovdim(i).meadken_acharon );
-                     end if;
-          END LOOP;
-      END IF;
-      EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_ins_peilut_ovdim;
-
-PROCEDURE pro_del_peilut_ovdim(p_coll_obj_peilut_ovdim IN coll_obj_peilut_ovdim) IS
-BEGIN
-      IF (p_coll_obj_peilut_ovdim IS NOT NULL) THEN
-            FOR i IN 1..p_coll_obj_peilut_ovdim.COUNT LOOP
-               pro_ins_peilut_ovdim_trail(p_coll_obj_peilut_ovdim(i),2);
-                pro_del_peilut_oved(p_coll_obj_peilut_ovdim(i));
-           END LOOP;
-      END IF;
-      EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_del_peilut_ovdim;
-
-PROCEDURE pro_upd_sidur_oved(p_obj_sidurim_ovdim IN obj_sidurim_ovdim) IS
-BEGIN
-    --Insert sidurim
-    UPDATE TB_SIDURIM_OVDIM
-    SET lo_letashlum                 = p_obj_sidurim_ovdim.lo_letashlum,
-        hashlama                     = p_obj_sidurim_ovdim.Hashlama,
-    --    hamarat_shabat               = p_obj_sidurim_ovdim.hamarat_shabat,
-        shat_hatchala                = p_obj_sidurim_ovdim.new_shat_hatchala,
-        shat_gmar                    = p_obj_sidurim_ovdim.shat_gmar,
-        mispar_ishi                  = p_obj_sidurim_ovdim.mispar_ishi,
-        mispar_sidur                 = p_obj_sidurim_ovdim.new_mispar_sidur,
-        chariga                      = p_obj_sidurim_ovdim.chariga,
-        out_michsa                   = p_obj_sidurim_ovdim.out_michsa,
-        shat_hatchala_letashlum      = p_obj_sidurim_ovdim.shat_hatchala_letashlum,
-        shat_gmar_letashlum          = p_obj_sidurim_ovdim.shat_gmar_letashlum,
-        mezake_nesiot                = p_obj_sidurim_ovdim.mezake_nesiot,
-        mezake_halbasha              = p_obj_sidurim_ovdim.mezake_halbasha,
-        taarich_idkun_acharon        = SYSDATE,
-        meadken_acharon              = p_obj_sidurim_ovdim.meadken_acharon,
-        kod_siba_ledivuch_yadani_out = p_obj_sidurim_ovdim.kod_siba_ledivuch_yadani_out,
-        kod_siba_ledivuch_yadani_in  = p_obj_sidurim_ovdim.kod_siba_ledivuch_yadani_in,
-        pitzul_hafsaka               = p_obj_sidurim_ovdim.pitzul_hafsaka,
-        kod_siba_lo_letashlum        = p_obj_sidurim_ovdim.kod_siba_lo_letashlum,
-        bitul_o_hosafa               = p_obj_sidurim_ovdim.bitul_o_hosafa,
-        shat_hitiatzvut              = p_obj_sidurim_ovdim.shat_hitiatzvut,
-		ptor_mehitiatzvut    = p_obj_sidurim_ovdim.ptor_mehitiatzvut,
-		 nidreshet_hitiatzvut   = p_obj_sidurim_ovdim.nidreshet_hitiatzvut,
-         hachtama_beatar_lo_takin= p_obj_sidurim_ovdim. hachtama_beatar_lo_takin,
-		 sug_hashlama=p_obj_sidurim_ovdim.sug_hashlama
-        -- sug_sidur =p_obj_sidurim_ovdim.sug_sidur
-    WHERE mispar_ishi  = p_obj_sidurim_ovdim.mispar_ishi AND
-          mispar_sidur = p_obj_sidurim_ovdim.new_mispar_sidur AND
-          taarich      = TRUNC(p_obj_sidurim_ovdim.taarich) AND
-          shat_hatchala= p_obj_sidurim_ovdim.new_shat_hatchala;
-          
-       
-       if ((p_obj_sidurim_ovdim.mispar_ishi <> p_obj_sidurim_ovdim.meadken_acharon) and (p_obj_sidurim_ovdim.meadken_acharon > 0) ) then
-            pkg_utils.pro_insert_meadken_acharon(p_obj_sidurim_ovdim.mispar_ishi,p_obj_sidurim_ovdim.taarich, p_obj_sidurim_ovdim.meadken_acharon );
-       end if;
-EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_upd_sidur_oved;
-PROCEDURE pro_del_sidur_oved(p_obj_sidurim_ovdim IN obj_sidurim_ovdim) IS
-BEGIN
-      DELETE TB_SIDURIM_OVDIM
-      WHERE    mispar_ishi         = p_obj_sidurim_ovdim.mispar_ishi AND
-               taarich             = TRUNC(p_obj_sidurim_ovdim.taarich) AND
-               mispar_sidur        = p_obj_sidurim_ovdim.mispar_sidur AND
-               shat_hatchala       = p_obj_sidurim_ovdim.shat_hatchala;
-               
-       if ((p_obj_sidurim_ovdim.mispar_ishi <> p_obj_sidurim_ovdim.meadken_acharon) and (p_obj_sidurim_ovdim.meadken_acharon > 0) ) then
-            pkg_utils.pro_insert_meadken_acharon(p_obj_sidurim_ovdim.mispar_ishi,p_obj_sidurim_ovdim.taarich,p_obj_sidurim_ovdim.meadken_acharon );
-       end if;        
-
-EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_del_sidur_oved;
-PROCEDURE pro_ins_sidurim_ovdim_trail(p_obj_sidurim_ovdim IN obj_sidurim_ovdim,p_sug_peula IN TRAIL_SIDURIM_OVDIM.sug_peula%TYPE) IS
-BEGIN
-    INSERT INTO TRAIL_SIDURIM_OVDIM (mispar_ishi,mispar_sidur,taarich,
-                                    shat_hatchala,shat_gmar,shat_hatchala_letashlum,shat_gmar_letashlum,
-                                    pitzul_hafsaka,chariga,tosefet_grira,hashlama,yom_visa,
-                                    lo_letashlum,out_michsa,mikum_shaon_knisa,mikum_shaon_yetzia,
-                                    achuz_knas_lepremyat_visa,achuz_viza_besikun,mispar_musach_o_machsan,
-                                    kod_siba_lo_letashlum,kod_siba_ledivuch_yadani_in,kod_siba_ledivuch_yadani_out,
-                                    meadken_acharon,taarich_idkun_acharon,heara,shayah_leyom_kodem,mispar_shiurey_nehiga,
-                                    mispar_ishi_trail,taarich_idkun_trail,sug_peula,mezake_halbasha,mezake_nesiot,sector_visa,shat_hitiatzvut,sug_hashlama,
-									menahel_musach_meadken,sug_hazmanat_visa,tafkid_visa,mivtza_visa,nidreshet_hitiatzvut,
-									ptor_mehitiatzvut,hachtama_beatar_lo_takin,hafhatat_nochechut_visa,bitul_o_hosafa   )
-    SELECT mispar_ishi,mispar_sidur,taarich,
-          shat_hatchala,shat_gmar,shat_hatchala_letashlum,shat_gmar_letashlum,
-          pitzul_hafsaka,chariga,tosefet_grira,hashlama,yom_visa,
-          lo_letashlum,out_michsa,mikum_shaon_knisa,mikum_shaon_yetzia,
-          achuz_knas_lepremyat_visa,achuz_viza_besikun,mispar_musach_o_machsan,
-          kod_siba_lo_letashlum,kod_siba_ledivuch_yadani_in,kod_siba_ledivuch_yadani_out,
-          meadken_acharon,taarich_idkun_acharon,heara,shayah_leyom_kodem,mispar_shiurey_nehiga,
-          p_obj_sidurim_ovdim.meadken_acharon ,SYSDATE,p_sug_peula, mezake_halbasha,mezake_nesiot,sector_visa,shat_hitiatzvut,sug_hashlama,
-		  menahel_musach_meadken,sug_hazmanat_visa,tafkid_visa,mivtza_visa,nidreshet_hitiatzvut ,
-		  ptor_mehitiatzvut,hachtama_beatar_lo_takin ,hafhatat_nochechut_visa,p_obj_sidurim_ovdim.bitul_o_hosafa
-    FROM TB_SIDURIM_OVDIM
-    WHERE mispar_ishi  = p_obj_sidurim_ovdim.mispar_ishi    AND
-         mispar_sidur  = p_obj_sidurim_ovdim.mispar_sidur   AND
-         taarich       = TRUNC(p_obj_sidurim_ovdim.taarich) AND
-         shat_hatchala = p_obj_sidurim_ovdim.shat_hatchala;
-         
-         
-        
-EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END  pro_ins_sidurim_ovdim_trail;
-
-PROCEDURE pro_upd_yom_avoda_oved(p_obj_yamey_avoda_ovdim IN obj_yamey_avoda_ovdim) IS
-BEGIN
-     UPDATE TB_YAMEY_AVODA_OVDIM
-     SET tachograf             = p_obj_yamey_avoda_ovdim.tachograf,
-         halbasha              = p_obj_yamey_avoda_ovdim.halbasha,
-         lina                  = p_obj_yamey_avoda_ovdim.lina,
-         hashlama_leyom        = p_obj_yamey_avoda_ovdim.hashlama_leyom,
-         bitul_zman_nesiot     = p_obj_yamey_avoda_ovdim.bitul_zman_nesiot,
-         meadken_acharon       = p_obj_yamey_avoda_ovdim.meadken_acharon,
-         zman_nesia_haloch     = p_obj_yamey_avoda_ovdim.zman_nesia_haloch,
-         zman_nesia_hazor      = p_obj_yamey_avoda_ovdim.zman_nesia_hazor,
-         sibat_hashlama_leyom  = p_obj_yamey_avoda_ovdim.sibat_hashlama_leyom,
-         hamarat_shabat        = p_obj_yamey_avoda_ovdim.hamarat_shabat,
-         taarich_idkun_acharon = SYSDATE
-     WHERE mispar_ishi     = p_obj_yamey_avoda_ovdim.mispar_ishi AND
-           taarich         = TRUNC(p_obj_yamey_avoda_ovdim.taarich);
-           
-           
-           
-       if ((p_obj_yamey_avoda_ovdim.mispar_ishi <> p_obj_yamey_avoda_ovdim.meadken_acharon) and (p_obj_yamey_avoda_ovdim.meadken_acharon > 0) ) then
-            pkg_utils.pro_insert_meadken_acharon(p_obj_yamey_avoda_ovdim.mispar_ishi,p_obj_yamey_avoda_ovdim.taarich,p_obj_yamey_avoda_ovdim.meadken_acharon );
-       end if;   
-EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_upd_yom_avoda_oved;
-
-PROCEDURE pro_ins_yom_avoda_oved_trail(p_obj_yamey_avoda_ovdim IN obj_yamey_avoda_ovdim) IS
-BEGIN
-    INSERT INTO TRAIL_YAMEY_AVODA_OVDIM(mispar_ishi,taarich,shat_hatchala,shat_siyum,
-                                     tachograf,bitul_zman_nesiot,zman_nesia_haloch,
-                                     zman_nesia_hazor,halbasha,lina,status,kod_histaygut_auto,
-                                     measher_o_mistayeg,status_tipul,meadken_acharon,taarich_idkun_acharon,
-                                     heara,hashlama_leyom,sibat_hashlama_leyom,mispar_ishi_trail,taarich_idkun_trail,
-                                     sug_peula,ritzat_ishurim_acharona,shgiot_letezuga_laoved,
-									 ritzat_shgiot_acharona,hamarat_shabat)
-    SELECT mispar_ishi,taarich,shat_hatchala,shat_siyum,tachograf,bitul_zman_nesiot,
-           zman_nesia_haloch,zman_nesia_hazor,halbasha,lina,status,kod_histaygut_auto,
-           measher_o_mistayeg,status_tipul,meadken_acharon,
-           taarich_idkun_acharon,heara,hashlama_leyom,sibat_hashlama_leyom,p_obj_yamey_avoda_ovdim.meadken_acharon,SYSDATE,3,
-		   ritzat_ishurim_acharona,shgiot_letezuga_laoved,
-									 ritzat_shgiot_acharona,hamarat_shabat
-    FROM TB_YAMEY_AVODA_OVDIM
-    WHERE mispar_ishi   = p_obj_yamey_avoda_ovdim.mispar_ishi AND
-          taarich       = TRUNC(p_obj_yamey_avoda_ovdim.taarich);
-
-
-   
-EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_ins_yom_avoda_oved_trail;
-
-
-PROCEDURE pro_upd_peilut_oved(p_obj_peilut_ovdim IN obj_peilut_ovdim)
-IS
-BEGIN
-     UPDATE TB_PEILUT_OVDIM
-     SET mispar_matala           = p_obj_peilut_ovdim.mispar_matala,
-         makat_nesia             = p_obj_peilut_ovdim.makat_nesia,
-         mispar_sidur            = p_obj_peilut_ovdim.new_mispar_sidur,
-		 shat_yetzia             = p_obj_peilut_ovdim.new_shat_yetzia,
-		 shat_hatchala_sidur     = p_obj_peilut_ovdim.new_shat_hatchala_sidur,
-         taarich_idkun_acharon   = SYSDATE,
-         meadken_acharon         = p_obj_peilut_ovdim.meadken_acharon,
-		  mispar_visa = p_obj_peilut_ovdim.mispar_visa,
-		  bitul_o_hosafa=p_obj_peilut_ovdim. bitul_o_hosafa
-     WHERE mispar_ishi           = p_obj_peilut_ovdim.mispar_ishi AND
-           taarich               = p_obj_peilut_ovdim.taarich AND
-           mispar_sidur          = p_obj_peilut_ovdim.mispar_sidur AND
-           shat_hatchala_sidur   = p_obj_peilut_ovdim.shat_hatchala_sidur AND
-           shat_yetzia           = p_obj_peilut_ovdim.shat_yetzia AND
-           mispar_knisa          = p_obj_peilut_ovdim.mispar_knisa;
-
-       if ((p_obj_peilut_ovdim.mispar_ishi <> p_obj_peilut_ovdim.meadken_acharon) and (p_obj_peilut_ovdim.meadken_acharon > 0) ) then
-            pkg_utils.pro_insert_meadken_acharon(p_obj_peilut_ovdim.mispar_ishi,p_obj_peilut_ovdim.taarich, p_obj_peilut_ovdim.meadken_acharon );
-       end if;   
-    EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_upd_peilut_oved;
-
-
-PROCEDURE pro_ins_peilut_ovdim_trail(p_obj_peilut_ovdim IN obj_peilut_ovdim, p_sug_peula IN TRAIL_PEILUT_OVDIM.sug_peula%TYPE)
-IS
-BEGIN
-    INSERT INTO TRAIL_PEILUT_OVDIM(mispar_ishi,taarich,mispar_sidur,
-                                   shat_hatchala_sidur,shat_yetzia,mispar_knisa,
-                                   makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
-                                   bitul_o_hosafa,kod_shinuy_premia,mispar_visa,imut_netzer,
-                                   shat_bhirat_nesia_netzer,oto_no_netzer,mispar_sidur_netzer,
-                                   shat_yetzia_netzer,makat_netzer,shilut_netzer,
-                                   mikum_bhirat_nesia_netzer,mispar_matala,
-                                   taarich_idkun_acharon,meadken_acharon,mispar_ishi_trail,
-                                   taarich_idkun_trail,sug_peula,heara,snif_tnua,teur_nesia,dakot_bafoal ,km_visa,shat_yetzia_mekorit )
-    SELECT mispar_ishi,taarich,mispar_sidur,
-           shat_hatchala_sidur,shat_yetzia,mispar_knisa,
-           makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
-           p_obj_peilut_ovdim.bitul_o_hosafa,kod_shinuy_premia,mispar_visa,imut_netzer,
-           shat_bhirat_nesia_netzer,oto_no_netzer,mispar_sidur_netzer,
-           shat_yetzia_netzer,makat_netzer,shilut_netzer,
-           mikum_bhirat_nesia_netzer,mispar_matala,
-           taarich_idkun_acharon,meadken_acharon,p_obj_peilut_ovdim.meadken_acharon,
-		   SYSDATE, p_sug_peula,
-           heara,snif_tnua,teur_nesia,dakot_bafoal ,km_visa,shat_yetzia_mekorit
-
-    FROM TB_PEILUT_OVDIM
-    WHERE mispar_ishi           = p_obj_peilut_ovdim.mispar_ishi         AND
-          taarich               = TRUNC(p_obj_peilut_ovdim.taarich)      AND
-          mispar_sidur          = p_obj_peilut_ovdim.mispar_sidur        AND
-          shat_hatchala_sidur   = p_obj_peilut_ovdim.shat_hatchala_sidur AND
-          shat_yetzia           = p_obj_peilut_ovdim.shat_yetzia         AND
-          mispar_knisa          = p_obj_peilut_ovdim.mispar_knisa;
-
-
-     
-EXCEPTION
-        --WHEN DUP_VAL_ON_INDEX THEN
-        --    RETURN;
-		 WHEN OTHERS THEN
-		     RAISE_APPLICATION_ERROR(-20001,'An error was encountered in pro_ins_peilut_ovdim_trailm - '||SQLCODE||' -ERROR- '||SQLERRM);
-END pro_ins_peilut_ovdim_trail;
-
-PROCEDURE pro_del_peilut_oved(p_obj_peilut_ovdim IN obj_peilut_ovdim) IS
-BEGIN
-      DELETE TB_PEILUT_OVDIM
-      WHERE    mispar_ishi         = p_obj_peilut_ovdim.mispar_ishi AND
-               taarich             = TRUNC(p_obj_peilut_ovdim.taarich) AND
-               mispar_sidur        = p_obj_peilut_ovdim.mispar_sidur AND
-               shat_hatchala_sidur = p_obj_peilut_ovdim.shat_hatchala_sidur AND
-               shat_yetzia         = p_obj_peilut_ovdim.shat_yetzia AND
-               mispar_knisa        = p_obj_peilut_ovdim.mispar_knisa; 
-           --    makat_nesia         = p_obj_peilut_ovdim.makat_nesia;
-           
-           
-           
-       if ((p_obj_peilut_ovdim.mispar_ishi <> p_obj_peilut_ovdim.meadken_acharon) and (p_obj_peilut_ovdim.meadken_acharon > 0) ) then
-            pkg_utils.pro_insert_meadken_acharon(p_obj_peilut_ovdim.mispar_ishi,p_obj_peilut_ovdim.taarich,p_obj_peilut_ovdim.meadken_acharon );
-       end if;   
-END  pro_del_peilut_oved;
-PROCEDURE pro_shinuy_kelet(p_coll_yamey_avoda_ovdim_upd IN coll_yamey_avoda_ovdim,
-                           p_coll_sidurim_ovdim_upd     IN coll_sidurim_ovdim,
-                           p_coll_sidurim_ovdim_ins     IN  coll_sidurim_ovdim,
-                           p_coll_sidurim_ovdim_del     IN coll_sidurim_ovdim,
-                           p_coll_obj_peilut_ovdim_upd  IN coll_obj_peilut_ovdim,
-                           p_coll_obj_peilut_ovdim_ins  IN coll_obj_peilut_ovdim,
-                           p_coll_obj_peilut_ovdim_del  IN coll_obj_peilut_ovdim) IS
-BEGIN
-DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'pkg_errors',action_name => 'pro_shinuy_kelet');
-    --עדכון יום עבודה
-    DBMS_APPLICATION_INFO.SET_ACTION( 'pro_upd_yamey_avoda_ovdim');
-   BEGIN
-        pro_upd_yamey_avoda_ovdim(p_coll_yamey_avoda_ovdim_upd);
-   EXCEPTION
-		 WHEN OTHERS THEN
-              RAISE_APPLICATION_ERROR(-20001,'An error was encountered in tb_yamey_avoda_ovdim - '||SQLCODE||' -ERROR- '||SQLERRM);
-
-   END;
-
-DBMS_APPLICATION_INFO.SET_ACTION( 'pro_del_sidurim_ovdim');
---מחיקת סידורים
-    BEGIN
-      pro_del_sidurim_ovdim(p_coll_sidurim_ovdim_del,2);
-      -- pro_del_sidurim_ovdim(p_coll_sidurim_ovdim_del,p_coll_sidurim_ovdim_ins,2);
-      EXCEPTION
-		 WHEN OTHERS THEN
-           RAISE_APPLICATION_ERROR(-20001,'An error was encountered in delete to tb_sidurim_ovdim - '||SQLCODE||' -ERROR- '||SQLERRM);
-    END;
- DBMS_APPLICATION_INFO.SET_ACTION( 'pro_ins_sidurim_ovdim');
- --הכנסת סידורים חדשים
-   BEGIN
-        pro_ins_sidurim_ovdim(p_coll_sidurim_ovdim_ins);
-      EXCEPTION
-		 WHEN OTHERS THEN
-		       RAISE_APPLICATION_ERROR(-20001,'An error was encountered in insert to tb_sidurim_ovdim - '||SQLCODE||' -ERROR- '||SQLERRM);
-    END;
-DBMS_APPLICATION_INFO.SET_ACTION( 'pro_del_peilut_ovdim');
---מחיקת פעילויות
-    BEGIN
-
-        pro_del_peilut_ovdim(p_coll_obj_peilut_ovdim_del);
-     EXCEPTION
-		 WHEN OTHERS THEN
-            RAISE_APPLICATION_ERROR(-20001,'An error was encountered in delete to tb_peiluyot_ovdim - '||SQLCODE||' -ERROR- '||SQLERRM);
-    END;
-	DBMS_APPLICATION_INFO.SET_ACTION( 'pro_upd_peilut_ovdim');
-	 --עדכון פעילויות
-    BEGIN
-        pro_upd_peilut_ovdim(p_coll_obj_peilut_ovdim_upd);
-       EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE_APPLICATION_ERROR(-20001,'An error was encountered in update to tb_peiluyot_ovdim - '||SQLCODE||' -ERROR- '||SQLERRM);
-    END;
-	
-	 DBMS_APPLICATION_INFO.SET_ACTION( 'pro_upd_sidurim_ovdim');
-    --עדכון סידורים
-    BEGIN
-        pro_upd_sidurim_ovdim(p_coll_sidurim_ovdim_upd);
-      EXCEPTION
-		 WHEN OTHERS THEN
-            RAISE_APPLICATION_ERROR(-20001,'An error was encountered in update to tb_sidurim_ovdim - '||SQLCODE||' -ERROR- '||SQLERRM);
-    END;
-    DBMS_APPLICATION_INFO.SET_ACTION( 'pro_del_sidurim_ovdim');
-   --מחיקת סידורים
-   BEGIN
-        pro_del_sidurim_ovdim(p_coll_sidurim_ovdim_del,0);
-      EXCEPTION
-		 WHEN OTHERS THEN
-           RAISE_APPLICATION_ERROR(-20001,'An error was encountered in delete to tb_sidurim_ovdim - '||SQLCODE||' -ERROR- '||SQLERRM);
-    END;
-DBMS_APPLICATION_INFO.SET_ACTION( 'pro_ins_peilut_ovdim');
---הכנסת פעילויות
-      BEGIN
-        pro_ins_peilut_ovdim(p_coll_obj_peilut_ovdim_ins);
-     EXCEPTION
-		 WHEN OTHERS THEN
-             RAISE_APPLICATION_ERROR(-20001,'An error was encountered in insert to tb_peiluyot_ovdim - '||SQLCODE||' -ERROR- '||SQLERRM);
-    END;  
-
-
-END pro_shinuy_kelet;
-
-PROCEDURE pro_oved_update_fields(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE, p_date IN DATE, p_cur OUT CurType)
-IS
-BEGIN
-DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'pkg_errors',action_name => 'pro_oved_update_fields');
---Get maximun table/trail  last update
-    OPEN p_cur FOR
-    SELECT TRUNC(max_date) last_date, NVL(OVDIM.SHEM_MISH || ' ' ||  OVDIM.SHEM_PRAT ,'מערכת') full_name,MEADKEN_ACHARON
-    FROM
-        OVDIM,
-        (
-            SELECT  TAARICH_IDKUN_ACHARON ,MEADKEN_ACHARON,
-                    MAX(TAARICH_IDKUN_ACHARON) OVER (ORDER BY TAARICH_IDKUN_ACHARON DESC) AS max_date
-            FROM
-            (
-                SELECT yo.TAARICH_IDKUN_ACHARON, yo.MEADKEN_ACHARON
-                FROM TB_YAMEY_AVODA_OVDIM yo
-                WHERE yo.MISPAR_ISHI= p_mispar_ishi
-                AND yo.TAARICH = p_date
-
-                UNION
-
-                SELECT TAARICH_IDKUN_ACHARON ,MEADKEN_ACHARON
-                FROM (
-                  SELECT so.TAARICH_IDKUN_ACHARON ,so.MEADKEN_ACHARON,
-                  MAX(TAARICH_IDKUN_ACHARON) OVER (PARTITION BY mispar_ishi,TAARICH) AS rmax_date
-                  FROM TB_SIDURIM_OVDIM so
-                  WHERE so.MISPAR_ISHI= p_mispar_ishi
-                        AND so.TAARICH = p_date)
-                WHERE TAARICH_IDKUN_ACHARON = rmax_date
-
-                UNION
-
-                SELECT TAARICH_IDKUN_ACHARON ,MEADKEN_ACHARON
-                FROM (
-                  SELECT po.TAARICH_IDKUN_ACHARON ,po.MEADKEN_ACHARON,
-                  MAX(TAARICH_IDKUN_ACHARON) OVER (PARTITION BY mispar_ishi,TAARICH) AS rmax_date
-                  FROM TB_PEILUT_OVDIM po
-                  WHERE po.MISPAR_ISHI= p_mispar_ishi
-                        AND po.TAARICH = p_date)
-                WHERE TAARICH_IDKUN_ACHARON = rmax_date
-
-
-            )
-        ) tbLastUpdate
-    WHERE tbLastUpdate.meadken_acharon= OVDIM.MISPAR_ISHI(+);
-        /*  union
-
-      SELECT TAARICH_IDKUN_TRAIL ,MEADKEN_ACHARON
-        FROM (
-          SELECT a.TAARICH_IDKUN_TRAIL ,a.MEADKEN_ACHARON,
-          MAX(TAARICH_IDKUN_TRAIL) OVER (PARTITION BY mispar_ishi,TAARICH) AS rmax_date
-          FROM trail_yamey_avoda_ovdim a
-          where a.MISPAR_ISHI= p_mispar_ishi
-                and a.TAARICH = p_date)
-        WHERE TAARICH_IDKUN_TRAIL = rmax_date
-
-
-        union
-
-        SELECT TAARICH_IDKUN_TRAIL ,MEADKEN_ACHARON
-        FROM (
-          SELECT a.TAARICH_IDKUN_TRAIL ,a.MEADKEN_ACHARON,
-          MAX(TAARICH_IDKUN_TRAIL) OVER (PARTITION BY mispar_ishi,TAARICH) AS rmax_date
-          FROM trail_sidurim_ovdim a
-          where a.MISPAR_ISHI= p_mispar_ishi
-                and a.TAARICH = p_date)
-        WHERE TAARICH_IDKUN_TRAIL = rmax_date
-
-        union
-
-        SELECT FIRST_VALUE(TAARICH_IDKUN_TRAIL) OVER () as TAARICH_IDKUN_TRAIL
-               ,MEADKEN_ACHARON
-        FROM (
-          SELECT (po.TAARICH_IDKUN_TRAIL) , po.MEADKEN_ACHARON, mispar_ishi,TAARICH,
-          MAX(TAARICH_IDKUN_TRAIL) OVER () AS rmax_date
-          FROM trail_peilut_ovdim po
-          where po.MISPAR_ISHI= p_mispar_ishi
-                and po.TAARICH = p_date)
-        WHERE TAARICH_IDKUN_TRAIL = rmax_date)*/
-
-
-EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END pro_oved_update_fields;
-
-PROCEDURE pro_upd_card_status(p_mispar_ishi IN TB_YAMEY_AVODA_OVDIM.mispar_ishi%TYPE,
-                              p_card_date IN TB_YAMEY_AVODA_OVDIM.taarich%TYPE,
-                              p_status IN TB_YAMEY_AVODA_OVDIM.status%TYPE,
-							  p_user_id IN TB_YAMEY_AVODA_OVDIM.meadken_acharon%TYPE  ) IS
-BEGIN
-    UPDATE TB_YAMEY_AVODA_OVDIM
-    SET status = p_status,
-        taarich_idkun_acharon = SYSDATE ,
-		meadken_acharon=p_user_id
-    WHERE mispar_ishi = p_mispar_ishi AND taarich = p_card_date;
-    
-     if ((p_mispar_ishi <> p_user_id) and (p_user_id > 0) ) then
-            pkg_utils.pro_insert_meadken_acharon(p_mispar_ishi,p_card_date,p_user_id );
-       end if;   
-EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END  pro_upd_card_status;
-
-PROCEDURE pro_get_ctb_shgiot(p_error_code IN CTB_SHGIOT.kod_shgia%TYPE, p_cur OUT CurType) IS
-BEGIN
-    OPEN p_cur FOR
-    SELECT teur_shgia, kod_ishur
-    FROM CTB_SHGIOT
-    WHERE kod_shgia = p_error_code
-          AND Pail = 1;
-
-EXCEPTION
-         WHEN OTHERS THEN
-              RAISE;
-END pro_get_ctb_shgiot;
-
-PROCEDURE pro_ins_approval_errors(p_obj_shgiot_meusharot IN obj_shgiot_meusharot ) IS
-BEGIN
-      -- Insert to tb_shgiot_meusharot
-      INSERT INTO TB_SHGIOT_MEUSHAROT
-                (mispar_ishi,
-                 kod_shgia,
-                 taarich,
-                 mispar_sidur,
-                 shat_hatchala,
-                 shat_yetzia,
-                 mispar_knisa,
-                 gorem_measher,
-                 taarich_ishur,
-                 heara)
-
-         VALUES (p_obj_shgiot_meusharot.mispar_ishi,
-                 p_obj_shgiot_meusharot.kod_shgia,
-                 p_obj_shgiot_meusharot.taarich,
-                 p_obj_shgiot_meusharot.mispar_sidur,
-                 p_obj_shgiot_meusharot.shat_hatchala,
-                 p_obj_shgiot_meusharot.shat_yetzia,
-                 p_obj_shgiot_meusharot.mispar_knisa,
-                 p_obj_shgiot_meusharot.gorem_measher,
-                 p_obj_shgiot_meusharot.taarich_ishur,
-                 p_obj_shgiot_meusharot.heara);
-
-EXCEPTION
-         WHEN OTHERS THEN
-              RAISE;
-END pro_ins_approval_errors;
-PROCEDURE pro_upd_approval_errors(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ishi%TYPE,
-                                      p_taarich  IN TB_SIDURIM_OVDIM.taarich%TYPE,
-                                      p_mispar_sidur IN TB_SIDURIM_OVDIM.mispar_sidur%TYPE,
-                                      p_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE,
-                                      p_shat_yetzia IN TB_PEILUT_OVDIM.shat_yetzia%TYPE,
-                                      p_mispar_knisa IN TB_PEILUT_OVDIM.mispar_knisa%TYPE,
-                                      p_new_mispar_sidur IN TB_SIDURIM_OVDIM.mispar_sidur%TYPE,
-                                      p_new_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE,
-                                      p_new_shat_yetzia IN TB_PEILUT_OVDIM.shat_yetzia%TYPE) IS       
-BEGIN
-      -- Update  tb_shgiot_meusharot
-      UPDATE TB_SHGIOT_MEUSHAROT
-      SET                  
-         mispar_sidur  = p_mispar_sidur,
-        -- shat_hatchala = p_new_shat_hatchala,
-         shat_yetzia   = p_new_shat_yetzia                  
-      WHERE 
-         mispar_ishi   = p_mispar_ishi AND
-         taarich       = p_taarich AND         
-         mispar_sidur  = p_mispar_sidur AND
-         shat_hatchala = p_shat_hatchala AND
-         shat_yetzia   = p_shat_yetzia AND
-         mispar_knisa  = p_mispar_knisa;
-       
-      
-EXCEPTION
-         WHEN OTHERS THEN
-              RAISE;                                         
-END pro_upd_approval_errors; 
-PROCEDURE pro_upd_approval_errors(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ishi%TYPE,
-                                  p_taarich  IN TB_SIDURIM_OVDIM.taarich%TYPE,
-                                  p_mispar_sidur IN TB_SIDURIM_OVDIM.mispar_sidur%TYPE,
-                                  p_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE,                                  
-                                  p_new_mispar_sidur IN TB_SIDURIM_OVDIM.mispar_sidur%TYPE,
-                                  p_new_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE) IS
-BEGIN
-      -- Update  tb_shgiot_meusharot
-      UPDATE TB_SHGIOT_MEUSHAROT
-      SET                  
-         mispar_sidur  = p_mispar_sidur,
-         shat_hatchala = p_new_shat_hatchala                          
-      WHERE 
-         mispar_ishi   = p_mispar_ishi AND
-         taarich       = p_taarich AND         
-         mispar_sidur  = p_mispar_sidur AND
-         shat_hatchala = p_shat_hatchala ;
-        
-END pro_upd_approval_errors;                                                                       
-FUNCTION fn_is_approval_errors_exists(p_obj_shgiot_meusharot IN obj_shgiot_meusharot, p_level IN NUMBER) RETURN NUMBER IS
-    iResult NUMBER;
-BEGIN
-    --Check if Error approval exists in tb_shgiot_meusharot
-    --level 1- yom-avoda
-    --level 2- sidur
-    --level 3- peilut
-
-    IF (p_level=1) THEN
-        SELECT COUNT(kod_shgia) INTO iResult
-        FROM TB_SHGIOT_MEUSHAROT S
-        WHERE S.MISPAR_ISHI =  p_obj_shgiot_meusharot.mispar_ishi AND
-              S.TAARICH     =  p_obj_shgiot_meusharot.taarich     AND
-              S.KOD_SHGIA   =  p_obj_shgiot_meusharot.kod_shgia;
-    END IF;
-
-
-    IF (p_level=2) THEN
-        SELECT COUNT(kod_shgia) INTO iResult
-        FROM TB_SHGIOT_MEUSHAROT S
-        WHERE S.MISPAR_ISHI   =  p_obj_shgiot_meusharot.mispar_ishi  AND
-              S.TAARICH       =  p_obj_shgiot_meusharot.taarich      AND
-              S.KOD_SHGIA     =  p_obj_shgiot_meusharot.kod_shgia    AND
-              S.MISPAR_SIDUR  =  p_obj_shgiot_meusharot.mispar_sidur AND
-              S.SHAT_HATCHALA =  p_obj_shgiot_meusharot.shat_hatchala;
-
-    END IF;
-
-     IF (p_level=3) THEN
-        SELECT COUNT(kod_shgia) INTO iResult
-        FROM TB_SHGIOT_MEUSHAROT S
-        WHERE S.MISPAR_ISHI   =  p_obj_shgiot_meusharot.mispar_ishi   AND
-              S.TAARICH       =  p_obj_shgiot_meusharot.taarich       AND
-              S.KOD_SHGIA     =  p_obj_shgiot_meusharot.kod_shgia     AND
-              S.MISPAR_SIDUR  =  p_obj_shgiot_meusharot.mispar_sidur  AND
-              S.SHAT_HATCHALA =  p_obj_shgiot_meusharot.shat_hatchala AND
-              S.SHAT_YETZIA   =  p_obj_shgiot_meusharot.shat_yetzia   AND
-              S.MISPAR_KNISA  =  p_obj_shgiot_meusharot.mispar_knisa  ;
-
-    END IF;
-    RETURN iResult;
-EXCEPTION
-         WHEN OTHERS THEN
-              iResult:=0;
-              RAISE;
-END  fn_is_approval_errors_exists;
-PROCEDURE pro_get_errors_for_field(p_field_name IN CTB_SHGIOT.natun_lebdika%TYPE,p_shgiot_leoved IN NUMBER, p_cur OUT CurType) IS
-BEGIN
-    OPEN p_cur FOR
-    SELECT S.KOD_SHGIA, s.TEUR_SHGIA, NVL(S.KOD_ISHUR,0) KOD_ISHUR, '' SHOW_ERROR, ('' || '|' ||  NVL(S.KOD_ISHUR,0) || '|' || S.KOD_SHGIA) ERR_KEY, NVL(S.ISHUR_RASHEMET,0) ISHUR_RASHEMET, '' USER_PROFILE
-    FROM CTB_SHGIOT s
-    WHERE UPPER(TRIM(S.NATUN_LEBDIKA)) = UPPER(TRIM(p_field_name))
-     AND PAIL =1
-     AND ((p_shgiot_leoved=1 AND S.LETEZUGA_LAOVED=1) OR (p_shgiot_leoved=0));
-EXCEPTION
-         WHEN OTHERS THEN
-              RAISE;
-END pro_get_errors_for_field;
-
-PROCEDURE pro_upd_tar_ritzat_shgiot(p_mispar_ishi IN TB_YAMEY_AVODA_OVDIM.mispar_ishi%TYPE,
-                              p_card_date IN TB_YAMEY_AVODA_OVDIM.taarich%TYPE,
-							  p_shgiot_letzuga IN TB_YAMEY_AVODA_OVDIM.shgiot_letezuga_laoved%TYPE) IS
-BEGIN
-    UPDATE TB_YAMEY_AVODA_OVDIM
-    SET Ritzat_Shgiot_Acharona=SYSDATE,
-	          shgiot_letezuga_laoved=p_shgiot_letzuga
-    WHERE mispar_ishi = p_mispar_ishi
-	AND taarich = p_card_date;
-EXCEPTION
-		 WHEN OTHERS THEN
-		      RAISE;
-END  pro_upd_tar_ritzat_shgiot;
-
-PROCEDURE pro_is_duplicate_travel(p_mispar_ishi IN TB_PEILUT_OVDIM.mispar_ishi%TYPE,
-		 									  	 						 p_taarich  IN TB_PEILUT_OVDIM.taarich%TYPE,
-																		 p_makat_nesia IN TB_PEILUT_OVDIM.makat_nesia%TYPE,
-																		 p_shat_yetzia IN TB_PEILUT_OVDIM.shat_yetzia%TYPE,
-																		 p_mispar_knisa IN TB_PEILUT_OVDIM.mispar_knisa%TYPE,
-																		 p_Cur OUT CurType) IS
- BEGIN
-     OPEN p_cur FOR
-		   SELECT y.mispar_ishi,y.taarich
-		    FROM TB_PEILUT_OVDIM p,TB_YAMEY_AVODA_OVDIM y
-		    WHERE p.mispar_ishi=y.mispar_ishi
-		   AND p.taarich=y.taarich
-		   AND (y.measher_o_mistayeg=0 OR y.measher_o_mistayeg=1)
-		   AND p.mispar_ishi<>p_mispar_ishi
-		  AND p.taarich=TRUNC(p_taarich)
-		  AND p.makat_nesia= p_makat_nesia
-		  AND p.shat_yetzia=p_shat_yetzia
-		  AND p.mispar_knisa=p_mispar_knisa;
-
- EXCEPTION
-         WHEN OTHERS THEN
-		RAISE;
-
-END pro_is_duplicate_travel;
-
-PROCEDURE pro_have_sidur_chofef(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ishi%TYPE,
-		 									  	 						 p_taarich  IN TB_SIDURIM_OVDIM.taarich%TYPE,
-																		 p_mispar_sidur IN TB_SIDURIM_OVDIM.mispar_sidur%TYPE,
-																		 p_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE,
-																		 p_shat_gmar IN TB_SIDURIM_OVDIM.shat_gmar%TYPE,
-																		 p_param_chafifa IN NUMBER,
-																		 p_Cur OUT CurType) IS
-BEGIN
-DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'pkg_errors',action_name => 'pro_have_sidur_chofef');
-   OPEN p_cur FOR
-		   SELECT y.mispar_ishi,y.taarich
-		   		FROM TB_SIDURIM_OVDIM s,TB_YAMEY_AVODA_OVDIM y
-				WHERE s.mispar_ishi=y.mispar_ishi
-				AND s.taarich=y.taarich
-		       AND (y.measher_o_mistayeg=0 OR y.measher_o_mistayeg=1)
-				AND s.mispar_ishi<>p_mispar_ishi
-				AND s.taarich=TRUNC(p_taarich)
-				AND s.mispar_sidur= p_mispar_sidur
-				AND (p_shat_hatchala<s.shat_gmar OR p_shat_gmar>s.shat_hatchala )
-				AND ((s.shat_hatchala<=p_shat_hatchala AND s.shat_gmar>=p_shat_gmar AND  (p_shat_gmar-p_shat_hatchala)*1440>p_param_chafifa)
-				OR  (s.shat_gmar<p_shat_gmar AND  (s.shat_gmar-p_shat_hatchala)*1440>p_param_chafifa)
-				OR  (s.shat_gmar>p_shat_gmar AND  (p_shat_gmar-s.shat_hatchala)*1440>p_param_chafifa)
-				OR (s.shat_hatchala>p_shat_hatchala AND s.shat_gmar<= p_shat_gmar  AND (s.shat_gmar-s.shat_hatchala)*1440>p_param_chafifa));
-
- EXCEPTION
-         WHEN OTHERS THEN
-		RAISE;
-
-END pro_have_sidur_chofef;
-
-FUNCTION  fn_count_shgiot_letzuga(p_arr_Kod_Shgia IN VARCHAR2) RETURN NUMBER
-IS
-    v_count NUMBER;
-BEGIN
-    v_count:=0;
-		SELECT COUNT(*) INTO v_count
-		FROM CTB_SHGIOT
-		WHERE LETEZUGA_LAOVED = 1
-		AND kod_shgia IN(SELECT x FROM  TABLE(CAST(Convert_String_To_Table(p_arr_Kod_Shgia ,  ',') AS mytabtype)));
-
-         RETURN v_count;
-EXCEPTION
-        WHEN NO_DATA_FOUND THEN
-             RETURN 0;
-        WHEN OTHERS THEN
-		RAISE;
-
-END fn_count_shgiot_letzuga;
-
-PROCEDURE get_idkuney_rashemet(p_mispar_ishi IN TB_IDKUN_RASHEMET.mispar_ishi%TYPE,
-		  										   							       p_taarich  IN TB_IDKUN_RASHEMET.taarich%TYPE,
-																				   p_Cur OUT CurType) AS
-  BEGIN
-   DBMS_APPLICATION_INFO.SET_MODULE('pkg_errors.get_idkuney_rashemet','get idkuney rashemet');
-	
-      OPEN p_Cur FOR
-         SELECT i.taarich,i.mispar_sidur,i.shat_hatchala,i.shat_yetzia,i.mispar_knisa,UPPER(m.shem_db) shem_db,i.pakad_id
-		 FROM TB_IDKUN_RASHEMET i, TB_MASACH m
-		 WHERE m.masach_id=19
-		 AND m.sug=2
-		 AND m.pakad_id=i.pakad_id
-		 AND i.mispar_ishi=p_mispar_ishi
-		 AND i.taarich=p_taarich;
-
-		   EXCEPTION
-        WHEN OTHERS THEN
-		RAISE;
-  END get_idkuney_rashemet;
-
-  PROCEDURE pro_check_have_sidur_grira(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ishi%TYPE,
-		 									  	 						 p_taarich  IN TB_SIDURIM_OVDIM.taarich%TYPE,
-																		 p_Cur OUT CurType) IS
- BEGIN
-     OPEN p_cur FOR
-		  SELECT o.mispar_ishi, o.mispar_sidur,o.bitul_o_hosafa, o.shat_gmar, o.shat_hatchala, o.yom_visa,
-           o.chariga,NVL(o.pitzul_hafsaka,0)pitzul_hafsaka,o.taarich,o.shayah_leyom_kodem,o.mispar_shiurey_nehiga,
-           o.out_michsa ,
-		   o.mikum_shaon_knisa,o.mikum_shaon_yetzia,o.mezake_halbasha,
-           o.hashlama,o.lo_letashlum,
-           o.kod_siba_ledivuch_yadani_in, o.kod_siba_ledivuch_yadani_out, o.kod_siba_lo_letashlum,
-           o.shat_hatchala_letashlum, o.shat_gmar_letashlum,o.mezake_nesiot,
-           o.tosefet_grira, o.achuz_knas_lepremyat_visa,o.achuz_viza_besikun,
-           o.mispar_musach_o_machsan,o.sug_hazmanat_visa, o.sug_hashlama,
-           o.heara, o.taarich_idkun_acharon, o.meadken_acharon,O.MENAHEL_MUSACH_MEADKEN,
-           o.shat_gmar_letashlum_musach,O.SHAT_HATCHALA_LETASHLUM_MUSACH,
-           o.sector_visa, o.nidreshet_hitiatzvut, o.shat_hitiatzvut, o.ptor_mehitiatzvut,o.Hachtama_Beatar_Lo_Takin FROM 
-			TB_SIDURIM_OVDIM o,
-			   pivot_sidurim_meyuchadim v_sidurm
-			WHERE o.mispar_ishi=p_mispar_ishi 
-			AND o.taarich=p_taarich
-			AND SUBSTR(o.mispar_sidur,0,2)='99'
-			AND v_sidurm.mispar_sidur(+)=o.mispar_sidur
-			 AND o.taarich BETWEEN v_sidurm.me_tarich(+) AND v_sidurm.ad_tarich(+)
-			 AND v_sidurm.sug_avoda=9;
-
- EXCEPTION
-         WHEN OTHERS THEN
-		RAISE;
-
-END pro_check_have_sidur_grira;
-
-PROCEDURE pro_get_shgiot_no_active( p_cur OUT CurType) IS
-BEGIN
-	 DBMS_APPLICATION_INFO.SET_MODULE('pkg_errors.pro_get_shgiot_no_active','get shgiot no active');
-    OPEN p_cur FOR
-    SELECT kod_shgia
-    FROM CTB_SHGIOT
-    WHERE  Pail = 0;
-
-EXCEPTION
-         WHEN OTHERS THEN
-              RAISE;
-END pro_get_shgiot_no_active;
-PROCEDURE pro_get_all_shgiot(p_cur OUT CurType) IS
-BEGIN   
-    OPEN p_cur FOR
-    SELECT s.kod_shgia,s.teur_shgia,M.TEUR,s.letezuga_laoved
-    FROM CTB_SHGIOT s,TB_MASACH m
-    WHERE UPPER(s.NATUN_LEBDIKA) = UPPER(m.SHEM_DB(+));
-END pro_get_all_shgiot;
-
-PROCEDURE pro_get_shgiot_active(p_cur OUT CurType) IS
-BEGIN   
-    OPEN p_cur FOR
-    SELECT s.kod_shgia,s.teur_shgia,M.TEUR,s.letezuga_laoved,s.RAMA
-    FROM CTB_SHGIOT s,TB_MASACH m
-    WHERE UPPER(s.NATUN_LEBDIKA) = UPPER(m.SHEM_DB(+))
-    and nvl(s.Pail,1) <>0
-    order by s.kod_shgia;
-END pro_get_shgiot_active;
-PROCEDURE get_approval_errors(p_mispar_ishi IN TB_IDKUN_RASHEMET.mispar_ishi%TYPE,
-		  										   							       p_taarich  IN TB_IDKUN_RASHEMET.taarich%TYPE,
-																				   p_Cur OUT CurType) AS
-  BEGIN
-      OPEN p_Cur FOR
-         SELECT s.KOD_SHGIA,s.MISPAR_SIDUR,s.SHAT_HATCHALA,s.SHAT_YETZIA,s.MISPAR_KNISA
-		 FROM TB_SHGIOT_MEUSHAROT S
-        WHERE S.MISPAR_ISHI =  p_mispar_ishi 
-		AND  S.TAARICH     = p_taarich;
-
-		   EXCEPTION
-        WHEN OTHERS THEN
-		RAISE;
-  END get_approval_errors;
-  
-  PROCEDURE pro_upd_approval_errors(p_coll_shgiot_meusharot IN coll_shgiot_meusharot) IS
-BEGIN
-      IF (p_coll_shgiot_meusharot IS NOT NULL) THEN
-          FOR i IN 1..p_coll_shgiot_meusharot.COUNT LOOP
-               IF (p_coll_shgiot_meusharot(i).NEW_SHAT_HATCHALA=p_coll_shgiot_meusharot(i).SHAT_HATCHALA) THEN                  
-                  		 IF (p_coll_shgiot_meusharot(i).NEW_SHAT_YETZIA<>p_coll_shgiot_meusharot(i).SHAT_YETZIA) THEN
-                      	 	pro_upd_approval_errors(p_coll_shgiot_meusharot(i).mispar_ishi,
-                                                   p_coll_shgiot_meusharot(i).taarich, 
-                                                   p_coll_shgiot_meusharot(i).mispar_sidur,
-                                                   p_coll_shgiot_meusharot(i).shat_hatchala,
-                                                   p_coll_shgiot_meusharot(i).shat_yetzia,
-                                                  p_coll_shgiot_meusharot(i).mispar_knisa,                                 
-                                                   p_coll_shgiot_meusharot(i).mispar_sidur,
-                                                   p_coll_shgiot_meusharot(i).new_shat_hatchala,
-                                                  p_coll_shgiot_meusharot(i).new_shat_yetzia);                     
-                  		END IF;
-                  ELSE
-                   	  	 pro_upd_approval_errors(p_coll_shgiot_meusharot(i).mispar_ishi,
-                                                   p_coll_shgiot_meusharot(i).taarich, 
-                                                  p_coll_shgiot_meusharot(i).mispar_sidur,
-                                                  p_coll_shgiot_meusharot(i).shat_hatchala,                                  
-                                                 p_coll_shgiot_meusharot(i).mispar_sidur,
-                                                 p_coll_shgiot_meusharot(i).new_shat_hatchala); 
-                 END IF;   
-          END LOOP;
-      END IF;
-    EXCEPTION
-         WHEN OTHERS THEN
-              RAISE;
-END pro_upd_approval_errors;
+CREATE OR REPLACE PACKAGE          PKG_TASK_MANAGER AS
+TYPE    CurType      IS    REF  CURSOR;
+procedure GetActionParameters ( p_GroupId in TB_PARAMETRS_PEILUYOT.KOD_kvuzA%type ,
+                                                p_OrderId in TB_PARAMETRS_PEILUYOT.KOD_PEILUT_BEkvuzA%type ,
+                                                 p_cur OUT CurType );
+procedure  GetKvuzot (  p_cur OUT CurType ) ;
+procedure  GetPeiluyotBekvuza (  pKvuza in TB_kvuzot.kod_kvuza%type ,  p_cur OUT CurType );
+ procedure InsLogKvuzot( LOGTASKMSG in   obj_LOGTASKMSG);
+procedure UpdLogKvuzot( LOGTASKMSG in   obj_LOGTASKMSG);
+procedure  ListKvuzot (  p_cur OUT CurType ) ;
+ procedure  ListLogKvuzot (  p_cur OUT CurType ) ;
+procedure GetStuckGroup ( p_GroupId in number , p_ActionId in number , p_Cur out CurTYPE ) ;
+procedure GetLogKvuzotByKod (p_kod_kvuza in number,p_kod_peilut in number, p_taarich date, p_cur OUT CurType ) ;
+END PKG_TASK_MANAGER;
+/
+
+
+CREATE OR REPLACE PACKAGE          Pkg_Utils AS
+/******************************************************************************
+   NAME:       PKG_UTILS
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        26/04/2009             1. Created this package.
+******************************************************************************/
 
 /*
-PROCEDURE pro_del_sidurim_ovdim(p_coll_sidurim_ovdim_del IN coll_sidurim_ovdim,  p_coll_sidurim_ovdim_ins  IN  OUT coll_sidurim_ovdim,p_type_update IN  NUMBER) IS
-isExists number;
-iIns number;
-BEGIN
-    IF (p_coll_sidurim_ovdim_del IS NOT NULL) THEN
-        FOR i IN 1..p_coll_sidurim_ovdim_del.COUNT LOOP           
-               IF (p_coll_sidurim_ovdim_del(i).update_object=p_type_update) THEN
-                      pro_ins_sidurim_ovdim_trail(p_coll_sidurim_ovdim_del(i),2);
-                      pro_del_sidur_oved(p_coll_sidurim_ovdim_del(i));
-               ELSE  
-                    iIns:=-1;
-                 IF (p_coll_sidurim_ovdim_ins IS NOT NULL) THEN
-                        FOR j IN 1..p_coll_sidurim_ovdim_ins.COUNT LOOP   
-                            if(p_coll_sidurim_ovdim_del(i).mispar_ishi= p_coll_sidurim_ovdim_ins(j).mispar_ishi and
-                               TRUNC(p_coll_sidurim_ovdim_del(i).taarich) =TRUNC(p_coll_sidurim_ovdim_ins(j).taarich) and
-                               p_coll_sidurim_ovdim_del(i).mispar_sidur = p_coll_sidurim_ovdim_ins(j).mispar_sidur  and
-                                p_coll_sidurim_ovdim_del(i).shat_hatchala =  p_coll_sidurim_ovdim_ins(j).shat_hatchala) then
-                                iIns:=j;
-                            end if;
-                                 
-                        /*   BEGIN
-                            SELECT count(*) into isExists
-                            from tb_sidurim_ovdim s
-                            where  s.mispar_ishi   =p_coll_sidurim_ovdim_ins(j).mispar_ishi AND
-                                       s.taarich = TRUNC(p_coll_sidurim_ovdim_ins(j).taarich) AND
-                                       s.mispar_sidur  =p_coll_sidurim_ovdim_ins(j).mispar_sidur AND
-                                       s.shat_hatchala  = p_coll_sidurim_ovdim_ins(j).shat_hatchala;       
-                             EXCEPTION
-                                           WHEN NO_DATA_FOUND  THEN
-                                             isExists:=0;
-                            END;*/
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        27/04/2009      sari       1. ????? ????? ????? ?????
+*/
+TYPE	CurType	  IS	REF  CURSOR;
 
-                  /*      END LOOP;
-                 END IF;*/
-                
-             
-                   
-          /*         if (iIns>-1) then
-                     --pro_ins_sidurim_ovdim_trail(p_coll_sidurim_ovdim_del(i),2);
-                     pro_upd_sidur_oved(p_coll_sidurim_ovdim_ins( iIns) );
-                     p_coll_sidurim_ovdim_ins( iIns).update_object :=9;*/
-                 --    p_coll_sidurim_ovdim_ins( iIns).;
-         --     p_coll_sidurim_ovdim_ins.removeat(iIns);
-                /* delete from p_coll_sidurim_ovdim_ins s where 
-                                s.mispar_ishi= p_coll_sidurim_ovdim_del(i).mispar_ishi and
-                                TRUNC(s.taarich) =TRUNC(p_coll_sidurim_ovdim_del(i).taarich) and
-                                s.mispar_sidur = p_coll_sidurim_ovdim_del(i).mispar_sidur  and
-                                s.shat_hatchala =  p_coll_sidurim_ovdim_del(i).shat_hatchala; */
-      /*             end if;
-                             
-               END IF;        
-        END LOOP;
-    END IF;
+
+
+PROCEDURE MoveRecordsToHistory;
+
+PROCEDURE pro_get_ezorim(p_Cur OUT CurType);
+
+PROCEDURE pro_get_snif_av(p_kod_ezor IN CTB_EZOR.kod_ezor%TYPE, p_cur OUT CurType);
+
+PROCEDURE pro_get_profil(p_Cur OUT CurType) ;
+
+PROCEDURE pro_get_harshaot_to_profil(p_kod_profil IN  TB_HARSHAOT_MASACHIM.KOD_PROFIL%TYPE, p_Cur OUT CurType);
+
+PROCEDURE pro_get_maamad(p_kod_hevra IN CTB_MAAMAD.kod_hevra%TYPE, p_cur OUT CurType);
+
+PROCEDURE pro_get_hodaot_to_profil(p_kod_masach  IN TB_HODAOT.MASACH_ID%TYPE ,
+		  									   		   		                  p_kod_profil IN  TB_HARSHAOT_MASACHIM.KOD_PROFIL%TYPE ,
+		  										  	  							   p_Cur OUT CurType) ;
+
+PROCEDURE pro_get_error_ovdim(p_kod_snif IN CTB_SNIF_AV.kod_snif_av%TYPE, p_kod_maamad IN CTB_MAAMAD.kod_maamad_hr%TYPE,
+                              p_from_date IN DATE, p_to_date IN DATE,
+                              p_cur OUT CurType);
+
+PROCEDURE pro_get_log_tahalich(p_Cur OUT CurType) ;
+
+PROCEDURE pro_get_etz_nihuly_by_user(p_prefix IN VARCHAR2, p_mispar_ishi IN NUMBER, p_cur OUT CurType) ;
+PROCEDURE pro_ins_Manage_Tree(p_mispar_ishi IN NUMBER );
+
+PROCEDURE pro_get_etz_nihuly_by_name(p_prefix IN VARCHAR2, p_mispar_ishi IN NUMBER, p_cur OUT CurType);
+
+PROCEDURE pro_get_meafyeney_bitua(p_Cur OUT CurType) ;
+
+PROCEDURE pro_get_kod_natun(p_Cur OUT CurType) ;
+PROCEDURE pro_get_parameters_table(p_cur OUT CurType);
+PROCEDURE pro_get_ctb_elementim(p_cur OUT CurType);
+PROCEDURE pro_get_sugey_yamim_meyuchadim(p_cur OUT CurType);
+PROCEDURE pro_get_yamim_meyuchadim(p_cur OUT CurType);
+PROCEDURE pro_get_sidurim_meyuch_rechiv(p_tar_me IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  								 p_tar_ad IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  									   	  											 p_cur OUT CurType);
+PROCEDURE pro_get_sug_sidur_rechiv(p_tar_me IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  								 p_tar_ad IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  									   	  		 p_cur OUT CurType);
+PROCEDURE pro_get_ctb_mutamut(p_cur OUT CurType);
+PROCEDURE pro_get_sibot_ledivuch_yadani(p_cur OUT CurType);
+PROCEDURE pro_get_status_ishur_max_level(p_mispar_ishi IN TB_ISHURIM.mispar_ishi%TYPE,
+                                         p_taarich IN TB_ISHURIM.taarich%TYPE,
+                                         p_kod_ishur IN TB_ISHURIM.kod_ishur%TYPE,
+                                         p_kod_status OUT TB_ISHURIM.kod_status_ishur%TYPE);
+FUNCTION  pro_check_ishur(p_mispar_ishi IN TB_ISHURIM.mispar_ishi%TYPE,
+                                         p_taarich IN TB_ISHURIM.taarich%TYPE,
+                                         p_kod_ishur IN TB_ISHURIM.kod_ishur%TYPE,
+                                       p_mispar_sidur IN TB_ISHURIM.mispar_sidur%TYPE DEFAULT  NULL,
+									    p_shat_hatchala IN TB_ISHURIM.Shat_Hatchala%TYPE DEFAULT  NULL) RETURN  NUMBER;
+
+										PROCEDURE pro_get_premia_yadanit(p_mispar_ishi IN TB_PREMYOT_YADANIYOT.MISPAR_ISHI%TYPE, p_chodesh IN TB_PREMYOT_YADANIYOT.TAARICH%TYPE, p_sug_premya IN TB_PREMYOT_YADANIYOT.SUG_PREMYA%TYPE, p_Cur OUT CurType);
+
+PROCEDURE pro_get_ovdim_for_premia(p_kod_premia IN MEAFYENIM_OVDIM.KOD_MEAFYEN%TYPE,p_taarich IN MEAFYENIM_OVDIM.ME_TAARICH%TYPE, p_cur OUT CurType);
+
+PROCEDURE pro_get_ovdim_for_premiot(p_mispar_ishi IN VARCHAR2,p_kod_premia IN MEAFYENIM_OVDIM.KOD_MEAFYEN%TYPE,p_Period IN VARCHAR2, p_cur OUT CurType);
+
+PROCEDURE pro_get_premyot_details(p_premya_codes VARCHAR2, p_cur OUT CurType);
+
+PROCEDURE pro_get_premyot_view(p_mispar_ishi IN PREMYOT_VW.mispar_ishi%TYPE,
+                                         p_tkufa IN PREMYOT_VW.tkufa%TYPE,
+                                         p_cur OUT CurType);
+
+PROCEDURE pro_get_zman_nesia(p_merkaz_erua IN CTB_ZMAN_NSIAA_MISHTANE.merkaz_erua%TYPE,
+                             p_mikum_yaad  IN CTB_ZMAN_NSIAA_MISHTANE.mikum_yaad%TYPE,
+                             p_taarich     IN CTB_ZMAN_NSIAA_MISHTANE.me_taarich%TYPE,
+                             p_dakot OUT   CTB_ZMAN_NSIAA_MISHTANE.dakot%TYPE);
+
+PROCEDURE Pro_Get_Value_From_Parametrim( p_Kod_Param IN  TB_PARAMETRIM.Kod_Param%TYPE,
+                                                                               p_Period IN VARCHAR2 ,
+                                                                              p_Erech_Param OUT  TB_PARAMETRIM.ERECH_PARAM%TYPE)       ;
+
+PROCEDURE Pro_Get_Value_From_Parametrim (p_kod_param IN TB_PARAMETRIM.KOD_PARAM%TYPE,
+                                            p_taarich IN DATE ,
+                                            p_ERECH_PARAM    OUT INTEGER)  ;
+
+PROCEDURE Pro_Get_Previous_Months_List(p_FromDate IN DATE, NumOfPreviousMonth NUMBER ,DisplayAll NUMBER,   p_cur OUT CurType);
+
+  PROCEDURE  pro_get_ovdim_leRitza (p_mis_ritza IN INTEGER  ,
+  			 					   				   			  	                p_maamad IN VARCHAR2,
+																			    p_isuk IN VARCHAR2,
+																				p_preFix IN VARCHAR2,
+																				p_cur OUT CurType);
+
+  FUNCTION fun_GET_Rechiv_Value(p_MisparIshi IN TB_CHISHUV_CHODESH_OVDIM.Mispar_ishi%TYPE,
+                                                        p_Kod_Rechiv IN TB_CHISHUV_CHODESH_OVDIM.Kod_Rechiv%TYPE,
+                                                        p_StartDate IN DATE,
+                                                        p_EndDate IN DATE,
+                                                        p_Bakasha_ID IN  TB_CHISHUV_CHODESH_OVDIM.Bakasha_ID%TYPE
+                                                        ) RETURN NUMBER ;
+
+	 PROCEDURE get_sadot_nosafim_lesidur(p_Sidur IN INTEGER,
+ 		  									   		   	  		 		        p_List_Meafyenim IN VARCHAR2,
+																				p_cur OUT CurType) ;
+	PROCEDURE get_sadot_nosafim_lePeilut(p_cur OUT CurType);
+  PROCEDURE get_sadot_nosafim_kayamim(p_mispar_ishi IN  INTEGER,
+														                                p_mispar_sidur IN  INTEGER,
+																					    p_taarich IN TB_SIDURIM_OVDIM.TAARICH%TYPE,
+																						p_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE,
+																						p_cur OUT CurType) ;
+																						
+	PROCEDURE pro_insert_barkod_Tachograf(p_mispar_ishi IN  INTEGER,p_taarich IN TB_TACHOGRAF_LE_KARTIS.TAARICH%TYPE,p_Barkod IN  NUMBER);		
+    PROCEDURE fun_get_barkod_Tachograf(p_mispar_ishi IN  INTEGER,p_taarich IN TB_TACHOGRAF_LE_KARTIS.TAARICH%TYPE, p_cur OUT CurType  ) ;
+	PROCEDURE pro_get_tavlaot_to_refresh(p_cur OUT CurType);	
+	PROCEDURE pro_get_snif_tnua_by_kod(p_kod_snif IN NUMBER,p_cur OUT CurType);		
+    PROCEDURE pro_insert_meadken_acharon(p_mispar_ishi IN tb_meadken_acharon.mispar_ishi%type,p_taarich tb_meadken_acharon.taarich%type, p_gorem_meadken in tb_meadken_acharon.GOREM_MEADKEN%type);	
+      PROCEDURE pro_get_ovdim_by_bakasha(p_bakasha_id IN NUMBER,p_cur OUT CurType);
+ FUNCTION fun_get_kod_tachanat_bizua(p_mispar_ishi IN  TB_PEILUT_OVDIM.mispar_ishi%TYPE,
+                                     p_mispar_sidur IN TB_PEILUT_OVDIM.mispar_sidur%TYPE,
+                                     p_taarich IN  TB_PEILUT_OVDIM.taarich%TYPE,
+                                     p_shat_hatchala IN  TB_PEILUT_OVDIM.shat_hatchala_sidur%TYPE) RETURN number;
+                                                
+function fun_get_yechida(p_mispar_ishi in ovdim.mispar_ishi%type) return number;
+
+function fun_get_manager_employees(p_prefix in varchar2,p_yechida in pivot_pirtey_ovdim.yechida_irgunit %type) return  tree_table pipelined;
+function fun_get_isuk_harshaot(p_prefix in varchar2,p_mispar_ishi in pivot_pirtey_ovdim.mispar_ishi%type)  return  tree_table pipelined;      
+
+--function fun_get_ez_nihuli_yechida(p_mispar_ishi in pivot_pirtey_ovdim.mispar_ishi%type) return  tb_harshaot_idkun.kod_yechida_nihuli%type;
+function fun_get_manager_emp_by_maamad(p_prefix in varchar2,p_mispar_ishi in ovdim.mispar_ishi%type ) return  tree_table pipelined;
+function fun_get_manager_emp_by_name(p_prefix in varchar2,p_mispar_ishi in pivot_pirtey_ovdim.mispar_ishi%type) return  tree_table pipelined;
+function fun_get_isuk_harshaot_by_name(p_prefix in varchar2,p_mispar_ishi in pivot_pirtey_ovdim.mispar_ishi%type)  return  tree_table pipelined;
+function fun_get_mngr_emp_by_mamad_name(p_prefix in varchar2,p_mispar_ishi in ovdim.mispar_ishi%type ) return  tree_table pipelined;
+PROCEDURE pro_get_michsat_sidur_meafyen(p_cur OUT CurType, p_tarich_me DATE,p_tarich_ad DATE); 
+function CheckShabatonOrShishi(p_mispar_ishi number,p_taarich date,p_meafyen56 number) return nvarchar2 ;
+procedure pro_get_status_card(p_cur OUT CurType);
+END Pkg_utils;
+/
+CREATE OR REPLACE PACKAGE BODY          Pkg_Baam_Wr1 AS
+/******************************************************************************
+   NAME:       PKG_BAAM_WR1
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        21/06/2012      meravn       1. Created this package body.
+******************************************************************************/
+
+ PROCEDURE pro_ins_ovdim_lehishuv_premiot   IS
+  -- todo: chainge this procedure to look at view in wr1 & baam, and to ommit the parameters
+  --also split this to 4  parts so that if one part 's dblink is not available the rest will still be ok
+ BEGIN
+ --EXECUTE IMMEDIATE  'truncate table   OVDIM_LECHISHUV_PREMYOT';
+ delete from OVDIM_LECHISHUV_PREMYOT where Prem_Type=1
+ -- 20140209:
+ and chodesh in ( SELECT  TO_DATE( baa_run_year_month ,'yyyymm')
+                    FROM  baam.tb_baa_run_param@KDS2baam
+                    WHERE baa_run_status='פ');
+ delete from OVDIM_LECHISHUV_PREMYOT where Prem_Type=1
+ -- 20140305:
+ and chodesh = ( SELECT  TO_DATE( baa_run_year_month ,'yyyymm')
+                    FROM  baam.tb_baa_run_param@KDS2baam
+                    WHERE  BAA_RUN_STATUS = 'ס'
+                    AND TRUNC (SYSDATE - 1) = TRUNC (baa_run_process_date));
+ 
+  INSERT INTO  OVDIM_LECHISHUV_PREMYOT( mispar_ishi,chodesh,Prem_Type)
+
+SELECT DISTINCT mispar_ishi,chodesh,1 FROM (SELECT *
+ FROM  wr1.wr_OVDIM_LECHISHUV_PREMIA@KDS2wr1
+  where chodesh<=sysdate
+ UNION ALL
+ SELECT *
+FROM  baam.baam_OVDIM_LECHISHUV_PREMIA@KDS2baam
+ where chodesh<=sysdate
+UNION ALL
+ SELECT DISTINCT mispar_ishi,TO_DATE(TO_CHAR(taarich,'yyyymm')*100+01,'yyyymmdd')
+ FROM TB_SIDURIM_OVDIM
+WHERE mispar_sidur BETWEEN 99220 AND 99222
+AND taarich BETWEEN (SELECT  TO_DATE(MIN(baa_run_year_month)*100+1,'yyyymmdd')  
+   FROM  baam.tb_baa_run_param@KDS2baam
+  WHERE baa_run_status='פ')
+AND   (  SELECT  TO_DATE(MAX(baa_run_year_month)*100+1,'yyyymmdd') 
+   FROM  baam.tb_baa_run_param@KDS2baam
+  WHERE baa_run_status='פ'  )
+  -- test 4 premiot nihul pkidim
+--       UNION ALL
+--  SELECT 12666,TO_DATE('01/04/2012','dd/mm/yyyy') 
+--  FROM dual
+  );
+      EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+ END pro_ins_ovdim_lehishuv_premiot; 
+ 
+ 
+PROCEDURE Pro_ins_baam IS
+SugErech NUMBER;
+
+BEGIN
+SugErech:=0;
+
+-- SELECT SUM(bakasha_id) 
+--  INTO   SugErech
+--  FROM (
+  SELECT DISTINCT  b.BAKASHA_ID 
+    INTO   SugErech
+    FROM   TB_BAKASHOT  b,  OVDIM_LECHISHUV_PREMYOT  o,
+  TB_CHISHUV_SIDUR_OVDIM   s
+WHERE s.kod_rechiv =211
+AND b.bakasha_id=s.bakasha_id
+AND b.SUG_BAKASHA=12
+-- 20140126: AND TO_CHAR(  s.taarich,'yyyymm')= TO_CHAR(  o.CHODESH,'yyyymm')
+AND   s.taarich>= o.CHODESH 
+AND s.MISPAR_ISHI=o.MISPAR_ISHI
+AND b.BAKASHA_ID=o.BAKASHA_ID
+--UNION ALL
+--SELECT 0 FROM dual)
+--20140522:
+and chodesh in ( SELECT  TO_DATE( baa_run_year_month ,'yyyymm')
+--20140714:                    FROM  baam.tb_baa_run_param@KDS2baam
+                   FROM   tb_run_param 
+                    WHERE baa_run_status='פ')
+;
+
+              IF (SugErech is null) THEN
+            RAISE_APPLICATION_ERROR(-2005, 'tst_tahalich', TRUE);
+              ELSE IF (SugErech =0) THEN
+            RAISE_APPLICATION_ERROR(-2005, 'log_tahalich', TRUE);
+              ELSE
+     baam.Pkg_Calc.DelAttend@KDS2baam;
+     baam.Pkg_Calc.DelPersonnel@KDS2baam;
+     baam.Pkg_Calc.InsPersonnel@KDS2baam;
+     baam.Pkg_Calc.InsAttend@KDS2baam;
+     baam.Pkg_Calc.InsGrr@KDS2baam;
+            baam.Pkg_Calc.InsNoch0@KDS2baam;
+            INSERT INTO TB_LOG_TAHALICH
+            VALUES (13,5,1,SYSDATE,'','','','Pro_ins_baam');
+            END IF;
+            END IF;
+
       EXCEPTION
          WHEN OTHERS THEN
               RAISE;
-END pro_del_sidurim_ovdim;
-*/
 
-PROCEDURE pro_Delete_Errors(p_mispar_ishi IN NUMBER,p_date IN DATE) IS
+END  Pro_ins_baam;
+
+ 
+PROCEDURE Pro_ins_wr1 IS
+SugErech NUMBER;
+
 BEGIN
-DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'pkg_errors',action_name => 'pro_Delete_Errors');
-    DELETE TB_SHGIOT T 
-    WHERE T.MISPAR_ISHI =p_mispar_ishi
-          and T.taarich =  p_date;
+SugErech:=0;
 
-EXCEPTION
+-- SELECT SUM(bakasha_id) 
+--  INTO   SugErech
+--  FROM (
+  SELECT DISTINCT  b.BAKASHA_ID 
+  INTO   SugErech
+  FROM   TB_BAKASHOT  b,  OVDIM_LECHISHUV_PREMYOT  o,
+  TB_CHISHUV_SIDUR_OVDIM   s
+WHERE s.kod_rechiv =212
+AND b.bakasha_id=s.bakasha_id
+AND b.SUG_BAKASHA=12
+-- 20140126: AND TO_CHAR(  s.taarich,'yyyymm')= TO_CHAR(  o.CHODESH,'yyyymm')
+AND   s.taarich>= o.CHODESH 
+AND s.MISPAR_ISHI=o.MISPAR_ISHI
+AND b.BAKASHA_ID=o.BAKASHA_ID
+--UNION ALL
+--SELECT 0 FROM dual)
+-- 20140522:
+and chodesh in ( SELECT  TO_DATE( baa_run_year_month ,'yyyymm')
+--20140714:                    FROM  baam.tb_baa_run_param@KDS2baam
+                   FROM   tb_run_param 
+                    WHERE baa_run_status='פ')
+;
+
+              IF (SugErech =0) THEN
+            RAISE_APPLICATION_ERROR(-2005, 'log_tahalich', TRUE);
+              ELSE
+            Wr1.Pkg_Calc.DelAttend@KDS2wr1;
+            Wr1.Pkg_Calc.DelPersonnel@KDS2wr1;
+            Wr1.Pkg_Calc.InsPersonnel@KDS2wr1;
+            Wr1.Pkg_Calc.InsAttend@KDS2wr1;
+            Wr1.Pkg_Calc.InsNoch0@KDS2wr1;
+
+            INSERT INTO TB_LOG_TAHALICH
+            VALUES (13,6,1,SYSDATE,'','','','Pro_ins_wr1');
+                  END IF;
+
+      EXCEPTION
          WHEN OTHERS THEN
               RAISE;
-END pro_Delete_Errors ;
+
+END  Pro_ins_wr1;
+PROCEDURE tst_baam IS
+SugErech NUMBER;
+
+BEGIN
+SugErech:=0;
+
+  SELECT DISTINCT  b.BAKASHA_ID 
+    INTO   SugErech
+    FROM   TB_BAKASHOT  b,  OVDIM_LECHISHUV_PREMYOT  o,
+  TB_CHISHUV_SIDUR_OVDIM   s
+WHERE s.kod_rechiv =211
+AND b.bakasha_id=s.bakasha_id
+AND b.SUG_BAKASHA=12
+AND   s.taarich>= o.CHODESH 
+AND s.MISPAR_ISHI=o.MISPAR_ISHI
+AND b.BAKASHA_ID=o.BAKASHA_ID
+and s.mispar_ishi=68733 and s.taarich=to_date('04/01/2014','dd/mm/yyyy');
+
+              IF (SugErech is null) THEN
+            RAISE_APPLICATION_ERROR(-2005, 'tst_tahalich', TRUE);
+              ELSE IF (SugErech =0) THEN
+                RAISE_APPLICATION_ERROR(-2005, 'tst_tahalich', TRUE);
+              ELSE
+            --baam.Pkg_Calc.InsNoch0@KDS2baam;
+            INSERT INTO TB_LOG_TAHALICH
+            VALUES (13,5,1,SYSDATE,'','','','tst_baam');
+                END IF;
+            END IF;
+
+      EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+
+END  tst_baam;
+
+PROCEDURE chkMusach1  is
+
+begin
+
+  baam.Pkg_Calc.chkMusach1@KDS2baam;
+    EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+
+end chkMusach1;
+
+END Pkg_Baam_Wr1;
+/
 
 
-END Pkg_Errors;
+CREATE OR REPLACE PACKAGE BODY          Pkg_Batch AS
+/******************************************************************************
+   NAME:       PKG_BATCH
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        26/04/2009             1. Created this package body.
+******************************************************************************/
+
+
+PROCEDURE pro_ins_log_bakasha(p_bakasha_id  IN TB_LOG_BAKASHOT.bakasha_id%TYPE,
+                   p_taarich_idkun  IN TB_LOG_BAKASHOT.taarich_idkun_acharon%TYPE,
+                 p_sug_hodaa  IN TB_LOG_BAKASHOT.sug_hodaa%TYPE,
+                 p_kod_tahalich IN TB_LOG_BAKASHOT.kod_tahalich%TYPE,
+                 p_kod_yeshut IN TB_LOG_BAKASHOT.kod_yeshut%TYPE,
+              p_mispar_ishi IN TB_LOG_BAKASHOT.mispar_ishi%TYPE,
+              p_taarich IN TB_LOG_BAKASHOT.taarich%TYPE,
+              p_mispar_sidur IN TB_LOG_BAKASHOT.mispar_sidur%TYPE,
+              p_shat_hatchala_sidur IN TB_LOG_BAKASHOT.shat_hatchala_sidur%TYPE,
+              p_shat_yetzia IN TB_LOG_BAKASHOT.shat_yetzia%TYPE,
+              p_mispar_knisa IN TB_LOG_BAKASHOT.mispar_knisa%TYPE,
+              p_teur_hodaa IN TB_LOG_BAKASHOT.teur_hodaa%TYPE,
+              p_kod_hodaa IN TB_LOG_BAKASHOT.kod_hodaa%TYPE,
+              p_mispar_siduri OUT TB_LOG_BAKASHOT.mispar_siduri%TYPE)
+ IS
+   v_mispar_siduri TB_LOG_BAKASHOT.mispar_siduri%TYPE;
+  BEGIN
+
+      SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
+   p_mispar_siduri:=v_mispar_siduri;
+
+        INSERT INTO TB_LOG_BAKASHOT
+                      (MISPAR_SIDURI,BAKASHA_ID,TAARICH_IDKUN_ACHARON,SUG_HODAA,KOD_TAHALICH,KOD_YESHUT,
+         MISPAR_ISHI,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA_SIDUR,SHAT_YETZIA,MISPAR_KNISA,KOD_HODAA,TEUR_HODAA)
+   VALUES (v_mispar_siduri,p_bakasha_id,p_taarich_idkun,p_sug_hodaa,p_kod_tahalich,p_kod_yeshut,p_mispar_ishi, p_taarich,p_mispar_sidur,p_shat_hatchala_sidur,
+           p_shat_yetzia,p_mispar_knisa,p_kod_hodaa,p_teur_hodaa);
+
+      EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+  END pro_ins_log_bakasha;
+
+
+PROCEDURE pro_ins_log_bakasha_tran(p_bakasha_id  IN TB_LOG_BAKASHOT.bakasha_id%TYPE,
+                                                  p_taarich_idkun  IN TB_LOG_BAKASHOT.taarich_idkun_acharon%TYPE,
+                                                  p_sug_hodaa  IN TB_LOG_BAKASHOT.sug_hodaa%TYPE,
+                                                  p_teur_hodaa IN TB_LOG_BAKASHOT.teur_hodaa%TYPE,
+                                                  p_kod_hodaa IN TB_LOG_BAKASHOT.kod_hodaa%TYPE)
+ IS
+ PRAGMA AUTONOMOUS_TRANSACTION;
+ v_mispar_siduri TB_LOG_BAKASHOT.mispar_siduri%TYPE;
+  BEGIN
+
+       SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
+    
+        INSERT INTO TB_LOG_BAKASHOT
+                      (MISPAR_SIDURI,BAKASHA_ID,TAARICH_IDKUN_ACHARON,SUG_HODAA,KOD_HODAA,TEUR_HODAA)
+            VALUES (v_mispar_siduri,p_bakasha_id,p_taarich_idkun,p_sug_hodaa,p_kod_hodaa,p_teur_hodaa);
+
+         commit;
+      EXCEPTION
+   WHEN OTHERS THEN
+       rollback;
+  END pro_ins_log_bakasha_tran;
+  
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        27/04/2009      sari       1. הוספת רשומה לטבלת בקשות
+*/
+  PROCEDURE pro_ins_bakasha(p_sug_bakasha  IN TB_BAKASHOT.sug_bakasha%TYPE,
+                   p_teur  IN TB_BAKASHOT.teur%TYPE,
+                 p_status   IN TB_BAKASHOT.status%TYPE,
+                 p_user_id IN TB_BAKASHOT.mishtamesh_id%TYPE,
+              p_bakasha_id OUT TB_BAKASHOT.bakasha_id%TYPE) IS
+     v_bakasha_id TB_BAKASHOT.bakasha_id%TYPE;
+  BEGIN
+        SELECT request_seq.NEXTVAL INTO v_bakasha_id FROM dual;
+   p_bakasha_id:=v_bakasha_id;
+
+        INSERT INTO TB_BAKASHOT
+                      (BAKASHA_ID,SUG_BAKASHA,TEUR,ZMAN_HATCHALA,ZMAN_SIYUM,STATUS,MISHTAMESH_ID,
+         HUAVRA_LESACHAR,TAARICH_HAAVARA_LESACHAR  )
+   VALUES (v_bakasha_id,p_sug_bakasha,p_teur,SYSDATE,NULL,p_status, p_user_id,NULL,NULL);
+
+      EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+  END pro_ins_bakasha;
+
+  PROCEDURE pro_upd_bakasha(p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                   p_status   IN TB_BAKASHOT.status%TYPE,
+              p_huavra_lesachar IN  TB_BAKASHOT.huavra_lesachar%TYPE,
+              p_zman_siyum   IN  TB_BAKASHOT.zman_siyum%TYPE,
+              p_tar_haavara_lesachar   IN  TB_BAKASHOT.taarich_haavara_lesachar%TYPE) IS
+  BEGIN
+        UPDATE  TB_BAKASHOT
+           SET ZMAN_SIYUM=NVL(p_zman_siyum,ZMAN_SIYUM),
+               STATUS=NVL(p_status,STATUS),
+         HUAVRA_LESACHAR=NVL(p_huavra_lesachar,HUAVRA_LESACHAR),
+         TAARICH_HAAVARA_LESACHAR=NVL(p_tar_haavara_lesachar,TAARICH_HAAVARA_LESACHAR)
+   WHERE BAKASHA_ID=p_bakasha_id;
+
+      EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+  END pro_upd_bakasha;
+
+
+  PROCEDURE pro_upd_bakasha_all_fields(p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                                                              p_zman_siyum   IN  TB_BAKASHOT.zman_siyum%TYPE,
+                                                              p_status   IN TB_BAKASHOT.status%TYPE,
+                                                              p_huavra_lesachar IN  TB_BAKASHOT.huavra_lesachar%TYPE,
+                                                              p_tar_haavara_lesachar   IN  TB_BAKASHOT.taarich_haavara_lesachar%TYPE,
+                                                              p_ishur_hilan   IN TB_BAKASHOT.ISHUR_HILAN%TYPE ) IS
+  BEGIN
+  
+           UPDATE  TB_BAKASHOT
+           SET ZMAN_SIYUM=NVL(p_zman_siyum,ZMAN_SIYUM),
+                  STATUS=NVL(p_status,STATUS),
+                  HUAVRA_LESACHAR=NVL(p_huavra_lesachar,HUAVRA_LESACHAR),
+                  TAARICH_HAAVARA_LESACHAR=NVL(p_tar_haavara_lesachar,TAARICH_HAAVARA_LESACHAR),
+                  ISHUR_HILAN=NVL(p_ishur_hilan,   ISHUR_HILAN)
+   WHERE BAKASHA_ID=p_bakasha_id;
+
+      EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+  END pro_upd_bakasha_all_fields;
+
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        27/04/2009      sari       1. הוספת   רשומה לטבלת פרמטר בקשות
+*/
+ PROCEDURE pro_ins_bakasha_param(p_bakasha_id  IN TB_BAKASHOT_PARAMS.bakasha_id%TYPE,
+                   p_param_id  IN  TB_BAKASHOT_PARAMS.param_id%TYPE,
+                 p_erech   IN  TB_BAKASHOT_PARAMS.erech%TYPE) IS
+  BEGIN
+        INSERT INTO TB_BAKASHOT_PARAMS
+                      (BAKASHA_ID,PARAM_ID,ERECH)
+   VALUES (p_bakasha_id,p_param_id,p_erech);
+
+      EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+  END  pro_ins_bakasha_param;
+
+
+  /*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        02/07/2009     sari      1. פונקציה המחזירה  ריצות חישוב לפי תאריכים
+*/
+ PROCEDURE pro_get_pirtey_ritzot(p_taarich_me IN TB_BAKASHOT.zman_hatchala%TYPE,
+             p_taarich_ad IN TB_BAKASHOT.zman_hatchala%TYPE,
+            p_get_all NUMBER,
+            p_cur OUT CurType) IS
+  v_first_bakasha NUMBER;
+BEGIN
+    IF (p_get_all =1) THEN
+    OPEN p_cur FOR
+         SELECT B.Zman_Hatchala , B.Bakasha_ID, B.Teur,
+             (SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND  bp.param_id=1)   param1,
+             (SELECT  DECODE(bp.erech,NULL,'',1,'חברים',2,'שכירים','חברים ושכירים') FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND  bp.param_id=1)   auchlusia,
+               (SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND bp.param_id=2) tkufa,
+               TO_DATE('01/' ||  (SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND bp.param_id=2) ,'dd/mm/yyyy') tkufa_date,
+          (SELECT  DECODE(bp.erech,1,'כן','לא') FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND bp.param_id=3) ritza_gorfet,
+          B.HUAVRA_LESACHAR,B.ISHUR_HILAN,
+          Pkg_Batch.fun_get_status_sachar( B.Bakasha_ID) status_haavara_lesachar,
+          Pkg_Batch.fun_get_status_bakasha(13,1,B.Bakasha_ID) status_yezirat_rikuzim,
+          Pkg_Batch.fun_get_rizot_zehot_lesachar( B.Bakasha_ID) rizot_zehot,
+           Pkg_Batch.fun_get_status_bakasha(20,1,B.Bakasha_ID) status_chufsha_rezifa ,
+          Pkg_Batch.fun_get_status_bakasha(26,1,B.Bakasha_ID)  status_machala
+       FROM TB_BAKASHOT B,(SELECT Erech,Bakasha_ID
+                   FROM TB_BAKASHOT_PARAMS
+                   WHERE  Param_ID = 5) P
+       WHERE B.Sug_Bakasha=1
+        AND TRUNC(B.Zman_Hatchala) BETWEEN TRUNC(p_taarich_me) AND TRUNC(p_taarich_ad)
+        AND b.bakasha_id=p.bakasha_id
+        AND p.erech='0'
+        AND b.status=2
+       ORDER BY B.Zman_Hatchala DESC ;
+  ELSE
+     OPEN p_cur FOR
+             SELECT B.Zman_Hatchala , B.Bakasha_ID, B.Teur,
+                (SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND  bp.param_id=1)   param1,
+                (SELECT  DECODE(bp.erech,NULL,'',1,'חברים',2,'שכירים','חברים ושכירים') FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND  bp.param_id=1)   auchlusia,
+             (SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND bp.param_id=2) tkufa,
+              TO_DATE('01/' ||  (SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND bp.param_id=2),'dd/mm/yyyy' ) tkufa_date,
+             (SELECT  DECODE(bp.erech,1,'כן','לא') FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND bp.param_id=3) ritza_gorfet,
+             B.HUAVRA_LESACHAR,B.ISHUR_HILAN,
+             Pkg_Batch.fun_get_status_sachar( B.Bakasha_ID) status_haavara_lesachar,
+             Pkg_Batch.fun_get_status_bakasha(13,1,B.Bakasha_ID) status_yezirat_rikuzim,
+             Pkg_Batch.fun_get_rizot_zehot_lesachar( B.Bakasha_ID) rizot_zehot,
+             Pkg_Batch.fun_get_status_bakasha(20,1,B.Bakasha_ID) status_chufsha_rezifa,
+            Pkg_Batch.fun_get_status_bakasha(26,1,B.Bakasha_ID) status_machala
+        FROM TB_BAKASHOT B,(SELECT Erech,Bakasha_ID
+                   FROM TB_BAKASHOT_PARAMS
+                   WHERE  Param_ID = 5) P
+        WHERE B.Sug_Bakasha=1
+        AND TRUNC(B.Zman_Hatchala) BETWEEN TRUNC(p_taarich_me) AND TRUNC(p_taarich_ad)
+        AND (B.Huavra_Lesachar=0 OR B.Huavra_Lesachar IS NULL)
+        AND b.bakasha_id=p.bakasha_id
+        AND p.erech='0'
+        AND b.status=2
+        ORDER BY B.Zman_Hatchala DESC ;
+
+  END IF;
+
+EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+
+END  pro_get_pirtey_ritzot;
+
+
+FUNCTION fun_get_status_sachar(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) RETURN NUMBER
+IS 
+    p_cur  CurType;
+    p_status NUMBER;
+    
+BEGIN
+   p_status:=0;   
+   BEGIN
+   
+       SELECT T.STATUS INTO  p_status
+       FROM   TB_BAKASHOT t 
+       WHERE   T.BAKASHA_ID IN(
+                               SELECT    MAX(T.BAKASHA_ID) bakasha_id
+                               FROM  TB_BAKASHOT t , TB_BAKASHOT_PARAMS p
+                               WHERE T.BAKASHA_ID = P.BAKASHA_ID
+                                  AND  T.SUG_BAKASHA =3
+                                  AND P.PARAM_ID = 1
+                                  AND P.ERECH = TO_CHAR(p_bakasha_id));     
+   EXCEPTION
+       WHEN NO_DATA_FOUND  THEN
+         p_status:=0;
+   END;
+  
+  RETURN p_status;
+END fun_get_status_sachar;
+
+FUNCTION fun_get_status_bakasha(p_sug_bakasha NUMBER,p_Param_id NUMBER,p_erech VARCHAR) RETURN NUMBER
+IS 
+    p_cur  CurType;
+    p_status NUMBER;
+    
+BEGIN
+   p_status:=0;   
+   BEGIN
+   
+        SELECT  t.status INTO p_status
+        FROM  TB_BAKASHOT t , TB_BAKASHOT_PARAMS p
+        WHERE T.BAKASHA_ID = P.BAKASHA_ID
+              AND  T.SUG_BAKASHA =p_sug_bakasha
+              AND P.PARAM_ID =p_Param_id
+              AND P.ERECH = p_erech;     
+   EXCEPTION
+       WHEN NO_DATA_FOUND  THEN
+         p_status:=0;
+   END;
+  
+  RETURN p_status;
+END fun_get_status_bakasha;
+
+
+
+FUNCTION fun_get_rizot_zehot_lesachar(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) RETURN VARCHAR
+IS
+CURSOR p_cur(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) IS
+        SELECT h2.BAKASHA_ID, h2.PARAM_ID_1,h2.PARAM_ID_2
+        FROM (SELECT  H.BAKASHA_ID,
+                            MAX(CASE WHEN  (H.Param_ID=1)   THEN H.ERECH  END)    PARAM_ID_1 ,
+                            MAX(CASE WHEN  (H.Param_ID=2)   THEN H.ERECH  END)    PARAM_ID_2
+                 FROM(  SELECT B.BAKASHA_ID,B.ERECH,B.PARAM_ID
+                           FROM TB_BAKASHOT_PARAMS b,TB_BAKASHOT t
+                           WHERE   T.HUAVRA_LESACHAR=1
+                                  AND T.SUG_BAKASHA = 1
+                                  AND B.BAKASHA_ID=T.BAKASHA_ID
+                                  AND b.bakasha_id <>p_bakasha_id
+                                  AND B.PARAM_ID IN(1,2) ) H
+                 GROUP BY  H.BAKASHA_ID )  h2
+         WHERE   h2.Param_ID_1=( SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=p_bakasha_id AND bp.param_id=1)
+              AND h2.Param_ID_2=( SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=p_bakasha_id AND bp.param_id=2);     
+lst_bakasha_id VARCHAR(1000);        
+v_rec  p_cur%ROWTYPE;
+BEGIN
+        lst_bakasha_id:='';
+             FOR v_rec  IN   p_cur(p_bakasha_id)
+              LOOP
+                      lst_bakasha_id:= lst_bakasha_id || ';' || v_rec.bakasha_id;
+              END LOOP;         
+              
+      RETURN lst_bakasha_id;            
+END fun_get_rizot_zehot_lesachar;
+
+PROCEDURE pro_get_ovdim_lechishuv(p_chodesh IN DATE,
+             p_maamad IN NUMBER,
+            p_ritza_gorefet IN NUMBER,
+            p_cur OUT CurType) IS
+  v_me_taarich DATE;
+  v_ad_taarich DATE;
+BEGIN
+  v_me_taarich:=p_chodesh;
+  v_ad_taarich:=ADD_MONTHS(v_me_taarich,1)-1;
+
+    IF  p_ritza_gorefet<>1 THEN
+    OPEN p_cur FOR
+          SELECT MISPAR_ISHI FROM
+        ( (SELECT o.MISPAR_ISHI
+        FROM OVDIM o,
+          (SELECT mispar_ishi, chodesh FROM
+             ( (SELECT o.mispar_ishi,TO_CHAR(o.taarich,'mm/yyyy') chodesh
+                    FROM TB_YAMEY_AVODA_OVDIM o,TB_MISPAR_ISHI_CHISHUV t
+               WHERE o.status=1
+			    AND t.mispar_ishi=o.mispar_ishi
+               AND TO_CHAR(o.taarich,'mm/yyyy')=TO_CHAR(p_chodesh,'mm/yyyy'))
+          /*  union all
+            (select mispar_ishi,to_char(chodesh,'mm/yyyy') chodesh
+              from Ovdim_Im_Shinuy_HR
+              where Bakasha_ID  is null)*/)
+           GROUP BY mispar_ishi,chodesh) y,
+         (SELECT po.maamad,po.mispar_ishi
+               FROM PIVOT_PIRTEY_OVDIM PO
+                 WHERE  (v_me_taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+              OR   v_ad_taarich  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+              OR   po.ME_TARICH>=v_me_taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  v_ad_taarich )) p
+        WHERE o.mispar_ishi=p.mispar_ishi
+       AND (SUBSTR(p.maamad,0,1)=p_maamad  OR p_maamad  IS NULL)
+       AND o.mispar_ishi=y.mispar_ishi)
+       UNION
+        (SELECT p.mispar_ishi
+         FROM TB_PREMYOT_YADANIYOT p,
+                (SELECT po.maamad,po.mispar_ishi
+               FROM PIVOT_PIRTEY_OVDIM PO
+                 WHERE  (v_me_taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+              OR   v_ad_taarich  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+              OR   po.ME_TARICH>=v_me_taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  v_ad_taarich )) po
+         WHERE p.Taarich_idkun_acharon  >
+                        (SELECT Zman_Hatchala
+                        FROM TB_BAKASHOT
+                        WHERE Taarich_Haavara_Lesachar =
+                                          (SELECT MAX(B.Taarich_Haavara_Lesachar)
+                                            FROM TB_BAKASHOT B, TB_CHISHUV_CHODESH_OVDIM CC
+                                           WHERE B.Bakasha_ID = CC. Bakasha_ID
+                                     AND B. Huavra_Lesachar=1
+                                     AND CC. Mispar_Ishi =p.mispar_ishi ))
+         AND p.mispar_ishi=po.mispar_ishi
+         AND (SUBSTR(po.maamad,0,1)=p_maamad  OR p_maamad  IS NULL)
+          AND TO_CHAR(p.taarich,'mm/yyyy')=TO_CHAR(p_chodesh,'mm/yyyy')));
+  ELSE
+     OPEN p_cur FOR
+         SELECT o.MISPAR_ISHI
+       FROM OVDIM o,
+       (SELECT mispar_ishi,TO_CHAR(taarich,'mm/yyyy') chodesh
+       FROM TB_YAMEY_AVODA_OVDIM
+       WHERE (status=1 OR status=2)
+      AND TO_CHAR(taarich,'mm/yyyy')=TO_CHAR(p_chodesh,'mm/yyyy')
+      GROUP BY mispar_ishi,TO_CHAR(taarich,'mm/yyyy') ) y,
+        (SELECT po.maamad,po.mispar_ishi
+              FROM PIVOT_PIRTEY_OVDIM PO
+                WHERE  (v_me_taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+             OR   v_ad_taarich  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+             OR   po.ME_TARICH>=v_me_taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  v_ad_taarich )) p
+       WHERE o.mispar_ishi=p.mispar_ishi
+      AND (SUBSTR(p.maamad,0,1)=p_maamad  OR p_maamad  IS NULL)
+      AND o.mispar_ishi=y.mispar_ishi;
+
+  END IF;
+
+EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+
+END  pro_get_ovdim_lechishuv;
+
+PROCEDURE pro_get_ovdim_to_transfer(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE,
+         p_cur_list OUT CurType,
+         p_cur OUT CurType,
+         p_cur_prem OUT CurType ) IS
+         bakasha_id_prem NUMBER;   
+   --      bakasha_id_nihul_prem NUMBER;   
+         taarich_prem DATE;
+         taarich_cur DATE;     
+         p_maamad varchar(5);
+             
+
+ BEGIN
+  DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'pro_get_ovdim_to_transfer');
+  SELECT  TO_DATE('01/' || x.erech,'dd/mm/yyyy') INTO taarich_cur 
+  FROM TB_BAKASHOT_PARAMS x
+  WHERE x.bakasha_id=p_request_id AND x.param_id=2;
+ 
+ IF ( TO_DATE('01/' || TO_CHAR(ADD_MONTHS(SYSDATE,-1),'mm/yyyy'),'dd/mm/yyyy') = taarich_cur) THEN
+      taarich_prem:= ADD_MONTHS(taarich_cur,-1);
+       SELECT MAX(b.bakasha_id) INTO bakasha_id_prem
+       FROM TB_BAKASHOT b,TB_CHISHUV_CHODESH_OVDIM c
+       WHERE  B.BAKASHA_ID = c.BAKASHA_ID
+            AND B.SUG_BAKASHA=12
+            AND C.TAARICH = taarich_prem;
+            
+    /*    SELECT MAX(b.bakasha_id) INTO bakasha_id_nihul_prem
+        FROM TB_CHISHUV_CHODESH_OVDIM c,TB_BAKASHOT b
+        WHERE B.BAKASHA_ID = c.BAKASHA_ID
+            AND c.kod_rechiv IN(114,117,116,118)
+            AND c.taarich=taarich_prem;*/
+            
+        select p.erech into p_maamad
+        from tb_bakashot_params p
+        where p.bakasha_id=p_request_id
+        and p.param_id=1;
+
+ ELSE
+        bakasha_id_prem:=-1;
+    --    bakasha_id_nihul_prem:=-1;
+        taarich_prem:=to_date('01/01/0001','dd/mm/yyyy');
+        p_maamad:= '0';--to_date('01/01/0001','dd/mm/yyyy');
+ END IF;
+
+            
+   DBMS_APPLICATION_INFO.SET_ACTION( 'SelectOvdimToTransfer');     
+     OPEN p_cur_list FOR
+     WITH cc AS (
+                 SELECT     DISTINCT TAARICH, MISPAR_ISHI
+                 FROM     TB_CHISHUV_CHODESH_OVDIM C
+                 WHERE     BAKASHA_ID = p_request_id ),
+             mp AS ( SELECT     ERECH
+                   FROM      TB_BAKASHOT_PARAMS
+                   WHERE     BAKASHA_ID =p_request_id
+                             AND PARAM_ID = 2 )
+     SELECT taarich,mispar_ishi,mifal,maamad,gil,maamad_rashi,chodesh_ibud,sifrat_bikoret,shem_mish,shem_prat,
+     dirug,darga,teudat_zehut,isuk,  decode(meafyen53,'0000',Pkg_Ovdim.fun_get_meafyen_oved(mispar_ishi,53,add_months(taarich,1)-1),meafyen53)  meafyen53,
+      meafyen83,mushhe,makor  FROM(
+			     SELECT c.taarich,c.mispar_ishi ,DECODE(SUBSTR(p.maamad,0,1),1,'0013', DECODE(SUBSTR(p.maamad,2,2),'23','2626',  '0026')) mifal,
+                 SUBSTR(p.maamad,2,2) maamad,p.gil,SUBSTR(p.maamad,0,1) maamad_rashi, c.chodesh_ibud,
+						o.SIFRAT_BIKORET_MI sifrat_bikoret,o.SHEM_MISH,o.SHEM_PRAT,p.dirug,p.darga,o.TEUDAT_ZEHUT,p.Isuk,
+                      Pkg_Ovdim.fun_get_meafyen_oved(c.mispar_ishi,53,c.taarich) meafyen53,
+                      Pkg_Ovdim.fun_get_meafyen_oved(c.mispar_ishi,83,c.taarich) meafyen83,
+			                DECODE((SELECT  1 FROM MATZAV_OVDIM m
+									            WHERE m.mispar_ishi=c.mispar_ishi
+									           AND c.TAARICH BETWEEN m.taarich_hatchala AND m.taarich_siyum
+									          AND  m.Kod_matzav='33'),NULL,0,1) mushhe, 1 makor
+			     FROM      ( SELECT cc.TAARICH, cc.MISPAR_ISHI, mp.ERECH CHODESH_IBUD
+                        FROM cc, mp )
+                     /* (SELECT  DISTINCT taarich,mispar_ishi,
+				 (SELECT erech FROM TB_BAKASHOT_PARAMS 
+							WHERE bakasha_id=p_request_id
+							AND param_id=2) chodesh_ibud
+					              FROM TB_CHISHUV_CHODESH_OVDIM c
+					            WHERE Bakasha_ID=p_request_id) */ c,
+			           			OVDIM o,
+                                 PIVOT_PIRTEY_OVDIM p
+						    /*    (SELECT po.me_tarich,po.ad_tarich ,po.mispar_ishi,po.maamad,po.dirug,po. darga,po.Isuk,po.gil
+						       FROM PIVOT_PIRTEY_OVDIM PO)p*/
+			   WHERE  c.mispar_ishi=p.mispar_ishi
+      --    and c.mispar_ishi =27861--  in(75757,27861,28900,31727,27573  )
+			   AND o.mispar_ishi=c.mispar_ishi
+                AND p.ME_TARICH=(SELECT MAX(po.me_tarich)
+													          FROM   PIVOT_PIRTEY_OVDIM po
+													          WHERE (c.taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+													          OR   (ADD_MONTHS(c.taarich,1)-1)  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+													          OR   po.ME_TARICH>=c.taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=    (ADD_MONTHS(c.taarich,1)-1))
+													  AND po.ISUK IS NOT NULL
+													   AND po.mispar_ishi=c.mispar_ishi)
+               AND (P.MAAMAD <> 223 or (P.MAAMAD = 223 and trim(p.sug_misra)='מ'))
+		--	   ORDER BY p.mispar_ishi asc,c.taarich desc
+          UNION       
+               SELECT DISTINCT c.taarich, c.mispar_ishi,
+                         DECODE(SUBSTR(p.maamad,0,1),1,'0013', DECODE(SUBSTR(p.maamad,2,2),'23','2626',  '0026')) mifal,
+                         SUBSTR(p.maamad,2,2) maamad,p.gil,SUBSTR(p.maamad,0,1) maamad_rashi ,mp.ERECH CHODESH_IBUD,
+                          o.SIFRAT_BIKORET_MI sifrat_bikoret,o.SHEM_MISH,o.SHEM_PRAT, p.dirug,p.darga,o.TEUDAT_ZEHUT,p.Isuk,
+                          Pkg_Ovdim.fun_get_meafyen_oved(c.mispar_ishi,53,c.taarich) meafyen53,
+                          Pkg_Ovdim.fun_get_meafyen_oved(c.mispar_ishi,83,c.taarich) meafyen83 ,
+                            DECODE((SELECT  1 FROM MATZAV_OVDIM m
+                                                WHERE m.mispar_ishi=c.mispar_ishi
+                                               AND c.TAARICH BETWEEN m.taarich_hatchala AND m.taarich_siyum
+                                              AND  m.Kod_matzav='33'),NULL,0,1) mushhe, 2 makor
+               FROM TB_CHISHUV_CHODESH_OVDIM c,OVDIM o,
+                         PIVOT_PIRTEY_OVDIM p,
+                         mp
+                /* (SELECT po.me_tarich,po.ad_tarich ,po.mispar_ishi,po.maamad,po.dirug,po. darga,po.Isuk,po.gil
+                               FROM PIVOT_PIRTEY_OVDIM PO)p*/
+               WHERE  (c.Bakasha_ID=bakasha_id_prem  AND c.KOD_RECHIV IN(114,117,116,118,115,113,112) )
+                      --     OR   (c.Bakasha_ID=bakasha_id_nihul_prem  AND c.KOD_RECHIV IN(114,117,116,118) ) )
+                   AND c.taarich= taarich_prem
+                   AND c.mispar_ishi=o.mispar_ishi
+                   AND c.mispar_ishi=p.mispar_ishi
+                   AND  SUBSTR(p.maamad,0,1) in (   SELECT X FROM TABLE(CAST(Convert_String_To_Table( p_maamad,  ',') AS MYTABTYPE)) )
+                   --and trim(p_maamad)<>'1'
+                --  AND  SUBSTR(p.maamad,0,1) = 2
+              --     and c.mispar_ishi =46629
+                   AND c.taarich BETWEEN p.me_tarich AND p.ad_tarich
+                  AND (P.MAAMAD <> 223 or (P.MAAMAD = 223 and trim(p.sug_misra)='מ'))
+    
+                 AND NOT exists (   select cc.mispar_ishi
+                                                             from cc 
+                                                             where c.mispar_ishi=cc.mispar_ishi
+                                                             and c.taarich= cc.taarich) )
+             ORDER BY mispar_ishi ASC,taarich DESC;          
+                                                 
+                                                             
+              
+
+ DBMS_APPLICATION_INFO.SET_ACTION( 'SelectRechivimToTransfer');     
+   OPEN p_cur FOR
+   with cc as ( SELECT DISTINCT   a.mispar_ishi, a.Taarich, a.bakasha_id,a.th2 TAARICH_HAAVARA_LESACHAR
+                                        FROM( SELECT  co.mispar_ishi, co.Taarich, co.bakasha_id,b.TAARICH_HAAVARA_LESACHAR th1,
+                                                              MAX(B.TAARICH_HAAVARA_LESACHAR) OVER (PARTITION BY co.mispar_ishi,co.Taarich )  th2
+                                                 FROM TB_CHISHUV_CHODESH_OVDIM co,TB_BAKASHOT b
+                                                 WHERE co.Bakasha_ID<>p_request_id
+                                                    AND co.Bakasha_ID<p_request_id
+                                                       AND B.BAKASHA_ID = CO.BAKASHA_ID
+                                                       AND b.Huavra_Lesachar=1
+                                           --      and co.mispar_ishi=28466
+                                                  ) a
+                                          WHERE a.th1=a.th2)     ,
+          mp AS ( SELECT     to_date('01/' || ERECH,'dd/mm/yyyy') chodesh_ibud
+                   FROM      TB_BAKASHOT_PARAMS
+                   WHERE     BAKASHA_ID =p_request_id
+                             AND PARAM_ID = 2 )                               
+   SELECT  /*+OPT_PARAM('_OPTIMIZER_USE_FEEDBACK' 'false') */
+   c.mispar_ishi, c.taarich,c.kod_rechiv,c.b1 bakasha_id_1,c.b2 bakasha_id_2,c.erech_rechiv_a,c.erech_rechiv_b,c.erech_rechiv,chodesh_ibud
+    FROM
+            ( SELECT  NVL(a.taarich,b.taarich) taarich,NVL(a.mispar_ishi,b.mispar_ishi)mispar_ishi,a.BAKASHA_ID b1,NVL(a.erech_rechiv,0) erech_rechiv_a,
+                NVL(b.BAKASHA_ID,bakasha_id_last) b2, NVL(b.erech_rechiv,0) erech_rechiv_b,NVL(a.kod_rechiv,b.kod_rechiv) kod_rechiv,
+                NVL(a.erech_rechiv,0)-NVL(b.erech_rechiv,0) erech_rechiv,nvl(a.chodesh_ibud,b.chodesh_ibud) chodesh_ibud
+               FROM
+                       (
+                        SELECT  c1.mispar_ishi,c1.taarich,c1.BAKASHA_ID,c1.kod_rechiv,c1.erech_rechiv,c2.bakasha_id bakasha_id_last,mp.chodesh_ibud
+                        FROM    (SELECT c.mispar_ishi,c.taarich,c.BAKASHA_ID,c.kod_rechiv,c.erech_rechiv
+                                     FROM TB_CHISHUV_CHODESH_OVDIM c
+                                     WHERE c.Bakasha_ID=p_request_id
+                              --   and  c.mispar_ishi = 27861 --in(75757,31777,28900,31727,27573  )
+                                  --     and c.mispar_ishi=28466
+                                     ORDER BY c.mispar_ishi,c.kod_rechiv) c1,   
+                                     mp,                
+                                   ( select  cc.mispar_ishi, cc.Taarich, cc.bakasha_id,cc.TAARICH_HAAVARA_LESACHAR from cc
+                                   /*SELECT DISTINCT   a.mispar_ishi, a.Taarich, a.bakasha_id,a.th2 TAARICH_HAAVARA_LESACHAR
+                                                FROM( SELECT  co.mispar_ishi, co.Taarich, co.bakasha_id,b.TAARICH_HAAVARA_LESACHAR th1,
+                                                                      MAX(B.TAARICH_HAAVARA_LESACHAR) OVER (PARTITION BY co.mispar_ishi,co.Taarich )  th2
+                                                         FROM TB_CHISHUV_CHODESH_OVDIM co,TB_BAKASHOT b
+                                                         WHERE co.Bakasha_ID<>p_request_id
+                                                               AND co.Bakasha_ID<p_request_id
+                                                               AND B.BAKASHA_ID = CO.BAKASHA_ID
+                                                               AND b.Huavra_Lesachar=1
+                                                      --          and co.mispar_ishi=28466
+                                                        -- and co.mispar_ishi=202
+                                                          ) a
+                                                  WHERE a.th1=a.th2*/
+                                                ) c2
+                          WHERE   c1.mispar_ishi= c2.mispar_ishi(+)
+                                AND c1.taarich = c2.taarich(+) 
+                        --  and  c1.mispar_ishi = 27861 --in(75757,31777,28900,31727,27573  )                   
+                         )a
+                    FULL JOIN
+                        (SELECT c1.mispar_ishi,c1.bakasha_id,c1.Taarich,c1.kod_rechiv,c1.erech_rechiv,mp.chodesh_ibud
+                          FROM TB_CHISHUV_CHODESH_OVDIM c1 ,
+                                    TB_BAKASHOT b,
+                                    (SELECT  DISTINCT taarich,mispar_ishi
+                                      FROM TB_CHISHUV_CHODESH_OVDIM c
+                                      WHERE Bakasha_ID=p_request_id
+                     --        and c.mispar_ishi = 27861-- in(75757,31777,28900,31727,27573  )
+                            )c2  ,
+                                      mp,
+                                     ( select  cc.mispar_ishi, cc.Taarich, cc.bakasha_id,cc.TAARICH_HAAVARA_LESACHAR from cc
+                                      /*SELECT DISTINCT   a.mispar_ishi, a.Taarich, a.bakasha_id,a.th2 TAARICH_HAAVARA_LESACHAR
+                                        FROM( SELECT  co.mispar_ishi, co.Taarich, co.bakasha_id,b.TAARICH_HAAVARA_LESACHAR th1,
+                                                              MAX(B.TAARICH_HAAVARA_LESACHAR) OVER (PARTITION BY co.mispar_ishi,co.Taarich )  th2
+                                                 FROM TB_CHISHUV_CHODESH_OVDIM co,TB_BAKASHOT b
+                                                 WHERE co.Bakasha_ID<>p_request_id
+                                                    AND co.Bakasha_ID<p_request_id
+                                                       AND B.BAKASHA_ID = CO.BAKASHA_ID
+                                                       AND b.Huavra_Lesachar=1
+                                           --      and co.mispar_ishi=28466
+                                                  ) a
+                                          WHERE a.th1=a.th2*/
+                                        ) x
+                          WHERE c1.Bakasha_ID<>p_request_id
+                               AND c1.taarich=c2.taarich
+                               AND c1.mispar_ishi=c2.mispar_ishi
+                               AND b.Huavra_Lesachar=1
+                               AND b.bakasha_id=c1.bakasha_id
+                               AND c1.BAKASHA_ID=x.BAKASHA_ID
+                               AND b.Taarich_Haavara_Lesachar = x.Taarich_Haavara_Lesachar
+                               AND c1.taarich=x.taarich
+                               AND c1.mispar_ishi=x.mispar_ishi
+                       --     and   c1.mispar_ishi = 27861--in(75757,31777,28900,31727,27573  )
+                         ORDER BY c1.mispar_ishi,c1.taarich,c1.kod_rechiv ) b
+                   ON       a.mispar_ishi=b.mispar_ishi
+                       AND a.taarich=b.taarich
+                   --    and  a.mispar_ishi = 27861 --in(75757,31777,28900,31727,27573  )
+                       AND  a.kod_rechiv  = b.kod_rechiv) c 
+      ORDER BY c.mispar_ishi,c.taarich,c.kod_rechiv;    
+
+
+            DBMS_APPLICATION_INFO.SET_ACTION( 'SelectPremiotToTransfer');     
+    OPEN p_cur_prem FOR
+        SELECT C.MISPAR_ISHI,C.TAARICH,C.KOD_RECHIV,C.ERECH_RECHIV                         
+        FROM TB_CHISHUV_CHODESH_OVDIM c 
+        WHERE C.BAKASHA_ID=bakasha_id_prem
+          AND C.TAARICH =  taarich_prem
+          AND c.KOD_RECHIV IN(115,113,112,114,117,116,118);
+
+   /* UNION
+        SELECT C.MISPAR_ISHI,C.TAARICH,C.KOD_RECHIV,C.ERECH_RECHIV                         
+        FROM TB_CHISHUV_CHODESH_OVDIM c 
+         WHERE C.BAKASHA_ID=bakasha_id_nihul_prem
+             AND C.TAARICH =  taarich_prem
+             AND c.KOD_RECHIV IN(114,117,116,118);*/
+EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+
+END  pro_get_ovdim_to_transfer;
+
+procedure get_netuney_machala_dor_b(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE,
+         p_cur_rechivim OUT CurType,
+         p_cur_ovdim OUT CurType) is
+ begin
+ 
+  open p_cur_ovdim for
+      WITH cc AS (
+                  select  mispar_ishi,taarich
+            from TB_OVDIM_DISEASE_SUM
+            where bakasha_id=p_request_id
+            group by  mispar_ishi,taarich
+
+            minus
+
+            select c.mispar_ishi,taarich
+            from tb_chishuv_chodesh_ovdim c
+            where c.bakasha_id=p_request_id
+            group by  c.mispar_ishi,c.taarich  ),
+             mp AS ( SELECT     ERECH
+                   FROM      TB_BAKASHOT_PARAMS
+                   WHERE     BAKASHA_ID =p_request_id
+                             AND PARAM_ID = 2 )
+     SELECT * FROM(
+                 SELECT c.taarich,c.mispar_ishi ,DECODE(SUBSTR(p.maamad,0,1),1,'0013', DECODE(SUBSTR(p.maamad,2,2),'23','2626',  '0026')) mifal,
+                 SUBSTR(p.maamad,2,2) maamad,p.gil,SUBSTR(p.maamad,0,1) maamad_rashi, c.chodesh_ibud,
+                        o.SIFRAT_BIKORET_MI sifrat_bikoret,o.SHEM_MISH,o.SHEM_PRAT,p.dirug,p.darga,o.TEUDAT_ZEHUT,p.Isuk,
+                      Pkg_Ovdim.fun_get_meafyen_oved(c.mispar_ishi,53,c.taarich) meafyen53,
+                      Pkg_Ovdim.fun_get_meafyen_oved(c.mispar_ishi,83,c.taarich) meafyen83,
+                            DECODE((SELECT  1 FROM MATZAV_OVDIM m
+                                                WHERE m.mispar_ishi=c.mispar_ishi
+                                               AND c.TAARICH BETWEEN m.taarich_hatchala AND m.taarich_siyum
+                                              AND  m.Kod_matzav='33'),NULL,0,1) mushhe, 1 makor
+                 FROM      ( SELECT cc.TAARICH, cc.MISPAR_ISHI, mp.ERECH CHODESH_IBUD
+                                   FROM cc, mp )   c,
+                                   OVDIM o,
+                                 PIVOT_PIRTEY_OVDIM p
+                WHERE  c.mispar_ishi=p.mispar_ishi
+                      AND o.mispar_ishi=c.mispar_ishi
+                      AND p.ME_TARICH=(SELECT MAX(po.me_tarich)
+                                                              FROM   PIVOT_PIRTEY_OVDIM po
+                                                              WHERE (c.taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                                                              OR   (ADD_MONTHS(c.taarich,1)-1)  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                                                              OR   po.ME_TARICH>=c.taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=    (ADD_MONTHS(c.taarich,1)-1))
+                                                      AND po.ISUK IS NOT NULL
+                                                       AND po.mispar_ishi=c.mispar_ishi)
+               AND (P.MAAMAD <> 223 or (P.MAAMAD = 223 and trim(p.sug_misra)='מ')) );
+               
+
+         open p_cur_rechivim for
+            with chishuv_ovdim as
+                            (
+                             SELECT     DISTINCT  c.MISPAR_ISHI, c.TAARICH
+                             FROM     TB_CHISHUV_CHODESH_OVDIM C ,pivot_pirtey_ovdim p
+                             WHERE     c.BAKASHA_ID = p_request_id
+                           --   and c.mispar_ishi=29175
+                                and c.mispar_ishi=p.mispar_ishi 
+                                and (c.taarich BETWEEN  p.ME_TARICH  AND   NVL(p.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                                   OR  last_day(c.taarich) BETWEEN  p.ME_TARICH  AND   NVL(p.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                                    OR   (p.ME_TARICH>=c.taarich AND   NVL(p.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  last_day(c.taarich) ))
+                               and   p.maamad in(225,226,286,227,228,238,248,258,229)         
+                               ),
+                 ovdim_noshkim as(            
+                            select s.mispar_ishi,s.taarich
+                            from TB_OVDIM_DISEASE_SUM s,chishuv_ovdim
+                            where s.bakasha_id=p_request_id
+                       --      and s.mispar_ishi=29175
+                             and not exists (select 1
+                                                   from chishuv_ovdim c
+                                                   where s.mispar_ishi= c.mispar_ishi
+                                                      and s.taarich=c.taarich)
+                            group by  s.mispar_ishi,s.taarich)
+              ,cur_ovdim as(
+                     select *
+                     from chishuv_ovdim
+                  union 
+                     select *
+                     from ovdim_noshkim
+               )      ,      
+                              mp AS ( SELECT     to_date('01/' || ERECH,'dd/mm/yyyy') chodesh_ibud
+                               FROM      TB_BAKASHOT_PARAMS
+                               WHERE     BAKASHA_ID =p_request_id
+                                         AND PARAM_ID = 2 )        
+                                         
+                , bakasha as                         
+                  (     SELECT DISTINCT   a.mispar_ishi, a.Taarich, a.bakasha_id,a.th2 TAARICH_HAAVARA_LESACHAR
+                        FROM( SELECT  co.mispar_ishi, co.Taarich, co.bakasha_id,b.TAARICH_HAAVARA_LESACHAR th1,
+                                              MAX(B.TAARICH_HAAVARA_LESACHAR) OVER (PARTITION BY co.mispar_ishi,co.Taarich )  th2
+                                 FROM TB_OVDIM_DISEASE_SUM co,TB_BAKASHOT b,cur_ovdim p
+                                 WHERE co.Bakasha_ID<>p_request_id
+                                    AND co.Bakasha_ID<p_request_id
+                                       AND B.BAKASHA_ID = CO.BAKASHA_ID
+                                       AND b.Huavra_Lesachar=1
+                                       and co.mispar_ishi = p.mispar_ishi
+                                       and co.taarich= p.taarich
+                           --      and co.mispar_ishi=28466
+                                  ) a
+                          WHERE a.th1=a.th2       )            
+                                         
+                    
+                        
+                        SELECT  /*+OPT_PARAM('_OPTIMIZER_USE_FEEDBACK' 'false') */
+                           c.mispar_ishi, c.taarich,c.kod_rechiv,c.b1 bakasha_id_1,c.b2 bakasha_id_2,c.erech_rechiv_a,c.erech_rechiv_b,c.erech_rechiv,mp.chodesh_ibud
+                            FROM mp, (
+                                    SELECT  NVL(a.taarich,b.taarich) taarich,NVL(a.mispar_ishi,b.mispar_ishi)mispar_ishi,a.BAKASHA_ID b1,NVL(a.erech_rechiv,0) erech_rechiv_a,
+                                                    b.BAKASHA_ID b2, NVL(b.erech_rechiv,0) erech_rechiv_b,NVL(a.kod_rechiv,b.kod_rechiv) kod_rechiv,
+                                                    NVL(a.erech_rechiv,0)-NVL(b.erech_rechiv,0) erech_rechiv
+                                    from
+                                            (select mispar_ishi,taarich,bakasha_id,kod_rechiv,sum_rechiv erech_rechiv
+                                            from TB_OVDIM_DISEASE_SUM
+                                            where bakasha_id=p_request_id
+                                 --          and  mispar_ishi=29175
+                                            ) a
+
+                                       FULL JOIN
+
+                                            (select s.mispar_ishi,s.taarich,s.bakasha_id,s.kod_rechiv,s.sum_rechiv erech_rechiv
+                                            from TB_OVDIM_DISEASE_SUM s,bakasha b
+                                            where s.bakasha_id=b.bakasha_id
+                                                 and s.mispar_ishi=b.mispar_ishi
+                                                 and s.taarich=b.taarich) b
+
+                                     ON     ( a.mispar_ishi=b.mispar_ishi
+                                          AND a.taarich=b.taarich
+                                     -- and a.mispar_ishi=29175
+                                          AND a.kod_rechiv  = b.kod_rechiv)
+                                     
+                                where NVL(a.erech_rechiv,0)-NVL(b.erech_rechiv,0) <>0
+                         ) c;
+        EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+ end    get_netuney_machala_dor_b;     
+procedure pro_get_ovdim_chufsha_rezifa(p_bakasha_id in number, p_cur OUT CurType ) IS
+--bakasha_id_tahalich number;
+begin
+        
+    DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'pro_get_ovdim_chufsha_rezifa');
+
+        OPEN p_cur FOR
+          SELECT MISPAR_ISHI,bakasha_id,taarich
+          FROM TB_OVDIM_VACATION V
+           WHERE BAKASHA_ID=p_bakasha_id
+             AND CONTINUOUS_VACATION ='0'
+             GROUP BY    MISPAR_ISHI,bakasha_id,taarich;
+           
+EXCEPTION
+   WHEN NO_DATA_FOUND THEN
+        RAISE;
+   WHEN OTHERS THEN
+            RAISE;
+
+END pro_get_ovdim_chufsha_rezifa;
+
+
+PROCEDURE pro_get_chishuv_yomi(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE,
+                   p_mispar_ishi IN  TB_CHISHUV_YOMI_OVDIM.MISPAR_ISHI%TYPE,
+                   p_taarich IN TB_CHISHUV_YOMI_OVDIM.TAARICH%TYPE,
+              p_cur OUT CurType) IS
+ BEGIN
+ OPEN p_cur  FOR
+   SELECT   taarich,kod_rechiv,erech_rechiv
+   FROM TB_CHISHUV_YOMI_OVDIM c
+   WHERE mispar_ishi =p_mispar_ishi
+   AND taarich BETWEEN p_taarich AND LAST_DAY(p_taarich)
+  AND bakasha_id=p_request_id;
+
+EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+
+END  pro_get_chishuv_yomi;
+
+
+PROCEDURE pro_get_rechivim_chishuv_yomi(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE,
+                                                                p_cur OUT CurType) IS
+    p_from DATE;  
+    P_to    Date;                                                      
+ BEGIN
+    
+ DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'pro_get_rechivim_chishuv_yomi');
+   --select min(taarich) into p_from from  TB_CHISHUV_YOMI_OVDIM where bakasha_id=p_request_id;
+    --select max(taarich) into P_to from TB_CHISHUV_YOMI_OVDIM where bakasha_id=p_request_id;
+ OPEN p_cur  FOR
+   SELECT  c.mispar_ishi, trunc(c.taarich,'MM') chodesh,count(*) yamim
+   FROM TB_CHISHUV_YOMI_OVDIM c,ovdim o
+   WHERE c.mispar_ishi= O.MISPAR_ISHI
+        and O.KOD_HEVRA <> 4895
+       -- and  taarich BETWEEN p_from AND P_to
+        and  bakasha_id=p_request_id
+        and kod_rechiv =126
+        and erech_rechiv>0
+     --    and  C.mispar_ishi in(75757,31777,28900,31727,27573  )           
+        group by  c.mispar_ishi,  trunc(c.taarich,'MM') ;
+ -- SELECT  0 mispar_ishi, to_date('01/01/0001','dd/mm/yyyy') taarich,0 kod_rechiv, 0 erech_rechiv from dual;
+  /* SELECT  c.mispar_ishi, c.taarich,c.kod_rechiv,c.erech_rechiv
+   FROM TB_CHISHUV_YOMI_OVDIM c,ovdim o
+   WHERE c.mispar_ishi= O.MISPAR_ISHI
+        and O.KOD_HEVRA <> 4895
+        and  taarich BETWEEN p_from AND P_to
+        and  bakasha_id=p_request_id
+        and kod_rechiv in(126,1,67,66,62,60,61,71,70,69,65,68,57,64,56);
+*/
+EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+
+END  pro_get_rechivim_chishuv_yomi;
+----------------
+PROCEDURE pro_del_chishuv_after_transfer(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE) IS
+CURSOR v_cur(v_request_id TB_BAKASHOT.bakasha_id%TYPE) IS
+  SELECT b.bakasha_id
+     FROM
+     (SELECT bakasha_id,MAX(CASE WHEN param_id=1 THEN erech ELSE NULL END) param1 ,
+     MAX(CASE WHEN param_id=2 THEN erech ELSE NULL END) param2
+      FROM TB_BAKASHOT_PARAMS
+      WHERE param_id IN(1,2)
+      GROUP BY bakasha_id )p,
+      TB_BAKASHOT b
+    WHERE  b.HUAVRA_LESACHAR IS NULL
+    AND b.bakasha_id=p.bakasha_id
+	 AND b.bakasha_id<>v_request_id
+    AND (p.param1=(SELECT p.erech FROM TB_BAKASHOT_PARAMS p,TB_BAKASHOT b
+                    WHERE b.bakasha_id=v_request_id
+                    AND b.bakasha_id=p.bakasha_id
+                    AND param_id=1)
+    AND p.param2=(SELECT p.erech FROM TB_BAKASHOT_PARAMS p,TB_BAKASHOT b
+                  WHERE b.bakasha_id=v_request_id
+                  AND b.bakasha_id=p.bakasha_id
+                  AND param_id=2));
+ --icount number;
+  v_from_date date; 
+ v_to_date date;
+ v_bakashot varchar2(1000 char);
+  BEGIN
+   DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'pro_del_chishuv_after_transfer');
+  --icount:=0;
+  v_bakashot:='';
+   
+   FOR   v_cur_rec IN  v_cur(p_request_id)
+   LOOP
+   if (length(v_bakashot)>0) then v_bakashot:=v_bakashot || ','; end if;
+   
+   v_bakashot:=v_bakashot || v_cur_rec.bakasha_id;
+   /*
+  DELETE FROM TB_CHISHUV_SIDUR_OVDIM
+    WHERE bakasha_id=v_cur_rec.bakasha_id;
+
+    DELETE FROM TB_CHISHUV_YOMI_OVDIM
+    WHERE bakasha_id=v_cur_rec.bakasha_id;
+
+    DELETE FROM TB_CHISHUV_CHODESH_OVDIM
+    WHERE bakasha_id=v_cur_rec.bakasha_id;
+    
+    DELETE FROM TB_BAKASHOT_PARAMS
+    WHERE bakasha_id=v_cur_rec.bakasha_id;
+    
+    DELETE FROM TB_BAKASHOT
+    WHERE bakasha_id=v_cur_rec.bakasha_id;*/
+    END LOOP;
+ 
+ if  (length(v_bakashot)>0) then
+   select  last_day(to_date('01/' || erech,'dd/mm/yyyy')) ,
+            add_months(to_date('01/' || erech,'dd/mm/yyyy'),-11) into v_to_date,v_from_date
+     FROM TB_BAKASHOT_PARAMS
+    WHERE bakasha_id=p_request_id
+    and param_id=2;
+              
+    DELETE FROM TB_CHISHUV_SIDUR_OVDIM c
+    WHERE c.taarich between v_from_date  and v_to_date
+     and C.BAKASHA_ID in( SELECT X FROM TABLE(CAST(Convert_String_To_Table(v_bakashot,  ',') AS MYTABTYPE)));
+    
+     delete  FROM TB_CHISHUV_YOMI_OVDIM c
+    WHERE c.taarich between v_from_date  and v_to_date
+       and C.BAKASHA_ID in( SELECT X FROM TABLE(CAST(Convert_String_To_Table(v_bakashot,  ',') AS MYTABTYPE)));
+                    
+      delete  FROM TB_CHISHUV_CHODESH_OVDIM c
+    WHERE c.taarich between v_from_date  and v_to_date
+       and C.BAKASHA_ID in( SELECT X FROM TABLE(CAST(Convert_String_To_Table(v_bakashot,  ',') AS MYTABTYPE)));
+       
+       DELETE FROM TB_BAKASHOT_PARAMS
+      where BAKASHA_ID in( SELECT X FROM TABLE(CAST(Convert_String_To_Table(v_bakashot,  ',') AS MYTABTYPE)));
+    
+    DELETE FROM TB_BAKASHOT
+     where BAKASHA_ID in( SELECT X FROM TABLE(CAST(Convert_String_To_Table(v_bakashot,  ',') AS MYTABTYPE)));
+     end if;                                                  
+EXCEPTION
+     WHEN NO_DATA_FOUND THEN
+        NULL;
+   WHEN OTHERS THEN
+            RAISE;
+
+END   pro_del_chishuv_after_transfer;
+
+----------------
+PROCEDURE pro_upd_status_yamey_avoda(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE) IS
+ CURSOR v_cur(v_request_id TB_BAKASHOT.bakasha_id%TYPE) IS
+         WITH bakasha_list AS  (
+             SELECT DISTINCT ch.mispar_ishi, ch.taarich , b.ZMAN_HATCHALA
+             FROM   kdsadmin.TB_MISPAR_ISHI_SUG_CHISHUV  ch , --TB_CHISHUV_CHODESH_OVDIM ch , --
+                   kdsadmin.TB_BAKASHOT b
+             WHERE b.bakasha_id= p_request_id
+                 AND b.bakasha_id= ch.bakasha_id)
+             SELECT  /*+ use_nl(o bl) */   o.mispar_ishi, o.taarich 
+            FROM kdsadmin.TB_YAMEY_AVODA_OVDIM o ,
+                 bakasha_list bl
+             WHERE o.taarich BETWEEN  bl.taarich AND LAST_DAY (bl.taarich)
+                 AND  o.mispar_ishi = bl.mispar_ishi  
+                 AND o.Status<>0
+                 AND O.TAARICH_IDKUN_ACHARON <=bl.ZMAN_HATCHALA 
+                 AND (  EXISTS 
+                                    (SELECT 1 FROM kdsadmin.TB_CHISHUV_YOMI_OVDIM C
+                                    WHERE c.taarich =o.taarich
+                                      AND c.mispar_ishi = o.mispar_ishi
+                                     AND bakasha_id= p_request_id)       
+             
+                         OR          
+                           NOT EXISTS (SELECT 1 FROM kdsadmin.TB_SIDURIM_OVDIM S
+                                                WHERE s.taarich = o.taarich
+                                                     AND s.mispar_ishi = o.mispar_ishi
+                                                      and nvl(S.LO_LETASHLUM,0)=0
+                                                     AND s.mispar_sidur<>99200)       
+                        );
+             
+             
+
+BEGIN
+--INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'status_yamey','11');
+
+DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'pro_upd_status_yamey_avoda');
+     FOR   v_cur_rec IN  v_cur(p_request_id)
+   LOOP
+   UPDATE TB_YAMEY_AVODA_OVDIM
+   SET status=2,
+          TAARICH_IDKUN_ACHARON = SYSDATE,
+          meadken_acharon=-8
+   WHERE mispar_ishi=v_cur_rec.mispar_ishi
+   AND taarich=v_cur_rec.taarich;
+  END LOOP;
+--INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'status_yamey','22');
+    Pkg_Calculation.pro_upd_ymy_avoda_lo_bechishuv;
+EXCEPTION
+     WHEN OTHERS THEN
+            RAISE;
+END pro_upd_status_yamey_avoda;
+--------------
+
+
+   PROCEDURE pro_ins_yamey_avoda_ovdim IS
+    idNumber NUMBER;
+err_str VARCHAR(1000);
+		
+CURSOR  stam6 IS
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01
+AND kod_tahalich=7 
+AND kod_peilut_tahalich=1;
+--and seq between 30 and 44;
+
+ BEGIN
+ idNumber:=0;
+err_str:='';
+
+   pro_ins_yamey_avoda_ovdim(TO_CHAR(SYSDATE,'yyyymmdd'));
+   
+ FOR  stam6_rec IN  stam6  LOOP
+BEGIN
+err_str:=err_str ||trim(stam6_rec.teur_tech);
+END;
+END LOOP;
+COMMIT;
+
+SELECT COUNT(*)
+ INTO idNumber
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01  
+AND kod_tahalich=7
+AND kod_peilut_tahalich=1;
+--and seq between 30 and 44;
+
+  	IF (idNumber >0) THEN
+    RAISE_APPLICATION_ERROR(-20006, SUBSTR(err_str,1,100), TRUE);
+ END IF;
+ 
+  EXCEPTION
+     WHEN NO_DATA_FOUND  THEN
+        						 idNumber:=0;
+   WHEN OTHERS THEN
+        RAISE;
+  
+END pro_ins_yamey_avoda_ovdim;  
+ 
+ PROCEDURE pro_ins_yamey_avoda_ovdim(pDt VARCHAR) IS
+ CURSOR Yamim IS
+  SELECT   DISTINCT mispar_ishi,TO_DATE(pDt,'yyyymmdd') dt--,0,SYSDATE,-11
+FROM NEW_MATZAV_OVDIM  o
+-- 20130911 WHERE   kod_matzav IN ('01','03','04','05','06','07','08','10')
+-- 20140216 WHERE   kod_matzav IN ('01','03','04','05','06','07','10')
+WHERE   kod_matzav IN ('01','03','04','05','06','07','10','11')
+   AND TO_DATE(pDt,'yyyymmdd') BETWEEN taarich_hatchala AND NVL(taarich_siyum,SYSDATE+1)
+   AND NOT EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM yao
+  WHERE yao.taarich=TO_DATE(pDt,'yyyymmdd')
+  AND yao.MISPAR_ISHI=o.mispar_ishi);
+
+   BEGIN
+FOR  Yamim_rec IN  Yamim LOOP
+BEGIN
+   INSERT INTO TB_YAMEY_AVODA_OVDIM
+   (mispar_ishi,taarich,lina,taarich_idkun_acharon,meadken_acharon)
+VALUES (Yamim_rec.mispar_ishi,Yamim_rec.dt,  0,SYSDATE,-11 );
+--   SELECT mispar_ishi,TO_DATE(pDt,'yyyymmdd'),0,SYSDATE,-11
+--  FROM  NEW_MATZAV_OVDIM  o
+--   WHERE   kod_matzav IN ('01','03','04','05','06','07','08')
+--   AND TO_DATE(pDt,'yyyymmdd') BETWEEN taarich_hatchala AND NVL(taarich_siyum,SYSDATE+1)
+--   AND NOT EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM yao
+--  WHERE yao.taarich=TO_DATE(pDt,'yyyymmdd')
+--  AND yao.MISPAR_ISHI=o.mispar_ishi);
+EXCEPTION
+   WHEN OTHERS THEN
+--   err_str:=err_str||' (4,1) '||to_char(Yamim_rec.driver_id)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (7,1,1,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Yamim_rec.mispar_ishi) ||' '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
+END LOOP;
+COMMIT;
+       
+END pro_ins_yamey_avoda_ovdim;
+
+
+ PROCEDURE pro_get_premiot_ovdim(pYM VARCHAR,p_Cur OUT CurType) IS
+  BEGIN
+  OPEN p_Cur FOR
+-- SELECT baa_premia_empl Mispar_ishi,baa_premia_year_month Tkufa,baa_premia_garagge Snif_premia,baa_sug_premia Sug_premia,baa_premia_minutes Dakot_premia
+-- FROM  baam_premia_4_kds@KDS2baam
+--WHERE baa_premia_year_month=pYM
+--UNION ALL
+--SELECT * FROM  wr_premia_4_kds@KDS2wr1
+-- WHERE wr_premia_year_month=pYM;
+-- 5/2/2012: materialized view tb_prem is the above union only on current open -1 tkufot
+SELECT   Mispar_ishi,  Tkufa,  Snif_premia,  Sug_premia,  Dakot_premia
+FROM  TB_PREM
+WHERE Tkufa=pYM;
+END pro_get_premiot_ovdim;
+
+
+   PROCEDURE pro_upd_yamey_avoda_ovdim(pDt VARCHAR) IS
+
+   BEGIN
+   
+   BEGIN
+          UPDATE TB_YAMEY_AVODA_OVDIM  yao
+      SET --measher_o_mistayeg=2,
+          tachograf=2
+      WHERE  EXISTS (SELECT * FROM TB_SIDURIM_OVDIM so
+           WHERE meadken_acharon=-12
+        AND so.mispar_ishi=yao.mispar_ishi
+        AND  so.taarich=yao.taarich
+        AND mispar_sidur<>99200)
+     AND yao.taarich= TO_DATE(pDt,'yyyymmdd');
+       EXCEPTION
+   WHEN OTHERS THEN
+   INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,56,SYSDATE,'',10,'',SUBSTR('update_yamim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+	END;
+COMMIT; 
+
+BEGIN
+         UPDATE TB_YAMEY_AVODA_OVDIM  yao
+      SET --measher_o_mistayeg=2,
+          tachograf=2
+      WHERE  EXISTS (SELECT * FROM TB_SIDURIM_OVDIM so
+           WHERE meadken_acharon=-12
+        AND so.mispar_ishi=yao.mispar_ishi
+        AND  so.taarich=yao.taarich
+        AND mispar_sidur<>99200)
+     AND yao.taarich= TO_DATE(pDt,'yyyymmdd')+1;
+	        EXCEPTION
+   WHEN OTHERS THEN
+   INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,57,SYSDATE,'',10,'',SUBSTR('update_yamim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+	END;
+COMMIT; 
+
+
+-- 20120712 no upd of measher_o_mistayeg
+-- 20120712 BEGIN
+-- 20120712-- 2010/06/29 measher_o_mistayeg
+-- 20120712   UPDATE  TB_YAMEY_AVODA_OVDIM yao
+-- 20120712 SET   measher_o_mistayeg =1
+-- 20120712WHERE yao.taarich =  TO_DATE(pDt,'yyyymmdd')
+-- 20120712AND measher_o_mistayeg IS NULL
+-- 20120712AND NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM so
+-- 20120712           WHERE so.meadken_acharon=-12
+-- 20120712        AND so.mispar_ishi=yao.mispar_ishi
+-- 20120712        AND  so.taarich=yao.taarich
+-- 20120712      AND so.taarich =  TO_DATE(pDt,'yyyymmdd')
+-- 20120712        AND so.mispar_sidur<>99200);
+-- 20120712       EXCEPTION
+-- 20120712   WHEN OTHERS THEN
+-- 20120712   INSERT INTO TB_LOG_TAHALICH
+-- 20120712	VALUES (15,1,58,SYSDATE,'',10,'',SUBSTR('update_yamim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+-- 20120712	END;
+-- 20120712COMMIT; 
+
+  --t2010/06/29 update measher_o_mistayeg=null,   for workers with any -12
+ --     update  tb_yamey_avoda_ovdim yao
+--set   measher_o_mistayeg =null
+--where yao.taarich =  to_date(pDt,'yyyymmdd')
+--and measher_o_mistayeg =1
+--and exists (select * from tb_sidurim_ovdim so
+  --         where meadken_acharon=-12
+    --    and so.mispar_ishi=yao.mispar_ishi
+      --  and  so.taarich=yao.taarich
+     -- and so.taarich =  to_date(pDt,'yyyymmdd')
+     --   and mispar_sidur<>99200);
+
+ --           update  tb_yamey_avoda_ovdim  ty
+--                   set ty.shat_hatchala         =
+--                      (select min(so1.shat_hatchala)
+--                       from  tb_sidurim_ovdim so1
+--                       where
+--                       so1.mispar_ishi          = ty.mispar_ishi and
+--                       so1.taarich              = ty.taarich and
+--                       so1.mispar_sidur         <>99200),
+--                       ty.shat_siyum            =
+--                      (select  max(so2.shat_gmar)
+--                       from  tb_sidurim_ovdim so2
+--                       where
+--                       so2.mispar_ishi          = ty.mispar_ishi and
+--                       so2.taarich              = ty.taarich and
+--                       so2.mispar_sidur         <>99200)--,
+--            --           ty.taarich_idkun_acharon = sysdate
+--                WHERE
+--                  ty.taarich       = to_date(pDt,'yyyymmdd');
+
+--            update  tb_yamey_avoda_ovdim  ty
+--                   set ty.shat_hatchala         =
+--                      (select min(so1.shat_hatchala)
+--                       from  tb_sidurim_ovdim so1
+--                       where
+--                       so1.mispar_ishi          = ty.mispar_ishi and
+--                       so1.taarich              = ty.taarich and
+--                       so1.mispar_sidur         <>99200),
+--                       ty.shat_siyum            =
+--                      (select  max(so2.shat_gmar)
+--                       from  tb_sidurim_ovdim so2
+--                       where
+--                       so2.mispar_ishi          = ty.mispar_ishi and
+--                       so2.taarich              = ty.taarich and
+--                       so2.mispar_sidur         <>99200)--,
+--             --          ty.taarich_idkun_acharon = sysdate
+--                WHERE
+--                  ty.taarich       = to_date(pDt,'yyyymmdd')+1;
+
+--    EXCEPTION
+--   WHEN OTHERS THEN
+--        RAISE;
+      END pro_upd_yamey_avoda_ovdim;
+
+
+--   PROCEDURE pro_upd_yamey_avoda_1oved(pDt varchar,pIshi varchar) IS
+--   BEGIN
+ --        update  tb_yamey_avoda_ovdim  ty
+ --                  set ty.shat_hatchala         =
+--                      (select min(so1.shat_hatchala)
+--                       from  tb_sidurim_ovdim so1
+--                       where
+--                       so1.mispar_ishi          =pIshi  and
+--                       so1.taarich              = ty.taarich and
+--                       so1.mispar_sidur         <>99200),
+--                       ty.shat_siyum            =
+--                      (select  max(so2.shat_gmar)
+--                       from  tb_sidurim_ovdim so2
+--                       where
+--                       so2.mispar_ishi          = pIshi and
+--                       so2.taarich              = ty.taarich and
+--                       so2.mispar_sidur         <>99200),
+--                       ty.taarich_idkun_acharon = sysdate
+--                WHERE
+--                  ty.taarich       = to_date(pDt,'yyyymmdd')
+--        and ty.mispar_ishi=pIshi     ;
+--          EXCEPTION
+--   WHEN OTHERS THEN
+--        RAISE;
+--      END pro_upd_yamey_avoda_1oved;
+
+
+
+
+ PROCEDURE pro_get_my_attendance(pIshi VARCHAR,pDt VARCHAR,p_Cur OUT CurType) IS
+  BEGIN
+  OPEN p_Cur FOR
+SELECT  taarich,mikum_shaon_knisa,mikum_shaon_yetzia,
+DECODE(TO_CHAR(shat_hatchala,'dd/mm/yyyy'),TO_CHAR(taarich,'dd/mm/yyyy'),' ',TO_CHAR(shat_hatchala,'dd/mm/yyyy'))||' '||
+TO_CHAR(shat_hatchala,'hh24:mi') shat_hatchala,
+DECODE(TO_CHAR(shat_gmar,'dd/mm/yyyy'),TO_CHAR(taarich,'dd/mm/yyyy'),' ',TO_CHAR(shat_gmar,'dd/mm/yyyy'))||' '||
+TO_CHAR(shat_gmar,'hh24:mi') shat_gmar,
+CAST((shat_gmar - shat_hatchala)*24 AS NUMBER(10,2)) zman
+ FROM   TB_SIDURIM_OVDIM
+   WHERE  mispar_ishi=pIshi
+   AND taarich >= TO_DATE(pDt,'yyyymmdd')
+   AND mispar_sidur=99001
+   AND shat_hatchala>TO_DATE('28/02/1954','dd/mm/yyyy')
+   AND shat_gmar IS NOT NULL
+   UNION ALL
+      SELECT  taarich,mikum_shaon_knisa,mikum_shaon_yetzia,
+DECODE(TO_CHAR(shat_hatchala,'dd/mm/yyyy'),TO_CHAR(taarich,'dd/mm/yyyy'),' ',TO_CHAR(shat_hatchala,'dd/mm/yyyy'))||' '||
+TO_CHAR(shat_hatchala,'hh24:mi') shat_hatchala,
+-- ' ' shat_gmar,0 zman
+TO_CHAR(SYSDATE,'hh24:mi') shat_gmar,
+CAST((SYSDATE - shat_hatchala)*24 AS NUMBER(10,2)) zman
+ FROM   TB_SIDURIM_OVDIM
+   WHERE  mispar_ishi=pIshi
+   AND taarich >= TO_DATE(pDt,'yyyymmdd')
+   AND shat_hatchala>TO_DATE('28/02/1954','dd/mm/yyyy')
+   AND  shat_gmar  IS NULL
+   AND taarich=TRUNC(SYSDATE)
+   AND mispar_sidur=99001
+   UNION ALL
+      SELECT  taarich,mikum_shaon_knisa,mikum_shaon_yetzia,
+'01/01/0001'  shat_hatchala,
+DECODE(TO_CHAR(shat_gmar,'dd/mm/yyyy'),TO_CHAR(taarich,'dd/mm/yyyy'),' ',TO_CHAR(shat_gmar,'dd/mm/yyyy'))||' '||
+TO_CHAR(shat_gmar,'hh24:mi') shat_gmar, 0  zman
+ FROM   TB_SIDURIM_OVDIM
+   WHERE  mispar_ishi=pIshi
+   AND taarich >= TO_DATE(pDt,'yyyymmdd')
+   AND mispar_sidur=99001
+   AND TRUNC(shat_hatchala)=TO_DATE('01/01/0001','dd/mm/yyyy')
+   AND shat_gmar IS NOT NULL
+   UNION ALL
+         SELECT  taarich,mikum_shaon_knisa,mikum_shaon_yetzia,
+'01/01/0001'  shat_hatchala,
+DECODE(TO_CHAR(shat_gmar,'dd/mm/yyyy'),TO_CHAR(taarich,'dd/mm/yyyy'),' ',TO_CHAR(shat_gmar,'dd/mm/yyyy'))||' '||
+TO_CHAR(shat_gmar,'hh24:mi') shat_gmar, 0  zman
+ FROM   TB_SIDURIM_OVDIM
+ WHERE  mispar_ishi=pIshi
+   AND taarich >= TO_DATE(pDt,'yyyymmdd')
+  AND mispar_sidur=99001
+   AND TRUNC(shat_hatchala)=TO_DATE('01/01/0001','dd/mm/yyyy')
+   AND shat_gmar IS NULL
+   UNION ALL
+      SELECT  taarich,mikum_shaon_knisa,mikum_shaon_yetzia,
+DECODE(TO_CHAR(shat_hatchala,'dd/mm/yyyy'),TO_CHAR(taarich,'dd/mm/yyyy'),' ',TO_CHAR(shat_hatchala,'dd/mm/yyyy'))||' '||
+TO_CHAR(shat_hatchala,'hh24:mi') shat_hatchala,' ' shat_gmar,0 zman
+ FROM   TB_SIDURIM_OVDIM
+   WHERE  mispar_ishi=pIshi
+   AND taarich >= TO_DATE(pDt,'yyyymmdd')
+   AND shat_hatchala>TO_DATE('28/02/1954','dd/mm/yyyy')
+   AND  shat_gmar  IS NULL
+   AND taarich<TRUNC(SYSDATE)
+   AND mispar_sidur=99001
+   UNION ALL
+   SELECT SYSDATE ,COUNT(*),COUNT(*)*8.9,NULL,NULL,SUM(CAST((NVL(shat_gmar,SYSDATE) - shat_hatchala)*24 AS NUMBER(10,2)))
+    FROM   TB_SIDURIM_OVDIM
+   WHERE  mispar_ishi=pIshi
+   AND taarich >= TO_DATE(pDt,'yyyymmdd')
+   AND mispar_sidur=99001
+   AND shat_hatchala>TO_DATE('28/02/1954','dd/mm/yyyy')
+   and not (  shat_gmar  IS NULL   AND taarich<TRUNC(SYSDATE))
+   --and shat_gmar is not null;
+   ;
+   END pro_get_my_attendance;
+
+PROCEDURE pro_pivot(p_ishi VARCHAR,p_Dt_from VARCHAR,p_Dt_to VARCHAR,p_Cur OUT CurType) IS
+  BEGIN
+  OPEN p_Cur FOR
+SELECT
+  mispar_ishi,
+  yechida_irgunit, taarich_hatzava, ezor,snif_av,mikum_yechida,  isuk, rishyon_autobus,mutaam,
+    mutaam_bitachon,mercaz_erua,dirug,darga,maamad,gil,  tachanat_sachar,sug_misra,
+ keren_revacha, tchilat_avoda
+FROM (
+  SELECT
+    mispar_ishi,
+    MAX(CASE WHEN kod_natun=1 THEN erech ELSE NULL END) yechida_irgunit,
+    MAX(CASE WHEN  kod_natun=2 THEN erech ELSE NULL END) taarich_hatzava,
+    MAX(CASE WHEN  kod_natun=3 THEN erech ELSE NULL END)  ezor,
+    MAX(CASE WHEN kod_natun=4 THEN  NVL(erech,'kuku')   ELSE NULL END) snif_av,
+    MAX(CASE WHEN  kod_natun=5 THEN erech ELSE NULL END) mikum_yechida,
+    MAX(CASE WHEN  kod_natun=6  THEN NVL(erech,'kuku') ELSE NULL END)  isuk,
+    MAX(CASE WHEN kod_natun=7 THEN erech ELSE NULL END) rishyon_autobus,
+    MAX(CASE WHEN  kod_natun=8 THEN erech ELSE NULL END) mutaam,
+    MAX(CASE WHEN  kod_natun=9 THEN erech ELSE NULL END)  mutaam_bitachon,
+    MAX(CASE WHEN kod_natun=10 THEN erech ELSE NULL END) mercaz_erua,
+    MAX(CASE WHEN  kod_natun=11 THEN erech ELSE NULL END) dirug,
+    MAX(CASE WHEN  kod_natun=12 THEN erech ELSE NULL END) darga,
+    MAX(CASE WHEN kod_natun=13 THEN erech ELSE NULL END) maamad,
+    MAX(CASE WHEN  kod_natun=14 THEN erech ELSE NULL END) gil,
+    MAX(CASE WHEN  kod_natun=15 THEN erech ELSE NULL END)  tachanat_sachar,
+    MAX(CASE WHEN kod_natun=17 THEN erech ELSE NULL END) sug_misra,
+    MAX(CASE WHEN  kod_natun=18 THEN erech ELSE NULL END) keren_revacha,
+    MAX(CASE WHEN  kod_natun=19 THEN erech ELSE NULL END) tchilat_avoda
+  FROM
+    PIRTEY_OVDIM
+ WHERE  mispar_ishi=p_ishi
+  AND ((TO_DATE(p_Dt_from,'dd/mm/yyyy') <= me_taarich  AND TO_DATE(p_Dt_to,'dd/mm/yyyy') >= me_taarich  AND TO_DATE(p_Dt_to,'dd/mm/yyyy') <= NVL(ad_taarich,TO_DATE('31/12/4712','dd/mm/yyyy')))
+  OR  (TO_DATE(p_Dt_from,'dd/mm/yyyy') <= me_taarich  AND TO_DATE(p_Dt_to,'dd/mm/yyyy') >= NVL(ad_taarich,TO_DATE('31/12/4712','dd/mm/yyyy')))
+     OR (TO_DATE(p_Dt_from,'dd/mm/yyyy') >= me_taarich  AND TO_DATE(p_Dt_from,'dd/mm/yyyy') <= NVL(ad_taarich,TO_DATE('31/12/4712','dd/mm/yyyy')) AND TO_DATE(p_Dt_to,'dd/mm/yyyy') >= NVL(ad_taarich,TO_DATE('31/12/4712','dd/mm/yyyy')))
+  OR (TO_DATE(p_Dt_from,'dd/mm/yyyy') >= me_taarich   AND TO_DATE(p_Dt_to,'dd/mm/yyyy') <= NVL(ad_taarich,TO_DATE('31/12/4712','dd/mm/yyyy'))))
+  GROUP BY
+   mispar_ishi);
+END pro_pivot;
+
+PROCEDURE pro_pivot_1Day(p_ishi VARCHAR,p_Dt VARCHAR,p_Cur OUT CurType) IS
+  BEGIN
+  OPEN p_Cur FOR
+SELECT
+  mispar_ishi,
+  yechida_irgunit, taarich_hatzava, ezor,snif_av,mikum_yechida,  isuk, rishyon_autobus,mutaam,
+    mutaam_bitachon,mercaz_erua,dirug,darga,maamad,gil,  tachanat_sachar,sug_misra,
+ keren_revacha, tchilat_avoda
+FROM (
+  SELECT
+    mispar_ishi,
+    MAX(CASE WHEN kod_natun=1 THEN erech ELSE NULL END) yechida_irgunit,
+    MAX(CASE WHEN  kod_natun=2 THEN erech ELSE NULL END) taarich_hatzava,
+    MAX(CASE WHEN  kod_natun=3 THEN erech ELSE NULL END)  ezor,
+    MAX(CASE WHEN kod_natun=4 THEN  NVL(erech,'kuku')   ELSE NULL END) snif_av,
+    MAX(CASE WHEN  kod_natun=5 THEN erech ELSE NULL END) mikum_yechida,
+    MAX(CASE WHEN  kod_natun=6  THEN NVL(erech,'kuku') ELSE NULL END)  isuk,
+    MAX(CASE WHEN kod_natun=7 THEN erech ELSE NULL END) rishyon_autobus,
+    MAX(CASE WHEN  kod_natun=8 THEN erech ELSE NULL END) mutaam,
+    MAX(CASE WHEN  kod_natun=9 THEN erech ELSE NULL END)  mutaam_bitachon,
+    MAX(CASE WHEN kod_natun=10 THEN erech ELSE NULL END) mercaz_erua,
+    MAX(CASE WHEN  kod_natun=11 THEN erech ELSE NULL END) dirug,
+    MAX(CASE WHEN  kod_natun=12 THEN erech ELSE NULL END) darga,
+    MAX(CASE WHEN kod_natun=13 THEN erech ELSE NULL END) maamad,
+    MAX(CASE WHEN  kod_natun=14 THEN erech ELSE NULL END) gil,
+    MAX(CASE WHEN  kod_natun=15 THEN erech ELSE NULL END)  tachanat_sachar,
+    MAX(CASE WHEN kod_natun=17 THEN erech ELSE NULL END) sug_misra,
+    MAX(CASE WHEN  kod_natun=18 THEN erech ELSE NULL END) keren_revacha,
+    MAX(CASE WHEN  kod_natun=19 THEN erech ELSE NULL END) tchilat_avoda
+  FROM
+    PIRTEY_OVDIM
+ WHERE  mispar_ishi=p_ishi
+ AND TO_DATE(p_Dt ,'dd/mm/yyyy') BETWEEN me_taarich AND ad_taarich
+  GROUP BY
+   mispar_ishi);
+END pro_pivot_1Day;
+
+PROCEDURE pro_ins_log_tahalich(p_KodTahalich  NUMBER  ,p_KodPeilut NUMBER,  p_KodStatus  NUMBER ,  p_TeurTech VARCHAR  ) IS
+  BEGIN
+
+        INSERT INTO  TB_LOG_TAHALICH
+   VALUES (p_KodTahalich,p_KodPeilut,0,SYSDATE,p_KodStatus,NULL,NULL,p_TeurTech);
+
+      EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+  END pro_ins_log_tahalich;
+
+PROCEDURE pro_ins_log_tahalich_takala(p_KodTahalich  NUMBER  ,p_KodPeilut NUMBER,  p_KodStatus  NUMBER ,  p_TeurTech VARCHAR  ,p_KodTakala NUMBER) IS
+  BEGIN
+
+        INSERT INTO  TB_LOG_TAHALICH
+   VALUES (p_KodTahalich,p_KodPeilut,0,SYSDATE,p_KodStatus,p_KodTakala,NULL,p_TeurTech);
+
+      EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+  END pro_ins_log_tahalich_takala;
+
+
+
+  PROCEDURE pro_GetListDs(pDt VARCHAR, pIshi VARCHAR ,psidur VARCHAR,p_cur OUT CurType)  IS
+     BEGIN
+ OPEN p_cur FOR
+   SELECT TO_CHAR(shat_hatchala,'yyyymmddhh24mi') shat_hatchala,
+ TO_CHAR(shat_gmar,'yyyymmddhh24mi') shat_gmar,
+ TO_CHAR(shat_hatchala_letashlum,'yyyymmddhh24mi') shat_hatchala_letashlum,
+ TO_CHAR(shat_gmar_letashlum,'yyyymmddhh24mi') shat_gmar_letashlum
+  FROM TB_SIDURIM_OVDIM
+  WHERE mispar_ishi=pIshi
+  AND taarich= TO_DATE(pDt,'yyyymmdd')
+  AND mispar_sidur=psidur
+  ORDER BY shat_hatchala;
+    EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+ END pro_GetListDs;
+
+
+  PROCEDURE pro_GetRowDt(pDt VARCHAR, p_cur OUT CurType)  IS
+     BEGIN
+ OPEN p_cur FOR
+ SELECT
+               TO_CHAR(TO_DATE(pDt ,'yyyymmdd')+1,'yyyymmdd')  thenextday,
+               TO_CHAR(TO_DATE(pDt ,'yyyymmdd')-1,'yyyymmdd')  previousday
+      FROM   dual;
+        EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END pro_GetRowDt;
+
+ PROCEDURE pro_GetRowDtLong(pDt VARCHAR, p_cur OUT CurType)  IS
+     BEGIN
+ OPEN p_cur FOR
+ SELECT
+           TO_CHAR(TO_DATE(pDt ,'yyyymmddhh24mi')+(1/1440),'yyyymmddhh24mi')  thenextefes
+       FROM   dual;
+       EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END pro_GetRowDtLong;
+
+   PROCEDURE pro_GetRowDtVeryLong(pDt VARCHAR, p_cur OUT CurType)  IS
+     BEGIN
+ OPEN p_cur FOR
+ SELECT
+           TO_CHAR(TO_DATE(pDt ,'yyyymmddhh24mi')+(1/86400),'yyyymmddhh24miss') thenextdt
+       FROM   dual;
+       EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END pro_GetRowDtVeryLong;
+
+
+  PROCEDURE pro_GetRowDtVeryLong2(pDt VARCHAR, phatchala VARCHAR,pIshi VARCHAR ,psidur VARCHAR,p_cur OUT CurType)  IS
+     BEGIN
+ OPEN p_cur FOR
+ SELECT
+      TO_CHAR( MAX(shat_hatchala)  +(1/86400),'yyyymmddhh24miss') thenextdt
+ FROM TB_SIDURIM_OVDIM
+ WHERE mispar_ishi=pIshi
+ AND taarich=TO_DATE(pDt,'yyyymmdd')
+ AND mispar_sidur=psidur
+AND      TO_CHAR(shat_hatchala ,'yyyymmddhh24mi')=     TO_CHAR(TO_DATE(phatchala ,'yyyymmddhh24mi') ,'yyyymmddhh24mi');
+      EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END pro_GetRowDtVeryLong2;
+
+
+  PROCEDURE pro_GetRowDtVeryLongPundakim2(pDt VARCHAR, phatchala VARCHAR,pIshi VARCHAR ,p_cur OUT CurType)  IS
+     BEGIN
+ OPEN p_cur FOR
+ SELECT
+      TO_CHAR( MAX(shat_hityazvut)  +(1/86400),'yyyymmddhh24miss') thenextdt
+  FROM TB_HITYAZVUT_PUNDAKIM
+  WHERE mispar_ishi=pIshi
+ AND taarich=TO_DATE(pDt,'yyyymmdd')
+  AND      TO_CHAR(shat_hityazvut ,'yyyymmddhh24mi')=     TO_CHAR(TO_DATE(phatchala ,'yyyymmddhh24mi') ,'yyyymmddhh24mi');
+     EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END pro_GetRowDtVeryLongPundakim2;
+
+
+  PROCEDURE pro_RefreshMv(shem_mvew VARCHAR)  IS
+  BEGIN
+ dbms_mview.REFRESH(shem_mvew,'c');
+
+EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+ END pro_RefreshMv;
+
+
+
+ PROCEDURE InsIntoTrailKnisa(pDt VARCHAR, pDt_N_KNISA VARCHAR,SRV_D_ISHI NUMBER,calc_D_new_sidur NUMBER,P24 NUMBER)  IS
+     BEGIN
+    INSERT INTO  TRAIL_SIDURIM_OVDIM
+            (MISPAR_ISHI,MISPAR_sidur,TAARICH,Shat_hatchala,Shat_gmar,
+            Shat_hatchala_letashlum,  Shat_gmar_letashlum,Pitzul_hafsaka,
+            Chariga,Tosefet_Grira,Hashlama,yom_Visa,
+            Lo_letashlum,Out_michsa,Mikum_shaon_knisa,
+            Mikum_shaon_yetzia,Achuz_Knas_LePremyat_Visa,
+            Achuz_Viza_Besikun,Mispar_Musach_O_Machsan,
+            Kod_siba_lo_letashlum,Kod_siba_ledivuch_yadani_in,
+            Kod_siba_ledivuch_yadani_out,Menahel_Musach_Meadken,Shayah_LeYom_Kodem ,Mispar_shiurey_nehiga,
+            Mezake_Halbasha ,Mezake_nesiot,MEADKEN_ACHARON,TAARICH_IDKUN_ACHARON,
+             tafkid_visa ,mivtza_visa ,Sug_Hazmanat_Visa,
+             Bitul_O_Hosafa, Nidreshet_hitiatzvut ,Shat_hitiatzvut,  Ptor_Mehitiatzvut,
+        Hachtama_Beatar_Lo_Takin  ,Hafhatat_Nochechut_Visa ,   Sector_Visa ,
+       heara ,mispar_ishi_trail,taarich_idkun_trail,sug_peula)
+            SELECT MISPAR_ISHI,MISPAR_sidur,TAARICH,Shat_hatchala,Shat_gmar,
+            Shat_hatchala_letashlum,  Shat_gmar_letashlum,Pitzul_hafsaka,
+            Chariga,Tosefet_Grira, Hashlama,yom_Visa,
+            Lo_letashlum,Out_michsa,Mikum_shaon_knisa,
+            Mikum_shaon_yetzia,Achuz_Knas_LePremyat_Visa,
+            Achuz_Viza_Besikun,Mispar_Musach_O_Machsan,
+            Kod_siba_lo_letashlum,Kod_siba_ledivuch_yadani_in,
+            Kod_siba_ledivuch_yadani_out,Menahel_Musach_Meadken,Shayah_LeYom_Kodem ,Mispar_shiurey_nehiga,            Mezake_Halbasha ,Mezake_nesiot,MEADKEN_ACHARON,TAARICH_IDKUN_ACHARON,
+             tafkid_visa ,mivtza_visa ,Sug_Hazmanat_Visa,
+             Bitul_O_Hosafa, Nidreshet_hitiatzvut ,Shat_hitiatzvut,  Ptor_Mehitiatzvut,
+        Hachtama_Beatar_Lo_Takin  ,Hafhatat_Nochechut_Visa ,   Sector_Visa ,
+             heara,-11,SYSDATE ,3
+            FROM TB_SIDURIM_OVDIM
+             WHERE mispar_ishi=SRV_D_ISHI
+             AND taarich=TO_DATE(pDt,'yyyymmdd') + P24
+             AND mispar_sidur=  calc_D_new_sidur
+             AND shat_hatchala = TO_DATE(pDt_N_KNISA,'yyyymmddhh24mi') +  P24  ;
+      EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+             END  InsIntoTrailKnisa;
+
+    PROCEDURE InsIntoTrailYetzia(pDt VARCHAR, pDt_N_YETZIA VARCHAR,SRV_D_ISHI NUMBER,calc_D_new_sidur NUMBER,P24 NUMBER)  IS
+     BEGIN
+    INSERT INTO  TRAIL_SIDURIM_OVDIM
+            (MISPAR_ISHI,MISPAR_sidur,TAARICH,Shat_hatchala,Shat_gmar,
+            Shat_hatchala_letashlum,  Shat_gmar_letashlum,Pitzul_hafsaka,
+            Chariga,Tosefet_Grira,Hashlama,yom_Visa,
+            Lo_letashlum,Out_michsa,Mikum_shaon_knisa,
+            Mikum_shaon_yetzia,Achuz_Knas_LePremyat_Visa,
+            Achuz_Viza_Besikun,Mispar_Musach_O_Machsan,
+            Kod_siba_lo_letashlum,Kod_siba_ledivuch_yadani_in,
+            Kod_siba_ledivuch_yadani_out,Shayah_LeYom_Kodem ,Mispar_shiurey_nehiga,
+            Mezake_Halbasha ,Mezake_nesiot,MEADKEN_ACHARON,TAARICH_IDKUN_ACHARON,
+             tafkid_visa ,mivtza_visa ,Sug_Hazmanat_Visa,
+             Bitul_O_Hosafa, Nidreshet_hitiatzvut ,Shat_hitiatzvut,  Ptor_Mehitiatzvut,
+        Hachtama_Beatar_Lo_Takin  ,Hafhatat_Nochechut_Visa ,   Sector_Visa ,
+            heara ,mispar_ishi_trail,taarich_idkun_trail,sug_peula)
+            SELECT MISPAR_ISHI,MISPAR_sidur,TAARICH,Shat_hatchala,Shat_gmar,
+            Shat_hatchala_letashlum,  Shat_gmar_letashlum,Pitzul_hafsaka,
+            Chariga,Tosefet_Grira,Hashlama,yom_Visa,
+            Lo_letashlum,Out_michsa,Mikum_shaon_knisa,
+            Mikum_shaon_yetzia,Achuz_Knas_LePremyat_Visa,
+            Achuz_Viza_Besikun,Mispar_Musach_O_Machsan,
+            Kod_siba_lo_letashlum,Kod_siba_ledivuch_yadani_in,
+            Kod_siba_ledivuch_yadani_out,Shayah_LeYom_Kodem ,Mispar_shiurey_nehiga,
+            Mezake_Halbasha ,Mezake_nesiot,MEADKEN_ACHARON,TAARICH_IDKUN_ACHARON,
+             tafkid_visa ,mivtza_visa ,Sug_Hazmanat_Visa,
+             Bitul_O_Hosafa, Nidreshet_hitiatzvut ,Shat_hitiatzvut,  Ptor_Mehitiatzvut,
+        Hachtama_Beatar_Lo_Takin  ,Hafhatat_Nochechut_Visa ,   Sector_Visa ,
+             heara,-11,SYSDATE ,3
+            FROM TB_SIDURIM_OVDIM
+             WHERE mispar_ishi=SRV_D_ISHI
+             AND taarich=TO_DATE(pDt,'yyyymmdd')
+             AND mispar_sidur=  calc_D_new_sidur
+    AND TO_CHAR(shat_hatchala,'yyyymmdd')='00010101'
+            AND shat_gmar=TO_DATE(pDt_N_YETZIA,'yyyymmddhh24mi') +P24 ;
+       EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+            END  InsIntoTrailYetzia;
+
+
+ PROCEDURE pro_get_yamei_avoda_meshek(p_date DATE,p_bakasha_id NUMBER, p_Cur OUT CurType) IS
+
+  BEGIN
+  
+      OPEN p_cur  FOR
+      /* alef */
+     SELECT DISTINCT  ya.mispar_ishi,ya.taarich
+        FROM TB_YAMEY_AVODA_OVDIM ya,OVDIM o
+        WHERE  o.mispar_ishi=ya.mispar_ishi
+        AND  EXISTS
+        (SELECT mispar_ishi
+          FROM TB_SIDURIM_OVDIM so
+          WHERE so.mispar_ishi=ya.mispar_ishi
+          AND so.taarich=ya.taarich AND so.meadken_acharon=-11
+          AND so.taarich_idkun_acharon>NVL(ya.ritzat_shgiot_acharona,so.taarich_idkun_acharon-1)
+          )
+       AND ya.measher_o_mistayeg IS NOT NULL
+       AND NVL(ya.status,-1)<>0
+         /* bet */
+     UNION SELECT DISTINCT   ya.mispar_ishi,ya.taarich
+            FROM TB_YAMEY_AVODA_OVDIM ya,OVDIM o
+            WHERE ya.taarich=TRUNC(p_date)
+               AND  o.mispar_ishi=ya.mispar_ishi
+               AND NOT EXISTS(SELECT 1 FROM TB_SIDURIM_OVDIM so WHERE so.mispar_ishi=ya.mispar_ishi
+                                        AND so.taarich=ya.taarich AND so.meadken_acharon=-12)
+              AND EXISTS(SELECT 1 FROM TB_SIDURIM_OVDIM so WHERE so.mispar_ishi=ya.mispar_ishi
+                                        AND so.taarich=ya.taarich AND so.meadken_acharon<>-12)
+        /* gimel */
+			/* 20101006:
+        union select h.Mispar_Ishi, h.Taarich 
+        from Ovdim_Im_Shinuy_HR h, TB_YAMEY_AVODA_OVDIM y,
+		  CTB_Isuk i,   pivot_pirtey_ovdim v_pirty_oved,ovdim ov
+        where h.Mispar_Ishi=y.Mispar_Ishi
+          and h.Taarich=Y.Taarich
+          and nvl(y. RITZAT_SHGIOT_ACHARONA,h.Taarich_Idkun_HR-1)<h.Taarich_Idkun_HR
+          and (y.STATUS<>0 or y.STATUS is null)
+          and y. Measher_O_Mistayeg Is not Null
+		    and h.mispar_ishi            = ov.mispar_ishi
+		    and v_pirty_oved.mispar_ishi(+) = h.mispar_ishi
+        and h.taarich  between v_pirty_oved.me_tarich(+) and v_pirty_oved.ad_tarich(+)
+         and i.kod_hevra = ov.kod_hevra
+		 and  i.kod_isuk =v_pirty_oved.isuk
+		 20101006*/
+        /*dalet*/
+   UNION SELECT  DISTINCT mispar_ishi, taarich
+      FROM
+       (SELECT DISTINCT t.mispar_ishi, t.kod_ishur,t.taarich, t.mispar_sidur, t.shat_hatchala,
+             t.shat_yetzia, t.mispar_knisa  ,t.rama,t.kod_status_ishur,t.taarich_idkun_acharon,
+              MAX(t.rama) KEEP (DENSE_RANK LAST ORDER BY t.rama )
+                OVER (PARTITION BY t.mispar_ishi,t.taarich,t.kod_ishur ) max_f4
+              FROM TB_ISHURIM t, TB_YAMEY_AVODA_OVDIM ya,OVDIM o
+              WHERE  t.taarich=ya.taarich
+              AND t.mispar_ishi=ya.mispar_ishi
+              AND  o.mispar_ishi=ya.mispar_ishi
+              AND t.taarich_idkun_acharon>NVL(ya.ritzat_shgiot_acharona,t.taarich_idkun_acharon-1)
+            )
+           WHERE max_f4=rama
+           AND kod_status_ishur IN (1,2)
+ 
+       /*heih*/    
+     UNION SELECT DISTINCT  ya.mispar_ishi,ya.taarich
+        FROM TB_YAMEY_AVODA_OVDIM ya
+        WHERE YA.RITZAT_SHGIOT_ACHARONA=TO_DATE('01/01/0001','dd/mm/yyyy');
+        
+        
+ END pro_get_yamei_avoda_meshek;
+
+   PROCEDURE pro_get_all_yamei_avoda(  p_Cur OUT CurType) IS
+    BEGIN
+      OPEN p_cur FOR
+         SELECT ya.mispar_ishi,ya.taarich
+        FROM TB_YAMEY_AVODA_OVDIM ya,OVDIM o
+        WHERE ya.taarich> TO_DATE('28/02/2010','dd/mm/yyyy') AND ya.taarich<TO_DATE('02/03/2010','dd/mm/yyyy')
+  AND o.mispar_ishi=ya.mispar_ishi
+  ORDER BY o.mispar_ishi;
+     --   and status is null;
+        --where ya.taarich<=trunc(sysdate).;
+  END pro_get_all_yamei_avoda;
+
+  PROCEDURE pro_get_yamei_avoda_shinui_hr(p_date DATE, p_bakasha_id NUMBER, p_Cur OUT CurType) IS
+  BEGIN 
+    OPEN p_cur FOR 
+        /* gimel */
+        SELECT h.Mispar_Ishi, h.Taarich 
+        FROM OVDIM_IM_SHINUY_HR h, TB_YAMEY_AVODA_OVDIM y,
+          CTB_ISUK i,   PIVOT_PIRTEY_OVDIM v_pirty_oved,OVDIM ov
+        WHERE h.Mispar_Ishi=y.Mispar_Ishi
+          AND h.Taarich=Y.Taarich
+          AND NVL(y. RITZAT_SHGIOT_ACHARONA,h.Taarich_Idkun_HR-1)<h.Taarich_Idkun_HR
+          AND (y.STATUS<>0 OR y.STATUS IS NULL)
+          AND y. Measher_O_Mistayeg IS NOT NULL
+            AND h.mispar_ishi            = ov.mispar_ishi
+            AND v_pirty_oved.mispar_ishi(+) = h.mispar_ishi
+        AND h.taarich  BETWEEN v_pirty_oved.me_tarich(+) AND v_pirty_oved.ad_tarich(+)
+         AND i.kod_hevra = ov.kod_hevra
+         AND  i.kod_isuk =v_pirty_oved.isuk;
+  END pro_get_yamei_avoda_shinui_hr;
+
+       PROCEDURE pro_new_rec(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  calc_D_new_sidur VARCHAR,
+      SRV_D_KNISA_X VARCHAR,  SRV_D_MIKUM_KNISA VARCHAR,  SRV_D_SIBAT_DIVUACH_KNISA VARCHAR,
+      SRV_D_YETZIA_X VARCHAR,  SRV_D_MIKUM_YETZIA VARCHAR,  SRV_D_SIBAT_DIVUACH_YETZIA VARCHAR,
+      SRV_D_ISHI_MEADKEN VARCHAR,
+   SRV_D_KOD_BITUL_ZMAN_NESIA_X VARCHAR,
+      SRV_D_KOD_CHARIGA_X VARCHAR,  SRV_D_KOD_HALBASHA_X VARCHAR,  SRV_D_KOD_HAZMANA_X VARCHAR,
+      TAARICH_knisa_p24 NUMBER , TAARICH_yetzia_p24 NUMBER,  DatEfes VARCHAR,
+      TAARICH_knisa_letashlum_p24 NUMBER,  SRV_D_KNISA_letashlum_X VARCHAR,
+      TAARICH_yetzia_letashlum_p24 NUMBER,  SRV_D_YETZIA_letashlum_X VARCHAR) IS
+    BEGIN
+ IF LENGTH(SRV_D_KNISA_X) = 4 THEN
+          INSERT INTO TB_SIDURIM_OVDIM ( mispar_ishi  ,   taarich ,  mispar_sidur   , shat_hatchala   ,mikum_shaon_knisa  ,
+             Kod_siba_ledivuch_yadani_in,  shat_gmar ,  mikum_shaon_yetzia   ,Kod_siba_ledivuch_yadani_out,
+             shat_hatchala_letashlum , shat_gmar_letashlum , chariga    ,hashlama  , lo_letashlum  ,mezake_nesiot,
+            mezake_halbasha, Shayah_LeYom_Kodem, Menahel_Musach_Meadken,meadken_acharon)
+             VALUES  ( SRV_D_ISHI ,
+            TO_DATE(SRV_D_TAARICH,'yyyymmdd') +   TAARICH_knisa_p24,
+            calc_D_new_sidur ,
+             TO_DATE(SRV_D_KNISA_X ,'yyyymmddhh24mi') +  TAARICH_knisa_p24 ,
+            DECODE(Trim(SRV_D_MIKUM_KNISA) , '' ,NULL, '00000',NULL,trim(SRV_D_MIKUM_KNISA) ),
+            SRV_D_SIBAT_DIVUACH_KNISA ,
+   TO_DATE(SRV_D_YETZIA_X ,'yyyymmddhh24mi') +  TAARICH_yetzia_p24,
+            DECODE (Trim(SRV_D_MIKUM_YETZIA) , '',NULL, '00000',NULL, trim(SRV_D_MIKUM_YETZIA)),
+            DECODE (Trim(SRV_D_SIBAT_DIVUACH_YETZIA) , '',NULL, '00',NULL, '0',NULL,trim(SRV_D_SIBAT_DIVUACH_YETZIA)),
+            TO_DATE(SRV_D_KNISA_letashlum_X ,'yyyymmddhh24mi') +  TAARICH_knisa_letashlum_p24,
+            TO_DATE(SRV_D_YETZIA_letashlum_X ,'yyyymmddhh24mi') +  TAARICH_yetzia_letashlum_p24,
+            DECODE( SRV_D_KOD_CHARIGA_X , '' ,  0,SRV_D_KOD_CHARIGA_X ),
+            DECODE( SRV_D_KOD_HAZMANA_X  , '0' , NULL,'' ,NULL, '7',NULL, SRV_D_KOD_HAZMANA_X ),
+            DECODE( SRV_D_KOD_HAZMANA_X , '7' ,1,NULL),
+            DECODE ( SRV_D_KOD_BITUL_ZMAN_NESIA_X , '',NULL, '0',NULL, SRV_D_KOD_BITUL_ZMAN_NESIA_X),
+    DECODE ( SRV_D_KOD_HALBASHA_X , '', NULL, '0',NULL,  SRV_D_KOD_HALBASHA_X),
+            DECODE( TAARICH_knisa_p24 , 1 ,1,NULL),
+            DECODE( SRV_D_ISHI_MEADKEN  , '0' ,'', '00000' ,'', 0,'',SRV_D_ISHI_MEADKEN ),
+      -11);
+   ELSE
+          INSERT INTO TB_SIDURIM_OVDIM ( mispar_ishi  ,   taarich ,  mispar_sidur   , shat_hatchala   ,mikum_shaon_knisa  ,
+             Kod_siba_ledivuch_yadani_in,  shat_gmar ,  mikum_shaon_yetzia   ,Kod_siba_ledivuch_yadani_out,
+             shat_hatchala_letashlum , shat_gmar_letashlum , chariga    ,hashlama  , lo_letashlum  ,mezake_nesiot,
+            mezake_halbasha, Shayah_LeYom_Kodem, Menahel_Musach_Meadken,meadken_acharon)
+             VALUES  ( SRV_D_ISHI ,
+            TO_DATE(SRV_D_TAARICH,'yyyymmdd') +   TAARICH_knisa_p24,
+            calc_D_new_sidur ,
+             TO_DATE(SRV_D_KNISA_X ,'yyyymmddhh24miss') +  TAARICH_knisa_p24 ,
+            DECODE(Trim(SRV_D_MIKUM_KNISA) , '' ,NULL, '00000',NULL,trim(SRV_D_MIKUM_KNISA) ),
+            SRV_D_SIBAT_DIVUACH_KNISA ,
+   TO_DATE(SRV_D_YETZIA_X ,'yyyymmddhh24mi') +  TAARICH_yetzia_p24,
+            DECODE (Trim(SRV_D_MIKUM_YETZIA) , '',NULL, '00000',NULL, trim(SRV_D_MIKUM_YETZIA)),
+            DECODE (Trim(SRV_D_SIBAT_DIVUACH_YETZIA) , '',NULL, '00',NULL, '0',NULL,trim(SRV_D_SIBAT_DIVUACH_YETZIA)),
+            TO_DATE(SRV_D_KNISA_letashlum_X ,'yyyymmddhh24mi') +  TAARICH_knisa_letashlum_p24,
+            TO_DATE(SRV_D_YETZIA_letashlum_X ,'yyyymmddhh24mi') +  TAARICH_yetzia_letashlum_p24,
+            DECODE( SRV_D_KOD_CHARIGA_X , '' ,  0,SRV_D_KOD_CHARIGA_X ),
+            DECODE( SRV_D_KOD_HAZMANA_X  , '0' , NULL,'' ,NULL, '7',NULL, SRV_D_KOD_HAZMANA_X ),
+            DECODE( SRV_D_KOD_HAZMANA_X , '7' ,1,NULL),
+            DECODE ( SRV_D_KOD_BITUL_ZMAN_NESIA_X , '',NULL, '0',NULL, SRV_D_KOD_BITUL_ZMAN_NESIA_X),
+    DECODE ( SRV_D_KOD_HALBASHA_X , '', NULL, '0',NULL,  SRV_D_KOD_HALBASHA_X),
+            DECODE( TAARICH_knisa_p24 , 1 ,1,NULL),
+            DECODE( SRV_D_ISHI_MEADKEN  , '0' ,'', '00000' ,'', 0,'',SRV_D_ISHI_MEADKEN ),
+      -11);
+   END IF;
+    EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+  END pro_new_rec;
+
+       PROCEDURE pro_measher_o_mistayeg(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  TAARICH_knisa_p24 NUMBER ) IS
+    BEGIN
+              UPDATE TB_YAMEY_AVODA_OVDIM
+                 SET measher_o_mistayeg = 1
+                          WHERE mispar_ishi= SRV_D_ISHI
+                       AND taarich =   TO_DATE(SRV_D_TAARICH,'yyyymmdd') +   TAARICH_knisa_p24;
+    EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+     END pro_measher_o_mistayeg;
+
+            PROCEDURE pro_lo_letashlum(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  TAARICH_knisa_p24 NUMBER ) IS
+    BEGIN
+              UPDATE TB_SIDURIM_OVDIM
+                 SET  lo_letashlum = 1 ,KOD_SIBA_LO_LETASHLUM=3
+                          WHERE mispar_ishi= SRV_D_ISHI
+                       AND taarich =   TO_DATE(SRV_D_TAARICH,'yyyymmdd') +   TAARICH_knisa_p24
+        AND mispar_sidur=99200;
+    EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+     END pro_lo_letashlum;
+
+     PROCEDURE pro_upd_out_blank(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  calc_D_new_sidur VARCHAR,
+      SRV_D_KNISA_X VARCHAR,  SRV_D_MIKUM_KNISA VARCHAR,  SRV_D_SIBAT_DIVUACH_KNISA VARCHAR,
+      SRV_D_YETZIA_X VARCHAR,  SRV_D_MIKUM_YETZIA VARCHAR,  SRV_D_SIBAT_DIVUACH_YETZIA VARCHAR,
+      SRV_D_ISHI_MEADKEN VARCHAR,
+   SRV_D_KOD_BITUL_ZMAN_NESIA_X VARCHAR,
+      SRV_D_KOD_CHARIGA_X VARCHAR,  SRV_D_KOD_HALBASHA_X VARCHAR,  SRV_D_KOD_HAZMANA_X VARCHAR,
+      TAARICH_knisa_p24 NUMBER , TAARICH_yetzia_p24 NUMBER,  DatEfes VARCHAR,
+      TAARICH_knisa_letashlum_p24 NUMBER,  SRV_D_KNISA_letashlum_X VARCHAR,
+      TAARICH_yetzia_letashlum_p24 NUMBER,  SRV_D_YETZIA_letashlum_X VARCHAR) IS
+    BEGIN
+             UPDATE TB_SIDURIM_OVDIM
+             SET shat_gmar=  TO_DATE(SRV_D_YETZIA_X ,'yyyymmddhh24mi') +  TAARICH_yetzia_p24,
+     mikum_shaon_yetzia=DECODE(Trim(SRV_D_MIKUM_YETZIA) , '', mikum_shaon_yetzia,'00000',mikum_shaon_yetzia,trim(SRV_D_MIKUM_YETZIA)),
+      Kod_siba_ledivuch_yadani_out =trim(SRV_D_SIBAT_DIVUACH_YETZIA),
+      Menahel_Musach_Meadken=DECODE(Trim(SRV_D_ISHI_MEADKEN) ,'',Menahel_Musach_Meadken,'0',Menahel_Musach_Meadken,'00000',Menahel_Musach_Meadken,trim(SRV_D_ISHI_MEADKEN)),
+     shat_hatchala_letashlum=TO_DATE(SRV_D_KNISA_letashlum_X ,'yyyymmddhh24mi') +  TAARICH_knisa_letashlum_p24,
+              shat_gmar_letashlum=TO_DATE(SRV_D_YETZIA_letashlum_X ,'yyyymmddhh24mi') +  TAARICH_yetzia_letashlum_p24,
+      chariga=DECODE(Trim(SRV_D_KOD_CHARIGA_X) ,'',chariga,'0',chariga,Trim(SRV_D_KOD_CHARIGA_X)),
+              hashlama=DECODE(trim(SRV_D_KOD_HAZMANA_X ),'',hashlama,'0',hashlama,'7',hashlama,trim(SRV_D_KOD_HAZMANA_X)),
+     lo_letashlum=DECODE(trim(SRV_D_KOD_HAZMANA_X),'7',1,lo_letashlum),
+     mezake_nesiot=DECODE(Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X),'',mezake_nesiot,'0',mezake_nesiot,Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X)),
+             mezake_halbasha=DECODE(Trim(SRV_D_KOD_HALBASHA_X) ,'',mezake_halbasha,'0',mezake_halbasha,Trim(SRV_D_KOD_HALBASHA_X)),
+             taarich_idkun_acharon = SYSDATE
+             WHERE mispar_ishi= SRV_D_ISHI
+             AND taarich =   TO_DATE(SRV_D_TAARICH,'yyyymmdd') +   TAARICH_knisa_p24
+             AND mispar_sidur= calc_D_new_sidur
+             AND shat_hatchala =    TO_DATE(SRV_D_KNISA_X ,'yyyymmddhh24mi') +  TAARICH_knisa_p24;
+  EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+     END pro_upd_out_blank;
+
+         PROCEDURE pro_upd_in_blank(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  calc_D_new_sidur VARCHAR,
+      SRV_D_KNISA_X VARCHAR,  SRV_D_MIKUM_KNISA VARCHAR,  SRV_D_SIBAT_DIVUACH_KNISA VARCHAR,
+      SRV_D_YETZIA_X VARCHAR,  SRV_D_MIKUM_YETZIA VARCHAR,  SRV_D_SIBAT_DIVUACH_YETZIA VARCHAR,
+      SRV_D_ISHI_MEADKEN VARCHAR,
+   SRV_D_KOD_BITUL_ZMAN_NESIA_X VARCHAR,
+      SRV_D_KOD_CHARIGA_X VARCHAR,  SRV_D_KOD_HALBASHA_X VARCHAR,  SRV_D_KOD_HAZMANA_X VARCHAR,
+      TAARICH_knisa_p24 NUMBER , TAARICH_yetzia_p24 NUMBER,  DatEfes VARCHAR,
+      TAARICH_knisa_letashlum_p24 NUMBER,  SRV_D_KNISA_letashlum_X VARCHAR,
+      TAARICH_yetzia_letashlum_p24 NUMBER,  SRV_D_YETZIA_letashlum_X VARCHAR) IS
+    BEGIN
+             UPDATE TB_SIDURIM_OVDIM s1
+               SET shat_hatchala=TO_DATE(SRV_D_KNISA_X ,'yyyymmddhh24mi') +  TAARICH_knisa_p24 ,
+          mikum_shaon_knisa=DECODE(Trim(SRV_D_MIKUM_KNISA) , '', mikum_shaon_knisa,'00000',mikum_shaon_knisa,trim(SRV_D_MIKUM_KNISA)),
+         Kod_siba_ledivuch_yadani_in=trim(SRV_D_SIBAT_DIVUACH_KNISA),
+         --meadken_acharon=decode(Trim(SRV_D_ISHI_MEADKEN) ,'',meadken_acharon,'0',meadken_acharon,'00000',meadken_acharon,trim(SRV_D_ISHI_MEADKEN)),
+      Menahel_Musach_Meadken=DECODE(Trim(SRV_D_ISHI_MEADKEN) ,'',Menahel_Musach_Meadken,'0',Menahel_Musach_Meadken,'00000',Menahel_Musach_Meadken,trim(SRV_D_ISHI_MEADKEN)),
+          shat_hatchala_letashlum=TO_DATE(SRV_D_KNISA_letashlum_X ,'yyyymmddhh24mi') +  TAARICH_knisa_letashlum_p24,
+                 shat_gmar_letashlum=TO_DATE(SRV_D_YETZIA_letashlum_X ,'yyyymmddhh24mi') +  TAARICH_yetzia_letashlum_p24,
+         chariga=DECODE(Trim(SRV_D_KOD_CHARIGA_X) ,'',chariga,'0',chariga,Trim(SRV_D_KOD_CHARIGA_X)),
+                 hashlama=DECODE(trim(SRV_D_KOD_HAZMANA_X ),'',hashlama,'0',hashlama,'7',hashlama,trim(SRV_D_KOD_HAZMANA_X)),
+        lo_letashlum=DECODE(trim(SRV_D_KOD_HAZMANA_X),'7',1,lo_letashlum),
+        mezake_nesiot=DECODE(Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X),'',mezake_nesiot,'0',mezake_nesiot,Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X)),
+                mezake_halbasha=DECODE(Trim(SRV_D_KOD_HALBASHA_X) ,'',mezake_halbasha,'0',mezake_halbasha,Trim(SRV_D_KOD_HALBASHA_X)),
+                taarich_idkun_acharon = SYSDATE
+                WHERE mispar_ishi= SRV_D_ISHI
+                 AND taarich =   TO_DATE(SRV_D_TAARICH,'yyyymmdd') +   TAARICH_knisa_p24
+                AND mispar_sidur= calc_D_new_sidur
+        AND TO_CHAR(shat_hatchala,'yyyymmdd')='00010101'
+                AND shat_gmar=TO_DATE(SRV_D_YETZIA_X ,'yyyymmddhh24mi') + TAARICH_yetzia_p24
+         AND NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+      WHERE  s2.mispar_ishi= SRV_D_ISHI
+         AND s2.taarich =   TO_DATE(SRV_D_TAARICH,'yyyymmdd') +   TAARICH_knisa_p24
+         AND s2.mispar_sidur= calc_D_new_sidur
+           AND s2.shat_hatchala=TO_DATE(SRV_D_KNISA_X ,'yyyymmddhh24mi') +  TAARICH_knisa_p24 )  ;
+  EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+     END pro_upd_in_blank;
+
+   PROCEDURE pro_upd_in_out_letashlum(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,  calc_D_new_sidur VARCHAR,
+      SRV_D_KNISA_X VARCHAR,
+   --SRV_D_MIKUM_KNISA varchar,  SRV_D_SIBAT_DIVUACH_KNISA varchar,
+      SRV_D_YETZIA_X VARCHAR,
+   --SRV_D_MIKUM_YETZIA varchar,  SRV_D_SIBAT_DIVUACH_YETZIA varchar,
+      SRV_D_ISHI_MEADKEN VARCHAR,
+   SRV_D_KOD_BITUL_ZMAN_NESIA_X VARCHAR,
+      --SRV_D_KOD_CHARIGA_X varchar,
+   SRV_D_KOD_HALBASHA_X VARCHAR,
+   --SRV_D_KOD_HAZMANA_X varchar,
+      TAARICH_knisa_p24 NUMBER , TAARICH_yetzia_p24 NUMBER,  DatEfes VARCHAR,
+      TAARICH_knisa_letashlum_p24 NUMBER,  SRV_D_KNISA_letashlum_X VARCHAR,
+      TAARICH_yetzia_letashlum_p24 NUMBER,  SRV_D_YETZIA_letashlum_X VARCHAR) IS
+    BEGIN
+               UPDATE TB_SIDURIM_OVDIM
+       SET  shat_hatchala_letashlum=
+    DECODE(SRV_D_KNISA_letashlum_X,NULL,shat_hatchala_letashlum,TO_DATE(SRV_D_KNISA_letashlum_X ,'yyyymmddhh24mi')  +TAARICH_knisa_letashlum_p24),
+    --to_date(SRV_D_KNISA_letashlum_X ,'yyyymmddhh24mi') +  TAARICH_knisa_letashlum_p24,
+              shat_gmar_letashlum=
+    DECODE(SRV_D_yetzia_letashlum_X,NULL,shat_gmar_letashlum,TO_DATE(SRV_D_yetzia_letashlum_X ,'yyyymmddhh24mi')  +TAARICH_yetzia_letashlum_p24),
+     --to_date(SRV_D_YETZIA_letashlum_X ,'yyyymmddhh24mi') +  TAARICH_yetzia_letashlum_p24,
+     mezake_nesiot=DECODE(Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X),'',mezake_nesiot,'0',mezake_nesiot,Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X)),
+              mezake_halbasha=DECODE(Trim(SRV_D_KOD_HALBASHA_X) ,'',mezake_halbasha,'0',mezake_halbasha,Trim(SRV_D_KOD_HALBASHA_X)),
+          --meadken_acharon=decode(Trim(SRV_D_ISHI_MEADKEN) ,'',meadken_acharon,'0',meadken_acharon,'00000',meadken_acharon,trim(SRV_D_ISHI_MEADKEN)),
+      Menahel_Musach_Meadken=DECODE(Trim(SRV_D_ISHI_MEADKEN) ,'',Menahel_Musach_Meadken,'0',Menahel_Musach_Meadken,'00000',Menahel_Musach_Meadken,trim(SRV_D_ISHI_MEADKEN)),
+     taarich_idkun_acharon = SYSDATE
+   WHERE mispar_ishi= SRV_D_ISHI
+           AND taarich =   TO_DATE(SRV_D_TAARICH,'yyyymmdd') +   TAARICH_knisa_p24
+        AND mispar_sidur= calc_D_new_sidur
+           AND shat_hatchala =    TO_DATE(SRV_D_KNISA_X ,'yyyymmddhh24mi') +  TAARICH_knisa_p24
+          AND shat_gmar=TO_DATE(SRV_D_YETZIA_X ,'yyyymmddhh24mi') + TAARICH_yetzia_p24;
+   EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+             END pro_upd_in_out_letashlum;
+
+
+            PROCEDURE pro_ins_yamey_avoda_1oved(SRV_D_ISHI NUMBER,  SRV_D_TAARICH VARCHAR) IS
+   BEGIN
+                     INSERT INTO TB_YAMEY_AVODA_OVDIM ( mispar_ishi,taarich  )
+                     VALUES  (  SRV_D_ISHI ,
+                            TO_DATE(SRV_D_TAARICH ,'yyyymmdd')  );
+     EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+     END pro_ins_yamey_avoda_1oved;
+
+   PROCEDURE pro_new_rec_pundakim(  SRV_D_ISHI VARCHAR,  SRV_D_TAARICH VARCHAR,
+                                     SRV_D_KNISA_X VARCHAR,  SRV_D_MIKUM_KNISA VARCHAR,   TAARICH_knisa_p24 NUMBER)  IS
+   BEGIN
+ IF LENGTH(SRV_D_KNISA_X) = 4 THEN
+          INSERT INTO TB_HITYAZVUT_PUNDAKIM ( mispar_ishi  ,   taarich ,  shat_hityazvut   ,mikum_shaon  ,meadken_acharon)
+             VALUES  ( SRV_D_ISHI ,
+            TO_DATE(SRV_D_TAARICH,'yyyymmdd') +   TAARICH_knisa_p24,
+             TO_DATE(SRV_D_KNISA_X ,'yyyymmddhh24mi') +  TAARICH_knisa_p24 ,
+            DECODE(Trim(SRV_D_MIKUM_KNISA) , '' ,'0', '00000','0',trim(SRV_D_MIKUM_KNISA) ),
+      -11);
+   ELSE
+          INSERT INTO TB_HITYAZVUT_PUNDAKIM ( mispar_ishi  ,   taarich ,  shat_hityazvut   ,mikum_shaon  ,meadken_acharon)
+             VALUES  ( SRV_D_ISHI ,
+            TO_DATE(SRV_D_TAARICH,'yyyymmdd') +   TAARICH_knisa_p24,
+             TO_DATE(SRV_D_KNISA_X ,'yyyymmddhh24miss') +  TAARICH_knisa_p24 ,
+            DECODE(Trim(SRV_D_MIKUM_KNISA) , '' ,'0', '00000','0',trim(SRV_D_MIKUM_KNISA) ),
+      -11);
+   END IF;
+              EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+     END pro_new_rec_pundakim;
+
+   PROCEDURE pro_GetListDsPundakim(pDt VARCHAR, pIshi VARCHAR ,p_cur OUT CurType)    IS
+     BEGIN
+ OPEN p_cur FOR
+   SELECT TO_CHAR(shat_hityazvut,'yyyymmddhh24mi') shat_hityazvut
+  FROM  TB_HITYAZVUT_PUNDAKIM
+  WHERE mispar_ishi=pIshi
+  AND taarich= TO_DATE(pDt,'yyyymmdd')
+   ORDER BY shat_hityazvut;
+         EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+     END pro_GetListDsPundakim ;
+
+	 PROCEDURE pro_insert_debug_maatefet(p_mispar_ishi NUMBER, p_taarich DATE, p_taarich_ritza DATE,
+                                    p_bakasha_id NUMBER, p_sug_bakasha NUMBER,
+                                    p_comments TEST_MAATEFET.comments%TYPE DEFAULT NULL)					 IS
+        BEGIN
+          INSERT INTO TEST_MAATEFET(mispar_ishi, taarich, taarich_ritza, bakasha_id, sug_bakasha,comments)
+          VALUES(p_mispar_ishi , p_taarich , p_taarich_ritza ,
+                                    p_bakasha_id , p_sug_bakasha, p_comments);
+
+        END pro_insert_debug_maatefet;
+
+ PROCEDURE pro_insert_log_maatefet(p_mispar_ishi NUMBER, p_taarich DATE, p_taarich_ritza DATE,
+                                p_bakasha_id NUMBER,   p_comments TEST_MAATEFET.comments%TYPE DEFAULT NULL,p_meadken number)   IS
+    BEGIN
+      INSERT INTO TEST_MAATEFET(mispar_ishi, taarich, taarich_ritza, bakasha_id,comments,kod_meadken)
+      VALUES(p_mispar_ishi , p_taarich , p_taarich_ritza ,   p_bakasha_id , p_comments, p_meadken);
+
+    END pro_insert_log_maatefet;
+        
+PROCEDURE pro_IfSdrnManas(pDt VARCHAR,pIshi VARCHAR ,p_cur OUT CurType)  IS
+     BEGIN
+ OPEN p_cur FOR
+   SELECT erech FROM PIRTEY_OVDIM
+WHERE Kod_Natun=6
+AND TRUNC(Erech) IN ('0420', '0422','420','422',420, 422)
+AND  TO_DATE(pDt,'yyyymmdd') BETWEEN me_taarich AND ad_taarich
+AND mispar_ishi=pIshi ;
+ EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END pro_IfSdrnManas;
+
+PROCEDURE pro_get_shinuy_matsav_ovdim( p_Cur OUT CurType) IS
+ BEGIN
+
+ DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'pro_get_shinuy_matsav_ovdim');
+ 		       OPEN p_Cur FOR
+		 --select * from(
+			   		SELECT   a.mispar_ishi, a.taarich_hatchala,
+							   		DECODE(a.taarich_siyum,NULL,TRUNC(SYSDATE-1),DECODE( INSTR((SYSDATE-1)-a.taarich_siyum,'-'),1,TRUNC(SYSDATE-1), a.taarich_siyum)) date_a,
+								--	decode( instr((sysdate-1)-b.taarich_siyum,'-'),1,trunc(sysdate-1), b.taarich_siyum) date_b,
+								DECODE( INSTR((SYSDATE-1)-b.taarich_siyum,'-'),1,TRUNC(SYSDATE-1),DECODE(b.taarich_siyum,NULL,DECODE(b.kod_matzav,NULL,NULL,TRUNC(SYSDATE-1)),b.taarich_siyum) )date_b,
+									a.kod_matzav erech_a,b.kod_matzav erech_b,0 kod
+					 FROM
+									(SELECT * FROM MATZAV_OVDIM MINUS SELECT * FROM NEW_MATZAV_OVDIM) a,
+									NEW_MATZAV_OVDIM b,
+									OVDIM o
+						WHERE a.mispar_ishi=b.mispar_ishi(+)
+						     AND a.mispar_ishi=o.mispar_ishi
+							  AND a.taarich_hatchala=b.taarich_hatchala(+)
+							  AND a.taarich_hatchala <= TRUNC(SYSDATE) 
+							--  and a.mispar_ishi=47906
+		UNION
+			   		SELECT  a.mispar_ishi, a.taarich_hatchala,
+							   		DECODE(a.taarich_siyum,NULL,TRUNC(SYSDATE-1),DECODE( INSTR((SYSDATE-1)-a.taarich_siyum,'-'),1,TRUNC(SYSDATE-1), a.taarich_siyum)) date_a,
+									DECODE( INSTR((SYSDATE-1)-b.taarich_siyum,'-'),1,TRUNC(SYSDATE-1),DECODE(b.taarich_siyum,NULL,DECODE(b.kod_matzav,NULL,NULL,TRUNC(SYSDATE-1)),b.taarich_siyum) )date_b,
+								--	decode( instr((sysdate-1)-b.taarich_siyum,'-'),1,trunc(sysdate-1), b.taarich_siyum) date_b,
+									a.kod_matzav erech_a,b.kod_matzav erech_b,0 kod
+					 FROM
+									(SELECT * FROM NEW_MATZAV_OVDIM MINUS SELECT * FROM MATZAV_OVDIM) a,
+									MATZAV_OVDIM b,
+									OVDIM o
+						WHERE a.mispar_ishi=b.mispar_ishi(+)
+						  	  AND a.mispar_ishi=o.mispar_ishi
+							  AND a.taarich_hatchala=b.taarich_hatchala(+)
+							  AND a.taarich_hatchala <= TRUNC(SYSDATE);
+						--	  and a.mispar_ishi=47906;
+				--	  	)
+				--	where mispar_ishi =763;
+				--	where RowNum<6;
+
+
+  EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END pro_get_shinuy_matsav_ovdim;
+
+PROCEDURE pro_get_Shinuy_meafyeney_bizua( p_Cur OUT CurType) IS
+ BEGIN
+
+ DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'pro_get_Shinuy_meafyeney_bizua');
+ 		       OPEN p_Cur FOR
+		--select * from(
+			   		   	SELECT  a.mispar_ishi, a.me_taarich taarich_hatchala,
+						   		DECODE(a.ad_taarich,NULL,TRUNC(SYSDATE-1),DECODE( INSTR((SYSDATE-1)-a.ad_taarich,'-'),1,TRUNC(SYSDATE-1), a.ad_taarich)) date_a,
+					--			decode( instr((sysdate-1)-b.ad_taarich,'-'),1,trunc(sysdate-1), b.ad_taarich) date_b,
+								DECODE( INSTR((SYSDATE-1)-b.ad_taarich,'-'),1,TRUNC(SYSDATE-1),DECODE(b.ad_taarich,NULL,DECODE(b.erech_ishi ,NULL,NULL,TRUNC(SYSDATE-1)),b.ad_taarich) )date_b,
+								a.erech_ishi erech_a,b.erech_ishi erech_b ,0 kod
+					 FROM
+								(SELECT * FROM MEAFYENIM_OVDIM MINUS SELECT * FROM NEW_MEAFYENIM_OVDIM) a,
+								NEW_MEAFYENIM_OVDIM b,
+								OVDIM o
+					 WHERE a.mispar_ishi=b.mispar_ishi(+)
+					   	    AND a.mispar_ishi=o.mispar_ishi
+							AND a.me_taarich=b.me_taarich(+)
+							AND a.kod_meafyen = b.kod_meafyen(+)
+							AND a.me_taarich <= TRUNC(SYSDATE)
+                            AND a.kod_meafyen IN(1,2,3,4,5,6,7,8,11,13,14,23,24,25,26,27,28,30,32,41,42,43,44,45,47,50,51,53,54,56,60,61,63,64,74,80,83,84,85,91)
+                   --	and  a.mispar_ishi=67761
+	UNION
+			   			SELECT  a.mispar_ishi, a.me_taarich taarich_hatchala,
+						   		DECODE(a.ad_taarich,NULL,TRUNC(SYSDATE-1),DECODE( INSTR((SYSDATE-1)-a.ad_taarich,'-'),1,TRUNC(SYSDATE-1), a.ad_taarich)) date_a,
+						--		decode( instr((sysdate-1)-b.ad_taarich,'-'),1,trunc(sysdate-1), b.ad_taarich) date_b,
+						DECODE( INSTR((SYSDATE-1)-b.ad_taarich,'-'),1,TRUNC(SYSDATE-1),DECODE(b.ad_taarich,NULL,DECODE(b.erech_ishi ,NULL,NULL,TRUNC(SYSDATE-1)),b.ad_taarich) )date_b,
+								a.erech_ishi erech_a,b.erech_ishi erech_b ,0 kod
+					 FROM
+								(SELECT * FROM NEW_MEAFYENIM_OVDIM MINUS SELECT * FROM MEAFYENIM_OVDIM) a,
+								MEAFYENIM_OVDIM b,
+								OVDIM o
+					 WHERE a.mispar_ishi=b.mispar_ishi(+)
+					        AND a.mispar_ishi=o.mispar_ishi
+							AND a.me_taarich=b.me_taarich(+)
+							AND a.kod_meafyen = b.kod_meafyen(+)
+							AND a.me_taarich<= TRUNC(SYSDATE)
+                            AND a.kod_meafyen IN(1,2,3,4,5,6,7,8,11,13,14,23,24,25,26,27,28,30,32,41,42,43,44,45,47,50,51,53,54,56,60,61,63,64,74,80,83,84,85,91);
+					--and  a.mispar_ishi=67761;
+				--	)
+			--	where mispar_ishi=224;
+
+
+  EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END pro_get_Shinuy_meafyeney_bizua;
+
+PROCEDURE pro_get_shinuy_pirey_oved(p_Cur OUT CurType) IS
+ BEGIN
+ DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'pro_get_shinuy_pirey_oved');
+
+ 		       OPEN p_Cur FOR
+			   		  SELECT   a.mispar_ishi, a.me_taarich taarich_hatchala,
+								 DECODE(a.ad_taarich,NULL,TRUNC(SYSDATE-1),DECODE( INSTR((SYSDATE-1)-a.ad_taarich,'-'),1,TRUNC(SYSDATE-1), a.ad_taarich)) date_a,
+							--	decode( instr((sysdate-1)-b.ad_taarich,'-'),1,trunc(sysdate-1), b.ad_taarich) date_b,
+							DECODE( INSTR((SYSDATE-1)-b.ad_taarich,'-'),1,TRUNC(SYSDATE-1),DECODE(b.ad_taarich,NULL,DECODE(b.erech ,NULL,NULL,TRUNC(SYSDATE-1)),b.ad_taarich) )date_b,
+						   		a.erech erech_a,b.erech  erech_b,0 kod
+					 FROM
+							(SELECT * FROM PIRTEY_OVDIM MINUS SELECT * FROM NEW_PIRTEY_OVDIM) a,
+							NEW_PIRTEY_OVDIM b,
+							OVDIM o
+					WHERE a.mispar_ishi=b.mispar_ishi(+)
+					 	   AND a.mispar_ishi=o.mispar_ishi
+							AND a.me_taarich=b.me_taarich(+)
+							AND a.kod_natun  = b.kod_natun (+)
+							AND a.me_taarich <= TRUNC(SYSDATE)
+                            AND a.kod_natun IN(5,6,7,8,10,13,20,21,26,27)
+						--	and a.mispar_ishi=21470
+		UNION
+					 SELECT   a.mispar_ishi, a.me_taarich taarich_hatchala,
+								 DECODE(a.ad_taarich,NULL,TRUNC(SYSDATE-1),DECODE( INSTR((SYSDATE-1)-a.ad_taarich,'-'),1,TRUNC(SYSDATE-1), a.ad_taarich)) date_a,
+							--	decode( instr((sysdate-1)-b.ad_taarich,'-'),1,trunc(sysdate-1), b.ad_taarich) date_b,
+							DECODE( INSTR((SYSDATE-1)-b.ad_taarich,'-'),1,TRUNC(SYSDATE-1),DECODE(b.ad_taarich,NULL,DECODE(b.erech ,NULL,NULL,TRUNC(SYSDATE-1)),b.ad_taarich) )date_b,
+						   		a.erech erech_a,b.erech  erech_b,0 kod
+					 FROM
+							(SELECT * FROM NEW_PIRTEY_OVDIM MINUS SELECT * FROM PIRTEY_OVDIM) a,
+							PIRTEY_OVDIM b,
+							OVDIM o
+					WHERE a.mispar_ishi=b.mispar_ishi(+)
+					  	    AND a.mispar_ishi=o.mispar_ishi
+							AND a.me_taarich=b.me_taarich(+)
+							AND a.kod_natun  = b.kod_natun (+)
+							AND a.me_taarich <= TRUNC(SYSDATE)
+                             AND a.kod_natun IN(5,6,7,8,10,13,20,21,26,27);
+						--	and a.mispar_ishi=21470;
+
+
+  EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END pro_get_shinuy_pirey_oved;
+
+PROCEDURE pro_get_shinuy_brerot_mechdal(p_Cur OUT CurType) IS
+ BEGIN
+
+ DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'pro_get_shinuy_brerot_mechdal');
+ 		       OPEN p_Cur FOR
+			   		SELECT a.kod_meafyen  kod, a.me_taarich taarich_hatchala,
+											 DECODE(a.ad_taarich,NULL,TRUNC(SYSDATE-1),DECODE( INSTR((SYSDATE-1)-a.ad_taarich,'-'),1,TRUNC(SYSDATE-1), a.ad_taarich)) date_a,
+											-- decode( instr((sysdate-1)-b.ad_taarich,'-'),1,trunc(sysdate-1), b.ad_taarich) date_b,
+											DECODE( INSTR((SYSDATE-1)-b.ad_taarich,'-'),1,TRUNC(SYSDATE-1),DECODE(b.ad_taarich,NULL,DECODE(b.erech ,NULL,NULL,TRUNC(SYSDATE-1)),b.ad_taarich) )date_b,
+						   		             a.erech erech_a,b.erech  erech_b,0 mispar_ishi
+								FROM
+										    (SELECT A.KOD_MEAFYEN,A.ME_TAARICH,A.AD_TAARICH,A.ERECH  FROM NEW_BREROT_MECHDAL_MEAFYENIM a 
+                                                MINUS SELECT B.KOD_MEAFYEN,B.ME_TAARICH,B.AD_TAARICH,B.ERECH FROM BREROT_MECHDAL_MEAFYENIM b) a,
+											BREROT_MECHDAL_MEAFYENIM b
+								WHERE a.kod_meafyen=b.kod_meafyen(+)
+									   AND a.me_taarich=b.me_taarich(+)
+									   AND a.me_taarich <= TRUNC(SYSDATE)
+									 --  and a.kod_meafyen=5
+				UNION
+					  	 	   SELECT a.kod_meafyen  kod, a.me_taarich taarich_hatchala,
+											 DECODE(a.ad_taarich,NULL,TRUNC(SYSDATE-1),DECODE( INSTR((SYSDATE-1)-a.ad_taarich,'-'),1,TRUNC(SYSDATE-1), a.ad_taarich)) date_a,
+									--		 decode( instr((sysdate-1)-b.ad_taarich,'-'),1,trunc(sysdate-1), b.ad_taarich) date_b,
+									DECODE( INSTR((SYSDATE-1)-b.ad_taarich,'-'),1,TRUNC(SYSDATE-1),DECODE(b.ad_taarich,NULL,DECODE(b.erech ,NULL,NULL,TRUNC(SYSDATE-1)),b.ad_taarich) )date_b,
+						   		             a.erech erech_a,b.erech  erech_b,0 mispar_ishi
+								FROM
+										   (SELECT B.KOD_MEAFYEN,B.ME_TAARICH,B.AD_TAARICH,B.ERECH FROM BREROT_MECHDAL_MEAFYENIM b
+                                              MINUS SELECT A.KOD_MEAFYEN,A.ME_TAARICH,A.AD_TAARICH,A.ERECH FROM NEW_BREROT_MECHDAL_MEAFYENIM a) a,
+											NEW_BREROT_MECHDAL_MEAFYENIM b
+								WHERE a.kod_meafyen=b.kod_meafyen(+)
+									   AND a.me_taarich=b.me_taarich(+)
+									   AND a.me_taarich <= TRUNC(SYSDATE);
+								--	   and a.kod_meafyen=5;
+
+
+  EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END pro_get_shinuy_brerot_mechdal;
+
+PROCEDURE pro_ins_ovdim_im_shinuy_hr(p_coll_obj_ovdim_im_shinuy_hr IN coll_ovdim_im_shinuy_hr) IS
+   idNumber NUMBER;
+   ecode    NUMBER(38);
+   emssg nvarchar2(500);
+   
+ BEGIN
+ 
+            
+      IF p_coll_obj_ovdim_im_shinuy_hr.COUNT > 0 THEN      
+
+        MERGE into OVDIM_IM_SHINUY_HR ov
+        USING  TABLE(p_coll_obj_ovdim_im_shinuy_hr)    coll
+         ON ( ov.mispar_ishi = coll.mispar_ishi AND ov.taarich = TRUNC(coll.taarich))
+         WHEN MATCHED THEN 
+            UPDATE SET ov.taarich_idkun_hr=SYSDATE,
+                    ov.tavla = coll.tavla
+         WHEN NOT MATCHED THEN
+           INSERT (  mispar_ishi, taarich, taarich_idkun_hr,   tavla ) 
+            VALUES ( coll.mispar_ishi, TRUNC(coll.taarich), sysdate, coll.tavla ); 
+
+      END IF;
+      
+    
+   /*
+ 
+    IF (p_coll_obj_ovdim_im_shinuy_hr IS NOT NULL) THEN
+
+        FOR i IN 1..p_coll_obj_ovdim_im_shinuy_hr.COUNT LOOP
+             
+                 idNumber := NULL;
+				   	    --check if exist in table
+				BEGIN
+
+				SELECT count(*)   --NVL(o.mispar_ishi,0)
+						INTO idNumber
+						FROM OVDIM_IM_SHINUY_HR o
+						WHERE o.mispar_ishi = p_coll_obj_ovdim_im_shinuy_hr(i).mispar_ishi
+							  AND o. taarich =   TRUNC(p_coll_obj_ovdim_im_shinuy_hr(i).taarich);
+			     EXCEPTION
+  				 		    WHEN NO_DATA_FOUND  THEN
+        						 idNumber:=0;
+                           WHEN  OTHERS THEN
+                             pkg_batch.pro_ins_log_bakasha_tran(33,sysdate,'E', 
+                                to_char(SQLCODE) ||' -ERROR- '|| SQLERRM||
+                                ' mispar ishi '||to_char(p_coll_obj_ovdim_im_shinuy_hr(i).mispar_ishi)||
+                                ' taarich  '||to_char(p_coll_obj_ovdim_im_shinuy_hr(i).taarich,'dd-mm-yyyy') ,null);          
+				END;
+						--if no then insert else update
+				IF (idNumber =0) THEN
+				   			 	Pkg_Batch.inset_oved_im_shinuy_hr( p_coll_obj_ovdim_im_shinuy_hr(i).mispar_ishi,
+																	 TRUNC( p_coll_obj_ovdim_im_shinuy_hr(i).taarich),p_coll_obj_ovdim_im_shinuy_hr(i).tavla);
+		        ELSIF (idNumber > 0) THEN
+								Pkg_Batch.update_oved_im_shinuy_hr	( p_coll_obj_ovdim_im_shinuy_hr(i).mispar_ishi,
+																	 TRUNC( p_coll_obj_ovdim_im_shinuy_hr(i).taarich),p_coll_obj_ovdim_im_shinuy_hr(i).tavla);
+
+				END IF;
+                
+		
+        END LOOP;
+        
+	END IF;
+    */
+	--select 4 into idNumber from dual;
+  EXCEPTION
+   WHEN OTHERS THEN
+              ecode := SQLCODE;
+                    emssg:= SQLERRM;
+                    
+                     pkg_batch.pro_ins_log_bakasha_tran(33,sysdate,'E', ecode ||' -ERROR- '|| DBMS_UTILITY.format_error_stack () ,null);
+            
+        RAISE;
+END pro_ins_ovdim_im_shinuy_hr;
+
+PROCEDURE pro_ins_defaults_hr(p_coll_obj_brerot_mechdal_hr IN coll_brerot_mechdal_meafyenim) IS
+
+CURSOR p_cur(p_kod MEAFYENIM_OVDIM.KOD_MEAFYEN%TYPE ,
+	   			   				 p_me_taarich TB_YAMEY_AVODA_OVDIM.TAARICH%TYPE,
+								 p_ad_taarich  TB_YAMEY_AVODA_OVDIM.TAARICH%TYPE) IS
+	    SELECT DISTINCT y.MISPAR_ISHI,y.TAARICH
+					 FROM TB_YAMEY_AVODA_OVDIM y,
+					           MEAFYENIM_OVDIM m
+					 WHERE y.MISPAR_ISHI = m.MISPAR_ISHI
+					 	   		AND  m.KOD_MEAFYEN = p_kod
+								AND y.TAARICH BETWEEN  p_me_taarich   AND  p_ad_taarich ;
+								--and  y.MISPAR_ISHI=3620;
+
+idNumber NUMBER;
+v_rec  p_cur%ROWTYPE;
+BEGIN
+
+ IF (p_coll_obj_brerot_mechdal_hr  IS NOT NULL) THEN
+ 
+       FOR i IN 1..p_coll_obj_brerot_mechdal_hr.COUNT LOOP
+       
+			FOR v_rec  IN   p_cur(p_coll_obj_brerot_mechdal_hr(i).kod_meafyen ,
+			 						   p_coll_obj_brerot_mechdal_hr(i). me_taarich,
+									   p_coll_obj_brerot_mechdal_hr(i). ad_taarich )
+			  LOOP
+				  	 	BEGIN
+							    SELECT  o.mispar_ishi
+								INTO idNumber
+								FROM OVDIM_IM_SHINUY_HR o
+								 WHERE o.mispar_ishi = v_rec.mispar_ishi
+							         AND o. taarich =   TRUNC(v_rec.taarich);
+						   EXCEPTION
+	  				 		    WHEN NO_DATA_FOUND  THEN
+	        						 idNumber:=0;
+							END;
+                            
+								IF (idNumber =0) THEN
+				   			 	   		 Pkg_Batch.inset_oved_im_shinuy_hr( v_rec.mispar_ishi, TRUNC(v_rec.taarich),'brerot_mechdal');
+						        ELSE
+										Pkg_Batch.update_oved_im_shinuy_hr	( v_rec.mispar_ishi, TRUNC(v_rec.taarich),'brerot_mechdal');
+								END IF;
+			  END LOOP;
+       END LOOP;
+END IF;
+ EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END pro_ins_defaults_hr;
+
+
+PROCEDURE inset_oved_im_shinuy_hr(p_mispar_ishi IN NUMBER,
+		  											   	   	   			  		 p_taarich IN DATE,
+																				 p_tavla IN VARCHAR ) IS
+BEGIN
+	 	     INSERT INTO OVDIM_IM_SHINUY_HR(
+						   						   			   							   	 		 mispar_ishi,
+						   									   	  						   	 		 taarich,
+																									 taarich_idkun_hr,
+																									 tavla )
+																			   VALUES (
+																									  p_mispar_ishi,
+																									 p_taarich,
+																									   SYSDATE,
+																									   p_tavla);
+END inset_oved_im_shinuy_hr;
+
+PROCEDURE update_oved_im_shinuy_hr(p_mispar_ishi IN NUMBER,
+		  											   	   	   			  		 p_taarich IN DATE,
+																				 p_tavla IN VARCHAR )  IS
+BEGIN
+	 	  UPDATE  OVDIM_IM_SHINUY_HR o
+		  SET o. taarich_idkun_hr=SYSDATE,
+		         tavla =p_tavla
+		  WHERE 	o.mispar_ishi = p_mispar_ishi
+	  				   AND o. taarich =   p_taarich;
+END update_oved_im_shinuy_hr;
+
+PROCEDURE MoveNewMatzavOvdimToOld  IS
+BEGIN
+	 EXECUTE IMMEDIATE  'truncate table Matzav_Ovdim' ;    
+	 EXECUTE IMMEDIATE ' insert into Matzav_Ovdim select * from new_Matzav_Ovdim';
+EXCEPTION
+   WHEN OTHERS THEN
+   		ROLLBACK;
+        RAISE;
+END MoveNewMatzavOvdimToOld;
+
+PROCEDURE MoveNewPirteyOvedToOld  IS
+BEGIN
+	  EXECUTE IMMEDIATE  'truncate table pirtey_ovdim' ;    
+	 EXECUTE IMMEDIATE 'insert into pirtey_ovdim select * from new_pirtey_ovdim';
+EXCEPTION
+   WHEN OTHERS THEN
+   		ROLLBACK;
+        RAISE;
+END MoveNewPirteyOvedToOld;
+
+PROCEDURE MoveNewMeafyenimOvdimToOld  IS
+   ecode    NUMBER(38);
+   emssg nvarchar2(500);
+BEGIN
+     EXECUTE IMMEDIATE  'truncate table meafyenim_ovdim' ;    
+     EXECUTE IMMEDIATE 'insert into meafyenim_ovdim select * from new_meafyenim_ovdim';
+EXCEPTION
+   WHEN OTHERS THEN
+                ecode := SQLCODE;
+                    emssg:= SQLERRM;
+                     pkg_batch.pro_ins_log_bakasha_tran(33,sysdate,'E', ecode ||' -ERROR- '|| emssg ,null);
+            
+           ROLLBACK;
+        RAISE;
+END MoveNewMeafyenimOvdimToOld;
+
+PROCEDURE MoveNewBrerotMechdalToOld  IS
+BEGIN
+	-- EXECUTE IMMEDIATE  'truncate table Brerot_Mechdal_Meafyenim' ;
+	 DELETE FROM     BREROT_MECHDAL_MEAFYENIM ;
+	 EXECUTE IMMEDIATE 'insert into Brerot_Mechdal_Meafyenim select * from new_Brerot_Mechdal_Meafyenim';
+EXCEPTION
+   WHEN OTHERS THEN
+   		ROLLBACK;
+        RAISE;
+END  MoveNewBrerotMechdalToOld;
+
+
+PROCEDURE pro_get_ovdim4rerunsdrn( pDt VARCHAR,p_Cur OUT CurType) IS
+  BEGIN
+  OPEN p_Cur FOR
+SELECT y.mispar_ishi
+  FROM TB_YAMEY_AVODA_OVDIM y
+WHERE  y.taarich=TO_DATE(pDt,'yyyymmdd')
+ AND measher_o_mistayeg IS NULL
+ UNION ALL
+ SELECT y.mispar_ishi
+  FROM TB_YAMEY_AVODA_OVDIM y
+WHERE  y.taarich=TO_DATE(pDt,'yyyymmdd')
+ AND measher_o_mistayeg =1
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+  	 	 				  	   WHERE  s.taarich=TO_DATE(pDt,'yyyymmdd')
+							   AND s.taarich=y.taarich
+							   AND s.mispar_ishi=y.mispar_ishi
+						   AND (s.mispar_sidur<99000 OR s.mispar_sidur>99999));
+						   EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END  pro_get_ovdim4rerunsdrn;
+
+  PROCEDURE pro_sof_meafyenim( pDt VARCHAR,p_Cur OUT CurType)  IS
+     BEGIN
+ OPEN p_Cur FOR
+SELECT  COUNT(*) ct
+FROM   TB_LOG_TAHALICH
+WHERE TRUNC(taarich)  = TO_DATE(pDt,'yyyymmdd')
+  AND kod_tahalich=3
+  AND kod_peilut_tahalich =33
+  AND status=2;
+						   EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+END  pro_sof_meafyenim;
+
+PROCEDURE pro_get_premia_input(p_taarich DATE, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE,p_Cur OUT CurType) IS
+     --   p_tar DATE;
+BEGIN
+      --  p_tar:= TO_DATE('01/' || TO_CHAR(p_taarich,'mm/yyyy'));
+    OPEN p_Cur FOR
+       SELECT cs.MISPAR_ISHI, CS.MISPAR_SIDUR,cs.TAARICH, cs.KOD_RECHIV ,cs.ERECH_RECHIV,
+           SP.KOD_PREMIA,PO.EZOR, PO.MAAMAD, PO.MUTAAM, PO.GIL, PO.ISUK,O.SHEM_MISH,O.SHEM_PRAT,
+           Pkg_Ovdim.fun_get_meafyen_oved(cs.MISPAR_ISHI,60,p_taarich) meafeyn_60,
+           Pkg_Ovdim.fun_get_meafyen_oved(cs.MISPAR_ISHI,74,p_taarich) meafeyn_74,
+           Pkg_Ovdim.func_get_mispar_tachana(cs.MISPAR_ISHI,CS.MISPAR_SIDUR,cs.TAARICH,cs.SHAT_HATCHALA) mispar_tachana
+        FROM TB_CHISHUV_SIDUR_OVDIM cs,
+                 CTB_SUGEY_PREMIOT sp ,
+                 PIVOT_PIRTEY_OVDIM po,
+                 OVDIM o 
+        WHERE   cs.BAKASHA_ID=p_bakasha_id
+        AND cs.taarich BETWEEN p_taarich AND LAST_DAY(p_taarich) -- to_char(cs.taarich,'mm/yyyy')=to_char(p_taarich,'mm/yyyy')
+        AND  cs.KOD_RECHIV IN (256,257,258,259,260)      
+  --    AND  cs.MISPAR_ISHI= 78387
+        AND cs.KOD_RECHIV=SP.KOD_RACHIV_NOCHECHUT(+)
+        AND cs.MISPAR_ISHI=O.MISPAR_ISHI
+        AND cs.MISPAR_ISHI=PO.MISPAR_ISHI
+        AND p_taarich BETWEEN PO.ME_TARICH AND NVL(PO.AD_TARICH,p_taarich+1)
+        ORDER BY MISPAR_ISHI,KOD_PREMIA,mispar_tachana,taarich;
+ 
+END pro_get_premia_input;
+PROCEDURE pro_update_calc_premia(p_taarich DATE, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE, p_mispar_ishi NUMBER,
+            p_kod_rechiv NUMBER, p_erech_rechiv NUMBER) AS
+ v_count NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO v_count
+    FROM TB_CHISHUV_CHODESH_OVDIM t 
+    WHERE  T.KOD_RECHIV = p_kod_rechiv
+        AND T.MISPAR_ISHI = p_mispar_ishi
+        AND T.TAARICH = p_taarich
+        AND T.BAKASHA_ID = p_bakasha_id;
+    
+    IF v_count=0 THEN
+        INSERT INTO TB_CHISHUV_CHODESH_OVDIM(MISPAR_ISHI,TAARICH,BAKASHA_ID,KOD_RECHIV,ERECH_RECHIV )
+        VALUES(p_mispar_ishi,p_taarich,p_bakasha_id,p_kod_rechiv,p_erech_rechiv);
+    ELSE
+        UPDATE TB_CHISHUV_CHODESH_OVDIM t 
+            SET T.ERECH_RECHIV=p_erech_rechiv
+        WHERE  T.KOD_RECHIV = p_kod_rechiv
+            AND T.MISPAR_ISHI = p_mispar_ishi
+            AND T.TAARICH = p_taarich
+            AND T.BAKASHA_ID = p_bakasha_id;
+    END IF;
+    
+END pro_update_calc_premia;
+PROCEDURE pro_get_premia_bakashot(p_taarich DATE,p_Cur OUT CurType) IS
+BEGIN
+    OPEN p_Cur FOR
+    SELECT TB.Bakasha_ID,TB.Bakasha_ID || ' '||  TB.Teur || ' ' || TO_CHAR(TB.Zman_Hatchala,'dd.mm.yyyy') Teur_Bakasha
+        FROM TB_BAKASHOT TB,
+        TB_BAKASHOT_PARAMS TC 
+        WHERE TB.Sug_Bakasha=1
+        AND TB.Status IN (2,4)
+        AND TB.Bakasha_ID=TC.Bakasha_ID
+        AND TC.PARAM_ID = 2
+        AND TO_DATE('01/' || TC.ERECH,'dd/mm/yyyy') >= p_taarich
+        ORDER BY TB.Zman_Hatchala;
+
+END pro_get_premia_bakashot;
+PROCEDURE pro_if_start(p_Cur OUT CurType) IS
+  BEGIN
+  OPEN p_Cur FOR
+SELECT  COUNT(*) ct
+FROM TB_LOG_TAHALICH
+WHERE taarich>=TRUNC(SYSDATE)
+ AND kod_tahalich=1
+AND kod_peilut_tahalich=1
+AND trim(teur_tech)='KdsSchedulerProc'  ;
+   END pro_if_start;
+   
+ PROCEDURE pro_if_GalreadyRun(p_Cur OUT CurType) IS
+  BEGIN
+  OPEN p_Cur FOR
+ SELECT   NVL(MAX(status),0) stat2
+ --nvl(min( status),0) stat1,
+FROM TB_LOG_TAHALICH   
+WHERE taarich>=TRUNC(SYSDATE)
+AND kod_tahalich=8
+AND kod_peilut_tahalich=3;
+--and ( status=1  or  status=2);
+   END pro_if_GalreadyRun;
+
+PROCEDURE pro_get_ovdim_lehishuv_premiot(p_Cur OUT CurType) IS
+ BEGIN
+    OPEN p_Cur FOR
+    SELECT mispar_ishi,chodesh
+    FROM OVDIM_LECHISHUV_PREMYOT lp
+    WHERE LP.BAKASHA_ID IS NULL
+    ORDER BY chodesh;
+ END pro_get_ovdim_lehishuv_premiot; 
+ 
+ /*PROCEDURE pro_update_chishuv_premia(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE,
+            p_mispar_ishi OVDIM_LECHISHUV_PREMYOT.MISPAR_ISHI%TYPE,
+            p_chodesh OVDIM_LECHISHUV_PREMYOT.chodesh%TYPE) IS
+  BEGIN
+    UPDATE OVDIM_LECHISHUV_PREMYOT lp
+    SET LP.BAKASHA_ID=p_bakasha_id
+    WHERE LP.MISPAR_ISHI=p_mispar_ishi 
+        AND LP.CHODESH=p_chodesh; 
+  END pro_update_chishuv_premia;*/
+  
+PROCEDURE pro_update_chishuv_premia(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE,p_num_pack number) IS
+   CURSOR p_cur( p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) IS
+        SELECT DISTINCT c.MISPAR_ISHI,c.TAARICH
+        FROM TB_CHISHUV_CHODESH_OVDIM c, TB_MISPAR_ISHI_CHISHUV t
+        WHERE C.BAKASHA_ID = p_bakasha_id
+            and c.mispar_ishi = t.mispar_ishi
+            and T.NUM_PACK=p_num_pack  ;
+v_rec  p_cur%ROWTYPE;
+BEGIN
+            FOR v_rec  IN   p_cur(p_bakasha_id)
+            LOOP
+              
+                   UPDATE OVDIM_LECHISHUV_PREMYOT lp
+                   SET LP.BAKASHA_ID=p_bakasha_id
+                   WHERE LP.MISPAR_ISHI=  v_rec.mispar_ishi
+                        AND LP.CHODESH=v_rec.taarich; 
+  
+            END LOOP;
+     EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END pro_update_chishuv_premia;
+ 
+  FUNCTION fun_get_num_changes_to_shguim RETURN NUMBER AS
+num NUMBER ;
+BEGIN
+
+  SELECT COUNT(*) INTO num
+        FROM OVDIM_IM_SHINUY_HR h, TB_YAMEY_AVODA_OVDIM y,
+          CTB_ISUK i,   PIVOT_PIRTEY_OVDIM v_pirty_oved,OVDIM ov
+        WHERE h.Mispar_Ishi=y.Mispar_Ishi
+          AND h.Taarich=Y.Taarich
+          AND NVL(y. RITZAT_SHGIOT_ACHARONA,h.Taarich_Idkun_HR-1)<h.Taarich_Idkun_HR
+          AND (y.STATUS<>0 OR y.STATUS IS NULL)
+          AND y. Measher_O_Mistayeg IS NOT NULL
+            AND h.mispar_ishi            = ov.mispar_ishi
+            AND v_pirty_oved.mispar_ishi(+) = h.mispar_ishi
+        AND h.taarich  BETWEEN v_pirty_oved.me_tarich(+) AND v_pirty_oved.ad_tarich(+)
+         AND i.kod_hevra = ov.kod_hevra
+         AND  i.kod_isuk =v_pirty_oved.isuk;
+
+    RETURN num  ;
+
+       EXCEPTION
+            WHEN NO_DATA_FOUND THEN
+                      num := 0 ;
+                          RETURN num  ;
+            WHEN OTHERS THEN
+                          RAISE;
+END fun_get_num_changes_to_shguim;
+
+
+FUNCTION pro_ins_log_tahalich_rec(p_KodTahalich  NUMBER  ,p_KodPeilut NUMBER,  
+		  										  		  			   			p_KodStatus  NUMBER ,  p_TeurTech VARCHAR ,p_KodTakala NUMBER ) RETURN NUMBER AS
+p_mispar_siduri TB_LOG_TAHALICH.seq%TYPE;
+  BEGIN
+
+      SELECT seq_tahalich.NEXTVAL INTO p_mispar_siduri FROM dual;
+
+        INSERT INTO  TB_LOG_TAHALICH
+   		VALUES (p_KodTahalich,p_KodPeilut,p_mispar_siduri,SYSDATE,p_KodStatus,p_KodTakala,NULL,p_TeurTech);
+
+		RETURN p_mispar_siduri ;
+      EXCEPTION
+		   WHEN OTHERS THEN
+		   	     p_mispar_siduri  := 0 ;
+		         RETURN p_mispar_siduri  ;
+		        RAISE;
+  END pro_ins_log_tahalich_rec;
+  
+  PROCEDURE pro_upd_log_tahalich_rec(p_seqTahalich NUMBER ,p_KodStatus NUMBER,  p_TeurTech VARCHAR ,p_KodTakala NUMBER ) AS
+  BEGIN
+
+      UPDATE  TB_LOG_TAHALICH t
+	  SET t.STATUS=p_KodStatus,
+	  	     t.TEUR_TECH=p_TeurTech,
+			 t.KOD_TAKALA = p_KodTakala,
+			 t.TAARICH_SGIRA = SYSDATE
+	  WHERE t.SEQ=p_seqTahalich;
+
+     
+      EXCEPTION
+		   WHEN OTHERS THEN
+		        RAISE;
+  END pro_upd_log_tahalich_rec;
+  
+  PROCEDURE pro_delete_log_tahalich_rcds AS
+  BEGIN
+  	   			 DELETE FROM TB_LOG_TAHALICH 
+				 WHERE TRUNC(taarich) < ADD_MONTHS(SYSDATE,-2);
+      EXCEPTION
+		   WHEN OTHERS THEN
+		        RAISE;
+  END pro_delete_log_tahalich_rcds;
+  
+  PROCEDURE pro_upd_yamimOfSdrn    IS
+  idNumber NUMBER;
+err_str VARCHAR(1000);
+		
+CURSOR  stam5 IS
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01
+AND (kod_tahalich=4 OR kod_tahalich=15)
+AND kod_peilut_tahalich=1;
+--and seq between 30 and 44;
+
+ BEGIN
+ idNumber:=0;
+err_str:='';
+
+   pro_upd_yamey_avoda_ovdim(TO_CHAR(SYSDATE-1,'yyyymmdd'));
+
+FOR  stam5_rec IN  stam5  LOOP
+BEGIN
+err_str:=err_str ||trim(stam5_rec.teur_tech);
+END;
+END LOOP;
+COMMIT;
+
+SELECT COUNT(*)
+ INTO idNumber
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01  
+AND (kod_tahalich=4 OR kod_tahalich=15)
+AND kod_peilut_tahalich=1;
+--and seq between 30 and 44;
+
+  	IF (idNumber >0) THEN
+    RAISE_APPLICATION_ERROR(-20005, 'duplicate key in sdrn', TRUE);
+ END IF;
+ 
+  EXCEPTION
+     WHEN NO_DATA_FOUND  THEN
+        						 idNumber:=0;
+   WHEN OTHERS THEN
+        RAISE;
+  
+END pro_upd_yamimOfSdrn; 
+
+
+ PROCEDURE pro_get_meafyenim_gap(p_num_process NUMBER,   p_cur OUT CurType) IS
+  
+BEGIN
+     OPEN p_cur FOR	
+	 --stepa : add  to an existing kod "the rest" of the month
+	 SELECT DISTINCT   p1.mispar_ishi oved,p1.kod_meafyen kodm,--p1.me_taarich ,p1.ad_taarich,
+	p1.ad_taarich+1 miss_me, NVL(LEAST(p3.me_taarich-1,LAST_DAY(s.taarich)),LAST_DAY(s.taarich)) miss_ad  ,b.erech
+FROM   MEAFYENIM_OVDIM  p1,MEAFYENIM_OVDIM  p3,BREROT_MECHDAL_MEAFYENIM b,TB_MISPAR_ISHI_CHISHUV s
+	WHERE   p1.me_taarich BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+			AND p1.ad_taarich+1 BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+			AND p3.mispar_ishi(+)=p1.mispar_ishi
+		    AND p3.kod_meafyen(+)=p1.kod_meafyen
+	        AND p3.me_taarich(+) >   p1.ad_taarich+1
+			AND b.kod_meafyen = p1.kod_meafyen
+			AND    S.NUM_PACK =p_num_process
+						 AND s.mispar_ishi  = p1.mispar_ishi
+	--  	    and ((p1.ad_taarich+1 between b.me_taarich and nvl(b.ad_taarich,sysdate+200)) or
+	--					( nvl(least(p3.me_taarich-1,last_day(s.taarich)),last_day(s.taarich))  between b.me_taarich and nvl(b.ad_taarich,sysdate+200)))
+		AND NOT EXISTS ( SELECT *  FROM   MEAFYENIM_OVDIM  p2
+						   	 		   	  WHERE   p2.mispar_ishi=p1.mispar_ishi
+										  		  AND p2.kod_meafyen=p1.kod_meafyen
+												  AND p2.me_taarich = p1.ad_taarich+1)
+	   AND NOT EXISTS (   SELECT p8.mispar_ishi,p8.kod_meafyen,COUNT(*)
+					   	   		  		 FROM   MEAFYENIM_OVDIM  p8
+										   WHERE  ((me_taarich<= s.taarich AND ad_taarich<=LAST_DAY(s.taarich) AND ad_taarich>= s.taarich ) OR
+										     	  		(me_taarich>= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich)) OR
+														(me_taarich>= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich) AND me_taarich<= LAST_DAY(s.taarich) ) OR
+														(me_taarich<= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich)))
+										AND p8.mispar_ishi=p1.mispar_ishi
+										AND p8.kod_meafyen=p1.kod_meafyen
+										GROUP BY p8.kod_meafyen,p8.mispar_ishi
+										HAVING COUNT(*)>1)
+  --stepb : add  to an existing kod "the beginning" of the month
+		UNION ALL
+		SELECT DISTINCT   p4.mispar_ishi oved,p4.kod_meafyen kodm,--p4.me_taarich ,p4.ad_taarich,
+	 NVL(GREATEST(p6.ad_taarich+1,s.taarich),s.taarich)  miss_me,
+	 p4.me_taarich-1  miss_ad,b.erech
+FROM   MEAFYENIM_OVDIM  p4,MEAFYENIM_OVDIM  p6,BREROT_MECHDAL_MEAFYENIM b,TB_MISPAR_ISHI_CHISHUV s
+	WHERE  p4.me_taarich BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+		AND		 p4.me_taarich-1 BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+		 AND p6.mispar_ishi(+)=p4.mispar_ishi
+		     AND p6.kod_meafyen(+)=p4.kod_meafyen
+	        AND p6.ad_taarich(+) <=   p4.me_taarich-1
+				AND b.kod_meafyen = p4.kod_meafyen
+				AND    S.NUM_PACK =p_num_process
+							 AND s.mispar_ishi  = p4.mispar_ishi
+			AND NOT EXISTS ( SELECT *  FROM   MEAFYENIM_OVDIM  p5
+						   	 		   	  WHERE   p5.mispar_ishi=p4.mispar_ishi
+										  		  AND p5.kod_meafyen=p4.kod_meafyen
+												  AND p5.ad_taarich = p4.me_taarich-1) 
+		 AND  NOT EXISTS (   SELECT p8.mispar_ishi,p8.kod_meafyen,COUNT(*)
+					   	   		  		 FROM   MEAFYENIM_OVDIM  p8
+										   WHERE  ((me_taarich<= s.taarich AND ad_taarich<=LAST_DAY(s.taarich) AND ad_taarich>= s.taarich ) OR
+										     	  		(me_taarich>= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich)) OR
+														(me_taarich>= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich) AND me_taarich<= LAST_DAY(s.taarich) ) OR
+														(me_taarich<= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich)))
+										AND p8.mispar_ishi=p4.mispar_ishi
+										AND p8.kod_meafyen=p4.kod_meafyen
+										GROUP BY p8.kod_meafyen,p8.mispar_ishi
+										HAVING COUNT(*)>1)
+   --stepc :  	add to a whole month where the kod does not exist
+   UNION ALL
+   SELECT DISTINCT s.mispar_ishi oved ,kod_meafyen_bitzua kodm , s.taarich miss_me , LAST_DAY(s.taarich) miss_ad  ,b.erech
+  FROM CTB_MEAFYEN_BITZUA, BREROT_MECHDAL_MEAFYENIM b,TB_MISPAR_ISHI_CHISHUV s
+WHERE     S.NUM_PACK =p_num_process
+AND NOT EXISTS (SELECT * FROM   MEAFYENIM_OVDIM  p1
+  WHERE p1.kod_meafyen=kod_meafyen_bitzua
+  AND ((me_taarich<= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich) AND ad_taarich>= s.taarich ) OR
+  	  		(me_taarich>= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich)) OR
+			(me_taarich>= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich) AND me_taarich<= LAST_DAY(s.taarich) ) OR
+			(me_taarich<= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich))))
+AND b.kod_meafyen = kod_meafyen_bitzua
+   --todo  stepd :  	pro_get_meafyenim_manygaps use cursors where there is more than one gap 
+  ORDER BY oved,kodm  ;
+      EXCEPTION
+		   WHEN OTHERS THEN
+		        RAISE;
+  END pro_get_meafyenim_gap;
+  
+ PROCEDURE pro_get_meafyenim_manygaps(p_num_process NUMBER,   p_cur OUT CurType) IS
+   v_dt DATE;
+  max_dt DATE;
+   
+ CURSOR many_gaps IS
+ SELECT DISTINCT    oved,  kodm,  miss_me,  miss_ad  
+FROM (SELECT DISTINCT   p1.mispar_ishi oved,p1.kod_meafyen kodm,
+	s.taarich  miss_me, LAST_DAY(s.taarich) miss_ad 
+FROM   MEAFYENIM_OVDIM  p1,MEAFYENIM_OVDIM  p3,BREROT_MECHDAL_MEAFYENIM b,TB_MISPAR_ISHI_CHISHUV s
+	WHERE   p1.me_taarich BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+			AND p1.ad_taarich+1 BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+			AND p3.mispar_ishi(+)=p1.mispar_ishi
+		    AND p3.kod_meafyen(+)=p1.kod_meafyen
+	        AND p3.me_taarich(+) >   p1.ad_taarich+1
+			AND b.kod_meafyen = p1.kod_meafyen
+			AND    S.NUM_PACK =p_num_process
+				 AND s.mispar_ishi  = p1.mispar_ishi
+		AND NOT EXISTS ( SELECT *  FROM   MEAFYENIM_OVDIM  p2
+						   	 		   	  WHERE   p2.mispar_ishi=p1.mispar_ishi
+										  		  AND p2.kod_meafyen=p1.kod_meafyen
+												  AND p2.me_taarich = p1.ad_taarich+1)
+AND  EXISTS (   SELECT p8.mispar_ishi,p8.kod_meafyen,COUNT(*)
+					   	   		  		 FROM   MEAFYENIM_OVDIM  p8
+										   WHERE  ((me_taarich<= s.taarich AND ad_taarich<=LAST_DAY(s.taarich) AND ad_taarich>= s.taarich ) OR
+										     	  		(me_taarich>= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich)) OR
+														(me_taarich>= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich) AND me_taarich<= LAST_DAY(s.taarich) ) OR
+														(me_taarich<= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich)))
+										AND p8.mispar_ishi=p1.mispar_ishi
+										AND p8.kod_meafyen=p1.kod_meafyen
+										GROUP BY p8.kod_meafyen,p8.mispar_ishi
+										HAVING COUNT(*)>1)
+ --stepb : add  to an existing kod "the beginning" of the month
+		UNION ALL
+		SELECT DISTINCT   p4.mispar_ishi oved,p4.kod_meafyen kodm,
+	s.taarich  miss_me, LAST_DAY(s.taarich) miss_ad 
+FROM   MEAFYENIM_OVDIM  p4,MEAFYENIM_OVDIM  p6,BREROT_MECHDAL_MEAFYENIM b,TB_MISPAR_ISHI_CHISHUV s
+	WHERE  p4.me_taarich BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+		AND		 p4.me_taarich-1 BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+		 AND p6.mispar_ishi(+)=p4.mispar_ishi
+		     AND p6.kod_meafyen(+)=p4.kod_meafyen
+	        AND p6.ad_taarich(+) <=   p4.me_taarich-1
+				AND b.kod_meafyen = p4.kod_meafyen
+				AND    S.NUM_PACK =p_num_process
+							 AND s.mispar_ishi  = p4.mispar_ishi
+			AND NOT EXISTS ( SELECT *  FROM   MEAFYENIM_OVDIM  p5
+						   	 		   	  WHERE   p5.mispar_ishi=p4.mispar_ishi
+										  		  AND p5.kod_meafyen=p4.kod_meafyen
+												  AND p5.ad_taarich = p4.me_taarich-1) 
+		 AND  EXISTS (   SELECT p8.mispar_ishi,p8.kod_meafyen,COUNT(*)
+					   	   		  		 FROM   MEAFYENIM_OVDIM  p8
+										   WHERE  ((me_taarich<= s.taarich AND ad_taarich<=LAST_DAY(s.taarich) AND ad_taarich>= s.taarich ) OR
+										     	  		(me_taarich>= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich)) OR
+														(me_taarich>= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich) AND me_taarich<= LAST_DAY(s.taarich) ) OR
+														(me_taarich<= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich)))
+										AND p8.mispar_ishi=p4.mispar_ishi
+										AND p8.kod_meafyen=p4.kod_meafyen
+										GROUP BY p8.kod_meafyen,p8.mispar_ishi
+										HAVING COUNT(*)>1))
+  ORDER BY oved,kodm;
+  
+  CURSOR meafyeney_oved(par_ishi NUMBER,p_meafyen NUMBER) IS
+  SELECT p9.mispar_ishi,p9.kod_meafyen,p9.me_taarich,p9.ad_taarich
+FROM   MEAFYENIM_OVDIM p9  ,TB_MISPAR_ISHI_CHISHUV s
+	WHERE    p9.mispar_ishi=par_ishi 
+		     AND  p9.kod_meafyen=p_meafyen
+			 AND    S.NUM_PACK =p_num_process
+				 AND s.mispar_ishi  = p9.mispar_ishi
+			 AND ((p9.me_taarich<= s.taarich  AND p9.ad_taarich<=LAST_DAY(s.taarich) AND p9.ad_taarich>= s.taarich ) OR
+  	  		(p9.me_taarich>= s.taarich  AND p9.ad_taarich<=LAST_DAY(s.taarich)) OR
+			(p9.me_taarich>= s.taarich  AND p9.ad_taarich>=LAST_DAY(s.taarich) AND p9.me_taarich<= LAST_DAY(s.taarich) ) OR
+			(p9.me_taarich<= s.taarich  AND p9.ad_taarich>=LAST_DAY(s.taarich)));
+
+  
+BEGIN
+   --todo  stepd :   there is more than one gap 
+FOR  many_gaps_rec IN  many_gaps  LOOP
+ v_dt:=many_gaps_rec.miss_me;
+ max_dt:=many_gaps_rec.miss_ad;
+
+FOR  meafyeney_oved_rec IN  meafyeney_oved(many_gaps_rec.oved,many_gaps_rec.kodm) LOOP
+	 IF (meafyeney_oved_rec.me_taarich > v_dt) THEN
+	-- insert into tb_log_tahalich values (40,meafyeney_oved_rec.kod_meafyen,meafyeney_oved_rec.mispar_ishi,v_dt,0,0,least(max_dt,meafyeney_oved_rec.me_taarich-1),'');
+	INSERT INTO TMP_MEAFYENIM_GAP 
+		   VALUES (meafyeney_oved_rec.mispar_ishi,meafyeney_oved_rec.kod_meafyen,v_dt,LEAST(max_dt,meafyeney_oved_rec.me_taarich-1));
+	 END IF;
+	 v_dt:=meafyeney_oved_rec.ad_taarich+1;
+END LOOP;
+	IF (v_dt <= max_dt) THEN
+	-- insert into tb_log_tahalich values (40,many_gaps_rec.kodm,many_gaps_rec.oved,v_dt,0,0,max_dt,'');
+	INSERT INTO TMP_MEAFYENIM_GAP 
+		VALUES (many_gaps_rec.oved,many_gaps_rec.kodm,v_dt,max_dt);
+ 	 END IF;
+
+END LOOP;
+
+ OPEN p_cur FOR	
+ 	  SELECT MISPAR_ISHI   ,  Kod_meafyen	,  Me_taarich  ,  ad_taarich   
+	  FROM TMP_MEAFYENIM_GAP;
+
+--beware to commit; not to lose the data!!
+
+      EXCEPTION
+		   WHEN OTHERS THEN
+		        RAISE;
+  END pro_get_meafyenim_manygaps;
+  
+  PROCEDURE Pro_PrepareOvdimRikuzim(p_bakasha_id NUMBER,p_RequestId number , p_num_processes number  ) IS
+  p_date DATE;
+  CountNum NUMBER ;
+  rowCnt number ; 
+  rowsPerProcess number ;
+  BEGIN 
+  DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'Pro_PrepareOvdimRikuzim');
+        DELETE TB_OVDIM_PROCESSES p where bakasha_id = p_RequestId ;
+  
+        INSERT INTO TB_OVDIM_PROCESSES (BAKASHA_ID,ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack) 
+        select p_RequestId, rownum,sub.MISPAR_ISHI ,sub.TAARICH ,0  from
+        ( 
+        SELECT DISTINCT S.MISPAR_ISHI ,S.TAARICH 
+        FROM TB_CHISHUV_CHODESH_OVDIM s 
+        WHERE S.BAKASHA_ID = p_RequestId) sub;
+
+        SELECT COUNT(*) INTO CountNum FROM TB_OVDIM_PROCESSES p 
+        where  p.bakasha_id = p_RequestId; 
+/*INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'p_bakasha_id', p_bakasha_id);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'p_RequestId', p_RequestId);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'CountNum', CountNum);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'p_num_processes', p_num_processes);
+*/
+rowsPerProcess := Trunc (CountNum/p_num_processes);
+        UPDATE TB_OVDIM_PROCESSES s
+        SET s.num_pack =  /* trunc(row_num * (p_num_processes/CountNum)) + 1*/ 
+            case when p_num_processes > CountNum 
+             then row_num
+            when row_num < rowsPerProcess * p_num_processes 
+                                              then 
+                                             TRUNC( 
+                                                    ( row_num -1 )/
+                                                    rowsPerProcess)+1
+                                               else  p_num_processes
+                                               end
+                                               
+        where  s.bakasha_id = p_RequestId; 
+        rowCnt :=  SQL%RowCount ;
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES (KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL,  'after UPDATE TB_OVDIM_PROCESSE ', to_char(rowCnt));
+          
+        UPDATE TB_OVDIM_PROCESSES s
+        SET s.num_pack =p_num_processes
+        WHERE s.num_pack=(p_num_processes+1)
+        and   s.bakasha_id = p_RequestId; 
+
+        rowCnt :=  SQL%RowCount ;
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES (KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'after UPDATE TB_OVDIM_PROCESSE 2 ',to_char( rowCnt));
+  
+  END Pro_PrepareOvdimRikuzim;
+  
+  
+  PROCEDURE Pro_get_pirtey_ovdim_leRikuzim(p_bakasha_id NUMBER,p_Num_Pack number , p_cur OUT CurType) IS
+  p_date DATE;
+  BEGIN
+   DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'Pro_get_pirtey_ovdim_leRikuzim');
+  OPEN p_cur FOR   
+         WITH dt AS (
+                 SELECT   distinct c.BAKASHA_ID,  c.TAARICH, c.MISPAR_ISHI
+                 FROM     TB_OVDIM_PROCESSES C
+                 WHERE     C.BAKASHA_ID = p_bakasha_id
+                       and c.num_pack= p_Num_Pack
+                     ) ,
+         DatailsRdl as     
+         (
+                select d.RS_VERSION, D.URL_CONFIG_KEY ,D.SERVICE_URL_CONFIG_KEY
+                from ctb_sugey_dochot c, CTB_DOCHOT_RS_VERSION d
+                where c.KOD_SUG_DOCH =  4
+                and c.RS_VERSION = D.RS_VERSION 
+         )       
+        SELECT DISTINCT dt.MISPAR_ISHI ,dt.TAARICH ,
+                 NVL(p.erech,r.erech)  WorkDay, 
+                B.ZMAN_HATCHALA,c.SUG_CHISHUV, o.kod_hevra,
+                 ppo.ezor,ppo.maamad   ,  d.RS_VERSION, D.URL_CONFIG_KEY ,D.SERVICE_URL_CONFIG_KEY
+        FROM DatailsRdl d,dt ,TB_BAKASHOT b ,
+                BREROT_MECHDAL_MEAFYENIM r,
+                TB_MISPAR_ISHI_SUG_CHISHUV c,
+                ovdim o,
+                 (SELECT po.Mispar_Ishi,po.me_tarich,po.ad_tarich, po.ezor,po.maamad    
+                        FROM PIVOT_PIRTEY_OVDIM PO,dt
+                         WHERE     ( dt.TAARICH   BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                         OR  TRUNC(LAST_DAY(dt.TAARICH  )) BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                         OR   po.ME_TARICH>=dt.TAARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<= TRUNC(LAST_DAY(dt.TAARICH  )))
+                          and po.Mispar_Ishi= dt.Mispar_Ishi) ppo,
+                (
+                SELECT p.mispar_ishi,P.ME_TAARICH, P.ad_taarich, NVL(P.ERECH_ISHI,P.ERECH_MECHDAL_PARTANY) erech  
+                 FROM   PIVOT_MEAFYENIM_OVDIM p,dt
+                 WHERE      
+                       ((p.me_taarich<=dt.TAARICH    AND p.ad_taarich<= LAST_DAY(dt.TAARICH  )  AND p.ad_taarich>=  dt.TAARICH    ) OR
+                         (p.me_taarich>=   dt.TAARICH    AND p.ad_taarich<= LAST_DAY(dt.TAARICH   )  ) OR
+                         (p.me_taarich>=dt.TAARICH    AND p.ad_taarich>=  LAST_DAY(dt.TAARICH  )  AND p.me_taarich<=  LAST_DAY( dt.TAARICH  )   ) OR
+                         (p.me_taarich<= dt.TAARICH    AND p.ad_taarich>= LAST_DAY(  dt.TAARICH   )  ))  
+                         and p.Mispar_Ishi= dt.Mispar_Ishi
+                        AND p.KOD_MEAFYEN =56  ) p
+
+        WHERE 
+           dt.BAKASHA_ID = B.BAKASHA_ID
+           AND dt.MISPAR_ISHI = o.MISPAR_ISHI(+)
+           AND dt.MISPAR_ISHI = ppo.MISPAR_ISHI(+)
+           AND dt.taarich between  ppo.me_tarich(+) and ppo.ad_tarich(+)     
+           AND dt.MISPAR_ISHI = P.MISPAR_ISHI(+)   
+           AND dt.taarich between  p.me_taarich(+) and p.ad_taarich(+)     
+           AND dt.MISPAR_ISHI = c.MISPAR_ISHI(+)
+           AND dt.BAKASHA_ID = c.BAKASHA_ID(+)
+           AND dt.TAARICH = c.TAARICH(+)
+           AND r.KOD_MEAFYEN =56;
+   /*     SELECT TO_DATE('01/' ||p.erech ,'dd/mm/yyyy') INTO p_date
+        FROM TB_BAKASHOT_PARAMS p, TB_BAKASHOT t
+        WHERE t.bakasha_id = p_bakasha_id
+            AND t.sug_bakasha=1
+            AND  t.bakasha_id =  p.bakasha_id  
+            AND p.param_id=2;
+     OPEN p_cur FOR   
+        SELECT DISTINCT S.MISPAR_ISHI ,S.TAARICH ,
+                 NVL(p.erech,r.erech)  WorkDay, 
+                B.ZMAN_HATCHALA,c.SUG_CHISHUV, o.kod_hevra,
+                 ppo.ezor,ppo.maamad    
+        FROM TB_OVDIM_PROCESSES s ,TB_BAKASHOT b ,
+                BREROT_MECHDAL_MEAFYENIM r,TB_MISPAR_ISHI_SUG_CHISHUV c,
+                ovdim o,
+                 (select p.mispar_ishi,p.ezor,p.MAAMAD from
+                    PIVOT_PIRTEY_OVDIM p,
+                       (SELECT Mispar_Ishi,MAX( po.ME_TARICH) me_taarich
+                        FROM PIVOT_PIRTEY_OVDIM PO
+                         WHERE     (p_date   BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                         OR  TRUNC(LAST_DAY(p_date)) BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                         OR   po.ME_TARICH>=p_date  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<= TRUNC(LAST_DAY(p_date)))
+                         group by po.Mispar_Ishi) ppo
+                     where  ppo.Mispar_Ishi=p.mispar_ishi
+                    AND  ppo.ME_TAARICH= p.ME_TARICH) ppo,
+                (SELECT * FROM(
+                SELECT p.mispar_ishi,P.ME_TAARICH, NVL(P.ERECH_ISHI,P.ERECH_MECHDAL_PARTANY) erech  ,
+                 MAX(p.ME_TAARICH) OVER (PARTITION BY p.mispar_ishi) max_me_tarich
+                 FROM   PIVOT_MEAFYENIM_OVDIM p
+                 WHERE      
+                       ((p.me_taarich<=p_date    AND p.ad_taarich<= LAST_DAY(p_date)  AND p.ad_taarich>=  p_date   ) OR
+                         (p.me_taarich>=  p_date   AND p.ad_taarich<= LAST_DAY( p_date )  ) OR
+                         (p.me_taarich>=p_date   AND p.ad_taarich>=  LAST_DAY(p_date)  AND p.me_taarich<=  LAST_DAY( p_date )   ) OR
+                         (p.me_taarich<= p_date   AND p.ad_taarich>= LAST_DAY( p_date )  ))  
+                     AND p.KOD_MEAFYEN =56 ) po
+                     WHERE po.ME_TAARICH = po.max_me_tarich
+                  ) p
+        WHERE S.BAKASHA_ID = p_bakasha_id
+            AND S.BAKASHA_ID = B.BAKASHA_ID
+            and s.num_pack = p_Num_Pack
+                  AND S.MISPAR_ISHI = o.MISPAR_ISHI(+)
+               AND S.MISPAR_ISHI = ppo.MISPAR_ISHI(+)
+            AND S.MISPAR_ISHI = P.MISPAR_ISHI(+)
+            AND S.MISPAR_ISHI = c.MISPAR_ISHI(+)
+            AND s.BAKASHA_ID = c.BAKASHA_ID(+)
+            AND S.TAARICH = c.TAARICH(+)
+            AND r.KOD_MEAFYEN =56;*/
+           
+     
+        
+  END Pro_get_pirtey_ovdim_leRikuzim;
+  
+  PROCEDURE Pro_get_Email_Ovdim_LeRikuzim(p_bakasha_id NUMBER, p_cur OUT CurType) IS
+  BEGIN
+  
+     OPEN p_cur FOR    
+      SELECT p.MISPAR_ISHI ,p.TAARICH , o.EMAIL  ,P.RIKUZ_PDF
+        FROM OVDIM o,TB_RIKUZ_PDF p
+        WHERE p.MISPAR_ISHI = O.MISPAR_ISHI
+            AND p.BAKASHA_ID = p_bakasha_id
+            AND o.EMAIL IS NOT NULL;
+     
+     /*   select distinct S.MISPAR_ISHI ,S.TAARICH ,o.EMAIL  ,c.SUG_CHISHUV
+        from tb_chishuv_chodesh_ovdim s  ,   OVDIM o,tb_mispar_ishi_sug_chishuv c
+        where S.MISPAR_ISHI = O.MISPAR_ISHI
+            and S.BAKASHA_ID = p_bakasha_id
+            and S.MISPAR_ISHI = c.MISPAR_ISHI
+            and s.BAKASHA_ID = c.BAKASHA_ID
+            and S.TAARICH = c.TAARICH;*/
+        
+  END Pro_get_Email_Ovdim_LeRikuzim;
+  
+  
+  FUNCTION  pro_get_sug_chishuv(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
+                                                  p_taarich IN DATE,
+                                                  p_bakasha_id OUT TB_BAKASHOT.bakasha_id%TYPE ) RETURN NUMBER IS
+  v_count_bakashot NUMBER;
+  p_sug_chishuv NUMBER;
+  p_tar DATE;
+BEGIN
+        p_tar:= TO_DATE('01/' || TO_CHAR(p_taarich,'mm/yyyy'));
+
+        SELECT COUNT(b.BAKASHA_ID) INTO  v_count_bakashot
+        FROM TB_BAKASHOT B
+        WHERE B.Huavra_Lesachar=1
+        AND EXISTS (SELECT bakasha_id FROM TB_CHISHUV_CHODESH_OVDIM  C
+                                      WHERE    C.Bakasha_ID=B.Bakasha_ID
+                                AND C.Mispar_Ishi =p_mispar_ishi
+                                AND C.Taarich BETWEEN p_tar AND LAST_DAY(p_tar));--TO_CHAR(C.Taarich,'mm/yyyy') =TO_CHAR(p_taarich,'mm/yyyy'));
+
+   IF v_count_bakashot=1 THEN
+            p_sug_chishuv:=0;
+   ELSIF v_count_bakashot>1 THEN
+            p_sug_chishuv:=1;
+     ELSE
+            p_sug_chishuv:=2;
+   END IF;
+   
+   RETURN p_sug_chishuv;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+          p_sug_chishuv:=2;
+          RETURN p_sug_chishuv;
+     WHEN OTHERS THEN
+            RAISE;
+ 
+END  pro_get_sug_chishuv;
+
+
+PROCEDURE pro_ins_misparishi_sug_chishuv(p_bakasha_id NUMBER,p_coll_chishuv_sug_sidur IN COLL_MISPAR_ISHI_SUG_CHISHUV) IS
+
+--PRAGMA AUTONOMOUS_TRANSACTION;
+BEGIN
+     DELETE FROM TB_MISPAR_ISHI_SUG_CHISHUV WHERE  bakasha_id=p_bakasha_id;
+      IF (p_coll_chishuv_sug_sidur IS NOT NULL) THEN
+          FOR i IN 1..p_coll_chishuv_sug_sidur.COUNT LOOP
+            INSERT INTO TB_MISPAR_ISHI_SUG_CHISHUV
+                        (mispar_ishi,
+                         bakasha_id,
+                         taarich,
+                         sug_chishuv
+                        )
+             VALUES (p_coll_chishuv_sug_sidur(i).mispar_ishi,
+                     p_coll_chishuv_sug_sidur(i).bakasha_id,
+                     p_coll_chishuv_sug_sidur(i).taarich,
+                     p_coll_chishuv_sug_sidur(i).sug_chishuv
+                      );
+          END LOOP;
+      END IF;
+    --  commit;
+      EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+END pro_ins_misparishi_sug_chishuv;
+
+
+/****************************************************************************************/
+/********************* shguim batch  ********************************/
+                   
+PROCEDURE Prepare_yamei_avoda_meshek(p_date IN DATE, p_type IN NUMBER,p_num_process IN NUMBER, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) IS
+/*  start_date date;
+   p_takanon date;
+   end_date date;
+   v_start_date date;
+   num number;
+    str_dates VARCHAR2(500); */
+  BEGIN
+  DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'Prepare_yamei_avoda_meshek');
+      /*  select (erech_param-1) into num from tb_parametrim where kod_param=100;
+        select  to_date(erech_param,'dd/mm/yyyy') into p_takanon  from tb_parametrim where kod_param=265;
+        end_date:= to_date('01/' || to_char(add_months(sysdate,-1),'mm/yyyy'),'dd/mm/yyyy');
+        start_date:= add_months(  to_date('01/' || to_char(sysdate,'mm/yyyy'),'dd/mm/yyyy'),-num);
+        if (p_takanon> start_date) then
+            start_date:=p_takanon;
+        end if;
+        v_start_date:=start_date;
+        LOOP
+            BEGIN
+                EXIT WHEN  v_start_date>end_date;
+                    str_dates:=str_dates || TO_CHAR(v_start_date,'dd/mm/yyyy') || ',';
+                     v_start_date:= add_months(v_start_date,1);
+                END;
+       END LOOP;
+
+      str_dates:=SUBSTR(str_dates,0,LENGTH(str_dates)-1);
+*/
+     INSERT INTO TB_MISPAR_ISHI_SHGUIM_BATCH(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack,TYPE,bakasha_id)
+      /* alef */
+    SELECT  ROWNUM,MISPAR_ISHI, taarich,0,p_type ,p_bakasha_id
+      FROM(           SELECT DISTINCT  ya.mispar_ishi,ya.taarich
+                FROM TB_YAMEY_AVODA_OVDIM ya,OVDIM o
+                WHERE  o.mispar_ishi=ya.mispar_ishi
+                     AND  EXISTS  (SELECT mispar_ishi
+                                          FROM TB_SIDURIM_OVDIM so
+                                          WHERE so.mispar_ishi=ya.mispar_ishi
+                                          AND so.taarich=ya.taarich AND so.meadken_acharon=-11
+                                          AND so.taarich_idkun_acharon>NVL(ya.ritzat_shgiot_acharona,so.taarich_idkun_acharon-1)  )
+                  --   AND ya.measher_o_mistayeg IS NOT NULL
+               --       AND NVL(ya.status,-1)<>0
+                  /* bet */
+     UNION  SELECT DISTINCT   ya.mispar_ishi,ya.taarich
+                 FROM TB_YAMEY_AVODA_OVDIM ya,OVDIM o
+                 WHERE ya.taarich=TRUNC(p_date)
+                     AND  o.mispar_ishi=ya.mispar_ishi
+                     AND NOT EXISTS(SELECT 1 FROM TB_SIDURIM_OVDIM so WHERE so.mispar_ishi=ya.mispar_ishi
+                                                                                                               AND so.taarich=ya.taarich AND so.meadken_acharon=-12)
+                   /* AND EXISTS(SELECT 1 FROM TB_SIDURIM_OVDIM so WHERE so.mispar_ishi=ya.mispar_ishi
+                                                                                                               AND so.taarich=ya.taarich AND so.meadken_acharon<>-12)*/
+     UNION  SELECT  DISTINCT mispar_ishi, taarich
+                  FROM
+                   (SELECT DISTINCT t.mispar_ishi, t.kod_ishur,t.taarich, t.mispar_sidur, t.shat_hatchala,
+                         t.shat_yetzia, t.mispar_knisa  ,t.rama,t.kod_status_ishur,t.taarich_idkun_acharon,
+                          MAX(t.rama) KEEP (DENSE_RANK LAST ORDER BY t.rama )
+                            OVER (PARTITION BY t.mispar_ishi,t.taarich,t.kod_ishur ) max_f4
+                          FROM TB_ISHURIM t, TB_YAMEY_AVODA_OVDIM ya,OVDIM o
+                          WHERE  t.taarich=ya.taarich
+                          AND t.mispar_ishi=ya.mispar_ishi
+                          AND  o.mispar_ishi=ya.mispar_ishi
+                          AND t.taarich_idkun_acharon>NVL(ya.ritzat_shgiot_acharona,t.taarich_idkun_acharon-1) )
+                    WHERE max_f4=rama
+                         AND kod_status_ishur IN (1,2)
+         /*heih*/    
+      UNION SELECT DISTINCT  ya.mispar_ishi,ya.taarich
+                 FROM TB_YAMEY_AVODA_OVDIM ya
+                 WHERE YA.RITZAT_SHGIOT_ACHARONA=TO_DATE('01/01/0001','dd/mm/yyyy')
+  --    UNION /*vahv - for chishuv rechiv 67 - takanon soziali*/
+   /* select  c.mispar_ishi,c.taarich
+                from  ovdim o, TB_YAMEY_AVODA_OVDIM y,tb_chishuv_yomi_ovdim c, matzav_ovdim m, ctb_status s,--PIVOT_PIRTEY_OVDIM P,
+                (SELECT     a.mispar_ishi, a.Taarich, a.bakasha_id
+                  FROM PIVOT_PIRTEY_OVDIM P,( SELECT  co.mispar_ishi, co.Taarich, co.bakasha_id,b.TAARICH_HAAVARA_LESACHAR th1,
+                                          MAX(B.TAARICH_HAAVARA_LESACHAR) OVER (PARTITION BY co.mispar_ishi,co.Taarich )  th2
+                             FROM TB_CHISHUV_CHODESH_OVDIM co,TB_BAKASHOT b
+                             WHERE   B.BAKASHA_ID = CO.BAKASHA_ID
+                                    AND b.Huavra_Lesachar=1
+                                  and CO.TAARICH in( select to_date(x,'dd/mm/yyyy') taarich from  TABLE(CAST(Convert_String_To_Table(str_dates  ,  ',') AS mytabtype))  ) 
+                             ) a
+                WHERE a.th1=a.th2
+                and  a.mispar_ishi = p.mispar_ishi
+                and  (a.Taarich BETWEEN  p.ME_TARICH  AND   NVL(p.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                                      OR     last_day( a.Taarich )   BETWEEN  p.ME_TARICH  AND   NVL(p.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                                      OR   p.ME_TARICH>=a.Taarich AND   NVL(p.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=    last_day( a.Taarich)  )
+                AND     SUBSTR(MAAMAD,2,2)<>'23'
+                AND not(DIRUG=85 AND DARGA=30)
+                group by  a.mispar_ishi, a.Taarich, a.bakasha_id ) b 
+                where c.kod_rechiv=67
+                and c.erech_rechiv =1
+                and c.taarich between start_date and last_day(end_date )
+                and c.mispar_ishi= m.mispar_ishi
+                and c.taarich between M.TAARICH_HATCHALA and M.TAARICH_SIYUM
+                and M.KOD_MATZAV = S.KOD_STATUS
+                and S.KOD_HEADRUT is null
+                and O.MISPAR_ISHI = C.MISPAR_ISHI
+                and O.KOD_HEVRA = S.KOD_HEVRA
+                and b.bakasha_id=c.bakasha_id
+                and b.mispar_ishi= c.mispar_ishi
+                and b.taarich =C.TKUFA
+                and y.MISPAR_ISHI = c.MISPAR_ISHI
+                and y.taarich = c.taarich
+                and y.status in (0,2) 
+                and not exists(
+                        select s.mispar_ishi,s.taarich,s.mispar_sidur
+                        from tb_sidurim_ovdim s
+                        where s.mispar_sidur=99822
+                            and s.taarich between start_date and last_day(end_date )
+                              and nvl(S.LO_LETASHLUM,0) =0
+                            and  s.mispar_ishi = y.mispar_ishi
+                            and s.taarich= y.taarich
+               )
+        group by  c.mispar_ishi,c.taarich*/ );
+                
+       Pkg_Batch.pro_divide_packets(p_num_process,p_bakasha_id); 
+       
+       /*INSERT INTO TEST_MAATEFET(mispar_ishi, taarich, taarich_ritza, bakasha_id, sug_bakasha,comments)
+         SELECT   M.MISPAR_ISHI,M.TAARICH,SYSDATE,p_bakasha_id,0,'shguim of sdrn'
+         FROM TB_MISPAR_ISHI_SHGUIM_BATCH m
+         WHERE m.bakasha_id = p_bakasha_id;*/
+ END Prepare_yamei_avoda_meshek;
+ 
+  PROCEDURE Prepare_yamei_avoda_shinui_hr( p_type IN NUMBER,p_num_process IN NUMBER, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) IS
+  BEGIN 
+  DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'Prepare_yamei_avoda_shinui_hr');
+      INSERT INTO TB_MISPAR_ISHI_SHGUIM_BATCH(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack,TYPE,bakasha_id)
+        SELECT ROWNUM, h.Mispar_Ishi, h.Taarich ,0,p_type,p_bakasha_id
+        from
+               ( select h.Mispar_Ishi, h.Taarich
+                     FROM OVDIM_IM_SHINUY_HR h, TB_YAMEY_AVODA_OVDIM y  ,
+                       CTB_ISUK i,   PIVOT_PIRTEY_OVDIM v_pirty_oved,OVDIM ov
+                      WHERE h.Mispar_Ishi=y.Mispar_Ishi
+                          AND h.Taarich=Y.Taarich
+                          AND NVL(y. RITZAT_SHGIOT_ACHARONA,h.Taarich_Idkun_HR-1)<h.Taarich_Idkun_HR
+                          AND (y.STATUS<>0 OR y.STATUS IS NULL)
+                       --   AND y. Measher_O_Mistayeg IS NOT NULL
+                         AND h.mispar_ishi            = ov.mispar_ishi
+                            AND v_pirty_oved.mispar_ishi(+) = h.mispar_ishi
+                        AND h.taarich  BETWEEN v_pirty_oved.me_tarich(+) AND v_pirty_oved.ad_tarich(+)
+                         AND i.kod_hevra = ov.kod_hevra
+                         AND  i.kod_isuk =v_pirty_ovED.ISUK 
+                UNION
+                 
+                    select h.Mispar_Ishi, h.Taarich
+                     FROM OVDIM_IM_IDKUN_MACHALA h, TB_YAMEY_AVODA_OVDIM y,
+                          CTB_ISUK i,   PIVOT_PIRTEY_OVDIM v_pirty_oved,OVDIM ov
+                      WHERE h.Mispar_Ishi=y.Mispar_Ishi
+                          AND h.Taarich=Y.Taarich
+                          AND NVL(y. RITZAT_SHGIOT_ACHARONA,h.Taarich_Idkun_acharon-1)<h.Taarich_Idkun_acharon
+                          AND (y.STATUS<>0 OR y.STATUS IS NULL)
+                           AND h.mispar_ishi            = ov.mispar_ishi
+                            AND v_pirty_oved.mispar_ishi(+) = h.mispar_ishi
+                        AND h.taarich  BETWEEN v_pirty_oved.me_tarich(+) AND v_pirty_oved.ad_tarich(+)
+                         AND i.kod_hevra = ov.kod_hevra
+                        AND  i.kod_isuk =v_pirty_oved.isuk  
+                 ) h ;
+         
+          Pkg_Batch.pro_divide_packets(p_num_process,p_bakasha_id);  
+          
+          /*  INSERT INTO TEST_MAATEFET(mispar_ishi, taarich, taarich_ritza, bakasha_id, sug_bakasha,comments)
+         SELECT   M.MISPAR_ISHI,M.TAARICH,SYSDATE,p_bakasha_id,0,'shguim of hr'
+         FROM TB_MISPAR_ISHI_SHGUIM_BATCH m
+         WHERE m.bakasha_id = p_bakasha_id;*/
+  END Prepare_yamei_avoda_shinui_hr;
+  
+ PROCEDURE pro_divide_packets( p_num_process IN  NUMBER, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE ) IS
+   num NUMBER;
+BEGIN
+
+ SELECT COUNT(*) INTO num FROM TB_MISPAR_ISHI_SHGUIM_BATCH WHERE bakasha_id =p_bakasha_id;
+  
+  UPDATE TB_MISPAR_ISHI_SHGUIM_BATCH s
+  SET s.num_pack =(SELECT  TRUNC(row_num*p_num_process/num)+1 FROM dual) -- (SELECT  ceil ( row_num /TRUNC(num/p_num_process)) FROM dual)-- (select trunc(rownum*p_num_processe/num + 1) from TB_MISPAR_ISHI_CHISHUV);
+  WHERE    s.bakasha_id =p_bakasha_id;
+      
+  UPDATE TB_MISPAR_ISHI_SHGUIM_BATCH s
+  SET s.num_pack =p_num_process
+  WHERE s.num_pack=(p_num_process+1)
+  AND s.bakasha_id =p_bakasha_id;
+  
+  EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+END pro_divide_packets;
+
+PROCEDURE pro_get_netunim_for_process( p_num_process IN  NUMBER , p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE, p_Cur OUT CurType) IS
+  BEGIN
+  
+     OPEN p_Cur FOR    
+        SELECT s.mispar_ishi,s.taarich,S.BAKASHA_ID,S.NUM_PACK
+         FROM TB_MISPAR_ISHI_SHGUIM_BATCH s
+         WHERE   s.num_pack =p_num_process 
+               AND s.bakasha_id = p_bakasha_id;
+  
+  EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+END pro_get_netunim_for_process;
+
+PROCEDURE pro_delete_tb_shguim_batch(    p_num_process IN  NUMBER ,  p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) IS
+BEGIN
+
+        DELETE  TB_MISPAR_ISHI_SHGUIM_BATCH s
+        WHERE   s.num_pack =p_num_process 
+               AND s.bakasha_id = p_bakasha_id;
+              
+         EXCEPTION
+   WHEN OTHERS THEN
+            RAISE; 
+END pro_delete_tb_shguim_batch;   
+
+PROCEDURE Prepare_premiot_shguim_batch(p_type IN NUMBER,p_num_process IN NUMBER, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) IS
+CURSOR p_cur IS
+      SELECT Mispar_Ishi, chodesh
+           FROM OVDIM_LECHISHUV_PREMYOT lp  
+            WHERE LP.BAKASHA_ID IS NULL
+      --      and LP.MISPAR_ISHI = 75148
+            ORDER BY chodesh;
+ v_rec  p_cur%ROWTYPE;  
+ tar_me DATE;    
+ tar_ad DATE;  
+ row_num NUMBER;   
+ BEGIN
+   DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'Prepare_premiot_shguim_batch');
+            row_num:=1;
+             FOR v_rec  IN   p_cur
+              LOOP
+                      BEGIN
+                           tar_me:=v_rec.chodesh;
+                           tar_ad:=ADD_MONTHS(tar_me,1)-1;
+                           IF (tar_ad>SYSDATE) THEN
+                                tar_ad:= SYSDATE;
+                           END IF;
+                            
+                           WHILE TRUNC(tar_me)<=TRUNC(tar_ad)
+                            LOOP
+                                 INSERT INTO TB_MISPAR_ISHI_SHGUIM_BATCH(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack,TYPE,bakasha_id)
+                                 VALUES (row_num,v_rec.MISPAR_ISHI,tar_me,0,p_type,p_bakasha_id);
+                                 row_num:=row_num+1;
+                                 tar_me:= tar_me+1;
+                            END LOOP;
+                      END;
+              END LOOP;
+   /*    insert into TB_MISPAR_ISHI_SHGUIM_BATCH(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack,TYPE,bakasha_id)
+        SELECT rownum, Mispar_Ishi, chodesh ,0,p_type,p_bakasha_id
+           FROM OVDIM_LECHISHUV_PREMYOT lp  
+            WHERE LP.BAKASHA_ID IS NULL
+            ORDER BY chodesh;*/
+
+         Pkg_Batch.pro_divide_packets(p_num_process,p_bakasha_id);
+
+   /*   INSERT INTO TEST_MAATEFET(mispar_ishi, taarich, taarich_ritza, bakasha_id, sug_bakasha,comments)
+             SELECT   M.MISPAR_ISHI,M.TAARICH,SYSDATE,p_bakasha_id,0,'shguim of premiot'
+             FROM TB_MISPAR_ISHI_SHGUIM_BATCH m
+             WHERE m.bakasha_id = p_bakasha_id;*/
+     EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;   
+ END Prepare_premiot_shguim_batch;   
+ 
+ 
+PROCEDURE Pro_Delete_Rikuzim_Pdf(p_bakasha_id  TB_RIKUZ_PDF.bakasha_id%TYPE) is
+BEGIN
+         DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'Pro_Delete_Rikuzim_Pdf');
+      DELETE FROM TB_RIKUZ_PDF R 
+        where R.BAKASHA_ID = p_bakasha_id;
+/*       and exists (select *   from  TB_OVDIM_PROCESSES p
+       where  NUM_PACK = p_Num_Pack
+       and    R.MISPAR_ISHI = P.MISPAR_ISHI
+       AND   P.TAARICH  =R.TAARICH   
+       AND P.BAKASHA_ID = R.BAKASHA_ID);
+       */
+          EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+END  Pro_Delete_Rikuzim_Pdf;
+PROCEDURE Pro_Save_Rikuz_Pdf(p_BakashatId TB_RIKUZ_PDF.bakasha_id%TYPE,p_coll_rikuz_pdf IN COLL_RIKUZ_PDF,p_Num_Pack IN NUMBER) IS
+BEGIN  
+DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'Pro_Save_Rikuz_Pdf');
+      IF (p_coll_rikuz_pdf IS NOT NULL) THEN
+          FOR i IN 1..p_coll_rikuz_pdf.COUNT LOOP
+          IF (p_coll_rikuz_pdf(i).rikuz_pdf IS NOT NULL) THEN
+            INSERT INTO TB_RIKUZ_PDF
+                        (mispar_ishi,
+                         bakasha_id,
+                         taarich,
+                         sug_chishuv,
+                         rikuz_pdf
+                        )
+             VALUES (p_coll_rikuz_pdf(i).mispar_ishi,
+                     p_coll_rikuz_pdf(i).bakasha_id,
+                     p_coll_rikuz_pdf(i).taarich,
+                    DECODE(p_coll_rikuz_pdf(i).sug_chishuv,-1,NULL,p_coll_rikuz_pdf(i).sug_chishuv),
+                    p_coll_rikuz_pdf(i).rikuz_pdf
+                      );
+                      END IF;
+          END LOOP;
+      END IF;
+      
+      EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+END Pro_Save_Rikuz_Pdf;
+
+PROCEDURE Pro_Get_Rikuz_Pdf(p_mispar_ishi IN NUMBER,p_taarich IN DATE,p_BakashatId IN NUMBER , p_cur OUT CurType) IS --p_rikuz OUT BLOB) IS
+
+BEGIN  
+DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'Pro_Get_Rikuz_Pdf');
+ OPEN p_cur FOR    
+    SELECT * -- into p_rikuz 
+    FROM TB_RIKUZ_PDF r
+    WHERE r.mispar_ishi = p_mispar_ishi
+        AND r.bakasha_id = p_BakashatId
+      AND r.taarich = p_taarich;
+
+      EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+END Pro_Get_Rikuz_Pdf;
+
+
+
+
+FUNCTION pro_check_view_empty(p_TableName VARCHAR2) RETURN NUMBER AS
+num NUMBER ;
+BEGIN
+
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'p_TableName:',p_TableName);
+
+  IF (p_TableName = 'NEW_MATZAV_OVDIM') THEN
+      SELECT COUNT(*) INTO num FROM NEW_MATZAV_OVDIM;
+   ELSE IF (p_TableName = 'NEW_PIRTEY_OVDIM') THEN
+              SELECT COUNT(*) INTO num FROM NEW_PIRTEY_OVDIM;
+         ELSE IF (p_TableName = 'NEW_MEAFYENIM_OVDIM') THEN
+                    SELECT COUNT(*) INTO num FROM NEW_MEAFYENIM_OVDIM;
+                ELSE IF (p_TableName = 'NEW_BREROT_MECHDAL_MEAFYENIM') THEN
+                      SELECT COUNT(*) INTO num FROM NEW_BREROT_MECHDAL_MEAFYENIM;
+                END IF;
+         END IF;
+   END IF;
+  END IF;     
+              
+  RETURN num  ;
+
+   /*    EXCEPTION
+            WHEN NO_DATA_FOUND THEN
+                      num := 0 ;
+                          RETURN num  ;
+            WHEN OTHERS THEN
+                          RAISE;*/
+END pro_check_view_empty;
+
+PROCEDURE DeleteBakashotYeziratRikuzim(p_BakashatId TB_BAKASHOT.bakasha_id%TYPE) IS
+    CURSOR v_cur(p_BakashatId TB_BAKASHOT.bakasha_id%TYPE) IS
+       SELECT P.BAKASHA_ID     
+       FROM  TB_BAKASHOT t , TB_BAKASHOT_PARAMS p
+       WHERE T.BAKASHA_ID = P.BAKASHA_ID
+              AND  T.SUG_BAKASHA =13
+              AND P.PARAM_ID =1
+              AND P.ERECH = TO_CHAR(p_BakashatId);
+  BEGIN
+  DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_batch',action_name => 'DeleteBakashotYeziratRikuzim');
+      FOR   v_cur_rec IN  v_cur(p_BakashatId)
+   LOOP
+            DELETE FROM TB_BAKASHOT_PARAMS
+            WHERE bakasha_id=v_cur_rec.bakasha_id;
+            
+            DELETE FROM TB_BAKASHOT
+            WHERE bakasha_id=v_cur_rec.bakasha_id;
+  END LOOP;
+EXCEPTION
+     WHEN NO_DATA_FOUND THEN
+        NULL;
+   WHEN OTHERS THEN
+            RAISE;
+
+END DeleteBakashotYeziratRikuzim;
+
+
+PROCEDURE pro_Get_Makatim_LeTkinut(p_date IN DATE, p_cur OUT CurType) IS
+BEGIN
+
+    OPEN p_Cur FOR
+        SELECT DISTINCT P.MAKAT_NESIA,P.TAARICH
+        FROM TB_PEILUT_OVDIM p
+        WHERE  P.TAARICH BETWEEN p_date AND LAST_DAY(p_date) 
+      --  P.TAARICH =  to_date('01/04/2011','dd/mm/yyyy') 
+        -- and  substr(P.MAKAT_NESIA,1,1)='1' 
+        AND P.MAKAT_NESIA>0
+        AND NOT((SUBSTR(P.MAKAT_NESIA,1,1)='7' OR SUBSTR(P.MAKAT_NESIA,1,1)='5' ) AND LENGTH(P.MAKAT_NESIA)=8);
+        
+        
+        -- P.TAARICH between p_date and last_day(p_date);
+        
+END pro_Get_Makatim_LeTkinut;
+
+
+ PROCEDURE pro_retrospect_yamey_avoda  IS
+ 
+-- CURSOR Yamim_r IS
+--  SELECT DISTINCT taarich dt 
+--FROM  TB_YAMEY_AVODA_OVDIM 
+--WHERE    taarich BETWEEN GREATEST(TO_DATE('01/07/2012','dd/mm/yyyy'),SYSDATE-(SELECT erech_param FROM TB_PARAMETRIM WHERE kod_param=262)) AND SYSDATE-1;
+
+--FOR  Yamim_r_rec IN  Yamim_r LOOP
+--   INSERT INTO TB_YAMEY_AVODA_OVDIM
+--   (mispar_ishi,taarich,lina,measher_o_mistayeg ,taarich_idkun_acharon,meadken_acharon)
+--   SELECT mispar_ishi,Yamim_r_rec.dt,0,1,SYSDATE,-11
+--  FROM  NEW_MATZAV_OVDIM  o
+--   WHERE   kod_matzav IN ('01','03','04','05','06','07','08')
+--   AND Yamim_r_rec.dt BETWEEN taarich_hatchala AND NVL(taarich_siyum,Yamim_r_rec.dt+1)
+--   AND NOT EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM yao
+--  WHERE yao.taarich=Yamim_r_rec.dt
+--  AND yao.MISPAR_ISHI=o.mispar_ishi);
+ 
+ strt_dt date;
+ Miss_oved_Dt DATE;  
+ 
+ CURSOR Yamim_r  IS
+  select ndt ,mispar_ishi
+from (
+SELECT  trunc(strt_dt + rownum -1) ndt
+   from all_objects 
+  where rownum <= (sysdate-1)-strt_dt+1),
+  new_matzav_ovdim o
+--20130916 WHERE   kod_matzav IN ('01','03','04','05','06','07','08', '10' )
+-- 20140216 WHERE   kod_matzav IN ('01','03','04','05','06','07','10')
+WHERE   kod_matzav IN ('01','03','04','05','06','07','10','11')
+   AND ndt BETWEEN taarich_hatchala AND NVL(taarich_siyum,ndt+1)
+   AND NOT EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM yao
+  WHERE yao.taarich=ndt
+  AND yao.MISPAR_ISHI=o.mispar_ishi)
+  order by mispar_ishi,ndt;
+
+ 
+   BEGIN
+
+select  trunc(GREATEST(TO_DATE('01/07/2012','dd/mm/yyyy'),SYSDATE-(SELECT erech_param FROM TB_PARAMETRIM WHERE kod_param=262)))
+into strt_dt 
+from dual;
+
+FOR  Yamim_r_rec IN  Yamim_r LOOP
+BEGIN
+
+ select  greatest( taarich_hatchala, to_date('01/07/2012','dd/mm/yyyy'),trunc(sysdate)-365)
+  into Miss_oved_Dt
+  from     NEW_MATZAV_OVDIM  o
+ --20130916  WHERE   kod_matzav IN ('01','03','04','05','06','07','08')
+ -- 20140216 WHERE   kod_matzav IN ('01','03','04','05','06','07','10')
+  WHERE   kod_matzav IN ('01','03','04','05','06','07','10','11')
+   and Yamim_r_rec.ndt  between taarich_hatchala and taarich_siyum
+ and   mispar_ishi=Yamim_r_rec.mispar_ishi;
+ 
+    INSERT INTO TB_YAMEY_AVODA_OVDIM
+   (mispar_ishi,taarich,lina,measher_o_mistayeg ,taarich_idkun_acharon,meadken_acharon)
+   SELECT Yamim_r_rec.mispar_ishi,kkdt,0,1,SYSDATE,-11
+from (
+SELECT trunc( Miss_oved_Dt + rownum -1) kkdt
+   from all_objects 
+  where rownum <= (sysdate-1)-Miss_oved_Dt+1),
+  new_matzav_ovdim o
+--20130916 WHERE   kod_matzav IN ('01','03','04','05','06','07','08')
+-- 20140216 WHERE   kod_matzav IN ('01','03','04','05','06','07','10')
+WHERE   kod_matzav IN ('01','03','04','05','06','07','10','11')
+ and mispar_ishi=Yamim_r_rec.mispar_ishi
+   AND kkdt BETWEEN taarich_hatchala AND NVL(taarich_siyum,kkdt+1)
+   AND NOT EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM yao
+  WHERE yao.taarich=kkdt
+  AND yao.MISPAR_ISHI=o.mispar_ishi);
+  commit;
+
+EXCEPTION
+   WHEN OTHERS THEN
+     INSERT INTO TB_LOG_TAHALICH
+    VALUES (7,12,1,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Yamim_r_rec.ndt)||' '||to_char(Yamim_r_rec.mispar_ishi) ||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
+
+END LOOP;
+COMMIT;
+       
+END pro_retrospect_yamey_avoda;
+
+function pro_ins_machalot_lo_meturgamot(p_bakasha_id number) return number is
+ num number;
+ num_months number;
+
+begin
+
+     select (to_number(erech_param)-1) into num_months
+      from tb_parametrim
+      where kod_param=100;
+      
+   insert into tb_log_bakashot(MISPAR_SIDURI,bakasha_id,mispar_ishi,taarich,sug_hodaa,taarich_idkun_acharon,teur_hodaa)
+   
+               with teudot as(
+                 select  t.mispar_ishi,t.TAARICH_THILAT_TEUDA, t.MAKOR_TEUDA, t.SUG_MAHALA 
+                 from TEUDOT_MAHALA t
+                 WHERE 
+                   not (T.MAKOR_TEUDA=1 and T.SUG_MAHALA=6) 
+                AND   (T.TAARICH_THILAT_TEUDA>= add_months(last_day(add_months( sysdate,-num_months)),-1)+1 
+                    or 
+                   T.TAARICH_SIUM_TEUDA>= add_months(last_day(add_months( sysdate,-num_months)),-1)+1) )
+ 
+           select   log_seq.NEXTVAL,p_bakasha_id,t.mispar_ishi,t.TAARICH_THILAT_TEUDA,'E',sysdate,'machala lo meturgemet:' || t.MAKOR_TEUDA || '-' || t.SUG_MAHALA 
+           from teudot t
+           where not  exists
+           (
+                select 1
+                from teudot z, CTB_MAHALA_MISPAR_SIDUR m
+                where   M.MAKOR_TEUDA=z.MAKOR_TEUDA
+                    and  m.SUG_MAHALA=z.SUG_MAHALA
+                    and z.mispar_ishi=t.mispar_ishi
+                    and z.TAARICH_THILAT_TEUDA= t.TAARICH_THILAT_TEUDA
+           );
+
+         num:=0;
+                begin
+                  select count(*) into num
+                    from tb_log_bakashot l
+                   where  L.BAKASHA_ID=p_bakasha_id
+                    and L.TEUR_HODAA like '%machala lo meturgemet%';
+               EXCEPTION
+                    WHEN no_data_found THEN
+                        num:=0;
+             end;  
+     
+     return num;  
+     EXCEPTION
+       WHEN OTHERS THEN
+                RAISE;
+end pro_ins_machalot_lo_meturgamot;
+
+/*function fun_get_machalot_lo_meturgamot(p_bakasha_id number) return number is
+ num number;
+
+begin
+
+       num:=0;
+        begin
+          select count(*) into num
+            from tb_log_bakashot l
+           where  L.BAKASHA_ID=p_bakasha_id
+            and L.TEUR_HODAA like '%machala lo meturgemet%';
+       EXCEPTION
+            WHEN no_data_found THEN
+                num:=0;
+     end;  
+     
+     return num;  
+
+end fun_get_machalot_lo_meturgamot;*/
+END Pkg_Batch;
+/
+
+
+CREATE OR REPLACE PACKAGE BODY          Pkg_Calculation AS
+/******************************************************************************
+   NAME:       PKG_CALCULATION
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        3/24/2011             1. Created this package body.
+   
+******************************************************************************/
+
+  PROCEDURE pro_insert_oved_lechishuv(p_mis_ishi IN NUMBER,p_chodesh IN DATE) IS
+  
+  BEGIN
+  --EXECUTE IMMEDIATE 'truncate table TB_TMP_OVDIM_LECHISHUV' ; 
+  	    INSERT INTO TB_TMP_OVDIM_LECHISHUV (MISPAR_ISHI,taarich)
+			         VALUES(p_mis_ishi,p_chodesh);
+			 
+		EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;			 
+  END pro_insert_oved_lechishuv;
+  
+  
+  PROCEDURE pro_get_ovdim_lechishuv(p_tar_me IN DATE,p_tar_ad IN DATE,
+                                    p_maamad IN NUMBER, p_ritza_gorefet IN NUMBER,
+                                    p_cur OUT CurType) IS
+			  v_me_taarich DATE;
+			  v_ad_taarich DATE;
+  BEGIN
+      v_me_taarich:=p_tar_me;
+      v_ad_taarich:=p_tar_ad;
+      
+   -- EXECUTE IMMEDIATE 'truncate table TB_TMP_OVDIM_LECHISHUV' ; 
+    IF  p_ritza_gorefet<>1 THEN
+    INSERT INTO TB_TMP_OVDIM_LECHISHUV(MISPAR_ISHI,taarich)
+      (    SELECT DISTINCT MISPAR_ISHI, TO_DATE('01/' || chodesh,'dd/mm/yyyy') taarich FROM
+        ( (SELECT o.MISPAR_ISHI,y.chodesh
+         --  RANK() OVER(    ORDER BY  o.mispar_ishi   ASC  ) AS num 
+        FROM OVDIM o,
+          (SELECT mispar_ishi, chodesh FROM
+             ( (SELECT o.mispar_ishi,TO_CHAR(o.taarich,'mm/yyyy') chodesh
+                    FROM TB_YAMEY_AVODA_OVDIM o ,TB_MISPAR_ISHI_CHISHUV t
+               WHERE o.status=1
+			 AND t.mispar_ishi=o.mispar_ishi
+               AND  o.taarich BETWEEN T.TAARICH AND LAST_DAY( T.TAARICH)  )
+              )
+           GROUP BY mispar_ishi,chodesh) y,
+         (SELECT po.maamad,po.mispar_ishi
+               FROM PIVOT_PIRTEY_OVDIM PO
+                 WHERE  (v_me_taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+              OR   v_ad_taarich  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+              OR   po.ME_TARICH>=v_me_taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  v_ad_taarich )) p
+        WHERE o.mispar_ishi=p.mispar_ishi
+       AND (SUBSTR(p.maamad,0,1)=p_maamad  OR p_maamad  IS NULL)
+       AND o.mispar_ishi=y.mispar_ishi  ) )  );
+	--   where num<=1200 );
+   --    where num<=1500
+   --    minus  select  distinct mispar_ishi,TO_DATE('01/06/2010' ,'dd/mm/yyyy') taarich from TB_LOG_BAKASHOT where bakasha_id =3282 ) ;
+  /*   UNION
+        (SELECT p.mispar_ishi,TO_CHAR(p.taarich,'mm/yyyy') chodesh
+         FROM TB_PREMYOT_YADANIYOT p,
+                (SELECT po.maamad,po.mispar_ishi
+               FROM PIVOT_PIRTEY_OVDIM PO
+                 WHERE  (v_me_taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+              OR   v_ad_taarich  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+              OR   po.ME_TARICH>=v_me_taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  v_ad_taarich )) po
+         WHERE p.Taarich_idkun_acharon  >
+                        (SELECT Zman_Hatchala
+                        FROM TB_BAKASHOT
+                        WHERE Taarich_Haavara_Lesachar =
+                                          (SELECT MAX(B.Taarich_Haavara_Lesachar)
+                                            FROM TB_BAKASHOT B, TB_CHISHUV_CHODESH_OVDIM CC
+                                           WHERE B.Bakasha_ID = CC. Bakasha_ID
+                                     AND B. Huavra_Lesachar=1
+                                     AND CC. Mispar_Ishi =p.mispar_ishi ))
+         AND p.mispar_ishi=po.mispar_ishi 
+         AND (SUBSTR(po.maamad,0,1)=p_maamad  OR p_maamad  IS NULL)
+          AND p.taarich BETWEEN v_me_taarich AND v_ad_taarich)); */
+  ELSE
+     INSERT INTO TB_TMP_OVDIM_LECHISHUV(MISPAR_ISHI,taarich)
+	   SELECT o.MISPAR_ISHI, TO_DATE('01/' || y.chodesh,'dd/mm/yyyy')
+       FROM OVDIM o,
+       (SELECT mispar_ishi,TO_CHAR(taarich,'mm/yyyy') chodesh
+       FROM TB_YAMEY_AVODA_OVDIM
+       WHERE (status=1 OR status=2)
+      AND  taarich BETWEEN v_me_taarich AND v_ad_taarich
+      GROUP BY mispar_ishi,TO_CHAR(taarich,'mm/yyyy') ) y,
+        (SELECT po.maamad,po.mispar_ishi
+              FROM PIVOT_PIRTEY_OVDIM PO
+                WHERE  (v_me_taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+             OR   v_ad_taarich  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+             OR   po.ME_TARICH>=v_me_taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  v_ad_taarich )) p
+       WHERE o.mispar_ishi=p.mispar_ishi
+      AND (SUBSTR(p.maamad,0,1)=p_maamad  OR p_maamad  IS NULL)
+      AND o.mispar_ishi=y.mispar_ishi ;
+
+  END IF;
+
+   OPEN p_cur FOR
+   SELECT * FROM TB_TMP_OVDIM_LECHISHUV;
+ 
+EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+
+END  pro_get_ovdim_lechishuv;
+
+PROCEDURE pro_prepare_netunim_lechishuv(p_bakasha_id number,p_tar_me IN DATE,p_tar_ad IN DATE,
+                                    p_maamad IN NUMBER, p_ritza_gorefet IN NUMBER, p_num_processe IN  NUMBER) IS
+              v_me_taarich DATE;
+              v_ad_taarich DATE;
+    param281 number;
+  BEGIN
+  DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Calculation',action_name => 'pro_prepare_netunim_lechishuv');
+    EXECUTE IMMEDIATE 'truncate table TB_MISPAR_ISHI_CHISHUV' ; 
+    EXECUTE IMMEDIATE 'truncate table TB_CATALOG_CHISHUV' ; 
+  --  EXECUTE IMMEDIATE 'truncate table tb_yamim_Lechishuv' ; 
+      v_me_taarich:=p_tar_me;
+      v_ad_taarich:=p_tar_ad;
+      
+ -- v_me_taarich:=to_date('01/01/2014','dd/mm/yyyy');
+ --v_ad_taarich:=to_date('31/01/2014','dd/mm/yyyy');
+  
+      DBMS_APPLICATION_INFO.SET_ACTION( 'SelectOvdimLeChishuv');
+       IF  p_ritza_gorefet<>1 THEN
+        
+     select erech_param into param281 
+     from tb_parametrim 
+     where kod_param=281
+     and sysdate between me_taarich and ad_taarich ; 
+         
+    INSERT INTO TB_MISPAR_ISHI_CHISHUV(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack)
+   WITH
+    p  as (SELECT po.ME_TARICH,
+                     po.ad_TARICH,
+                     po.maamad,
+                   po.mispar_ishi,
+                   PO.DIRUG,
+                   PO.DARGA
+              FROM PIVOT_PIRTEY_OVDIM PO
+             WHERE (v_me_taarich   BETWEEN po.ME_TARICH  AND NVL (  po.ad_TARICH, TO_DATE (  '01/01/9999',    'dd/mm/yyyy'))
+                    OR v_ad_taarich BETWEEN po.ME_TARICH     AND NVL (  po.ad_TARICH, TO_DATE (  '01/01/9999',  'dd/mm/yyyy'))
+                    OR po.ME_TARICH >=v_me_taarich   AND NVL (   po.ad_TARICH,     TO_DATE ('01/01/9999',  'dd/mm/yyyy')) <=   v_ad_taarich)
+                  AND ( (p_maamad  IS NULL AND SUBSTR(po.maamad,0,1) IN(1,2) ) OR SUBSTR(po.maamad,0,1)=p_maamad )
+                 AND NOT (po.dirug = 13
+                 AND (   po.darga = 64 OR po.darga = 70 OR po.darga = 2 OR po.darga = 3))
+                 AND NOT(po.dirug = 12 AND ( (po.darga >= 21 AND po.darga <= 30) OR (po.darga >= 62 AND po.darga <= 72)))  )           
+SELECT ROWNUM NUM,
+       z.MISPAR_ISHI,
+       z.taarich,
+       z.pack
+  FROM (SELECT S.MISPAR_ISHI,  TO_DATE ('01/' || s.chodesh, 'dd/mm/yyyy') taarich, 0 pack
+             FROM (
+             SELECT DISTINCT y.MISPAR_ISHI, y.chodesh
+                      --  RANK() OVER(    ORDER BY  o.mispar_ishi   ASC  ) AS num
+                      FROM
+                           (  SELECT mispar_ishi, chodesh
+                                FROM ( SELECT o.mispar_ishi,   TO_CHAR (o.taarich, 'mm/yyyy') chodesh
+                                          FROM TB_YAMEY_AVODA_OVDIM o,
+                                               TB_MISPAR_ISHI_CHISHUV_BAK t
+                                         WHERE o.status = 1
+                                             AND o.taarich BETWEEN  ADD_MONTHS(trunc(v_ad_taarich,'MM'),-param281) AND v_ad_taarich
+                                             --and o.MISPAR_ISHI =44965
+                                         AND T.NUM_PACK = 515        --
+                                          AND t.mispar_ishi =  o.mispar_ishi         --
+                                           AND o.taarich BETWEEN T.TAARICH AND LAST_DAY (   T.TAARICH) --
+                                        )
+                            GROUP BY mispar_ishi, chodesh) y,
+                            p
+                     WHERE y.mispar_ishi = p.mispar_ishi
+                      AND  (to_date('01' ||y.chodesh,'dd/mm/yyyy')   BETWEEN p.ME_TARICH  AND NVL (  p.ad_TARICH, TO_DATE (  '01/01/9999',    'dd/mm/yyyy'))
+                    OR  ADD_MONTHS(to_date('01' ||y.chodesh,'dd/mm/yyyy'),1)-1 BETWEEN p.ME_TARICH     AND NVL (  p.ad_TARICH, TO_DATE (  '01/01/9999',  'dd/mm/yyyy'))
+                    OR p.ME_TARICH >=to_date('01' ||y.chodesh,'dd/mm/yyyy')   AND NVL (   P.ad_TARICH,     TO_DATE ('01/01/9999',  'dd/mm/yyyy')) <=    ADD_MONTHS(to_date('01' ||y.chodesh,'dd/mm/yyyy'),1)-1)
+                   
+                --   where num<=1200 );
+                --    where num<=1500
+                --    minus  select  distinct mispar_ishi,TO_DATE('01/06/2010' ,'dd/mm/yyyy') taarich from TB_LOG_BAKASHOT where bakasha_id =3282 ) ;
+         UNION
+            select  distinct mm.mispar_ishi,mm.chodesh  from
+             ( select m.mispar_ishi , TO_CHAR(m.taarich, 'mm/yyyy') chodesh from
+                TB_MEADKEN_ACHARON m, 
+                PIVOT_PIRTEY_OVDIM PO
+                 where M.TAARICH_IDKUN_ACHARON>= (SELECT Zman_Hatchala
+                                                                                         FROM TB_BAKASHOT
+                                                                                        WHERE Taarich_Haavara_Lesachar = (SELECT MAX (   B.Taarich_Haavara_Lesachar)
+                                                                                                                                                FROM TB_BAKASHOT B
+                                                                                                                                               WHERE B.Huavra_Lesachar =   1
+                                                                                                                                                     AND b.SUG_BAKASHA=1)) 
+                  and m.GOREM_MEADKEN=po.mispar_ishi
+                 and M.TAARICH_IDKUN_ACHARON BETWEEN po.ME_TARICH  AND NVL (po.ad_TARICH, TO_DATE (  '01/01/9999',    'dd/mm/yyyy'))
+                  and po.isuk in(15,23,133)             
+               and PO.YECHIDA_IRGUNIT in(63321 ,81109)                                                                                                                        
+                 group by m.mispar_ishi, TO_CHAR(m.taarich, 'mm/yyyy')) mm,
+                     (SELECT o.mispar_ishi,   TO_CHAR (o.taarich, 'mm/yyyy') chodesh
+                                          FROM TB_YAMEY_AVODA_OVDIM o,
+                                              TB_MISPAR_ISHI_CHISHUV_BAK t
+                                         WHERE o.status = 1
+                                             AND o.taarich BETWEEN  v_me_taarich AND v_ad_taarich
+                                             --and o.MISPAR_ISHI =44965
+                                          AND T.NUM_PACK = 515        --
+                                        AND t.mispar_ishi =  o.mispar_ishi         --
+                                          AND o.taarich BETWEEN T.TAARICH AND LAST_DAY (   T.TAARICH) --
+                            GROUP BY o.mispar_ishi, TO_CHAR (o.taarich, 'mm/yyyy')) y,
+                 p
+                 where mm.mispar_ishi = p.mispar_ishi
+                          AND mm.mispar_ishi = y.mispar_ishi   
+                        AND mm.chodesh=y.chodesh
+                            AND  (to_date('01' ||y.chodesh,'dd/mm/yyyy')   BETWEEN p.ME_TARICH  AND NVL (  p.ad_TARICH, TO_DATE (  '01/01/9999',    'dd/mm/yyyy'))
+                    OR  ADD_MONTHS(to_date('01' ||y.chodesh,'dd/mm/yyyy'),1)-1 BETWEEN p.ME_TARICH     AND NVL (  p.ad_TARICH, TO_DATE (  '01/01/9999',  'dd/mm/yyyy'))
+                    OR p.ME_TARICH >=to_date('01' ||y.chodesh,'dd/mm/yyyy')   AND NVL (   P.ad_TARICH,     TO_DATE ('01/01/9999',  'dd/mm/yyyy')) <=    ADD_MONTHS(to_date('01' ||y.chodesh,'dd/mm/yyyy'),1)-1)
+                  
+          UNION
+             select mm.mispar_ishi,mm.chodesh  from
+             ( select m.mispar_ishi , TO_CHAR(m.taarich, 'mm/yyyy') chodesh from
+                 OVDIM_IM_IDKUN_MACHALA m
+                 where M.TAARICH_IDKUN_ACHARON>= (SELECT Zman_Hatchala
+                                                                                         FROM TB_BAKASHOT
+                                                                                        WHERE Taarich_Haavara_Lesachar = (SELECT MAX (   B.Taarich_Haavara_Lesachar)
+                                                                                                                                                FROM TB_BAKASHOT B
+                                                                                                                                               WHERE B.Huavra_Lesachar =   1
+                                                                                                                                                     AND b.SUG_BAKASHA=1))   
+                 group by m.mispar_ishi, TO_CHAR(m.taarich, 'mm/yyyy')) mm,
+                     (SELECT o.mispar_ishi,   TO_CHAR (o.taarich, 'mm/yyyy') chodesh
+                                          FROM TB_YAMEY_AVODA_OVDIM o,
+                                            TB_MISPAR_ISHI_CHISHUV_BAK t
+                                         WHERE o.status = 1
+                                             AND o.taarich BETWEEN  v_me_taarich AND v_ad_taarich
+                                             --and o.MISPAR_ISHI =44965
+                                             AND T.NUM_PACK = 515        --
+                                           AND t.mispar_ishi =  o.mispar_ishi         --
+                                            AND o.taarich BETWEEN T.TAARICH AND LAST_DAY (   T.TAARICH) --
+                            GROUP BY o.mispar_ishi, TO_CHAR (o.taarich, 'mm/yyyy')) y,
+                 p
+                 where mm.mispar_ishi = p.mispar_ishi
+                          AND mm.mispar_ishi = y.mispar_ishi   
+                        AND mm.chodesh=y.chodesh
+                        AND  (to_date('01' ||y.chodesh,'dd/mm/yyyy')   BETWEEN p.ME_TARICH  AND NVL (  p.ad_TARICH, TO_DATE (  '01/01/9999',    'dd/mm/yyyy'))
+                    OR  ADD_MONTHS(to_date('01' ||y.chodesh,'dd/mm/yyyy'),1)-1 BETWEEN p.ME_TARICH     AND NVL (  p.ad_TARICH, TO_DATE (  '01/01/9999',  'dd/mm/yyyy'))
+                    OR p.ME_TARICH >=to_date('01' ||y.chodesh,'dd/mm/yyyy')   AND NVL (   P.ad_TARICH,     TO_DATE ('01/01/9999',  'dd/mm/yyyy')) <=    ADD_MONTHS(to_date('01' ||y.chodesh,'dd/mm/yyyy'),1)-1)
+                  
+          union
+            SELECT DISTINCT x.mispar_ishi, x.chodesh
+                  FROM (SELECT p.mispar_ishi,  TO_CHAR (p.taarich, 'mm/yyyy') chodesh
+                          FROM TB_PREMYOT_YADANIYOT p,
+                               TB_YAMEY_AVODA_OVDIM o,
+                            TB_MISPAR_ISHI_CHISHUV_BAK t
+                    WHERE p.Taarich_idkun_acharon > (SELECT Zman_Hatchala
+                                                                         FROM TB_BAKASHOT
+                                                                        WHERE Taarich_Haavara_Lesachar = (SELECT MAX (   B.Taarich_Haavara_Lesachar)
+                                                                                                                                FROM TB_BAKASHOT B,
+                                                                                                                                     TB_CHISHUV_CHODESH_OVDIM CC
+                                                                                                                               WHERE B.Bakasha_ID = CC.Bakasha_ID
+                                                                                                                                     AND B.Huavra_Lesachar =   1
+                                                                                                                                --     AND CC.Mispar_Ishi =  p.mispar_ishi
+                                                                                                                                --     AND TO_CHAR (CC.TAARICH, 'mm/yyyy') = TO_CHAR (p.TAARICH, 'mm/yyyy')
+                                                                                                                                     ))
+                                AND o.mispar_ishi = p.mispar_ishi
+                               AND o.taarich BETWEEN v_me_taarich AND v_ad_taarich
+                              AND p.taarich BETWEEN v_me_taarich AND v_ad_taarich
+                              AND o.status = 2
+                             AND T.NUM_PACK = 515                         --
+                           AND t.mispar_ishi = o.mispar_ishi            --
+                           AND p.taarich BETWEEN T.TAARICH AND LAST_DAY (T.TAARICH)   --
+                          ) x,  p
+                            where  p.mispar_ishi = x.mispar_ishi
+                           AND  (to_date('01' ||x.chodesh,'dd/mm/yyyy')   BETWEEN p.ME_TARICH  AND NVL (  p.ad_TARICH, TO_DATE (  '01/01/9999',    'dd/mm/yyyy'))
+                    OR  ADD_MONTHS(to_date('01' ||x.chodesh,'dd/mm/yyyy'),1)-1 BETWEEN p.ME_TARICH     AND NVL (  p.ad_TARICH, TO_DATE (  '01/01/9999',  'dd/mm/yyyy'))
+                    OR p.ME_TARICH >=to_date('01' || x.chodesh,'dd/mm/yyyy')   AND NVL (   P.ad_TARICH,     TO_DATE ('01/01/9999',  'dd/mm/yyyy')) <=    ADD_MONTHS(to_date('01' ||x.chodesh,'dd/mm/yyyy'),1)-1)
+                  
+                 ) s                     
+                ) z,
+                 OVDIM o
+                 where o.mispar_ishi=z.mispar_ishi
+                AND O.KOD_HEVRA <> 6486;
+    
+  /*ELSE
+     INSERT INTO TB_MISPAR_ISHI_CHISHUV(MISPAR_ISHI,taarich)
+       SELECT o.MISPAR_ISHI, TO_DATE('01/' || y.chodesh,'dd/mm/yyyy')
+       FROM OVDIM o,
+       (SELECT mispar_ishi,TO_CHAR(taarich,'mm/yyyy') chodesh
+       FROM TB_YAMEY_AVODA_OVDIM
+       WHERE (status=1 OR status=2)
+      AND  taarich BETWEEN v_me_taarich AND v_ad_taarich
+      GROUP BY mispar_ishi,TO_CHAR(taarich,'mm/yyyy') ) y,
+        (SELECT po.maamad,po.mispar_ishi,PO.DIRUG,PO.DARGA
+              FROM PIVOT_PIRTEY_OVDIM PO
+                WHERE  (v_me_taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+             OR   v_ad_taarich  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+             OR   po.ME_TARICH>=v_me_taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  v_ad_taarich )) p
+       WHERE o.mispar_ishi=p.mispar_ishi
+      AND ( (p_maamad  IS NULL AND SUBSTR(p.maamad,0,1) IN(1,2) ) OR SUBSTR(p.maamad,0,1)=p_maamad )
+      --AND (SUBSTR(p.maamad,0,1)=p_maamad  OR p_maamad  IS NULL)
+       AND O.KOD_HEVRA<>6486
+         and not( p.dirug=13 and (p.darga=64 or p.darga=70 or p.darga=2 or p.darga=3))
+       and not( p.dirug=12 and ((p.darga>=21 and p.darga<=30 ) or (p.darga>=62 and p.darga<=72 )))
+      AND o.mispar_ishi=y.mispar_ishi ;*/
+  END IF;
+  
+  pkg_batch.pro_ins_log_bakasha_tran(p_bakasha_id,sysdate,'I', 'After ovdim lechishuv, Before divide packets' ,null);
+  DBMS_APPLICATION_INFO.SET_ACTION( 'pro_divide_packets');
+ Pkg_Calculation.pro_divide_packets(p_num_processe);
+  pkg_batch.pro_ins_log_bakasha_tran(p_bakasha_id,sysdate,'I', 'After divide packets, Before upd yemey avoda bechishuv' ,null);
+  DBMS_APPLICATION_INFO.SET_ACTION( 'pro_upd_yemey_avoda_bechishuv');
+ Pkg_Calculation.pro_upd_yemey_avoda_bechishuv(v_me_taarich,v_ad_taarich);
+   pkg_batch.pro_ins_log_bakasha_tran(p_bakasha_id,sysdate,'I', 'After upd yemey avoda bechishuv, Before set kavim details' ,null);
+
+EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+
+END  pro_prepare_netunim_lechishuv;
+
+
+PROCEDURE pro_kavim_details_lechishuv (p_bakasha_id number, p_tar_me IN DATE,p_tar_ad IN DATE,p_num_processe IN  NUMBER) IS
+BEGIN
+   DBMS_APPLICATION_INFO.SET_ACTION( 'pro_set_kavim_details_chishuv');
+   Pkg_Calculation.pro_set_kavim_details_chishuv(p_tar_me,p_tar_ad);
+   pkg_batch.pro_ins_log_bakasha_tran(p_bakasha_id,sysdate,'I', 'After set kavim details, Before Insert Yamim LeTavla' ,null);
+   DBMS_APPLICATION_INFO.SET_ACTION( 'pro_InsertYamimLeTavla');
+   Pkg_Calculation.pro_InsertYamimLeTavla(p_bakasha_id,p_tar_me,p_tar_ad,p_num_processe );
+   pkg_batch.pro_ins_log_bakasha_tran(p_bakasha_id,sysdate,'I', 'After Insert Yamim LeTavl, Before Inser Ovdim Lechishuv Tavlat History' ,null);
+   DBMS_APPLICATION_INFO.SET_ACTION( 'pro_InsertOvdimLechishuv');
+   Pkg_Calculation.pro_InsertOvdimLechishuv(p_bakasha_id);
+   pkg_batch.pro_ins_log_bakasha_tran(p_bakasha_id,sysdate,'I', 'After Insert  Ovdim Lechishuv Tavlat History' ,null);
+  EXCEPTION
+       WHEN OTHERS THEN
+                RAISE;
+END pro_kavim_details_lechishuv;
+
+PROCEDURE pro_InsertOvdimLechishuv(p_bakasha_id number) IS
+BEGIN
+    INSERT INTO TB_MISPAR_ISHI_CHISHUV_HISTORY(bakasha_id,MISPAR_ISHI,TAARICH, NUM_PACK, ROW_NUM)
+        SELECT DISTINCT p_bakasha_id,  os.MISPAR_ISHI, os.TAARICH, OS.NUM_PACK,OS.ROW_NUM
+            FROM   TB_MISPAR_ISHI_CHISHUV OS;      
+  EXCEPTION
+       WHEN OTHERS THEN
+                RAISE;
+END pro_InsertOvdimLechishuv;
+PROCEDURE pro_divide_packets( p_num_processe IN  NUMBER) IS
+   num NUMBER;
+BEGIN
+
+ SELECT COUNT(*) INTO num FROM TB_MISPAR_ISHI_CHISHUV; 
+  
+  UPDATE TB_MISPAR_ISHI_CHISHUV s
+  SET s.num_pack = (SELECT  TRUNC(row_num*p_num_processe/num)+1 FROM dual);
+  -- (SELECT  ceil ( row_num /TRUNC(num/p_num_processe)) FROM dual);
+  -- (SELECT  TRUNC(row_num*p_num_processe/num)+1 FROM dual);-- (select trunc(rownum*p_num_processe/num + 1) from TB_MISPAR_ISHI_CHISHUV);
+  
+  UPDATE TB_MISPAR_ISHI_CHISHUV s
+  SET s.num_pack =p_num_processe
+  WHERE s.num_pack=(p_num_processe+1);
+  
+  EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+END pro_divide_packets;
+ 
+PROCEDURE pro_set_kavim_details_chishuv(p_tar_me IN DATE,p_tar_ad IN DATE) IS
+    rc NUMBER;
+BEGIN
+
+
+    BEGIN
+       INSERT INTO TMP_CATALOG_DETAILS@kds_gw_at_tnpr
+                              (activity_date,makat8)
+       SELECT DISTINCT   po.TAARICH ,po.MAKAT_NESIA
+       FROM TB_SIDURIM_OVDIM o,TB_PEILUT_OVDIM po  , TB_MISPAR_ISHI_CHISHUV s
+       WHERE o.mispar_ishi=  s.mispar_ishi
+         AND O.TAARICH BETWEEN p_tar_me AND p_tar_ad
+         AND  o.taarich  BETWEEN s.taarich  AND LAST_DAY(s.taarich)
+         AND o.mispar_ishi = po.mispar_ishi
+          AND o.taarich = po.taarich
+          AND o.mispar_sidur= po.mispar_sidur
+          AND o.shat_hatchala = po.shat_hatchala_sidur ;
+       EXCEPTION
+              WHEN DUP_VAL_ON_INDEX THEN
+                   NULL;
+     END;
+     
+    BEGIN 
+     kds.kds_catalog_pack.GetKavimDetails@kds_gw_at_tnpr(rc); 
+       INSERT INTO TB_CATALOG_CHISHUV( activity_date,makat8, Shilut,Description,nihul_name,mazan_tashlum,mazan_tichnun,
+                                                                Km,sug_shirut_name,eilat_trip,onatiut,kisuy_tor,eshel,migun,xy_moked_tchila,xy_moked_siyum,
+                                                                snif,snif_name,sug_auto ) 
+                            SELECT activity_date, makat8, Shilut,Description,nihul_name,mazan_tashlum,mazan_tichnun,Km,sug_shirut_name,
+                                        eilat_trip,onatiut,kisui_tor,eshel,migun,xy_moked_tchila,xy_moked_siyum,snif,snif_name,sug_auto   
+                            FROM kds.TMP_CATALOG_DETAILS@kds_gw_at_tnpr;
+    END;
+
+ --COMMIT;
+  EXCEPTION
+       WHEN OTHERS THEN
+                RAISE;
+END  pro_set_kavim_details_chishuv;
+
+PROCEDURE pro_get_ovdim(p_Cur_Ovdim OUT CurType,p_num_process IN NUMBER) IS
+BEGIN
+     OPEN p_Cur_Ovdim FOR
+        SELECT s.MISPAR_ISHI,s.taarich
+        FROM TB_MISPAR_ISHI_CHISHUV s
+        WHERE S.NUM_PACK = p_num_process;
+      /*   and S.MISPAR_ISHI in(   select  mispar_ishi
+                                               from tb_log_bakashot 
+                                                where  BAKASHA_ID = 6468
+                                                AND TEUR_HODAA like  'CalcDay:    at System.Collections.Generic.Dictionary`2.get_Item(TKey key)%');*/
+
+END pro_get_ovdim;
+
+PROCEDURE pro_get_michsa_yomit(p_tar_me IN  TB_MICHSA_YOMIT.me_taarich%TYPE,
+							   p_tar_ad IN  TB_MICHSA_YOMIT.ad_taarich%TYPE,
+							   p_cur OUT CurType)
+IS
+BEGIN
+   DBMS_APPLICATION_INFO.SET_MODULE('Pkg_Calculation.pro_get_michsa_yomit','get michsot yomiyot');
+  
+    OPEN p_cur FOR
+	    SELECT  kod_michsa,sug_yom ,me_taarich, NVL(AD_TAARICH,TO_DATE('01/01/9999','dd/mm/yyyy')) ad_taarich,michsa,Shavoa_Avoda
+        FROM TB_MICHSA_YOMIT
+		WHERE me_taarich<=p_tar_ad 
+		AND NVL(AD_TAARICH,TO_DATE('01/01/9999','dd/mm/yyyy'))>=p_tar_me;
+
+		  EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+END pro_get_michsa_yomit;
+
+PROCEDURE pro_get_sidurim_meyuch_rechiv(p_tar_me IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  								 p_tar_ad IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  						        p_cur OUT CurType)
+IS
+BEGIN
+DBMS_APPLICATION_INFO.SET_MODULE('PKG_UTILS.pro_get_sidurim_meyuch_rechiv','get kod rechiv for sidurim meyuchadim');
+    OPEN p_cur FOR
+	    SELECT sm.mispar_sidur,sm.me_taarich,NVL(sm.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy')) ad_taarich,sm.kod_rechiv
+		 FROM TB_SIDURIM_MEYUCHADIM_RECHIV sm
+		 WHERE  (  p_tar_me  BETWEEN  sm.me_taarich AND   NVL(sm.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR p_tar_ad  BETWEEN  sm.me_taarich  AND   NVL(sm.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR   sm.me_taarich>=p_tar_me  AND   NVL(sm.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  p_tar_ad  );
+		
+		-- WHERE p_date BETWEEN sm.me_taarich AND NVL(sm.ad_taarich,TO_DATE('01/01/9999','dd/mm/yyyy'));
+
+END pro_get_sidurim_meyuch_rechiv;
+
+ 
+PROCEDURE pro_get_sug_sidur_rechiv( p_tar_me IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  								 p_tar_ad IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  									   	  											 p_cur OUT CurType)
+IS
+BEGIN
+	 DBMS_APPLICATION_INFO.SET_MODULE('PKG_UTILS.pro_get_sug_sidur_rechiv','get kod rechiv for sidurim regilim');
+    OPEN p_cur FOR
+	    SELECT sr.KOD_RECHIV,sr.ME_TAARICH, NVL(sr.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy')) AD_TAARICH,sr.SUG_SIDUR
+		 FROM TB_SUG_SIDUR_RECHIV sr
+		  WHERE  (  p_tar_me  BETWEEN  sr.me_taarich AND   NVL(sr.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR p_tar_ad  BETWEEN  sr.me_taarich  AND   NVL(sr.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR   sr.me_taarich>=p_tar_me  AND   NVL(sr.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  p_tar_ad  );
+		
+		 --WHERE p_date BETWEEN sr.me_taarich AND NVL(sr.ad_taarich,TO_DATE('01/01/9999','dd/mm/yyyy'));
+
+END pro_get_sug_sidur_rechiv;
+
+
+PROCEDURE pro_get_premyot_view( p_cur OUT CurType, p_num_process IN NUMBER)
+IS
+BEGIN
+ DBMS_APPLICATION_INFO.SET_MODULE('PKG_UTILS.pro_get_premyot_view',' get premyot view ');
+  
+   OPEN p_cur FOR
+        --    SELECT 0 Sug_premia,0  Sum_dakot FROM dual;
+	SELECT v.Mispar_ishi,s.taarich,Sug_premia,SUM(Dakot_premia) Sum_dakot
+		FROM TB_PREM v, TB_MISPAR_ISHI_CHISHUV s
+		WHERE v.Mispar_ishi =s.Mispar_ishi
+		 AND v.Tkufa =  TO_CHAR(s.taarich,'yyyyMM')
+         AND S.NUM_PACK = p_num_process
+		GROUP BY (v.Mispar_ishi,s.taarich, v.Sug_premia);
+  
+	EXCEPTION
+		     WHEN OTHERS THEN
+             OPEN p_cur FOR
+               SELECT 0 mispar_ishi,SYSDATE taarich,  0 Sug_premia,0  Sum_dakot FROM dual;
+              --  SELECT 0 Sug_premia,0  Sum_dakot FROM dual;
+		--		 RAISE;
+END pro_get_premyot_view;
+
+
+PROCEDURE pro_get_premyot_nihul_tnua( p_cur OUT CurType, p_num_process IN NUMBER)
+IS
+BEGIN
+ DBMS_APPLICATION_INFO.SET_MODULE('PKG_UTILS.pro_get_premyot_view',' get premyot view ');
+  
+   OPEN p_cur FOR
+        --    SELECT 0 Sug_premia,0  Sum_dakot FROM dual;
+    SELECT v.Mispar_ishi,s.taarich,Sug_premia,SUM(Dakot_premia) Sum_dakot
+        FROM TB_PREMYOT_NIHUL_TNUA v, TB_MISPAR_ISHI_CHISHUV s
+        WHERE v.Mispar_ishi =s.Mispar_ishi
+         AND v.Tkufa = s.taarich
+         AND S.NUM_PACK = p_num_process
+        GROUP BY (v.Mispar_ishi,s.taarich, v.Sug_premia);
+  
+    EXCEPTION
+             WHEN OTHERS THEN
+             OPEN p_cur FOR
+               SELECT 0 mispar_ishi,SYSDATE taarich,  0 Sug_premia,0  Sum_dakot FROM dual;
+              --  SELECT 0 Sug_premia,0  Sum_dakot FROM dual;
+        --         RAISE;
+END pro_get_premyot_nihul_tnua;
+PROCEDURE pro_get_premia_yadanit(  p_Cur OUT CurType, p_num_process IN NUMBER)
+IS
+BEGIN
+   DBMS_APPLICATION_INFO.SET_MODULE('PKG_SUG_UTILS.pro_get_premia_yadanit',' get premia yadanit');
+  
+	 OPEN p_cur FOR
+	 	  SELECT  s.MISPAR_ISHI,s.taarich ,DAKOT_PREMYA, Taarich_idkun_acharon,sug_premya
+		  FROM TB_PREMYOT_YADANIYOT p,  TB_MISPAR_ISHI_CHISHUV s
+		  WHERE p.MISPAR_ISHI = s.MISPAR_ISHI
+		    AND p.TAARICH BETWEEN s.taarich AND LAST_DAY(s.taarich)  --TO_CHAR(p.TAARICH,'mm/yyyy') = TO_CHAR(s.taarich,'mm/yyyy')
+            AND S.NUM_PACK = p_num_process;
+
+	EXCEPTION
+		    WHEN OTHERS THEN
+				 RAISE;
+END pro_get_premia_yadanit;
+
+PROCEDURE pro_get_sug_yechida( p_cur OUT CurType, p_num_process IN NUMBER)
+IS
+BEGIN 
+	 -- DBMS_APPLICATION_INFO.SET_MODULE('PKG_OVDIM.fun_get_sug_yechida_oved','get sug yechida leoved  ');
+      OPEN p_Cur FOR 
+	  	   SELECT o.mispar_ishi,y.SUG_YECHIDA,  p.me_tarich,p.ad_tarich 
+		   FROM  	OVDIM o,CTB_YECHIDA y, 
+		            (  SELECT   t.mispar_ishi , t.YECHIDA_IRGUNIT ,t.ME_TARICH,
+					 	  			-- MAX( t.ME_TARICH) OVER (PARTITION BY t.mispar_ishi) me_tarich,
+									 t.ad_tarich 
+					 				-- row_number() OVER (PARTITION BY t.mispar_ishi ORDER BY me_tarich) seq
+					        FROM  PIVOT_PIRTEY_OVDIM t,TB_MISPAR_ISHI_CHISHUV s
+					        WHERE t.mispar_ishi= s.mispar_ishi
+							    AND t.isuk IS NOT NULL 
+							    AND ( s.taarich BETWEEN ME_TARICH  AND NVL(t.ad_TARICH,TO_DATE(  '01/01/9999'  ,  'dd/mm/yyyy'  ))
+							         OR LAST_DAY(s.taarich) BETWEEN ME_TARICH AND NVL(t.ad_TARICH,TO_DATE(  '01/01/9999'  ,  'dd/mm/yyyy'  )) 
+					                 OR t.ME_TARICH>= s.taarich AND NVL(t.ad_TARICH,TO_DATE(  '01/01/9999'  , 'dd/mm/yyyy'  ))<= LAST_DAY(s.taarich) )
+                                AND S.NUM_PACK = p_num_process
+							 ORDER BY mispar_ishi ) p
+					  
+			 WHERE o.mispar_ishi= p.mispar_ishi 
+			 AND y.KOD_HEVRA=o.KOD_HEVRA
+			 AND y.KOD_YECHIDA=p.YECHIDA_IRGUNIT;
+   
+	EXCEPTION
+		    WHEN OTHERS THEN
+				 RAISE;
+
+END  pro_get_sug_yechida;
+
+PROCEDURE pro_get_sugey_sidur_tnua(  p_Cur OUT CurType) AS
+  GeneralQry VARCHAR2(3000);
+  CountQry VARCHAR2(3000);
+  CountRows NUMBER;
+  InsertQry  VARCHAR2(3000); 
+  
+	 rc NUMBER ;   
+BEGIN
+	 DBMS_APPLICATION_INFO.SET_MODULE('PKG_SUG_SIDUR.pro_get_sugey_sidur_tnua','get sugey sidur from tnua loved letkyfa ');
+ 
+    INSERT INTO  kds.TMP_SUG_SIDUR@KDS_GW_AT_TNPR(ACTIVE_DATE,SIDUR_AVODA)
+       SELECT DISTINCT  t.TAARICH,t.MISPAR_SIDUR   FROM TB_SIDURIM_OVDIM t,TB_TMP_OVDIM_LECHISHUV o WHERE   t.MISPAR_ISHI = o.MISPAR_ISHI AND
+                   t.MISPAR_SIDUR NOT LIKE '99%'  AND t.taarich BETWEEN o.taarich  AND LAST_DAY(o.taarich)  AND  ( LENGTH(t.MISPAR_SIDUR) BETWEEN 4 AND 5);
+           
+ 
+  
+      Kds_Sidur_Avoda_Pack.Get_Sug_Sidur@KDS_GW_AT_TNPR(rc);
+ 
+          INSERT INTO TMP_SIDURIM ( TAARICH,SIDUR_AVODA,SUG_SIDUR,Sug_Sidur_Name,Status) 
+                                SELECT   Active_Date,Sidur_Avoda,SUG_SIDUR,Sug_Sidur_Name,Status
+                            FROM   kds.TMP_SUG_SIDUR@KDS_GW_AT_TNPR ;
+    
+	  
+	  OPEN p_Cur FOR	
+	  	   SELECT TAARICH,SIDUR_AVODA mispar_sidur,SUG_SIDUR
+		   FROM TMP_SIDURIM; 
+		   
+	EXCEPTION 
+         WHEN OTHERS THEN 
+               RAISE; 	   
+END pro_get_sugey_sidur_tnua;
+
+PROCEDURE pro_get_buses_details( p_Cur OUT CurType, p_num_process IN NUMBER,p_tar_me IN DATE,p_tar_ad IN DATE)
+IS
+ 
+BEGIN
+ 
+      DBMS_APPLICATION_INFO.SET_MODULE('PKG_TNUA.pro_get_buses_details','get buses details from mashar ');
+  
+     OPEN p_Cur FOR
+	     SELECT license_number, bus_number,Vehicle_Type
+	     FROM VEHICLE_SPECIFICATIONS
+ --VCL_GENERAL_VEHICLE_VIEW@kds2maale
+	     WHERE bus_number IN (SELECT DISTINCT p.oto_no
+		 FROM TB_PEILUT_OVDIM p,TB_MISPAR_ISHI_CHISHUV o
+		 WHERE p.MISPAR_ISHI = o.MISPAR_ISHI  
+          AND    p.taarich BETWEEN p_tar_me AND p_tar_ad
+            AND o.NUM_PACK = p_num_process
+		    AND  p.taarich BETWEEN o.taarich  AND LAST_DAY(o.taarich) );
+      
+EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_buses_details;
+
+
+PROCEDURE pro_get_yemey_avoda ( p_status_tipul  IN  TB_YAMEY_AVODA_OVDIM.status_tipul%TYPE,
+													p_num_process IN NUMBER,	p_cur OUT CurType,p_tar_me IN DATE,p_tar_ad IN DATE) IS
+	BEGIN
+	 DBMS_APPLICATION_INFO.SET_MODULE('PKG_CAOLC.pro_get_yemey_avoda_to_oved','get yemey avoda to oved');
+        update tb_sidurim_ovdim s
+        set  S.LO_LETASHLUM= 0,
+              S.KOD_SIBA_LO_LETASHLUM= null
+        where  S.KOD_SIBA_LO_LETASHLUM=19
+            and  exists 
+            (
+                    select * 
+                    from  TB_MISPAR_ISHI_CHISHUV os
+                    where s.mispar_ishi=OS.MISPAR_ISHI
+                    and S.TAARICH between OS.TAARICH and last_day(OS.TAARICH)
+                    and OS.NUM_PACK=p_num_process
+            );
+           COMMIT; 
+		 OPEN p_cur FOR
+			 	     SELECT       Y.MISPAR_ISHI, Y.TAARICH, Y.SHAT_HATCHALA, Y.SHAT_SIYUM,
+                       S.MISPAR_SIDUR, NVL ( S.LO_LETASHLUM, 0 ) LO_LETASHLUM,
+                       S.SHAT_HATCHALA SHAT_HATCHALA_SIDUR, S.SHAT_HATCHALA_LETASHLUM,
+                       S.SHAT_GMAR_LETASHLUM, S.SHAT_GMAR SHAT_GMAR_SIDUR,
+                       TO_CHAR ( S.TAARICH, 'd' ) DAY_TAARICH, Y.HAMARAT_SHABAT,
+                       Y.TACHOGRAF, V_SIDURIM.SIDUR_MISUG_HEADRUT, V_SIDURIM.SECTOR_AVODA,
+                       V_SIDURIM.SUG_AVODA, V_SIDURIM.SUG_SIDUR SUG_SIDUR_MEYUCHAD,
+                       V_SIDURIM.SIDUR_NAMLAK_VISA,V_SIDURIM.tashlum_kavua_beshishi,
+                       DECODE ( S.OUT_MICHSA, NULL, 0, S.OUT_MICHSA ) OUT_MICHSA, Y.LINA,
+                       Y.HALBASHA, S.PITZUL_HAFSAKA,
+                       NVL ( S.MEZAKE_HALBASHA, 0 ) MEZAKE_HALBASHA,
+                       V_SIDURIM.MICHSAT_SHAOT_CHODSHIT, V_SIDURIM.MAX_DAKOT_BODED,
+                       V_SIDURIM.MAX_SHAOT_BYOM_SHISHI, V_SIDURIM.MAX_SHAOT_BESHABATON,
+                       NVL ( V_SIDURIM.ZAKAY_LEPIZUL, 0 ) ZAKAY_LEPIZUL,
+                       V_SIDURIM.DAKOT_N_LETASHLUM_HOL,V_SIDURIM.michsat_shishi_lebaley_x,
+                       NVL ( S.SUG_HASHLAMA, 0 ) SUG_HASHLAMA,
+                       V_SIDURIM.SUG_SHAOT_BYOM_HOL_IF_MIGBALA,V_SIDURIM.shabaton_tashlum_kavua,
+                        V_SIDURIM.sug_hashaot_beyom_shishi,V_SIDURIM.max_shaot_byom_hol,
+                       V_SIDURIM.sug_hashaot_beyom_shabaton,v_sidurim.shat_gmar_auto,
+                       NVL ( S.HASHLAMA, 0 ) HASHLAMA, S.BITUL_O_HOSAFA, Y.HASHLAMA_LEYOM,
+                       NVL ( S.YOM_VISA, 0 ) YOM_VISA, V_SIDURIM.EIN_LESHALEM_TOS_LILA,
+                       NVL ( Y.ZMAN_NESIA_HALOCH, 0 ) ZMAN_NESIA_HALOCH,
+                       NVL ( Y.ZMAN_NESIA_HAZOR, 0 ) ZMAN_NESIA_HAZOR,v_sidurim.realy_veod_yom,
+                       NVL(v_sidurim.zakay_lehamara,0) zakay_lehamara  ,v_sidurim.tashlum_kavua_bchol,
+                       NVL ( S.HAFHATAT_NOCHECHUT_VISA, 0 ) HAFHATAT_NOCHECHUT_VISA,
+                       NVL ( S.MEZAKE_NESIOT, 0 ) MEZAKE_NESIOT, Y.BITUL_ZMAN_NESIOT,
+                       NVL ( S.KOD_SIBA_LEDIVUCH_YADANI_IN, 0 ) KOD_SIBA_LEDIVUCH_YADANI_IN,
+                       NVL ( S.KOD_SIBA_LEDIVUCH_YADANI_OUT, 0 )
+                           KOD_SIBA_LEDIVUCH_YADANI_OUT,V_SIDURIM.sidur_rak_lechevrot_banot,
+                       NVL ( S.ACHUZ_KNAS_LEPREMYAT_VISA, 0 ) ACHUZ_KNAS_LEPREMYAT_VISA,
+                       NVL ( S.ACHUZ_VIZA_BESIKUN, 0 ) ACHUZ_VIZA_BESIKUN,
+                       S.MIKUM_SHAON_KNISA, S.MIKUM_SHAON_YETZIA,
+                       V_SIDURIM.ZAKAY_LECHISHUV_RETZIFUT, NVL ( S.SUG_SIDUR, 0 ) SUG_SIDUR,
+                       V_SIDURIM.matala_klalit_lelo_rechev,nvl(V_SIDURIM.zakaut_legmul_chisachon,0) zakaut_legmul_chisachon,
+                       V_SIDURIM.shaon_nochachut, S.KOD_SIBA_LO_LETASHLUM
+            FROM   TB_MISPAR_ISHI_CHISHUV OS,       
+                   OVDIM O,
+                   TB_YAMEY_AVODA_OVDIM Y,      
+                       ( SELECT * FROM TB_SIDURIM_OVDIM s
+                       WHERE   ( (s.lo_letashlum=0 OR s.lo_letashlum IS NULL)
+                                   OR  (s.lo_letashlum=1 AND s.sug_sidur=69  ))
+                             AND s.mispar_sidur<>99200
+                            AND  s.taarich BETWEEN p_tar_me AND p_tar_ad) s,
+                   PIVOT_SIDURIM_MEYUCHADIM V_SIDURIM
+            WHERE  os.MISPAR_ISHI = o.MISPAR_ISHI 
+                    AND    os.MISPAR_ISHI = Y.MISPAR_ISHI  
+                    AND    Y.TAARICH BETWEEN os.TAARICH AND LAST_DAY ( os.TAARICH )  
+                    AND    Y.TAARICH = s.TAARICH (+)
+                    AND    y.MISPAR_ISHI = s.MISPAR_ISHI (+)
+                    AND    V_SIDURIM.MISPAR_SIDUR(+) = S.MISPAR_SIDUR
+                               AND S.TAARICH BETWEEN V_SIDURIM.ME_TARICH(+)
+                                                 AND  V_SIDURIM.AD_TARICH(+)
+                    AND Y.TAARICH BETWEEN p_tar_me AND p_tar_ad
+                    AND OS.NUM_PACK =p_num_process 
+                    AND ( Y.STATUS = 1 OR Y.STATUS = 2 )
+                    AND NOT NVL ( S.BITUL_O_HOSAFA, 0 ) IN (1, 3)
+                --    AND (( S.LO_LETASHLUM = 0 OR S.LO_LETASHLUM IS NULL)   OR ( S.LO_LETASHLUM = 1  AND S.SUG_SIDUR = 69 ))
+                   --AND nvl(S.MISPAR_SIDUR,0) <> 99200    
+               ORDER BY y.taarich ASC;
+               
+            --   EXECUTE IMMEDIATE 'truncate table tb_yamim_Lechishuv' ; 
+         
+  EXCEPTION
+       WHEN OTHERS THEN
+				RAISE;
+END  pro_get_yemey_avoda;
+
+PROCEDURE pro_InsertYamimLeTavla(p_bakasha_id in number,p_tar_me IN DATE,p_tar_ad IN DATE , p_num_process IN NUMBER) IS
+BEGIN
+    INSERT INTO TB_YAMIM_LECHISHUV
+        SELECT DISTINCT  p_bakasha_id, Y.MISPAR_ISHI, Y.TAARICH, Y.STATUS
+            FROM   TB_MISPAR_ISHI_CHISHUV OS,       
+                   OVDIM O,
+                   TB_YAMEY_AVODA_OVDIM Y,      
+                       ( SELECT * FROM TB_SIDURIM_OVDIM s
+                       WHERE   ( (s.lo_letashlum=0 OR s.lo_letashlum IS NULL)
+                                   OR  (s.lo_letashlum=1 AND s.sug_sidur=69  ))
+                             AND s.mispar_sidur<>99200
+                            AND  s.taarich BETWEEN p_tar_me AND p_tar_ad) s,
+                   PIVOT_SIDURIM_MEYUCHADIM V_SIDURIM
+            WHERE  os.MISPAR_ISHI = o.MISPAR_ISHI 
+                    AND    os.MISPAR_ISHI = Y.MISPAR_ISHI  
+                    AND    Y.TAARICH BETWEEN os.TAARICH AND LAST_DAY ( os.TAARICH )  
+                    AND    Y.TAARICH = s.TAARICH (+)
+                    AND    y.MISPAR_ISHI = s.MISPAR_ISHI (+)
+                    AND    V_SIDURIM.MISPAR_SIDUR(+) = S.MISPAR_SIDUR
+                               AND S.TAARICH BETWEEN V_SIDURIM.ME_TARICH(+)
+                                                 AND  V_SIDURIM.AD_TARICH(+)
+                    AND Y.TAARICH BETWEEN p_tar_me AND p_tar_ad
+                   -- AND OS.NUM_PACK =p_num_process 
+                    AND ( Y.STATUS = 1 OR Y.STATUS = 2 )
+                    AND NOT NVL ( S.BITUL_O_HOSAFA, 0 ) IN (1, 3)
+                --    AND (( S.LO_LETASHLUM = 0 OR S.LO_LETASHLUM IS NULL)   OR ( S.LO_LETASHLUM = 1  AND S.SUG_SIDUR = 69 ))
+                   --AND nvl(S.MISPAR_SIDUR,0) <> 99200    
+               ORDER BY y.taarich ASC;
+
+  EXCEPTION
+       WHEN OTHERS THEN
+                RAISE;
+END pro_InsertYamimLeTavla;
+PROCEDURE pro_get_kavim_process(p_cur OUT CurType,p_num_process IN NUMBER,p_tar_me IN DATE,p_tar_ad IN DATE) IS
+BEGIN
+    OPEN p_cur FOR
+        WITH ALL_DATES AS (SELECT /*+ materialize */
+                                                                                    DISTINCT TAARICH
+                                                   FROM             KDSADMIN.TB_MISPAR_ISHI_CHISHUV
+                                                   WHERE           NUM_PACK = p_num_process),
+             ids AS ( 
+            SELECT   DISTINCT   S.MISPAR_ISHI, PO.MAKAT_NESIA , PO.TAARICH
+            FROM     KDSADMIN.TB_PEILUT_OVDIM PO,        
+                     KDSADMIN.TB_MISPAR_ISHI_CHISHUV S
+            WHERE         PO.MISPAR_ISHI = S.MISPAR_ISHI
+                     AND S.TAARICH IN (SELECT    TAARICH FROM ALL_DATES)
+                     AND PO.TAARICH BETWEEN S.TAARICH AND LAST_DAY ( S.TAARICH )
+                     AND S.NUM_PACK =  p_num_process
+                     )         
+            SELECT              S.MISPAR_ISHI, C.*
+            FROM    KDSADMIN.TB_CATALOG_CHISHUV C,  ids S
+            WHERE  S.MAKAT_NESIA = C.MAKAT8
+                                     AND S.TAARICH = C.ACTIVITY_DATE;
+
+      --  WITH all_dates AS 
+          --  (SELECT /*+ materialize */   DISTINCT taarich FROM  kdsadmin.TB_MISPAR_ISHI_CHISHUV 
+         /*    WHERE  NUM_PACK = p_num_process)
+            SELECT     S.MISPAR_ISHI, C.*
+            FROM     kdsadmin.TB_CATALOG_CHISHUV C, 
+                     kdsadmin.TB_PEILUT_OVDIM PO, 
+                     kdsadmin.TB_MISPAR_ISHI_CHISHUV S
+            WHERE         PO.MISPAR_ISHI = S.MISPAR_ISHI
+                     AND S.TAARICH IN (SELECT taarich FROM all_dates)
+                     AND PO.TAARICH BETWEEN S.TAARICH AND LAST_DAY ( S.TAARICH )
+                     AND S.NUM_PACK =p_num_process
+                     AND PO.MAKAT_NESIA = C.MAKAT8
+                     AND PO.TAARICH = C.ACTIVITY_DATE;*/
+/*
+        SELECT s.mispar_ishi ,c.* 
+            FROM TB_CATALOG_CHISHUV c,TB_PEILUT_OVDIM po,  TB_MISPAR_ISHI_CHISHUV s
+            WHERE po.mispar_ishi=s.mispar_ishi 
+            AND po.taarich  BETWEEN  p_tar_me  AND p_tar_ad
+            AND    po.taarich  BETWEEN  s.taarich  AND LAST_DAY(s.taarich)
+            AND S.NUM_PACK = p_num_process
+            AND po.MAKAT_NESIA = c.makat8
+            AND po.taarich = c.activity_date; */
+
+    EXCEPTION
+            WHEN OTHERS THEN
+                 RAISE;
+END pro_get_kavim_process;
+
+PROCEDURE pro_get_kavim_details(p_cur OUT CurType) IS
+    v_count  NUMBER;
+    rc NUMBER;
+BEGIN
+   DBMS_APPLICATION_INFO.SET_MODULE('pkg_tnua.pro_get_kavim_details','get kavim details from tnua');
+    SELECT COUNT(po.mispar_ishi) INTO v_count
+    FROM TB_SIDURIM_OVDIM o,TB_PEILUT_OVDIM po , TB_TMP_OVDIM_LECHISHUV s
+    WHERE o.mispar_ishi=  s.mispar_ishi
+	     AND  o.taarich  BETWEEN    s.taarich  AND LAST_DAY(s.taarich)
+		  AND o.mispar_ishi = po.mispar_ishi
+          AND o.taarich = po.taarich
+          AND o.mispar_sidur= po.mispar_sidur
+          AND o.shat_hatchala = po.shat_hatchala_sidur ;
+          --   OR (((trunc(o.taarich) = trunc(p_date_from)) and (o.shayah_leyom_kodem<>1 or o.shayah_leyom_kodem is null)) or ((o.taarich=trunc(p_date_to)+1) and (o.shayah_leyom_kodem=1))));
+          
+    IF (v_count>0) THEN
+    BEGIN
+       INSERT INTO TMP_CATALOG_DETAILS@kds_gw_at_tnpr
+                              (activity_date,makat8)
+       SELECT DISTINCT   po.TAARICH ,po.MAKAT_NESIA
+       FROM TB_SIDURIM_OVDIM o,TB_PEILUT_OVDIM po  , TB_TMP_OVDIM_LECHISHUV s
+       WHERE o.mispar_ishi=  s.mispar_ishi
+	     AND  o.taarich  BETWEEN s.taarich  AND LAST_DAY(s.taarich)
+		 AND o.mispar_ishi = po.mispar_ishi
+          AND o.taarich = po.taarich
+          AND o.mispar_sidur= po.mispar_sidur
+          AND o.shat_hatchala = po.shat_hatchala_sidur ;
+          
+       EXCEPTION
+              WHEN DUP_VAL_ON_INDEX THEN
+                   NULL;
+     END;
+    BEGIN 
+        --Get makats details
+		--  INSERT INTO TMP_CATALOG_DETAILS@kds_gw_at_tnpr(activity_date,makat8) VALUES( TO_DATE('01/08/2010','dd/mm/yyyy'),7811111);
+     
+     kds.kds_catalog_pack.GetKavimDetails@kds_gw_at_tnpr(rc); 
+
+	 OPEN p_cur FOR
+	   SELECT s.mispar_ishi ,r.* 
+			FROM TMP_CATALOG_DETAILS@kds_gw_at_tnpr r,TB_PEILUT_OVDIM po, TB_TMP_OVDIM_LECHISHUV s
+			WHERE po.mispar_ishi=s.mispar_ishi 
+			AND    po.taarich  BETWEEN  s.taarich  AND LAST_DAY(s.taarich)
+		    AND po.MAKAT_NESIA = r.makat8
+			AND po.taarich = r.activity_date; 
+    END;
+    END IF;
+ --COMMIT;
+END  pro_get_kavim_details;
+
+PROCEDURE pro_get_pirtey_ovdim(p_cur OUT CurType, p_num_process IN NUMBER) IS
+BEGIN
+DBMS_APPLICATION_INFO.SET_MODULE('pkg_calc.pro_get_pirtey_ovdim','get pirtey oved for letkyfa ');
+ 
+	 OPEN p_cur FOR
+	 SELECT po.*, i.KOD_SECTOR_ISUK
+	    FROM PIVOT_PIRTEY_OVDIM PO,CTB_ISUK i,OVDIM o, TB_MISPAR_ISHI_CHISHUV s
+		WHERE 	po.mispar_ishi=s.MISPAR_ISHI
+		AND po.mispar_ishi=o.mispar_ishi
+        AND S.NUM_PACK = p_num_process
+		AND   (  s.taarich  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR LAST_DAY(s.taarich) BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR   po.ME_TARICH>= s.taarich    AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<= LAST_DAY(s.taarich) )
+		
+		  AND i.Kod_Hevra = o.kod_hevra
+		 AND  i.Kod_Isuk =po.isuk;
+
+EXCEPTION
+       WHEN OTHERS THEN
+            RAISE;
+
+END  pro_get_pirtey_ovdim;
+
+PROCEDURE pro_get_meafyeney_ovdim(p_brerat_Mechadal  IN NUMBER, p_num_process IN NUMBER,
+									p_tar_me IN DATE,p_tar_ad IN DATE, p_cur OUT CurType) IS
+	BEGIN
+	IF p_brerat_Mechadal =1 THEN
+              OPEN p_cur FOR              
+                    WITH tbIshi AS
+                     (  select h.MISPAR_ISHI, h.kod_meafyen,   h.erech_ishi_partany,h.ME_TAARICH,h.ad_TAARICH,h.value_erech_ishi,h.Erech_ishi, h.Erech_Mechdal_partany
+                       , nvl( LEAD (h.ME_TAARICH,1)
+                          OVER(partition by h.mispar_ishi,h.kod_meafyen order by h.mispar_ishi,h.kod_meafyen,h.ME_TAARICH asc),  last_day(  h.taarich)+1 ) next_hour_me
+                          , nvl( LAG (h.AD_TAARICH,1)
+                        OVER(partition by h.mispar_ishi,h.kod_meafyen order by h.mispar_ishi,h.kod_meafyen,h.ME_TAARICH asc) ,h.taarich-1  ) prev_hour_ad
+                      from
+                     (SELECT S.MISPAR_ISHI, to_char(m.kod_meafyen) kod_meafyen, S.taarich,m.erech_ishi erech_ishi_partany,
+                                --  m.ME_TAARICH ,m.ad_TAARICH ,
+                                  case when m.ME_TAARICH between  s.taarich and last_day( s.taarich ) then m.ME_TAARICH else   s.taarich  end ME_TAARICH,
+                                  case when NVL( m.ad_TAARICH,TO_DATE('31/12/4712' ,'dd/mm/yyyy'))  between  s.taarich and last_day( s.taarich ) then m.ad_TAARICH else  last_day(s.taarich)  end ad_TAARICH,
+                                  to_char(to_number(DECODE(m.erech_ishi,NULL,m.ERECH_MECHDAL_PARTANY,to_char(m.erech_ishi)))) value_erech_ishi,
+                                  DECODE(m.erech_ishi,NULL ,m.ERECH_MECHDAL_PARTANY || ' (ב.מ.) ',m.erech_ishi || ' (אישי) '  ) Erech_ishi,
+                                   DECODE(m.Erech_Mechdal_partany,NULL,'',m.Erech_Mechdal_partany ||   ' (ב.מ.) ') Erech_Mechdal_partany
+                       FROM   CTB_MEAFYEN_BITZUA c,   CTB_YECHIDAT_MEAFYEN Y, PIVOT_MEAFYENIM_OVDIM m,
+                                   (select distinct MISPAR_ISHI,taarich,num_pack from TB_MISPAR_ISHI_CHISHUV where num_pack=p_num_process) s
+                       WHERE   ( s.taarich  BETWEEN  m.ME_TAARICH  AND   NVL(m.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                                      OR  last_day( s.taarich ) BETWEEN  m.ME_TAARICH  AND   NVL(m.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                                      OR   m.ME_TAARICH>= s.taarich  AND   NVL(m.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  last_day( s.taarich ) )
+                                    AND s.MISPAR_ISHI = m.MISPAR_ISHI
+                                    AND c.KOD_MEAFYEN_BITZUA= m.kod_meafyen
+                                    AND c.YECHIDAT_MEAFYEN = Y.KOD_YECHIDA_MEAFYEN(+)
+                              --   and s.mispar_ishi=31029
+                              --   and m.kod_meafyen=42
+                      order by  s.mispar_ishi,m.kod_meafyen,m.ME_TAARICH ) h
+                       order by  h.mispar_ishi,h.kod_meafyen,h.ME_TAARICH      )
+        ,mPeriod as
+                       (  
+                           select * 
+                           from( select s.MISPAR_ISHI, s.kod_meafyen, m.erech erech_ishi_partany, (s.AD_TAARICH+1) ME_TAARICH,
+                                             case when last_day(s.AD_TAARICH)<=(next_hour_me-1) then  last_day(s.AD_TAARICH) else next_hour_me-1 end  AD_TAARICH,
+                             -- (next_hour_me-1) AD_TAARICH, 
+                                            '' Erech_Mechdal_partany,
+                                             m.erech ||  ' (ב.מ. מערכת) '  Erech_ishi,
+                                             to_char(m.erech) value_erech_ishi,
+                                              '1' source_meafyen
+                                    from  tbIshi s, brerot_mechdal_meafyenim m
+                                    where (s.AD_TAARICH+1)<next_hour_me
+                                         and s.kod_meafyen = m.kod_meafyen)
+                             where ME_TAARICH<=AD_TAARICH     
+                                       ----  and ((trunc(s.AD_TAARICH,'MM') = trunc(next_hour_me,'MM') )or (trunc(add_months(s.AD_TAARICH,1),'MM') = trunc(next_hour_me,'MM')))
+                                     --      and (next_hour_me-1)<=  last_day(s.AD_TAARICH)
+                                  --      and trunc(s.AD_TAARICH,'MM') =  trunc(next_hour_me,'MM')
+                                     --   and s.kod_meafyen =42       
+                        union 
+                        
+                             select *
+                             from( select s.MISPAR_ISHI, s.kod_meafyen, m.erech erech_ishi_partany,--         (s.prev_hour_ad+1) ME_TAARICH,
+                                              case when trunc(s.ME_TAARICH,'MM')>=(prev_hour_ad+1) then   trunc(s.ME_TAARICH,'MM')else s.prev_hour_ad+1 end  ME_TAARICH,
+                                              (s.ME_TAARICH -1) AD_TAARICH,
+                                               '' Erech_Mechdal_partany,
+                                               m.erech ||  ' (ב.מ. מערכת) '  Erech_ishi,
+                                               to_char(m.erech) value_erech_ishi,
+                                               '1' source_meafyen
+                                      from  tbIshi s, brerot_mechdal_meafyenim m
+                                      where (s.prev_hour_ad+1)<s.ME_TAARICH
+                                            and s.kod_meafyen = m.kod_meafyen)
+                             where ME_TAARICH<=AD_TAARICH
+                           ----      and ((trunc(s.ME_TAARICH,'MM') = trunc(prev_hour_ad,'MM') )or (trunc(add_months(s.ME_TAARICH,-1),'MM') = trunc(prev_hour_ad,'MM')))
+                         --   and trunc(s.ME_TAARICH,'MM') =  trunc(prev_hour_ad,'MM')
+                     --       and s.mispar_ishi=31029
+
+                        union
+
+                            select s.MISPAR_ISHI, s.kod_meafyen,  s.erech_ishi_partany,s.ME_TAARICH,s.AD_TAARICH,
+                            s.Erech_Mechdal_partany,
+                            s.Erech_ishi,
+                            s.value_erech_ishi,
+                             '2' source_meafyen
+                            from  tbIshi s
+                      --     where  s.mispar_ishi=31029
+                            ) 
+          
+           (select   h.MISPAR_ISHI, to_char(h.kod_meafyen) kod_meafyen,  h.erech_ishi_partany,
+                        h.ME_TAARICH,h.AD_TAARICH,
+                        h.Erech_Mechdal_partany,
+                        h.Erech_ishi,
+                        h.value_erech_ishi,
+                        h.source_meafyen             
+         from
+         (   select mPeriod.*
+              from mPeriod
+           union               
+            ( SELECT     OV.mispar_ishi, to_char(df.KOD_MEAFYEN) KOD_MEAFYEN, ''  erech_ishi_partany, ov.taarich me_taarich ,last_day(ov.taarich) ad_taarich,
+                                            '' Erech_Mechdal_partany,
+                                            df.erech ||  ' (ב.מ. מערכת) '  Erech_ishi,
+                                            to_char(df.erech) value_erech_ishi,
+                                             '1' source_meafyen
+                            FROM   TB_MISPAR_ISHI_CHISHUV ov, BREROT_MECHDAL_MEAFYENIM df
+                            where num_pack= p_num_process
+                             --   and ov.mispar_ishi=31029
+                            --     and df.kod_meafyen =42
+                                and df.kod_meafyen not in (select   Ph.kod_meafyen 
+                                                                        from  mPeriod Ph
+                                                                        where Ph.mispar_ishi =  ov.mispar_ishi
+                                                                        and to_char(Ph.ME_TAARICH,'mm/yyyy') =to_char( OV.taarich,'mm/yyyy') )
+                                                                        )) h )
+                 order by h.MISPAR_ISHI,to_char(h.ME_TAARICH,'mm/yyyy'),to_number( h.kod_meafyen) ;
+	ELSE
+		OPEN p_cur FOR
+	   		    SELECT m.kod_meafyen, m.erech_ishi erech_ishi_partany,DECODE(m.Erech_Mechdal_partany,NULL,'',m.Erech_Mechdal_partany ||   ' (ב.מ.) ') Erech_Mechdal_partany,
+				 	   		 c.teur_MEAFYEN_BITZUA,( SELECT  b.erech  ||   ' (ב.מ. מערכת) '
+																   		FROM BREROT_MECHDAL_MEAFYENIM b
+																   		WHERE TRUNC(SYSDATE) BETWEEN b.ME_TAARICH AND NVL(b.AD_TAARICH,TO_DATE('01/01/9999','dd/mm/yyyy'))
+																		AND b.kod_meafyen=m.kod_meafyen
+																		AND b.erech  IS NOT NULL)  Erech_Brirat_Mechdal,
+				 			m.ME_TAARICH,m.ad_TAARICH,y.TEUR_YECHIDA_MEAFYEN YECHIDA,
+				           DECODE(m.erech_ishi,NULL,DECODE(m.ERECH_MECHDAL_PARTANY,NULL, NULL,m.Erech_Mechdal_partany || ' (ב.מ.) '),m.erech_ishi || ' (אישי) ' ) Erech_ishi,
+						    TO_NUMBER(DECODE(m.erech_ishi,NULL,DECODE(m.ERECH_MECHDAL_PARTANY,NULL, NULL,m.Erech_Mechdal_partany),m.erech_ishi ) ) value_Erech_ishi
+				FROM PIVOT_MEAFYENIM_OVDIM m,CTB_MEAFYEN_BITZUA c,CTB_YECHIDAT_MEAFYEN Y ,TB_MISPAR_ISHI_CHISHUV s
+				 WHERE   (s.taarich   BETWEEN  m.ME_TAARICH  AND   NVL(m.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR  LAST_DAY(s.taarich) BETWEEN  m.ME_TAARICH  AND   NVL(m.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR   m.ME_TAARICH>= s.taarich   AND   NVL(m.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<= LAST_DAY(s.taarich) )
+                 AND  S.NUM_PACK = p_num_process
+				AND   m.MISPAR_ISHI=s.mispar_ishi
+				AND c.KOD_MEAFYEN_BITZUA=m.kod_meafyen
+				   AND c.YECHIDAT_MEAFYEN =Y.KOD_YECHIDA_MEAFYEN(+);
+	END IF;
+  EXCEPTION
+       WHEN OTHERS THEN
+				RAISE;
+END   pro_get_meafyeney_ovdim;
+
+
+PROCEDURE pro_get_peiluyot_ovdim( p_Cur OUT CurType, p_num_process IN NUMBER,p_tar_me IN DATE,p_tar_ad IN DATE)
+IS
+BEGIN
+ DBMS_APPLICATION_INFO.SET_MODULE('pkg_calc.pro_get_peiluyot_leoved','get peiluyot leoved letkufa ');
+    OPEN p_cur FOR
+	   SELECT p.MISPAR_ISHI,p.TAARICH,p.MISPAR_SIDUR,p.SHAT_HATCHALA_SIDUR,p.SHAT_YETZIA,
+		      LPAD(TO_CHAR(p.MAKAT_NESIA),8,'0') MAKAT_NESIA,p.MISPAR_KNISA,NVL(e.sector_zvira_zman_haelement,0)sector_zvira_zman_haelement,NVL(p.km_visa,0) km_visa,
+			   e.nesia,e.kod_lechishuv_premia,e.kupai,NVL(p.Kod_shinuy_premia,0) Kod_shinuy_premia ,p.Oto_no,NVL(p.Dakot_bafoal,0) Dakot_bafoal,
+			  TO_NUMBER( SUBSTR(LPAD(TO_CHAR(p.MAKAT_NESIA),8,'0') ,4,3)) zmanElement,p.kisuy_tor,e.nesia_reika
+	    FROM 
+		 (SELECT p.*
+		  FROM   TB_PEILUT_OVDIM p,TB_MISPAR_ISHI_CHISHUV s 
+		  WHERE p.MISPAR_ISHI=s.MISPAR_ISHI
+             AND P.TAARICH BETWEEN p_tar_me AND p_tar_ad
+			  AND  p.TAARICH BETWEEN s.taarich AND LAST_DAY(s.taarich) 
+              AND S.NUM_PACK= p_num_process
+			  AND NOT NVL(p.Bitul_O_Hosafa,0)  IN (1,3) ) p
+		  ,PIVOT_MEAFYENEY_ELEMENTIM e
+        WHERE
+		  TO_NUMBER(SUBSTR(p.makat_nesia,2,2)) = e.kod_element(+)
+              AND p.TAARICH BETWEEN e.me_tarich(+) AND e.ad_tarich(+);
+
+		  EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+END pro_get_peiluyot_ovdim;
+
+PROCEDURE pro_get_Matzav_Ovdim(p_Cur_Matzav OUT CurType,p_num_process IN NUMBER) IS
+BEGIN
+     OPEN p_Cur_Matzav FOR
+        SELECT  s.MISPAR_ISHI,m.kod_matzav, M.TAARICH_HATCHALA TAARICH_ME, NVL(m.TAARICH_SIYUM,TO_DATE('01/01/9999','dd/mm/yyyy')) TAARICH_AD, T.KOD_HEADRUT
+        FROM ovdim o,MATZAV_OVDIM m ,TB_MISPAR_ISHI_CHISHUV s,ctb_status t
+        WHERE o.mispar_ishi= m.mispar_ishi
+          and  m.mispar_ishi=s.mispar_ishi
+         AND S.NUM_PACK= p_num_process
+        AND ( s.taarich BETWEEN M.TAARICH_HATCHALA  AND NVL(M.TAARICH_SIYUM,TO_DATE(  '01/01/9999'  ,  'dd/mm/yyyy'  ))
+                                     OR LAST_DAY(s.taarich) BETWEEN M.TAARICH_HATCHALA AND NVL(M.TAARICH_SIYUM ,TO_DATE(  '01/01/9999'  ,  'dd/mm/yyyy'  )) 
+                                     OR M.TAARICH_HATCHALA>= s.taarich AND NVL(M.TAARICH_SIYUM,TO_DATE(  '01/01/9999'  , 'dd/mm/yyyy'  ))<= LAST_DAY(s.taarich) ) 
+         and T.KOD_STATUS= M.KOD_MATZAV
+         and O.KOD_HEVRA = T.KOD_HEVRA;                               
+        
+          EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+END pro_get_Matzav_Ovdim;
+PROCEDURE pro_get_ovdim_lehishuv_premiot(p_num_process IN NUMBER) IS --,p_taarich_me OUT DATE,p_taarich_ad OUT DATE) IS
+p_tar_me DATE;
+p_tar_ad DATE;
+ BEGIN
+  DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Calculation',action_name => 'pro_get_ovdim_lehishuv_premiot');
+        EXECUTE IMMEDIATE 'truncate table TB_MISPAR_ISHI_CHISHUV' ; 
+        EXECUTE IMMEDIATE 'truncate table TB_CATALOG_CHISHUV' ; 
+        --EXECUTE IMMEDIATE 'truncate table tb_yamim_Lechishuv' ; 
+           
+	    INSERT INTO TB_MISPAR_ISHI_CHISHUV(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack)
+            SELECT  ROWNUM,p.*
+            FROM ( SELECT distinct  MISPAR_ISHI,  chodesh ,1
+                        FROM OVDIM_LECHISHUV_PREMYOT lp  
+                        WHERE LP.BAKASHA_ID IS NULL
+                        ORDER BY chodesh)  p;
+
+		
+        SELECT MIN(l.chodesh) INTO p_tar_me
+        FROM OVDIM_LECHISHUV_PREMYOT l
+        WHERE  l.BAKASHA_ID IS NULL;
+        
+        SELECT MAX(LAST_DAY(l.chodesh)) INTO p_tar_ad
+        FROM OVDIM_LECHISHUV_PREMYOT l
+        WHERE  l.BAKASHA_ID IS NULL;
+        
+         Pkg_Calculation.pro_divide_packets(p_num_process);
+        Pkg_Calculation.pro_set_kavim_details_chishuv(p_tar_me,p_tar_ad);
+		--OPEN p_Cur FOR
+  			-- SELECT * FROM TB_TMP_OVDIM_LECHISHUV;
+	 EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;   
+ END pro_get_ovdim_lehishuv_premiot;
+ 
+ PROCEDURE pro_get_netunim_lechishuv( p_Cur_Ovdim OUT CurType ,
+  p_Cur_Michsa_Yomit OUT CurType,
+ p_Cur_SidurMeyuchadRechiv OUT CurType,
+ p_Cur_Sug_Sidur_Rechiv OUT CurType,
+p_Cur_Premiot_View OUT CurType,
+ p_Cur_Premiot_Yadaniot OUT CurType,
+ p_Cur_Sug_Yechida OUT CurType, 
+ p_Cur_Yemey_Avoda OUT CurType,
+ p_Cur_Pirtey_Ovdim OUT CurType,
+ p_Cur_Meafyeney_Ovdim OUT CurType,
+ p_Cur_Peiluyot_Ovdim OUT CurType,   
+  p_Cur_Mutamut OUT CurType, 
+ p_Cur_Matzav  OUT CurType, 
+  p_Cur_Buses_Details OUT CurType, 
+ --p_Cur_Sugey_Sidur_Tnua OUT CurType, 
+ p_Cur_Kavim_Details OUT CurType, 
+ p_tar_me IN DATE,p_tar_ad IN DATE, 
+ p_maamad IN NUMBER, p_ritza_gorefet IN NUMBER,
+ p_status_tipul  IN  TB_YAMEY_AVODA_OVDIM.status_tipul%TYPE,
+ p_brerat_Mechadal  IN NUMBER, 
+ p_Mis_Ishi IN NUMBER   )IS
+ 
+  p_tarich_me   DATE;
+   p_tarich_ad   DATE;
+ BEGIN
+   DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Calculation',action_name => 'pro_get_netunim_lechishuv ');
+    EXECUTE IMMEDIATE 'truncate table TB_TMP_OVDIM_LECHISHUV' ; 
+	 --  ANALYZE  TB_TMP_OVDIM_LECHISHUV  VALIDATE STRUCTURE CASCADE;
+ 
+ p_tarich_me :=p_tar_me;
+ p_tarich_ad :=p_tar_ad;
+	 IF (p_Mis_Ishi = 0) THEN 
+	 	Pkg_Calculation.pro_get_ovdim_lechishuv(p_tar_me ,p_tar_ad , p_maamad , p_ritza_gorefet ,
+                                    p_Cur_Ovdim); 
+	 ELSE IF  p_Mis_Ishi = -1 THEN
+			 -- Pkg_Calculation.pro_get_ovdim_lehishuv_premiot(p_Cur_Ovdim);
+			   SELECT MIN(taarich) INTO p_tarich_me FROM TB_TMP_OVDIM_LECHISHUV;	
+		 	   SELECT MAX(taarich) INTO p_tarich_ad FROM TB_TMP_OVDIM_LECHISHUV; 
+		 ELSE 
+				 Pkg_Calculation.pro_insert_oved_lechishuv(p_Mis_Ishi,p_tar_me);
+				 OPEN p_Cur_Ovdim FOR
+		   		 	  SELECT * FROM TB_TMP_OVDIM_LECHISHUV; 
+		 END IF;	
+	 END IF;	 	  		
+ 
+ 
+	  Pkg_Calculation.pro_get_michsa_yomit(p_tarich_me , p_tarich_ad ,p_Cur_Michsa_Yomit); 
+			
+	 Pkg_Calculation.pro_get_sidurim_meyuch_rechiv(p_tarich_me , p_tarich_ad , p_Cur_SidurMeyuchadRechiv );					   
+	 
+	 Pkg_Calculation.pro_get_sug_sidur_rechiv( p_tarich_me , p_tarich_ad,p_Cur_Sug_Sidur_Rechiv);
+		  							 
+	-- Pkg_Calculation.pro_get_premyot_view(p_Cur_Premiot_View);
+	 
+	 --Pkg_Calculation.pro_get_premia_yadanit(p_Cur_Premiot_Yadaniot);
+	 
+	-- Pkg_Calculation.pro_get_sug_yechida( p_Cur_Sug_Yechida);
+	 
+	--Pkg_Calculation.pro_get_yemey_avoda (p_status_tipul,p_Cur_Yemey_Avoda);								 
+	 
+	-- Pkg_Calculation.pro_get_pirtey_ovdim(p_Cur_Pirtey_Ovdim);
+	 
+	 --Pkg_Calculation.pro_get_meafyeney_ovdim(p_brerat_Mechadal,p_Cur_Meafyeney_Ovdim);
+	 
+	 --Pkg_Calculation.pro_get_peiluyot_ovdim(p_Cur_Peiluyot_Ovdim);
+ 
+      Pkg_Utils.pro_get_ctb_mutamut(p_Cur_Mutamut);  
+   
+  -- Pkg_Calculation.pro_get_Ovdim_ShePutru(p_Cur_Piturim);
+     
+   --   Pkg_Calculation.pro_get_buses_details(p_Cur_Buses_Details); 
+  
+   -- Pkg_Calculation.pro_get_sugey_sidur_tnua(p_Cur_Sugey_Sidur_Tnua); 
+	 
+	 -- Pkg_Calculation.pro_get_kavim_details(p_Cur_Kavim_Details); 
+	 
+ 
+	   EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;   
+ END pro_get_netunim_lechishuv;
+ 
+ 
+ PROCEDURE pro_get_netunim_leprocess( p_Cur_Ovdim OUT CurType ,
+  p_Cur_Michsa_Yomit OUT CurType,
+ p_Cur_SidurMeyuchadRechiv OUT CurType,
+ p_Cur_Sug_Sidur_Rechiv OUT CurType,
+p_Cur_Premiot_View OUT CurType,
+ p_Cur_Premiot_Yadaniot OUT CurType,
+ p_Cur_Premiot_NihulTnua OUT CurType,
+ p_Cur_Sug_Yechida OUT CurType, 
+ p_Cur_Yemey_Avoda OUT CurType,
+ p_Cur_Pirtey_Ovdim OUT CurType,
+ p_Cur_Meafyeney_Ovdim OUT CurType,
+ p_Cur_Peiluyot_Ovdim OUT CurType,   
+  p_Cur_Mutamut OUT CurType, 
+   p_Cur_Michsat_sidur OUT CurType, 
+p_Cur_Matzav  OUT CurType, 
+  p_Cur_Buses_Details OUT CurType, 
+ p_Cur_Kavim_Details OUT CurType, 
+ p_tar_me IN DATE,p_tar_ad IN DATE, 
+ p_status_tipul  IN  TB_YAMEY_AVODA_OVDIM.status_tipul%TYPE,
+ p_brerat_Mechadal  IN NUMBER,
+  p_Mis_Ishi IN NUMBER,
+ p_num_process IN NUMBER   ) IS
+ 
+  p_tarich_me   DATE;
+  p_tarich_ad   DATE;
+ BEGIN
+
+  IF (p_Mis_Ishi = -1) THEN
+       SELECT MIN(s.taarich)  INTO p_tarich_me  FROM TB_MISPAR_ISHI_CHISHUV s;
+       SELECT MAX(LAST_DAY(s.taarich))  INTO p_tarich_ad  FROM TB_MISPAR_ISHI_CHISHUV s;
+  ELSE
+          p_tarich_me :=p_tar_me;
+          p_tarich_ad :=p_tar_ad;
+  END IF;
+DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Calculation',action_name => 'pro_get_netunim_lechishuv process num  ' || p_num_process);
+      --  p_tarich_me:=to_date('01/04/2012','dd/mm/yyyy');
+      --  p_tarich_ad:=to_date('30/04/2012','dd/mm/yyyy');
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_ovdim');
+      Pkg_Calculation.pro_get_ovdim(p_Cur_Ovdim,p_num_process); 
+      DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_michsa_yomit');
+      Pkg_Calculation.pro_get_michsa_yomit(p_tarich_me , p_tarich_ad ,p_Cur_Michsa_Yomit);  
+      DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_sidurim_meyuch_rechiv');
+     Pkg_Calculation.pro_get_sidurim_meyuch_rechiv(p_tarich_me , p_tarich_ad , p_Cur_SidurMeyuchadRechiv );                      
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_sug_sidur_rechiv');
+     Pkg_Calculation.pro_get_sug_sidur_rechiv( p_tarich_me , p_tarich_ad,p_Cur_Sug_Sidur_Rechiv);
+    DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_premyot_view');                               
+     Pkg_Calculation.pro_get_premyot_view(p_Cur_Premiot_View,p_num_process);
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_premia_yadanit');
+     Pkg_Calculation.pro_get_premia_yadanit(p_Cur_Premiot_Yadaniot,p_num_process); 
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_premyot_nihul_tnua');
+     Pkg_Calculation.pro_get_premyot_nihul_tnua(p_Cur_Premiot_NihulTnua,p_num_process); 
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_sug_yechida');
+     Pkg_Calculation.pro_get_sug_yechida( p_Cur_Sug_Yechida,p_num_process); 
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_yemey_avoda');
+    Pkg_Calculation.pro_get_yemey_avoda (p_status_tipul,p_num_process,p_Cur_Yemey_Avoda,p_tarich_me,p_tarich_ad);                            
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_pirtey_ovdim');
+     Pkg_Calculation.pro_get_pirtey_ovdim(p_Cur_Pirtey_Ovdim,p_num_process); 
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_meafyeney_ovdim');
+     Pkg_Calculation.pro_get_meafyeney_ovdim(p_brerat_Mechadal,p_num_process,p_tarich_me,p_tarich_ad,p_Cur_Meafyeney_Ovdim);
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_peiluyot_ovdim');
+     Pkg_Calculation.pro_get_peiluyot_ovdim(p_Cur_Peiluyot_Ovdim,p_num_process,p_tarich_me,p_tarich_ad);
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_ctb_mutamut');
+      Pkg_Utils.pro_get_ctb_mutamut(p_Cur_Mutamut);  
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_Matzav_Ovdim');
+    Pkg_Calculation.pro_get_Matzav_Ovdim(p_Cur_Matzav,p_num_process);
+     DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_buses_details');
+      Pkg_Calculation.pro_get_buses_details(p_Cur_Buses_Details,p_num_process,p_tarich_me,p_tarich_ad); 
+      DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_kavim_process');    
+      Pkg_Calculation.pro_get_kavim_process(p_Cur_Kavim_Details,p_num_process,p_tarich_me,p_tarich_ad); 
+    DBMS_APPLICATION_INFO.SET_ACTION( 'pro_get_kavim_process');    
+      Pkg_Utils.pro_get_michsat_sidur_meafyen(p_Cur_Michsat_sidur,p_tarich_me,p_tarich_ad); 
+       
+ 
+       EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;   
+ END pro_get_netunim_leprocess;
+ PROCEDURE pro_ovdim_kelet_lechishuv(p_Cur_Ovdim OUT CurType) IS
+ BEGIN
+   
+   OPEN p_Cur_Ovdim FOR
+         SELECT Y.MISPAR_ISHI,Y.TAARICH
+         from tb_yamey_avoda_ovdim y
+         where Y.TAARICH between to_date('21/06/2012','dd/mm/yyyy') and to_date('30/06/2012','dd/mm/yyyy');
+         
+         
+         --Y.MISPAR_ISHI = p.MISPAR_ISHI and
+            /*       to_char(Y.TAARICH,'mm/yyyy') = '09/2010' and 
+                 --  substr(P.MAAMAD,0,1) ='2' and
+                  -- Y.TAARICH between p.ME_TARICH and nvl(P.AD_TARICH,to_date('01/01/9999','dd/mm/yyyy') )
+                      Y.MISPAR_ISHI  in(
+                    select  mispar_ishi
+                           from tb_log_bakashot 
+                            where  BAKASHA_ID = 6532
+                          --  AND TEUR_HODAA like 'InitMeafyenyOved: PrepareMeafyenim :An item with the same key has already been added.%'
+                          AND TEUR_HODAA like 'AddRowZmanLeloHafsaka:    at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)%'
+                      );*/
+                                 
+ END  pro_ovdim_kelet_lechishuv;        
+ 
+ 
+ PROCEDURE pro_idkun_sug_sidur IS --(  p_Cur OUT CurType) AS
+
+   
+   GeneralQry VARCHAR2(3000);
+  CountQry VARCHAR2(3000);
+  CountRows NUMBER;
+  InsertQry  VARCHAR2(3000); 
+  
+     rc NUMBER ;   
+BEGIN
+     DBMS_APPLICATION_INFO.SET_MODULE('PKG_SUG_SIDUR.pro_get_sugey_sidur_tnua','get sugey sidur from tnua loved letkyfa ');
+ 
+     INSERT INTO  kds.TMP_SUG_SIDUR@KDS_GW_AT_TNPR(ACTIVE_DATE,SIDUR_AVODA)
+                  SELECT DISTINCT  taarich, mispar_sidur
+                    FROM TB_SIDURIM_OVDIM s
+                    WHERE mispar_sidur NOT LIKE '99%'
+                   AND  s.taarich BETWEEN TO_DATE('01/08/2010','dd/mm/yyyy')     AND TO_DATE('31/10/2010','dd/mm/yyyy')
+                 --    and to_char(taarich,'mm/yyyy') ='08/2010'
+                     AND LENGTH(MISPAR_SIDUR) BETWEEN 4 AND 5
+                      AND sug_sidur  IS NULL;
+              --        and s.mispar_ishi in(select m.mispar_ishi
+               --                                     from tb_mispar_ishi_chishuv m); 
+
+  
+      Kds_Sidur_Avoda_Pack.Get_Sug_Sidur@KDS_GW_AT_TNPR(rc);
+ 
+          INSERT INTO TMP_SIDURIM ( TAARICH,SIDUR_AVODA,SUG_SIDUR,Sug_Sidur_Name,Status) 
+                                SELECT   Active_Date,Sidur_Avoda,SUG_SIDUR,Sug_Sidur_Name,Status
+                            FROM   kds.TMP_SUG_SIDUR@KDS_GW_AT_TNPR ;
+                            
+ /*  update tb_sidurim_ovdim s
+    set S.SUG_SIDUR = T.SUG_SIDUR
+    from  tb_sidurim_ovdim s
+    inner join TMP_SIDURIM t
+    on S.MISPAR_SIDUR= T.SIDUR_AVODA and
+         S.TAARICH = T.TAARICH; */
+     
+  UPDATE  TB_SIDURIM_OVDIM s
+    SET   S.SUG_SIDUR = (SELECT DISTINCT  T.SUG_SIDUR 
+                                    FROM TMP_SIDURIM t 
+                                    WHERE S.MISPAR_SIDUR= T.SIDUR_AVODA AND
+                                    S.TAARICH = T.TAARICH  )
+   WHERE  s.taarich BETWEEN TO_DATE('01/08/2010','dd/mm/yyyy')     AND TO_DATE('31/10/2010','dd/mm/yyyy')
+ AND    s.mispar_sidur NOT LIKE '99%'   
+   AND  s.SUG_SIDUR IS  NULL 
+    AND LENGTH(s.MISPAR_SIDUR) BETWEEN 4 AND 5;
+ --     and s.mispar_ishi in(select m.mispar_ishi
+      --                                              from tb_mispar_ishi_chishuv m);   
+    
+    COMMIT;      
+/*
+ OPEN p_Cur FOR    
+             SELECT TAARICH,SIDUR_AVODA mispar_sidur,SUG_SIDUR
+           FROM TMP_SIDURIM; */
+/*
+ update (select bonus 
+           from employee_bonus b 
+               inner join employees e on b.employee_id = e.employee_id 
+                        where e.bonus_eligible = 'N') t 
+ set t.bonus = 0*/
+ END  pro_idkun_sug_sidur; 
+      
+ 
+ PROCEDURE  pro_Ovdim_Errors(p_Cur OUT CurType) IS
+ BEGIN
+   
+  DELETE FROM TB_SHGIOT WHERE TAARICH BETWEEN TO_DATE('02/01/2011','dd/mm/yyyy') AND  TO_DATE('02/01/2011','dd/mm/yyyy');
+  --delete from tb_shgiot_2 where TAARICH  between  to_date('02/01/2011','dd/mm/yyyy') and  to_date('02/01/2011','dd/mm/yyyy');
+  COMMIT;
+  
+   OPEN p_Cur  FOR
+         SELECT Y.MISPAR_ISHI,Y.TAARICH
+         FROM TB_YAMEY_AVODA_OVDIM y--,pivot_pirtey_ovdim p
+         WHERE Y.TAARICH  BETWEEN  TO_DATE('02/01/2011','dd/mm/yyyy') AND  TO_DATE('02/01/2011','dd/mm/yyyy')
+                AND Y.STATUS=0;
+ END  pro_Ovdim_Errors;    
+ 
+ PROCEDURE pro_upd_yemey_avoda_bechishuv(p_tar_me IN DATE,p_tar_ad IN DATE) IS
+ BEGIN
+ 
+         UPDATE    TB_YAMEY_AVODA_OVDIM t
+         SET t.BECHISHUV_SACHAR = 1--,
+        --   t.TAARICH_IDKUN_ACHARON = sysdate
+         WHERE ( t.MISPAR_ISHI   ,T.TAARICH)  IN(
+                SELECT       Y.MISPAR_ISHI, Y.TAARICH
+                FROM   TB_MISPAR_ISHI_CHISHUV OS,       
+                            OVDIM O,
+                            TB_YAMEY_AVODA_OVDIM Y,      
+                           ( SELECT * FROM TB_SIDURIM_OVDIM s
+                              WHERE   ( (s.lo_letashlum=0 OR s.lo_letashlum IS NULL)
+                                   OR  (s.lo_letashlum=1 AND s.sug_sidur=69  ))
+                                 AND s.mispar_sidur<>99200
+                                AND  s.taarich BETWEEN p_tar_me AND p_tar_ad) s,
+                       PIVOT_SIDURIM_MEYUCHADIM V_SIDURIM
+                WHERE  os.MISPAR_ISHI = o.MISPAR_ISHI 
+                        AND    os.MISPAR_ISHI = Y.MISPAR_ISHI  
+                        AND    Y.TAARICH BETWEEN os.TAARICH AND LAST_DAY ( os.TAARICH )  
+                        AND    Y.TAARICH = s.TAARICH (+)
+                        AND    y.MISPAR_ISHI = s.MISPAR_ISHI (+)
+                        AND    V_SIDURIM.MISPAR_SIDUR(+) = S.MISPAR_SIDUR
+                                   AND S.TAARICH BETWEEN V_SIDURIM.ME_TARICH(+)
+                                                     AND  V_SIDURIM.AD_TARICH(+)
+                        AND Y.TAARICH BETWEEN p_tar_me AND p_tar_ad
+                  --      AND OS.NUM_PACK =p_num_process 
+                        AND ( Y.STATUS = 1 OR Y.STATUS = 2 )
+                        AND NOT NVL ( S.BITUL_O_HOSAFA, 0 ) IN (1, 3));
+ END  pro_upd_yemey_avoda_bechishuv;
+ 
+  PROCEDURE pro_upd_ymy_avoda_lo_bechishuv IS
+ BEGIN
+     DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Calculation',action_name => 'pro_upd_ymy_avoda_lo_bechishuv  ');
+         UPDATE    TB_YAMEY_AVODA_OVDIM t
+         SET t.BECHISHUV_SACHAR = 0 --,
+          --    t.TAARICH_IDKUN_ACHARON = sysdate
+         WHERE t.BECHISHUV_SACHAR = 1;
+         
+ END  pro_upd_ymy_avoda_lo_bechishuv;
+ PROCEDURE pro_InsYamimLeTavlaRetro(p_maamad IN varchar2, p_bakasha_id in number,p_tar_me IN DATE,p_tar_ad IN DATE ) is
+  begin
+   if (p_maamad is null)then
+             Pkg_Calculation.pro_HafelInsertTavlaRetro(1,p_bakasha_id,p_tar_me,p_tar_ad);--חברים
+             Pkg_Calculation.pro_HafelInsertTavlaRetro(2,p_bakasha_id,p_tar_me,p_tar_ad);--שכירים
+        else
+             Pkg_Calculation.pro_HafelInsertTavlaRetro(p_maamad,p_bakasha_id,p_tar_me,p_tar_ad);
+        end if;
+    
+  end pro_InsYamimLeTavlaRetro;
+ 
+ PROCEDURE pro_HafelInsertTavlaRetro(p_maamad IN varchar2, p_bakasha_id in number,p_tar_me IN DATE,p_tar_ad IN DATE ) IS
+ param271 number;
+ p_zman_hatchala date;
+ p_zman_haavara_lesachar date;
+ p_id_premiot number;
+BEGIN
+
+ --   INSERT INTO TB_YAMIM_LECHISHUV
+      
+select erech_param into param271 
+     from tb_parametrim p
+     where kod_param=271
+         and sysdate between P.ME_TAARICH and P.AD_TAARICH;
+  --  INSERT INTO TB_MISPAR_ISHI_CHISHUV(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack)
+  
+        
+        SELECT max( h2.ZMAN_HATCHALA) into p_zman_hatchala -- h2.BAKASHA_ID, h2.PARAM_ID_1,h2.PARAM_ID_2
+        FROM (SELECT  H.BAKASHA_ID,h.ZMAN_HATCHALA,
+                            MAX(CASE WHEN  (H.Param_ID=1)   THEN H.ERECH  END)    PARAM_ID_1 ,
+                            MAX(CASE WHEN  (H.Param_ID=2)   THEN H.ERECH  END)    PARAM_ID_2
+                 FROM(  SELECT B.BAKASHA_ID,B.ERECH,B.PARAM_ID, T.ZMAN_HATCHALA
+                           FROM TB_BAKASHOT_PARAMS b,TB_BAKASHOT t
+                           WHERE   T.HUAVRA_LESACHAR=1
+                                  AND T.SUG_BAKASHA = 1
+                                  AND B.BAKASHA_ID=T.BAKASHA_ID
+                                  AND B.PARAM_ID IN(1,2) ) H
+                 GROUP BY  H.BAKASHA_ID,H.ZMAN_HATCHALA )  h2
+          where  h2.PARAM_ID_1 =to_char( p_maamad) 
+           and
+             h2.PARAM_ID_2=  to_char(add_months( p_tar_ad,-1),'mm/yyyy');
+                 
+        select T.TAARICH_HAAVARA_LESACHAR into p_zman_haavara_lesachar
+        from TB_BAKASHOT t
+        where t.SUG_BAKASHA = 1
+             and t.ZMAN_HATCHALA=p_zman_hatchala;
+
+        
+        begin    
+            select t.BAKASHA_ID into p_id_premiot
+            from TB_BAKASHOT t
+            where t.SUG_BAKASHA =12
+                 and t.ZMAN_HATCHALA between p_zman_hatchala and p_zman_haavara_lesachar;
+             
+           EXCEPTION
+                   WHEN NO_DATA_FOUND  THEN
+                    p_id_premiot:=-1;
+            end;
+             
+     INSERT INTO TB_MISPAR_ISHI_CHISHUV_RETRO(MISPAR_ISHI,TAARICH, BAKASHA_ID, RETRO_REASON, TAARICH_IDKUN_ACHARON)
+
+            with days as
+                (select  x taarich FROM TABLE(CAST(Convert_String_To_Table(String_Dates_Of_Period(TO_CHAR(p_tar_ad ,'mm/yyyy')),',') AS mytabtype)) ) 
+            , mukpa as
+              (
+                     select mispar_ishi ,count( mispar_ishi ) num
+                     from
+                               ( select   po.mispar_ishi , days.taarich
+                                             from matzav_ovdim po, days, ctb_status s, ovdim o
+                                             where to_date(days.taarich,'dd/mm/yyyy') BETWEEN  po.TAARICH_HATCHALA  AND   NVL(po.TAARICH_SIYUM,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                                                --    and ( Try_Parse_Int(po.kod_matzav) >=40 or Try_Parse_Int(po.kod_matzav) =-1)
+                                                    and PO.KOD_MATZAV=S.KOD_STATUS
+                                                    and po.mispar_ishi=o.mispar_ishi
+                                                    and o.kod_hevra=S.KOD_HEVRA
+                                                    and S.KOD_STATUS_HILAN>=40
+                                    )
+                      group by   mispar_ishi                   
+                      having count(mispar_ishi)= to_number(to_char( p_tar_ad,'DD'))
+                      ),
+             ovdey_5_yamim as         
+                (select f.*
+                from meafyenim_ovdim f
+                where F.KOD_MEAFYEN=56
+                and nvl(F.ERECH_ISHI, F.ERECH_MECHDAL_PARTANY) in('51','52')),
+            /*headrut as
+                   ( SELECT distinct  s.mispar_ishi,s.taarich 
+                    FROM TB_SIDURIM_OVDIM s, TB_SIDURIM_MEYUCHADIM m
+                    where S.TAARICH>=p_tar_me
+                      and ( to_char(S.TAARICH,'d')='7' or ( to_char(S.TAARICH,'d')='6' and exists (select 1 from ovdey_5_yamim d where s.mispar_ishi= d.mispar_ishi 
+                                                                                                                                           and s.taarich between M.ME_TAARICH and nvl(M.ad_TAARICH,to_date('31/12/4712','dd/mm/yyyy'))) ) )
+
+                     and M.KOD_MEAFYEN=53
+                     and M.ERECH in('2','3','4','6')
+                      and s.taarich between M.ME_TAARICH and nvl(M.ad_TAARICH,to_date('31/12/4712','dd/mm/yyyy'))
+                      and S.MISPAR_SIDUR = m.MISPAR_SIDUR) */
+            sidurHeadrutLoLetashlum as
+             ( select S.MISPAR_ISHI, S.TAARICH
+             from tb_sidurim_ovdim s
+             where S.TAARICH between p_tar_me and p_tar_ad
+               and S.LO_LETASHLUM=1
+               and S.KOD_SIBA_LO_LETASHLUM=22
+             ), 
+            sdrn as
+             (
+                 select  mispar_ishi,taarich
+                 from tb_sidurim_ovdim s 
+                 where S.MEADKEN_ACHARON=-12 and S.TAARICH_IDKUN_ACHARON>   p_zman_hatchala
+                   and  s.taarich BETWEEN p_tar_me AND   add_months( p_tar_ad,-1)
+                
+              union
+                
+                 select  mispar_ishi,taarich
+                 from TRAIL_SIDURIM_OVDIM s 
+                 where S.MEADKEN_ACHARON=-12 and S.TAARICH_IDKUN_ACHARON>   p_zman_hatchala
+                    and  s.taarich BETWEEN p_tar_me AND  add_months( p_tar_ad,-1)
+                 
+             )        ,
+             premiot as
+             (
+                    select o.mispar_ishi,o.taarich
+                    from tb_chishuv_chodesh_ovdim o
+                    where o.bakasha_id=p_id_premiot
+                    
+             ),
+           cards as(
+                 SELECT distinct   o.MISPAR_ISHI,y.taarich,Y.MEADKEN_ACHARON,Y.TAARICH_IDKUN_ACHARON
+                  FROM OVDIM o,
+                          (
+                                  SELECT o.mispar_ishi,o.taarich,o.MEADKEN_ACHARON,o.TAARICH_IDKUN_ACHARON
+                                  FROM TB_YAMEY_AVODA_OVDIM o  
+                                  WHERE o.status=1
+                                      AND  o.taarich BETWEEN p_tar_me AND add_months( p_tar_ad,-1)
+                                      --AND O.TAARICH<TO_DATE('01/08/2013','DD/MM/YYYY')
+                              ) y,
+                         (SELECT po.maamad,po.mispar_ishi,PO.DIRUG,PO.DARGA
+                               FROM PIVOT_PIRTEY_OVDIM PO
+                                 WHERE  (p_tar_me   BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                              OR  p_tar_ad  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                              OR   po.ME_TARICH>=p_tar_me AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  p_tar_ad )) p
+                        WHERE o.mispar_ishi=p.mispar_ishi
+                      AND ( (p_maamad='1,2' AND SUBSTR(p.maamad,0,1) IN(1,2) ) OR SUBSTR(p.maamad,0,1)=p_maamad )
+                  --     AND SUBSTR(p.maamad,0,1)=p_maamad
+                       AND O.KOD_HEVRA<>6486
+                       and not( p.dirug=13 and (p.darga=64 or p.darga=70 or p.darga=2 or p.darga=3))
+                       and not( p.dirug=12 and ((p.darga>=21 and p.darga<=30 ) or (p.darga>=62 and p.darga<=72 )))
+                       AND o.mispar_ishi=y.mispar_ishi
+                     and(  (o.mispar_ishi IN( SELECT MISPAR_ISHI FROM mukpa ) and   y.taarich >  add_months(p_tar_ad,-6)) --add_months(v_ad_taarich,-param271))
+                      OR 
+                        (o.mispar_ishi NOT IN( SELECT MISPAR_ISHI FROM mukpa)) )   )
+          
+          select distinct c.mispar_ishi,c.taarich, p_bakasha_id, co.sug_siba,sysdate
+          from cards c,
+          (            
+            select c.mispar_ishi,c.taarich, 1 sug_siba
+               from cards c, tb_meadken_acharon k
+               where  c.mispar_ishi=k.mispar_ishi
+                   and c.taarich=k.taarich
+                   and k.taarich_idkun_acharon>    p_zman_hatchala 
+                   
+             union
+          
+               select c.mispar_ishi,c.taarich, 2 sug_siba
+               from cards c, ovdim_im_shinuy_hr k
+               where  c.mispar_ishi=k.mispar_ishi
+                   and c.taarich=k.taarich
+                   and k.taarich_idkun_hr>   p_zman_hatchala
+                   
+                union
+             /*
+               select c.mispar_ishi,c.taarich, 3 sug_siba
+               from cards c
+               where  
+                      c.taarich_idkun_acharon>    p_zman_hatchala
+                  and c.MEADKEN_ACHARON=-12              
+          */
+               select c.mispar_ishi,c.taarich, 3 sug_siba
+               from cards c, sdrn s
+               where  c.mispar_ishi=s.mispar_ishi
+                   and c.taarich=s.taarich
+                       
+              union
+             
+               select c.mispar_ishi,c.taarich, 4 sug_siba
+               from cards c
+               where  
+                      c.taarich_idkun_acharon>    p_zman_hatchala
+                  and c.MEADKEN_ACHARON=-11   
+                  
+              union
+             
+               select c.mispar_ishi,c.taarich, 5 sug_siba
+               from cards c, tb_idkun_rashemet r
+               where  
+                     c.mispar_ishi=r.mispar_ishi
+                   and c.taarich=r.taarich
+                   and r.taarich_idkun>    p_zman_hatchala 
+                   
+             union
+             
+               select c.mispar_ishi,c.taarich, 6 sug_siba
+               from cards c, sidurHeadrutLoLetashlum s
+               where  
+                     c.mispar_ishi=s.mispar_ishi
+                   and c.taarich=s.taarich    
+              
+                union
+             
+               select c.mispar_ishi,c.taarich, 7 sug_siba
+               from cards c, MATZAV_OVDIM m
+               where  
+                     c.mispar_ishi=m.mispar_ishi
+                   and c.taarich between M.TAARICH_HATCHALA and    NVL( M.TAARICH_SIYUM ,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                   and trim(M.KOD_MATZAV) not  in('01','03','04','05','06','07','08','10')
+                 
+               union
+                 
+               select mispar_ishi, taarich , 8 sug_siba
+                         from    ( 
+                             select d.mispar_ishi, d.taarich 
+                             from cards d, tb_yamey_avoda_ovdim y
+                             where y.meadken_acharon>0
+                             and  y.meadken_acharon <>y.mispar_ishi
+                             and y.mispar_ishi=d.mispar_ishi
+                             and y.taarich=d.taarich
+                             and Y.TAARICH_IDKUN_ACHARON> p_zman_hatchala 
+                             
+                             union
+                             
+                              select d.mispar_ishi, d.taarich
+                             from cards d, TRAIL_YAMEY_AVODA_OVDIM y
+                             where y.meadken_acharon>0
+                             and  y.meadken_acharon <>y.mispar_ishi
+                             and y.mispar_ishi=d.mispar_ishi
+                             and y.taarich=d.taarich
+                             and Y.TAARICH_IDKUN_ACHARON> p_zman_hatchala 
+                             
+                              union
+                              
+                              select d.mispar_ishi, d.taarich
+                             from cards d, tb_sidurim_ovdim y
+                             where y.meadken_acharon>0
+                             and  y.meadken_acharon <>y.mispar_ishi
+                             and y.mispar_ishi=d.mispar_ishi
+                             and y.taarich=d.taarich
+                             and Y.TAARICH_IDKUN_ACHARON> p_zman_hatchala 
+                             
+                              union
+                              
+                              select d.mispar_ishi, d.taarich
+                             from cards d, TRAIL_sidurim_OVDIM y
+                             where y.meadken_acharon>0
+                             and  y.meadken_acharon <>y.mispar_ishi
+                             and y.mispar_ishi=d.mispar_ishi
+                             and y.taarich=d.taarich
+                             and Y.TAARICH_IDKUN_ACHARON> p_zman_hatchala 
+                             
+                               union
+                              
+                              select d.mispar_ishi, d.taarich
+                             from cards d, tb_peilut_ovdim y
+                             where y.meadken_acharon>0
+                             and  y.meadken_acharon <>y.mispar_ishi
+                             and y.mispar_ishi=d.mispar_ishi
+                             and y.taarich=d.taarich
+                             and Y.TAARICH_IDKUN_ACHARON> p_zman_hatchala 
+                             
+                              union
+                              
+                              select d.mispar_ishi, d.taarich
+                             from cards d, TRAIL_peilut_OVDIM y
+                             where y.meadken_acharon>0
+                             and  y.meadken_acharon <>y.mispar_ishi
+                             and y.mispar_ishi=d.mispar_ishi
+                             and y.taarich=d.taarich
+                             and Y.TAARICH_IDKUN_ACHARON> p_zman_hatchala   
+                     )      
+             
+             union
+                    
+                    select c.mispar_ishi, c.taarich,9 sug_siba
+                    from cards c,premiot p
+                    where  c.mispar_ishi=p.mispar_ishi
+                         and c.taarich between p.taarich and last_day(p.taarich)
+                         and c.TAARICH_IDKUN_ACHARON between    p_zman_hatchala and p_zman_haavara_lesachar
+                   
+             union
+                    
+                    select c.mispar_ishi, c.taarich,9 sug_siba
+                    from cards c,premiot p, TRAIL_YAMEY_AVODA_OVDIM y
+                    where  c.mispar_ishi=p.mispar_ishi
+                         and c.taarich between p.taarich and last_day(p.taarich)
+                         and  c.mispar_ishi=y.mispar_ishi
+                         and c.taarich=y.taarich
+                         and y.TAARICH_IDKUN_ACHARON between    p_zman_hatchala and p_zman_haavara_lesachar
+                         
+            union
+                    
+                    select c.mispar_ishi, c.taarich,10 sug_siba
+                    from cards c
+                    where  C.TAARICH_IDKUN_ACHARON between    p_zman_hatchala and p_zman_haavara_lesachar
+                    
+               union
+                    
+                    select c.mispar_ishi, c.taarich,12 sug_siba
+                    from cards c,tb_chishuv_chodesh_ovdim o, tb_bakashot t
+                    where c.mispar_ishi=o.mispar_ishi
+                    and c.taarich between o.taarich and last_day( o.taarich)
+                     and o.bakasha_id=t.bakasha_id
+                     and t.sug_bakasha=12
+                     and T.ZMAN_HATCHALA>   p_zman_hatchala        
+                     and  C.TAARICH_IDKUN_ACHARON >    p_zman_hatchala          
+                    
+             union
+             
+               select c.mispar_ishi,c.taarich, 13 sug_siba
+               from cards c
+               where  
+                      c.taarich_idkun_acharon>    p_zman_hatchala
+                  and c.MEADKEN_ACHARON=-3 
+                  
+             union
+             
+               select c.mispar_ishi,c.taarich, 14 sug_siba
+               from cards c
+               where  
+                      c.taarich_idkun_acharon>    p_zman_hatchala
+                  and c.MEADKEN_ACHARON=-4          
+                  ) co
+                  
+                  where c.mispar_ishi=co.mispar_ishi(+)
+                  and c.taarich=co.taarich(+);
+       COMMIT;
+  EXCEPTION
+       WHEN OTHERS THEN
+                RAISE;
+END pro_HafelInsertTavlaRetro;
+END Pkg_Calculation;
 /
 
 
@@ -6025,7 +10545,7 @@ BEGIN
 		              po.mispar_ishi= o.mispar_ishi AND
 		              s.kod_hevra = ez.kod_hevra AND
 		              s.kod_snif_av = po.snif_av AND
-		              ma.kod_maamad_hr = po.maamad AND
+		              ma.kod_maamad_hr(+) = po.maamad AND
 		              ez.kod_ezor = po.ezor AND
 		              ck.KOD_HEVRA = o.KOD_HEVRA AND
 		              ck.KOD_ISUK = po.ISUK AND
@@ -6642,6 +11162,32 @@ EXCEPTION
        WHEN OTHERS THEN
               RAISE;       
 END  pro_get_workcad_no_val_letash;
+
+
+procedure pro_get_ovdim_to_yechida(p_tar_me IN DATE,p_tar_ad IN DATE,
+                                                                 p_yechida IN NUMBER,  p_cur OUT CurType)  AS
+/*p_tar_me date;
+p_tar_ad date;
+p_yechida number;*/
+begin
+/*
+p_tar_me:= to_date('01/04/2014','dd/mm/yyyy');
+p_tar_ad:= to_date('01/04/2014','dd/mm/yyyy');
+p_yechida:=24505;*/
+    open p_cur for
+         SELECT mispar_ishi as MisparIshi, me_tarich as TaarichMe ,ad_tarich as TaarichAd,  YECHIDA_IRGUNIT as YechidaIrgunit, isuk as Isuk
+          FROM ( SELECT   t.mispar_ishi , 
+                        MAX( t.ME_TARICH) OVER (PARTITION BY t.mispar_ishi) me_tarich,
+                     t.ad_tarich, T.YECHIDA_IRGUNIT, t.isuk, 
+                      row_number() OVER (PARTITION BY t.mispar_ishi ORDER BY me_tarich desc) seq
+                FROM  PIVOT_PIRTEY_OVDIM t
+                WHERE T.YECHIDA_IRGUNIT = p_yechida
+                    AND (   p_tar_me    BETWEEN ME_TARICH  AND NVL(t.ad_TARICH,TO_DATE(  '01/01/9999'  ,  'dd/mm/yyyy'  ))
+                         OR   p_tar_ad     BETWEEN ME_TARICH AND NVL(t.ad_TARICH,TO_DATE(  '01/01/9999'  ,  'dd/mm/yyyy'  )) 
+                         OR t.ME_TARICH>=  p_tar_me   AND NVL(t.ad_TARICH,TO_DATE(  '01/01/9999'   ,'dd/mm/yyyy'  ))<=  p_tar_ad   )
+                 ORDER BY mispar_ishi) a
+            WHERE a.seq=1;  
+end   pro_get_ovdim_to_yechida;                                                                  
 END Pkg_Ovdim;
 /
 
@@ -11753,7 +16299,7 @@ with p as
 select S.TAARICH, s.mispar_ishi, O.SHEM_MISH || ' ' || O.SHEM_PRAT shem, SNIF.TEUR_SNIF_AV, I.TEUR_ISUK,
         (Pkg_Ovdim.fun_get_meafyen_oved(s.mispar_ishi, 3, P_ENDDATE )) START_TIME_ALLOWED ,
         (Pkg_Ovdim.fun_get_meafyen_oved(s.mispar_ishi, 4, P_ENDDATE  )) END_TIME_ALLOWED  ,   
-           TO_NUMBER( TO_CHAR(  (S.SHAT_GMAR_LETASHLUM - S.SHAT_HATCHALA_LETASHLUM)*1440,'99999.99') ) dakot_nocechut,
+           TO_NUMBER( TO_CHAR(  (S.SHAT_GMAR_LETASHLUM - S.SHAT_HATCHALA_LETASHLUM)*1440,'9999999999.99') ) dakot_nocechut,
          S.MISPAR_SIDUR,M.TEUR_SIDUR_MEYCHAD,
           to_char(S.SHAT_HATCHALA ,'HH24:mi')  SHAT_HATCHALA,
           to_char(S.SHAT_GMAR ,'HH24:mi')  SHAT_GMAR,
@@ -11816,7 +16362,7 @@ begin
         return 'אין דיווח';
      end if;
 
-    if( mispar_sidur is not null and (shat_hatchala is null or shat_gmar  is null)  and mispar_sidur<>99200) then
+    if( mispar_sidur is not null and (shat_hatchala is null or shat_hatchala=to_date('01/01/0001','dd/mm/yyyy') or shat_gmar  is null)  and mispar_sidur<>99200) then
       p_heara_ezer:= 'חסר דיווח';
     end if;
 
@@ -12859,12 +17405,12 @@ PROCEDURE pro_rechivey_headrut_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                               p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
                                                               p_cur OUT CurType) IS
     tar_me date;       
-    list_rechivim nvarchar2(100);        
+    list_rechivim nvarchar2(150);        
   -- p_taarich  DATE;                                                             
  BEGIN  
  --p_taarich:=to_date('31/08/2010','dd/mm/yyyy');
    tar_me:= to_date('01/' ||  to_char(p_taarich,'mm/yyyy'),'dd/mm/yyyy');
-   list_rechivim:= '53,56,57,60,61,62,64,65,66,67,68,69,70,71,72,266,280';    
+   list_rechivim:= '53,56,57,60,61,62,64,65,66,67,68,69,70,71,72,266,280,289,290';    
    
    open  p_cur for                  
     select   
@@ -12885,7 +17431,9 @@ PROCEDURE pro_rechivey_headrut_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
           max(case to_number(kod_rechiv) when 71 then  erech_rechiv end ) r71 ,
           max(case to_number(kod_rechiv) when 72 then  erech_rechiv end ) r72,
           max(case to_number(kod_rechiv) when 266 then  erech_rechiv end ) r266,
-          max(case to_number(kod_rechiv) when 280 then  erech_rechiv end ) r280
+          max(case to_number(kod_rechiv) when 280 then  erech_rechiv end ) r280,
+          max(case to_number(kod_rechiv) when 289 then  erech_rechiv end ) r289,
+          max(case to_number(kod_rechiv) when 290 then  erech_rechiv end ) r290
    from(     
    select  C.KOD_RECHIV,C.ERECH_RECHIV
    from TB_CHISHUV_CHODESH_OVDIM C
@@ -12902,17 +17450,17 @@ PROCEDURE pro_rechivey_shonot_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                               p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
                                                               p_cur OUT CurType) IS
     tar_me date;       
-    list_rechivim nvarchar2(100);        
+    list_rechivim nvarchar2(200);        
  --p_taarich  DATE;                                                             
  BEGIN  
  --p_taarich:=to_date('31/08/2010','dd/mm/yyyy');
    tar_me:= to_date('01/' ||  to_char(p_taarich,'mm/yyyy'),'dd/mm/yyyy');
-   list_rechivim:= '1,10,11,12,39,41,43,75,95,112,113,114,115,116,117,118,126,204,205';                          
+   list_rechivim:= '1,10,11,12,39,41,43,75,95,112,113,114,115,116,117,118,126,204,205,206,224,225,226,227,228,229,230,231,232,242,243,247,282,283,284,285,286,287,288';                         
    
    open  p_cur for                  
-    select r.*,py.*
+    /*select r.*,py.*
     from
-        (  select   
+        (  */select   
               max(case to_number(kod_rechiv) when 1 then  erech_rechiv end ) r1,
               max(case to_number(kod_rechiv) when 10 then  erech_rechiv end ) r10 ,
               max(case to_number(kod_rechiv) when 11 then  erech_rechiv end ) r11 ,
@@ -12932,8 +17480,29 @@ PROCEDURE pro_rechivey_shonot_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
            --   max(case to_number(kod_rechiv) when 126 then  erech_rechiv end ) r126,
          --  pkg_rikuz_avoda.getMaxRechivYomi(p_mispar_ishi , tar_me, p_bakasha_id,126) r126,
              pkg_rikuz_avoda.getErechChelki(p_mispar_ishi , tar_me, p_bakasha_id,126,1) r126,
-              max(case to_number(kod_rechiv) when 204 then  erech_rechiv end ) r204,
-              max(case to_number(kod_rechiv) when 205 then  erech_rechiv end ) r205,
+                    max(case to_number(kod_rechiv) when 204 then  erech_rechiv end ) r204,
+                max(case to_number(kod_rechiv) when 205 then  erech_rechiv end ) r205,
+                 max(case to_number(kod_rechiv) when 206 then  erech_rechiv end ) r206,
+                max(case to_number(kod_rechiv) when 224 then  erech_rechiv end ) r224,
+                max(case to_number(kod_rechiv) when 225 then  erech_rechiv end ) r225,
+                max(case to_number(kod_rechiv) when 226 then  erech_rechiv end ) r226,
+                max(case to_number(kod_rechiv) when 227 then  erech_rechiv end ) r227,
+                max(case to_number(kod_rechiv) when 228 then  erech_rechiv end ) r228,
+                max(case to_number(kod_rechiv) when 229then  erech_rechiv end ) r229,
+                max(case to_number(kod_rechiv) when 230 then  erech_rechiv end ) r230,
+                max(case to_number(kod_rechiv) when 231 then  erech_rechiv end ) r231,
+                max(case to_number(kod_rechiv) when 232 then  erech_rechiv end ) r232,
+                max(case to_number(kod_rechiv) when 242 then  erech_rechiv end ) r242,
+                max(case to_number(kod_rechiv) when 243 then  erech_rechiv end ) r243,
+               max(case to_number(kod_rechiv) when 247 then  erech_rechiv end ) r247,
+                max(case to_number(kod_rechiv) when 282 then  erech_rechiv end ) r282,
+                max(case to_number(kod_rechiv) when 283 then  erech_rechiv end ) r283,
+                max(case to_number(kod_rechiv) when 284 then  erech_rechiv end ) r284,
+                max(case to_number(kod_rechiv) when 285 then  erech_rechiv end ) r285,
+                max(case to_number(kod_rechiv) when 286 then  erech_rechiv end ) r286,
+                max(case to_number(kod_rechiv) when 287 then  erech_rechiv end ) r287,
+                max(case to_number(kod_rechiv) when 288 then  erech_rechiv end ) r288,
+          
               pkg_rikuz_avoda.getErechChelki(p_mispar_ishi , tar_me, p_bakasha_id,1,75) r1b
        from(     
        select  C.KOD_RECHIV,C.ERECH_RECHIV
@@ -12941,7 +17510,7 @@ PROCEDURE pro_rechivey_shonot_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
        where c.Mispar_Ishi=p_mispar_ishi 
                   and C.Bakasha_ID=p_bakasha_id
                   AND c.taarich between tar_me and last_day(tar_me) 
-                  and  c.Kod_Rechiv in ( SELECT X FROM TABLE(CAST(Convert_String_To_Table( list_rechivim,  ',') AS MYTABTYPE))) ) p  ) r,
+                  and  c.Kod_Rechiv in ( SELECT X FROM TABLE(CAST(Convert_String_To_Table( list_rechivim,  ',') AS MYTABTYPE))) ) p ;/* ) r,
       (select   
               max(case to_number(SUG_PREMYA) when 100 then  dakot_premya end ) py100,
               max(case to_number(SUG_PREMYA) when 101 then  dakot_premya end )  py101,
@@ -12959,7 +17528,7 @@ PROCEDURE pro_rechivey_shonot_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
            from    TB_PREMYOT_YADANIYOT
            where Mispar_Ishi=p_mispar_ishi 
             AND taarich = tar_me
-            and SUG_PREMYA between 100 and 110) x) py;            
+            and SUG_PREMYA between 100 and 110) x) py;        */    
     /*  (select *
        from
           ( select  SUG_PREMYA  ,dakot_premya
@@ -13059,7 +17628,7 @@ PROCEDURE Pro_get_num_rechivim(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
  BEGIN  
   -- p_taarich:=to_date('31/08/2010','dd/mm/yyyy');
    tar_me:= to_date('01/' ||  to_char(p_taarich,'mm/yyyy'),'dd/mm/yyyy');
-   list_RechiveyHeadrut:=  '56,57,64,68,69,70,71,72,65';   
+   list_RechiveyHeadrut:=  '53,56,57,64,68,69,70,71,72,65,280,289,290';   
     list_RechiveyShonot:=    '10,11,39,41,43,95,112,113,114,115,116,117,118,126,204,205';   -- not insert 12,1,75
    --1 סוג העדרות
    --2 שונות
@@ -13411,7 +17980,7 @@ PROCEDURE pro_rechivey_headrut_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
  BEGIN  
  --p_taarich:=to_date('31/08/2010','dd/mm/yyyy');
    tar_me:= to_date('01/' ||  to_char(p_taarich,'mm/yyyy'),'dd/mm/yyyy');
-   list_rechivim:= '53,56,57,60,61,62,64,65,66,67,68,69,70,71,72,266,280';    
+   list_rechivim:= '53,56,57,60,61,62,64,65,66,67,68,69,70,71,72,266,280,289,290';    
    
    open  p_cur for                  
     select   
@@ -13432,7 +18001,9 @@ PROCEDURE pro_rechivey_headrut_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
           max(case to_number(kod_rechiv) when 71 then  erech_rechiv end ) r71 ,
           max(case to_number(kod_rechiv) when 72 then  erech_rechiv end ) r72,
           max(case to_number(kod_rechiv) when 266 then  erech_rechiv end ) r266,
-          max(case to_number(kod_rechiv) when 280 then  erech_rechiv end ) r280
+          max(case to_number(kod_rechiv) when 280 then  erech_rechiv end ) r280,
+             max(case to_number(kod_rechiv) when 289 then  erech_rechiv end ) r289,
+          max(case to_number(kod_rechiv) when 290 then  erech_rechiv end ) r290
    from(     
    select  C.KOD_RECHIV,C.ERECH_RECHIV
    from TB_TMP_CHISHUV_CHODESH_OVDIM C
@@ -13449,17 +18020,17 @@ PROCEDURE pro_rechivey_shonot_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                               p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
                                                               p_cur OUT CurType) IS
     tar_me date;       
-    list_rechivim nvarchar2(100);        
+    list_rechivim nvarchar2(200);        
  --p_taarich  DATE;                                                             
  BEGIN  
  --p_taarich:=to_date('31/08/2010','dd/mm/yyyy');
    tar_me:= to_date('01/' ||  to_char(p_taarich,'mm/yyyy'),'dd/mm/yyyy');
-   list_rechivim:= '1,10,11,12,39,41,43,75,95,112,113,114,115,116,117,118,126,204,205';    
+   list_rechivim:= '1,10,11,12,39,41,43,75,95,112,113,114,115,116,117,118,126,204,205,206,224,225,226,227,228,229,230,231,232,242,243,247,282,283,284,285,286,287,288';    
   
    open  p_cur for                  
-      select r.*,py.*
+     /* select r.*,py.*
     from
-        (  select   
+        (  */select   
               max(case to_number(kod_rechiv) when 1 then  erech_rechiv end ) r1,
               max(case to_number(kod_rechiv) when 10 then  erech_rechiv end ) r10 ,
               max(case to_number(kod_rechiv) when 11 then  erech_rechiv end ) r11 ,
@@ -13480,7 +18051,28 @@ PROCEDURE pro_rechivey_shonot_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
          --  pkg_rikuz_avoda.getMaxRechivYomi(p_mispar_ishi , tar_me, p_bakasha_id,126) r126,
              pkg_rikuz_avoda.getErechChelki(p_mispar_ishi , tar_me, p_bakasha_id,126,1) r126,
               max(case to_number(kod_rechiv) when 204 then  erech_rechiv end ) r204,
-              max(case to_number(kod_rechiv) when 205 then  erech_rechiv end ) r205,
+                max(case to_number(kod_rechiv) when 205 then  erech_rechiv end ) r205,
+                 max(case to_number(kod_rechiv) when 206 then  erech_rechiv end ) r206,
+                max(case to_number(kod_rechiv) when 224 then  erech_rechiv end ) r224,
+                max(case to_number(kod_rechiv) when 225 then  erech_rechiv end ) r225,
+                max(case to_number(kod_rechiv) when 226 then  erech_rechiv end ) r226,
+                max(case to_number(kod_rechiv) when 227 then  erech_rechiv end ) r227,
+                max(case to_number(kod_rechiv) when 228 then  erech_rechiv end ) r228,
+                max(case to_number(kod_rechiv) when 229then  erech_rechiv end ) r229,
+                max(case to_number(kod_rechiv) when 230 then  erech_rechiv end ) r230,
+                max(case to_number(kod_rechiv) when 231 then  erech_rechiv end ) r231,
+                max(case to_number(kod_rechiv) when 232 then  erech_rechiv end ) r232,
+                max(case to_number(kod_rechiv) when 242 then  erech_rechiv end ) r242,
+                max(case to_number(kod_rechiv) when 243 then  erech_rechiv end ) r243,
+                 max(case to_number(kod_rechiv) when 247 then  erech_rechiv end ) r247,
+                max(case to_number(kod_rechiv) when 282 then  erech_rechiv end ) r282,
+                max(case to_number(kod_rechiv) when 283 then  erech_rechiv end ) r283,
+                max(case to_number(kod_rechiv) when 284 then  erech_rechiv end ) r284,
+                max(case to_number(kod_rechiv) when 285 then  erech_rechiv end ) r285,
+                max(case to_number(kod_rechiv) when 286 then  erech_rechiv end ) r286,
+                max(case to_number(kod_rechiv) when 287 then  erech_rechiv end ) r287,
+                max(case to_number(kod_rechiv) when 288 then  erech_rechiv end ) r288,
+          
               pkg_rikuz_avoda.getErechChelki(p_mispar_ishi , tar_me, p_bakasha_id,1,75) r1b
        from(     
        select  C.KOD_RECHIV,C.ERECH_RECHIV
@@ -13488,7 +18080,7 @@ PROCEDURE pro_rechivey_shonot_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
        where c.Mispar_Ishi=p_mispar_ishi 
                   and C.Bakasha_ID=p_bakasha_id
                   AND c.taarich between tar_me and last_day(tar_me) 
-                  and  c.Kod_Rechiv in ( SELECT X FROM TABLE(CAST(Convert_String_To_Table( list_rechivim,  ',') AS MYTABTYPE))) ) p  ) r,
+                  and  c.Kod_Rechiv in ( SELECT X FROM TABLE(CAST(Convert_String_To_Table( list_rechivim,  ',') AS MYTABTYPE))) ) p;  /*) r,
       (select   
               max(case to_number(SUG_PREMYA) when 100 then  dakot_premya end ) py100,
               max(case to_number(SUG_PREMYA) when 101 then  dakot_premya end )  py101,
@@ -13506,7 +18098,7 @@ PROCEDURE pro_rechivey_shonot_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
            from    TB_PREMYOT_YADANIYOT
            where Mispar_Ishi=p_mispar_ishi 
             AND taarich = tar_me
-            and SUG_PREMYA between 100 and 110) x) py;       
+            and SUG_PREMYA between 100 and 110) x) py;      */ 
               
 end pro_rechivey_shonot_tmp;
 /******************************************
@@ -13641,7 +18233,7 @@ PROCEDURE Pro_get_num_rechivim_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
  BEGIN
   -- p_taarich:=to_date('31/08/2010','dd/mm/yyyy');
    tar_me:= to_date('01/' ||  to_char(p_taarich,'mm/yyyy'),'dd/mm/yyyy');
-   list_RechiveyHeadrut:=  '56,57,64,68,69,70,71,72,65';   
+   list_RechiveyHeadrut:=  '53,56,57,64,68,69,70,71,72,65,280,289,290';                          
    list_RechiveyShonot:=    '10,11,39,41,43,95,112,113,114,115,116,117,118,126,204,205';   -- not insert 12,1,75
    
    --1 סוג העדרות
@@ -13770,4 +18362,1827 @@ end Pro_get_recivey_premyot;
 
 
 END PKG_RIKUZ_AVODA;
+/
+
+
+CREATE OR REPLACE PACKAGE body          PKG_TASK_MANAGER AS
+procedure GetActionParameters ( p_GroupId in TB_PARAMETRS_PEILUYOT.kod_kvuza%type ,
+                                                p_OrderId in TB_PARAMETRS_PEILUYOT.KOD_PEILUT_BEkvuzA%type ,
+                                                 p_cur OUT CurType ) is 
+begin 
+OPEN p_cur FOR
+select PP.SUG_PARAMETR ParamType,
+        PP.SHEM_PARAMETR ParamName,
+        PP.ERECH_PARAMETR ParamValue  from TB_PARAMETRS_PEILUYOT Pp
+where PP.KOD_kvuzA = p_GroupId
+and PP.KOD_PEILUT_BEkvuzA =  p_OrderId ;
+  
+        EXCEPTION 
+        WHEN OTHERS THEN
+        RAISE;
+END GetActionParameters; 
+
+ 
+procedure  GetKvuzot (  p_cur OUT CurType ) is 
+DateRunning date ;
+begin
+DateRunning := sysdate ;--- 0.3 ; 
+OPEN p_cur FOR
+select km.kod_kvuza IDGROUP ,  nvl(moed_tchila,trunc(DateRunning))   STARTTIME ,   nvl(moed_siyum,trunc(DateRunning)+1439/1440+59/86400)    ENDTIME ,tamid  CYCLE
+from tb_kvuzot  km  --, TB_PEILUYOT_BEKVUZA PB
+where km.pail=1
+   and tamid=1
+   and nvl(to_char(hafaala_be_taarich,'dd'),to_char(DateRunning,'dd'))=to_char(DateRunning,'dd')
+   and to_char(DateRunning,'hh24:mi:ss') <= to_char(nvl(moed_siyum, to_date('23:59:59','hh24:mi:ss')),'hh24:mi:ss')
+   and DateRunning between km.me_taarich and km.ad_taarich
+   and exists (select * from TB_PEILUYOT_BEKVUZA PB
+  	  		 		   where PB.KOD_KVUZA = KM.KOD_KVUZA
+					   		 			    and PB.PAIL = 1)
+     --and PB.KOD_KVUZA = KM.KOD_KVUZA
+   --and PB.PAIL = 1
+   -- no need to check if already run because it is always
+ union all
+  select km.kod_kvuza, moed_tchila,  moed_siyum,  tamid  
+ from tb_kvuzot km --, TB_PEILUYOT_BEKVUZA PB
+   where km.pail=1
+  and nvl(tamid,0)<>1
+  and nvl(to_char(hafaala_be_taarich,'dd'),to_char(DateRunning,'dd'))=to_char(DateRunning,'dd')
+   and to_char(DateRunning,'hh24:mi:ss') <= to_char(nvl(moed_siyum, to_date('23:59:59','hh24:mi:ss')),'hh24:mi:ss')
+  and DateRunning between km.me_taarich and km.ad_taarich
+  and exists (select * from TB_PEILUYOT_BEKVUZA PB
+  	  		 		   where PB.KOD_KVUZA = KM.KOD_KVUZA
+					   		 			    and PB.PAIL = 1)
+--    and PB.KOD_KVUZA = KM.KOD_KVUZA
+--   and PB.PAIL = 1
+   -- check if already run because it is only once:
+  and not exists(select * from tb_log_kvuzot  l
+  	  	  				  	   where km.kod_kvuza=l.kod_kvuza
+							   and trunc(DateRunning)=trunc(l.moed_tchila)
+							    and  nvl(status,0)>0 )
+  order by IDGROUP;
+
+EXCEPTION
+       WHEN OTHERS THEN
+            RAISE;
+
+END GetKvuzot;
+
+procedure  GetPeiluyotBekvuza (  pKvuza in TB_kvuzot.kod_kvuza%type ,  p_cur OUT CurType ) is 
+begin 
+OPEN p_cur FOR
+select kod_kvuza,kod_peilut_bekvuza IDORDER,sug_peilut TYPECOMMAND,
+im_nichshal ONFAILURE ,maslul_sifriya LIBRARYNAME ,shigra_lebizua COMMANDNAME,seq_kvuzot.nextval SEQuence
+from (select kod_kvuza,kod_peilut_bekvuza  ,sug_peilut  ,
+im_nichshal   ,maslul_sifriya   ,shigra_lebizua  
+from tb_peiluyot_bekvuza p
+where p.kod_kvuza=pKvuza 
+and pail=1
+   and sysdate between me_taarich and ad_taarich
+   --20140724:
+  order by kod_peilut_bekvuza) ;
+EXCEPTION
+       WHEN OTHERS THEN
+            RAISE;
+END GetPeiluyotBekvuza;
+
+ procedure InsLogKvuzot( LOGTASKMSG in   obj_LOGTASKMSG) is 
+begin 
+
+/*
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.IDGROUP',LOGTASKMSG.IDGROUP);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.idorder',LOGTASKMSG.idorder);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.sequence',LOGTASKMSG.sequence);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.STARTTIME',LOGTASKMSG.STARTTIME);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.ENDTIME',LOGTASKMSG.ENDTIME);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.STATUSID',LOGTASKMSG.STATUSID);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.REMARK',LOGTASKMSG.REMARK);
+*/
+insert into tb_log_kvuzot (kod_kvuza ,kod_peilut_bekvuza ,seq, moed_tchila,moed_siyum ,STATUS ,teur_tech) 
+values (LOGTASKMSG.IDGROUP,
+LOGTASKMSG.idorder,
+LOGTASKMSG.sequence,
+LOGTASKMSG.STARTTIME,
+LOGTASKMSG.ENDTIME,
+LOGTASKMSG.STATUSID,
+LOGTASKMSG.REMARK) ; 
+
+
+EXCEPTION
+       WHEN OTHERS THEN
+            RAISE;
+
+END  InsLogKvuzot;
+
+procedure UpdLogKvuzot( LOGTASKMSG in   obj_LOGTASKMSG) is 
+begin 
+
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.IDGROUP',LOGTASKMSG.IDGROUP);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.idorder',LOGTASKMSG.idorder);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.sequence',LOGTASKMSG.sequence);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.STARTTIME',LOGTASKMSG.STARTTIME);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.ENDTIME',LOGTASKMSG.ENDTIME);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.STATUSID',LOGTASKMSG.STATUSID);
+INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'InsLogKvuzot:LOGTASKMSG.REMARK',LOGTASKMSG.REMARK);
+
+
+update tb_log_kvuzot 
+set 
+moed_tchila=  decode(LOGTASKMSG.STARTTIME, to_date('01/01/0001' ,'dd/mm/yyyy'), moed_tchila,null,moed_tchila,LOGTASKMSG.STARTTIME)  ,  
+moed_siyum=decode(LOGTASKMSG.ENDTIME, to_date('01/01/0001' ,'dd/mm/yyyy'),moed_siyum,null,moed_siyum,LOGTASKMSG.ENDTIME)  ,
+STATUS=decode(LOGTASKMSG.STATUSID, null, STATUS ,LOGTASKMSG.STATUSID)  ,
+teur_tech=decode(LOGTASKMSG.REMARK, null,teur_tech, LOGTASKMSG.REMARK)  
+where kod_kvuza=LOGTASKMSG.IDGROUP
+and kod_peilut_bekvuza=LOGTASKMSG.idorder
+and seq=LOGTASKMSG.sequence;
+
+EXCEPTION
+       WHEN OTHERS THEN
+            RAISE;
+
+END UpdLogKvuzot;
+
+procedure  ListKvuzot (  p_cur OUT CurType ) is 
+begin 
+OPEN p_cur FOR
+select k.kod_kvuza,c.teur_kvuza,k.moed_tchila,k.moed_siyum,k.hafaala_be_taarich,
+k.tamid||' '||decode(tamid,0,'לפעמים',1,'תמיד',null,'לא תמיד',tamid),
+k.pail||' '||decode(k.pail,0,'לא',1,'פעיל',k.pail)
+from tb_kvuzot k,ctb_kvuzot c
+where   k.kod_kvuza=c.kod_kvuza(+)
+ and (( k.tamid=1 and   nvl(to_char(k.hafaala_be_taarich,'dd'),to_char(sysdate,'dd'))=to_char(sysdate,'dd')
+   and to_char(sysdate,'hh24:mi') <= to_char(nvl(k.moed_siyum, to_date('23:59','hh24:mi')),'hh24:mi')
+   and sysdate between k.me_taarich and k.ad_taarich)
+or (  nvl(k.tamid,0)<>1
+  and nvl(to_char(k.hafaala_be_taarich,'dd'),to_char(sysdate,'dd'))=to_char(sysdate,'dd')
+  and to_char(sysdate,'hh24:mi') <= to_char(nvl(k.moed_siyum, to_date('23:59','hh24:mi')),'hh24:mi')
+  and sysdate between k.me_taarich and k.ad_taarich
+   and not exists(select * from tb_log_kvuzot  l
+  	  	  				  	   where k.kod_kvuza=l.kod_kvuza
+							   and trunc(sysdate)=trunc(l.moed_tchila)
+							    and  nvl(l.status,0)>0 )));
+
+EXCEPTION
+       WHEN OTHERS THEN
+            RAISE;
+
+END ListKvuzot ;
+ 
+ procedure  ListLogKvuzot (  p_cur OUT CurType ) is 
+begin 
+OPEN p_cur FOR
+select l.kod_kvuza,c.teur_kvuza,l.kod_peilut_bekvuza,p.TEUR_KVUZA,l.seq,l.moed_tchila,l.moed_siyum,
+l.status,s.TEUR_STATUS_KVUZA,l.teur_tech
+from  tb_log_kvuzot l,ctb_kvuzot c,ctb_peiluyot_bekvuza p,ctb_status_kvuza s
+where l.kod_kvuza=c.kod_kvuza(+)
+and p.KOD_KVUZA=l.kod_kvuza(+)
+and p.KOD_PEILUT_BEKVUZA=l.kod_peilut_bekvuza(+)
+and nvl(l.status,0)=s.KOD_STATUS_KVUZA(+)
+and l.moed_tchila>sysdate-0.5
+order by seq desc;
+
+EXCEPTION
+       WHEN OTHERS THEN
+            RAISE;
+
+END ListLogKvuzot  ;
+
+procedure GetStuckGroup ( p_GroupId in number , p_ActionId in number , p_Cur out CurTYPE ) is 
+begin 
+OPEN p_cur FOR
+select C.TEUR_KVUZA || ' (' || C.KOD_KVUZA|| ')'    GroupDesc  , P.TEUR_KVUZA || ' (' || P.KOD_PEILUT_BEKVUZA || ')'     ActionDesc , DELTA_OF_PERIOD (L.MOED_TCHILA , sysdate) Delta  
+from  tb_log_kvuzot l,ctb_kvuzot c,ctb_peiluyot_bekvuza p
+where l.kod_kvuza=c.kod_kvuza(+)
+and p.KOD_KVUZA=l.kod_kvuza(+)
+and p.KOD_PEILUT_BEKVUZA=l.kod_peilut_bekvuza(+)
+and L.STATUS = 1 
+and L.SEQ in (
+            select max(seq)
+            from            tb_log_kvuzot l
+            group by L.KOD_KVUZA, L.KOD_PEILUT_BEKVUZA)
+and p.KOD_KVUZA = p_GroupId
+and p.KOD_PEILUT_BEKVUZA = p_ActionId ; 
+
+EXCEPTION
+       WHEN OTHERS THEN
+            RAISE;
+
+END GetStuckGroup  ;
+
+
+ procedure GetLogKvuzotByKod (p_kod_kvuza in number,p_kod_peilut in number, p_taarich date, p_cur OUT CurType ) is 
+begin 
+OPEN p_cur FOR
+select l.kod_kvuza,c.teur_kvuza,l.kod_peilut_bekvuza,p.TEUR_KVUZA,l.seq,l.moed_tchila,l.moed_siyum,
+l.status,s.TEUR_STATUS_KVUZA,l.teur_tech
+from  tb_log_kvuzot l,ctb_kvuzot c,ctb_peiluyot_bekvuza p,ctb_status_kvuza s
+where l.kod_kvuza=c.kod_kvuza(+)
+and p.KOD_KVUZA=l.kod_kvuza(+)
+and p.KOD_PEILUT_BEKVUZA=l.kod_peilut_bekvuza(+)
+and nvl(l.status,0)=s.KOD_STATUS_KVUZA(+)
+and trunc( l.moed_tchila) =trunc(p_taarich)
+AND L.KOD_KVUZA=p_kod_kvuza
+and L.STATUS<>0 
+and P.KOD_PEILUT_BEKVUZA=p_kod_peilut
+order by l.moed_tchila desc;
+
+EXCEPTION
+       WHEN OTHERS THEN
+            RAISE;
+
+END GetLogKvuzotByKod  ;
+
+
+END PKG_TASK_MANAGER;
+/
+
+
+CREATE OR REPLACE PACKAGE BODY          Pkg_Utils AS
+/******************************************************************************
+   NAME:       PKG_UTILS
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        26/04/2009             1. Created this package.
+******************************************************************************/
+
+PROCEDURE MoveRecordsToHistory 
+IS
+     param NUMBER;
+	fromDate DATE;
+	toDate DATE;
+	 err_code NUMBER;
+	  err_msg VARCHAR2(100);
+  BEGIN
+DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'MoveRecordsToHistory');
+  SELECT SM.ERECH_PARAM INTO param
+  FROM TB_PARAMETRIM SM
+  WHERE SM.KOD_PARAM =100   AND
+	   SYSDATE BETWEEN SM.ME_TAARICH AND SM.AD_TAARICH;
+	   
+  SELECT ADD_MONTHS(TRUNC(SYSDATE, 'MM'),param*-1) INTO fromDate FROM dual;
+   SELECT  LAST_DAY(fromDate) INTO toDate FROM dual;
+
+
+		INSERT  INTO HISTORY_YAMEY_AVODA_OVDIM
+        -- 2013/08/20 (MISPAR_ISHI,TAARICH,SHAT_HATCHALA,SHAT_SIYUM,TACHOGRAF,BITUL_ZMAN_NESIOT,ZMAN_NESIA_HALOCH,ZMAN_NESIA_HAZOR,HALBASHA,LINA,HASHLAMA_LEYOM,SIBAT_HASHLAMA_LEYOM,STATUS,KOD_HISTAYGUT_AUTO,MEASHER_O_MISTAYEG,STATUS_TIPUL,MEADKEN_ACHARON,TAARICH_IDKUN_ACHARON,HEARA,HAMARAT_SHABAT)
+		--  2013/08/20 (
+         SELECT *
+        -- 2013/08/20 MISPAR_ISHI,TAARICH,SHAT_HATCHALA,SHAT_SIYUM,TACHOGRAF,BITUL_ZMAN_NESIOT,ZMAN_NESIA_HALOCH,ZMAN_NESIA_HAZOR,HALBASHA,LINA,HASHLAMA_LEYOM,SIBAT_HASHLAMA_LEYOM,STATUS,KOD_HISTAYGUT_AUTO,MEASHER_O_MISTAYEG,STATUS_TIPUL,MEADKEN_ACHARON,TAARICH_IDKUN_ACHARON,HEARA,HAMARAT_SHABAT
+		  FROM TB_YAMEY_AVODA_OVDIM
+		  WHERE Taarich BETWEEN fromDate AND toDate
+        -- 2013/08/20  )
+        ;
+  
+  
+		INSERT INTO HISTORY_SIDURIM_OVDIM
+        -- 2013/08/20(MISPAR_ISHI,MISPAR_SIDUR,TAARICH,SHAT_HATCHALA,SHAT_GMAR,SHAT_HATCHALA_LETASHLUM,SHAT_GMAR_LETASHLUM,PITZUL_HAFSAKA,CHARIGA,TOSEFET_GRIRA,HASHLAMA,YOM_VISA,LO_LETASHLUM,OUT_MICHSA,MIKUM_SHAON_KNISA,MIKUM_SHAON_YETZIA,BITUL_O_HOSAFA,ACHUZ_KNAS_LEPREMYAT_VISA,ACHUZ_VIZA_BESIKUN,tafkid_visa,MISPAR_MUSACH_O_MACHSAN,KOD_SIBA_LO_LETASHLUM,KOD_SIBA_LEDIVUCH_YADANI_IN,KOD_SIBA_LEDIVUCH_YADANI_OUT,SHAYAH_LEYOM_KODEM,MEADKEN_ACHARON,TAARICH_IDKUN_ACHARON,HEARA,MISPAR_SHIUREY_NEHIGA,MEZAKE_HALBASHA,MEZAKE_NESIOT,MIVTZA_VISA,SUG_HAZMANAT_VISA,NIDRESHET_HITIATZVUT,SHAT_HITIATZVUT,PTOR_MEHITIATZVUT,MENAHEL_MUSACH_MEADKEN)
+		-- 2013/08/20 (
+         SELECT *
+         -- 2013/08/20MISPAR_ISHI,MISPAR_SIDUR,TAARICH,SHAT_HATCHALA,SHAT_GMAR,SHAT_HATCHALA_LETASHLUM,SHAT_GMAR_LETASHLUM,PITZUL_HAFSAKA,CHARIGA,TOSEFET_GRIRA,HASHLAMA,YOM_VISA,LO_LETASHLUM,OUT_MICHSA,MIKUM_SHAON_KNISA,MIKUM_SHAON_YETZIA,BITUL_O_HOSAFA,ACHUZ_KNAS_LEPREMYAT_VISA,ACHUZ_VIZA_BESIKUN,tafkid_visa,MISPAR_MUSACH_O_MACHSAN,KOD_SIBA_LO_LETASHLUM,KOD_SIBA_LEDIVUCH_YADANI_IN,KOD_SIBA_LEDIVUCH_YADANI_OUT,SHAYAH_LEYOM_KODEM,MEADKEN_ACHARON,TAARICH_IDKUN_ACHARON,HEARA,MISPAR_SHIUREY_NEHIGA,MEZAKE_HALBASHA,MEZAKE_NESIOT,MIVTZA_VISA,SUG_HAZMANAT_VISA,NIDRESHET_HITIATZVUT,SHAT_HITIATZVUT,PTOR_MEHITIATZVUT,MENAHEL_MUSACH_MEADKEN
+		  FROM TB_SIDURIM_OVDIM
+		  WHERE Taarich BETWEEN fromDate AND toDate
+         -- 2013/08/20 )
+          ;
+  
+		   INSERT INTO HISTORY_PEILUT_OVDIM
+           -- 2013/08/20(MISPAR_ISHI,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA_SIDUR,SHAT_YETZIA,MISPAR_KNISA,MAKAT_NESIA,OTO_NO,MISPAR_SIDURI_OTO,KISUY_TOR,BITUL_O_HOSAFA,KOD_SHINUY_PREMIA,SNIF_TNUA,MISPAR_VISA,IMUT_NETZER,SHAT_BHIRAT_NESIA_NETZER,OTO_NO_NETZER,MISPAR_SIDUR_NETZER,SHAT_YETZIA_NETZER,MAKAT_NETZER,SHILUT_NETZER,MIKUM_BHIRAT_NESIA_NETZER,MISPAR_MATALA,TAARICH_IDKUN_ACHARON,MEADKEN_ACHARON,HEARA,DAKOT_BAFOAL,KM_VISA)
+		 -- 2013/08/20(
+         -- 20140324: due to new shilut,  write all fields!!
+         (MISPAR_ISHI   ,  TAARICH      ,  MISPAR_sidur  ,  Shat_hatchala_sidur ,  Shat_yetzia     ,  Mispar_knisa    ,  
+Makat_nesia     ,  Oto_no    ,  Mispar_siduri_oto  ,  Kisuy_tor    ,  Bitul_O_Hosafa,  Kod_shinuy_premia ,  
+Snif_tnua     ,  Mispar_visa    ,  Imut_netzer    ,  Shat_Bhirat_Nesia_Netzer ,  Oto_No_Netzer   ,  
+Mispar_Sidur_Netzer ,  Shat_yetzia_Netzer   ,  Makat_Netzer    ,  Shilut_Netzer   ,  Mispar_matala  ,  
+Dakot_bafoal  ,  Km_visa   ,  TAARICH_IDKUN_ACHARON ,  MEADKEN_ACHARON    ,  Mikum_Bhirat_Nesia_Netzer ,  
+heara     ,  Teur_Nesia ,  Shat_yetzia_Mekorit  )--  ,   Shilut
+         SELECT MISPAR_ISHI   ,  TAARICH      ,  MISPAR_sidur  ,  Shat_hatchala_sidur ,  Shat_yetzia     ,  Mispar_knisa    ,  
+Makat_nesia     ,  Oto_no    ,  Mispar_siduri_oto  ,  Kisuy_tor    ,  Bitul_O_Hosafa,  Kod_shinuy_premia ,  
+Snif_tnua     ,  Mispar_visa    ,  Imut_netzer    ,  Shat_Bhirat_Nesia_Netzer ,  Oto_No_Netzer   ,  
+Mispar_Sidur_Netzer ,  Shat_yetzia_Netzer   ,  Makat_Netzer    ,  Shilut_Netzer   ,  Mispar_matala  ,  
+Dakot_bafoal  ,  Km_visa   ,  TAARICH_IDKUN_ACHARON ,  MEADKEN_ACHARON    ,  Mikum_Bhirat_Nesia_Netzer ,  
+heara     ,  Teur_Nesia ,  Shat_yetzia_Mekorit  --*
+         -- 2013/08/20MISPAR_ISHI,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA_SIDUR,SHAT_YETZIA,MISPAR_KNISA,MAKAT_NESIA,OTO_NO,MISPAR_SIDURI_OTO,KISUY_TOR,BITUL_O_HOSAFA,KOD_SHINUY_PREMIA,SNIF_TNUA,MISPAR_VISA,IMUT_NETZER,SHAT_BHIRAT_NESIA_NETZER,OTO_NO_NETZER,MISPAR_SIDUR_NETZER,SHAT_YETZIA_NETZER,MAKAT_NETZER,SHILUT_NETZER,MIKUM_BHIRAT_NESIA_NETZER,MISPAR_MATALA,TAARICH_IDKUN_ACHARON,MEADKEN_ACHARON,HEARA,DAKOT_BAFOAL,KM_VISA
+		  FROM TB_PEILUT_OVDIM
+		  WHERE Taarich BETWEEN fromDate AND toDate
+          -- 2013/08/20)
+          ;
+  
+
+		  DELETE  FROM TB_PEILUT_OVDIM
+		  WHERE Taarich BETWEEN fromDate AND toDate;
+		 
+		  DELETE FROM TB_SIDURIM_OVDIM
+		  WHERE Taarich BETWEEN fromDate AND toDate;
+ 
+		  DELETE FROM TB_YAMEY_AVODA_OVDIM
+		  WHERE Taarich BETWEEN fromDate AND toDate;
+	  -- delete trails
+	 	  DELETE  FROM TRAIL_PEILUT_OVDIM
+    	  WHERE Taarich BETWEEN fromDate AND toDate;
+		 
+		  DELETE FROM TRAIL_SIDURIM_OVDIM
+          WHERE Taarich BETWEEN fromDate AND toDate;
+ 
+		  DELETE FROM TRAIL_YAMEY_AVODA_OVDIM
+          WHERE Taarich BETWEEN fromDate AND toDate;
+          
+          DELETE FROM TB_MEADKEN_ACHARON
+          WHERE Taarich BETWEEN fromDate AND toDate;
+          
+          DELETE FROM TB_SHGIOT_MEUSHAROT
+          WHERE Taarich BETWEEN fromDate AND toDate;
+	--	   commit;	  
+		EXCEPTION
+		        WHEN OTHERS THEN
+				RAISE;
+			--	BEGIN
+					-- ROLLBACK;
+						-- err_msg := substr(SQLERRM, 1, 200);
+					  --   PKG_BATCH.pro_ins_log_tahalich(99,0,3,  err_msg);
+					     ---commit;	  
+				-- END;
+ END MoveRecordsToHistory;
+
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        27/04/2009      vered       1. ????? ????? ????? ?????
+*/
+PROCEDURE pro_get_ezorim(p_Cur OUT CurType)
+IS
+	 BEGIN
+     OPEN p_Cur FOR
+       SELECT code,description
+       FROM (
+             SELECT  DISTINCT aa.kod_ezor code, kod_ezor || ' - ' ||  aa.teur_ezor description,aa.teur_ezor
+             FROM CTB_EZOR aa)
+       ORDER BY teur_ezor;
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_ezorim;
+
+
+PROCEDURE pro_get_snif_av(p_kod_ezor IN CTB_EZOR.kod_ezor%TYPE,p_cur OUT CurType)
+IS
+    BEGIN
+     OPEN p_Cur FOR
+         SELECT a.Kod_Snif_Av code, a.Teur_Snif_Av  || ' (' ||  a.Kod_Snif_Av || ') '  || c.teur_hevra || ' ('  ||  b.kod_hevra || ')'    Description
+         FROM  CTB_SNIF_AV a, CTB_EZOR b, CTB_HEVRA c
+         WHERE a.ezor=b.kod_ezor
+               AND (a.ezor=p_kod_ezor OR p_kod_ezor IS NULL)
+               AND a.kod_hevra = c.kod_hevra
+               AND a.ezor=b.kod_ezor
+               AND c.KOD_HEVRA=b.kod_hevra
+         ORDER BY a.Teur_Snif_Av ASC ;
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_snif_av;
+
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       03/05/2009      sari       1. מחזיר רשימת פרופילים
+*/
+PROCEDURE pro_get_profil(p_Cur OUT CurType)
+IS
+	 BEGIN
+     OPEN p_Cur FOR
+      	  SELECT kod_profil,teur_profil FROM CTB_PROFIL;
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_profil;
+
+
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       03/05/2009      sari       1. מחזיר רשימת  הרשאות לפרופיל
+*/
+PROCEDURE pro_get_harshaot_to_profil(p_kod_profil IN  TB_HARSHAOT_MASACHIM.KOD_PROFIL%TYPE ,
+		  										  	  							   p_Cur OUT CurType)
+IS
+	 BEGIN
+     OPEN p_Cur FOR
+      	  SELECT  m.sug,m.shem,h.kod_harshaa, m.masach_id
+			FROM  TB_MASACH m, TB_HARSHAOT_MASACHIM h
+			WHERE m.masach_id=h.masach_id
+			AND m.pakad_id=h.pakad_id
+			AND h.kod_profil=p_kod_profil;
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_harshaot_to_profil;
+
+PROCEDURE pro_get_maamad(p_kod_hevra IN CTB_MAAMAD.kod_hevra%TYPE, p_cur OUT CurType) IS
+BEGIN
+     OPEN p_Cur FOR
+          SELECT m.kod_hevra || '-' || m.kod_maamad_hr code, m.teur_maamad_hr  || ' (' || m.kod_maamad_hr || ') '   || c.teur_hevra || ' (' || c.kod_hevra || ')'  Description
+          FROM  CTB_MAAMAD m, CTB_HEVRA c
+          WHERE (m.kod_hevra=p_kod_hevra OR p_kod_hevra IS NULL)
+                AND m.kod_hevra= c.kod_hevra
+          ORDER BY m.teur_maamad_hr;
+         /*SELECT distinct a.kod_maamad_hr code, a.teur_maamad_hr  || ' ' || a.kod_maamad_hr || ' '   || c.teur_hevra || ' ' || c.kod_hevra  Description
+         FROM  ctb_maamad a,pirtey_ovdim o , ctb_hevra c
+         WHERE c.kod_hevra = a.kod_hevra
+               and exists (select distinct m.mispar_ishi
+                           from pirtey_ovdim  m
+                           where m.kod_natun=4
+                                 and m.erech=p_kod_snif and m.mispar_ishi=o.mispar_ishi)
+         AND o.kod_natun =13
+         AND o.erech =a.kod_maamad_hr
+
+         ORDER BY a.kod_maamad_hr;*/
+
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_maamad;
+
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       0405/2009      sari       1. מחזיר רשימת  הודעות לפרופיל
+*/
+PROCEDURE pro_get_hodaot_to_profil(p_kod_masach  IN TB_HODAOT.MASACH_ID%TYPE ,
+		  									   		   		                  p_kod_profil IN  TB_HARSHAOT_MASACHIM.KOD_PROFIL%TYPE ,
+		  										  	  							   p_Cur OUT CurType)
+IS
+	 BEGIN
+     OPEN p_Cur FOR
+      	 SELECT h. Melel_Hodaa,h.Kod_Hodaa
+		FROM TB_HODAOT h,  TB_HODAOT_LEPROFIL hp
+		WHERE h.Kod_Hodaa= hp.Kod_Hodaa
+		AND h.MASACH_ID = p_kod_masach
+		AND hp.Kod_Profil = p_kod_profil
+		AND h. Me_Taarich <= TRUNC(SYSDATE)
+		AND h. Ad_Taarich >= TRUNC(SYSDATE);
+
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_hodaot_to_profil;
+
+PROCEDURE pro_get_error_ovdim(p_kod_snif IN CTB_SNIF_AV.kod_snif_av%TYPE, p_kod_maamad IN CTB_MAAMAD.kod_maamad_hr%TYPE,
+                              p_from_date IN DATE, p_to_date IN DATE,
+                              p_cur OUT CurType)
+IS
+     BEGIN
+     OPEN p_Cur FOR
+      	 SELECT DISTINCT m1.mispar_ishi
+         FROM PIRTEY_OVDIM  m1, PIRTEY_OVDIM m2,TB_YAMEY_AVODA_OVDIM l
+
+         WHERE m1.kod_natun=4
+               AND m1.erech=p_kod_snif
+               AND m2.KOD_NATUN=13
+               AND m2.erech= p_kod_maamad
+
+               AND m1.mispar_ishi=m2.mispar_ishi
+               AND m1.mispar_ishi=l.mispar_ishi
+               AND l.taarich BETWEEN p_from_date AND p_to_date;
+
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_error_ovdim;
+
+
+ /*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       0505/2009      sari       1. מחזיר רשימת לוג תהליכים
+*/
+PROCEDURE pro_get_log_tahalich(p_Cur OUT CurType)
+IS
+	 BEGIN
+     DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'pro_get_log_tahalich');
+ 	 	  OPEN p_Cur FOR
+      	  	   SELECT k.Teur_Tahalich,p.Teur_Peilut_Be_Tahalich,
+				l.Taarich,t.Teur_Takala,l.Teur_Tech
+				FROM CTB_TAHALICH_KLITA k, CTB_PEILUT_BETAHALICH p, TB_LOG_TAHALICH l, CTB_TAKALOT t
+				WHERE l. Status=3
+				AND l.Kod_Tahalich = k.Kod_Tahalich
+				AND k.Kod_Tahalich = p.Kod_Tahalich(+)
+				AND p.Kod_Peilut_Be_Tahalich = l.Kod_Peilut_Tahalich(+)
+				AND l.Kod_Takala = t.Kod_Takala(+)
+				AND ROWNUM=0
+				ORDER BY l.Taarich DESC;
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_log_tahalich;
+
+ /*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       02/06/2009      sari       1. מחזיר עובדים כפופים לעובד
+*/
+PROCEDURE pro_get_etz_nihuly_by_user(p_prefix IN VARCHAR2, p_mispar_ishi IN NUMBER, p_cur OUT CurType) IS
+    p_yechida varchar2(6);
+    p_cnt number;
+BEGIN
+ DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'pro_get_etz_nihuly_by_user');
+             
+             /*   BEGIN
+                    SELECT  ERECH into p_yechida
+                    FROM PIRTEY_OVDIM
+                    WHERE MISPAR_ISHI=p_mispar_ishi  
+                         AND KOD_NATUN=1
+                         AND TRUNC(SYSDATE)>= ME_TAARICH AND TRUNC(SYSDATE)<=AD_TAARICH ;
+                 EXCEPTION
+                               WHEN NO_DATA_FOUND  THEN
+                                 p_yechida:=0;
+                END;*/
+   
+    /*        SELECT  count(*) into p_cnt
+            FROM KDSADMIN.EZ_NIHULY E
+                CONNECT BY     E.YECHIDAT_ABA = PRIOR E.YECHIDA_MEKORIT
+                START WITH     ( E.YECHIDAT_ABA = p_yechida      OR E.YECHIDA_MEKORIT = p_yechida);
+
+   if  (p_cnt <=1) then
+    OPEN p_Cur FOR
+        SELECT  DISTINCT e.yechidat_aba,e.yechida_mekorit,
+                        o.shem_mish || ' ' ||  o.shem_prat  || ' (' || o.mispar_ishi || ')' Oved_Name,o.mispar_ishi
+           FROM kdsadmin.EZ_NIHULY E, kdsadmin.OVDIM O
+           WHERE E.YECHIDA_MEKORIT=p_yechida
+            and O.MISPAR_ISHI = p_mispar_ishi
+         ORDER BY mispar_ishi;
+   ELSE */
+  
+
+    -- OPEN p_Cur FOR
+     --       WITH NIHULY AS (SELECT
+      --                               EN.YECHIDAT_ABA, EN.YECHIDA_MEKORIT
+       --                     FROM         KDSADMIN.EZ_NIHULY EN
+        --                    CONNECT BY     EN.YECHIDAT_ABA = PRIOR EN.YECHIDA_MEKORIT
+         --                   START WITH     EN.yechida_mekorit = p_yechida ) --    97709
+        --   SELECT   /*+ use_nl (e po o) */
+         --             E.YECHIDAT_ABA, E.YECHIDA_MEKORIT,
+          --             O.SHEM_MISH || ' ' || O.SHEM_PRAT || ' (' || O.MISPAR_ISHI || ')'
+           --                OVED_NAME, O.MISPAR_ISHI
+          --  FROM       KDSADMIN.PIRTEY_OVDIM PO, NIHULY E, KDSADMIN.OVDIM O
+           -- WHERE           TRUNC ( SYSDATE ) >= PO.ME_TAARICH
+            --           AND TRUNC ( SYSDATE ) <= PO.AD_TAARICH
+             --          AND PO.KOD_NATUN = 1
+              --         AND PO.ERECH = E.YECHIDA_MEKORIT
+               --        AND O.MISPAR_ISHI = PO.MISPAR_ISHI
+                --       AND po.MISPAR_ISHI LIKE p_prefix
+        --     ORDER BY   mispar_ishi;
+        
+        
+   p_yechida:= fun_get_yechida(p_mispar_ishi);       
+   open p_cur for     --כפופים
+  -- select  distinct yechidat_aba,yechida_mekorit, oved_name,mispar_ishi                       
+    select  distinct oved_name,mispar_ishi 
+    from (                          
+            select * from table(fun_get_manager_employees(p_prefix,p_yechida))
+            union       
+            select * from table(fun_get_isuk_harshaot(p_prefix,p_mispar_ishi))
+            union          
+            select * from table(fun_get_manager_emp_by_maamad(p_prefix, p_mispar_ishi)))
+     order by mispar_ishi;
+        
+   --  fun_get_ez_nihuli_mispar_ishi
+    /*    (select ' ' YECHIDAT_ABA,  ' ' YECHIDA_MEKORIT , O.SHEM_MISH || ' ' ||  O.SHEM_PRAT OVED_NAME, O.Mispar_ishi
+        from 
+        pivot_pirtey_ovdim po, ovdim o 
+        where o.mispar_ishi = po.mispar_ishi
+        and sysdate between PO.ME_TARICH and PO.AD_TARICH
+        and  po.MISPAR_ISHI LIKE p_prefix
+        and exists (
+                        select h.kod_darga, h.kod_ezor 
+                        from tb_harshaot_idkun h 
+                        where exists  (select PO.ISUK, PO.YECHIDA_IRGUNIT
+                                         ++    from pivot_pirtey_ovdim po
+                                             where po.mispar_ishi=p_mispar_ishi
+                                                       and  sysdate between PO.ME_TARICH and PO.AD_TARICH
+                                                       and h.kod_isuk = PO.isuk and h.kod_yechida = po.YECHIDA_IRGUNIT)
+                    
+                        and H.KOD_DARGA = PO.DARGA and H.KOD_EZOR = po.EZOR)
+                                               
+         ORDER BY   mispar_ishi); */
+
+
+             /* SELECT  DISTINCT e.yechidat_aba,e.yechida_mekorit,
+                            o.shem_mish || ' ' ||  o.shem_prat  || ' (' || o.mispar_ishi || ')' Oved_Name,o.mispar_ishi
+               FROM kdsadmin.PIRTEY_OVDIM po, kdsadmin.EZ_NIHULY E, kdsadmin.OVDIM O
+               WHERE TRUNC(SYSDATE)>= po.ME_TAARICH AND TRUNC(SYSDATE)<= po.AD_TAARICH 
+                    and po.KOD_NATUN=1
+                    and po.ERECH=E.YECHIDA_MEKORIT
+                    and O.MISPAR_ISHI= po.MISPAR_ISHI AND po.MISPAR_ISHI LIKE p_prefix
+                 CONNECT BY e.YECHIDAT_ABA = PRIOR e.YECHIDA_MEKORIT
+                 START WITH (e.YECHIDAT_ABA =p_yechida  OR e.YECHIDA_MEKORIT = p_yechida)
+             ORDER BY mispar_ishi;*/
+      --   END IF;
+    
+    /*SELECT DISTINCT a.yechidat_aba,a.yechida_mekorit,o.shem_mish || ' ' ||  o.shem_prat  || ' (' || a.mispar_ishi || ')' Oved_Name,a.mispar_ishi
+				FROM
+				     OVDIM o,
+									(SELECT * FROM
+									       EZ_NIHULY e,
+										  (SELECT Mispar_Ishi,erech FROM PIRTEY_OVDIM
+										   WHERE  TRUNC(SYSDATE)>= Me_taarich
+										  AND TRUNC(SYSDATE)<= Ad_taarich
+										  AND  Kod_Natun=1) p
+									WHERE p.erech=e.yechida_mekorit) a
+						WHERE o.mispar_ishi=a.mispar_ishi
+						AND   o.mispar_ishi LIKE p_prefix
+						CONNECT BY a.YECHIDAT_ABA  = PRIOR a.yechida_mekorit
+						START WITH (a.YECHIDAT_ABA  =(SELECT Erech
+																							FROM PIRTEY_OVDIM
+																							WHERE Mispar_Ishi=p_mispar_ishi
+																							AND TRUNC(SYSDATE)>= Me_taarich
+																							AND TRUNC(SYSDATE)<= Ad_taarich
+																							AND  Kod_Natun=1)
+														OR a.yechida_mekorit   =(SELECT Erech
+																							FROM PIRTEY_OVDIM
+																							WHERE Mispar_Ishi=p_mispar_ishi
+																							AND TRUNC(SYSDATE)>= Me_taarich
+																							AND TRUNC(SYSDATE)<= Ad_taarich
+																							AND  Kod_Natun=1))
+                                   ORDER BY mispar_ishi;                                                         
+
+					/*union all
+						  select  e.yechidat_aba,e.yechida_mekorit,o.shem_mish || ' ' ||  o.shem_prat  || ' (' || o.mispar_ishi || ')' Oved_Name,o.mispar_ishi
+							from
+							     ovdim o, Pirtey_Ovdim p,ez_nihuly e
+						      where  trunc(sysdate)>= Me_taarich
+									  and trunc(sysdate)<= p.Ad_taarich
+									  and  p.Kod_Natun=1
+									  and p.Mispar_Ishi=p_mispar_ishi
+									and p.erech=e.yechida_mekorit
+									and o.mispar_ishi=p.mispar_ishi
+									and   o.mispar_ishi like p_prefix		*/
+				
+
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_etz_nihuly_by_user;
+
+PROCEDURE pro_ins_Manage_Tree(p_mispar_ishi IN NUMBER ) IS 
+  p_yechida varchar2(6);
+BEGIN 
+   EXECUTE IMMEDIATE 'truncate table TMP_MANAGE_TREE' ; 
+ p_yechida:= fun_get_yechida(p_mispar_ishi);    
+INSERT INTO TMP_MANAGE_TREE 
+  select  distinct mispar_ishi
+    from (                          
+             select * from table(fun_get_manager_employees('%',p_yechida))
+            union       
+            select * from table(fun_get_isuk_harshaot('%',p_mispar_ishi))
+            union          
+            select * from table(fun_get_manager_emp_by_maamad('%', p_mispar_ishi))
+            );
+   -- order by oved_name;
+       /*   SELECT DISTINCT a.mispar_ishi
+                FROM
+                                    (SELECT * FROM
+                                           EZ_NIHULY e,
+                                          (SELECT Mispar_Ishi,erech FROM PIRTEY_OVDIM
+                                           WHERE  TRUNC(SYSDATE)>= Me_taarich
+                                          AND TRUNC(SYSDATE)<= Ad_taarich
+                                          AND  Kod_Natun=1) p
+                                    WHERE p.erech=e.yechida_mekorit) a
+                        CONNECT BY a.YECHIDAT_ABA  = PRIOR a.yechida_mekorit
+                        START WITH (a.YECHIDAT_ABA  =(SELECT Erech
+                                                                                            FROM PIRTEY_OVDIM
+                                                                                            WHERE Mispar_Ishi=p_mispar_ishi
+                                                                                            AND TRUNC(SYSDATE)>= Me_taarich
+                                                                                            AND TRUNC(SYSDATE)<= Ad_taarich
+                                                                                            AND  Kod_Natun=1)
+                                                        OR a.yechida_mekorit   =(SELECT Erech
+                                                                                            FROM PIRTEY_OVDIM
+                                                                                            WHERE Mispar_Ishi=p_mispar_ishi
+                                                                                            AND TRUNC(SYSDATE)>= Me_taarich
+                                                                                            AND TRUNC(SYSDATE)<= Ad_taarich
+                                                                                            AND  Kod_Natun=1)) ;
+
+ 
+*/
+END pro_ins_Manage_Tree; 
+
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       02/06/2009      sari       1. מחזיר עובדים כפופים לעובד
+*/
+PROCEDURE pro_get_etz_nihuly_by_name(p_prefix IN VARCHAR2, p_mispar_ishi IN NUMBER, p_cur OUT CurType) IS
+BEGIN
+DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'pro_get_etz_nihuly_by_name');
+   OPEN p_Cur FOR    
+   -- select  distinct yechidat_aba,yechida_mekorit, oved_name,mispar_ishi                       
+    select  distinct  oved_name,mispar_ishi
+    from (                          
+            select * from table(fun_get_manager_emp_by_name(p_prefix,p_mispar_ishi))
+            union       
+            select * from table(fun_get_isuk_harshaot_by_name(p_prefix,p_mispar_ishi))
+            union          
+            select * from table(fun_get_mngr_emp_by_mamad_name(p_prefix, p_mispar_ishi)))
+     order by oved_name;
+        /*  SELECT DISTINCT a.yechidat_aba,a.yechida_mekorit,o.shem_mish || ' ' ||  o.shem_prat  || ' (' || o.mispar_ishi || ')' Oved_Name,a.mispar_ishi
+				FROM
+				     OVDIM o,
+									(SELECT * FROM
+									       EZ_NIHULY e,
+										  (SELECT Mispar_Ishi,erech FROM PIRTEY_OVDIM
+										   WHERE  TRUNC(SYSDATE)>= Me_taarich
+										  AND TRUNC(SYSDATE)<= Ad_taarich
+										  AND  Kod_Natun=1) p
+									WHERE p.erech=e.yechida_mekorit) a
+						WHERE o.mispar_ishi=a.mispar_ishi
+						AND   o.shem_mish || ' ' ||  o.shem_prat LIKE p_prefix
+						CONNECT BY a.YECHIDAT_ABA  = PRIOR a.yechida_mekorit
+						START WITH (a.YECHIDAT_ABA  =(SELECT Erech
+																							FROM PIRTEY_OVDIM
+																							WHERE Mispar_Ishi=p_mispar_ishi
+																							AND TRUNC(SYSDATE)>= Me_taarich
+																							AND TRUNC(SYSDATE)<= Ad_taarich
+																							AND  Kod_Natun=1)
+														OR a.yechida_mekorit   =(SELECT Erech
+																							FROM PIRTEY_OVDIM
+																							WHERE Mispar_Ishi=p_mispar_ishi
+																							AND TRUNC(SYSDATE)>= Me_taarich
+																							AND TRUNC(SYSDATE)<= Ad_taarich
+																							AND  Kod_Natun=1))
+*/
+					/*union all
+						  select  e.yechidat_aba,e.yechida_mekorit,o.shem_mish || ' ' ||  o.shem_prat  || ' (' || o.mispar_ishi || ')' Oved_Name,o.mispar_ishi
+							from
+							     ovdim o, Pirtey_Ovdim p,ez_nihuly e
+						      where  trunc(sysdate)>= Me_taarich
+									  and trunc(sysdate)<= p.Ad_taarich
+									  and  p.Kod_Natun=1
+									  and p.Mispar_Ishi=p_mispar_ishi
+									and p.erech=e.yechida_mekorit
+									and o.mispar_ishi=p.mispar_ishi
+									and   o.shem_mish || ' ' ||  o.shem_prat like p_prefix						*/
+/*				ORDER BY mispar_ishi;*/
+
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_etz_nihuly_by_name;
+
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       0405/2009      sari       1. מחזיר קוד ותאור מאפייני ביצוע
+*/
+PROCEDURE pro_get_meafyeney_bitua(p_Cur OUT CurType)
+IS
+	 BEGIN
+     OPEN p_Cur FOR
+      	 SELECT TO_CHAR(m.KOD_MEAFYEN_BITZUA) KOD_MEAFYEN_BITZUA,m.TEUR_MEAFYEN_BITZUA
+		   FROM CTB_MEAFYEN_BITZUA  m
+		   ORDER BY m.KOD_MEAFYEN_BITZUA ;
+
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_meafyeney_bitua;
+
+
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       0405/2009      sari       1. מחזיר קודי נתון
+*/
+PROCEDURE pro_get_kod_natun(p_Cur OUT CurType)
+IS
+	 BEGIN
+     OPEN p_Cur FOR
+      	 SELECT TO_CHAR(n.KOD_NATUN) KOD_NATUN ,n.TEUR_NATUN
+		 FROM CTB_NATUN_HR  n
+		 ORDER BY n.KOD_NATUN;
+
+
+	 EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_kod_natun;
+PROCEDURE pro_get_parameters_table(p_cur OUT CurType)
+IS
+BEGIN
+	 DBMS_APPLICATION_INFO.SET_MODULE('PKG_UTILS.pro_get_parameters_table',' get parameters table ');
+     OPEN p_cur FOR
+     SELECT kod_param,me_taarich,ad_taarich,erech_param
+     FROM TB_PARAMETRIM;
+
+EXCEPTION
+        WHEN OTHERS THEN
+		RAISE;
+END pro_get_parameters_table;
+PROCEDURE pro_get_ctb_elementim(p_cur OUT CurType)
+IS
+BEGIN
+    OPEN p_cur FOR
+    SELECT * FROM CTB_ELEMENTIM;
+
+END pro_get_ctb_elementim;
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       27/07/2009      sari       1. מחזירה סוגי ימים מיוחדים
+*/
+PROCEDURE pro_get_sugey_yamim_meyuchadim(p_cur OUT CurType)
+IS
+BEGIN
+   DBMS_APPLICATION_INFO.SET_MODULE('Pkg_Utils.pro_get_sugey_yamim_meyuchadim','get  sugey yamim meyuchadim');
+  
+    OPEN p_cur FOR
+	    SELECT sy.SUG_YOM,sy.TEUR_YOM,sy.YOM_AVODA,sy.SHBATON,sy.EREV_SHISHI_CHAG,sy.SHISHI_MUHLAF
+		 FROM CTB_SUGEY_YAMIM_MEYUCHADIM sy;
+
+END pro_get_sugey_yamim_meyuchadim;
+
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       28/07/2009      sari       1. מחזירה  ימים מיוחדים
+*/
+PROCEDURE pro_get_yamim_meyuchadim(p_cur OUT CurType)
+IS
+BEGIN
+  DBMS_APPLICATION_INFO.SET_MODULE('Pkg_Utils.pro_get_yamim_meyuchadim','get yamim meyuchadim');
+  
+    OPEN p_cur FOR
+	    SELECT m.SUG_YOM,m.taarich,m.Sug_Yom_Muchlaf_Minhal ,m.Sug_Yom_Muchlaf_Meshek , 
+		m.Sug_Yom_Muchlaf_Tnua ,m.Sug_Yom_Muchlaf_Nehagut
+		 FROM TB_YAMIM_MEYUCHADIM m ;
+
+END pro_get_yamim_meyuchadim;
+
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       27/07/2009      sari       1. מחזיר סידורים מיוחדים  לרכיב לפי תאריך
+*/
+PROCEDURE pro_get_sidurim_meyuch_rechiv(p_tar_me IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  								 p_tar_ad IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  									   	  											 p_cur OUT CurType)
+IS
+BEGIN
+DBMS_APPLICATION_INFO.SET_MODULE('PKG_UTILS.pro_get_sidurim_meyuch_rechiv','get kod rechiv for sidurim meyuchadim');
+    OPEN p_cur FOR
+	    SELECT sm.mispar_sidur,sm.me_taarich,NVL(sm.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy')) ad_taarich,sm.kod_rechiv
+		 FROM TB_SIDURIM_MEYUCHADIM_RECHIV sm
+		 WHERE  (  p_tar_me  BETWEEN  sm.me_taarich AND   NVL(sm.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR p_tar_ad  BETWEEN  sm.me_taarich  AND   NVL(sm.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR   sm.me_taarich>=p_tar_me  AND   NVL(sm.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  p_tar_ad  );
+		
+		-- WHERE p_date BETWEEN sm.me_taarich AND NVL(sm.ad_taarich,TO_DATE('01/01/9999','dd/mm/yyyy'));
+
+END pro_get_sidurim_meyuch_rechiv;
+
+/*
+Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       27/07/2009      sari       1. מחזיר סוג סידור לרכיב לפי תאריך
+*/
+PROCEDURE pro_get_sug_sidur_rechiv( p_tar_me IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  								 p_tar_ad IN TB_SIDURIM_MEYUCHADIM_RECHIV.me_taarich%TYPE,
+		  									   	  											 p_cur OUT CurType)
+IS
+BEGIN
+	 DBMS_APPLICATION_INFO.SET_MODULE('PKG_UTILS.pro_get_sug_sidur_rechiv','get kod rechiv for sidurim regilim');
+    OPEN p_cur FOR
+	    SELECT sr.KOD_RECHIV,sr.ME_TAARICH, NVL(sr.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy')) AD_TAARICH,sr.SUG_SIDUR
+		 FROM TB_SUG_SIDUR_RECHIV sr
+		  WHERE  (  p_tar_me  BETWEEN  sr.me_taarich AND   NVL(sr.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR p_tar_ad  BETWEEN  sr.me_taarich  AND   NVL(sr.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR   sr.me_taarich>=p_tar_me  AND   NVL(sr.ad_taarich,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  p_tar_ad  );
+		
+		 --WHERE p_date BETWEEN sr.me_taarich AND NVL(sr.ad_taarich,TO_DATE('01/01/9999','dd/mm/yyyy'));
+
+END pro_get_sug_sidur_rechiv;
+
+/*   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       03/08/2009      sari       1. מחזיר טבלת מותאמות*/
+PROCEDURE pro_get_ctb_mutamut(p_cur OUT CurType)
+IS
+BEGIN
+    OPEN p_cur FOR
+    SELECT m.kod_mutamut,m.teur_mutamut,m.mezake_gmul, m.isur_shaot_nosafot
+    FROM CTB_MUTAMUT m;
+
+END pro_get_ctb_mutamut;
+
+
+PROCEDURE pro_get_sibot_ledivuch_yadani(p_cur OUT CurType)
+IS
+BEGIN
+DBMS_APPLICATION_INFO.SET_MODULE('pkg_utils.pro_get_sibot_ledivuch_yadani','get sibot ledivuch yadani');
+
+    OPEN p_cur FOR
+    SELECT m.goremet_lebitul_zman_halbasha,m.goremet_lebitul_zman_nesiaa,
+           m.kod_siba, m.pail, m.teur_siba
+    FROM CTB_SIBOT_LEDIVUCH_YADANI m
+    WHERE Pail=1
+    ORDER BY m.kod_siba;
+END pro_get_sibot_ledivuch_yadani;
+
+
+PROCEDURE pro_get_status_ishur_max_level(p_mispar_ishi IN TB_ISHURIM.mispar_ishi%TYPE,
+                                         p_taarich IN TB_ISHURIM.taarich%TYPE,
+                                         p_kod_ishur IN TB_ISHURIM.kod_ishur%TYPE,
+                                         p_kod_status OUT TB_ISHURIM.kod_status_ishur%TYPE)
+IS
+BEGIN
+    SELECT kod_status_ishur INTO p_kod_status
+    FROM TB_ISHURIM T
+    WHERE t.mispar_ishi   = p_mispar_ishi
+          AND t.taarich   =  p_taarich 
+          AND t.kod_ishur = p_kod_ishur
+          AND t.rama = (SELECT MAX(rama) rama
+                        FROM TB_ISHURIM I
+                        WHERE i.mispar_ishi = t.mispar_ishi
+                              AND i.taarich = t.taarich
+                              AND i.kod_ishur = t.kod_ishur);
+END pro_get_status_ishur_max_level;
+
+
+FUNCTION  pro_check_ishur(p_mispar_ishi IN TB_ISHURIM.mispar_ishi%TYPE,
+                                         p_taarich IN TB_ISHURIM.taarich%TYPE,
+                                         p_kod_ishur IN TB_ISHURIM.kod_ishur%TYPE,
+                                       p_mispar_sidur IN TB_ISHURIM.mispar_sidur%TYPE DEFAULT  NULL,
+									    p_shat_hatchala IN TB_ISHURIM.Shat_Hatchala%TYPE DEFAULT  NULL) RETURN  NUMBER
+	IS
+	v_ishur NUMBER;
+BEGIN
+	 BEGIN
+		 SELECT 1 INTO v_ishur
+			FROM TB_ISHURIM
+			WHERE Mispar_Ishi = p_mispar_ishi
+			AND Kod_Ishur =  p_kod_ishur
+			AND Taarich =  p_taarich
+			AND (Mispar_Sidur =   p_mispar_sidur OR   p_mispar_sidur IS NULL)
+			AND (Shat_Hatchala= p_shat_hatchala OR  p_shat_hatchala IS NULL)
+			AND ROWNUM=1;
+
+			EXCEPTION
+		 WHEN NO_DATA_FOUND THEN
+					RETURN 1;
+	       WHEN OTHERS THEN
+				  RAISE;
+     END;
+
+	BEGIN
+	   SELECT 1 INTO v_ishur
+		FROM TB_ISHURIM
+        WHERE Mispar_Ishi =  p_mispar_ishi
+        AND Kod_Ishur =  p_kod_ishur
+       AND Taarich = p_taarich
+        AND (Mispar_Sidur =   p_mispar_sidur OR   p_mispar_sidur IS NULL)
+		AND (Shat_Hatchala= p_shat_hatchala OR  p_shat_hatchala IS NULL)
+        AND Kod_Status_Ishur = 1
+        AND Rama = (SELECT MAX(rama)
+      			                    FROM TB_ISHURIM
+								    WHERE Mispar_Ishi =  p_mispar_ishi
+								     AND Kod_Ishur =  p_kod_ishur
+								    AND Taarich = p_taarich
+								    AND (Mispar_Sidur =   p_mispar_sidur OR   p_mispar_sidur IS NULL)
+							        AND (Shat_Hatchala= p_shat_hatchala OR  p_shat_hatchala IS NULL));
+
+
+		RETURN v_ishur;
+
+	EXCEPTION
+		 WHEN NO_DATA_FOUND THEN
+					 RETURN 0;
+	       WHEN OTHERS THEN
+				 RAISE;
+  END;
+
+END pro_check_ishur;
+
+PROCEDURE pro_get_ovdim_for_premia(p_kod_premia IN MEAFYENIM_OVDIM.KOD_MEAFYEN%TYPE,p_taarich IN MEAFYENIM_OVDIM.ME_TAARICH%TYPE, p_cur OUT CurType)
+IS
+BEGIN
+DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'pro_get_ovdim_for_premia');
+if (p_kod_premia <> 103 and p_kod_premia <> 112 and p_kod_premia <> 113 and p_kod_premia <> 114 and
+p_kod_premia <> 115 and p_kod_premia <> 116 and p_kod_premia <> 117 and p_kod_premia <> 118 ) then
+
+	 OPEN p_cur FOR
+           SELECT *
+              FROM
+              (SELECT  m.MISPAR_ISHI,
+                                        DECODE(m.kod_meafyen,NULL,b.kod_meafyen,m.kod_meafyen) kod_meafyen,
+                                          TO_NUMBER(DECODE(m.erech_ishi,NULL,DECODE(m.ERECH_MECHDAL_PARTANY,NULL, b.erech ,m.ERECH_MECHDAL_PARTANY ),m.erech_ishi))  value_erech_ishi
+                                        FROM PIVOT_MEAFYENIM_OVDIM m,BREROT_MECHDAL_MEAFYENIM b,
+                                           (SELECT m.mispar_ishi,MAX(m.ME_TAARICH) me_taarich
+                                               FROM PIVOT_MEAFYENIM_OVDIM m
+                                               WHERE (p_taarich   BETWEEN  m.ME_TAARICH  AND   NVL(m.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                                                       OR last_day(p_taarich)  BETWEEN  m.ME_TAARICH  AND   NVL(m.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                                                        OR   (m.ME_TAARICH>=p_taarich   AND   NVL(m.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=last_day(p_taarich )  ))
+                                             AND m.kod_meafyen=p_kod_premia
+                                             GROUP BY m.mispar_ishi) x 
+                            WHERE    m.mispar_ishi= x.mispar_ishi
+                                    and   m.ME_TaARICH = x.me_taarich  
+                              AND p_taarich BETWEEN b.ME_TAARICH AND NVL(b.AD_TAARICH,TO_DATE('01/01/9999','dd/mm/yyyy'))
+                               AND m.kod_meafyen=b.KOD_MEAFYEN(+)
+                               AND m.kod_meafyen=p_kod_premia
+                ) t
+                WHERE t.value_erech_ishi = 1
+                ORDER BY t.MISPAR_ISHI ASC;
+     /*SELECT *
+              FROM
+              (SELECT  m.MISPAR_ISHI,
+                                        DECODE(m.kod_meafyen,NULL,b.kod_meafyen,m.kod_meafyen) kod_meafyen,
+                                          TO_NUMBER(DECODE(m.erech_ishi,NULL,DECODE(m.ERECH_MECHDAL_PARTANY,NULL, b.erech ,m.ERECH_MECHDAL_PARTANY ),m.erech_ishi))  value_erech_ishi
+                                        FROM PIVOT_MEAFYENIM_OVDIM m,BREROT_MECHDAL_MEAFYENIM b
+                            WHERE  p_taarich  BETWEEN m.ME_TAARICH(+) AND NVL(m.AD_TAARICH(+),TO_DATE('01/01/9999','dd/mm/yyyy'))
+                              AND  p_taarich  BETWEEN b.ME_TAARICH AND NVL(b.AD_TAARICH,TO_DATE('01/01/9999','dd/mm/yyyy'))
+                               AND m.kod_meafyen=b.KOD_MEAFYEN(+)
+                               AND m.kod_meafyen=p_kod_premia
+                ) t
+                WHERE t.value_erech_ishi = 1
+                ORDER BY t.MISPAR_ISHI ASC;*/
+else
+OPEN p_cur FOR
+     SELECT p.MISPAR_ISHI, p_kod_premia
+     FROM TB_PREMYOT_YADANIYOT p
+          WHERE  p.SUG_PREMYA = p_kod_premia  
+            AND  p.TAARICH between p_taarich and last_day(p_taarich); -- TO_CHAR(TAARICH,'mm/yyyy') = TO_CHAR(p_chodesh,'mm/yyyy');
+
+            
+end if;
+	 EXCEPTION
+		    WHEN OTHERS THEN
+				 RAISE;
+
+END pro_get_ovdim_for_premia;
+
+PROCEDURE pro_get_ovdim_for_premiot(p_mispar_ishi IN VARCHAR2, p_kod_premia IN MEAFYENIM_OVDIM.KOD_MEAFYEN%TYPE,p_Period IN VARCHAR2, p_cur OUT CurType)
+ IS
+  p_ToDate DATE ;
+  p_FromDate DATE ;
+  BEGIN
+  DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'pro_get_ovdim_for_premiot');
+      p_FromDate := TO_DATE('01/' || p_Period,'dd/mm/yyyy'); /* period= 05/2009=>  v_MinLimitDate = 01/05/2009 */
+    p_ToDate := ADD_MONTHS(p_FromDate,1) -1 ;    /* period= 05/2009=>  v_MaxLimitDate = 31/05/2009 */
+
+     OPEN p_cur FOR
+SELECT *
+  FROM
+  (SELECT  m.MISPAR_ISHI,
+                              DECODE(m.kod_meafyen,NULL,b.kod_meafyen,m.kod_meafyen) kod_meafyen,
+                              TO_NUMBER(DECODE(m.erech_ishi,NULL,DECODE(m.ERECH_MECHDAL_PARTANY,NULL, b.erech ,m.ERECH_MECHDAL_PARTANY ),m.erech_ishi))  value_erech_ishi
+                            FROM PIVOT_MEAFYENIM_OVDIM m,BREROT_MECHDAL_MEAFYENIM b
+                WHERE (m.Me_Taarich <=  p_ToDate ) AND (m.Ad_Taarich >= p_FromDate OR m.Ad_Taarich IS NULL )
+                   AND m.kod_meafyen=b.KOD_MEAFYEN(+)
+                   AND m.kod_meafyen=p_kod_premia
+    ) t
+    WHERE t.value_erech_ishi = 1
+    AND t.mispar_ishi LIKE  p_mispar_ishi || '%' 
+     group by MISPAR_ISHI,kod_meafyen,value_erech_ishi
+    ORDER BY t.MISPAR_ISHI ASC;
+
+     EXCEPTION
+            WHEN OTHERS THEN
+                 RAISE;
+
+END pro_get_ovdim_for_premiot;
+
+
+PROCEDURE pro_get_premyot_details(p_premya_codes VARCHAR2, p_cur OUT CurType)
+IS
+BEGIN
+--INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'p_premya_codes:',p_premya_codes);
+	 OPEN p_cur FOR
+	 	  SELECT Kod_Premia, Teur_Premia
+		  FROM CTB_SUGEY_PREMIOT
+		  WHERE  p_premya_codes IS NOT NULL 
+               AND LENGTH(p_premya_codes) > 0 
+               AND   Kod_Premia IN  (SELECT x FROM TABLE(CAST(Convert_String_To_Table(p_premya_codes ,  ',') AS mytabtype)))
+               AND pail=1;
+
+	EXCEPTION
+		    WHEN OTHERS THEN
+				 RAISE;
+
+END pro_get_premyot_details;
+
+PROCEDURE pro_get_premyot_view(p_mispar_ishi IN PREMYOT_VW.mispar_ishi%TYPE,
+                                         p_tkufa IN PREMYOT_VW.tkufa%TYPE,
+                                         p_cur OUT CurType)
+IS
+BEGIN
+ DBMS_APPLICATION_INFO.SET_MODULE('PKG_UTILS.pro_get_premyot_view',' get premyot view ');
+  
+   OPEN p_cur FOR
+  -- SELECT 0 Sug_premia,0  Sum_dakot FROM dual;
+	 SELECT Sug_premia,SUM(Dakot_premia) Sum_dakot
+		FROM PREMYOT_VW
+		WHERE Mispar_ishi = p_mispar_ishi
+		AND Tkufa = p_tkufa
+		GROUP BY (Mispar_ishi,Tkufa, Sug_premia);
+
+	EXCEPTION
+		    WHEN OTHERS THEN
+				 RAISE;
+END pro_get_premyot_view;
+
+PROCEDURE pro_get_premia_yadanit(p_mispar_ishi IN TB_PREMYOT_YADANIYOT.MISPAR_ISHI%TYPE, p_chodesh IN TB_PREMYOT_YADANIYOT.TAARICH%TYPE, p_sug_premya IN TB_PREMYOT_YADANIYOT.SUG_PREMYA%TYPE, p_Cur OUT CurType)
+IS
+    p_taarich date;
+BEGIN
+   DBMS_APPLICATION_INFO.SET_MODULE('PKG_SUG_UTILS.pro_get_premia_yadanit',' get premia yadanit');
+     p_taarich:= to_date('01/' || to_char(p_chodesh,'mm/yyyy'),'dd/mm/yyyy');
+	 OPEN p_cur FOR
+	 	  SELECT DAKOT_PREMYA, Taarich_idkun_acharon,sug_premya
+		  FROM TB_PREMYOT_YADANIYOT
+		  WHERE MISPAR_ISHI = p_mispar_ishi
+		    AND (SUG_PREMYA = p_sug_premya OR p_sug_premya IS NULL)
+			AND  TAARICH between p_taarich and last_day(p_taarich); -- TO_CHAR(TAARICH,'mm/yyyy') = TO_CHAR(p_chodesh,'mm/yyyy');
+
+	EXCEPTION
+		    WHEN OTHERS THEN
+				 RAISE;
+END pro_get_premia_yadanit;
+
+PROCEDURE pro_get_zman_nesia(p_merkaz_erua IN  CTB_ZMAN_NSIAA_MISHTANE.merkaz_erua%TYPE,
+                             p_mikum_yaad  IN  CTB_ZMAN_NSIAA_MISHTANE.mikum_yaad%TYPE,
+                             p_taarich     IN CTB_ZMAN_NSIAA_MISHTANE.me_taarich%TYPE,
+                             p_dakot       OUT CTB_ZMAN_NSIAA_MISHTANE.dakot%TYPE)
+IS
+    v_dakot NUMBER;
+	v_kod_mikum_yechida NUMBER;
+	 v_kod_merkaz_erua NUMBER;
+BEGIN
+    v_dakot:= 0;
+	SELECT    KOD_MIKUM_YECHIDA_EZORI  INTO  v_kod_mikum_yechida FROM CTB_MIKUM_YECHIDA
+	WHERE KOD_MIKUM_YECHIDA=SUBSTR(p_mikum_yaad,0,3);
+
+	SELECT  KOD_MERKAZ_EROA_EZORI    INTO  v_kod_merkaz_erua FROM CTB_MERKAZ_EROA
+	WHERE KOD_MERKAZ_EROA=p_merkaz_erua;
+
+    SELECT dakot INTO v_dakot
+    FROM CTB_ZMAN_NSIAA_MISHTANE c
+    WHERE c.merkaz_erua =  v_kod_merkaz_erua AND
+          c.mikum_yaad  = v_kod_mikum_yechida  AND
+           p_taarich  BETWEEN c.me_taarich AND c.ad_taarich;
+
+
+    p_dakot := v_dakot;
+
+EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+		     p_dakot := -1;
+        WHEN OTHERS THEN
+             RAISE;
+END pro_get_zman_nesia;
+
+  PROCEDURE Pro_Get_Value_From_Parametrim( p_Kod_Param IN  TB_PARAMETRIM.Kod_Param%TYPE,
+                                                                              p_Period IN VARCHAR2 ,
+                                                                              p_Erech_Param OUT  TB_PARAMETRIM.ERECH_PARAM%TYPE) IS
+  p_ToDate DATE ;
+  p_FromDate DATE ;
+  BEGIN
+  	p_FromDate := TO_DATE('01/' || p_Period,'dd/mm/yyyy'); /* period= 05/2009=>  v_MinLimitDate = 01/05/2009 */
+    p_ToDate := ADD_MONTHS(p_FromDate,1) -1 ;    /* period= 05/2009=>  v_MaxLimitDate = 31/05/2009 */
+    SELECT  erech_param INTO p_Erech_Param
+    FROM TB_PARAMETRIM
+    WHERE Kod_Param = p_Kod_Param
+    AND (Me_Taarich <= p_ToDate) AND (Ad_Taarich >= p_FromDate OR Ad_Taarich IS NULL ) ;
+           EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+  END  Pro_Get_Value_From_Parametrim;
+
+PROCEDURE Pro_Get_Value_From_Parametrim (p_kod_param IN TB_PARAMETRIM.KOD_PARAM%TYPE,
+                                                                                p_taarich IN DATE ,
+                                                                                p_ERECH_PARAM    OUT INTEGER)  IS
+BEGIN
+    SELECT ERECH_PARAM  INTO p_ERECH_PARAM
+            FROM TB_PARAMETRIM
+                WHERE KOD_PARAM =  p_kod_param
+                    AND  ME_TAARICH   <= p_taarich
+                    AND  AD_TAARICH   >= p_taarich ;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+         p_ERECH_PARAM := 0;
+END Pro_Get_Value_From_Parametrim ;
+
+
+PROCEDURE Pro_Get_Previous_Months_List(p_FromDate IN DATE, NumOfPreviousMonth NUMBER ,DisplayAll NUMBER,   p_cur OUT CurType) IS
+BEGIN
+OPEN p_Cur FOR
+  SELECT x FROM TABLE(CAST(Convert_String_To_Table(
+   KDSADMIN.Previous_Months_List ( p_FromDate, NumOfPreviousMonth, DisplayAll ) ,  ',') AS mytabtype));
+
+   END Pro_Get_Previous_Months_List;
+
+
+
+
+  PROCEDURE  pro_get_ovdim_leRitza (p_mis_ritza IN INTEGER  ,
+  			 					   				   			  	                p_maamad IN VARCHAR2,
+																			    p_isuk IN VARCHAR2,
+																				p_preFix IN VARCHAR2,
+																				p_cur OUT CurType) IS
+  BEGIN
+      OPEN p_cur FOR
+	--  select 75290, 'מירב' from dual ;
+  SELECT DISTINCT Ov.MISPAR_ISHI,
+	  		 		  CASE WHEN (p_prefix IS NULL) THEN
+ 					  	    Ov.shem_mish || ' ' ||  Ov.shem_prat || '(' || Ov.MISPAR_ISHI || ')'
+					  ELSE ''
+					  END full_name
+		   FROM TB_CHISHUV_CHODESH_OVDIM C,
+		   				PIVOT_PIRTEY_OVDIM T ,
+						OVDIM Ov
+		   WHERE
+		   		 			  c.MISPAR_ISHI = Ov.MISPAR_ISHI AND
+		   		 			  C.BAKASHA_ID =	p_mis_ritza AND
+		   		 			 C.MISPAR_ISHI = T.MISPAR_ISHI AND
+							--(  p_maamad is null OR  ( (substr( T.MAAMAD,0,1)  IN (SELECT X FROM TABLE(CAST(CONVERT_STRING_TO_TABLE(p_maamad ,  ',') AS MYTABTYPE))) )   AND      ( (add_months(C.TAARICH,1) -1) BETWEEN T.ME_TARICH and T.AD_TARICH)    )     ) AND
+						--	(  p_isuk is null OR  ( (T.ISUK  IN (SELECT X FROM TABLE(CAST(CONVERT_STRING_TO_TABLE(p_isuk ,  ',') AS MYTABTYPE))) )   AND      ( (add_months(C.TAARICH,1) -1) BETWEEN T.ME_TARICH and T.AD_TARICH)    )     ) AND
+
+						(ADD_MONTHS(C.TAARICH,1) -1) BETWEEN T.ME_TARICH(+) AND T.AD_TARICH(+)
+						AND ((SUBSTR( T.MAAMAD,0,1)  IN (SELECT X FROM TABLE(CAST(Convert_String_To_Table(p_maamad ,  ',') AS MYTABTYPE)))) OR p_maamad IS NULL) AND
+				    	 (T.ISUK IN (SELECT X FROM TABLE(CAST(Convert_String_To_Table(p_isuk ,  ',') AS MYTABTYPE)))  OR p_isuk IS NULL) AND
+							( p_preFix IS NULL OR C.MISPAR_ISHI LIKE p_preFix ||  '%'  )
+		   ORDER BY Ov.MISPAR_ISHI;
+
+	   EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+  END pro_get_ovdim_leRitza;
+
+  FUNCTION fun_GET_Rechiv_Value ( p_MisparIshi IN TB_CHISHUV_CHODESH_OVDIM.Mispar_ishi%TYPE,
+                                                        p_Kod_Rechiv IN TB_CHISHUV_CHODESH_OVDIM.Kod_Rechiv%TYPE,
+                                                        p_StartDate IN DATE,
+                                                        p_EndDate IN DATE,
+                                                        p_Bakasha_ID IN  TB_CHISHUV_CHODESH_OVDIM.Bakasha_ID%TYPE
+                                                        ) RETURN NUMBER AS
+ValueComponent NUMBER ;
+BEGIN
+SELECT NVL( Ch.Erech_Rechiv,0)  INTO ValueComponent
+FROM TB_CHISHUV_CHODESH_OVDIM Ch
+WHERE Ch.Kod_Rechiv=p_Kod_Rechiv
+AND Ch. Mispar_Ishi= p_MisparIshi
+AND Ch.Taarich BETWEEN p_StartDate AND p_EndDate
+AND Ch.Bakasha_ID=p_Bakasha_ID;
+
+    RETURN ValueComponent  ;
+
+       EXCEPTION
+            WHEN NO_DATA_FOUND THEN
+                      ValueComponent := 0 ;
+                          RETURN ValueComponent  ;
+            WHEN OTHERS THEN
+                          RAISE;
+END fun_GET_Rechiv_Value;
+
+
+ PROCEDURE get_sadot_nosafim_lesidur(p_Sidur IN INTEGER,
+ 		  									   		   	  		 		        p_List_Meafyenim IN VARCHAR2,
+																				p_cur OUT CurType) IS
+ BEGIN
+ 		  OPEN p_cur FOR
+					 SELECT s.KOD_MEAFYEN,s.ERECH, c.*
+					 FROM TB_SADOT_NOSAFIM_LESIDUR s,CTB_SADOT_NOSAFIM_LESIDUR c
+					 WHERE s.KOD_SADE_IN_MASACH = c.KOD_SADE_IN_MASACH AND
+					 	   			  (s.MISPAR_SIDUR=p_Sidur  OR s.KOD_MEAFYEN IN(  SELECT x FROM TABLE(CAST(Convert_String_To_Table(p_List_Meafyenim ,  ',') AS mytabtype)) )    ) AND
+									  c.RAMA = 1;
+
+
+
+       EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END get_sadot_nosafim_lesidur;
+
+  PROCEDURE get_sadot_nosafim_lePeilut(p_cur OUT CurType) IS
+ BEGIN
+ 		  OPEN p_cur FOR
+					 SELECT c.*
+					 FROM CTB_SADOT_NOSAFIM_LESIDUR c
+					 WHERE  c.RAMA = 2;
+
+       EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END get_sadot_nosafim_lePeilut;
+
+  PROCEDURE get_sadot_nosafim_kayamim(p_mispar_ishi IN  INTEGER,
+														                                p_mispar_sidur IN  INTEGER,
+																					    p_taarich IN TB_SIDURIM_OVDIM.TAARICH%TYPE,
+																						p_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE,
+																						p_cur OUT CurType) IS
+	 BEGIN
+       DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'get_sadot_nosafim_kayamim');
+	 			 OPEN p_cur FOR
+						  SELECT s.Mispar_Musach_O_Machsan,s.Yom_Visa,s.Achuz_Knas_LePremyat_Visa ,
+							              s.Achuz_Viza_Besikun,s.Sug_Hazmanat_Visa,s.Mispar_shiurey_nehiga,
+										  s.Tafkid_Visa,s.Mivtza_Visa,y.Lina
+							FROM TB_SIDURIM_OVDIM s ,
+										  TB_YAMEY_AVODA_OVDIM y
+							WHERE s.MISPAR_ISHI =p_mispar_ishi  AND
+								  			   s.MISPAR_SIDUR =p_mispar_sidur AND
+								  			   s.TAARICH =	  p_taarich  AND
+											   s.MISPAR_ISHI = y.MISPAR_ISHI AND
+											   s.SHAT_HATCHALA = p_shat_hatchala AND
+							                   s.TAARICH = y.TAARICH ;
+											          EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END get_sadot_nosafim_kayamim;
+  
+  
+  PROCEDURE pro_insert_barkod_Tachograf(p_mispar_ishi IN  INTEGER,
+  													  	  		  	  			 			p_taarich IN TB_TACHOGRAF_LE_KARTIS.TAARICH%TYPE,
+																							p_Barkod IN NUMBER	)IS
+	 BEGIN
+	 			
+				INSERT INTO TB_TACHOGRAF_LE_KARTIS(MISPAR_ISHI,TAARICH,MISPAR,BARKOD)
+					   																 VALUES(p_mispar_ishi,p_taarich ,1,p_Barkod);
+		 EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END pro_insert_barkod_Tachograf;
+		
+				
+ PROCEDURE fun_get_barkod_Tachograf(p_mispar_ishi IN  INTEGER,
+			  										 p_taarich IN TB_TACHOGRAF_LE_KARTIS.TAARICH%TYPE,
+													 p_cur OUT CurType  ) AS
+
+BEGIN
+	 		  OPEN p_Cur FOR
+	 		   	SELECT DISTINCT t.Barkod 
+				FROM TB_TACHOGRAF_LE_KARTIS t 
+				WHERE t.MISPAR_ISHI =p_mispar_ishi
+					  AND t.TAARICH =p_taarich;		   			
+    				  
+       EXCEPTION
+            WHEN OTHERS THEN
+                          RAISE;
+END fun_get_barkod_Tachograf;
+  
+  
+  
+  	PROCEDURE pro_get_tavlaot_to_refresh(p_cur OUT CurType)
+	IS
+	 BEGIN
+	 			OPEN p_cur FOR
+					    SELECT trim(SUBSTR(p.teur_peilut_be_tahalich,9)) NAME, p.KOD_PEILUT_BE_TAHALICH kod
+						FROM CTB_PEILUT_BETAHALICH p
+						WHERE kod_tahalich=3
+						AND SUBSTR(teur_peilut_be_tahalich,1,7) = ('Refresh' )	
+						ORDER BY	p.KOD_PEILUT_BE_TAHALICH ASC;								
+		 EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END pro_get_tavlaot_to_refresh;
+					
+	PROCEDURE pro_get_snif_tnua_by_kod(p_kod_snif IN NUMBER,p_cur OUT CurType)
+	IS
+	 BEGIN
+	 			OPEN p_cur FOR
+                   SELECT DISTINCT s.KOD_SNIF_TNUAA,s.teur_snif_tnuaa TEUR_SNIF
+                       FROM ctb_snifey_tnuaa s
+                       WHERE s.KOD_SNIF_TNUAA= p_kod_snif;
+				   /*    SELECT DISTINCT s.KOD_SNIF_AV,s.TEUR_SNIF_AV TEUR_SNIF
+					   FROM CTB_SNIF_AV s
+					   WHERE s.SNIF_TNUA LIKE p_kod_snif || '%';*/
+		 EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END pro_get_snif_tnua_by_kod;		
+  
+ PROCEDURE pro_insert_meadken_acharon(p_mispar_ishi IN tb_meadken_acharon.mispar_ishi%type,p_taarich tb_meadken_acharon.taarich%type, p_gorem_meadken in tb_meadken_acharon.GOREM_MEADKEN%type)
+    IS
+    icount number;
+     BEGIN
+        
+        BEGIN
+            select count(*) into icount
+            from tb_meadken_acharon t
+            where T.MISPAR_ISHI = p_mispar_ishi
+               and T.TAARICH = p_taarich;
+        
+        EXCEPTION
+         WHEN NO_DATA_FOUND THEN
+                icount:=0;
+        END;
+       
+          if (icount = 0) then
+                insert into tb_meadken_acharon(MISPAR_ISHI,TAARICH,TAARICH_IDKUN_ACHARON,GOREM_MEADKEN )
+                VALUES (p_mispar_ishi,p_taarich, sysdate,p_gorem_meadken);
+          ELSE
+                UPDATE tb_meadken_acharon
+                SET  TAARICH_IDKUN_ACHARON=  sysdate,
+                        gorem_meadken=p_gorem_meadken
+                WHERE   MISPAR_ISHI = p_mispar_ishi
+                      and  TAARICH = p_taarich;
+          end if;
+           
+         EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END pro_insert_meadken_acharon;    
+  
+                          
+    PROCEDURE pro_get_ovdim_by_bakasha(p_bakasha_id IN NUMBER,p_cur OUT CurType)
+    IS
+     BEGIN
+                 OPEN p_cur FOR
+                   SELECT DISTINCT C.MISPAR_ISHI,C.TAARICH
+                       FROM tb_chishuv_chodesh_ovdim c
+                       WHERE C.BAKASHA_ID = p_bakasha_id;
+
+         EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END pro_get_ovdim_by_bakasha;        
+  	
+  
+FUNCTION fun_get_kod_tachanat_bizua(p_mispar_ishi IN  TB_PEILUT_OVDIM.mispar_ishi%TYPE,
+                                     p_mispar_sidur IN TB_PEILUT_OVDIM.mispar_sidur%TYPE,
+                                     p_taarich IN  TB_PEILUT_OVDIM.taarich%TYPE,
+                                     p_shat_hatchala IN  TB_PEILUT_OVDIM.shat_hatchala_sidur%TYPE) RETURN number AS
+
+
+     v_snif_tnua NUMBER;
+     BEGIN
+      if   (SUBSTR (p_mispar_sidur, 0, 2) <> '99' AND p_mispar_sidur > 999) then
+            v_snif_tnua:=TO_NUMBER (SUBSTR (LPAD (p_mispar_sidur, 5), 0, 2));
+      else if (SUBSTR (p_mispar_sidur, 0, 2) = '99') then
+                    begin
+                          SELECT v.snif_tnua into v_snif_tnua
+                          FROM VIW_SNIF_TNUA_FROM_TNUA v
+                         WHERE     v.mispar_ishi =p_mispar_ishi
+                               AND v.taarich = p_taarich
+                               AND v.mispar_sidur = p_mispar_sidur
+                               AND v.SHAT_HATCHALA =p_shat_hatchala;
+                               
+                               EXCEPTION
+                                    WHEN no_data_found THEN
+                                      v_snif_tnua:=null;  
+                     end;
+               else    v_snif_tnua:=null;  
+             end if;
+      end if;         
+      return    v_snif_tnua;
+         EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END fun_get_kod_tachanat_bizua;  
+  function fun_get_yechida(p_mispar_ishi in ovdim.mispar_ishi%type) return number as
+   p_yechida number;
+  BEGIN
+        BEGIN
+                    SELECT  ERECH into p_yechida
+                    FROM PIRTEY_OVDIM
+                    WHERE MISPAR_ISHI=p_mispar_ishi  
+                         AND KOD_NATUN=1
+                         AND TRUNC(SYSDATE)>= ME_TAARICH AND TRUNC(SYSDATE)<=AD_TAARICH ;
+                 EXCEPTION
+                               WHEN NO_DATA_FOUND  THEN
+                                 p_yechida:=0;
+                END;
+    return p_yechida;                
+   EXCEPTION        
+         WHEN OTHERS THEN
+              RAISE;
+  end fun_get_yechida;
+  
+  
+  
+  function fun_get_manager_employees(p_prefix in varchar2,p_yechida in pivot_pirtey_ovdim.yechida_irgunit %type) return tree_table pipelined as
+   --rc sys_refcursor;
+    --  tbl tree_table;
+begin
+       DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'fun_get_manager_employees');
+     for i in (with nihuly as (select
+                                      en.yechidat_aba, en.yechida_mekorit
+                                      from         kdsadmin.ez_nihuly en
+                                      connect by   en.yechidat_aba = prior en.yechida_mekorit
+                                      start with     en.yechida_mekorit = p_yechida ) --    97709
+                 select   /*+ use_nl (e po o) */
+                           --  e.yechidat_aba , e.yechida_mekorit ,
+                             o.shem_mish || ' ' || o.shem_prat || ' (' || o.mispar_ishi || ')'
+                             oved_name, o.mispar_ishi 
+                 from     kdsadmin.pirtey_ovdim po, nihuly e, kdsadmin.ovdim o
+                 where   trunc ( sysdate ) >= po.me_taarich
+                            and trunc ( sysdate ) <= po.ad_taarich
+                            and po.kod_natun = 1
+                            and po.erech = e.yechida_mekorit
+                            and o.mispar_ishi = po.mispar_ishi
+                            and po.mispar_ishi like p_prefix
+     ) loop
+  --   pipe row(tree_record(i.yechidat_aba,i.yechida_mekorit,i.oved_name,i.mispar_ishi));
+     pipe row(tree_record(i.oved_name,i.mispar_ishi));
+     end loop;
+ return ;    
+      
+   exception        
+         when others then
+              raise;
+  end fun_get_manager_employees;
+  
+  function fun_get_isuk_harshaot(p_prefix in varchar2,p_mispar_ishi in pivot_pirtey_ovdim.mispar_ishi%type) return  tree_table pipelined as
+  
+   begin
+       DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'fun_get_isuk_harshaot');
+       -- for i in (select 0 yechidat_aba, 0 yechida_mekorit , o.shem_mish || ' ' || o.shem_prat || ' (' || o.mispar_ishi || ')'  oved_name, o.mispar_ishi
+        for i in (select o.shem_mish || ' ' || o.shem_prat || ' (' || o.mispar_ishi || ')'  oved_name, o.mispar_ishi
+        from 
+            pivot_pirtey_ovdim po, ovdim o 
+         where o.mispar_ishi = po.mispar_ishi
+                   and sysdate between po.me_tarich and po.ad_tarich
+                   and  po.mispar_ishi like p_prefix
+                   and exists (
+                         select h.kod_maamad, h.kod_ezor 
+                         from tb_harshaot_idkun h 
+                         where exists  (select po.isuk, po.yechida_irgunit
+                                              from pivot_pirtey_ovdim po
+                                              where po.mispar_ishi=p_mispar_ishi
+                                                        and  sysdate between po.me_tarich and po.ad_tarich
+                                                        and h.kod_isuk = po.isuk and h.kod_yechida = po.yechida_irgunit)
+                         
+                         and  (case when h.kod_ezor = 0 then  po.ezor  else h.kod_ezor end) = po.ezor 
+                         and  (po.maamad in  (select  hm.kod_maamad_hr
+                                                        from ctb_harshaot_maamad hm 
+                                                        where h.kod_maamad= hm.kod_maamad
+                                                        ) or h.kod_maamad=0)
+                          and h.kod_isuk_nihuli is null and h.kod_yechida_nihuli is null  )                                                                    
+                                                        
+                                                                                      
+          order by   mispar_ishi
+       ) loop
+    --  pipe row(tree_record(i.yechidat_aba,i.yechida_mekorit,i.oved_name,i.mispar_ishi));
+      pipe row(tree_record(i.oved_name,i.mispar_ishi));
+      end loop; 
+          return;
+  exception        
+         when others then
+              raise;
+  end fun_get_isuk_harshaot;
+  
+  /*function fun_get_ez_nihuli_yechida(p_mispar_ishi in pivot_pirtey_ovdim.mispar_ishi%type) return tb_harshaot_idkun.kod_yechida_nihuli%type as
+     
+  v_yechida tb_harshaot_idkun.kod_yechida_nihuli%type;
+  begin     
+            select distinct(h.kod_yechida_nihuli) into v_yechida
+            from tb_harshaot_idkun h 
+            where exists  (select po.isuk, po.yechida_irgunit
+                                 from pivot_pirtey_ovdim po
+                                 where po.mispar_ishi=p_mispar_ishi
+                                           and  sysdate between po.me_tarich and po.ad_tarich
+                                           and h.kod_isuk = po.isuk and h.kod_yechida = po.yechida_irgunit);                                                     
+          
+      return v_yechida;
+  exception        
+         when others then
+              raise;                      
+  end fun_get_ez_nihuli_yechida;*/
+function fun_get_manager_emp_by_maamad(p_prefix in varchar2,  p_mispar_ishi in ovdim.mispar_ishi%type) return  tree_table pipelined
+as
+ begin  
+ DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'fun_get_manager_emp_by_maamad');   
+                for i in (with nihuly as (select
+                                      en.yechidat_aba, en.yechida_mekorit
+                                      from         kdsadmin.ez_nihuly en
+                                      connect by   en.yechidat_aba = prior en.yechida_mekorit
+                                      start with     en.yechida_mekorit in ( select distinct(h.kod_yechida_nihuli)
+                                                                                           from tb_harshaot_idkun h 
+                                                                                             where exists  (select po.isuk, po.yechida_irgunit
+                                                                                                                     from pivot_pirtey_ovdim po
+                                                                                                                     where po.mispar_ishi=p_mispar_ishi
+                                                                                                                               and  sysdate between po.me_tarich and po.ad_tarich
+                                                                                                                               and h.kod_isuk = po.isuk and h.kod_yechida = po.yechida_irgunit) ) ) --    97709
+                 select   /*+ use_nl (e po o) */
+                            -- e.yechidat_aba , e.yechida_mekorit ,
+                             o.shem_mish || ' ' || o.shem_prat || ' (' || o.mispar_ishi || ')'
+                             oved_name, o.mispar_ishi 
+                 from     kdsadmin.pirtey_ovdim po, nihuly e, kdsadmin.ovdim o, pivot_pirtey_ovdim ppo1
+                 where   trunc ( sysdate ) >= po.me_taarich
+                            and trunc ( sysdate ) <= po.ad_taarich
+                            and po.kod_natun = 1
+                            and po.erech = e.yechida_mekorit
+                            and o.mispar_ishi = ppo1.mispar_ishi
+                            and sysdate  between ppo1.me_tarich and ppo1.ad_tarich                            
+                            and o.mispar_ishi = po.mispar_ishi                                                        
+                            and po.mispar_ishi like p_prefix
+                            and exists (select h.kod_maamad, h.kod_ezor
+                                            from tb_harshaot_idkun h
+                                            where exists  (select po2.isuk, po2.yechida_irgunit
+                                                                 from pivot_pirtey_ovdim po2
+                                                                 where po2.mispar_ishi=p_mispar_ishi
+                                                                               and  sysdate between po2.me_tarich and po2.ad_tarich
+                                                                               and h.kod_isuk = po2.isuk and h.kod_yechida = po2.yechida_irgunit)
+                                                                               
+                                             and  (case when h.kod_ezor = 0 or   h.kod_ezor = 5 then  ppo1.ezor  else h.kod_ezor end) = ppo1.ezor
+                                             and  (ppo1.maamad in  (select  hm.kod_maamad_hr
+                                                                                from ctb_harshaot_maamad hm 
+                                                                                 where h.kod_maamad= hm.kod_maamad
+                                                                                ) or h.kod_maamad=5  or h.kod_maamad=0)                              
+                                            )                                                                                                       
+                       
+     ) loop
+     -- pipe row(tree_record(i.yechidat_aba,i.yechida_mekorit,i.oved_name,i.mispar_ishi));
+      pipe row(tree_record(i.oved_name,i.mispar_ishi));
+       end loop; 
+          return;
+   exception        
+         when others then
+              raise;          
+end fun_get_manager_emp_by_maamad;
+function fun_get_manager_emp_by_name(p_prefix in varchar2,p_mispar_ishi in pivot_pirtey_ovdim.mispar_ishi%type) return  tree_table pipelined
+as
+begin
+ DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'fun_get_manager_emp_by_name');   
+     --for i in (select distinct a.yechidat_aba,a.yechida_mekorit,o.shem_mish || ' ' ||  o.shem_prat  || ' (' || o.mispar_ishi || ')' oved_name,a.mispar_ishi
+     for i in (select distinct o.shem_mish || ' ' ||  o.shem_prat  || ' (' || o.mispar_ishi || ')' oved_name,a.mispar_ishi
+                from
+                     ovdim o,
+                                    (select * from
+                                           ez_nihuly e,
+                                          (select mispar_ishi,erech from pirtey_ovdim
+                                           where  trunc(sysdate)>= me_taarich
+                                          and trunc(sysdate)<= ad_taarich
+                                          and  kod_natun=1) p
+                                           where p.erech=e.yechida_mekorit) a
+                                           where o.mispar_ishi=a.mispar_ishi
+                                           and   o.shem_mish || ' ' ||  o.shem_prat like p_prefix
+                                           connect by a.yechidat_aba  = prior a.yechida_mekorit
+                                           start with (a.yechidat_aba  =(select erech
+                                                                                       from pirtey_ovdim
+                                                                                       where mispar_ishi=p_mispar_ishi
+                                                                                        and trunc(sysdate)>= me_taarich
+                                                                                        and trunc(sysdate)<= ad_taarich
+                                                                                        and  kod_natun=1)
+                                                        or a.yechida_mekorit   =(select erech
+                                                                                            from pirtey_ovdim
+                                                                                            where mispar_ishi=p_mispar_ishi
+                                                                                            and trunc(sysdate)>= me_taarich
+                                                                                            and trunc(sysdate)<= ad_taarich
+                                                                                            and  kod_natun=1))
+            --    order by mispar_ishi
+     ) loop
+      --pipe row(tree_record(i.yechidat_aba,i.yechida_mekorit,i.oved_name,i.mispar_ishi));
+        pipe row(tree_record(i.oved_name,i.mispar_ishi));
+     end loop;
+ return ;    
+end fun_get_manager_emp_by_name;
+function fun_get_isuk_harshaot_by_name(p_prefix in varchar2,p_mispar_ishi in pivot_pirtey_ovdim.mispar_ishi%type) return  tree_table pipelined
+as
+begin
+ DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'fun_get_isuk_harshaot_by_name');   
+       --for i in (select 0 yechidat_aba, 0 yechida_mekorit ,o.shem_mish || ' ' || o.shem_prat || ' (' || o.mispar_ishi || ')' oved_name, o.mispar_ishi
+       for i in (select o.shem_mish || ' ' || o.shem_prat || ' (' || o.mispar_ishi || ')' oved_name, o.mispar_ishi
+        from 
+            pivot_pirtey_ovdim po, ovdim o 
+         where o.mispar_ishi = po.mispar_ishi
+                   and sysdate between po.me_tarich and po.ad_tarich
+                   and o.shem_mish || ' ' ||  o.shem_prat like p_prefix
+                    
+                   and exists (
+                         select h.kod_maamad, h.kod_ezor 
+                         from tb_harshaot_idkun h 
+                         where exists  (select po.isuk, po.yechida_irgunit
+                                              from pivot_pirtey_ovdim po
+                                              where po.mispar_ishi=p_mispar_ishi
+                                                        and  sysdate between po.me_tarich and po.ad_tarich
+                                                        and h.kod_isuk = po.isuk and h.kod_yechida = po.yechida_irgunit)
+                         
+                         and  (case when h.kod_ezor = 0 then  po.ezor  else h.kod_ezor end) = po.ezor 
+                         and  (po.maamad in  (select  hm.kod_maamad_hr
+                                                        from ctb_harshaot_maamad hm 
+                                                        where h.kod_maamad= hm.kod_maamad
+                                                        ) or h.kod_maamad=0)
+                           and h.kod_isuk_nihuli is null and h.kod_yechida_nihuli is null)                                                        
+                                                                       
+        --  order by   mispar_ishi
+       ) loop
+      --pipe row(tree_record(i.yechidat_aba,i.yechida_mekorit,i.oved_name,i.mispar_ishi));
+      pipe row(tree_record(i.oved_name,i.mispar_ishi));
+      end loop; 
+          return;
+  exception        
+         when others then
+              raise;
+end fun_get_isuk_harshaot_by_name;
+function fun_get_mngr_emp_by_mamad_name(p_prefix in varchar2,p_mispar_ishi in ovdim.mispar_ishi%type ) return  tree_table pipelined
+as
+begin
+DBMS_APPLICATION_INFO.SET_MODULE(module_name => 'Pkg_Utils',action_name => 'fun_get_mngr_emp_by_mamad_name');   
+      for i in (with nihuly as (select
+                                      en.yechidat_aba, en.yechida_mekorit
+                                      from         kdsadmin.ez_nihuly en
+                                      connect by   en.yechidat_aba = prior en.yechida_mekorit
+                                      start with     en.yechida_mekorit in ( select distinct(h.kod_yechida_nihuli)
+                                                                                           from tb_harshaot_idkun h 
+                                                                                             where exists  (select po.isuk, po.yechida_irgunit
+                                                                                                                     from pivot_pirtey_ovdim po
+                                                                                                                     where po.mispar_ishi=p_mispar_ishi
+                                                                                                                               and  sysdate between po.me_tarich and po.ad_tarich
+                                                                                                                               and h.kod_isuk = po.isuk and h.kod_yechida = po.yechida_irgunit) ) ) --    97709
+                 select   /*+ use_nl (e po o) */
+                           --  e.yechidat_aba , e.yechida_mekorit ,
+                             o.shem_mish || ' ' || o.shem_prat || ' (' || o.mispar_ishi || ')'
+                             oved_name, o.mispar_ishi 
+                 from     kdsadmin.pirtey_ovdim po, nihuly e, kdsadmin.ovdim o, pivot_pirtey_ovdim ppo1
+                 where   trunc ( sysdate ) >= po.me_taarich
+                            and trunc ( sysdate ) <= po.ad_taarich
+                            and po.kod_natun = 1
+                            and po.erech = e.yechida_mekorit
+                            and o.mispar_ishi = ppo1.mispar_ishi
+                            and sysdate  between ppo1.me_tarich and ppo1.ad_tarich                            
+                            and o.mispar_ishi = po.mispar_ishi                                                        
+                           and o.shem_mish || ' ' ||  o.shem_prat like p_prefix
+                            and exists (select h.kod_maamad, h.kod_ezor
+                                            from tb_harshaot_idkun h
+                                            where exists  (select po2.isuk, po2.yechida_irgunit
+                                                                 from pivot_pirtey_ovdim po2
+                                                                 where po2.mispar_ishi=p_mispar_ishi
+                                                                               and  sysdate between po2.me_tarich and po2.ad_tarich
+                                                                               and h.kod_isuk = po2.isuk and h.kod_yechida = po2.yechida_irgunit)
+                                                                               
+                                             and  (case when h.kod_ezor = 0 or   h.kod_ezor = 5 then  ppo1.ezor  else h.kod_ezor end) = ppo1.ezor
+                                             and  (ppo1.maamad in  (select  hm.kod_maamad_hr
+                                                                              from ctb_harshaot_maamad hm 
+                                                                              where h.kod_maamad= hm.kod_maamad
+                                                                             ) or h.kod_maamad=5 or h.kod_maamad=0)                              
+                                            )                                                                                                       
+                       
+     ) loop
+      --pipe row(tree_record(i.yechidat_aba,i.yechida_mekorit,i.oved_name,i.mispar_ishi));
+      pipe row(tree_record(i.oved_name,i.mispar_ishi));
+       end loop; 
+          return;
+   exception        
+         when others then
+              raise;          
+end fun_get_mngr_emp_by_mamad_name;
+
+
+PROCEDURE pro_get_michsat_sidur_meafyen(p_cur OUT CurType, p_tarich_me DATE,p_tarich_ad DATE)
+IS
+BEGIN
+    OPEN p_cur FOR
+    SELECT t.kod_meafyen,t.mispar_sidur, t.me_taarich,t.ad_taarich
+    FROM  TB_MICHSA_CHODSHIT_LEMEAFYEN t
+    where (p_tarich_me  BETWEEN  t.ME_TAARICH  AND   NVL(t.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+               OR p_tarich_ad  BETWEEN  t.ME_TAARICH  AND   NVL(t.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+                OR   (t.ME_TAARICH>=p_tarich_me  AND   NVL(t.ad_TAARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=p_tarich_ad )) ;    
+
+END pro_get_michsat_sidur_meafyen;
+
+function CheckShabatonOrShishi(p_mispar_ishi number,p_taarich date,p_meafyen56 number) return nvarchar2 as
+
+  iCount NUMBER ;
+begin
+
+  if (  TO_CHAR(TRUNC(p_taarich),'d')  = '7') then
+    return 'true';
+  end if;
+  SELECT COUNT(TRUNC(p_taarich)) INTO iCount  FROM TB_YAMIM_MEYUCHADIM WHERE taarich = TRUNC(p_taarich); 
+  
+  IF  (iCount> 0  ) THEN 
+        SELECT COUNT(taarich)   INTO   iCount
+        FROM TB_YAMIM_MEYUCHADIM Ym 
+        INNER JOIN CTB_SUGEY_YAMIM_MEYUCHADIM Ctb ON  ym.sug_yom = ctb.sug_yom 
+        WHERE CTB.SHBATON = 1
+           and  ym.taarich = TRUNC(p_taarich);
+        
+         IF  (iCount> 0  ) THEN
+           return 'true';
+         end if;
+  END IF;  
+  
+  if (  TO_CHAR(TRUNC(p_taarich),'d')  = '6') then
+        if(p_meafyen56 =51 or p_meafyen56 =52) then
+         return 'true';
+        end if;
+  end if;
+  return 'false';
+end CheckShabatonOrShishi;
+
+procedure pro_get_status_card(p_cur OUT CurType) is
+begin
+  OPEN p_cur FOR
+    select M.KOD_MEASHER_O_MISTAYEG kod, M.TEUR_MEASHER_O_MISTAYEG teur
+    from  CTB_MEASHER_O_MISTAYEG m
+    where M.PAIL='1'
+    order by  M.TEUR_MEASHER_O_MISTAYEG;
+end pro_get_status_card;
+END Pkg_utils;
 /
