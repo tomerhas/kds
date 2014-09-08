@@ -8900,9 +8900,9 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox84</rd:DefaultName>
-        <Top>3.07276in</Top>
+        <Top>3.12484in</Top>
         <Left>0.1167in</Left>
-        <Height>0.11458in</Height>
+        <Height>0.15625in</Height>
         <Width>1.58763in</Width>
         <ZIndex>13</ZIndex>
         <Visibility>
@@ -11370,7 +11370,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
