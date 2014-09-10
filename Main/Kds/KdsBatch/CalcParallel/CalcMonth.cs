@@ -4705,42 +4705,53 @@ namespace KdsBatch
 
         private void CalcRechiv143()
         {
-            float fSumDakotRechiv, fTempX, fTempY, fTemp;
+            float fSumDakotRechiv = 0;
+            float  fTempX, fTempY, fTemp;
             fTempX = 0;
             try
             {
                 fTempX = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsatShaotNosafotTafkidChol.GetHashCode());
-                if ((objOved.objMeafyeneyOved.iMeafyen14 > 0))
+                if (objOved.objMeafyeneyOved.sMeafyen74.Trim() == "1")
                 {
-                    fSumDakotRechiv = objOved.objMeafyeneyOved.iMeafyen14;
+                    if (_dTaarichChishuv < DateTime.Parse("01/08/2014"))
+                    {
+                        fSumDakotRechiv = objOved.objMeafyeneyOved.iMeafyen14;
+                    }
                 }
                 else
                 {
-                    objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
-                    fTempY = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("ERECH_RECHIV>0 and KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString(), "").Length;
-                    if (objOved.objMeafyeneyOved.iMeafyen12 == -1)
+                    if ((objOved.objMeafyeneyOved.iMeafyen14 > 0))
                     {
-                        throw new Exception("ערך null במאפיין 12");
+                        fSumDakotRechiv = objOved.objMeafyeneyOved.iMeafyen14;
+                    }
+                    else
+                    {
+                        objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
+                        fTempY = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("ERECH_RECHIV>0 and KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString(), "").Length;
+                        if (objOved.objMeafyeneyOved.iMeafyen12 == -1)
+                        {
+                            throw new Exception("ערך null במאפיין 12");
+                        }
+
+                        if (objOved.objMeafyeneyOved.iMeafyen84 == -1)
+                        {
+                            throw new Exception("ערך null במאפיין 84");
+                        }
+                        fTemp = objOved.objMeafyeneyOved.iMeafyen12 + objOved.objMeafyeneyOved.iMeafyen84;
+                        // fTemp = objOved.objMeafyeneyOved.iMeafyen12;
+
+                        fSumDakotRechiv = fTemp * fTempX / fTempY;
+
                     }
 
-                    if (objOved.objMeafyeneyOved.iMeafyen84 == -1)
-                    {
-                        throw new Exception("ערך null במאפיין 84");
-                    }
-                    fTemp = objOved.objMeafyeneyOved.iMeafyen12 + objOved.objMeafyeneyOved.iMeafyen84;
-                   // fTemp = objOved.objMeafyeneyOved.iMeafyen12;
-
-                    fSumDakotRechiv = fTemp * fTempX / fTempY;
-
+                    fSumDakotRechiv = float.Parse(Math.Round(fSumDakotRechiv, MidpointRounding.AwayFromZero).ToString()); // float.Parse(Math.Ceiling(fSumDakotRechiv).ToString());
                 }
-
-                fSumDakotRechiv = float.Parse(Math.Round(fSumDakotRechiv, MidpointRounding.AwayFromZero).ToString()); // float.Parse(Math.Ceiling(fSumDakotRechiv).ToString());
                 addRowToTable(clGeneral.enRechivim.MichsatShaotNosafotTafkidChol.GetHashCode(), fSumDakotRechiv);
 
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsatShaotNosafotTafkidChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsatShaotNosafotTafkidChol.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
                 throw (ex);
             }
         }
