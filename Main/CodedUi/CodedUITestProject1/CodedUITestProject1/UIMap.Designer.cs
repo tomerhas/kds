@@ -40,7 +40,8 @@ namespace CodedUITestProject1
             HtmlInputButton uISD000ctl03SD_000_ctlButton = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument9.UISD000ctl03SD_000_ctlButton;
             #endregion
 
-            // Click 'SD$000$ctl03$AddRekaUpSD_000_ctl03' button
+            // Wait for 1 seconds for user delay between actions; Click 'SD$000$ctl03$AddRekaUpSD_000_ctl03' button
+            Playback.Wait(1000);
             Mouse.Click(uISD000ctl03AddRekaUpSButton, new Point(5, 5));
 
             // Click 'SD$000$ctl03$SD_000_ctl03CancelPeilut' button
@@ -62,33 +63,6 @@ namespace CodedUITestProject1
 
             // Click 'SD$000$ctl06$SD_000_ctl06CancelPeilut' button
             Mouse.Click(uISD000ctl06SD_000_ctlButton, new Point(5, 8));
-        }
-        
-        /// <summary>
-        /// לא נמצאו נתונים
-        /// </summary>
-        public void Assert_exists_grid()
-        {
-            #region Variable Declarations
-            HtmlHeaderCell uIItem1אCell = this.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument12.UICtl00_KdsContent_grdTable.UIItem1אCell;
-            #endregion
-
-            // Verify that the 'InnerText' property of '1 א' cell equals '1
-            //א'
-            Assert.AreEqual(this.Assert_exists_gridExpectedValues.UIItem1אCellInnerText, uIItem1אCell.InnerText);
-        }
-        
-        /// <summary>
-        /// Assert1111 - Use 'Assert1111ExpectedValues' to pass parameters into this method.
-        /// </summary>
-        public void Assert1111()
-        {
-            #region Variable Declarations
-            HtmlCell uIחובהלפחותפעילותאחתCell = this.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument28.UITbErrCell.UIItemTable.UIחובהלפחותפעילותאחתCell;
-            #endregion
-
-            // Verify that the 'InnerText' property of 'חובה לפחות פעילות אחת' cell equals 'חובה לפחות פעילות אחת '
-            Assert.AreEqual(this.Assert1111ExpectedValues.UIחובהלפחותפעילותאחתCellInnerText, uIחובהלפחותפעילותאחתCell.InnerText);
         }
         
         /// <summary>
@@ -240,62 +214,6 @@ namespace CodedUITestProject1
         }
         
         /// <summary>
-        /// Running_presence_report
-        /// </summary>
-        public void Running_presence_report()
-        {
-            #region Variable Declarations
-            HtmlInputButton uIדוחנוכחותButton = this.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument3.UIדוחנוכחותButton;
-            HtmlInputButton uIהצגButton = this.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument11.UIהצגButton;
-            HtmlInputButton uIסגורButton = this.UIדוחותWebpageDialogWindow.UIדוחותDocument.UIסגורButton;
-            #endregion
-
-            // Click 'דו''ח נוכחות' button
-            Mouse.Click(uIדוחנוכחותButton, new Point(59, 70));
-
-            // Click 'הצג' button
-            Mouse.Click(uIהצגButton, new Point(32, 10));
-            uIסגורButton.WaitForControlExist(1000);
-            Playback.PlaybackSettings.WaitForReadyLevel = WaitForReadyLevel.UIThreadOnly;
-            // Wait for 5 seconds for user delay between actions; Click 'סגור' button
-            Playback.Wait(5000);
-            Mouse.Click(uIסגורButton, new Point(28, 12));
-        }
-        
-        /// <summary>
-        /// Running_rickuz_online_report
-        /// </summary>
-        public void Running_rickuz_online_report()
-        {
-            #region Variable Declarations
-            HtmlCell uIדוחותCell = this.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument12.UIדוחותCell;
-            HtmlCell uIהפקתדוחותCell = this.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument12.UICtl00_MenuMainn35Row.UIItemTable.UIהפקתדוחותCell;
-            HtmlTable uIItemTable1 = this.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument12.UIAspnetFormCustom.UIItemTable1;
-            WinButton uICloseButton = this.UIWebpageDialogWindow.UIWebpageDialogTitleBar.UICloseButton;
-            #endregion
-
-            // Set flag to allow play back to continue if non-essential actions fail. (For example, if a mouse hover action fails.)
-            Playback.PlaybackSettings.ContinueOnError = true;
-
-            // Mouse hover 'דו''חות' cell at (16, 24)
-            Mouse.Hover(uIדוחותCell, new Point(16, 24));
-
-            // Mouse hover 'הפקת דו''חות' cell at (5, 13)
-            Mouse.Hover(uIהפקתדוחותCell, new Point(5, 13));
-
-            // Reset flag to ensure that play back stops if there is an error.
-            Playback.PlaybackSettings.ContinueOnError = false;
-
-            // Click table
-            Mouse.Click(uIItemTable1, new Point(116, 15));
-            uICloseButton.WaitForControlExist(1000);
-            // Wait for 5 seconds for user delay between actions; Click 'Close' button
-            Playback.Wait(5000);
-            Playback.PlaybackSettings.WaitForReadyLevel = WaitForReadyLevel.UIThreadOnly;
-            Mouse.Click(uICloseButton, new Point(11, 13));
-        }
-        
-        /// <summary>
         /// Select_driverid_and_month - Use 'Select_driverid_and_monthParams' to pass parameters into this method.
         /// </summary>
         public void Select_driverid_and_month()
@@ -421,8 +339,8 @@ namespace CodedUITestProject1
             // Reset flag to ensure that play back stops if there is an error.
             Playback.PlaybackSettings.ContinueOnError = false;
 
-            // Wait for 3 seconds for user delay between actions; Type '85015' in 'txtId' text box
-            Playback.Wait(3000);
+            // Wait for 5 seconds for user delay between actions; Type '85015' in 'txtId' text box
+            Playback.Wait(5000);
             uITxtIdEdit.Text = this.בחרמאוחודש1Params.UITxtIdEditText;
 
             // Type '{Enter}' in 'txtId' text box
@@ -790,30 +708,6 @@ namespace CodedUITestProject1
         }
         
         #region Properties
-        public virtual Assert_exists_gridExpectedValues Assert_exists_gridExpectedValues
-        {
-            get
-            {
-                if ((this.mAssert_exists_gridExpectedValues == null))
-                {
-                    this.mAssert_exists_gridExpectedValues = new Assert_exists_gridExpectedValues();
-                }
-                return this.mAssert_exists_gridExpectedValues;
-            }
-        }
-        
-        public virtual Assert1111ExpectedValues Assert1111ExpectedValues
-        {
-            get
-            {
-                if ((this.mAssert1111ExpectedValues == null))
-                {
-                    this.mAssert1111ExpectedValues = new Assert1111ExpectedValues();
-                }
-                return this.mAssert1111ExpectedValues;
-            }
-        }
-        
         public virtual Enter_driver_idParams Enter_driver_idParams
         {
             get
@@ -1044,10 +938,6 @@ namespace CodedUITestProject1
         #endregion
         
         #region Fields
-        private Assert_exists_gridExpectedValues mAssert_exists_gridExpectedValues;
-        
-        private Assert1111ExpectedValues mAssert1111ExpectedValues;
-        
         private Enter_driver_idParams mEnter_driver_idParams;
         
         private Go_to_web_pageParams mGo_to_web_pageParams;
@@ -1085,37 +975,6 @@ namespace CodedUITestProject1
         private UIדוחותWebpageDialogWindow mUIדוחותWebpageDialogWindow;
         
         private UIWebpageDialogWindow mUIWebpageDialogWindow;
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'Assert_exists_grid'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class Assert_exists_gridExpectedValues
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Verify that the 'InnerText' property of '1 א' cell equals '1
-        ///א'
-        /// </summary>
-        public string UIItem1אCellInnerText = "1\r\nא";
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'Assert1111'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class Assert1111ExpectedValues
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Verify that the 'InnerText' property of 'חובה לפחות פעילות אחת' cell equals 'חובה לפחות פעילות אחת '
-        /// </summary>
-        public string UIחובהלפחותפעילותאחתCellInnerText = "חובה לפחות פעילות אחת ";
         #endregion
     }
     
@@ -1233,7 +1092,7 @@ namespace CodedUITestProject1
         
         #region Fields
         /// <summary>
-        /// Wait for 3 seconds for user delay between actions; Type '85015' in 'txtId' text box
+        /// Wait for 5 seconds for user delay between actions; Type '85015' in 'txtId' text box
         /// </summary>
         public string UITxtIdEditText = "85015";
         
@@ -1446,6 +1305,18 @@ namespace CodedUITestProject1
                 return this.mUIמערכתקדםשכרDocument12;
             }
         }
+        
+        public UIמערכתקדםשכרDocument4 UIמערכתקדםשכרDocument4
+        {
+            get
+            {
+                if ((this.mUIמערכתקדםשכרDocument4 == null))
+                {
+                    this.mUIמערכתקדםשכרDocument4 = new UIמערכתקדםשכרDocument4(this);
+                }
+                return this.mUIמערכתקדםשכרDocument4;
+            }
+        }
         #endregion
         
         #region Fields
@@ -1462,6 +1333,8 @@ namespace CodedUITestProject1
         private UIמערכתקדםשכרDocument11 mUIמערכתקדםשכרDocument11;
         
         private UIמערכתקדםשכרDocument12 mUIמערכתקדםשכרDocument12;
+        
+        private UIמערכתקדםשכרDocument4 mUIמערכתקדםשכרDocument4;
         #endregion
     }
     
@@ -2772,6 +2645,54 @@ namespace CodedUITestProject1
     }
     
     [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UIמערכתקדםשכרDocument4 : HtmlDocument
+    {
+        
+        public UIמערכתקדםשכרDocument4(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = "ctl00_MasterBody";
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "מערכת קדם שכר";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://kdstest/";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlInputButton UIכרטיסיעבודהלעובדButton
+        {
+            get
+            {
+                if ((this.mUIכרטיסיעבודהלעובדButton == null))
+                {
+                    this.mUIכרטיסיעבודהלעובדButton = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUIכרטיסיעבודהלעובדButton.SearchProperties[HtmlButton.PropertyNames.Id] = "ctl00_KdsContent_btnUpdWorkCard";
+                    this.mUIכרטיסיעבודהלעובדButton.SearchProperties[HtmlButton.PropertyNames.Name] = "ctl00$KdsContent$btnUpdWorkCard";
+                    this.mUIכרטיסיעבודהלעובדButton.FilterProperties[HtmlButton.PropertyNames.DisplayText] = " כרטיסי עבודה לעובד ";
+                    this.mUIכרטיסיעבודהלעובדButton.FilterProperties[HtmlButton.PropertyNames.Type] = "submit";
+                    this.mUIכרטיסיעבודהלעובדButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUIכרטיסיעבודהלעובדButton.FilterProperties[HtmlButton.PropertyNames.Class] = "opening-btn";
+                    this.mUIכרטיסיעבודהלעובדButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "id=ctl00_KdsContent_btnUpdWorkCard class";
+                    this.mUIכרטיסיעבודהלעובדButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "12";
+                    this.mUIכרטיסיעבודהלעובדButton.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIכרטיסיעבודהלעובדButton;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlInputButton mUIכרטיסיעבודהלעובדButton;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
     public class UIמערכתקדםשכרWebpageDiWindow : BrowserWindow
     {
         
@@ -2790,13 +2711,13 @@ namespace CodedUITestProject1
         }
         
         #region Properties
-        public UIמערכתקדםשכרDocument4 UIמערכתקדםשכרDocument
+        public UIמערכתקדםשכרDocument5 UIמערכתקדםשכרDocument
         {
             get
             {
                 if ((this.mUIמערכתקדםשכרDocument == null))
                 {
-                    this.mUIמערכתקדםשכרDocument = new UIמערכתקדםשכרDocument4(this);
+                    this.mUIמערכתקדםשכרDocument = new UIמערכתקדםשכרDocument5(this);
                 }
                 return this.mUIמערכתקדםשכרDocument;
             }
@@ -2850,13 +2771,13 @@ namespace CodedUITestProject1
             }
         }
         
-        public UIמערכתקדםשכרDocument5 UIמערכתקדםשכרDocument5
+        public UIמערכתקדםשכרDocument51 UIמערכתקדםשכרDocument5
         {
             get
             {
                 if ((this.mUIמערכתקדםשכרDocument5 == null))
                 {
-                    this.mUIמערכתקדםשכרDocument5 = new UIמערכתקדםשכרDocument5(this);
+                    this.mUIמערכתקדםשכרDocument5 = new UIמערכתקדםשכרDocument51(this);
                 }
                 return this.mUIמערכתקדםשכרDocument5;
             }
@@ -3137,10 +3058,22 @@ namespace CodedUITestProject1
                 return this.mUIמערכתקדםשכרDocument28;
             }
         }
+        
+        public UIמערכתקדםשכרDocument29 UIמערכתקדםשכרDocument29
+        {
+            get
+            {
+                if ((this.mUIמערכתקדםשכרDocument29 == null))
+                {
+                    this.mUIמערכתקדםשכרDocument29 = new UIמערכתקדםשכרDocument29(this);
+                }
+                return this.mUIמערכתקדםשכרDocument29;
+            }
+        }
         #endregion
         
         #region Fields
-        private UIמערכתקדםשכרDocument4 mUIמערכתקדםשכרDocument;
+        private UIמערכתקדםשכרDocument5 mUIמערכתקדםשכרDocument;
         
         private UIמערכתקדםשכרDocument13 mUIמערכתקדםשכרDocument1;
         
@@ -3150,7 +3083,7 @@ namespace CodedUITestProject1
         
         private UIמערכתקדםשכרDocument41 mUIמערכתקדםשכרDocument4;
         
-        private UIמערכתקדםשכרDocument5 mUIמערכתקדםשכרDocument5;
+        private UIמערכתקדםשכרDocument51 mUIמערכתקדםשכרDocument5;
         
         private UIמערכתקדםשכרDocument6 mUIמערכתקדםשכרDocument6;
         
@@ -3197,14 +3130,16 @@ namespace CodedUITestProject1
         private UIמערכתקדםשכרDocument27 mUIמערכתקדםשכרDocument27;
         
         private UIמערכתקדםשכרDocument28 mUIמערכתקדםשכרDocument28;
+        
+        private UIמערכתקדםשכרDocument29 mUIמערכתקדםשכרDocument29;
         #endregion
     }
     
     [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class UIמערכתקדםשכרDocument4 : HtmlDocument
+    public class UIמערכתקדםשכרDocument5 : HtmlDocument
     {
         
-        public UIמערכתקדםשכרDocument4(UITestControl searchLimitContainer) : 
+        public UIמערכתקדםשכרDocument5(UITestControl searchLimitContainer) : 
                 base(searchLimitContainer)
         {
             #region Search Criteria
@@ -5498,10 +5433,10 @@ namespace CodedUITestProject1
     }
     
     [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class UIמערכתקדםשכרDocument5 : HtmlDocument
+    public class UIמערכתקדםשכרDocument51 : HtmlDocument
     {
         
-        public UIמערכתקדםשכרDocument5(UITestControl searchLimitContainer) : 
+        public UIמערכתקדםשכרDocument51(UITestControl searchLimitContainer) : 
                 base(searchLimitContainer)
         {
             #region Search Criteria
@@ -7860,6 +7795,134 @@ namespace CodedUITestProject1
     }
     
     [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UIמערכתקדםשכרDocument29 : HtmlDocument
+    {
+        
+        public UIמערכתקדםשכרDocument29(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "מערכת קדם שכר";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Modules/Ovdim/WorkCard.aspx";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=243&WCardDate=16/01/2014 00:00:0" +
+                "0&dt=Tue Jan 21 16:08:31 2014";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public UITbErrCell1 UITbErrCell
+        {
+            get
+            {
+                if ((this.mUITbErrCell == null))
+                {
+                    this.mUITbErrCell = new UITbErrCell1(this);
+                }
+                return this.mUITbErrCell;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private UITbErrCell1 mUITbErrCell;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UITbErrCell1 : HtmlCell
+    {
+        
+        public UITbErrCell1(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlCell.PropertyNames.Id] = "tbErr";
+            this.SearchProperties[HtmlCell.PropertyNames.Name] = null;
+            this.FilterProperties[HtmlCell.PropertyNames.InnerText] = "התחלת פעילות לפני תחילת סדור  |0|121|460";
+            this.FilterProperties[HtmlCell.PropertyNames.ControlDefinition] = "id=tbErr align=right";
+            this.FilterProperties[HtmlCell.PropertyNames.RowIndex] = "2";
+            this.FilterProperties[HtmlCell.PropertyNames.ColumnIndex] = "0";
+            this.FilterProperties[HtmlCell.PropertyNames.Class] = null;
+            this.FilterProperties[HtmlCell.PropertyNames.TagInstance] = "593";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public UIItemTable8 UIItemTable
+        {
+            get
+            {
+                if ((this.mUIItemTable == null))
+                {
+                    this.mUIItemTable = new UIItemTable8(this);
+                }
+                return this.mUIItemTable;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private UIItemTable8 mUIItemTable;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
+    public class UIItemTable8 : HtmlTable
+    {
+        
+        public UIItemTable8(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlTable.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlTable.PropertyNames.Name] = null;
+            this.FilterProperties[HtmlTable.PropertyNames.InnerText] = "התחלת פעילות לפני תחילת סדור  |0|121|460";
+            this.FilterProperties[HtmlTable.PropertyNames.ControlDefinition] = "border=0 width=\"100%\"";
+            this.FilterProperties[HtmlTable.PropertyNames.RowCount] = "1";
+            this.FilterProperties[HtmlTable.PropertyNames.ColumnCount] = "4";
+            this.FilterProperties[HtmlTable.PropertyNames.Class] = null;
+            this.FilterProperties[HtmlTable.PropertyNames.TagInstance] = "1";
+            this.WindowTitles.Add("מערכת קדם שכר");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlCell UIהתחלתפעילותלפניתחילתCell
+        {
+            get
+            {
+                if ((this.mUIהתחלתפעילותלפניתחילתCell == null))
+                {
+                    this.mUIהתחלתפעילותלפניתחילתCell = new HtmlCell(this);
+                    #region Search Criteria
+                    this.mUIהתחלתפעילותלפניתחילתCell.SearchProperties[HtmlCell.PropertyNames.Id] = null;
+                    this.mUIהתחלתפעילותלפניתחילתCell.SearchProperties[HtmlCell.PropertyNames.Name] = null;
+                    this.mUIהתחלתפעילותלפניתחילתCell.SearchProperties[HtmlCell.PropertyNames.MaxDepth] = "3";
+                    this.mUIהתחלתפעילותלפניתחילתCell.FilterProperties[HtmlCell.PropertyNames.InnerText] = "התחלת פעילות לפני תחילת סדור";
+                    this.mUIהתחלתפעילותלפניתחילתCell.FilterProperties[HtmlCell.PropertyNames.ControlDefinition] = "width=340";
+                    this.mUIהתחלתפעילותלפניתחילתCell.FilterProperties[HtmlCell.PropertyNames.RowIndex] = "0";
+                    this.mUIהתחלתפעילותלפניתחילתCell.FilterProperties[HtmlCell.PropertyNames.ColumnIndex] = "0";
+                    this.mUIהתחלתפעילותלפניתחילתCell.FilterProperties[HtmlCell.PropertyNames.Class] = null;
+                    this.mUIהתחלתפעילותלפניתחילתCell.FilterProperties[HtmlCell.PropertyNames.TagInstance] = "1";
+                    this.mUIהתחלתפעילותלפניתחילתCell.WindowTitles.Add("מערכת קדם שכר");
+                    #endregion
+                }
+                return this.mUIהתחלתפעילותלפניתחילתCell;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlCell mUIהתחלתפעילותלפניתחילתCell;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
     public class UIמערכתקדםשכרWebpageDiWindow1 : BrowserWindow
     {
         
@@ -7879,13 +7942,13 @@ namespace CodedUITestProject1
         }
         
         #region Properties
-        public UIמערכתקדםשכרDocument29 UIמערכתקדםשכרDocument
+        public UIמערכתקדםשכרDocument30 UIמערכתקדםשכרDocument
         {
             get
             {
                 if ((this.mUIמערכתקדםשכרDocument == null))
                 {
-                    this.mUIמערכתקדםשכרDocument = new UIמערכתקדםשכרDocument29(this);
+                    this.mUIמערכתקדםשכרDocument = new UIמערכתקדםשכרDocument30(this);
                 }
                 return this.mUIמערכתקדםשכרDocument;
             }
@@ -7939,13 +8002,13 @@ namespace CodedUITestProject1
             }
         }
         
-        public UIמערכתקדםשכרDocument51 UIמערכתקדםשכרDocument5
+        public UIמערכתקדםשכרDocument52 UIמערכתקדםשכרDocument5
         {
             get
             {
                 if ((this.mUIמערכתקדםשכרDocument5 == null))
                 {
-                    this.mUIמערכתקדםשכרDocument5 = new UIמערכתקדםשכרDocument51(this);
+                    this.mUIמערכתקדםשכרDocument5 = new UIמערכתקדםשכרDocument52(this);
                 }
                 return this.mUIמערכתקדםשכרDocument5;
             }
@@ -7953,7 +8016,7 @@ namespace CodedUITestProject1
         #endregion
         
         #region Fields
-        private UIמערכתקדםשכרDocument29 mUIמערכתקדםשכרDocument;
+        private UIמערכתקדםשכרDocument30 mUIמערכתקדםשכרDocument;
         
         private UIמערכתקדםשכרDocument110 mUIמערכתקדםשכרDocument1;
         
@@ -7963,15 +8026,15 @@ namespace CodedUITestProject1
         
         private UIמערכתקדםשכרDocument42 mUIמערכתקדםשכרDocument4;
         
-        private UIמערכתקדםשכרDocument51 mUIמערכתקדםשכרDocument5;
+        private UIמערכתקדםשכרDocument52 mUIמערכתקדםשכרDocument5;
         #endregion
     }
     
     [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class UIמערכתקדםשכרDocument29 : HtmlDocument
+    public class UIמערכתקדםשכרDocument30 : HtmlDocument
     {
         
-        public UIמערכתקדםשכרDocument29(UITestControl searchLimitContainer) : 
+        public UIמערכתקדםשכרDocument30(UITestControl searchLimitContainer) : 
                 base(searchLimitContainer)
         {
             #region Search Criteria
@@ -8627,10 +8690,10 @@ namespace CodedUITestProject1
     }
     
     [GeneratedCode("Coded UITest Builder", "11.0.50727.1")]
-    public class UIמערכתקדםשכרDocument51 : HtmlDocument
+    public class UIמערכתקדםשכרDocument52 : HtmlDocument
     {
         
-        public UIמערכתקדםשכרDocument51(UITestControl searchLimitContainer) : 
+        public UIמערכתקדםשכרDocument52(UITestControl searchLimitContainer) : 
                 base(searchLimitContainer)
         {
             #region Search Criteria

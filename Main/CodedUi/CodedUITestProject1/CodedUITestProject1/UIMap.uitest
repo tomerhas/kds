@@ -40,7 +40,7 @@
   </Configuration>
   <InitializeActions />
   <ExecuteActions>
-    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument9.UISD000ctl03AddRekaUpSButton">
+    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument9.UISD000ctl03AddRekaUpSButton" ThinkTime="1000">
       <ParameterName />
       <ModifierKeys>None</ModifierKeys>
       <IsGlobalHotkey>false</IsGlobalHotkey>
@@ -93,41 +93,6 @@
       <Disabled>false</Disabled>
       <WorkItemId>0</WorkItemId>
       <MarkerRegionType>Action</MarkerRegionType>
-    </TestStepMarkerAction>
-    <AssertAction UIObjectName="UIMap.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument12.UICtl00_KdsContent_grdTable.UIItem1אCell">
-      <ParameterName />
-      <PropertyName>InnerText</PropertyName>
-      <ExpectedValue>1
-א</ExpectedValue>
-      <MessageOnValidationFailure />
-      <Type>String</Type>
-      <PropertyCondition>AreEqual</PropertyCondition>
-    </AssertAction>
-    <TestStepMarkerAction Comment="לא נמצאו נתונים" MarkerInformation="Assert_exists_grid">
-      <ParameterName />
-      <StepId>-1</StepId>
-      <Direction>Start</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>0</WorkItemId>
-      <MarkerRegionType>Assertion</MarkerRegionType>
-    </TestStepMarkerAction>
-    <AssertAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument28.UITbErrCell.UIItemTable.UIחובהלפחותפעילותאחתCell">
-      <ParameterName />
-      <PropertyName>InnerText</PropertyName>
-      <ExpectedValue>חובה לפחות פעילות אחת </ExpectedValue>
-      <MessageOnValidationFailure />
-      <Type>String</Type>
-      <PropertyCondition>AreEqual</PropertyCondition>
-    </AssertAction>
-    <TestStepMarkerAction Comment="" MarkerInformation="Assert1111">
-      <ParameterName />
-      <StepId>-1</StepId>
-      <Direction>Start</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>0</WorkItemId>
-      <MarkerRegionType>Assertion</MarkerRegionType>
     </TestStepMarkerAction>
     <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWebpageDiWindow.UIמערכתקדםשכרDocument26.UISDimgCancel0Button">
       <ParameterName />
@@ -345,89 +310,6 @@
       <WorkItemId>0</WorkItemId>
       <MarkerRegionType>Action</MarkerRegionType>
     </TestStepMarkerAction>
-    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument3.UIדוחנוכחותButton">
-      <ParameterName />
-      <ModifierKeys>None</ModifierKeys>
-      <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Location X="59" Y="70" />
-      <WheelDirection>0</WheelDirection>
-      <ActionType>Click</ActionType>
-      <MouseButton>Left</MouseButton>
-    </MouseAction>
-    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument11.UIהצגButton">
-      <ParameterName />
-      <ModifierKeys>None</ModifierKeys>
-      <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Location X="32" Y="10" />
-      <WheelDirection>0</WheelDirection>
-      <ActionType>Click</ActionType>
-      <MouseButton>Left</MouseButton>
-    </MouseAction>
-    <MouseAction UIObjectName="UIMap.UIדוחותWebpageDialogWindow.UIדוחותDocument.UIסגורButton" ThinkTime="5000">
-      <ParameterName />
-      <ModifierKeys>None</ModifierKeys>
-      <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Location X="28" Y="12" />
-      <WheelDirection>0</WheelDirection>
-      <ActionType>Click</ActionType>
-      <MouseButton>Left</MouseButton>
-    </MouseAction>
-    <TestStepMarkerAction Comment="" MarkerInformation="Running_presence_report">
-      <ParameterName />
-      <StepId>-1</StepId>
-      <Direction>Start</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>0</WorkItemId>
-      <MarkerRegionType>Action</MarkerRegionType>
-    </TestStepMarkerAction>
-    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument12.UIדוחותCell">
-      <ContinueOnError>True</ContinueOnError>
-      <ParameterName />
-      <ModifierKeys>None</ModifierKeys>
-      <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Location X="16" Y="24" />
-      <WheelDirection>0</WheelDirection>
-      <ActionType>Hover</ActionType>
-      <MouseButton>Left</MouseButton>
-    </MouseAction>
-    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument12.UICtl00_MenuMainn35Row.UIItemTable.UIהפקתדוחותCell">
-      <ContinueOnError>True</ContinueOnError>
-      <ParameterName />
-      <ModifierKeys>None</ModifierKeys>
-      <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Location X="5" Y="13" />
-      <WheelDirection>0</WheelDirection>
-      <ActionType>Hover</ActionType>
-      <MouseButton>Left</MouseButton>
-    </MouseAction>
-    <MouseAction UIObjectName="UIMap.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument12.UIAspnetFormCustom.UIItemTable1">
-      <ParameterName />
-      <ModifierKeys>None</ModifierKeys>
-      <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Location X="116" Y="15" />
-      <WheelDirection>0</WheelDirection>
-      <ActionType>Click</ActionType>
-      <MouseButton>Left</MouseButton>
-    </MouseAction>
-    <MouseAction UIObjectName="UIMap.UIWebpageDialogWindow.UIWebpageDialogTitleBar.UICloseButton" ThinkTime="5000">
-      <ParameterName />
-      <ModifierKeys>None</ModifierKeys>
-      <IsGlobalHotkey>false</IsGlobalHotkey>
-      <Location X="11" Y="13" />
-      <WheelDirection>0</WheelDirection>
-      <ActionType>Click</ActionType>
-      <MouseButton>Left</MouseButton>
-    </MouseAction>
-    <TestStepMarkerAction Comment="" MarkerInformation="Running_rickuz_online_report">
-      <ParameterName />
-      <StepId>-1</StepId>
-      <Direction>Start</Direction>
-      <Outcome />
-      <Disabled>false</Disabled>
-      <WorkItemId>0</WorkItemId>
-      <MarkerRegionType>Action</MarkerRegionType>
-    </TestStepMarkerAction>
     <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument1.UITxtIdEdit">
       <ParameterName />
       <Value Encoded="false">87903</Value>
@@ -584,7 +466,7 @@
       <ActionType>Hover</ActionType>
       <MouseButton>Left</MouseButton>
     </MouseAction>
-    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument2.UITxtIdEdit" ThinkTime="3000">
+    <SetValueAction UIObjectName="UIMap.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument2.UITxtIdEdit" ThinkTime="5000">
       <ParameterName />
       <Value Encoded="false">85015</Value>
       <Type>String</Type>
@@ -2272,6 +2154,53 @@
                       </Descendants>
                     </UIObject>
                   </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIמערכתקדםשכרDocument4" FriendlyName="מערכת קדם שכר" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>מערכת קדם שכר</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="Id">ctl00_MasterBody</PropertyCondition>
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">מערכת קדם שכר</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://kdstest/</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Button" Id="UIכרטיסיעבודהלעובדButton" FriendlyName=" כרטיסי עבודה לעובד " SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                      <PropertyCondition Name="Id">ctl00_KdsContent_btnUpdWorkCard</PropertyCondition>
+                      <PropertyCondition Name="Name">ctl00$KdsContent$btnUpdWorkCard</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="DisplayText"> כרטיסי עבודה לעובד </PropertyCondition>
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">opening-btn</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">id=ctl00_KdsContent_btnUpdWorkCard class</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">12</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
                 </UIObject>
               </Descendants>
             </UIObject>
@@ -6498,6 +6427,104 @@
                             </AndCondition>
                             <FilterCondition Id="Secondary">
                               <PropertyCondition Name="InnerText">חובה לפחות פעילות אחת </PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">width=340</PropertyCondition>
+                              <PropertyCondition Name="RowIndex">0</PropertyCondition>
+                              <PropertyCondition Name="ColumnIndex">0</PropertyCondition>
+                              <PropertyCondition Name="Class" />
+                              <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                      </Descendants>
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIמערכתקדםשכרDocument29" FriendlyName="מערכת קדם שכר" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>מערכת קדם שכר</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">מערכת קדם שכר</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Modules/Ovdim/WorkCard.aspx</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://kdstest/Modules/Ovdim/WorkCard.aspx?EmpID=243&amp;WCardDate=16/01/2014 00:00:00&amp;dt=Tue Jan 21 16:08:31 2014</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Cell" Id="UITbErrCell" FriendlyName="tbErr" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>מערכת קדם שכר</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Cell</PropertyCondition>
+                      <PropertyCondition Name="Id">tbErr</PropertyCondition>
+                      <PropertyCondition Name="Name" />
+                      <PropertyCondition Name="TagName">TD</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="InnerText">התחלת פעילות לפני תחילת סדור  |0|121|460</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">id=tbErr align=right</PropertyCondition>
+                      <PropertyCondition Name="RowIndex">2</PropertyCondition>
+                      <PropertyCondition Name="ColumnIndex">0</PropertyCondition>
+                      <PropertyCondition Name="Class" />
+                      <PropertyCondition Name="TagInstance">593</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Table" Id="UIItemTable" FriendlyName="" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>מערכת קדם שכר</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Table</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name" />
+                          <PropertyCondition Name="TagName">TABLE</PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">התחלת פעילות לפני תחילת סדור  |0|121|460</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">border=0 width="100%"</PropertyCondition>
+                          <PropertyCondition Name="RowCount">1</PropertyCondition>
+                          <PropertyCondition Name="ColumnCount">4</PropertyCondition>
+                          <PropertyCondition Name="Class" />
+                          <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants>
+                        <UIObject ControlType="Cell" Id="UIהתחלתפעילותלפניתחילתCell" FriendlyName="התחלת פעילות לפני תחילת סדור" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>מערכת קדם שכר</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Cell</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                              <PropertyCondition Name="TagName">TD</PropertyCondition>
+                              <PropertyCondition Name="MaxDepth">3</PropertyCondition>
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">התחלת פעילות לפני תחילת סדור</PropertyCondition>
                               <PropertyCondition Name="ControlDefinition">width=340</PropertyCondition>
                               <PropertyCondition Name="RowIndex">0</PropertyCondition>
                               <PropertyCondition Name="ColumnIndex">0</PropertyCondition>

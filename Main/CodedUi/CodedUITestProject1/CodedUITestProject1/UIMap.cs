@@ -524,6 +524,61 @@
         }
 
         private Type_date2Params mType_date2Params;
+
+        /// <summary>
+        /// Running_presence_report
+        /// </summary>
+        public void Running_presence_report()
+        {
+            #region Variable Declarations
+            HtmlInputButton uIדוחנוכחותButton = this.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument3.UIדוחנוכחותButton;
+            HtmlInputButton uIהצגButton = this.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument11.UIהצגButton;
+            HtmlInputButton uIסגורButton = this.UIדוחותWebpageDialogWindow.UIדוחותDocument.UIסגורButton;
+            #endregion
+
+            // Click 'דו''ח נוכחות' button
+            Mouse.Click(uIדוחנוכחותButton, new Point(59, 70));
+
+            // Click 'הצג' button
+            Mouse.Click(uIהצגButton, new Point(32, 10));
+
+            // Wait for 5 seconds for user delay between actions; Click 'סגור' button
+           
+           if(uIסגורButton.WaitForControlExist()) 
+            Mouse.Click(uIסגורButton, new Point(28, 12));
+}
+
+        /// <summary>
+        /// Running_rickuz_online_report
+        /// </summary>
+        public void Running_rickuz_online_report()
+        {
+            #region Variable Declarations
+            HtmlCell uIדוחותCell = this.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument12.UIדוחותCell;
+            HtmlCell uIהפקתדוחותCell = this.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument12.UICtl00_MenuMainn35Row.UIItemTable.UIהפקתדוחותCell;
+            HtmlTable uIItemTable1 = this.UIמערכתקדםשכרWindowsInWindow.UIמערכתקדםשכרDocument12.UIAspnetFormCustom.UIItemTable1;
+            WinButton uICloseButton = this.UIWebpageDialogWindow.UIWebpageDialogTitleBar.UICloseButton;
+            #endregion
+
+            // Set flag to allow play back to continue if non-essential actions fail. (For example, if a mouse hover action fails.)
+            Playback.PlaybackSettings.ContinueOnError = true;
+
+            // Mouse hover 'דו''חות' cell at (16, 24)
+            Mouse.Hover(uIדוחותCell, new Point(16, 24));
+
+            // Mouse hover 'הפקת דו''חות' cell at (5, 13)
+            Mouse.Hover(uIהפקתדוחותCell, new Point(5, 13));
+
+            // Reset flag to ensure that play back stops if there is an error.
+            Playback.PlaybackSettings.ContinueOnError = false;
+
+            // Click table
+            Mouse.Click(uIItemTable1, new Point(116, 15));
+
+            // Wait for 5 seconds for user delay between actions; Click 'Close' button
+            if(uICloseButton.WaitForControlExist())
+            Mouse.Click(uICloseButton, new Point(11, 13));
+}
     }
     /// <summary>
     /// Parameters to be passed into 'Cancel_Activity'

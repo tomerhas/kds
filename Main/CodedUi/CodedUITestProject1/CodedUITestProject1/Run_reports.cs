@@ -16,9 +16,9 @@ namespace CodedUITestProject1
     /// Summary description for CodedUITest1
     /// </summary>
     [CodedUITest]
-    public class CodedUITest1
+    public class Run_reports
     {
-        public CodedUITest1()
+        public Run_reports()
         {
         }
 
@@ -28,9 +28,9 @@ namespace CodedUITestProject1
 
             this.UIMap.Running_presence_report();
             this.UIMap.Show_calc_employee();
-            //this.UIMap.Assert_exists_grid();
             this.UIMap.Running_rickuz_online_report();
             
+
 
 
 
