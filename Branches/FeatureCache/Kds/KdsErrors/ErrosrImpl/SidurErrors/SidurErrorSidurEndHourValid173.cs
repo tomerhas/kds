@@ -27,7 +27,8 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
         public override bool InternalIsCorrect(ErrorInputData input)
         {
             DateTime dEndLimitHour, dStartLimitHour;
-            DateTime dSidurEndHour;
+            DateTime dSidurEndHour, dEzerDate;
+            bool bFlag = false;
 
             bool isSidurNahagut = false;
             bool isSidurNihulTnua = false;
@@ -42,23 +43,32 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             dEndLimitHour = (isSidurNahagut || isSidurNihulTnua) ? input.oParameters.dNahagutLimitShatGmar : input.oParameters.dSidurEndLimitHourParam3;
 
             if (input.curSidur.bSidurMyuhad && !string.IsNullOrEmpty(input.curSidur.sShaonNochachut) && (input.OvedDetails.iIsuk == 122 || input.OvedDetails.iIsuk == 123 || input.OvedDetails.iIsuk == 124 || input.OvedDetails.iIsuk == 127))
+            {
+                bFlag = true;
                 dEndLimitHour = input.oParameters.dSidurLimitShatGmarMafilim;
+            }
 
 
             if ((input.OvedDetails.iIsuk != 122 && input.OvedDetails.iIsuk != 123 && input.OvedDetails.iIsuk != 124 && input.OvedDetails.iIsuk != 127) && input.oMeafyeneyOved.IsMeafyenExist(43))
+            {
+                if (!string.IsNullOrEmpty(input.curSidur.sShaonNochachut))
+                    bFlag = true;
                 dEndLimitHour = input.oParameters.dSiyumLilaLeovedLoMafil;
+            }
 
             dSidurEndHour = input.curSidur.dFullShatGmar;
             if (input.curSidur.bSidurMyuhad)
             {
                 if ((input.curSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(input.curSidur.sShatHatchalaMuteret))) //קיים מאפיין
                 {
-                    dStartLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatHatchalaMuteret).ToString("HH:mm"), input.CardDate);
+                    dStartLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatHatchalaMuteret).ToString("HH:mm"), input.CardDate);
                 }
 
-                if ((input.curSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(input.curSidur.sShatGmarMuteret))) //קיים מאפיין
+                if ((!bFlag) && (input.curSidur.bShatGmarMuteretExists) && (!String.IsNullOrEmpty(input.curSidur.sShatGmarMuteret))) //קיים מאפיין
                 {
-                    dEndLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatGmarMuteret).ToString("HH:mm"), input.CardDate.AddDays(1));
+                    dEzerDate = DateTime.Parse(input.curSidur.sShatGmarMuteret);
+                    dEndLimitHour = clGeneral.GetDateTimeFromStringHour(dEzerDate.ToString("HH:mm"), DateHelper.getCorrectDay(dEzerDate, input.CardDate));
+
                 }
             }
 

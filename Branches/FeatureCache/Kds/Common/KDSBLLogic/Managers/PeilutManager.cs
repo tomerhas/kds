@@ -142,6 +142,81 @@ namespace KdsLibrary.KDSLogic.Managers
             }
         }
 
+        public void UpdatePeilutFromOldPeilut(int iMisparIshi, DateTime dDateCard, PeilutDM cls, long lMakatNesiaNew, DataTable dtMeafyeneyElements)
+        {
+      
+            DataTable dtPeiluyot;
+            string sCacheKey = "ElementsTable";
+
+            try
+            {
+                cls.dtElementim = GetDTElementim();
+                cls.lMakatNesia = lMakatNesiaNew;
+                cls.dCardDate = dDateCard;
+                cls.iOldKisuyTor = cls.iKisuyTor;
+
+                cls.lOldOtoNo = cls.lOtoNo;
+
+
+                cls.iOldDakotBafoal = cls.iDakotBafoal;
+
+
+                //TODO - need to try get from cahce and also save to peilut to cache
+                var kavimManager = _container.Resolve<IKavimManager>();
+                dtPeiluyot = kavimManager.GetKatalogKavim(iMisparIshi, dDateCard, dDateCard);
+
+                SetKavDetails(cls, dtPeiluyot, cls.lMakatNesia);
+
+                if ((enMakatType)cls.iMakatType == enMakatType.mElement)
+                {
+                    DataRow[] dr = dtMeafyeneyElements.Select("kod_element=" + int.Parse(cls.lMakatNesia.ToString().Substring(1, 2)));
+                    DataRow drMeafyeneyElements;
+
+                    if (dr.Length > 0)
+                    {
+                        drMeafyeneyElements = dr[0];
+                        cls.iElementLeYedia = (System.Convert.IsDBNull(drMeafyeneyElements["element_for_yedia"]) ? 0 : int.Parse(drMeafyeneyElements["element_for_yedia"].ToString()));
+                        cls.iErechElement = (System.Convert.IsDBNull(drMeafyeneyElements["erech_element"]) ? 0 : int.Parse(drMeafyeneyElements["erech_element"].ToString()));
+
+                        cls.iMisparSidurMatalotTnua = (System.Convert.IsDBNull(drMeafyeneyElements["mispar_sidur_matalot_tnua"]) ? 0 : int.Parse(drMeafyeneyElements["mispar_sidur_matalot_tnua"].ToString()));
+                        cls.bMisparSidurMatalotTnuaExists = !String.IsNullOrEmpty(drMeafyeneyElements["mispar_sidur_matalot_tnua"].ToString());
+                        cls.sBusNumberMust = drMeafyeneyElements["bus_number_must"].ToString();
+                        cls.bBusNumberMustExists = !(String.IsNullOrEmpty(drMeafyeneyElements["bus_number_must"].ToString()));
+                        cls.sElementHamtana = drMeafyeneyElements["element_hamtana"].ToString();
+                        cls.bElementHamtanaExists = !String.IsNullOrEmpty(drMeafyeneyElements["element_hamtana"].ToString());
+                        cls.sElementIgnoreHafifaBetweenNesiot = drMeafyeneyElements["lehitalem_hafifa_bein_nesiot"].ToString();
+                        cls.bElementIgnoreHafifaBetweenNesiotExists = !String.IsNullOrEmpty(drMeafyeneyElements["lehitalem_hafifa_bein_nesiot"].ToString());
+
+                        cls.sElementIgnoreReka = drMeafyeneyElements["lehitalem_beitur_reyka"].ToString();
+                        cls.bElementIgnoreReka = !String.IsNullOrEmpty(drMeafyeneyElements["lehitalem_beitur_reyka"].ToString());
+
+                        cls.sElementZviraZman = drMeafyeneyElements["element_zvira_zman"].ToString();
+                        cls.sElementNesiaReka = drMeafyeneyElements["nesia_reika"].ToString();
+                        cls.sElementInMinutes = drMeafyeneyElements["element_in_minutes"].ToString();
+                        cls.sKodLechishuvPremia = drMeafyeneyElements["kod_lechishuv_premia"].ToString();
+                        cls.sLoNitzbarLishatGmar = drMeafyeneyElements["lo_nizbar_leshat_gmar"].ToString();
+                        cls.sHamtanaEilat = drMeafyeneyElements["hamtana_eilat"].ToString();
+
+                        cls.sElementLershut = drMeafyeneyElements["Lershut"].ToString();
+                        cls.bElementLershutExists = !String.IsNullOrEmpty(drMeafyeneyElements["Lershut"].ToString());
+                        cls.iElementLeShatGmar = System.Convert.IsDBNull(drMeafyeneyElements["peilut_mashmautit"]) ? 0 : int.Parse(drMeafyeneyElements["peilut_mashmautit"].ToString());
+
+                        cls.sBitulBiglalIchurLasidur = drMeafyeneyElements["bitul_biglal_ichur_lasidur"].ToString();
+                        cls.bBitulBiglalIchurLasidurExists = !String.IsNullOrEmpty(drMeafyeneyElements["bitul_biglal_ichur_lasidur"].ToString());
+                        cls.sDivuchInSidurVisa = drMeafyeneyElements["divuch_in_sidur_visa"].ToString();
+                        cls.sDivuchInSidurMeyuchad = drMeafyeneyElements["divuach_besidur_meyuchad"].ToString();
+
+                    }
+                }
+
+              
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public PeilutDM CreateClsPeilut(int iMisparIshi, DateTime dDateCard, OBJ_PEILUT_OVDIM oObjPeilutOvdimIns, DataTable dtMeafyeneyElements)
         {
             PeilutDM cls = new PeilutDM();

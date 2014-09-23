@@ -481,13 +481,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          var ovedDetails = ovedManager.GetOvedDetails(misparIshi, cardDate);
 
          //WorkCardResult WCResult = new WorkCardResult() { Succeeded = false };
-         if (ovedDetails.Rows.Count > 0)
-         {
+         //if (ovedDetails.Rows.Count > 0)
+         //{
              wcResult.htEmployeeDetails = ovedManager.GetEmployeeDetails(ovedDetails, cardDate, misparIshi, out iLast, out htSpecialEmployeeDetails, out htFullEmployeeDetails);
              wcResult.htFullEmployeeDetails = htFullEmployeeDetails;
              wcResult.Succeeded = true;
              wcResult.dtMashar = GetMasharData(wcResult.htEmployeeDetails);
-         }
+         //}
          var cacheAged = ServiceLocator.Current.GetInstance<IKDSAgedQueueParameters>();
          wcResult.oParam = cacheAged.GetItem(cardDate);
 
@@ -2221,7 +2221,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             DataView dv;
             //string strImageUrl = "";        
             // btnCardStatus.Text = _wcResult.oOvedYomAvodaDetails.sStatusCardDesc;
-            if (_wcResult.oOvedYomAvodaDetails!=null)
+            if (_wcResult.oOvedYomAvodaDetails != null && _wcResult.oOvedYomAvodaDetails.bOvedDetailsExists)
             {
                 //_StatusCard = oBatchManager.CardStatus;
                 if (bRashemet)
@@ -2298,8 +2298,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         string strImageUrlApprove = "";
         string strImageUrlNotApprove = "";
         clGeneral.enMeasherOMistayeg oMasherOMistayeg;
-      
-        if (_wcResult.oOvedYomAvodaDetails!=null)
+
+        if (_wcResult.oOvedYomAvodaDetails != null && _wcResult.oOvedYomAvodaDetails.bOvedDetailsExists)
         {
             oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)_wcResult.oOvedYomAvodaDetails.iMeasherOMistayeg;
             switch (oMasherOMistayeg)
@@ -2404,7 +2404,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         //סטטוס טיפול כרטיס
         SetCardStatus();
-        if (_wcResult.oOvedYomAvodaDetails!=null){
+        if (_wcResult.oOvedYomAvodaDetails != null && _wcResult.oOvedYomAvodaDetails.bOvedDetailsExists)
+        {
         //DDL
         ddlTachograph.SelectedValue = _wcResult.oOvedYomAvodaDetails.sTachograf;//String.IsNullOrEmpty(_wcResult.oOvedYomAvodaDetails.sTachograf) ? "-1" : _wcResult.oOvedYomAvodaDetails.sTachograf;
         ddlHalbasha.SelectedValue = _wcResult.oOvedYomAvodaDetails.sHalbasha;//String.IsNullOrEmpty(_wcResult.oOvedYomAvodaDetails.sHalbasha) ? "-1" : _wcResult.oOvedYomAvodaDetails.sHalbasha;
@@ -2779,10 +2780,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     switch (int.Parse(Request.QueryString["Page"]))
                     {
                         case 1:
-                            Response.Redirect("EmployeeCards.aspx?EmpID=" + iMisparIshi.ToString() + "&WCardDate=" + dDateCard.ToShortDateString());
+                            Response.Redirect("EmployeeCards.aspx?EmpID=" + iMisparIshi.ToString() + "&WCardDate=" + dDateCard.ToShortDateString(), false);
                             break;
                         case 2:
-                            Response.Redirect("EmployeTotalMonthly.aspx?EmpID=" + iMisparIshi.ToString() + "&WCardDate=" + dDateCard.ToShortDateString());
+                            Response.Redirect("EmployeTotalMonthly.aspx?EmpID=" + iMisparIshi.ToString() + "&WCardDate=" + dDateCard.ToShortDateString(), false);
                             break;
                     }
                 }

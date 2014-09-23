@@ -60,7 +60,7 @@ namespace KdsShinuyim.ShinuyImpl
                         oObjSidurimConenutGriraUpd = GetSidurOvdimObject(oSidurKonenutGrira.iMisparSidur, oSidurKonenutGrira.dFullShatHatchala,inputData);
                         if (oObjSidurimConenutGriraUpd.LO_LETASHLUM == 0)
                         {
-                            UdateKonenutGrira(inputData, oSidurKonenutGrira, oObjSidurimConenutGriraUpd);
+                            UdateKonenutGrira(curSidur,inputData, oSidurKonenutGrira, oObjSidurimConenutGriraUpd);
                         }
                     }
                 }
@@ -71,34 +71,44 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void UdateKonenutGrira(ShinuyInputData inputData, SidurDM oSidurKonenutGrira, OBJ_SIDURIM_OVDIM oObjSidurimConenutGriraUpd)
+        private void UdateKonenutGrira(SidurDM curSidur,ShinuyInputData inputData, SidurDM oSidurKonenutGrira, OBJ_SIDURIM_OVDIM oObjSidurimConenutGriraUpd)
         {
-            float Minutes;
+            float Minutes, iNumSidur2;
 
             try{
                 oObjSidurimConenutGriraUpd.UPDATE_OBJECT = 1;
                 Minutes = float.Parse((oSidurKonenutGrira.dFullShatGmar - oSidurKonenutGrira.dFullShatHatchala).TotalMinutes.ToString());
+                iNumSidur2 = int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().PadLeft(5, '0').Substring(0, 2));
                 if (Minutes > inputData.oParam.iMinZmanGriraDarom)
                 {
-                    if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().Substring(0, 2)) >= 25)
+                    if (iNumSidur2 >= 25 || iNumSidur2 == 4 || (iNumSidur2 == 22 &&
+                                  (curSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString() || curSidur.sErevShishiChag == "1" || curSidur.sSidurDay == enDay.Shabat.GetHashCode().ToString() || curSidur.sShabaton == "1")))
+                   // if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().Substring(0, 2)) >= 25)
                     {
                         oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
                         oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala.AddMinutes(inputData.oParam.iMinZmanGriraDarom);
                     }
-                    else
+                    else if (iNumSidur2 < 25 && (iNumSidur2 == 1 || iNumSidur2 == 22) && (curSidur.sSidurDay != enDay.Shabat.GetHashCode().ToString() &&
+                                            curSidur.sSidurDay != enDay.Shishi.GetHashCode().ToString() &&
+                                            !curSidur.sErevShishiChag.Equals("1") && !curSidur.sShabaton.Equals("1")))
                     {
                         oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
                         oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala.AddMinutes(inputData.oParam.iMinZmanGriraTzafon);
                     }
                 }
-                else if (Minutes > inputData.oParam.iMinZmanGriraTzafon && Minutes < inputData.oParam.iMinZmanGriraDarom)
+                else if (Minutes > inputData.oParam.iMinZmanGriraTzafon && Minutes <= inputData.oParam.iMinZmanGriraDarom)
                 {
-                    if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().Substring(0, 2)) >= 25)
+                   // if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().Substring(0, 2)) >= 25)
+                    if (iNumSidur2 >= 25 || iNumSidur2 == 4 || (iNumSidur2 == 22 &&
+                                   (curSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString() || curSidur.sErevShishiChag == "1" || curSidur.sSidurDay == enDay.Shabat.GetHashCode().ToString() || curSidur.sShabaton == "1")))
+                               
                     {
                         oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
                         oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatGmar;
                     }
-                    else
+                    else if (iNumSidur2 < 25 && (iNumSidur2 == 1 || iNumSidur2 == 22) && (curSidur.sSidurDay != enDay.Shabat.GetHashCode().ToString() &&
+                                                curSidur.sSidurDay != enDay.Shishi.GetHashCode().ToString() &&
+                                                !curSidur.sErevShishiChag.Equals("1") && !curSidur.sShabaton.Equals("1")))
                     {
                         oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
                         oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala.AddMinutes(inputData.oParam.iMinZmanGriraTzafon);

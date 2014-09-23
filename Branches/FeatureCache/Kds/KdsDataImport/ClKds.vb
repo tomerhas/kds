@@ -3916,6 +3916,7 @@ Public Class ClKds
         Dim Outline As String
         Dim i As Integer
         Dim previousday As String
+        Dim LineErrCnt As Integer
 
         Try
 
@@ -3925,8 +3926,10 @@ Public Class ClKds
             sr = New StreamReader(InPathNFile)
 
             line = sr.ReadLine
+            LineErrCnt = 0
             If Trim(line) = "" Then
                 line = sr.ReadLine
+                LineErrCnt = LineErrCnt + 1
             End If
             oDal = New clDal
             While Not ((Trim(line) Is Nothing) Or (Trim(line) = ""))
@@ -3962,8 +3965,9 @@ Public Class ClKds
                             End If
                             Outline = Outline & SRV_D_MIKUM_KNISA & "00"
                             Outline = Outline & "000000000000000000000000000000000000000        "
+                            '                    12345678901234567890123456789012345678901234567
                             'Outline = Outline & "99214" & "000000000" & Mid(line, 5, 1) & "00  "
-                            Outline = Outline & "99214" & "000000000100  "
+                            Outline = Outline & "99214" & "000000010000  "
                             LoadPundakim(Outline)
                             i = i + 1
                             Restline = Mid(line, 18 + 14 * i, 14)
@@ -3973,13 +3977,18 @@ Public Class ClKds
                     End If
 
                 Catch ex As Exception
-                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Pundakim aborted" & ex.Message, 3)
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Pundakim aborted line " & LineErrCnt.ToString & ex.Message, 3)
                     Throw ex
                 End Try
                 line = sr.ReadLine
+                LineErrCnt = LineErrCnt + 1
+                While Trim(line) = "" And Not sr.EndOfStream
+                    line = sr.ReadLine
+                    LineErrCnt = LineErrCnt + 1
+                End While
             End While
         Catch ex As Exception
-            oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Pundakim aborted" & ex.Message, 3)
+            oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Pundakim aborted line " & LineErrCnt.ToString & ex.Message, 3)
             Throw ex
         Finally
             sr.Close()

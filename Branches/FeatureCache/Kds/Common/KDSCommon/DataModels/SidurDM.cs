@@ -12,6 +12,7 @@ namespace KDSCommon.DataModels
         public int iMisparIshi;
         public int iMisparSidur;
         public int iMisparSidurMyuhad;
+        public bool bSadotNosafim = false;
         public string sShatGmar;
         public DateTime dFullShatHatchala;
         public DateTime dOldFullShatHatchala;

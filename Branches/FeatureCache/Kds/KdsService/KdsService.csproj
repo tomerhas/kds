@@ -241,9 +241,18 @@
   -->
   <Target Name="AfterBuild">
     <TransformXml Source="@(AppConfigWithTargetPath)" Transform="$(ProjectConfigTransformFileName)" Destination="@(AppConfigWithTargetPath->'$(OutDir)%(TargetPath)')" />
+    <!--<Exec Command="XCOPY  &quot;$(SolutionDir)$(ProjectName)\bin\$(ConfigurationName)\*&quot; &quot;..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)&quot;  /Y/I"  ContinueOnError="false" />-->
+    <!--<ItemGroup>
+      <MyFiles Include="$(SolutionDir)$(ProjectName)\bin\$(ConfigurationName)\*.*"/>
+    </ItemGroup>
+    <Microsoft.Build.Tasks.Copy SourceFiles="@(MyFiles)" DestinationFolder="..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)\"/>
+    <Message Text="Source files= $(MyFiles)" />
+    <Message Text="Out dir = ..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)\" />-->
+
   </Target>
   <PropertyGroup>
+    <!--<TransformXml Source="@(AppConfigWithTargetPath)" Transform="$(ProjectConfigTransformFileName)" Destination="@(AppConfigWithTargetPath->'$(OutDir)%(TargetPath)')" />-->
     <PostBuildEvent>XCOPY  "$(SolutionDir)$(ProjectName)\bin\$(ConfigurationName)\*" "..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)"  /Y/I
-ECHO XCOPY  "$(SolutionDir)$(ProjectName)\bin\$(ConfigurationName)\*" "..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)\"  /Y</PostBuildEvent>
+                    ECHO XCOPY  "$(SolutionDir)$(ProjectName)\bin\$(ConfigurationName)\*" "..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)\"  /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

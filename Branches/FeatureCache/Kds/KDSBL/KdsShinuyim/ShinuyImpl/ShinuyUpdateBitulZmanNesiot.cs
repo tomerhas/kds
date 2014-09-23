@@ -227,6 +227,7 @@ namespace KdsShinuyim.ShinuyImpl
         private void SetZakautFromAvoda(ShinuyInputData inputData, int iSidurZakaiLenesiaYetzia)
         {
             int iZmanNesia = 0;
+            int iErechMeafyen=0;
             try{
                 if (iSidurZakaiLenesiaYetzia > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT", inputData) && inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
                 {
@@ -256,8 +257,20 @@ namespace KdsShinuyim.ShinuyImpl
                         }
                         if (inputData.oMeafyeneyOved.IsMeafyenExist(51))
                         {
-                            iZmanNesia = int.Parse(inputData.oMeafyeneyOved.GetMeafyen(51).Value.ToString().PadRight(3, char.Parse("0")).Substring(1));
-                            inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                            iZmanNesia = int.Parse(inputData.oMeafyeneyOved.GetMeafyen(51).Value.PadRight(3, char.Parse("0")).Substring(1));
+                            iErechMeafyen = int.Parse(inputData.oMeafyeneyOved.GetMeafyen(51).Value.Substring(0, 1));
+
+                            if (iErechMeafyen == 2)
+                            {
+                                inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = iZmanNesia;
+                            }
+                            if (iErechMeafyen == 3)
+                            {
+                                inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                            }
+
+                         //   iZmanNesia = int.Parse(inputData.oMeafyeneyOved.GetMeafyen(51).Value.ToString().PadRight(3, char.Parse("0")).Substring(1));
+                         //   inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
                         }
                     }
                 }
@@ -271,6 +284,7 @@ namespace KdsShinuyim.ShinuyImpl
         private void SetZakautToAvoda(ShinuyInputData inputData, int iSidurZakaiLenesiaKnisa)
         {
             int iZmanNesia = 0;
+            int iErechMeafyen;
             try{
             //לפחות אחד הסידורים מזכה בזמן נסיעה (סידור מזכה בזמן נסיעות אם יש לו ערך 1 (זכאי) במאפיין 14 (זכאות לזמן נסיעה) בטבלת סידורים מיוחדים/מאפייני סוג סידור
                 if (iSidurZakaiLenesiaKnisa > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT", inputData) && inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
@@ -303,11 +317,22 @@ namespace KdsShinuyim.ShinuyImpl
                         }
                         if (inputData.oMeafyeneyOved.IsMeafyenExist(51))
                         {
+                            iErechMeafyen = int.Parse(inputData.oMeafyeneyOved.GetMeafyen(51).Value.Substring(0, 1));
                             iZmanNesia = int.Parse(inputData.oMeafyeneyOved.GetMeafyen(51).Value.Substring(1));
-                            if (iZmanNesia > -1)
+                            if (iErechMeafyen == 1)
+                            {
+                                inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = iZmanNesia;
+                            }
+                            if (iErechMeafyen == 3)
                             {
                                 inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
                             }
+
+                            //iZmanNesia = int.Parse(inputData.oMeafyeneyOved.GetMeafyen(51).Value.Substring(1));
+                            //if (iZmanNesia > -1)
+                            //{
+                            //    inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                            //}
                         }
                     }
                 }
@@ -325,6 +350,7 @@ namespace KdsShinuyim.ShinuyImpl
             DataRow[] drSugSidur;
             bool bKnisaValid = false;
             bool bYetizaValid = false;
+            bool bSidurRelevanti = true;
             
             try{
                 var sidurManager = _container.Resolve<ISidurManager>();
@@ -335,7 +361,16 @@ namespace KdsShinuyim.ShinuyImpl
                 sMefyen14 = curSidur.sZakayLezamanNesia;
                 if (!curSidur.bSidurMyuhad && drSugSidur.Length > 0) sMefyen14 = drSugSidur[0]["zakay_leaman_nesia"].ToString();
 
-                if (!bSidurZakaiLnesiot && sMefyen14 == "1" && curSidur.iLoLetashlum == 0)
+                bSidurRelevanti = true;
+                if (IsSidurNihulTnua(drSugSidur, curSidur))
+                {
+                    if (inputData.OvedDetails.iIsuk == 401 || inputData.OvedDetails.iIsuk == 402 || inputData.OvedDetails.iIsuk == 403 ||
+                        inputData.OvedDetails.iIsuk == 404 || inputData.OvedDetails.iIsuk == 421 || inputData.OvedDetails.iIsuk == 422 || inputData.OvedDetails.iIsuk == 17)
+                        bSidurRelevanti = true;
+                    else bSidurRelevanti = false;
+                }
+
+                if (!bSidurZakaiLnesiot && sMefyen14 == "1" && curSidur.iLoLetashlum == 0 && bSidurRelevanti)
                 {
                     if (!(bSidurMezake))
                     {

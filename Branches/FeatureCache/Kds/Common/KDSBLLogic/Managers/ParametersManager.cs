@@ -811,7 +811,11 @@ namespace KdsLibrary
                 // 277
                 sTmp = GetOneParam(277, dCardDate);
                 cls.dTaarichHafalatMichsot = String.IsNullOrEmpty(sTmp) ? DateTime.MaxValue : DateTime.Parse(sTmp);
-        
+
+                // 278
+                sTmp = GetOneParam(278, dCardDate);
+                cls.dTaarichmichsatHachanatMechona = String.IsNullOrEmpty(sTmp) ? DateTime.MaxValue : DateTime.Parse(sTmp);
+
                 // 279
                 sTmp = GetOneParam(279, dCardDate);
                 cls.dTaarichPremiatNahagut = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);

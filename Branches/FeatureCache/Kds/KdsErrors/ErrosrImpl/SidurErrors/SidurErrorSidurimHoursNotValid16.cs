@@ -21,12 +21,25 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             if (input.iSidur > 0)//לא נבצע את הבדיקה לסידור הראשון
             {
                 SidurDM oPrevSidur = (SidurDM)input.htEmployeeDetails[input.iSidur - 1];
-                string sShatGmarPrev = oPrevSidur.sShatGmar;
                 int iPrevLoLetashlum = oPrevSidur.iLoLetashlum;
+
+                for (int i = (input.iSidur - 1); i >= 0; i--)
+                {
+                    oPrevSidur = (SidurDM)input.htEmployeeDetails[i];
+
+                    iPrevLoLetashlum = oPrevSidur.iLoLetashlum;
+                    if (iPrevLoLetashlum == 0)
+                    {
+                        break;
+                    }
+                }
+                
+                string sShatGmarPrev = oPrevSidur.sShatGmar;
                 DateTime dShatHatchalaSidur = input.curSidur.dFullShatHatchala;
                 DateTime dShatGmarPrevSidur = oPrevSidur.dFullShatGmar;
 
-                if (dShatHatchalaSidur != DateTime.MinValue && dShatGmarPrevSidur != DateTime.MinValue)
+              //  if (dShatHatchalaSidur != DateTime.MinValue && dShatGmarPrevSidur != DateTime.MinValue)
+                if (dShatHatchalaSidur.Date != DateTime.MinValue.Date && dShatGmarPrevSidur.Date != DateTime.MinValue.Date)
                 {
                     DateTime dPrevTime = new DateTime(dShatGmarPrevSidur.Year, dShatGmarPrevSidur.Month, dShatGmarPrevSidur.Day, int.Parse(dShatGmarPrevSidur.ToString("HH:mm").Substring(0, 2)), int.Parse(dShatGmarPrevSidur.ToString("HH:mm").Substring(3, 2)), 0);
                     DateTime dCurrTime = new DateTime(dShatHatchalaSidur.Year, dShatHatchalaSidur.Month, dShatHatchalaSidur.Day, int.Parse(dShatHatchalaSidur.ToString("HH:mm").Substring(0, 2)), int.Parse(dShatHatchalaSidur.ToString("HH:mm").Substring(3, 2)), 0);

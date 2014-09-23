@@ -77,7 +77,9 @@ namespace KdsBatch
             //else 
             if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
             {
-                sErua417.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaMeshek.GetHashCode(),_dtPrem), 4, 0));
+                fErech = GetErechRechivPremiya(clGeneral.enRechivim.PremiaMeshek.GetHashCode(), _dtPrem);
+                fErech += GetErechRechiv(clGeneral.enRechivim.PremyatMeshekYadani.GetHashCode());
+                sErua417.Append(FormatNumber(fErech, 4, 0));
             }
             else sErua417.Append(GetBlank(4));
             //פרמיה פקחים - 117
@@ -89,7 +91,9 @@ namespace KdsBatch
             //else 
             if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
             {
-                sErua417.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaPakachim.GetHashCode(), _dtPrem), 4, 0));
+                fErech = GetErechRechivPremiya(clGeneral.enRechivim.PremiaPakachim.GetHashCode(), _dtPrem);
+                fErech += GetErechRechiv(clGeneral.enRechivim.PremyatPakachYadani.GetHashCode());
+                sErua417.Append(FormatNumber(fErech, 4, 0));
             }
             else sErua417.Append(GetBlank(4));
             //פרמיה סדרנים - 116
@@ -101,7 +105,9 @@ namespace KdsBatch
             //else 
             if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
             {
-                sErua417.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaSadranim.GetHashCode(), _dtPrem), 4, 0));
+                fErech = GetErechRechivPremiya(clGeneral.enRechivim.PremiaSadranim.GetHashCode(), _dtPrem);
+                fErech += GetErechRechiv(clGeneral.enRechivim.PremyatSadranYadani.GetHashCode());
+                sErua417.Append(FormatNumber(fErech, 4, 0));
             }
             else sErua417.Append(GetBlank(4));
             //פרמיה רכזים - 118
@@ -114,7 +120,9 @@ namespace KdsBatch
             //else 
             if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
             {
-                sErua417.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaRakazim.GetHashCode(), _dtPrem), 4, 0));
+                fErech = GetErechRechivPremiya(clGeneral.enRechivim.PremiaRakazim.GetHashCode(), _dtPrem);
+                fErech += GetErechRechiv(clGeneral.enRechivim.PremyatRakazYadani.GetHashCode());
+                sErua417.Append(FormatNumber(fErech, 4, 0));
             }
             else sErua417.Append(GetBlank(4)); 
            

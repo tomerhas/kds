@@ -36,7 +36,8 @@ namespace KdsBatch
                   sErua460.Append(FormatNumber(1, 4, 2));
               else sErua460.Append(GetBlank(4));
 
-              sErua460.Append(GetBlank(4));
+              fErech = GetErechRechiv(clGeneral.enRechivim.NochehutByameyMiluim.GetHashCode());
+              sErua460.Append(FormatNumber(fErech, 4, 2));
            //   sErua460.Append(GetBlank(8));
 
               //if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
@@ -47,7 +48,9 @@ namespace KdsBatch
               //else 
               if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
               {
-                  sErua460.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaGrira.GetHashCode(), _dtPrem), 4, 0));
+                  fErech=GetErechRechivPremiya(clGeneral.enRechivim.PremiaGrira.GetHashCode(), _dtPrem);
+                  fErech += GetErechRechiv(clGeneral.enRechivim.PremyatGriraYadanit.GetHashCode());
+                  sErua460.Append(FormatNumber(fErech, 4, 0));
               }
               else sErua460.Append(GetBlank(4));
 
@@ -71,7 +74,15 @@ namespace KdsBatch
               {
                   sErua460.Append(GetBlank(4));
               }
-              sErua460.Append(GetBlank(12));//פוזיציות 6,7,8
+
+
+              fErech = GetErechRechiv(clGeneral.enRechivim.MachalatYeledImMugbalutMaavid.GetHashCode());
+              sErua460.Append(FormatNumber(fErech, 4, 2));
+                  
+              fErech = GetErechRechiv(clGeneral.enRechivim.MachalatYeledImMugbalutOved.GetHashCode());
+              sErua460.Append(FormatNumber(fErech, 4, 2));
+
+              sErua460.Append(GetBlank(4));//פוזיציה 8
               sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode()), 4, 2));
 
               sErua460.Append(GetBlank(37));

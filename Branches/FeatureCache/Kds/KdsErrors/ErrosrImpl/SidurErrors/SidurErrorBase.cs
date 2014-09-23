@@ -29,8 +29,10 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             drNew["taarich"] = input.CardDate.ToShortDateString();
             drNew["mispar_sidur"] = input.curSidur.iMisparSidur;
             drNew["shat_hatchala"] = (input.curSidur.sShatHatchala == null ? DateTime.MinValue : input.curSidur.dFullShatHatchala);
-
+            if(input.curSidur.bSadotNosafim)
+                drNew["sadot_nosafim"] = 1;
             input.dtErrors.Rows.Add(drNew);
         }
+        
     }
 }

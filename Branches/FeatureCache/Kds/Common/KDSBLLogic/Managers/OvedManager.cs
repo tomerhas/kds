@@ -28,6 +28,7 @@ namespace KDSBLLogic.Managers
             {
                 OvedYomAvodaDetailsDM ovedYomAvodaDatails = new OvedYomAvodaDetailsDM();
                 SetMeafyneyOved(ovedYomAvodaDatails, dtOvedCardDetails);
+                ovedYomAvodaDatails.bOvedDetailsExists = true;
                 return ovedYomAvodaDatails;
             }
             return new OvedYomAvodaDetailsDM();

@@ -23,7 +23,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
         }
         public override bool InternalIsCorrect(ErrorInputData input)
         {
-            DateTime dStartLimitHour, dEndLimitHour;
+            DateTime dStartLimitHour, dEndLimitHour, dEzerDate;
             DateTime dSidurStartHour;
             bool bSidurNahagut = false;
             bool bSidurNihulTnua = false;
@@ -49,15 +49,15 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
 
             if (input.curSidur.bSidurMyuhad)
             {
-
                 if ((input.curSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(input.curSidur.sShatHatchalaMuteret))) //קיים מאפיין
                 {
-                    dStartLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatHatchalaMuteret).ToString("HH:mm"), input.CardDate);
+                    dStartLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatHatchalaMuteret).ToString("HH:mm"), input.CardDate);
                 }
 
-                if ((input.curSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(input.curSidur.sShatGmarMuteret))) //קיים מאפיין
+                if ((input.curSidur.bShatGmarMuteretExists) && (!String.IsNullOrEmpty(input.curSidur.sShatGmarMuteret))) //קיים מאפיין
                 {
-                    dEndLimitHour = DateHelper.GetDateTimeFromStringHour(DateTime.Parse(input.curSidur.sShatGmarMuteret).ToString("HH:mm"), input.CardDate.AddDays(1));
+                    dEzerDate = DateTime.Parse(input.curSidur.sShatGmarMuteret);
+                    dEndLimitHour = clGeneral.GetDateTimeFromStringHour(dEzerDate.ToString("HH:mm"), DateHelper.getCorrectDay(dEzerDate, input.CardDate));
                 }
             }
 

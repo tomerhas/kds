@@ -275,10 +275,17 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
     {
         string id =txtId.Text;
         if (ListOvdim.Value.IndexOf(";" + id + ";") > -1)
+        {
+            btnUpdate.Enabled = true;
+            txtPremiaMinutes.Enabled = true;
             SearchOvedInGrid();
+        }
         else
-           ScriptManager.RegisterStartupScript(btnSearch, btnSearch.GetType(), "err", " alert('מספר אישי לא קיים לפרמיה שנבחרה');", true);
-
+        {
+            btnUpdate.Enabled = false;
+            txtPremiaMinutes.Enabled = false;      
+            ScriptManager.RegisterStartupScript(btnSearch, btnSearch.GetType(), "err", " alert('מספר אישי לא קיים לפרמיה שנבחרה');", true);
+        }
         if (rdoId.Checked)
         {
             txtName.Enabled = false;
@@ -314,7 +321,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
             //    NotAuthorizedRedirectPage));
             HttpContext.Current.Response.Redirect(String.Format("{0}/{1}",
                "~",
-               NotAuthorizedRedirectPage));
+               NotAuthorizedRedirectPage), false);
         }
 
         if (!IsPostBack)
@@ -455,6 +462,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         drPremiot["Kod_Premia"] = -1;
         drPremiot["Teur_Premia"] = "בחר פרמיה";
         dtPremiot.Rows.InsertAt(drPremiot, 0);
+        Session["dtPremiot"] = dtPremiot;
 
         ddStatuses.DataSource = dtPremiot;
         ddStatuses.DataBind();
@@ -635,7 +643,14 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
        
     }
 
-    
+    private static int checkPremiaTluyaBemefyenIshi(int kodPremia)
+    {
+        int TaluyBemefyenIshi = 0;
+        TaluyBemefyenIshi = int.Parse(((DataTable)HttpContext.Current.Session["dtPremiot"]).Select("kod_premia=" + kodPremia)[0]["TALUI_BEMAFYEN_ISHI"].ToString());
+
+        return TaluyBemefyenIshi;
+    }
+
     [WebMethod]
     [ScriptMethod]
     public static string[] GetOvdimById(string prefixText, int count, string contextKey)
@@ -644,7 +659,8 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         DataTable dt= new DataTable();
         clOvdim oOvdim = new clOvdim();
 
-        if (contextKey != "103")
+        //if (contextKey != "103")
+        if (checkPremiaTluyaBemefyenIshi(int.Parse(contextKey)) == 1)
         {
             if (HttpContext.Current.Session[SAVED_PREMIAS] != null)
             {
@@ -682,7 +698,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         clOvdim oOvdim = new clOvdim();
         DataTable dt;
 
-        if (contextKey != "103")
+        if (checkPremiaTluyaBemefyenIshi(int.Parse(contextKey)) == 1)
         {
             if (HttpContext.Current.Session[SAVED_PREMIAS] != null)
             {

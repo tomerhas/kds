@@ -48,5 +48,6 @@ namespace KDSCommon.DataModels
         public int iBechishuvSachar;
         public DateTime dTaarichMe;
         public DateTime dTaarichAd;
+        public bool bOvedDetailsExists = false;
     }
 }

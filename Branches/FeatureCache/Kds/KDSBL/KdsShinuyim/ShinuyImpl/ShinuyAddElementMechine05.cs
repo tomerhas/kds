@@ -545,16 +545,20 @@ namespace KdsShinuyim.ShinuyImpl
             {
                 oPeilut = (PeilutDM)oSidur.htPeilut[iPeilutNesiaIndex];
                 InsertToObjPeilutOvdimForInsert(oSidur, oObjPeilutOvdimIns, inputData.UserId);
-
-                ////if (iMeshechHachanotMechona <inputData.oParam.iPrepareAllMechineTotalMaxTimeInDay && 
-                ////    iNumHachanotMechonaForSidur <inputData.oParam.iPrepareAllMechineTotalMaxTimeForSidur &&
-                ////    iMeshechHachanotMechonaNosafot <inputData.oParam.iPrepareOtherMechineTotalMaxTime)
-                ////{
-                ////    oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711",inputData.oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
-                ////}
-                ////else oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711", "000" , "00"));
-
-                oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711",inputData.oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
+                if (oSidur.dSidurDate >= inputData.oParam.dTaarichmichsatHachanatMechona)
+                {
+                    if (iMeshechHachanotMechona < inputData.oParam.iPrepareAllMechineTotalMaxTimeInDay &&
+                        iNumHachanotMechonaForSidur < inputData.oParam.iPrepareAllMechineTotalMaxTimeForSidur &&
+                        iMeshechHachanotMechonaNosafot < inputData.oParam.iPrepareOtherMechineTotalMaxTime)
+                    {
+                        oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711", inputData.oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
+                    }
+                    else oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711", "000", "00"));
+                }
+                else
+                    oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711", inputData.oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
+               
+               // oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711",inputData.oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
                 oObjPeilutOvdimIns.OTO_NO = oPeilut.lOtoNo;
 
                 PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oObjPeilutOvdimIns, inputData.dtTmpMeafyeneyElements);

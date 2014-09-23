@@ -292,6 +292,15 @@ namespace KDSCommon.Helpers
             }
         }
 
+        public static DateTime getCorrectDay(DateTime hour, DateTime dCardDate)
+        {
+            string date = hour.ToShortDateString();
+            if (hour >= DateTime.Parse(date + " 00:01:00") && hour <= DateTime.Parse(date + " 07:59:00"))
+            {
+                return dCardDate.AddDays(1);
+            }
+            else return dCardDate;
+        }
       
     }
  

@@ -25,6 +25,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                 Int32.TryParse(input.curSidur.sVisa, out tmpVisaCode);
                 if ((sLookUp.IndexOf(input.curSidur.sVisa) == -1) || (string.IsNullOrEmpty(input.curSidur.sVisa)) || tmpVisaCode == 0)
                 {
+                    input.curSidur.bSadotNosafim = true;
                     AddNewError(input);
                     return false;
                 }

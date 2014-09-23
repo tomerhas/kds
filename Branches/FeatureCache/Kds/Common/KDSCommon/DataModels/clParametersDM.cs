@@ -180,7 +180,7 @@ namespace KDSCommon.DataModels
         public int iMaxNuchehutVisaPnimRishon2; //226 - מקסימום הנוכחות לויזה  יום ראשון- מ- 14:00
 
         public int iMinNuchehutVisaPnimRishon2; //227 - מינימום הנוכחות לויזה - יום ראשון-   מ- 14:00
-
+        public DateTime dTaarichmichsatHachanatMechona; // - 278
         public DateTime dTaarichPremiatNahagut; // - 279  תאריך שינוי לוגיקת פרמית נהגות 
         public int iMaxNochehutVisaPnim; //228 - ויזה פנים -יום ראשון - מקסימום נוכחות
         public int iMinNochehutVisaPnim; //229 - ויזה פנים -יום ראשון - מינימום נוכחות

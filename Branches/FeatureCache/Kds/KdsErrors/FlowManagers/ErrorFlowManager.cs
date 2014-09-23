@@ -33,7 +33,8 @@ namespace KdsErrors.FlowManagers
         {
             
             var inputData = FillInputData(misparIshi, cardDate, btchRequest, userId);
-            ExecuteFlow(inputData);
+            if (inputData.OvedDetails.bOvedDetailsExists)
+                ExecuteFlow(inputData);
     
             return FillResult( inputData);
         }

@@ -21,6 +21,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
             if (input.curPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode() && input.curPeilut.iMisparKnisa == 0 &&
                 input.curPeilut.iOnatiyut == 71 && input.curPeilut.lMisparSiduriOto == 0 && input.curPeilut.bPeilutEilat)
             {
+                input.curSidur.bSadotNosafim = true;
                 AddNewError(input);
                 return false;
             }

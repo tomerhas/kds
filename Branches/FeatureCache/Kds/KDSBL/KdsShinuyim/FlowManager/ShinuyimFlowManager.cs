@@ -36,25 +36,28 @@ namespace KdsShinuyim.FlowManager
             try
             {
                  inputData = FillInputData(misparIshi, cardDate, btchRequest, userId);
-               
-                List<ShinuyTypes> ShinuyimExecOrderList = GetExecOrderList();
-                List<IShinuy> listShinuyim = GetListShinuyim();
-                ShinuyimExecOrderList.ForEach(shinuyType =>
-                {
-                    var shinuyObj = listShinuyim.SingleOrDefault(shinuy => shinuy.ShinuyType == shinuyType);
-                    if (shinuyObj != null)
-                        try
-                        {
-                            shinuyObj.ExecShinuy(inputData);
-                        }
-                        catch (Exception ex)
-                        {
-                            AddLogErrorToDb(inputData, shinuyObj.ShinuyType, ex);
-                            inputData.IsSuccsess = false;
-                        }
-                });
 
-                SaveDataBase(inputData);
+                 if (inputData.OvedDetails.bOvedDetailsExists)
+                 {
+                     List<ShinuyTypes> ShinuyimExecOrderList = GetExecOrderList();
+                     List<IShinuy> listShinuyim = GetListShinuyim();
+                     ShinuyimExecOrderList.ForEach(shinuyType =>
+                     {
+                         var shinuyObj = listShinuyim.SingleOrDefault(shinuy => shinuy.ShinuyType == shinuyType);
+                         if (shinuyObj != null)
+                             try
+                             {
+                                 shinuyObj.ExecShinuy(inputData);
+                             }
+                             catch (Exception ex)
+                             {
+                                 AddLogErrorToDb(inputData, shinuyObj.ShinuyType, ex);
+                                 inputData.IsSuccsess = false;
+                             }
+                     });
+
+                     SaveDataBase(inputData);
+                 }
             }
             catch (Exception ex)
             {
@@ -227,7 +230,7 @@ namespace KdsShinuyim.FlowManager
                 inputData.oMeafyeneyOved = ovedManager.CreateMeafyenyOved(misparIshi, cardDate);
 
                 //if (dtOvedCardDetails.Rows.Count>0)
-                if (inputData.OvedDetails != null)
+                if (inputData.OvedDetails != null && inputData.OvedDetails.bOvedDetailsExists)
                 {
                     if ((inputData.OvedDetails.sKodMaamd == "331") || (inputData.OvedDetails.sKodMaamd == "332") || (inputData.OvedDetails.sKodMaamd == "333") || (inputData.OvedDetails.sKodMaamd == "334"))
                     {
@@ -273,6 +276,8 @@ namespace KdsShinuyim.FlowManager
                        // _IsExecuteInputData = true;
                     }
                 }
+                
+                
                 return inputData;
             }
             catch (Exception ex)

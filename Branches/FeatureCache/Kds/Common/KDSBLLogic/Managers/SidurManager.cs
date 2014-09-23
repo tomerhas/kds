@@ -485,6 +485,96 @@ namespace KdsLibrary.KDSLogic.Managers
             return cls;
         }
 
+        public void UpdateClsSidurFromSidurMeyuchad(SidurDM cls, DateTime dTaarich, int iMisparSidurNew, DataRow dr)
+        {
+            //נתונים ברמת סידור            
+            cls.iMisparSidur = iMisparSidurNew;
+
+            cls.sShatGmar = cls.dFullShatGmar.ToString("HH:mm");
+            cls.dOldFullShatGmar = cls.dFullShatGmar;
+
+            cls.dOldFullShatHatchala = new DateTime();
+            cls.sShatHatchala = cls.dFullShatHatchala.ToString("HH:mm");
+            cls.dOldFullShatHatchalaLetashlum = cls.dFullShatHatchalaLetashlum;
+            cls.sShatGmarLetashlum = cls.dFullShatGmarLetashlum.ToString("HH:mm");
+            cls.dOldFullShatGmarLetashlum = cls.dFullShatGmarLetashlum;
+            cls.dSidurDate = dTaarich;
+            cls.sSidurDay = (dTaarich.GetHashCode() + 1).ToString();
+
+            cls.sOldChariga = cls.sChariga;
+            cls.sOldPitzulHafsaka = cls.sPitzulHafsaka;
+            cls.sOldOutMichsa = cls.sOutMichsa;
+            cls.sOldHashlama = cls.sHashlama;
+            cls.iOldLoLetashlum = cls.iLoLetashlum;
+
+            cls.bSidurMyuhad = IsSidurMyuhad(cls.iMisparSidur.ToString());
+
+            if (cls.bSidurMyuhad)
+            {
+                cls.iMisparSidurMyuhad = (System.Convert.IsDBNull(dr["mispar_sidur_myuhad"]) ? 0 : int.Parse(dr["mispar_sidur_myuhad"].ToString()));
+
+                cls.sSectorAvoda = dr["sector_avoda"].ToString();
+                cls.bSectorAvodaExists = !String.IsNullOrEmpty(dr["sector_avoda"].ToString());
+                cls.sHalbashKod = dr["Halbash_Kod"].ToString();
+                cls.bHalbashKodExists = !(String.IsNullOrEmpty(dr["Halbash_Kod"].ToString()));
+                cls.sShatHatchalaMuteret = dr["shat_hatchala_muteret"].ToString();
+                cls.bShatHatchalaMuteretExists = !(String.IsNullOrEmpty(dr["shat_hatchala_muteret"].ToString()));
+                cls.sShatGmarMuteret = dr["shat_gmar_muteret"].ToString();
+                cls.bShatGmarMuteretExists = !(String.IsNullOrEmpty(dr["shat_gmar_muteret"].ToString()));
+                cls.sNoPeilotKod = dr["No_Peilot_Kod"].ToString();
+                cls.bNoPeilotKodExists = !(String.IsNullOrEmpty(dr["No_Peilot_Kod"].ToString()));
+                cls.sSidurVisaKod = dr["Sidur_Visa_kod"].ToString();
+                cls.bSidurVisaKodExists = !(String.IsNullOrEmpty(dr["Sidur_Visa_kod"].ToString()));
+                cls.sZakaiLehamara = dr["zakay_lehamara"].ToString();
+                cls.bZakaiLehamaraExists = !(String.IsNullOrEmpty(dr["zakay_lehamara"].ToString()));
+                cls.sZakaiLeChariga = dr["zakay_lechariga"].ToString();
+                cls.bZakaiLeCharigaExists = !(String.IsNullOrEmpty(dr["zakay_lechariga"].ToString()));
+                cls.sZakayLezamanNesia = dr["Zakay_Leaman_Nesia"].ToString();
+                cls.bZakayLezamanNesiaExists = !(String.IsNullOrEmpty(dr["zakay_leaman_nesia"].ToString()));
+                cls.iZakaiLelina = System.Convert.IsDBNull(dr["zakay_lelina"]) ? 0 : int.Parse(dr["zakay_lelina"].ToString());
+                cls.sTokefHatchala = dr["tokef_hatchala"].ToString();
+                cls.sTokefSiyum = dr["tokef_siyum"].ToString();
+
+                cls.sSidurInSummer = dr["sidur_in_summer"].ToString();
+                cls.bSidurInSummerExists = !(String.IsNullOrEmpty(dr["sidur_in_summer"].ToString()));
+                cls.sNoOtoNo = dr["no_oto_no"].ToString();
+                cls.bNoOtoNoExists = !(String.IsNullOrEmpty(dr["no_oto_no"].ToString()));
+                cls.sHashlamaKod = dr["hashlama_kod"].ToString();
+                cls.sShaonNochachut = dr["shaon_nochachut"].ToString();
+                cls.sLoLetashlumAutomati = dr["lo_letashlum_automati"].ToString();
+                cls.bLoLetashlumAutomatiExists = !(String.IsNullOrEmpty(dr["lo_letashlum_automati"].ToString()));
+                cls.sHeadrutTypeKod = dr["headrut_type_kod"].ToString();
+                cls.bHeadrutTypeKodExists = !(String.IsNullOrEmpty(dr["headrut_type_kod"].ToString()));
+                cls.sSugAvoda = dr["sug_avoda"].ToString();
+                cls.bSugAvodaExists = !(String.IsNullOrEmpty(dr["sug_avoda"].ToString()));
+                cls.sPeilutRequiredKod = dr["peilut_required_kod"].ToString();
+                cls.bPeilutRequiredKodExists = !(String.IsNullOrEmpty(dr["peilut_required_kod"].ToString()));
+                cls.sSidurNotValidKod = dr["sidur_not_valid_kod"].ToString();
+                cls.bSidurNotValidKodExists = !(String.IsNullOrEmpty(dr["sidur_not_valid_kod"].ToString()));
+                cls.sSidurNotInShabtonKod = dr["sidur_not_in_shabton_kod"].ToString();
+                cls.bSidurNotInShabtonKodExists = !(String.IsNullOrEmpty(dr["sidur_not_in_shabton_kod"].ToString()));
+                cls.iNitanLedaveachBemachalaAruca = System.Convert.IsDBNull(dr["nitan_ledaveach_bmachala_aruc"]) ? 0 : int.Parse(dr["nitan_ledaveach_bmachala_aruc"].ToString());
+                cls.sLidroshKodMivtza = dr["lidrosh_kod_mivtza"].ToString();
+                cls.sZakayMichutzLamichsa = dr["zakay_michutz_lamichsa"].ToString(); //מאפיין 25
+                cls.sKizuzAlPiHatchalaGmar = dr["kizuz_al_pi_hatchala_gmar"].ToString();
+                cls.bKizuzAlPiHatchalaGmarExists = !(String.IsNullOrEmpty(dr["kizuz_al_pi_hatchala_gmar"].ToString()));
+                cls.sHovatHityatzvut = dr["hovat_hityazvut"].ToString();
+                cls.bHovaMisparMachsan = !(String.IsNullOrEmpty(dr["hova_ledaveach_mispar_machsan"].ToString()));
+                cls.bSidurAsurBeyomShishi = !(String.IsNullOrEmpty(dr["sidur_asur_beyom_shishi"].ToString()));
+                cls.bMatalaKlalitLeloRechev = !(String.IsNullOrEmpty(dr["matala_klalit_lelo_rechev"].ToString()));
+                cls.iSidurLebdikatRezefMachala = System.Convert.IsDBNull(dr["lebdikat_rezef_machala"]) ? 0 : int.Parse(dr["lebdikat_rezef_machala"].ToString());
+
+                cls.bSidurRetizfut = IsSidurRetzifut(cls.iMisparSidur);
+                cls.bSidurNahagut = IsSidurNahagut(cls);
+                if (!cls.bSidurNahagut)
+                { cls.bSidurTafkid = IsSidurTafkid(cls); }
+
+            }
+            else if (dr["SUG_SIDUR"] != null && dr["SUG_SIDUR"].ToString() != "")
+                cls.iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
+           
+        }
+
         public bool IsSidurChofef(int iMisparIshi, DateTime dCardDate, int iMisparSidur, DateTime dShatHatchala, DateTime dShatGmar, int iParamChafifa, DataTable dt)
         { 
             return _container.Resolve<ISidurDAL>().IsSidurChofef(iMisparIshi, dCardDate, iMisparSidur, dShatHatchala, dShatGmar, iParamChafifa, dt);

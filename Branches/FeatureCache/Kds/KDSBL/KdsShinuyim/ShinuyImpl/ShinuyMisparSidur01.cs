@@ -36,8 +36,10 @@ namespace KdsShinuyim.ShinuyImpl
                     SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
                     if (!CheckIdkunRashemet("MISPAR_SIDUR", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
                     {
-                        FixedMisparSidur01(curSidur, i, inputData);
+                        FixedMisparSidur01( curSidur, i, inputData);
+                      //  inputData.htEmployeeDetails[i] = curSidur;
                     }
+                    
                 }
             }
             catch (Exception ex)
@@ -46,7 +48,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void FixedMisparSidur01(SidurDM curSidur, int iSidurIndex, ShinuyInputData inputData)
+        private void FixedMisparSidur01( SidurDM curSidur, int iSidurIndex, ShinuyInputData inputData)
         {
            
              
@@ -69,7 +71,7 @@ namespace KdsShinuyim.ShinuyImpl
                     if (((SidurDM)(inputData.htEmployeeDetails[iSidurIndex])).htPeilut.Count > 0)
                     {
                         PeilutDM oPeilut = (PeilutDM)((SidurDM)(inputData.htEmployeeDetails[iSidurIndex])).htPeilut[0];
-                        UpdateMisparSidur(ref curSidur, oPeilut, iSidurIndex, inputData);
+                        UpdateMisparSidur( curSidur, oPeilut, iSidurIndex, inputData);
                     }
                 }
 
@@ -80,11 +82,11 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void UpdateMisparSidur(ref SidurDM curSidur,PeilutDM oPeilut, int iSidurIndex, ShinuyInputData inputData)
+        private void UpdateMisparSidur(SidurDM curSidur,PeilutDM oPeilut, int iSidurIndex, ShinuyInputData inputData)
         {
             int iNewMisparMatala, iNewMisparSidur;
             int iMisparSidur = GetMisparSidur(oPeilut);
-
+            OBJ_PEILUT_OVDIM oObjPeilutUpd;
             try{
                 if (iMisparSidur > 0)
                 {
@@ -107,7 +109,10 @@ namespace KdsShinuyim.ShinuyImpl
 
                     drSidurMeyuchad = inputData.dtTmpSidurimMeyuchadim.Select("mispar_sidur=" + iNewMisparSidur);
                     var sidurManager = ServiceLocator.Current.GetInstance<ISidurManager>();
-                    curSidur = sidurManager.CreateClsSidurFromSidurMeyuchad(curSidur, inputData.CardDate, iNewMisparSidur, drSidurMeyuchad[0]);
+                  //  var temp = sidurManager.CreateClsSidurFromSidurMeyuchad(curSidur, inputData.CardDate, iNewMisparSidur, drSidurMeyuchad[0]);
+                 
+                    sidurManager.UpdateClsSidurFromSidurMeyuchad(curSidur, inputData.CardDate, iNewMisparSidur, drSidurMeyuchad[0]);
+                    
                     curSidur.sHashlama = "0";
                     curSidur.sOutMichsa = "0";
 
@@ -124,22 +129,20 @@ namespace KdsShinuyim.ShinuyImpl
                         //נעדכן גם את הפעילויות במספר הסידור החדש
                         SourceObj SourceObject;
                         oPeilut = (PeilutDM)((SidurDM)(inputData.htEmployeeDetails[iSidurIndex])).htPeilut[j];
-                        GetUpdPeilutObject(iSidurIndex, oPeilut, inputData, oObjSidurimOvdimUpd, out SourceObject);
+                        oObjPeilutUpd = GetUpdPeilutObject(iSidurIndex, oPeilut, inputData, oObjSidurimOvdimUpd, out SourceObject);
 
-
-                        // OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd = GetUpdPeilutObject(iSidurIndex, oPeilut, inputData, oObjSidurimOvdimUpd, out SourceObject);
-                        //oObjPeilutOvdimUpd.MISPAR_MATALA = iNewMisparMatala;
-                        //if (SourceObject == SourceObj.Insert)
-                        //{
-                        //    oObjPeilutOvdimUpd.MISPAR_SIDUR = iNewMisparSidur;
-                        //}
-                        //else
-                        //{
-                        //    oObjPeilutOvdimUpd.NEW_MISPAR_SIDUR = iNewMisparSidur;
-                        //    oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
-                        //}
-                        //oPeilut.iPeilutMisparSidur = iNewMisparSidur;
-                        //oPeilut.lMisparMatala = iNewMisparMatala;
+                        oObjPeilutUpd.MISPAR_MATALA = iNewMisparMatala;
+                        if (SourceObject == SourceObj.Insert)
+                        {
+                            oObjPeilutUpd.MISPAR_SIDUR = iNewMisparSidur;
+                        }
+                        else
+                        {
+                            oObjPeilutUpd.NEW_MISPAR_SIDUR = iNewMisparSidur;
+                            oObjPeilutUpd.UPDATE_OBJECT = 1;
+                        }
+                        oPeilut.iPeilutMisparSidur = iNewMisparSidur;
+                        oPeilut.lMisparMatala = iNewMisparMatala;
                     }
                     //UpdatePeiluyotMevutalotYadani(iSidurIndex, oNewSidurim, oObjSidurimOvdimUpd);
 

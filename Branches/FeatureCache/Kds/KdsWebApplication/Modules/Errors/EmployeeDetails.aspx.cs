@@ -21,7 +21,7 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
     protected override void OnInit(EventArgs e)
     {
         base.OnInit(e);
-        grdOvedErrorCards.RowCreated += new GridViewRowEventHandler(grdEmployee_RowCreated);
+       grdOvedErrorCards.RowCreated += new GridViewRowEventHandler(grdEmployee_RowCreated);
     }
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -34,13 +34,13 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
             iMisparIshi = int.Parse(lblMisparIshi.Text);
             InputHiddenBack.Value = Session["Params"].ToString();
             SetOvedDetailsDB(iMisparIshi);
-            SetOvedCards(iMisparIshi, "taarich", "ASC");
+            SetOvedCards(iMisparIshi, "taarich", "ASC");           
             divPeriod.InnerText = string.Concat("פרטי העובד לתקופה: ", (string)Request.QueryString["FromDate"], " - ", (string)Request.QueryString["ToDate"]);
             LoadMessages((DataList)Master.FindControl("lstMessages"));
-
+            
         }
         GetMisparimIshi();
-        SetButtons();
+        SetButtons();        
     }
 
     private void SetButtons()
@@ -52,17 +52,17 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
             DisablePrevButton();
         }
 
-        if (int.Parse(dtMisparim.Rows[0][1].ToString()) == iMisparIshi)
+        if (int.Parse(dtMisparim.Rows[0][1].ToString())==iMisparIshi)
         {   //אם מוצג העובד הראשון, לא נאפשר לחיצה על עובד קודם
             DisablePrevButton();
         }
 
-        if (int.Parse(dtMisparim.Rows[dtMisparim.Rows.Count - 1][1].ToString()) == iMisparIshi)
+        if (int.Parse(dtMisparim.Rows[dtMisparim.Rows.Count-1][1].ToString())==iMisparIshi)
         {   //אם מוצג העובד האחרון, לא נאפשר לחיצה על עובד הבא
             DisableNextButton();
         }
     }
-
+    
     private void SetOvedDetailsDB(int iMisparIshi)
     {
         try
@@ -71,21 +71,21 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
             DataTable dt = new DataTable();
             DateTime dFrom = new DateTime();
             DateTime dTo = new DateTime();
+        
+           dFrom = DateTime.Parse(Request.QueryString["FromDate"]);
+           dTo = DateTime.Parse(Request.QueryString["ToDate"]);
+           //dt = oOvdim.GetOvedDetails(iMisparIshi, dFrom);
+           dt = oOvdim.GetOvedDetailsByTkufa(iMisparIshi, dFrom, dTo);
 
-            dFrom = DateTime.Parse(Request.QueryString["FromDate"]);
-            dTo = DateTime.Parse(Request.QueryString["ToDate"]);
-            //dt = oOvdim.GetOvedDetails(iMisparIshi, dFrom);
-            dt = oOvdim.GetOvedDetailsByTkufa(iMisparIshi, dFrom, dTo);
-
-            if (dt.Rows.Count > 0)
+           if (dt.Rows.Count > 0)
             {
 
-                lblMisparIshi.Text = iMisparIshi.ToString();
-                lblName.Text = dt.Rows[0]["full_name"].ToString();
-                lblEzor.Text = dt.Rows[0]["teur_ezor"].ToString();
-                lblSnif.Text = dt.Rows[0]["teur_snif_av"].ToString();
-                lblMaamad.Text = dt.Rows[0]["teur_maamad_hr"].ToString();
-
+                lblMisparIshi.Text =  iMisparIshi.ToString();
+                lblName.Text =  dt.Rows[0]["full_name"].ToString();
+                lblEzor.Text =  dt.Rows[0]["teur_ezor"].ToString();
+                lblSnif.Text =  dt.Rows[0]["teur_snif_av"].ToString();           
+                lblMaamad.Text =  dt.Rows[0]["teur_maamad_hr"].ToString();
+                
             }
         }
         catch (Exception ex)
@@ -104,18 +104,18 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
 
     private void SetOvedCards(int iMisparIshi, string sSortExp, string sSortDirection)
     {
-        clOvdim oOvdim = new clOvdim();
+        clOvdim oOvdim = new clOvdim();       
         DataTable dt = new DataTable();
         DataView dv;
         DateTime from = new DateTime();
         DateTime to = new DateTime();
         string[] param;
-        int iKodStatus = -1;
+        int iKodStatus=-1;
         try
         {
             param = InputHiddenBack.Value.Split(';');
             //(string)Request.QueryString["FromDate"], " - ", (string)Request.QueryString["ToDate"]);
-            from = DateTime.Parse((string)Request.QueryString["FromDate"]);
+            from = DateTime.Parse((string)Request.QueryString["FromDate"]);      
             to = DateTime.Parse((string)Request.QueryString["ToDate"]);
             if (param[3] != "-1")
                 iKodStatus = int.Parse(param[3]);
@@ -128,7 +128,7 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
                 else
                     dv.Sort = string.Concat(sSortExp, " ", sSortDirection);
             }
-
+           
             grdOvedErrorCards.DataSource = dv;
             grdOvedErrorCards.DataBind();
             Session["OvedCards"] = dv;
@@ -159,14 +159,14 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
             dtMisparim.Columns.Add("MisparIshi", System.Type.GetType("System.Int32"));
             //for (iCount = 0; iCount <= arrMisparimIshi.Length - 1; iCount++)
             for (iCount = 0; iCount <= ((DataTable)Session["MisparimIshi"]).Rows.Count - 1; iCount++)
-            {
+             {
                 dr = dtMisparim.NewRow();
                 dr["MisparIshiIndex"] = iCount;
                 //dr["MisparIshi"] = arrMisparimIshi[iCount];
                 dr["MisparIshi"] = ((DataTable)Session["MisparimIshi"]).Rows[iCount]["mispar_ishi"];
                 dtMisparim.Rows.Add(dr);
             }
-
+            
         }
         catch (Exception ex)
         {
@@ -180,45 +180,45 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
         switch (e.Row.RowType)
         {
             case DataControlRowType.Header:
-                System.Web.UI.WebControls.Label lbl = new System.Web.UI.WebControls.Label();
-                iColSort = GetCurrentColSort();
-                lbl.Text = " ";
-                e.Row.Cells[iColSort].Controls.Add(lbl);
-                if ((SortDirection)ViewState["SortDirection"] == SortDirection.Ascending)
-                {
+                 System.Web.UI.WebControls.Label lbl = new System.Web.UI.WebControls.Label();
+                 iColSort = GetCurrentColSort();
+                 lbl.Text = " ";
+                 e.Row.Cells[iColSort].Controls.Add(lbl);
+                 if ((SortDirection)ViewState["SortDirection"] == SortDirection.Ascending)
+                 {
                     System.Web.UI.WebControls.Image ImageSort = new System.Web.UI.WebControls.Image();
                     ImageSort.ID = "imgAscSort";
                     ImageSort.ImageUrl = "../../Images/AscSort.gif";
                     e.Row.Cells[iColSort].Controls.Add(ImageSort);
-                }
-                else
-                {
+                 }
+                 else
+                 {
                     System.Web.UI.WebControls.Image ImageSort = new System.Web.UI.WebControls.Image();
                     ImageSort.ID = "imgDescSort";
                     ImageSort.ImageUrl = "../../Images/DescSort.gif";
                     e.Row.Cells[iColSort].Controls.Add(ImageSort);
-                }
+                 }
 
-                int i = 0;
-                object sortHeader = null;
+                 int i = 0;
+                 object sortHeader = null;
 
-                for (i = 0; i < e.Row.Cells.Count; i++)
-                {
-                    sortHeader = e.Row.Cells[i].Controls[0];
-                    ((LinkButton)(sortHeader)).Style.Add("color", "white");
-                    ((LinkButton)(sortHeader)).Style.Add("text-decoration", "none");
-                }
+                 for (i = 0; i < e.Row.Cells.Count; i++)
+                 {
+                     sortHeader = e.Row.Cells[i].Controls[0];
+                     ((LinkButton)(sortHeader)).Style.Add("color", "white");
+                     ((LinkButton)(sortHeader)).Style.Add("text-decoration", "none");
+                 }
                 e.Row.Cells[4].Style["display"] = "none";
                 break;
             case DataControlRowType.DataRow:
                 e.Row.Cells[4].Style["display"] = "none";
                 ((HyperLink)e.Row.Cells[0].Controls[0]).Attributes.Add("OnClick", string.Concat("javascript:OpenEmpWorkCard('", e.Row.Cells[4].Text, "')"));
-                // ((HyperLink)e.Row.Cells[0].Controls[0]).Attributes.Add("OnClick", string.Concat("javascript:OpenEmpWorkCard('", e.Row.Cells[4].Text, "')"));
+               // ((HyperLink)e.Row.Cells[0].Controls[0]).Attributes.Add("OnClick", string.Concat("javascript:OpenEmpWorkCard('", e.Row.Cells[4].Text, "')"));
                 break;
             default:
                 break;
-        }
-
+        }      
+      
     }
 
     protected void btnNext_Click(object sender, EventArgs e)
@@ -226,7 +226,7 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
         try
         {
             int iIndex = 1;
-            MoveOved(iIndex);
+            MoveOved(iIndex);          
         }
         catch (Exception ex)
         {
@@ -366,21 +366,21 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
 
                 //נשלוף את המספר האישי הבא
                 iNewMisparIshi = int.Parse(dr["MisparIshi"].ToString());
-
+                
                 if ((SortDirection)ViewState["SortDirection"] == SortDirection.Ascending)
                     sDirection = "ASC";
                 else
                     sDirection = "DESC";
 
                 SetOvedCards(iNewMisparIshi, (string)ViewState["SortExp"], sDirection);
-                SetOvedDetailsDB(iNewMisparIshi);
+                SetOvedDetailsDB(iNewMisparIshi);            
             }
 
             //הגענו להתחלה
             if ((iCurrIndex + iIndex) <= 0)
             {
                 //Disable prev button
-                DisablePrevButton();
+                DisablePrevButton();                             
             }
             else
             {
@@ -428,8 +428,8 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
     {
         try
         {
-            Session["Params"] = InputHiddenBack.Value;
-            Response.Redirect("EmployeErrors.aspx?Back=true");
+             Session["Params"] = InputHiddenBack.Value;
+             Response.Redirect("EmployeErrors.aspx?Back=true", false);
         }
         catch (Exception ex)
         {
@@ -443,7 +443,7 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
         dFrom = Request.QueryString["FromDate"];
         dTo = Request.QueryString["ToDate"];
 
-        Response.Redirect(string.Concat("EmployeeDetails.aspx?ID=", lblMisparIshi.Text, "&ToDate=", dTo, "&FromDate=", dFrom));
+        Response.Redirect(string.Concat("EmployeeDetails.aspx?ID=", lblMisparIshi.Text, "&ToDate=", dTo, "&FromDate=", dFrom), false);   
     }
 
     //*******Pager Functions*********/

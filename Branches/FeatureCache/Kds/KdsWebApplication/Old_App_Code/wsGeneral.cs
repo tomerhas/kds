@@ -1211,7 +1211,7 @@ public class wsGeneral : System.Web.Services.WebService
     {
         string sResult = "0";
         DataTable dtDetailsFromTnua;
-        PeilutDM _PeilutElement =null;
+        PeilutDM _PeilutElement = new PeilutDM();
         try
         {
             if (Session["Parameters"] == null)
@@ -1336,10 +1336,14 @@ public class wsGeneral : System.Web.Services.WebService
                         _Peilut.iXyMokedTchila = 0;//(System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedtchila"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedtchila"].ToString()));
                         _Peilut.iXyMokedSiyum=0;
                         _Peilut.fKm = 0;
-                        _Peilut.bBusNumberMustExists = _PeilutElement.bBusNumberMustExists;
-                        _Peilut.bElementIgnoreReka = _PeilutElement.bElementIgnoreReka;
+                        if (_PeilutElement != null)
+                        {
+                            _Peilut.bBusNumberMustExists = _PeilutElement.bBusNumberMustExists;
+                            _Peilut.bElementIgnoreReka = _PeilutElement.bElementIgnoreReka;
+                        }
                         _Peilut.lMakatNesia = lMakatNesia;
                          AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
+
                         break;
                     case enMakatType.mVisut:                       
                         break;

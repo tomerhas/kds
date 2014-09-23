@@ -35,7 +35,7 @@ namespace KdsShinuyim.ShinuyImpl
 
                     //מחוץ למכסה
                     if (!CheckIdkunRashemet("OUT_MICHSA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
-                        UpdateOutMichsa(curSidur, oObjSidurimOvdimUpd);
+                        UpdateOutMichsa(inputData,curSidur, oObjSidurimOvdimUpd);
 
                     //חריגה
                     if (!CheckIdkunRashemet("CHARIGA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData)) //!CheckApproval("2,4,5,6,10", oSidur.iMisparSidur, oSidur.dFullShatHatchala) &&
@@ -53,21 +53,48 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void UpdateOutMichsa(SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
+        private void UpdateOutMichsa(ShinuyInputData inputData,SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
         {
+              DataRow[] drSugSidur;
             //שינוי ברמת סידור
             //עדכון שדה מחוץ למכסה
             try
             {
 
-                if ((curSidur.bSidurMyuhad) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0 || (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM == 1)))
+                if (inputData.OvedDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode())
                 {
-                    if ((curSidur.sZakayMichutzLamichsa == enMeafyenSidur25.enZakaiAutomat.GetHashCode().ToString()))
-                    {   //אם סידור הוא סידור מיוחד ויש לו ערך 3 במאפיין 25 (זכאי אוטומטית "מחוץ למכסה")
-                        //וגם הוא לא מאגד תעבורה.                                               
-                        oObjSidurimOvdimUpd.OUT_MICHSA = 1;
-                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                        curSidur.sOutMichsa = "1";
+                    oObjSidurimOvdimUpd.OUT_MICHSA = 0;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    //oObjSidurimOvdimUpd.bUpdate = true;
+                    curSidur.sOutMichsa = "0";
+                }
+                else
+                {
+                    if (oObjSidurimOvdimUpd.LO_LETASHLUM == 0 || (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM == 1))
+                    {
+                        if (!curSidur.bSidurMyuhad)
+                        {
+                            //  drSugSidur = clDefinitions.GetOneSugSidurMeafyen(curSidur.iSugSidurRagil, curSidur.dSidurDate, _dtSugSidur);
+                            drSugSidur = _container.Resolve<ISidurManager>().GetOneSugSidurMeafyen(curSidur.iSugSidurRagil, inputData.CardDate);
+                            if (drSugSidur.Length > 0)
+                            {
+                                curSidur.sZakayMichutzLamichsa = drSugSidur[0]["zakay_michutz_lamichsa"].ToString();
+                            }
+                        }
+
+                        if ((curSidur.sZakayMichutzLamichsa == enMeafyenSidur25.enZakaiAutomat.GetHashCode().ToString()))
+                        {   //אם סידור הוא סידור מיוחד/מפה ויש לו ערך 3 במאפיין 25 (זכאי אוטומטית "מחוץ למכסה")
+                            //וגם הוא לא מאגד תעבורה.                                               
+                            oObjSidurimOvdimUpd.OUT_MICHSA = 1;
+                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                            curSidur.sOutMichsa = "1";
+                        }
+                        else
+                        {
+                            oObjSidurimOvdimUpd.OUT_MICHSA = 0;
+                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                            curSidur.sOutMichsa = "0";
+                        }
                     }
                     else
                     {
@@ -75,12 +102,6 @@ namespace KdsShinuyim.ShinuyImpl
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                         curSidur.sOutMichsa = "0";
                     }
-                }
-                else
-                {
-                    oObjSidurimOvdimUpd.OUT_MICHSA = 0;
-                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                    curSidur.sOutMichsa = "0";
                 }
             }
             catch (Exception ex)

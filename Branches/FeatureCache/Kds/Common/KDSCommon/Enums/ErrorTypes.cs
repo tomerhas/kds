@@ -130,6 +130,8 @@ namespace KDSCommon.Enums
         errTipatChalavMealMichsa205 = 205,
         errOvedMutaamLeloShaotNosafot206 = 206,
         errShatHatchalaBiggerShatYetzia = 207,
-        errMushalETWithSidurNotAllowET =208
+        errMushalETWithSidurNotAllowET =208,
+        errShatHatchalaLetashlumBiggerShatGmar = 209,
+        errMichsatMachalaYeledImMugbalut = 210
     }
 }

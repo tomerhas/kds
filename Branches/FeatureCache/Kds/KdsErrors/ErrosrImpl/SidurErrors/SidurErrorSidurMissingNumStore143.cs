@@ -21,6 +21,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             {//בסידור "מתגבר מחסן" (מזהים לפי מאפיין 36 (חובה לדווח מספר מחסן) בטבלת מאפייני סידורים מיוחדים) בודקים האם הוכנס מספר מחסן, אם חסר - שגוי. (כדי שניתן יהיה לצרפו למערכת חישוב פרמיות אחסנה). מספר מחסן זה לא שדה שמגיע מהסדרן. 
                 if (input.curSidur.bHovaMisparMachsan && input.curSidur.iMisparMusachOMachsan == 0)
                 {
+                    input.curSidur.bSadotNosafim = true;
                     AddNewError(input);
                     return false;
                 }

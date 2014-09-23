@@ -35,6 +35,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
                 if (!CheckIdkunRashemet("MISPAR_SIDUR", curSidur.iMisparSidur, curSidur.dFullShatHatchala,inputData))
                 {
                         FixedMisparMatalatVisa02(curSidur, i, inputData);
+                     
                 }
             }
         }
@@ -58,7 +59,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
             {
                 if (curSidur.bSectorVisaExists && !curSidur.bSidurVisaKodExists)
                 {
-                    CreateSidurVisa(ref curSidur,inputData, iSidurIndex);
+                    CreateSidurVisa(curSidur,inputData, iSidurIndex);
                 }
             }
         }
@@ -68,7 +69,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
         }
     }
 
-    private void CreateSidurVisa(ref SidurDM curSidur,ShinuyInputData inputData, int iSidurIndex)
+    private void CreateSidurVisa( SidurDM curSidur,ShinuyInputData inputData, int iSidurIndex)
     {
         try{
             var oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
@@ -97,7 +98,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
             drSidurMeyuchad = inputData.dtTmpSidurimMeyuchadim.Select("mispar_sidur=" + oNewSidurim.SidurNew);
             var sidurManager = ServiceLocator.Current.GetInstance<ISidurManager>();
 
-            curSidur = sidurManager.CreateClsSidurFromSidurMeyuchad(curSidur, inputData.CardDate, oNewSidurim.SidurNew, drSidurMeyuchad[0]);
+           sidurManager.UpdateClsSidurFromSidurMeyuchad(curSidur, inputData.CardDate, oNewSidurim.SidurNew, drSidurMeyuchad[0]);
             oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR = oNewSidurim.SidurNew;
 
             if (oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR == 99101)
@@ -175,11 +176,14 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
             oObjPeilutOvdimUpd.MISPAR_VISA = iOldMisparSidur;
             oObjPeilutOvdimUpd.MAKAT_NESIA = long.Parse("50" + oObjPeilutOvdimUpd.MISPAR_VISA);
 
-            PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
-            oPeilutNew.lMisparVisa = oObjPeilutOvdimUpd.MISPAR_VISA;
-            oPeilutNew.iPeilutMisparSidur = oSidur.iMisparSidur;
+         //   PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
+           
+            UpdatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
+
+            oPeilut.lMisparVisa = oObjPeilutOvdimUpd.MISPAR_VISA;
+            oPeilut.iPeilutMisparSidur = oSidur.iMisparSidur;
             //       oPeilutNew.iMakatType = enMakatType.mVisa.GetHashCode();
-            oPeilut = oPeilutNew; //?
+           // oPeilut = oPeilutNew; //?
 
         }
         catch (Exception ex)

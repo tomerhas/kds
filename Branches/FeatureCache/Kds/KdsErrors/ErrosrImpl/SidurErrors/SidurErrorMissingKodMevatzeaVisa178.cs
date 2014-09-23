@@ -21,6 +21,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             {//בסידור ויזה (לפי מאפיין 45 בטבלת סידורים מיוחדים עם ערך 2 ) חובה לדווח קוד מבצע ויזה. אם שדה ריק - שגוי. 
                 if (input.curSidur.sSidurVisaKod == "2" && input.curSidur.iMivtzaVisa == 0 && input.curSidur.sLidroshKodMivtza != "")
                 {
+                    input.curSidur.bSadotNosafim = true;
                     AddNewError(input);
                     return false;
                 }  

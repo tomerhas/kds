@@ -35,6 +35,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                                         && peilut.iKmVisa <= 0)
                                     {
                                         isValid = false;
+                                        input.curSidur.bSadotNosafim = true;
                                     }                                        
                                 }
                                 );

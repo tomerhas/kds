@@ -841,6 +841,16 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ETPaarBetweenMichsaRegilaAndMuktenet = 278,
             ETMichsaMekoritBeforeHafchata = 279,
             YomMachalatYeledHadHori=280,
+            PremyatGriraYadanit=282,
+            PremyatMachsanimYadanit = 283,
+            PremyatManasYadani = 284,
+            PremyatMeshekYadani = 285,
+            PremyatSadranYadani = 286,
+            PremyatPakachYadani = 287,
+            PremyatRakazYadani = 288,
+            MachalatYeledImMugbalutOved=289,
+            MachalatYeledImMugbalutMaavid = 290,
+            NochehutByameyMiluim = 291,
             NosafotBeNeemanut=281,
             HalbashaTchilatYom=931,
             HalbashaSofYom=932,
@@ -980,7 +990,14 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             MusachRishonLetzyon = 107,
             TechnayYetzur = 108,
             ReshetBitachon = 109,
-            PerukVeshiputz = 110
+            PerukVeshiputz = 110,
+            GriraYadani = 112,
+            MachsenaiYdani = 113,
+            ManasYadani = 114,
+            MeshekYadani = 115,
+            SadranYadani = 116,
+            PakachYadani = 117,
+            RakazYadani = 118
         }
 
         public enum enHachtamatShaon

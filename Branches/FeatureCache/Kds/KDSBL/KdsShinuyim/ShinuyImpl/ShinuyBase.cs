@@ -557,6 +557,12 @@ namespace KdsShinuyim.ShinuyImpl
             return manager.CreatePeilutFromOldPeilut(iMisparIshi, dCardDate, oPeilut, makat, dtTmpMeafyeneyElements);
         }
 
+
+        protected void UpdatePeilut(int iMisparIshi, DateTime dCardDate, PeilutDM oPeilut, long makat, DataTable dtTmpMeafyeneyElements)
+        {
+            var manager = ServiceLocator.Current.GetInstance<IPeilutManager>();
+            manager.UpdatePeilutFromOldPeilut(iMisparIshi, dCardDate, oPeilut, makat, dtTmpMeafyeneyElements);
+        }
         protected PeilutDM CreatePeilut(int iMisparIshi, DateTime dCardDate, OBJ_PEILUT_OVDIM oObjPeilutOvdimIns, DataTable dtTmpMeafyeneyElements)
         {
             var manager = ServiceLocator.Current.GetInstance<IPeilutManager>();
@@ -1265,6 +1271,52 @@ namespace KdsShinuyim.ShinuyImpl
             dr = drSidurSibotLedivuchYadani.Select(string.Concat("kod_siba=", iKodSiba.ToString()));
 
             return dr;
+        }
+
+        public bool IsSidurNihulTnua(DataRow[] drSugSidur, SidurDM oSidur)
+        {
+            bool bSidurNihulTnua = false;
+            bool bElementZviraZman = false;
+            //הפונקציה תחזיר TRUE אם הסידור הוא סידור נהגות
+
+            try
+            {
+                if (oSidur.bSidurMyuhad)
+                {//סידור מיוחד
+                    bSidurNihulTnua = (oSidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString());
+                    if (!bSidurNihulTnua)
+                        if (oSidur.iMisparSidur == 99301)
+                        {
+
+                            PeilutDM oPeilut = null;
+                            for (int i = 0; i < oSidur.htPeilut.Count; i++)
+                            {
+                                oPeilut = (PeilutDM)oSidur.htPeilut[i];
+                                if (!string.IsNullOrEmpty(oPeilut.sElementZviraZman))
+                                    if (int.Parse(oPeilut.sElementZviraZman) == 4)
+                                    {
+                                        bElementZviraZman = true;
+                                        break;
+                                    }
+                            }
+                            if (bElementZviraZman)
+                                bSidurNihulTnua = true;
+                        }
+                }
+                else
+                {//סידור רגיל
+                    if (drSugSidur.Length > 0)
+                    {
+                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return bSidurNihulTnua;
         }
     }
 }

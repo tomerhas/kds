@@ -21,6 +21,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
             {
                 if ((input.curPeilut.lMisparVisa == 0) && (input.curPeilut.lMakatNesia > 0) && input.curPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 1) == "5")  //אין תעודת נסיעה
                 {
+                    input.curSidur.bSadotNosafim = true;
                     AddNewError(input);
                     return false;
                 }

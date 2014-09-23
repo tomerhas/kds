@@ -108,6 +108,9 @@ namespace KdsErrors.FlowManagers.SubFlowManagers
             errorTypeList.Add(ErrorTypes.errTipatChalavMealMichsa205);//205
             errorTypeList.Add(ErrorTypes.errOvedMutaamLeloShaotNosafot206);//206
             errorTypeList.Add(ErrorTypes.errMushalETWithSidurNotAllowET);//208
+            errorTypeList.Add(ErrorTypes.errShatHatchalaLetashlumBiggerShatGmar);//209
+            errorTypeList.Add(ErrorTypes.errMichsatMachalaYeledImMugbalut);//210
+       
 
             ExecuteListOfErrors(errContainer, input, errorTypeList, ErrorSubLevel.Sidur);
 

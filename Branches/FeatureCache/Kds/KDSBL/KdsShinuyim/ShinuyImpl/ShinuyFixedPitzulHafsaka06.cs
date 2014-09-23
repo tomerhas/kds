@@ -212,50 +212,50 @@ namespace KdsShinuyim.ShinuyImpl
             return iMinPaar;
         }
         
-        private bool IsSidurNihulTnua(DataRow[] drSugSidur, SidurDM oSidur)
-        {
-            bool bSidurNihulTnua = false;
-            bool bElementZviraZman = false;  
-            //הפונקציה תחזיר TRUE אם הסידור הוא סידור נהגות
+        //private bool IsSidurNihulTnua(DataRow[] drSugSidur, SidurDM oSidur)
+        //{
+        //    bool bSidurNihulTnua = false;
+        //    bool bElementZviraZman = false;  
+        //    //הפונקציה תחזיר TRUE אם הסידור הוא סידור נהגות
 
-            try
-            {
-                if (oSidur.bSidurMyuhad)
-                {//סידור מיוחד
-                    bSidurNihulTnua = (oSidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString());
-                    if (!bSidurNihulTnua)
-                       if (oSidur.iMisparSidur == 99301){
+        //    try
+        //    {
+        //        if (oSidur.bSidurMyuhad)
+        //        {//סידור מיוחד
+        //            bSidurNihulTnua = (oSidur.sSectorAvoda == enSectorAvoda.Nihul.GetHashCode().ToString());
+        //            if (!bSidurNihulTnua)
+        //               if (oSidur.iMisparSidur == 99301){
                     
-                        PeilutDM oPeilut = null;
-                        for (int i = 0; i < oSidur.htPeilut.Count; i++)
-                        {
-                             oPeilut = (PeilutDM)oSidur.htPeilut[i];
-                             if ( !string.IsNullOrEmpty(oPeilut.sElementZviraZman))
-                                 if (int.Parse(oPeilut.sElementZviraZman) == 4)
-                                 {
-                                     bElementZviraZman = true;
-                                     break;
-                                 }
-                        }
-                        if( bElementZviraZman)
-                            bSidurNihulTnua = true;
-                    }
-                }
-                else
-                {//סידור רגיל
-                    if (drSugSidur.Length > 0)
-                    {
-                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString());
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+        //                PeilutDM oPeilut = null;
+        //                for (int i = 0; i < oSidur.htPeilut.Count; i++)
+        //                {
+        //                     oPeilut = (PeilutDM)oSidur.htPeilut[i];
+        //                     if ( !string.IsNullOrEmpty(oPeilut.sElementZviraZman))
+        //                         if (int.Parse(oPeilut.sElementZviraZman) == 4)
+        //                         {
+        //                             bElementZviraZman = true;
+        //                             break;
+        //                         }
+        //                }
+        //                if( bElementZviraZman)
+        //                    bSidurNihulTnua = true;
+        //            }
+        //        }
+        //        else
+        //        {//סידור רגיל
+        //            if (drSugSidur.Length > 0)
+        //            {
+        //                bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString());
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
 
-            return bSidurNihulTnua;
-        }
+        //    return bSidurNihulTnua;
+        //}
 
         private bool IsSugAvodaKupai(SidurDM oSidur, DateTime dCardDate)
         {

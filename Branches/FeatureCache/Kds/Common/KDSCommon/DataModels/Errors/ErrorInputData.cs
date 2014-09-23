@@ -27,7 +27,7 @@ namespace KDSCommon.DataModels.Errors
         public DateTime dTarTchilatMatzav = DateTime.MinValue;
         public bool bHaveSidurNahagut { get; set; }
         public bool bCheckBoolSidur { get; set; }//remove from code
-      
+       
 
         public DataTable SugeyYamimMeyuchadim { get; set; }
         public DataTable YamimMeyuchadim { get; set; }

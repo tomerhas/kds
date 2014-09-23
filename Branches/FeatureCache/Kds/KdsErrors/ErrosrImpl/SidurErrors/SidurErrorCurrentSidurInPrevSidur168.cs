@@ -31,19 +31,30 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                 DateTime dShatHatchalaPrevSidur = oPrevSidur.dFullShatHatchala;
                 DateTime dShatGmarPrevSidur = oPrevSidur.dFullShatGmar;
 
-                if (dShatHatchalaSidur == DateTime.MinValue)
+                for (int i = (input.iSidur - 1); i >= 0; i--)
+                {
+                    oPrevSidur = (SidurDM)input.htEmployeeDetails[i];
+                    dShatHatchalaPrevSidur = oPrevSidur.dFullShatHatchala;
+                    dShatGmarPrevSidur = oPrevSidur.dFullShatGmar;
+                    if (oPrevSidur.iLoLetashlum == 0)
+                    {
+                        break;
+                    }
+                }
+
+                if (dShatHatchalaSidur.Date == DateTime.MinValue.Date)
                 {
                     dShatHatchalaSidur = input.curSidur.dFullShatGmar;
                 }
-                if (dShatGmarSidur == DateTime.MinValue)
+                if (dShatGmarSidur.Date == DateTime.MinValue.Date)
                 {
                     dShatGmarSidur = input.curSidur.dFullShatHatchala;
                 }
-                if (dShatHatchalaPrevSidur == DateTime.MinValue)
+                if (dShatHatchalaPrevSidur.Date == DateTime.MinValue.Date)
                 {
                     dShatHatchalaPrevSidur = oPrevSidur.dFullShatGmar;
                 }
-                if (dShatGmarPrevSidur == DateTime.MinValue)
+                if (dShatGmarPrevSidur.Date == DateTime.MinValue.Date)
                 {
                     dShatGmarPrevSidur = oPrevSidur.dFullShatHatchala;
                 }

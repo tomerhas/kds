@@ -1670,7 +1670,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         GridView _CurrSidur;
         GridViewRow _NextPeilut, _CurrPeilutUp;
         SidurDM _Sidur = null;
-        PeilutDM _Peilut = null;
+        PeilutDM _Peilut = new PeilutDM();// null;
         int iSidurNumber = 0;
         DateTime dSidurShatHatchala = new DateTime();
         DateTime dPeilutDate = CardDate;

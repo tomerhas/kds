@@ -98,6 +98,7 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
                             <asp:AsyncPostBackTrigger ControlID="ddStatuses" />
                             <asp:AsyncPostBackTrigger ControlID="btnExecute" />
                             <asp:AsyncPostBackTrigger ControlID="btnSearch" />
+                            <asp:AsyncPostBackTrigger ControlID="txtName" />
                        </Triggers> 
                  </asp:UpdatePanel>           
                 </td>                
@@ -123,8 +124,8 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
                                <%-- onblur="if(this.value != ''){onClientHiddenHandler_getName(this,null);}"--%>
                             </asp:TextBox>
                             <cc1:AutoCompleteExtender 
-                                id="AutoCompleteExtenderByName" runat="server"                                 CompletionInterval="100" 
-                                CompletionSetCount="12"                                                        UseContextKey="true" TargetControlID="txtName"                                 MinimumPrefixLength="1" 
+                                id="AutoCompleteExtenderByName" runat="server"   CompletionInterval="100" 
+                                CompletionSetCount="12"                                                             UseContextKey="true" TargetControlID="txtName"                                 MinimumPrefixLength="1" 
                                 ServiceMethod="GetOvdimByName" 
                                 EnableCaching="true" 
                                 CompletionListCssClass="ACLst"
@@ -138,6 +139,7 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
                             <asp:AsyncPostBackTrigger ControlID="ddStatuses" />
                             <asp:AsyncPostBackTrigger ControlID="btnExecute" />
                             <asp:AsyncPostBackTrigger ControlID="btnSearch" /> 
+                            <asp:AsyncPostBackTrigger ControlID="txtId" />
                        </Triggers> 
                  </asp:UpdatePanel>                         
                 </td>                
@@ -171,6 +173,8 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
                             <asp:AsyncPostBackTrigger ControlID="ddStatuses" />
                             <asp:AsyncPostBackTrigger ControlID="btnExecute" />
                             <asp:AsyncPostBackTrigger ControlID="btnSearch" /> 
+                            <asp:AsyncPostBackTrigger ControlID="txtId" />
+                            <asp:AsyncPostBackTrigger ControlID="txtName" />
                        </Triggers> 
                  </asp:UpdatePanel>                         
                 </td>
@@ -188,6 +192,8 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
                             <asp:AsyncPostBackTrigger ControlID="ddStatuses" />
                             <asp:AsyncPostBackTrigger ControlID="btnExecute" />
                             <asp:AsyncPostBackTrigger ControlID="btnSearch" />
+                            <asp:AsyncPostBackTrigger ControlID="txtId" />
+                            <asp:AsyncPostBackTrigger ControlID="txtName" />
                        </Triggers> 
                     </asp:UpdatePanel>                                  
                 </td>               
@@ -459,6 +465,7 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
             document.getElementById("ctl00_KdsContent_txtId").disabled = true;
             //    document.getElementById("ctl00_KdsContent_txtName").select();
         }
+        document.getElementById("ctl00_KdsContent_btnSearch").click();
     }
 //    function onchange_ddStatuses() {
 //        document.getElementById("ctl00_KdsContent_ddMonths").selectedIndex = 0;
