@@ -13156,25 +13156,25 @@ namespace KdsBatch
                     if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "738")
                     {
                         //אם זוהי פעילות יחידה בסידור – לא לבטל אלא לסמן את הסידור "לא לתשלום
-                        if (oSidur.htPeilut.Count == 1)
-                        {
-                            //oObjSidurimOvdimUpd = new OBJ_SIDURIM_OVDIM();
-                            //InsertToObjSidurimOvdimForUpdate(ref oSidur, ref oObjSidurimOvdimUpd);
-                            oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
-                            oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 3;
-                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                            oSidur.iLoLetashlum = 1;
-                            // oCollSidurimOvdimUpd.Add(oObjSidurimOvdimUpd);
-                        }
-                        else
-                        {//לבטל
+                        //if (oSidur.htPeilut.Count == 1)
+                        //{
+                        //    //oObjSidurimOvdimUpd = new OBJ_SIDURIM_OVDIM();
+                        //    //InsertToObjSidurimOvdimForUpdate(ref oSidur, ref oObjSidurimOvdimUpd);
+                        //    oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
+                        //    oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 3;
+                        //    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                        //    oSidur.iLoLetashlum = 1;
+                        //    // oCollSidurimOvdimUpd.Add(oObjSidurimOvdimUpd);
+                        //}
+                        //else
+                        //{//לבטל
                             oObjPeilutOvdimDel = new OBJ_PEILUT_OVDIM();
                             InsertToObjPeilutOvdimForDelete(ref oPeilut, ref oSidur, ref oObjPeilutOvdimDel);
                             oCollPeilutOvdimDel.Add(oObjPeilutOvdimDel);
                             oSidur.htPeilut.RemoveAt(iIndexPeilut);
                             iIndexPeilut = iIndexPeilut - 1;
                            
-                        }
+                        //}
                     }
                 }
             }
@@ -16130,6 +16130,7 @@ namespace KdsBatch
 
             if (firstTafkidSidur != null && lastTafkidSidur != null)
             {
+                iSugYom = clGeneral.GetSugYom(_iMisparIshi, _dCardDate, _dtYamimMeyuchadim, _oOvedYomAvodaDetails.iKodSectorIsuk, _dtSugeyYamimMeyuchadim, _oMeafyeneyOved.iMeafyen56);
                 if (_oMeafyeneyOved.Meafyen3Exists)
                 {
                     dShatHatchalaLetashlum = oMeafyeneyOved.ConvertMefyenShaotValid(_dCardDate, oMeafyeneyOved.sMeafyen3);
@@ -16141,14 +16142,14 @@ namespace KdsBatch
                     bFromMeafyenGmar = true;
                 }
 
-                iSugYom = clGeneral.GetSugYom(_iMisparIshi, _dCardDate, _dtYamimMeyuchadim, _oOvedYomAvodaDetails.iKodSectorIsuk, _dtSugeyYamimMeyuchadim, _oMeafyeneyOved.iMeafyen56);
                 if (iSugYom >= clGeneral.enSugYom.Chol.GetHashCode() && iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())
                 {
                     int iSugMishmeret = clDefinitions.GetSugMishmeret(_iMisparIshi, _dCardDate, _iSugYom, firstTafkidSidur.dFullShatHatchala, lastTafkidSidur.dFullShatGmar, _oParameters);
 
                     switch (iSugMishmeret)
                     {
-                        case 1:// בוקר                            
+                        case 1:
+                              
                             break;
 
                         case 2:// צהריים
