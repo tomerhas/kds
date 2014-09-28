@@ -27,6 +27,7 @@ using KDSBLLogic.DAL;
 using KDSBLLogic.Managers;
 using KdsShinuyim;
 using KdsShinuyim.FlowManager;
+using KDSCommon.DataModels.Shinuyim;
 
 namespace KdsWebApplication
 {
@@ -67,6 +68,7 @@ namespace KdsWebApplication
             container.RegisterType<IShinuyimManager, ShinuyimManager>();
             container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
             container.RegisterType<ILogBakashot, LogBakashot>();
+            container.RegisterType<IShinuyLogCollection, ShinuyLogCollection>();
 
             //Containers
 

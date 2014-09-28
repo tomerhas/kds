@@ -96,6 +96,33 @@ namespace KdsShinuyim.ShinuyImpl
             return bHaveIdkun;
         }
 
+        protected void DeleteIdkunRashemet(string sFieldToChange, int iMisparSidur, DateTime dShatHatchala, ShinuyInputData inputData)
+        {
+            //bool bHaveIdkun = false;
+            DataRow dr;
+            OBJ_IDKUN_RASHEMET ObjIdkunRashemet;
+            try
+            {
+                for (int i = 0; i < inputData.IdkuneyRashemet.Rows.Count; i++)
+                {
+                    dr = inputData.IdkuneyRashemet.Rows[i];
+
+                    if (dr["shem_db"].ToString() == sFieldToChange.ToUpper() && int.Parse(dr["MISPAR_SIDUR"].ToString()) == iMisparSidur && dr["shat_hatchala"].ToString() == dShatHatchala.ToString())
+                    {
+                       ObjIdkunRashemet = FillIdkunRashemet(dr, inputData);
+                       inputData.oCollIdkunRashemetDel.Add(ObjIdkunRashemet);
+                       inputData.IdkuneyRashemet.Rows.RemoveAt(i);
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
         protected NewSidur FindSidurOnHtNewSidurim(int iMisparSidur, DateTime dShatHatchala, OrderedDictionary htNewSidurim)
         {
             NewSidur oNewSidurim = null;
@@ -551,11 +578,11 @@ namespace KdsShinuyim.ShinuyImpl
             oObjPeilutOvdimIns.TEUR_NESIA = oPeilut.sMakatDescription;
         }
 
-        protected PeilutDM CreatePeilut(int iMisparIshi, DateTime dCardDate, PeilutDM oPeilut, long makat, DataTable dtTmpMeafyeneyElements)
-        {
-            var manager = ServiceLocator.Current.GetInstance<IPeilutManager>();
-            return manager.CreatePeilutFromOldPeilut(iMisparIshi, dCardDate, oPeilut, makat, dtTmpMeafyeneyElements);
-        }
+        //protected PeilutDM CreatePeilut(int iMisparIshi, DateTime dCardDate, PeilutDM oPeilut, long makat, DataTable dtTmpMeafyeneyElements)
+        //{
+        //    var manager = ServiceLocator.Current.GetInstance<IPeilutManager>();
+        //    return manager.CreatePeilutFromOldPeilut(iMisparIshi, dCardDate, oPeilut, makat, dtTmpMeafyeneyElements);
+        //}
 
 
         protected void UpdatePeilut(int iMisparIshi, DateTime dCardDate, PeilutDM oPeilut, long makat, DataTable dtTmpMeafyeneyElements)

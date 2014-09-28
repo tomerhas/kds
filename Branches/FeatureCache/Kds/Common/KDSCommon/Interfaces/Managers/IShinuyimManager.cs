@@ -13,6 +13,7 @@ namespace KDSCommon.Interfaces.Managers
         DataTable GetIdkuneyRashemet(int iMisparIshi, DateTime dTaarich);
         DataTable GetApprovalErrors(int iMisparIshi, DateTime dTaarich);
         void SaveIdkunRashemet(COLL_IDKUN_RASHEMET oCollIdkunRashemet);
+        void DeleteIdkunRashemet(COLL_IDKUN_RASHEMET oCollIdkunRashemetDel);
         void UpdateAprrovalErrors(COLL_SHGIOT_MEUSHAROT oCollShgiotMeusharot);
         void SaveShinuyKelet(ShinuyInputData inputData);
     }

@@ -32,115 +32,115 @@ namespace KdsLibrary.KDSLogic.Managers
             _container = container;
         }
 
-        public PeilutDM CreatePeilutFromOldPeilut(int iMisparIshi, DateTime dDateCard, PeilutDM oPeilutOld, long lMakatNesiaNew, DataTable dtMeafyeneyElements)
-        {
-            PeilutDM cls = new PeilutDM();
+        //public PeilutDM CreatePeilutFromOldPeilut(int iMisparIshi, DateTime dDateCard, PeilutDM oPeilutOld, long lMakatNesiaNew, DataTable dtMeafyeneyElements)
+        //{
+        //    PeilutDM cls = new PeilutDM();
 
-            DataTable dtPeiluyot;
-            string sCacheKey = "ElementsTable";
+        //    DataTable dtPeiluyot;
+        //    string sCacheKey = "ElementsTable";
 
-            try
-            {
-                cls.dtElementim = GetDTElementim();
-                //cls.dtElementim = (DataTable)HttpRuntime.Cache.Get(sCacheKey);
-                //if (dtElementim == null)
-                //{
-                //    dtElementim = oUtils.GetCtbElementim();
-                //    HttpRuntime.Cache.Insert(sCacheKey, dtElementim, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
-                //}
-                //     dtElementim = oUtils.GetCtbElementim();
-                cls.lMakatNesia = lMakatNesiaNew;
-                cls.dCardDate = dDateCard;
-                cls.iPeilutMisparSidur = oPeilutOld.iPeilutMisparSidur;
-                cls.iKisuyTor = oPeilutOld.iKisuyTor;
-                cls.iOldKisuyTor = cls.iKisuyTor;
-                cls.dFullShatYetzia = oPeilutOld.dFullShatYetzia;
-                cls.dOldFullShatYetzia = oPeilutOld.dFullShatYetzia;
-                cls.sShatYetzia = oPeilutOld.sShatYetzia;
+        //    try
+        //    {
+        //        cls.dtElementim = GetDTElementim();
+        //        //cls.dtElementim = (DataTable)HttpRuntime.Cache.Get(sCacheKey);
+        //        //if (dtElementim == null)
+        //        //{
+        //        //    dtElementim = oUtils.GetCtbElementim();
+        //        //    HttpRuntime.Cache.Insert(sCacheKey, dtElementim, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+        //        //}
+        //        //     dtElementim = oUtils.GetCtbElementim();
+        //        cls.lMakatNesia = lMakatNesiaNew;
+        //        cls.dCardDate = dDateCard;
+        //        cls.iPeilutMisparSidur = oPeilutOld.iPeilutMisparSidur;
+        //        cls.iKisuyTor = oPeilutOld.iKisuyTor;
+        //        cls.iOldKisuyTor = cls.iKisuyTor;
+        //        cls.dFullShatYetzia = oPeilutOld.dFullShatYetzia;
+        //        cls.dOldFullShatYetzia = oPeilutOld.dFullShatYetzia;
+        //        cls.sShatYetzia = oPeilutOld.sShatYetzia;
 
-                cls.lOtoNo = oPeilutOld.lOtoNo;
-                cls.lOldOtoNo = cls.lOtoNo;
+        //        cls.lOtoNo = oPeilutOld.lOtoNo;
+        //        cls.lOldOtoNo = cls.lOtoNo;
 
-                cls.lMisparSiduriOto = oPeilutOld.lMisparSiduriOto;
+        //        cls.lMisparSiduriOto = oPeilutOld.lMisparSiduriOto;
 
-                cls.lMisparVisa = oPeilutOld.lMisparVisa;
-                cls.iMisparKnisa = oPeilutOld.iMisparKnisa;
-                cls.bImutNetzer = oPeilutOld.bImutNetzer;
-                cls.iBitulOHosafa = oPeilutOld.iBitulOHosafa;
-                cls.iDakotBafoal = oPeilutOld.iDakotBafoal;
-                cls.iOldDakotBafoal = cls.iDakotBafoal;
-                cls.iKmVisa = oPeilutOld.iKmVisa;
-                cls.dCardLastUpdate = oPeilutOld.dCardLastUpdate;
-                cls.sSnifTnua = oPeilutOld.sSnifTnua;
-                cls.lMisparSiduriOto = oPeilutOld.lMisparSiduriOto;
-                cls.lMisparMatala = oPeilutOld.lMisparMatala;
+        //        cls.lMisparVisa = oPeilutOld.lMisparVisa;
+        //        cls.iMisparKnisa = oPeilutOld.iMisparKnisa;
+        //        cls.bImutNetzer = oPeilutOld.bImutNetzer;
+        //        cls.iBitulOHosafa = oPeilutOld.iBitulOHosafa;
+        //        cls.iDakotBafoal = oPeilutOld.iDakotBafoal;
+        //        cls.iOldDakotBafoal = cls.iDakotBafoal;
+        //        cls.iKmVisa = oPeilutOld.iKmVisa;
+        //        cls.dCardLastUpdate = oPeilutOld.dCardLastUpdate;
+        //        cls.sSnifTnua = oPeilutOld.sSnifTnua;
+        //        cls.lMisparSiduriOto = oPeilutOld.lMisparSiduriOto;
+        //        cls.lMisparMatala = oPeilutOld.lMisparMatala;
 
-                cls.sHeara = oPeilutOld.sHeara;
-                cls.sShilutNetzer = oPeilutOld.sShilutNetzer;
-                cls.dShatYetziaNetzer = oPeilutOld.dShatBhiratNesiaNetzer;
-                cls.dShatBhiratNesiaNetzer = oPeilutOld.dShatBhiratNesiaNetzer;
-                cls.iMisparSidurNetzer = oPeilutOld.iMisparSidurNetzer;
-                cls.sMikumBhiratNesiaNetzer = oPeilutOld.sMikumBhiratNesiaNetzer;
-                cls.lMakatNetzer = oPeilutOld.lMakatNetzer;
-                cls.lOtoNoNetzer = oPeilutOld.lOtoNoNetzer;
-                cls.iKodShinuyPremia = oPeilutOld.iKodShinuyPremia;
-                cls.sMakatDescription = oPeilutOld.sMakatDescription;
+        //        cls.sHeara = oPeilutOld.sHeara;
+        //        cls.sShilutNetzer = oPeilutOld.sShilutNetzer;
+        //        cls.dShatYetziaNetzer = oPeilutOld.dShatBhiratNesiaNetzer;
+        //        cls.dShatBhiratNesiaNetzer = oPeilutOld.dShatBhiratNesiaNetzer;
+        //        cls.iMisparSidurNetzer = oPeilutOld.iMisparSidurNetzer;
+        //        cls.sMikumBhiratNesiaNetzer = oPeilutOld.sMikumBhiratNesiaNetzer;
+        //        cls.lMakatNetzer = oPeilutOld.lMakatNetzer;
+        //        cls.lOtoNoNetzer = oPeilutOld.lOtoNoNetzer;
+        //        cls.iKodShinuyPremia = oPeilutOld.iKodShinuyPremia;
+        //        cls.sMakatDescription = oPeilutOld.sMakatDescription;
 
-                //TODO - need to try get from cahce and also save to peilut to cache
-                var kavimManager = _container.Resolve<IKavimManager>();
-                dtPeiluyot = kavimManager.GetKatalogKavim(iMisparIshi, dDateCard, dDateCard);
+        //        //TODO - need to try get from cahce and also save to peilut to cache
+        //        var kavimManager = _container.Resolve<IKavimManager>();
+        //        dtPeiluyot = kavimManager.GetKatalogKavim(iMisparIshi, dDateCard, dDateCard);
 
-                SetKavDetails(cls, dtPeiluyot, cls.lMakatNesia);
+        //        SetKavDetails(cls, dtPeiluyot, cls.lMakatNesia);
 
-                if ((enMakatType)cls.iMakatType == enMakatType.mElement)
-                {
-                    DataRow[] dr = dtMeafyeneyElements.Select("kod_element=" + int.Parse(cls.lMakatNesia.ToString().Substring(1, 2)));
-                    DataRow drMeafyeneyElements;
+        //        if ((enMakatType)cls.iMakatType == enMakatType.mElement)
+        //        {
+        //            DataRow[] dr = dtMeafyeneyElements.Select("kod_element=" + int.Parse(cls.lMakatNesia.ToString().Substring(1, 2)));
+        //            DataRow drMeafyeneyElements;
 
-                    if (dr.Length > 0)
-                    {
-                        drMeafyeneyElements = dr[0];
-                        cls.iElementLeYedia = (System.Convert.IsDBNull(drMeafyeneyElements["element_for_yedia"]) ? 0 : int.Parse(drMeafyeneyElements["element_for_yedia"].ToString()));
-                        cls.iErechElement = (System.Convert.IsDBNull(drMeafyeneyElements["erech_element"]) ? 0 : int.Parse(drMeafyeneyElements["erech_element"].ToString()));
+        //            if (dr.Length > 0)
+        //            {
+        //                drMeafyeneyElements = dr[0];
+        //                cls.iElementLeYedia = (System.Convert.IsDBNull(drMeafyeneyElements["element_for_yedia"]) ? 0 : int.Parse(drMeafyeneyElements["element_for_yedia"].ToString()));
+        //                cls.iErechElement = (System.Convert.IsDBNull(drMeafyeneyElements["erech_element"]) ? 0 : int.Parse(drMeafyeneyElements["erech_element"].ToString()));
 
-                        cls.iMisparSidurMatalotTnua = (System.Convert.IsDBNull(drMeafyeneyElements["mispar_sidur_matalot_tnua"]) ? 0 : int.Parse(drMeafyeneyElements["mispar_sidur_matalot_tnua"].ToString()));
-                        cls.bMisparSidurMatalotTnuaExists = !String.IsNullOrEmpty(drMeafyeneyElements["mispar_sidur_matalot_tnua"].ToString());
-                        cls.sBusNumberMust = drMeafyeneyElements["bus_number_must"].ToString();
-                        cls.bBusNumberMustExists = !(String.IsNullOrEmpty(drMeafyeneyElements["bus_number_must"].ToString()));
-                        cls.sElementHamtana = drMeafyeneyElements["element_hamtana"].ToString();
-                        cls.bElementHamtanaExists = !String.IsNullOrEmpty(drMeafyeneyElements["element_hamtana"].ToString());
-                        cls.sElementIgnoreHafifaBetweenNesiot = drMeafyeneyElements["lehitalem_hafifa_bein_nesiot"].ToString();
-                        cls.bElementIgnoreHafifaBetweenNesiotExists = !String.IsNullOrEmpty(drMeafyeneyElements["lehitalem_hafifa_bein_nesiot"].ToString());
+        //                cls.iMisparSidurMatalotTnua = (System.Convert.IsDBNull(drMeafyeneyElements["mispar_sidur_matalot_tnua"]) ? 0 : int.Parse(drMeafyeneyElements["mispar_sidur_matalot_tnua"].ToString()));
+        //                cls.bMisparSidurMatalotTnuaExists = !String.IsNullOrEmpty(drMeafyeneyElements["mispar_sidur_matalot_tnua"].ToString());
+        //                cls.sBusNumberMust = drMeafyeneyElements["bus_number_must"].ToString();
+        //                cls.bBusNumberMustExists = !(String.IsNullOrEmpty(drMeafyeneyElements["bus_number_must"].ToString()));
+        //                cls.sElementHamtana = drMeafyeneyElements["element_hamtana"].ToString();
+        //                cls.bElementHamtanaExists = !String.IsNullOrEmpty(drMeafyeneyElements["element_hamtana"].ToString());
+        //                cls.sElementIgnoreHafifaBetweenNesiot = drMeafyeneyElements["lehitalem_hafifa_bein_nesiot"].ToString();
+        //                cls.bElementIgnoreHafifaBetweenNesiotExists = !String.IsNullOrEmpty(drMeafyeneyElements["lehitalem_hafifa_bein_nesiot"].ToString());
 
-                        cls.sElementIgnoreReka = drMeafyeneyElements["lehitalem_beitur_reyka"].ToString();
-                        cls.bElementIgnoreReka = !String.IsNullOrEmpty(drMeafyeneyElements["lehitalem_beitur_reyka"].ToString());
+        //                cls.sElementIgnoreReka = drMeafyeneyElements["lehitalem_beitur_reyka"].ToString();
+        //                cls.bElementIgnoreReka = !String.IsNullOrEmpty(drMeafyeneyElements["lehitalem_beitur_reyka"].ToString());
 
-                        cls.sElementZviraZman = drMeafyeneyElements["element_zvira_zman"].ToString();
-                        cls.sElementNesiaReka = drMeafyeneyElements["nesia_reika"].ToString();
-                        cls.sElementInMinutes = drMeafyeneyElements["element_in_minutes"].ToString();
-                        cls.sKodLechishuvPremia = drMeafyeneyElements["kod_lechishuv_premia"].ToString();
-                        cls.sLoNitzbarLishatGmar = drMeafyeneyElements["lo_nizbar_leshat_gmar"].ToString();
-                        cls.sHamtanaEilat = drMeafyeneyElements["hamtana_eilat"].ToString();
+        //                cls.sElementZviraZman = drMeafyeneyElements["element_zvira_zman"].ToString();
+        //                cls.sElementNesiaReka = drMeafyeneyElements["nesia_reika"].ToString();
+        //                cls.sElementInMinutes = drMeafyeneyElements["element_in_minutes"].ToString();
+        //                cls.sKodLechishuvPremia = drMeafyeneyElements["kod_lechishuv_premia"].ToString();
+        //                cls.sLoNitzbarLishatGmar = drMeafyeneyElements["lo_nizbar_leshat_gmar"].ToString();
+        //                cls.sHamtanaEilat = drMeafyeneyElements["hamtana_eilat"].ToString();
 
-                        cls.sElementLershut = drMeafyeneyElements["Lershut"].ToString();
-                        cls.bElementLershutExists = !String.IsNullOrEmpty(drMeafyeneyElements["Lershut"].ToString());
-                        cls.iElementLeShatGmar = System.Convert.IsDBNull(drMeafyeneyElements["peilut_mashmautit"]) ? 0 : int.Parse(drMeafyeneyElements["peilut_mashmautit"].ToString());
+        //                cls.sElementLershut = drMeafyeneyElements["Lershut"].ToString();
+        //                cls.bElementLershutExists = !String.IsNullOrEmpty(drMeafyeneyElements["Lershut"].ToString());
+        //                cls.iElementLeShatGmar = System.Convert.IsDBNull(drMeafyeneyElements["peilut_mashmautit"]) ? 0 : int.Parse(drMeafyeneyElements["peilut_mashmautit"].ToString());
 
-                        cls.sBitulBiglalIchurLasidur = drMeafyeneyElements["bitul_biglal_ichur_lasidur"].ToString();
-                        cls.bBitulBiglalIchurLasidurExists = !String.IsNullOrEmpty(drMeafyeneyElements["bitul_biglal_ichur_lasidur"].ToString());
-                        cls.sDivuchInSidurVisa = drMeafyeneyElements["divuch_in_sidur_visa"].ToString();
-                        cls.sDivuchInSidurMeyuchad = drMeafyeneyElements["divuach_besidur_meyuchad"].ToString();
+        //                cls.sBitulBiglalIchurLasidur = drMeafyeneyElements["bitul_biglal_ichur_lasidur"].ToString();
+        //                cls.bBitulBiglalIchurLasidurExists = !String.IsNullOrEmpty(drMeafyeneyElements["bitul_biglal_ichur_lasidur"].ToString());
+        //                cls.sDivuchInSidurVisa = drMeafyeneyElements["divuch_in_sidur_visa"].ToString();
+        //                cls.sDivuchInSidurMeyuchad = drMeafyeneyElements["divuach_besidur_meyuchad"].ToString();
 
-                    }
-                }
+        //            }
+        //        }
 
-                return cls;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //        return cls;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
         public void UpdatePeilutFromOldPeilut(int iMisparIshi, DateTime dDateCard, PeilutDM cls, long lMakatNesiaNew, DataTable dtMeafyeneyElements)
         {

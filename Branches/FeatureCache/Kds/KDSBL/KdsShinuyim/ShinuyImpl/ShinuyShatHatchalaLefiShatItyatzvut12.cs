@@ -224,7 +224,8 @@ namespace KdsShinuyim.ShinuyImpl
                                 {
                                     sNewTempTime = (iTempTime - dZmanLekizuz).ToString().PadLeft(3, (char)48);
                                     oObjPeilutOvdimUpd.MAKAT_NESIA = long.Parse(oObjPeilutOvdimUpd.MAKAT_NESIA.ToString().Replace(sTempTime, sNewTempTime));
-                                    oPeilut = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
+                                   // oPeilut = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
+                                    UpdatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
                                     oSidur.htPeilut[j] = oPeilut;
                                 }
                                 dShatHatchalaNew = dShatHatchalaNew.AddMinutes(dZmanLekizuz);

@@ -226,7 +226,7 @@ namespace KdsErrors.FlowManagers
 
             int iLast = 0;
             var ovedDetails = ovedManager.GetOvedDetails(misparIshi, cardDate);
-            inputData.htEmployeeDetails = ovedManager.GetEmployeeDetails(ovedDetails, inputData.CardDate, misparIshi, out iLast,out htSpecialEmployeeDetails,out htFullSidurimDetails);
+            inputData.htEmployeeDetails = ovedManager.GetEmployeeDetails(true,ovedDetails, inputData.CardDate, misparIshi, out iLast,out htSpecialEmployeeDetails,out htFullSidurimDetails);
             inputData.iLastMisaprSidur = iLast;
             inputData.dtErrors = BuildErrorDataTable();
 

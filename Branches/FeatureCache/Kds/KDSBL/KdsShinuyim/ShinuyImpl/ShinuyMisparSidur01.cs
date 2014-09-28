@@ -34,6 +34,7 @@ namespace KdsShinuyim.ShinuyImpl
                 for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
                     SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
+                  
                     if (!CheckIdkunRashemet("MISPAR_SIDUR", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
                     {
                         FixedMisparSidur01( curSidur, i, inputData);
@@ -90,6 +91,8 @@ namespace KdsShinuyim.ShinuyImpl
             try{
                 if (iMisparSidur > 0)
                 {
+                  //  inputData.LogCollection.AddShinuy(this, curSidur);
+
                     curSidur.bSidurMyuhad = true;
                     NewSidur oNewSidurim = FindSidurOnHtNewSidurim(curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData.htNewSidurim);
 
@@ -124,6 +127,7 @@ namespace KdsShinuyim.ShinuyImpl
 
                     for (int j = 0; j < ((SidurDM)(inputData.htEmployeeDetails[iSidurIndex])).htPeilut.Count; j++)
                     {
+                        
                         //עבור שינוי 1, במידה והיה צורך לעדכן את מספר המטלה במספר הסידור הישן )מספר הסידור קיבל מספר חדש(
                         //נעדכן את הפעילות הראשונה . במקרה כזה לא אמורה להיות יותר מפעילות אחת לסידור
                         //נעדכן גם את הפעילויות במספר הסידור החדש
@@ -145,7 +149,7 @@ namespace KdsShinuyim.ShinuyImpl
                         oPeilut.lMisparMatala = iNewMisparMatala;
                     }
                     //UpdatePeiluyotMevutalotYadani(iSidurIndex, oNewSidurim, oObjSidurimOvdimUpd);
-
+                   
                 }
             }
             catch (Exception ex)

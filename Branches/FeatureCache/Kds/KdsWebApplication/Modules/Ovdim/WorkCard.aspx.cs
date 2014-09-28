@@ -483,7 +483,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          //WorkCardResult WCResult = new WorkCardResult() { Succeeded = false };
          //if (ovedDetails.Rows.Count > 0)
          //{
-             wcResult.htEmployeeDetails = ovedManager.GetEmployeeDetails(ovedDetails, cardDate, misparIshi, out iLast, out htSpecialEmployeeDetails, out htFullEmployeeDetails);
+             wcResult.htEmployeeDetails = ovedManager.GetEmployeeDetails(false,ovedDetails, cardDate, misparIshi, out iLast, out htSpecialEmployeeDetails, out htFullEmployeeDetails);
              wcResult.htFullEmployeeDetails = htFullEmployeeDetails;
              wcResult.Succeeded = true;
              wcResult.dtMashar = GetMasharData(wcResult.htEmployeeDetails);

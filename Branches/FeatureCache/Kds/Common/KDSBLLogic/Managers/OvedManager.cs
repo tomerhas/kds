@@ -165,7 +165,110 @@ namespace KDSBLLogic.Managers
         /// <param name="misparIshi"></param>
         /// <param name="iLastMisaprSidur"></param>
         /// <returns></returns>
-        public OrderedDictionary GetEmployeeDetails(DataTable dtDetails, DateTime dCardDate, int misparIshi, out int iLastMisaprSidur, out OrderedDictionary htSpecialEmployeeDetails, out OrderedDictionary htFullSidurimDetails)
+        //public OrderedDictionary InsertEmployeeDetails (DataTable dtDetails, DateTime dCardDate, int misparIshi, out int iLastMisaprSidur, out OrderedDictionary htSpecialEmployeeDetails, out OrderedDictionary htFullSidurimDetails)
+        //{
+        //    int iMisparSidur, iPeilutMisparSidur;
+        //    int iKey = 0;
+        //    int i = 1;
+        //    int iMisparSidurPrev = 0;
+        //    DateTime dShatHatchala = DateTime.MinValue;
+        //    DateTime dShatHatchalaPrev = new DateTime();
+        //    SidurDM oSidur = null;
+        //    PeilutDM oPeilut = null;
+        //    OrderedDictionary htEmployeeDetails = new OrderedDictionary();
+        //    //OrderedDictionary htSpecialEmployeeDetails = new OrderedDictionary();
+        //    string sLastShilut = "";
+        //    DataTable dtPeiluyot;
+        //    enMakatType _MakatType;
+        //    try
+        //    {
+        //        htSpecialEmployeeDetails = new OrderedDictionary();
+        //        htFullSidurimDetails = new OrderedDictionary();
+              
+        //        //נשלוף את נתוני הפעילויות לאותו יום
+        //        var kavimManager = _container.Resolve<IKavimManager>();
+        //        dtPeiluyot = kavimManager.GetKatalogKavim(misparIshi, dCardDate, dCardDate);
+
+        //        //HashTable-הכנסת כל הסידורים והפעילויות של עובד בתאריך הנתון ל
+        //        foreach (DataRow dr in dtDetails.Rows)
+        //        {
+
+        //            iMisparSidur = int.Parse(dr["Mispar_Sidur"].ToString());
+        //            dShatHatchala = DateTime.Parse(dr["shat_hatchala"].ToString());
+
+        //            if ((iMisparSidur != iMisparSidurPrev) || (iMisparSidur == iMisparSidurPrev) && (dShatHatchala != dShatHatchalaPrev))
+        //            {
+        //                iKey = 1;
+        //                i++;
+        //                //נתונים ברמת סידור
+
+        //                var sidurManager = _container.Resolve<ISidurManager>();
+        //                oSidur = sidurManager.CreateClsSidurFromEmployeeDetails(dr);
+
+        //                List<int> SpecialSidurim = new List<int> { 99200 };
+        //                if (SpecialSidurim.Contains(iMisparSidur))
+        //                {
+        //                    htSpecialEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+        //                }
+        //                else
+        //                {
+        //                    if (oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iLebdikaShguim == 1))
+        //                    {
+        //                        htEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+        //                    }
+
+        //                    htFullSidurimDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+        //                }
+        //                iMisparSidurPrev = iMisparSidur;
+        //                dShatHatchalaPrev = dShatHatchala;
+
+        //            }
+        //            //נתוני פעילויות  
+
+        //            iPeilutMisparSidur = (System.Convert.IsDBNull(dr["peilut_mispar_sidur"]) ? 0 : int.Parse(dr["peilut_mispar_sidur"].ToString()));
+        //            if (iPeilutMisparSidur > 0)
+        //            {
+        //                var peilutManager = _container.Resolve<IPeilutManager>();
+        //                oPeilut = peilutManager.CreateEmployeePeilut(dCardDate, iKey, dr, dtPeiluyot);
+        //                _MakatType = (enMakatType)StaticBL.GetMakatType(oPeilut.lMakatNesia);
+        //                if (_MakatType == enMakatType.mKavShirut)
+        //                    sLastShilut = oPeilut.sShilut;
+        //                else if (_MakatType == enMakatType.mVisut)
+        //                    oPeilut.sShilut = sLastShilut;
+        //                oSidur.htPeilut.Add(iKey, oPeilut);
+
+        //                //אם לפחות אחד מהפעילויות היא פעילות אילת, נסמן את הסידור כסידור אילת
+        //                if (oPeilut.bPeilutEilat)
+        //                    oSidur.bSidurEilat = true;
+
+        //                //אם לפחות פעילות אחת לא ריקה, נגדיר את הסידור כסידור לא ריק
+        //                if (!oSidur.bSidurNotEmpty)
+        //                    oSidur.bSidurNotEmpty = oPeilut.bPeilutNotRekea;
+
+        //                iKey++;
+        //            }
+
+        //        }
+
+        //        if (dtDetails.Rows.Count > 0)
+        //            iLastMisaprSidur = int.Parse(dtDetails.Rows[dtDetails.Rows.Count - 1]["mispar_sidur"].ToString());
+        //        else 
+        //            iLastMisaprSidur = 0;
+
+        //        return htEmployeeDetails;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Error in InsertEmployeeDetails:" + " " + ex.Message);
+
+        //    }
+        //}
+
+
+        public OrderedDictionary GetEmployeeDetails(bool bInsertToShguim, DataTable dtDetails,
+                                               DateTime dCardDate, int misparIshi, out int iLastMisaprSidur,
+                                               out OrderedDictionary htSpecialEmployeeDetails,
+                                               out OrderedDictionary htFullSidurimDetails)
         {
             int iMisparSidur, iPeilutMisparSidur;
             int iKey = 0;
@@ -176,7 +279,8 @@ namespace KDSBLLogic.Managers
             SidurDM oSidur = null;
             PeilutDM oPeilut = null;
             OrderedDictionary htEmployeeDetails = new OrderedDictionary();
-            //OrderedDictionary htSpecialEmployeeDetails = new OrderedDictionary();
+            htSpecialEmployeeDetails = new OrderedDictionary();
+            //htEmployeeDetailsWithCancled = new OrderedDictionary();
             string sLastShilut = "";
             DataTable dtPeiluyot;
             enMakatType _MakatType;
@@ -184,7 +288,7 @@ namespace KDSBLLogic.Managers
             {
                 htSpecialEmployeeDetails = new OrderedDictionary();
                 htFullSidurimDetails = new OrderedDictionary();
-              
+
                 //נשלוף את נתוני הפעילויות לאותו יום
                 var kavimManager = _container.Resolve<IKavimManager>();
                 dtPeiluyot = kavimManager.GetKatalogKavim(misparIshi, dCardDate, dCardDate);
@@ -197,7 +301,7 @@ namespace KDSBLLogic.Managers
                     dShatHatchala = DateTime.Parse(dr["shat_hatchala"].ToString());
 
                     if ((iMisparSidur != iMisparSidurPrev) || (iMisparSidur == iMisparSidurPrev) && (dShatHatchala != dShatHatchalaPrev))
-                    {
+                    { 
                         iKey = 1;
                         i++;
                         //נתונים ברמת סידור
@@ -206,25 +310,22 @@ namespace KDSBLLogic.Managers
                         oSidur = sidurManager.CreateClsSidurFromEmployeeDetails(dr);
 
                         List<int> SpecialSidurim = new List<int> { 99200 };
+
                         if (SpecialSidurim.Contains(iMisparSidur))
                         {
-                            htSpecialEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+                           htSpecialEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
                         }
                         else
                         {
-                            if (oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iLebdikaShguim == 1))
-                            {
+                            if (!bInsertToShguim || (bInsertToShguim && (oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iLebdikaShguim == 1))))
                                 htEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
-                            }
-
+                            
                             htFullSidurimDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
                         }
                         iMisparSidurPrev = iMisparSidur;
                         dShatHatchalaPrev = dShatHatchala;
-
                     }
                     //נתוני פעילויות  
-
                     iPeilutMisparSidur = (System.Convert.IsDBNull(dr["peilut_mispar_sidur"]) ? 0 : int.Parse(dr["peilut_mispar_sidur"].ToString()));
                     if (iPeilutMisparSidur > 0)
                     {
@@ -247,12 +348,13 @@ namespace KDSBLLogic.Managers
 
                         iKey++;
                     }
+                   
 
                 }
-
+               
                 if (dtDetails.Rows.Count > 0)
                     iLastMisaprSidur = int.Parse(dtDetails.Rows[dtDetails.Rows.Count - 1]["mispar_sidur"].ToString());
-                else 
+                else
                     iLastMisaprSidur = 0;
 
                 return htEmployeeDetails;
@@ -263,7 +365,6 @@ namespace KDSBLLogic.Managers
 
             }
         }
-
 
 
 

@@ -11,8 +11,7 @@ namespace KDSCommon.Interfaces.Managers
         DataTable GetOvedDetails(int iMisparIshi, DateTime dCardDate);
         MeafyenimDM CreateMeafyenyOved(int iMisparIshi, DateTime dDate);
         MeafyenimDM CreateMeafyenyOved(int iMisparIshi, DateTime dDate, DataTable meafyenim);
-        OrderedDictionary GetEmployeeDetails(DataTable dtDetails, DateTime dCardDate, int misparIshi, out int iLastMisaprSidur, out OrderedDictionary htSpecialEmployeeDetails, out OrderedDictionary htFullSidurimDetails);
-
+        OrderedDictionary GetEmployeeDetails(bool bInsertToShguim,DataTable dtDetails, DateTime dCardDate, int misparIshi, out int iLastMisaprSidur, out OrderedDictionary htSpecialEmployeeDetails, out OrderedDictionary htFullSidurimDetails);
         void UpdateCardStatus(int iMisparIshi, DateTime dCardDate, CardStatus oCardStatus, int iUserId);
         bool IsOvedMatzavExists(string sKodMatzav, DataTable dtMatzavOved);
        

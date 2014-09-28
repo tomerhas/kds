@@ -161,7 +161,8 @@ namespace KdsShinuyim.ShinuyImpl
                 oElement.lMakatNesia = long.Parse(oElement.lMakatNesia.ToString().Replace(oElement.lMakatNesia.ToString().Substring(3, 3), sZmanElement));
                 oObjPeilutOvdimUpd.MAKAT_NESIA = oElement.lMakatNesia;
                 oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
-                oElement = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oElement, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
+               // oElement = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oElement, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
+                UpdatePeilut(inputData.iMisparIshi, inputData.CardDate, oElement, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
                 curSidur.htPeilut[IndexPeilut] = oElement;
             }
             catch (Exception ex)

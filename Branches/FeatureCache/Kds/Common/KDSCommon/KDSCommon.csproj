@@ -80,7 +80,10 @@
     <Compile Include="DataModels\MeafyenimDM.cs" />
     <Compile Include="DataModels\PeilutDM.cs" />
     <Compile Include="DataModels\Shinuyim\FlowShinuyResult.cs" />
+    <Compile Include="Interfaces\Shinuyim\IShinuyLogCollection.cs" />
     <Compile Include="DataModels\Shinuyim\ShinuyInputData.cs" />
+    <Compile Include="DataModels\Shinuyim\ShinuyLogCollection.cs" />
+    <Compile Include="DataModels\Shinuyim\SingleShinuyLog.cs" />
     <Compile Include="DataModels\SidurDM.cs" />
     <Compile Include="Enums\BatchExecutionType.cs" />
     <Compile Include="Enums\CardStatus.cs" />

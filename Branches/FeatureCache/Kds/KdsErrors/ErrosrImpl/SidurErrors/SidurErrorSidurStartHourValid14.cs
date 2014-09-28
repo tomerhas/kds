@@ -27,7 +27,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             DateTime dSidurStartHour;
             bool bSidurNahagut = false;
             bool bSidurNihulTnua = false;
-         
+        
             dStartLimitHour = input.oParameters.dSidurStartLimitHourParam1;
             dEndLimitHour = input.oParameters.dSidurEndLimitShatHatchala;
 
@@ -46,6 +46,11 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                 dEndLimitHour = input.oParameters.dShatHatchalaNahagutNihulTnua;
             }
 
+            if (input.curSidur.bSidurMyuhad && (input.curSidur.sSugAvoda == enSugAvoda.ActualGrira.GetHashCode().ToString()))
+            {
+                dStartLimitHour = input.oParameters.dSidurStartLimitHourParam1;
+                dEndLimitHour = input.oParameters.dShatHatchalaGrira;
+            }
 
             if (input.curSidur.bSidurMyuhad)
             {

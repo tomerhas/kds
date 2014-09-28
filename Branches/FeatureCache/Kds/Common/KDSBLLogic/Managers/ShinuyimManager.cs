@@ -57,6 +57,27 @@ namespace KDSBLLogic.Managers
             }
 
         }
+        public void DeleteIdkunRashemet(COLL_IDKUN_RASHEMET oCollIdkunRashemetDel)
+        {
+            try
+            {
+                _container.Resolve<IShinuyimDAL>().DeleteIdkunRashemet(oCollIdkunRashemetDel);
+            }
+            catch (Exception ex)
+            {
+                string rcipientsList = ConfigurationManager.AppSettings["MailErrorWorkCard"];
+
+                var mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
+                string subject = "תקלה במחיקת עדכוני רשמת למספר אישי: " + oCollIdkunRashemetDel.Value[0].MISPAR_ISHI + "  תאריך:" + oCollIdkunRashemetDel.Value[0].TAARICH.ToShortDateString();
+
+                mailManager.SendMessage(new MailMessageWrapper(rcipientsList)
+                {
+                    Subject = subject,
+                    Body = ex.Message
+                });
+            }
+
+        }
         public void UpdateAprrovalErrors(COLL_SHGIOT_MEUSHAROT oCollShgiotMeusharot)
         {
             _container.Resolve<IShinuyimDAL>().UpdateAprrovalErrors(oCollShgiotMeusharot);

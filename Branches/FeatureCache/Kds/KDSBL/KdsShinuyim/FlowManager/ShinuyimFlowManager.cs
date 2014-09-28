@@ -97,6 +97,9 @@ namespace KdsShinuyim.FlowManager
                 if (inputData.oCollIdkunRashemet.Count > 0)
                     shinuyimManager.SaveIdkunRashemet(inputData.oCollIdkunRashemet);
 
+                if (inputData.oCollIdkunRashemetDel.Count > 0)
+                    shinuyimManager.DeleteIdkunRashemet(inputData.oCollIdkunRashemetDel);
+
                 if (inputData.oCollApprovalErrors.Count > 0)
                     shinuyimManager.UpdateAprrovalErrors(inputData.oCollApprovalErrors);
             }
@@ -254,7 +257,7 @@ namespace KdsShinuyim.FlowManager
                            
                             //OrderedDictionary htFullSidurimDetails = new OrderedDictionary();
                             //Insert Oved Details to Class
-                            inputData.htEmployeeDetails = ovedManager.GetEmployeeDetails(ovedDetails, inputData.CardDate, misparIshi, out iLast, out htSpecialEmployeeDetails, out htFullEmployeeDetails);
+                            inputData.htEmployeeDetails = ovedManager.GetEmployeeDetails(false,ovedDetails, inputData.CardDate, misparIshi, out iLast, out htSpecialEmployeeDetails, out htFullEmployeeDetails);
                             // htEmployeeDetails = oDefinition.InsertEmployeeDetails(false, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullSidurimDetails);//, out  _htEmployeeDetailsWithCancled
                             inputData.htFullEmployeeDetails = htFullEmployeeDetails;
                             inputData.htSpecialEmployeeDetails = htSpecialEmployeeDetails;

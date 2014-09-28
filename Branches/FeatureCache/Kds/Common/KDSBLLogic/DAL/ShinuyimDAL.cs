@@ -17,6 +17,7 @@ namespace KDSBLLogic.DAL
         public const string cProGetApprovalErrors = "pkg_errors.get_approval_errors";
         public const string cProUpdApprovalErrors = "pkg_errors.pro_upd_approval_errors";
         public const string cProUpdIdkunRashemet = "pkg_ovdim.pro_ins_idkuney_rashemet";
+        public const string cProDeleteIdkunRashemet = "pkg_ovdim.pro_delete_idkuney_rashemet";
         public const string cProShinuyKelet = "pkg_errors.pro_shinuy_kelet";
 
         public DataTable GetIdkuneyRashemet(int iMisparIshi, DateTime dTaarich)
@@ -84,6 +85,19 @@ namespace KDSBLLogic.DAL
             }
         }
 
+        public void DeleteIdkunRashemet(COLL_IDKUN_RASHEMET oCollIdkunRashemetDel)
+        {
+            clDal Dal = new clDal();
+            try
+            {
+                Dal.AddParameter("p_coll_idkun_rashemet", ParameterType.ntOracleArray, oCollIdkunRashemetDel, ParameterDir.pdInput, "COLL_IDKUN_RASHEMET");
+                Dal.ExecuteSP(cProDeleteIdkunRashemet);
+            }
+            catch (Exception ex)
+            {  
+                throw ex;
+            }
+        }
         public  void UpdateAprrovalErrors(COLL_SHGIOT_MEUSHAROT oCollShgiotMeusharot)
         {
             clDal Dal = new clDal();

@@ -93,14 +93,14 @@ namespace KdsShinuyim.ShinuyImpl
            
                 if (inputData.htEmployeeDetails != null)
                 {
-                    for ( i = 0; i < inputData.htEmployeeDetails.Count; i++)
-                    
-                     curSidur = (SidurDM)inputData.htEmployeeDetails[i];
-                
-                     CheckZakautHalbasha(inputData,curSidur, i, ref iSidurZakaiLehalbashaKnisa, ref iSidurZakaiLehalbashaYetzia, ref bSidurLoZakaiLHalbash );
+                    for (i = 0; i < inputData.htEmployeeDetails.Count; i++)
+                    {
+                        curSidur = (SidurDM)inputData.htEmployeeDetails[i];
 
-                     bHaveHalbasha = HaveZakaut(inputData, iSidurZakaiLehalbashaKnisa, iSidurZakaiLehalbashaYetzia);
+                        CheckZakautHalbasha(inputData, curSidur, i, ref iSidurZakaiLehalbashaKnisa, ref iSidurZakaiLehalbashaYetzia, ref bSidurLoZakaiLHalbash);
 
+                        bHaveHalbasha = HaveZakaut(inputData, iSidurZakaiLehalbashaKnisa, iSidurZakaiLehalbashaYetzia);
+                    }
                     if (bHaveHalbasha)
                     { //עובד אשר ענה על תנאי זכאות (אחד מהערכים 1-3)
 

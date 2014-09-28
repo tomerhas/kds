@@ -26,6 +26,7 @@ namespace KDSCommon.DataModels.Shinuyim
             oCollPeilutOvdimDel = new COLL_OBJ_PEILUT_OVDIM();
             oCollPeilutOvdimIns = new COLL_OBJ_PEILUT_OVDIM();
             oCollIdkunRashemet = new COLL_IDKUN_RASHEMET();
+            oCollIdkunRashemetDel = new COLL_IDKUN_RASHEMET();
             oCollApprovalErrors = new COLL_SHGIOT_MEUSHAROT();
             htNewSidurim = new OrderedDictionary();
             htEmployeeDetails = new OrderedDictionary();
@@ -33,6 +34,8 @@ namespace KDSCommon.DataModels.Shinuyim
             oCollYameyAvodaUpdRecorder = new ModificationRecorderCollection<OBJ_YAMEY_AVODA_OVDIM>();
             oCollSidurimOvdimUpdRecorder = new ModificationRecorderCollection<OBJ_SIDURIM_OVDIM>();
             oCollPeilutOvdimUpdRecorder = new ModificationRecorderCollection<OBJ_PEILUT_OVDIM>();
+
+            LogCollection = new ShinuyLogCollection();
         }
         public int iMisparIshi { get; set; }
         public DateTime CardDate { get; set; }
@@ -64,6 +67,7 @@ namespace KDSCommon.DataModels.Shinuyim
         public clParametersDM oParam { get; set; }
         public MeafyenimDM oMeafyeneyOved { get; set; }
 
+        public ShinuyLogCollection LogCollection { get; set; }
         /**/
         public OBJ_YAMEY_AVODA_OVDIM oObjYameyAvodaUpd { get; set; }
 
@@ -71,6 +75,7 @@ namespace KDSCommon.DataModels.Shinuyim
         //public COLL_YAMEY_AVODA_OVDIM oCollYameyAvodaUpd;
         public OrderedDictionary htNewSidurim { get; set; }
         public COLL_IDKUN_RASHEMET oCollIdkunRashemet { get; set; }
+        public COLL_IDKUN_RASHEMET oCollIdkunRashemetDel { get; set; }
         public COLL_SHGIOT_MEUSHAROT oCollApprovalErrors { get; set; }
      
         public ModificationRecorderCollection<OBJ_SIDURIM_OVDIM> oCollSidurimOvdimUpdRecorder { get; set; }

@@ -162,9 +162,12 @@ namespace KdsShinuyim.ShinuyImpl
                         CopyPeilutToObj( oObjPeilutOvdimIns,  oPeilut);
                         inputData.oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
 
-                        PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oPeilut.lMakatNesia, inputData.dtTmpMeafyeneyElements);
-                        oPeilutNew.iBitulOHosafa = 4;
-                        oPeilutNew.iPeilutMisparSidur = oSidurPutzal.iMisparSidur;
+                    //    PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oPeilut.lMakatNesia, inputData.dtTmpMeafyeneyElements);
+
+                        UpdatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oPeilut.lMakatNesia, inputData.dtTmpMeafyeneyElements);
+
+                        oPeilut.iBitulOHosafa = 4;
+                        oPeilut.iPeilutMisparSidur = oSidurPutzal.iMisparSidur;
                         oSidurPutzal.htPeilut.Add(28 * oSidurPutzal.htPeilut.Count + 1, oPeilut);
 
 
