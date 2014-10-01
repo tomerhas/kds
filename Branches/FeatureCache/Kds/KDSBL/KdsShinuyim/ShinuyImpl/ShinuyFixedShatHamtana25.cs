@@ -117,7 +117,7 @@ namespace KdsShinuyim.ShinuyImpl
 
                     //ב.	לוקחים את שני הסידורים הראשונים. מחשבים שעת התחלה של השני פחות שעת גמר של הראשון, אם התוצאה גדולה מ- 1 וגם סה"כ ההמתנה שניתנה עד כה קטנה מהערך בפרמטר 148ובמידה 
                     dPaar = (oSidurNext.dFullShatHatchala - curSidur.dFullShatGmar).TotalMinutes;
-                    if (dPaar > 1 && iSumElement < inputData.oParam.iMaxZmanHamtanaEilat)
+                    if (dPaar >= 1 && iSumElement < inputData.oParam.iMaxZmanHamtanaEilat)
                     {
                         if (!CheckIdkunRashemet("SHAT_GMAR", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
                         {

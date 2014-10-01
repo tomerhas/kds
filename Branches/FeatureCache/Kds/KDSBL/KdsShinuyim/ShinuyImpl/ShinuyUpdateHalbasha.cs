@@ -87,6 +87,7 @@ namespace KdsShinuyim.ShinuyImpl
             int iMutamut,i;
             bool bSidurLoZakaiLHalbash = false;
             bool bHaveHalbasha = false;
+            bool bSidurMezake = false;
             SidurDM curSidur = null;
 
             try{
@@ -97,10 +98,10 @@ namespace KdsShinuyim.ShinuyImpl
                     {
                         curSidur = (SidurDM)inputData.htEmployeeDetails[i];
 
-                        CheckZakautHalbasha(inputData, curSidur, i, ref iSidurZakaiLehalbashaKnisa, ref iSidurZakaiLehalbashaYetzia, ref bSidurLoZakaiLHalbash);
-
-                        bHaveHalbasha = HaveZakaut(inputData, iSidurZakaiLehalbashaKnisa, iSidurZakaiLehalbashaYetzia);
+                        CheckZakautHalbasha(inputData, curSidur, i, ref bSidurMezake,ref iSidurZakaiLehalbashaKnisa, ref iSidurZakaiLehalbashaYetzia, ref bSidurLoZakaiLHalbash);
                     }
+
+                    bHaveHalbasha = HaveZakaut(inputData, iSidurZakaiLehalbashaKnisa, iSidurZakaiLehalbashaYetzia);
                     if (bHaveHalbasha)
                     { //עובד אשר ענה על תנאי זכאות (אחד מהערכים 1-3)
 
@@ -246,10 +247,10 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void CheckZakautHalbasha(ShinuyInputData inputData,SidurDM curSidur, int indexSidur, ref int iSidurZakaiLehalbashaKnisa, ref int iSidurZakaiLehalbashaYetzia, ref bool bSidurLoZakaiLHalbash)
+        private void CheckZakautHalbasha(ShinuyInputData inputData,SidurDM curSidur, int indexSidur,ref bool  bSidurMezake, ref int iSidurZakaiLehalbashaKnisa, ref int iSidurZakaiLehalbashaYetzia, ref bool bSidurLoZakaiLHalbash)
         {
             bool bSidurMisugShaonim;
-            bool bSidurMezake = false;
+            
             bool bSidurZakaiLHalbash;
             DataRow[] drSugSidur;
             bool bKnisaValid = false;

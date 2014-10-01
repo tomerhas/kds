@@ -29,6 +29,7 @@ namespace KdsShinuyim.ShinuyImpl
         {
             try
             {
+                inputData.bUsedMazanTichnun = false;
                 for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
                     SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
@@ -87,6 +88,8 @@ namespace KdsShinuyim.ShinuyImpl
                                     oPeilut = (PeilutDM)curSidur.htPeilut[i];
                                     if (isElemntLoMashmauti(oPeilut) || oPeilut.iMakatType == enMakatType.mEmpty.GetHashCode())
                                         dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilut, curSidur, inputData, ref bUsedMazanTichnunInSidur)));
+                                    if (bUsedMazanTichnunInSidur)
+                                        inputData.bUsedMazanTichnun = true;   
                                 }
                             }
                         }
@@ -99,7 +102,7 @@ namespace KdsShinuyim.ShinuyImpl
                         UpdateShatHatchala(curSidur, iIndexSidur, dShatHatchala, inputData);
                     }
                 }
-
+                
             }
             catch (Exception ex)
             {

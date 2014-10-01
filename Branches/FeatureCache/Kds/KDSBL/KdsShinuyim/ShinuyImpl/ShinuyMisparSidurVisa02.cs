@@ -144,7 +144,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
             oObjPeilutOvdimIns.TAARICH = inputData.CardDate;
             oObjPeilutOvdimIns.SHAT_YETZIA = curSidur.dFullShatHatchala;
             oObjPeilutOvdimIns.SHAT_HATCHALA_SIDUR = curSidur.dFullShatHatchala;
-            oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse("50000000");
+            oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse("50" + oNewSidurim.SidurOld);
             oObjPeilutOvdimIns.MISPAR_VISA = oNewSidurim.SidurOld;
             oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;
             inputData.oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);

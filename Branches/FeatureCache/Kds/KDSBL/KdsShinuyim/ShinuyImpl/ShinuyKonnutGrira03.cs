@@ -51,6 +51,7 @@ namespace KdsShinuyim.ShinuyImpl
                 {
                     if (HaveKonenutGrira(inputData, ref curSidur,ref iSidurKonnutGrira))
                     {
+                        bSidurKonnutGrira = true;
                         UpdateNetunim(inputData,curSidur, bSidurKonnutGrira, iSidurKonnutGrira, ref oSidurKonenutGrira);
                     }
                     //לשאול אם כוננות לא לתשלום =0
@@ -128,7 +129,7 @@ namespace KdsShinuyim.ShinuyImpl
 
         private void UpdateNetunim(ShinuyInputData inputData,SidurDM curSidur, bool bSidurKonnutGrira, int iSidurKonnutGrira, ref SidurDM oSidurKonenutGrira)
         {
-            SidurDM oSidur = null;
+           
             DataTable dtSidurGrira = new DataTable();
             int iTypeGrira, i;
             int iGriraNum = 0;
@@ -182,7 +183,7 @@ namespace KdsShinuyim.ShinuyImpl
 
 
                     //בכל המקומות בהם מחפשים סידור גרירה בפועל בטווח הזמן של כוננות הגרירה וסידור כוננות הגרירה מתחיל לפני חצות ומסתיים אחרי חצות, 
-                    if (bSidurKonnutGrira && curSidur.dFullShatHatchala < DateHelper.GetDateTimeFromStringHour("24:00", inputData.CardDate) && oSidur.dFullShatGmar > DateHelper.GetDateTimeFromStringHour("24:00", inputData.CardDate))
+                    if (bSidurKonnutGrira && curSidur.dFullShatHatchala < DateHelper.GetDateTimeFromStringHour("24:00", inputData.CardDate) && curSidur.dFullShatGmar > DateHelper.GetDateTimeFromStringHour("24:00", inputData.CardDate))
                     {
                         // יש לחפש סידור גרירה בתאריך כרטיס העבודה ובתאריך כרטיס העבודה +1.
                         if (_container.Resolve<ISidurManager>().CheckHaveSidurGrira(inputData.iMisparIshi, inputData.CardDate.AddDays(1), ref dtSidurGrira))

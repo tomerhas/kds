@@ -54,10 +54,13 @@ namespace KdsShinuyim.ShinuyImpl
                         for (int j = 0; j < oSidur.htPeilut.Count; j++)
                         {
                             oPeilut = (PeilutDM)oSidur.htPeilut[j];
-                            if (inputData.dtMashar.Select("bus_number=" + oPeilut.lOtoNo + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2)<>64").Length > 0)
+                            if (inputData.dtMashar != null)
                             {
-                                bNotDegem64 = true;
-                                break;
+                                if (inputData.dtMashar.Select("bus_number=" + oPeilut.lOtoNo + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2)<>64").Length > 0)
+                                {
+                                    bNotDegem64 = true;
+                                    break;
+                                }
                             }
                         }
                     }

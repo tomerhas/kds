@@ -49,11 +49,12 @@ namespace KdsShinuyim.ShinuyImpl
             bool bHaveFirstElementMachine = false;
             int i, iIndexElement;
             iIndexElement = -1;
-            bool bUsedMazanTichnun = false;
+         
             bool bUsedMazanTichnunInSidur = false;
             //הוספת אלמנט הכנת מכונה אם העובד החליף רכב ולא מופיע אלמנט זה או בתחילת יום
             try
             {
+                inputData.bUsedMazanTichnun = false;
                 DeletePeiluyotHachanatMechona(inputData);
 
                 for (i = 0; i < inputData.htEmployeeDetails.Count; i++)
@@ -68,19 +69,19 @@ namespace KdsShinuyim.ShinuyImpl
                     //אם סידור ראשון ביום קיימים שני מקרים
                     if (iMeshechHachanotMechona == 0)
                     {
-                        AddElementMachineForFirstSidur(oSidur, inputData, i, ref dShatYetziaFirst, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iIndexElement, ref iIndexFirstElementMachine, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur, oObjSidurimOvdimUpd);
+                        AddElementMachineForFirstSidur(oSidur, inputData, i, ref dShatYetziaFirst, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iIndexElement, ref iIndexFirstElementMachine, ref bUsedMazanTichnunInSidur, oObjSidurimOvdimUpd);
                         iIndexFirstElementMachine += 1;
                         if (iIndexElement == 0) bHaveFirstElementMachine = true;
                     }
 
-                    AddElementMachineForNextSidur(oSidur, inputData,ref dShatYetzia, i, iIndexFirstElementMachine, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref iIndexElement, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur, oObjSidurimOvdimUpd);
+                    AddElementMachineForNextSidur(oSidur, inputData,ref dShatYetzia, i, iIndexFirstElementMachine, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref iIndexElement,  ref bUsedMazanTichnunInSidur, oObjSidurimOvdimUpd);
                     if (!bHaveFirstElementMachine)
                     {
                         dShatYetziaFirst = dShatYetzia;
                     }
                     inputData.htEmployeeDetails[i] = oSidur;
                     if (bUsedMazanTichnunInSidur)
-                        bUsedMazanTichnun = true;
+                          inputData.bUsedMazanTichnun = true;
                  
                     if (dShatYetziaFirst != oSidur.dFullShatHatchala && (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala, inputData)))
                     {
@@ -285,7 +286,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void AddElementMachineForFirstSidur( SidurDM oSidur, ShinuyInputData inputData, int iIndexSidur, ref DateTime dShatYetzia, ref  int iMeshechHachanotMechona, ref int iNumHachanotMechonaForSidur, ref int iIndexElement, ref int iPeilutNesiaIndex, ref bool bUsedMazanTichnun, ref bool bUsedMazanTichnunInSidur,  OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
+        private void AddElementMachineForFirstSidur( SidurDM oSidur, ShinuyInputData inputData, int iIndexSidur, ref DateTime dShatYetzia, ref  int iMeshechHachanotMechona, ref int iNumHachanotMechonaForSidur, ref int iIndexElement, ref int iPeilutNesiaIndex,  ref bool bUsedMazanTichnunInSidur,  OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
         {
             bool bPeilutNesiaMustBusNumber = false;
             long lOtoNo = 0;
@@ -296,7 +297,7 @@ namespace KdsShinuyim.ShinuyImpl
 
                 if ((bPeilutNesiaMustBusNumber))
                 {
-                    AddElementHachanatMechine701( oSidur,inputData, iIndexSidur, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iIndexElement, ref bUsedMazanTichnun,  oObjSidurimOvdimUpd, ref bUsedMazanTichnunInSidur);
+                    AddElementHachanatMechine701( oSidur,inputData, iIndexSidur, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iIndexElement,  oObjSidurimOvdimUpd, ref bUsedMazanTichnunInSidur);
                 }
             }
             catch (Exception ex)
@@ -335,7 +336,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void AddElementHachanatMechine701(SidurDM oSidur,ShinuyInputData inputData, int iIndexSidur, ref DateTime dShatYetiza, ref int iPeilutNesiaIndex, ref  int iMeshechHachanotMechona, ref int iNumHachanotMechonaForSidur, ref int iIndexElement, ref bool bUsedMazanTichnun,  OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, ref bool bUsedMazanTichnunInSidur)
+        private void AddElementHachanatMechine701(SidurDM oSidur,ShinuyInputData inputData, int iIndexSidur, ref DateTime dShatYetiza, ref int iPeilutNesiaIndex, ref  int iMeshechHachanotMechona, ref int iNumHachanotMechonaForSidur, ref int iIndexElement,    OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, ref bool bUsedMazanTichnunInSidur)
         {
             OBJ_PEILUT_OVDIM oObjPeilutOvdimIns = new OBJ_PEILUT_OVDIM();
             PeilutDM oPeilut;
@@ -370,7 +371,7 @@ namespace KdsShinuyim.ShinuyImpl
                 iIndexElement = iPeilutNesiaIndex;
                 iPeilutNesiaIndex += 1;
 
-                dShatYetziaPeilut = GetShatHatchalaElementMachine(inputData,iIndexSidur, iPeilutNesiaIndex, oSidur, oPeilutNew, true, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur);
+                dShatYetziaPeilut = GetShatHatchalaElementMachine(inputData,iIndexSidur, iPeilutNesiaIndex, oSidur, oPeilutNew, true,  ref bUsedMazanTichnunInSidur);
 
                 //dRefferenceDate = DateHelper.GetDateTimeFromStringHour("08:00", dShatYetziaPeilut);
                 //if (dShatYetziaPeilut >= dRefferenceDate && (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
@@ -407,7 +408,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void AddElementMachineForNextSidur(SidurDM oSidur, ShinuyInputData inputData,ref DateTime dShatYetzia, int iSidurIndex, int iIndexFirstElementMachine, ref  int iMeshechHachanotMechona, ref int iNumHachanotMechonaForSidur, ref int iMeshechHachanotMechonaNosafot, ref int iIndexElement, ref bool bUsedMazanTichnun, ref bool bUsedMazanTichnunInSidur,  OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
+        private void AddElementMachineForNextSidur(SidurDM oSidur, ShinuyInputData inputData,ref DateTime dShatYetzia, int iSidurIndex, int iIndexFirstElementMachine, ref  int iMeshechHachanotMechona, ref int iNumHachanotMechonaForSidur, ref int iMeshechHachanotMechonaNosafot, ref int iIndexElement, ref bool bUsedMazanTichnunInSidur,  OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
         {
             PeilutDM oPeilut;
             SidurDM oLocalSidur;
@@ -459,7 +460,7 @@ namespace KdsShinuyim.ShinuyImpl
                                                 if (oPeilut.lOtoNo != lOtoNo && oPeilut.lOtoNo > 0 && lOtoNo > 0 && oPeilut.lOtoNo.ToString().Length >= 5)
                                                 {
                                                     //אם אין להן אותו מספר רכב אז מוסיפים אלמנט הכנת מכונה (71100000).
-                                                    AddElementHachanatMechine711( oSidur,inputData, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref bUsedMazanTichnun, ref  bUsedMazanTichnunInSidur,  oObjSidurimOvdimUpd);
+                                                    AddElementHachanatMechine711( oSidur,inputData, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref  bUsedMazanTichnunInSidur,  oObjSidurimOvdimUpd);
                                                     inputData.htEmployeeDetails[iSidurIndex] = oSidur;
                                                     if (i == iSidurIndex)
                                                         l += 1;
@@ -477,7 +478,7 @@ namespace KdsShinuyim.ShinuyImpl
                                         if (oLocalSidur != oSidur && (oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes > inputData.oParam.iMinTimeBetweenSidurim
                                             && ((oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes - inputData.oParam.iPrepareOtherMechineMaxTime) > inputData.oParam.iMinTimeBetweenSidurim)
                                         {
-                                            AddElementHachanatMechine711( oSidur, inputData, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref  iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur,  oObjSidurimOvdimUpd);
+                                            AddElementHachanatMechine711( oSidur, inputData, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref  iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref bUsedMazanTichnunInSidur,  oObjSidurimOvdimUpd);
                                             inputData.htEmployeeDetails[iSidurIndex] = oSidur;
                                             bAddElementPitzul = true;
                                         }
@@ -491,7 +492,7 @@ namespace KdsShinuyim.ShinuyImpl
                                             if (oLocalSidur != oSidur && iSidurIndex == i + 1 && (oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes <= inputData.oParam.iMinTimeBetweenSidurim
                                                  && (lMakat.ToString().PadLeft(8).Substring(0, 3) == "724" || lMakat.ToString().PadLeft(8).Substring(0, 3) == "735") && int.Parse(lMakat.ToString().PadLeft(8).Substring(3, 3)) > 60)
                                             {
-                                                AddElementHachanatMechine711(oSidur, inputData,iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur, oObjSidurimOvdimUpd);
+                                                AddElementHachanatMechine711(oSidur, inputData,iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref bUsedMazanTichnunInSidur, oObjSidurimOvdimUpd);
                                                 inputData.htEmployeeDetails[iSidurIndex] = oSidur;
                                                 bAddElementHamtana = true;
                                             }
@@ -535,7 +536,7 @@ namespace KdsShinuyim.ShinuyImpl
             return bHave;
         }
 
-        private void AddElementHachanatMechine711( SidurDM oSidur, ShinuyInputData inputData,int iIndexSidur, ref DateTime dShatYetiza, ref int iPeilutNesiaIndex, ref int iMeshechHachanotMechona, ref int iNumHachanotMechonaForSidur, ref int iMeshechHachanotMechonaNosafot, ref int iIndexElement, ref bool bUsedMazanTichnun, ref bool bUsedMazanTichnunInSidur,  OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
+        private void AddElementHachanatMechine711( SidurDM oSidur, ShinuyInputData inputData,int iIndexSidur, ref DateTime dShatYetiza, ref int iPeilutNesiaIndex, ref int iMeshechHachanotMechona, ref int iNumHachanotMechonaForSidur, ref int iMeshechHachanotMechonaNosafot, ref int iIndexElement, ref bool bUsedMazanTichnunInSidur,  OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
         {
             OBJ_PEILUT_OVDIM oObjPeilutOvdimIns = new OBJ_PEILUT_OVDIM();
             PeilutDM oPeilut;
@@ -570,7 +571,7 @@ namespace KdsShinuyim.ShinuyImpl
                 iIndexElement = iPeilutNesiaIndex;
                 iPeilutNesiaIndex += 1;
 
-                dShatYetziaPeilut = GetShatHatchalaElementMachine(inputData,iIndexSidur, iPeilutNesiaIndex,  oSidur, (PeilutDM)oSidur.htPeilut[iIndexElement], false, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur);
+                dShatYetziaPeilut = GetShatHatchalaElementMachine(inputData,iIndexSidur, iPeilutNesiaIndex,  oSidur, (PeilutDM)oSidur.htPeilut[iIndexElement], false, ref bUsedMazanTichnunInSidur);
                 idakot = FindDuplicatPeiluyot(iPeilutNesiaIndex - 1,inputData, dShatYetziaPeilut, iIndexSidur,  oSidur,  oObjSidurimOvdimUpd);
 
                 if (idakot > 0)
@@ -598,7 +599,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private DateTime GetShatHatchalaElementMachine(ShinuyInputData inputData,int iIndexSidur, int iPeilutNesiaIndex, SidurDM oSidur, PeilutDM oPeilutMachine, bool bFirstElementMachine, ref bool bUsedMazanTichnun, ref bool bUsedMazanTichnunInSidur)
+        private DateTime GetShatHatchalaElementMachine(ShinuyInputData inputData,int iIndexSidur, int iPeilutNesiaIndex, SidurDM oSidur, PeilutDM oPeilutMachine, bool bFirstElementMachine, ref bool bUsedMazanTichnunInSidur)
         {
             PeilutDM oNextPeilut, oPeilut, oPeilutRekaFirst, oFirstPeilutMashmautit;
             DateTime dShatHatchala = DateTime.MinValue;
