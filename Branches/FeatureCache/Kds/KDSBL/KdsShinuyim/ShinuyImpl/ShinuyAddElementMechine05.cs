@@ -412,6 +412,7 @@ namespace KdsShinuyim.ShinuyImpl
         {
             PeilutDM oPeilut;
             SidurDM oLocalSidur;
+            DateTime dShatYetziaPeilut;
             int iPeilutNesiaIndex = 0;
             long lOtoNo = 0;
             int i = 0;
@@ -440,6 +441,7 @@ namespace KdsShinuyim.ShinuyImpl
                             iPeilutNesiaIndex = l;
                             lOtoNo = oPeilut.lOtoNo;
                             bHavePeilutMustRechev = false;
+                            dShatYetziaPeilut = oPeilut.dFullShatYetzia;
 
                             for (i = iSidurIndex; i >= 0; i--)
                             {
@@ -462,6 +464,13 @@ namespace KdsShinuyim.ShinuyImpl
                                                     //אם אין להן אותו מספר רכב אז מוסיפים אלמנט הכנת מכונה (71100000).
                                                     AddElementHachanatMechine711( oSidur,inputData, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref  bUsedMazanTichnunInSidur,  oObjSidurimOvdimUpd);
                                                     inputData.htEmployeeDetails[iSidurIndex] = oSidur;
+                                                    if (i == iSidurIndex)
+                                                        l += 1;
+                                                }
+                                                else if (oLocalSidur != oSidur && l == 0 && isPeilutMashmautit((PeilutDM)oSidur.htPeilut[l]) && oPeilut.lOtoNo == lOtoNo && (dShatYetziaPeilut - oLocalSidur.dFullShatGmar).TotalMinutes > inputData.oParam.iMinTimeBetweenSidurim
+                                                   && ((dShatYetziaPeilut - oLocalSidur.dFullShatGmar).TotalMinutes - inputData.oParam.iPrepareOtherMechineMaxTime) > inputData.oParam.iMinTimeBetweenSidurim)
+                                                {
+                                                    AddElementHachanatMechine711( oSidur,inputData, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref  bUsedMazanTichnunInSidur,  oObjSidurimOvdimUpd);
                                                     if (i == iSidurIndex)
                                                         l += 1;
                                                 }

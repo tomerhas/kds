@@ -42,8 +42,8 @@ namespace KdsShinuyim.ShinuyImpl
                         UpdateChariga(curSidur, oObjSidurimOvdimUpd);
 
                     //השלמה
-                    if (!CheckIdkunRashemet("HASHLAMA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
-                        UpdateHashlamaForSidur(curSidur, i, oObjSidurimOvdimUpd, inputData);
+                    //if (!CheckIdkunRashemet("HASHLAMA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                    //    UpdateHashlamaForSidur(curSidur, i, oObjSidurimOvdimUpd, inputData);
 
                 }
             }

@@ -198,11 +198,9 @@ namespace KdsShinuyim.ShinuyImpl
                 //ביום שישי/ערב חג (לפי ה- oracle או טבלת ימים מיוחדים) יחושב פיצול רק במידה ושעת הגמר של הסידור השני היא לפני כניסת שבת. 
                 if (oSidurFirst.sSidurDay == enDay.Shishi.GetHashCode().ToString() || oSidurFirst.sErevShishiChag == "1")
                 {
-                    if (oNextSidur.dFullShatHatchala > inputData.oParam.dKnisatShabat)
-                    {
-                        iMinPaar = 0;
-                    }
-                    else iMinPaar = inputData.oParam.iMinHefreshSidurimLepitzulSummer;
+                    if (oNextSidur.dFullShatHatchala < inputData.oParam.dKnisatShabat)
+                        iMinPaar = inputData.oParam.iMinHefreshSidurimLepitzulSummer;
+                    else iMinPaar = 0;  
                 }
             }
             catch (Exception ex)

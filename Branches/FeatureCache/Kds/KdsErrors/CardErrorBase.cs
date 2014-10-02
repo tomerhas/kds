@@ -14,6 +14,8 @@ using KDSCommon.Interfaces.Managers;
 using System.Diagnostics;
 using Microsoft.Practices.Unity;
 using KDSCommon.Interfaces.Logs;
+using System.Web;
+using KDSCommon.Interfaces.DAL;
 
 namespace KdsErrors
 {
@@ -323,6 +325,23 @@ namespace KdsErrors
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        protected int IsBusNumberValid(long otoNumber, DateTime cardDate)
+        {
+            string sCacheKey = otoNumber + cardDate.ToShortDateString();
+            if (HttpRuntime.Cache.Get(sCacheKey) == null || HttpRuntime.Cache.Get(sCacheKey).ToString() == "")
+            {
+                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                var result = kavimDal.IsBusNumberValid(otoNumber, cardDate);
+
+                HttpRuntime.Cache.Insert(sCacheKey, result, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+                return result;
+            }
+            else
+            {
+                return int.Parse(HttpRuntime.Cache.Get(sCacheKey).ToString().Trim());
             }
         }
 

@@ -750,17 +750,6 @@ namespace KdsShinuyim.ShinuyImpl
 
             if (firstTafkidSidur != null && lastTafkidSidur != null)
             {
-                if (inputData.oMeafyeneyOved.IsMeafyenExist(3))
-                {
-                    dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(inputData.CardDate, inputData.oMeafyeneyOved.GetMeafyen(3).Value);
-                    bFromMeafyenHatchala = true;
-                }
-                if (inputData.oMeafyeneyOved.IsMeafyenExist(4))
-                {
-                    dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(inputData.CardDate, inputData.oMeafyeneyOved.GetMeafyen(4).Value);
-                    bFromMeafyenGmar = true;
-                }
-
                 int iSugYom = DateHelper.GetSugYom(inputData.iMisparIshi, inputData.CardDate, inputData.YamimMeyuchadim, inputData.OvedDetails.iKodSectorIsuk, inputData.SugeyYamimMeyuchadim, inputData.oMeafyeneyOved.GetMeafyen(56).IntValue);
                 if (iSugYom >= enSugYom.Chol.GetHashCode() && iSugYom < enSugYom.Shishi.GetHashCode())
                 {
@@ -778,14 +767,14 @@ namespace KdsShinuyim.ShinuyImpl
         {
             if (iSugYom == enSugYom.Shishi.GetHashCode() && iSugYom < enSugYom.Shabat.GetHashCode())
             {
-                if (oMeafyeneyOved.IsMeafyenExist(27))
+                if (oMeafyeneyOved.IsMeafyenExist(5))
                 {
-                    dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(27).Value);
+                    dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(5).Value);
                     bFromMeafyenHatchala = true;
                 }
-                if (oMeafyeneyOved.IsMeafyenExist(28))
+                if (oMeafyeneyOved.IsMeafyenExist(6))
                 {
-                    dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(28).Value);
+                    dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(6).Value);
                     bFromMeafyenGmar = true;
                 }
             }
@@ -809,7 +798,17 @@ namespace KdsShinuyim.ShinuyImpl
 
             switch (iSugMishmeret)
             {
-                case 1:// בוקר                            
+                case 1:// בוקר   
+                        if (inputData.oMeafyeneyOved.IsMeafyenExist(3))
+                        {
+                            dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(inputData.CardDate, inputData.oMeafyeneyOved.GetMeafyen(3).Value);
+                            bFromMeafyenHatchala = true;
+                        }
+                        if (inputData.oMeafyeneyOved.IsMeafyenExist(4))
+                        {
+                            dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(inputData.CardDate, inputData.oMeafyeneyOved.GetMeafyen(4).Value);
+                            bFromMeafyenGmar = true;
+                        }     
                     break;
 
                 case 2:// צהריים

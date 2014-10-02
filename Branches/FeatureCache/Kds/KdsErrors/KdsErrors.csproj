@@ -111,6 +111,7 @@
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsOtoNoExists68.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsOtoNoValid69.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsPeilutInSidurValid84.cs" />
+    <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsRechevMushbat211.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsShatPeilutNotValid121.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsShatPeilutNotValid122.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsSidurNamlakWithoutNesiaCard13.cs" />

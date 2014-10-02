@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,9 @@ using Microsoft.Practices.Unity;
 
 namespace KdsErrors.ErrosrImpl.PeilutErrors
 {
-    public class PeilutErrorIsOtoNoValid69 : PeilutErrorBase
+    public class PeilutErrorIsRechevMushbat211 : PeilutErrorBase
     {
-        public PeilutErrorIsOtoNoValid69(IUnityContainer container)
+        public PeilutErrorIsRechevMushbat211(IUnityContainer container)
             : base(container)
         {
 
@@ -31,7 +32,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
                 if (input.curPeilut.lOtoNo > 0)
                 {
                     kod=IsBusNumberValid(input.curPeilut.lOtoNo, input.CardDate);
-                    if (kod==1 || kod==2)
+                    if (kod==3)
                     {
                         AddNewError(input);
                         return false;
@@ -40,7 +41,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
                 else //חסר מספר רכב
                 {
 
-                    //שגיאה 69
+                    //שגיאה 211
                     //בודקים אם הפעילות דורשת מספר רכב ואם הוא קיים וחוקי (מול מש"ר). פעילות דורשת מספר רכב אם מרוטינת זיהוי מקט חזר פרמטר שונה מאלמנט. אם חזר מהרוטינה אלנמט יש לבדוק אם דורש מספר רכב. תהיה טבלה של מספר פעילות המתחילים ב- 7 ולכל רשומה יהיה מאפיין אם הוא דורש מספר רכב. בטבלת מאפייני אלמנטים (11 - חובה מספר רכב)
                     
                         AddNewError(input);
@@ -56,7 +57,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
 
         public override ErrorTypes CardErrorType
         {
-            get { return ErrorTypes.errOtoNoNotExists; }
+            get { return ErrorTypes.errRechevMushbat; }
         }
     }
 }

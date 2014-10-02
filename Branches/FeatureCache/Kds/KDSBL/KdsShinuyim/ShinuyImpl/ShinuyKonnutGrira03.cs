@@ -304,7 +304,7 @@ namespace KdsShinuyim.ShinuyImpl
             try
             {
 
-                iMerchav = int.Parse((oSidurKonenutGrira.iMisparSidur).ToString().Substring(0, 2));
+                iMerchav = int.Parse((oSidurKonenutGrira.iMisparSidur).ToString().PadLeft(5, '0').Substring(0, 2)); 
 
                 fTime = float.Parse((oSidurGrira.dFullShatGmar - oSidurKonenutGrira.dFullShatHatchala).TotalMinutes.ToString());
 
@@ -337,7 +337,7 @@ namespace KdsShinuyim.ShinuyImpl
                 iTypeGrira = 0;
                 if (curSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    if (curSidur.sSugAvoda == enSugAvoda.ActualGrira.GetHashCode().ToString())
+                    if (curSidur.sSugAvoda == enSugAvoda.ActualGrira.GetHashCode().ToString() && curSidur.iLoLetashlum == 0)
                     {
                         oSidurKonenutGrira = (SidurDM)inputData.htEmployeeDetails[iSidurKonnutGrira];
                         dKonenutShatHatchala = oSidurKonenutGrira.dFullShatHatchala;
@@ -458,7 +458,7 @@ namespace KdsShinuyim.ShinuyImpl
 
                 if (!CheckIdkunRashemet("HASHLAMA", oSidurGrira.iMisparSidur, oSidurGrira.dFullShatHatchala, inputData))
                 {
-                    iMerchav = int.Parse((oSidurKonenutGrira.iMisparSidur).ToString().Substring(0, 2));
+                    iMerchav = int.Parse((oSidurKonenutGrira.iMisparSidur).ToString().PadLeft(5, '0').Substring(0, 2)); 
 
                     fSidurTime = float.Parse((oSidurGrira.dFullShatGmar - oSidurGrira.dFullShatHatchala).TotalMinutes.ToString());
 

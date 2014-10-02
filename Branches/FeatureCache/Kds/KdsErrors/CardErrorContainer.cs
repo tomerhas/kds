@@ -145,6 +145,8 @@ namespace KdsErrors
             Add(_container.Resolve<PeilutErrorIsDuplicateTravel151>());
             Add(_container.Resolve<PeilutErrorHightValueDakotBefoal179>());
             Add(_container.Resolve<PeilutErrorKisuyTorLifneyHatchalatSidur189>());
+            Add(_container.Resolve<PeilutErrorIsRechevMushbat211>());
+            
            
 
         }
