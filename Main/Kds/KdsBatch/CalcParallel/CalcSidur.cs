@@ -2442,7 +2442,8 @@ namespace KdsBatch
                 {
                     if (!string.IsNullOrEmpty(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString()))
                     {
-                        if (((int.Parse(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString()) == 10 || int.Parse(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_OUT"].ToString()) == 10) ||
+                        if ((( (int.Parse(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString()) == 10 || int.Parse(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_OUT"].ToString()) == 10)
+                               && objOved.Taarich < objOved.objParameters.dTaarichBitulEshel) ||
                              (objOved.objMeafyeneyOved.sMeafyen50 == "1" && objOved.objPirteyOved.iIsuk==178 ) )  && IsSidurShaon(drSidurim[I]) )
                         {
                             iMisparSidur = int.Parse(drSidurim[I]["MISPAR_SIDUR"].ToString());

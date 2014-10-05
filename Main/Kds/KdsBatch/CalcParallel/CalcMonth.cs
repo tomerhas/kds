@@ -4713,10 +4713,10 @@ namespace KdsBatch
                 fTempX = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsatShaotNosafotTafkidChol.GetHashCode());
                 if (objOved.objMeafyeneyOved.sMeafyen74.Trim() == "1")
                 {
-                    if (_dTaarichChishuv < DateTime.Parse("01/08/2014"))
-                    {
+                    //if (_dTaarichChishuv < objOved.objParameters.dTaarichBitulNosafotAlTikni)
+                    //{
                         fSumDakotRechiv = objOved.objMeafyeneyOved.iMeafyen14;
-                    }
+                    //}
                 }
                 else
                 {

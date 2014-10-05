@@ -251,10 +251,10 @@ namespace KdsBatch.Errors
 
                     if (PeilutInstance.lOtoNo > 0)
                     {
-                        if (!(oKavim.IsBusNumberValid(PeilutInstance.lOtoNo,PeilutInstance.dCardDate)))
-                        {
+                        //if (!(oKavim.IsBusNumberValid(PeilutInstance.lOtoNo,PeilutInstance.dCardDate)))
+                        //{
                             bError = true;
-                        }
+                        //}
                     }
                     else //חסר מספר רכב
                     {//שגיאה 69

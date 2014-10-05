@@ -423,7 +423,7 @@ namespace KdsLibrary.BL
             }
         }
 
-        public bool IsBusNumberValid(long lOtoNo, DateTime dCardDate)
+        public int IsBusNumberValid(long lOtoNo, DateTime dCardDate)
         {
             clDal oDal = new clDal();           
             string sCacheKey = lOtoNo + dCardDate.ToShortDateString();
@@ -440,9 +440,9 @@ namespace KdsLibrary.BL
                     oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
                     oDal.ExecuteSP(clGeneral.cFnIsOtoNumberExists);
                     HttpRuntime.Cache.Insert(sCacheKey, int.Parse(oDal.GetValParam("p_result").ToString()), null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
-                    return int.Parse(oDal.GetValParam("p_result").ToString()) == 0;
+                    return int.Parse(oDal.GetValParam("p_result").ToString());// == 0;
                 }
-                else return  HttpRuntime.Cache.Get(sCacheKey).ToString().Trim() == "0";                 
+                else return  int.Parse(HttpRuntime.Cache.Get(sCacheKey).ToString().Trim());// == "0";                 
                 //    return  (int)HttpRuntime.Cache.Get(sCacheKey) == 0;                                  
             }
             catch (Exception ex)
