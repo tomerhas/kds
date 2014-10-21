@@ -1485,6 +1485,9 @@ namespace KdsBatch
                 //נוכחות ביום מילואים (רכיב 291) :
                 CalcRechiv291();
 
+                //יום מחלה משרד הבטחון (רכיב 292) :
+                CalcRechiv292();
+
                 //דקות חופש/היעדרות (רכיב 269) 
                 CalcRechiv269();
 
@@ -2815,6 +2818,21 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutByameyMiluim.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
+
+        private void CalcRechiv292()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMachalaMisradHaBitachon.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.YomMachalaMisradHaBitachon.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMachalaMisradHaBitachon.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
                 throw (ex);
             }
         }

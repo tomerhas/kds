@@ -892,6 +892,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             MachalatYeledImMugbalutOved=289,
             MachalatYeledImMugbalutMaavid = 290,
             NochehutByameyMiluim = 291,
+            YomMachalaMisradHaBitachon = 292,
             NosafotBeNeemanut=281,
             HalbashaTchilatYom=931,
             HalbashaSofYom=932,

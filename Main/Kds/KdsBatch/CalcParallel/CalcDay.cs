@@ -609,6 +609,9 @@ namespace KdsBatch
                 //נוכחות ביום מילואים (רכיב 291) :
                 CalcRechiv291();
 
+                //יום מחלה משרד הבטחון (רכיב 292) :
+                CalcRechiv292();
+
                 //דקות חופש/היעדרות (רכיב 269) 
                 CalcRechiv269();
 
@@ -3599,6 +3602,35 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiv292()
+        {
+            float fErechRechiv, fMichsaYomit;
+
+            try
+            {
+
+                fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
+                fErechRechiv = 0;
+                if (fMichsaYomit > 0)
+                {
+                    fErechRechiv = CalcHeadruyot(clGeneral.enRechivim.YomMachalaMisradHaBitachon.GetHashCode());
+
+                    if (fErechRechiv>0 && objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 ||  objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7) &&
+                        ( ((objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && objOved.objPirteyOved.iIshurKeren>0) ||
+                          (objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 8)  ||
+                          (objOved.objPirteyOved.iSibotMutamut == 1 ) ) )
+                         fErechRechiv = objOved.objPirteyOved.iZmanMutamut / fMichsaYomit;
+                                
+                    addRowToTable(clGeneral.enRechivim.YomMachalaMisradHaBitachon.GetHashCode(), fErechRechiv);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMachalaMisradHaBitachon.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
         private void CalcRechiv72()
         {
             float fErechRechiv;

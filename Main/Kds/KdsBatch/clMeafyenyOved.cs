@@ -144,11 +144,11 @@ namespace KdsBatch
                 return Meafyenim[12].IntValue;
             }
         }
-        public int iMeafyen13
+        public float iMeafyen13
         {
             get
             {
-                return Meafyenim[13].IntValue;
+                return Meafyenim[13].FloatValue;
             }
         }
         public float iMeafyen14
