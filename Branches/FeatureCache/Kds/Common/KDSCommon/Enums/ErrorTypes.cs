@@ -133,6 +133,7 @@ namespace KDSCommon.Enums
         errMushalETWithSidurNotAllowET =208,
         errShatHatchalaLetashlumBiggerShatGmar = 209,
         errMichsatMachalaYeledImMugbalut = 210,
-        errRechevMushbat=211
+        errRechevMushbat=211,
+        errMachalaMisradHaBitachonLoYachid = 212
     }
 }

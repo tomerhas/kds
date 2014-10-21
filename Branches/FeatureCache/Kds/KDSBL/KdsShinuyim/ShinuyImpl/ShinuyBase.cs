@@ -751,7 +751,8 @@ namespace KdsShinuyim.ShinuyImpl
             if (firstTafkidSidur != null && lastTafkidSidur != null)
             {
                 int iSugYom = DateHelper.GetSugYom(inputData.iMisparIshi, inputData.CardDate, inputData.YamimMeyuchadim, inputData.OvedDetails.iKodSectorIsuk, inputData.SugeyYamimMeyuchadim, inputData.oMeafyeneyOved.GetMeafyen(56).IntValue);
-                if (iSugYom >= enSugYom.Chol.GetHashCode() && iSugYom < enSugYom.Shishi.GetHashCode())
+                if ((iSugYom >= enSugYom.Chol.GetHashCode() && iSugYom < enSugYom.Shabat.GetHashCode()) &&
+                    iSugYom != enSugYom.Shishi.GetHashCode())
                 {
                     int iSugMishmeret = DateHelper.GetSugMishmeret(inputData.iMisparIshi, inputData.CardDate, inputData.iSugYom, firstTafkidSidur.dFullShatHatchala, lastTafkidSidur.dFullShatGmar, inputData.oParam);
                     SetShaotYomCholMafilim(dShatHatchalaSidur, dSidurShatGmar, inputData, iSugMishmeret, ref bFromMeafyenHatchala, ref bFromMeafyenGmar, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum);
@@ -765,7 +766,7 @@ namespace KdsShinuyim.ShinuyImpl
 
         private void SetShaotShishiShabatMafilim(string sShabaton, DateTime dShatHatchalaSidur, DateTime dSidurShatGmar, MeafyenimDM oMeafyeneyOved, ref bool bFromMeafyenHatchala, ref bool bFromMeafyenGmar, ref DateTime dShatHatchalaLetashlum, ref DateTime dShatGmarLetashlum, int iSugYom)
         {
-            if (iSugYom == enSugYom.Shishi.GetHashCode() && iSugYom < enSugYom.Shabat.GetHashCode())
+            if (iSugYom == enSugYom.Shishi.GetHashCode())// && iSugYom < enSugYom.Shabat.GetHashCode())
             {
                 if (oMeafyeneyOved.IsMeafyenExist(5))
                 {

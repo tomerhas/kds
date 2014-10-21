@@ -5591,7 +5591,7 @@ namespace KdsBatch
             try
             {
                 fErech = 0;
-                if ((objOved.objMeafyeneyOved.GetMeafyen(14).IntValue <= 0) && objOved.objMeafyeneyOved.GetMeafyen(12).IntValue > 0)
+                if ((objOved.objMeafyeneyOved.GetMeafyen(14).FloatValue <= 0) && objOved.objMeafyeneyOved.GetMeafyen(12).IntValue > 0)
                 {
                     bPutar = oCalcBL.CheckOvedPutar(objOved);
                     fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);

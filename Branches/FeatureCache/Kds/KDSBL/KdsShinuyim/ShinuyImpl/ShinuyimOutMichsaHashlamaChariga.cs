@@ -42,8 +42,8 @@ namespace KdsShinuyim.ShinuyImpl
                         UpdateChariga(curSidur, oObjSidurimOvdimUpd);
 
                     //השלמה
-                    //if (!CheckIdkunRashemet("HASHLAMA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
-                    //    UpdateHashlamaForSidur(curSidur, i, oObjSidurimOvdimUpd, inputData);
+                    if (!CheckIdkunRashemet("HASHLAMA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
+                        UpdateHashlamaForSidur(curSidur, i, oObjSidurimOvdimUpd, inputData);
 
                 }
             }
@@ -136,10 +136,10 @@ namespace KdsShinuyim.ShinuyImpl
         {
             //עדכון שדה השלמה ברמת סידור
             //עדכון שדה השלמה
-            int iParamHashlama;
-            double dZmanSidur, dZmanHashlama;
-            bool bValidHashlama = false;
-            DataRow[] drSugSidur;
+            //int iParamHashlama;
+            //double dZmanSidur, dZmanHashlama;
+            //bool bValidHashlama = false;
+            //DataRow[] drSugSidur;
             try
             {
                 //float fSidurTime = 0;
@@ -153,60 +153,60 @@ namespace KdsShinuyim.ShinuyImpl
                     curSidur.sHashlama = "0";
                 }
 
-                if (inputData.OvedDetails.iKodHevra != enEmployeeType.enEggedTaavora.GetHashCode())
-                {
-                    //התנאים לקבלת ערך 1 - השלמה לשעה                          
-                    //כל הסידורים מסומנים ללא ערך בשדה השלמה (השלמה כלשהיא, לא משנה איזה ערך), אם קיימת -  עוצרים.
-                    if (!inputData.htEmployeeDetails.Values.Cast<SidurDM>().ToList().Any(sidur => sidur.sHashlama != "0" && !string.IsNullOrEmpty(sidur.sHashlama)))
-                    {
-                        //מחפשים את הסידור הראשון ביום שהמשך שלו קטן מהערך בפרמטרים 101 - 103.
-                        //הסידור (101 (זמן מינימום לסידור חול להשלמה, 102 - זמן מינימום לסידור שישי/ע.ח להשלמה, 103 - זמן מינימום לסידור שבת/שבתון
-                        if (DateHelper.CheckShaaton(inputData.iSugYom, curSidur.dSidurDate, inputData.SugeyYamimMeyuchadim))
-                        { iParamHashlama = inputData.oParam.iHashlamaShabat; }
-                        else if ((curSidur.sErevShishiChag == "1") || (curSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()))
-                        { iParamHashlama = inputData.oParam.iHashlamaShisi; }
-                        else { iParamHashlama = inputData.oParam.iHashlamaYomRagil; }
+                //if (inputData.OvedDetails.iKodHevra != enEmployeeType.enEggedTaavora.GetHashCode())
+                //{
+                //    //התנאים לקבלת ערך 1 - השלמה לשעה                          
+                //    //כל הסידורים מסומנים ללא ערך בשדה השלמה (השלמה כלשהיא, לא משנה איזה ערך), אם קיימת -  עוצרים.
+                //    if (!inputData.htEmployeeDetails.Values.Cast<SidurDM>().ToList().Any(sidur => sidur.sHashlama != "0" && !string.IsNullOrEmpty(sidur.sHashlama)))
+                //    {
+                //        //מחפשים את הסידור הראשון ביום שהמשך שלו קטן מהערך בפרמטרים 101 - 103.
+                //        //הסידור (101 (זמן מינימום לסידור חול להשלמה, 102 - זמן מינימום לסידור שישי/ע.ח להשלמה, 103 - זמן מינימום לסידור שבת/שבתון
+                //        if (DateHelper.CheckShaaton(inputData.iSugYom, curSidur.dSidurDate, inputData.SugeyYamimMeyuchadim))
+                //        { iParamHashlama = inputData.oParam.iHashlamaShabat; }
+                //        else if ((curSidur.sErevShishiChag == "1") || (curSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString()))
+                //        { iParamHashlama = inputData.oParam.iHashlamaShisi; }
+                //        else { iParamHashlama = inputData.oParam.iHashlamaYomRagil; }
 
-                        dZmanSidur = curSidur.dFullShatGmar.Subtract(curSidur.dFullShatHatchala).TotalMinutes;
-                        //אם משך הסידור או הערך בפרמטר המתאים ליום העבודה שווה או גדול משעה - עוצרים.
-                        if (dZmanSidur < iParamHashlama && iParamHashlama <= 60 && dZmanSidur <= 60)
-                        {
+                //        dZmanSidur = curSidur.dFullShatGmar.Subtract(curSidur.dFullShatHatchala).TotalMinutes;
+                //        //אם משך הסידור או הערך בפרמטר המתאים ליום העבודה שווה או גדול משעה - עוצרים.
+                //        if (dZmanSidur < iParamHashlama && iParamHashlama <= 60 && dZmanSidur <= 60)
+                //        {
 
-                            //. לסידור מאפיין 40 (לפי מספר סידור או סוג סידור)עם ערך 2 (זכאי אוטומטי) והסידור אינו מבוטל
-                            if (curSidur.bSidurMyuhad && curSidur.sHashlamaKod == "2")
-                            { bValidHashlama = true; }
-                            else //if (oSidur.bSidurRagilExists)
-                            {
-                                drSugSidur = _container.Resolve<ISidurManager>().GetOneSugSidurMeafyen(curSidur.iSugSidurRagil, curSidur.dSidurDate);
-                                if (drSugSidur[0]["zakay_lehashlama_avur_sidur"].ToString() == "2")
-                                {
-                                    bValidHashlama = true;
-                                }
-                            }
+                //            //. לסידור מאפיין 40 (לפי מספר סידור או סוג סידור)עם ערך 2 (זכאי אוטומטי) והסידור אינו מבוטל
+                //            if (curSidur.bSidurMyuhad && curSidur.sHashlamaKod == "2")
+                //            { bValidHashlama = true; }
+                //            else //if (oSidur.bSidurRagilExists)
+                //            {
+                //                drSugSidur = _container.Resolve<ISidurManager>().GetOneSugSidurMeafyen(curSidur.iSugSidurRagil, curSidur.dSidurDate);
+                //                if (drSugSidur[0]["zakay_lehashlama_avur_sidur"].ToString() == "2")
+                //                {
+                //                    bValidHashlama = true;
+                //                }
+                //            }
 
-                            //אם הסידור אינו אחרון או בודד ביום
-                            if (inputData.htEmployeeDetails.Values.Count > 1 && iSidurIndex < inputData.htEmployeeDetails.Values.Count - 1)
-                            {
-                                //יש לבדוק האם שעת ההתחלה של הסידור העוקב שווה לשעת הגמר של הסידור שלנו +משך ההשלמה. אם כן - עוצרים.
-                                dZmanHashlama = double.Parse("60") - double.Parse(dZmanSidur.ToString());
-                                if (curSidur.dFullShatGmar.AddMinutes(dZmanHashlama) > ((SidurDM)inputData.htEmployeeDetails[iSidurIndex + 1]).dFullShatHatchala)
-                                {
-                                    bValidHashlama = false;
-                                }
-                            }
+                //            //אם הסידור אינו אחרון או בודד ביום
+                //            if (inputData.htEmployeeDetails.Values.Count > 1 && iSidurIndex < inputData.htEmployeeDetails.Values.Count - 1)
+                //            {
+                //                //יש לבדוק האם שעת ההתחלה של הסידור העוקב שווה לשעת הגמר של הסידור שלנו +משך ההשלמה. אם כן - עוצרים.
+                //                dZmanHashlama = double.Parse("60") - double.Parse(dZmanSidur.ToString());
+                //                if (curSidur.dFullShatGmar.AddMinutes(dZmanHashlama) > ((SidurDM)inputData.htEmployeeDetails[iSidurIndex + 1]).dFullShatHatchala)
+                //                {
+                //                    bValidHashlama = false;
+                //                }
+                //            }
 
-                            if (bValidHashlama)
-                            {
-                                oObjSidurimOvdimUpd.HASHLAMA = 1;
-                                oObjSidurimOvdimUpd.SUG_HASHLAMA = 1;
-                                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                //            if (bValidHashlama)
+                //            {
+                //                oObjSidurimOvdimUpd.HASHLAMA = 1;
+                //                oObjSidurimOvdimUpd.SUG_HASHLAMA = 1;
+                //                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
 
-                                curSidur.sHashlama = "1";
-                                curSidur.iSugHashlama = 1;
-                            }
-                        }
-                    }
-                }
+                //                curSidur.sHashlama = "1";
+                //                curSidur.iSugHashlama = 1;
+                //            }
+                //        }
+                //    }
+                //}
             }
             catch (Exception ex)
             {

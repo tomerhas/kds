@@ -293,8 +293,8 @@ namespace KdsShinuyim.ShinuyImpl
 
         private void FixedShatHatchalaAndGmarToMafilim26(SidurDM oSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar, ShinuyInputData inputData)
         {
-            DateTime dRequiredShatHatchala = DateTime.Now;
-            DateTime dRequiredShatGmar = DateTime.Now;
+            DateTime dRequiredShatHatchala = DateTime.MinValue;
+            DateTime dRequiredShatGmar = DateTime.MinValue;
             DateTime dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
             DateTime dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
             bool bFromMeafyenHatchala, bFromMeafyenGmar;
@@ -304,12 +304,28 @@ namespace KdsShinuyim.ShinuyImpl
                     && oSidur.sSugAvoda == enSugAvoda.Shaon.GetHashCode().ToString())
                 {
 
+                    if (oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.ToShortDateString() != DateTime.MinValue.ToShortDateString())
+                        dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
+                    else if (oObjSidurimOvdimUpd.SHAT_HATCHALA.ToShortDateString() != DateTime.MinValue.ToShortDateString())
+                        dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+                    else dShatHatchalaLetashlumToUpd = DateTime.MinValue;
+
                     GetMeafyeneyMafilim(oSidur.sShabaton, oSidur.dFullShatHatchala, oSidur.dFullShatGmar,inputData, out  bFromMeafyenHatchala, out  bFromMeafyenGmar, ref dRequiredShatHatchala, ref dRequiredShatGmar);
 
-                    dShatHatchalaLetashlumToUpd = dRequiredShatHatchala;
-                    dShatGmarLetashlumToUpd = dRequiredShatGmar;
-
                     SetShatHatchalaGmarKizuz(oSidur, oObjSidurimOvdimUpd, dRequiredShatHatchala, dRequiredShatGmar, inputData, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd);
+
+                    if (dShatHatchalaLetashlumToUpd == DateTime.MinValue)
+                    {
+                        if (oSidur.dFullShatHatchala.ToShortDateString() == DateTime.MinValue.ToShortDateString())
+                        {
+                            dShatHatchalaLetashlumToUpd = DateTime.MinValue;
+                            oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = DateTime.MinValue;
+                        }
+                        else dShatHatchalaLetashlumToUpd = oSidur.dFullShatHatchala;
+                    }
+
+                    if (dShatGmarLetashlumToUpd == DateTime.MinValue)
+                        dShatGmarLetashlumToUpd = oSidur.dFullShatGmar;
 
                     if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)
                     {

@@ -4726,14 +4726,14 @@ namespace KdsBatch
                 {
                     if (_dTaarichChishuv < DateTime.Parse("01/08/2014"))
                     {
-                        fSumDakotRechiv = objOved.objMeafyeneyOved.GetMeafyen(14).IntValue;
+                        fSumDakotRechiv = objOved.objMeafyeneyOved.GetMeafyen(14).FloatValue;
                     }
                 }
                 else
                 {
-                    if ((objOved.objMeafyeneyOved.GetMeafyen(14).IntValue > 0))
+                    if ((objOved.objMeafyeneyOved.GetMeafyen(14).FloatValue > 0))
                 {
-                    fSumDakotRechiv = objOved.objMeafyeneyOved.GetMeafyen(14).IntValue;
+                    fSumDakotRechiv = objOved.objMeafyeneyOved.GetMeafyen(14).FloatValue;
                 }
                 else
                 {
@@ -6444,13 +6444,13 @@ namespace KdsBatch
                         fTempZ = 6;
                     }
 
-                if (objOved.objMeafyeneyOved.GetMeafyen(13).IntValue == -1)
+                    if (objOved.objMeafyeneyOved.GetMeafyen(13).FloatValue == -1)
                     {
                         throw new Exception("null מאפיין 13 התקבל עם ערך");
                     }
                     else
                     {
-                    fSumDakotRechiv = objOved.objMeafyeneyOved.GetMeafyen(13).IntValue + fTempZ;
+                        fSumDakotRechiv = objOved.objMeafyeneyOved.GetMeafyen(13).FloatValue + fTempZ;
                     }
                 ////}
                 addRowToTable(clGeneral.enRechivim.MichsatShaotNosafotNihul.GetHashCode(), fSumDakotRechiv);

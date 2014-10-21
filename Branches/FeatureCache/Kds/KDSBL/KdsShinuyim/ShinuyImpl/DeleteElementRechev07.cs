@@ -73,19 +73,8 @@ namespace KdsShinuyim.ShinuyImpl
                     if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "738")
                     {
                         //אם זוהי פעילות יחידה בסידור – לא לבטל אלא לסמן את הסידור "לא לתשלום
-                        if (oSidur.htPeilut.Count == 1)
-                        {
-                            //oObjSidurimOvdimUpd = new OBJ_SIDURIM_OVDIM();
-                            //InsertToObjSidurimOvdimForUpdate(ref oSidur, ref oObjSidurimOvdimUpd);
-                            oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
-                            oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 3;
-                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                            oSidur.iLoLetashlum = 1;
-                            // oCollSidurimOvdimUpd.Add(oObjSidurimOvdimUpd);
-                        }
-                        else
-                        {//לבטל
-     
+                        if (oSidur.htPeilut.Count > 1)
+                        {   
                             OBJ_PEILUT_OVDIM oObjPeilutOvdimDel =  InsertToObjPeilutOvdimForDelete( oPeilut,  oSidur, inputData);
                             inputData.oCollPeilutOvdimDel.Add(oObjPeilutOvdimDel);
                             oSidur.htPeilut.RemoveAt(iIndexPeilut);
