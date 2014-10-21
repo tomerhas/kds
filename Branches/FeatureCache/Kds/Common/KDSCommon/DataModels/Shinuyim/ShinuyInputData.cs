@@ -41,7 +41,7 @@ namespace KDSCommon.DataModels.Shinuyim
         public DateTime CardDate { get; set; }
         public int? UserId { get; set; }
         public bool IsSuccsess { get; set; }
-      //  public bool bUsedMazanTichnun { get; set; }
+       public bool bUsedMazanTichnun { get; set; }
         public bool bLoLetashlum { get; set; }
         public bool bSidurNahagut { get; set; }
         public bool bFirstSidurZakaiLenesiot { get; set; }
