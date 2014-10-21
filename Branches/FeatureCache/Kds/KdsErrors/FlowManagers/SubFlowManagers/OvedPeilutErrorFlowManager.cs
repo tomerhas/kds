@@ -42,6 +42,7 @@ namespace KdsErrors.FlowManagers.SubFlowManagers
             errorTypeList.Add(ErrorTypes.errShatPeilutSmallerThanShatHatchalaSidur);//121
             errorTypeList.Add(ErrorTypes.errPeilutForSidurNonValid); //84
             errorTypeList.Add(ErrorTypes.errOtoNoNotExists); //69
+            errorTypeList.Add(ErrorTypes.errRechevMushbat); //211
             errorTypeList.Add(ErrorTypes.errLoZakaiLLina);//31
             errorTypeList.Add(ErrorTypes.errOtoNoExists);//68
             errorTypeList.Add(ErrorTypes.errTeoodatNesiaNotInVisa); //52

@@ -26,6 +26,7 @@ namespace KdsShinuyim.ShinuyImpl
         public override void ExecShinuy(ShinuyInputData inputData)
         {
             try{
+                inputData.bUsedMazanTichnun = false;
                 for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
                     SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
