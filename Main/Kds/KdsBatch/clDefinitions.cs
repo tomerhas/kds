@@ -687,7 +687,7 @@ namespace KdsBatch
                            }
                       }
                       //-	אם סוג יום [שליפת סוג יום לשליפת מכסה יומית (תאריך, מ.א.)] הוא אחד מתוך 11 או 13 או 14 או 15 או 16 או 17 או 18 וגם [שעת גמר אחרונה] > 13:00 אזי [סוג משמרת] = צהריים
-                      if (iSugYom == 11 || iSugYom == 13 || (iSugYom >= 14 && iSugYom <= 15))
+                      if (iSugYom == 11 || iSugYom == 13 || (iSugYom >= 14 && iSugYom <= 18))
                       {
                           dTemp1 = oParameters.dMinEndMishmeretMafilimShishi;
                           if (dShatGmarSidur >= dTemp1)

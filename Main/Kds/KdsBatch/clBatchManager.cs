@@ -7531,6 +7531,7 @@ namespace KdsBatch
                     //SidurNetzer17(ref oSidur);
 
                     //שינוי 10
+                    bUsedMazanTichnun = false;
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
                         oSidur = (clSidur)htEmployeeDetails[i];
@@ -7620,6 +7621,7 @@ namespace KdsBatch
 
 
                     //חישוב שעת התחלה - שינוי 30
+                  
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
                         bUsedMazanTichnun = false;
