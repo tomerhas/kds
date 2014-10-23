@@ -16250,21 +16250,21 @@ namespace KdsBatch
                     iSugYom != clGeneral.enSugYom.Shishi.GetHashCode())   
                 {
                     int iSugMishmeret = clDefinitions.GetSugMishmeret(_iMisparIshi, _dCardDate, _iSugYom, firstTafkidSidur.dFullShatHatchala, lastTafkidSidur.dFullShatGmar, _oParameters);
-
+                    if (_oMeafyeneyOved.Meafyen3Exists)
+                    {
+                        dShatHatchalaLetashlum = oMeafyeneyOved.ConvertMefyenShaotValid(_dCardDate, oMeafyeneyOved.sMeafyen3);
+                        bFromMeafyenHatchala = true;
+                    }
+                    if (_oMeafyeneyOved.Meafyen4Exists)
+                    {
+                        dShatGmarLetashlum = oMeafyeneyOved.ConvertMefyenShaotValid(_dCardDate, oMeafyeneyOved.sMeafyen4);
+                        bFromMeafyenGmar = true;
+                    }
+                              
                     switch (iSugMishmeret)
                     {
                         case 1:
-                                if (_oMeafyeneyOved.Meafyen3Exists)
-                                {
-                                    dShatHatchalaLetashlum = oMeafyeneyOved.ConvertMefyenShaotValid(_dCardDate, oMeafyeneyOved.sMeafyen3);
-                                    bFromMeafyenHatchala = true;
-                                }
-                                if (_oMeafyeneyOved.Meafyen4Exists)
-                                {
-                                    dShatGmarLetashlum = oMeafyeneyOved.ConvertMefyenShaotValid(_dCardDate, oMeafyeneyOved.sMeafyen4);
-                                    bFromMeafyenGmar = true;
-                                }
-                              
+                                
                             break;
 
                         case 2:// צהריים
