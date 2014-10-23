@@ -796,20 +796,20 @@ namespace KdsShinuyim.ShinuyImpl
 
         private void SetShaotYomCholMafilim(DateTime dShatHatchalaSidur, DateTime dSidurShatGmar, ShinuyInputData inputData, int iSugMishmeret, ref bool bFromMeafyenHatchala, ref bool bFromMeafyenGmar, ref DateTime dShatHatchalaLetashlum, ref DateTime dShatGmarLetashlum)
         {
-
+            if (inputData.oMeafyeneyOved.IsMeafyenExist(3))
+            {
+                dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(inputData.CardDate, inputData.oMeafyeneyOved.GetMeafyen(3).Value);
+                bFromMeafyenHatchala = true;
+            }
+            if (inputData.oMeafyeneyOved.IsMeafyenExist(4))
+            {
+                dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(inputData.CardDate, inputData.oMeafyeneyOved.GetMeafyen(4).Value);
+                bFromMeafyenGmar = true;
+            }     
             switch (iSugMishmeret)
             {
                 case 1:// בוקר   
-                        if (inputData.oMeafyeneyOved.IsMeafyenExist(3))
-                        {
-                            dShatHatchalaLetashlum = DateHelper.ConvertMefyenShaotValid(inputData.CardDate, inputData.oMeafyeneyOved.GetMeafyen(3).Value);
-                            bFromMeafyenHatchala = true;
-                        }
-                        if (inputData.oMeafyeneyOved.IsMeafyenExist(4))
-                        {
-                            dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(inputData.CardDate, inputData.oMeafyeneyOved.GetMeafyen(4).Value);
-                            bFromMeafyenGmar = true;
-                        }     
+                       
                     break;
 
                 case 2:// צהריים
