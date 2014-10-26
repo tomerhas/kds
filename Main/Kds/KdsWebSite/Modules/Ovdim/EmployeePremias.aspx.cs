@@ -356,6 +356,8 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         NikuySadot();
         AutoCompleteExtenderID.ContextKey = ddStatuses.SelectedValue;
         AutoCompleteExtenderByName.ContextKey = ddStatuses.SelectedValue;
+
+        ScriptManager.RegisterStartupScript(ddStatuses, ddStatuses.GetType(), "", "DisabledSearchTR(true);", true);
         //if (ddStatuses.SelectedIndex > 0)
         //{
         //    txtPremiaMinutes.Enabled = true;
@@ -371,6 +373,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
     void ddMonths_SelectedIndexChanged(object sender, EventArgs e)
     {
         NikuySadot();
+        ScriptManager.RegisterStartupScript(ddStatuses, ddStatuses.GetType(), "", "DisabledSearchTR(true);", true);
     }
     private void NikuySadot()
     {

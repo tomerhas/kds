@@ -41,13 +41,13 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                             חודש:
                         </td>
                         <td>
-                            <asp:DropDownList runat="server" 
-                                AutoPostBack="true" ID="ddMonths" Enabled="false" DataTextField="month" DataValueField="Value">
+                            <asp:DropDownList runat="server"  
+                                AutoPostBack="true" ID="ddMonths" Enabled="false" DataTextField="month" DataValueField="Value"   >
                             </asp:DropDownList>
                         </td>
                         <td>
                             <asp:Button Text="הצג" ID="btnExecute"  Enabled="false"
-                                runat="server" CssClass="ImgButtonSearch" />
+                                runat="server" CssClass="ImgButtonSearch"  OnClientClick="DisabledSearchTR(false);"/>
                         </td>
                     </tr>
                 </table>
@@ -62,7 +62,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
     <fieldset > 
         <legend>חיפוש לפי</legend>      
         <table class="FilterTable" style="width:100%;"> 
-            <tr>
+            <tr id="trSearchMI" runat="server">
                 <td class="InternalLabel" style="width:80px;">
                     <asp:UpdatePanel ID="UpdatePanel3" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
@@ -300,10 +300,19 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
     {
         window.moveTo(0,0);
         window.resizeTo(screen.availWidth,screen.availHeight);
-        
-       SetTextBox();
+   
+        SetTextBox();
+        DisabledSearchTR(true);
     }
     
+    function DisabledSearchTR(val) {
+        document.getElementById("ctl00_KdsContent_txtId").disabled = val;
+        document.getElementById("ctl00_KdsContent_txtName").disabled = val;
+        document.getElementById("ctl00_KdsContent_btnSearch").disabled = val;
+        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").disabled = val;
+        document.getElementById("ctl00_KdsContent_btnUpdate").disabled = val;
+    }
+
     function SetTextBox()
     {
         var rdo = document.getElementById("ctl00_KdsContent_rdoId");
