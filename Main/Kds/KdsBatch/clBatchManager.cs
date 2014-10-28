@@ -16026,8 +16026,8 @@ namespace KdsBatch
                                     oPeilut = (clPeilut)oSidur.htPeilut[i];
                                     if (isElemntLoMashmauti(oPeilut) || oPeilut.iMakatType == clKavim.enMakatType.mEmpty.GetHashCode())
                                         dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilut, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur)));
-                                    if (bUsedMazanTichnunInSidur)
-                                        bUsedMazanTichnun = true;     
+                                    //if (bUsedMazanTichnunInSidur)
+                                    //    bUsedMazanTichnun = true;     
                                 }
                             }
                         }
