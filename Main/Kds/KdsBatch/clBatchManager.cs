@@ -4789,7 +4789,7 @@ namespace KdsBatch
                                  .Cast<clSidur>()
                                  .ToList()
                                  .ForEach
-                                 (
+                                 ( 
                                     sidur =>
                                     {
                                         sidur.htPeilut.Values
@@ -4804,7 +4804,7 @@ namespace KdsBatch
                                                                 if ((clKavim.enMakatType)peilut.iMakatType == clKavim.enMakatType.mElement)
                                                                 {
                                                                     dtMeafyenim = oKavim.GetMeafyeneyElementByKod(peilut.lMakatNesia, dCardDate);
-                                                                    if (dtMeafyenim.Select("KOD_MEAFYEN = 9") != null)
+                                                                    if (dtMeafyenim.Select("KOD_MEAFYEN = 9").Length>0)
                                                                     {
                                                                         shouldProcess = false;
                                                                     }
