@@ -283,7 +283,7 @@ namespace KdsBatch
                 //}
                 else if (iMisparSidur == 99006)
                 {//•	סידור 99006 (8554) – שליחות בחו"ל: 
-                    if ((objOved.SugYom == clGeneral.enSugYom.Chol.GetHashCode()) ||  (oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom) && !oCalcBL.CheckYomShishi(objOved.SugYom)))
+                    if ((objOved.SugYom == clGeneral.enSugYom.Chol.GetHashCode() || (objOved.SugYom >= clGeneral.enSugYom.CholHamoedSukot.GetHashCode() && objOved.SugYom <= clGeneral.enSugYom.Purim.GetHashCode())) || (oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom) && !oCalcBL.CheckYomShishi(objOved.SugYom)))
                     {
                         //-	ימים א – ה : מכסה יומית (רכיב 126) + 120 דקות שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 62 ). 
                         fErechRechiv = fMichsaYomit + int.Parse(drSidur["dakot_n_letashlum_hol"].ToString());
