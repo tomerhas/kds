@@ -274,7 +274,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
     void btnSearch_Click(object sender, EventArgs e)
     {
         string id =txtId.Text;
-        if (ListOvdim.Value.IndexOf(";" + id + ";") > -1)
+        if ((checkPremiaTluyaBemefyenIshi(int.Parse(ddStatuses.SelectedValue)) == 0) || ListOvdim.Value.IndexOf(";" + id + ";") > -1)
         {
             btnUpdate.Enabled = true;
             txtPremiaMinutes.Enabled = true;

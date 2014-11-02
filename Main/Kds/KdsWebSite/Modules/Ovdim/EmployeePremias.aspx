@@ -81,7 +81,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                     <asp:UpdatePanel ID="upId" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtId" runat="server" MaxLength="5" onchange="GetOvedNameById();" onfocus="this.select();" AutoComplete="Off" dir="rtl">
+                            <asp:TextBox ID="txtId" runat="server" MaxLength="5" onchange="GetOvedNameById();" onfocus="this.select();" AutoComplete="Off" dir="rtl">   
                             </asp:TextBox> 
                             <cc1:AutoCompleteExtender
                                 id="AutoCompleteExtenderID" runat="server" CompletionInterval="100"
@@ -463,6 +463,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
     }
      
     function continue_click() {
+   
         var rdo = document.getElementById("ctl00_KdsContent_rdoId");
         if (rdo.checked) {
 
@@ -476,7 +477,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
             //    document.getElementById("ctl00_KdsContent_txtName").select();
         }
         document.getElementById("ctl00_KdsContent_btnSearch").click();
-
+        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").disabled = false;
     }
 //    function onchange_ddStatuses() {
 //        document.getElementById("ctl00_KdsContent_ddMonths").selectedIndex = 0;
