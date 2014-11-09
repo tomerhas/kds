@@ -44,13 +44,13 @@ namespace KdsShinuyim.ShinuyImpl
                     { bIdkunRashShatGmar = true; }
 
                     //שינוי 19
-                    SetHourToSidur19(curSidur, oObjSidurimOvdimUpd, bIdkunRashShatHatchala, bIdkunRashShatGmar, inputData);
+                    SetHourToSidur19(curSidur, oObjSidurimOvdimUpd, bIdkunRashShatHatchala, bIdkunRashShatGmar, inputData,i);
 
                     //שינוי 26
-                    FixedShatHatchalaAndGmarToMafilim26(curSidur, oObjSidurimOvdimUpd, bIdkunRashShatHatchala, bIdkunRashShatGmar, inputData);
+                    FixedShatHatchalaAndGmarToMafilim26(curSidur, oObjSidurimOvdimUpd, bIdkunRashShatHatchala, bIdkunRashShatGmar, inputData,i);
 
                     //שינוי 27
-                    FixedShatHatchalaAndGmarSidurMapa27(curSidur, oObjSidurimOvdimUpd);
+                    FixedShatHatchalaAndGmarSidurMapa27(inputData,curSidur, oObjSidurimOvdimUpd,i);
 
                 }
             }
@@ -61,7 +61,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void SetHourToSidur19(SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar, ShinuyInputData inputData)
+        private void SetHourToSidur19(SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar, ShinuyInputData inputData, int index)
         {
             DateTime dShatHatchalaLetashlumToUpd;
             DateTime dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
@@ -98,7 +98,7 @@ namespace KdsShinuyim.ShinuyImpl
                 if (dShatGmarLetashlumToUpd == DateTime.MinValue)
                     dShatGmarLetashlumToUpd = curSidur.dFullShatGmar;
 
-                ChangeShaot(curSidur, oObjSidurimOvdimUpd, bIdkunRashShatHatchala, bIdkunRashShatGmar, dShatHatchalaLetashlumToUpd, dShatGmarLetashlumToUpd);
+                ChangeShaot(inputData, curSidur, oObjSidurimOvdimUpd, bIdkunRashShatHatchala, bIdkunRashShatGmar, dShatHatchalaLetashlumToUpd, dShatGmarLetashlumToUpd, index);
             }
             catch (Exception ex)
             {
@@ -106,12 +106,14 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void ChangeShaot(SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar, DateTime dShatHatchalaLetashlumToUpd, DateTime dShatGmarLetashlumToUpd)
+        private void ChangeShaot(ShinuyInputData inputData, SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar, DateTime dShatHatchalaLetashlumToUpd, DateTime dShatGmarLetashlumToUpd, int index)
         {
 
             try{
                 if (curSidur.dShatHatchalaMenahelMusach != DateTime.MinValue)
                 {
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM.ToString(), curSidur.dShatHatchalaMenahelMusach.ToString(), 19, index, "SHAT_HATCHALA_LETASHLUM");
+
                     oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = curSidur.dShatHatchalaMenahelMusach;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                     curSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
@@ -119,6 +121,8 @@ namespace KdsShinuyim.ShinuyImpl
                 }
                 else if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)// && !bLoLeadken)
                 {
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM.ToString(), dShatHatchalaLetashlumToUpd.ToString(), 19, index, "SHAT_HATCHALA_LETASHLUM");
+
                     oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = dShatHatchalaLetashlumToUpd;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                     curSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
@@ -129,6 +133,9 @@ namespace KdsShinuyim.ShinuyImpl
 
                 if (curSidur.dShatGmarMenahelMusach != DateTime.MinValue)
                 {
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM.ToString(), curSidur.dShatGmarMenahelMusach.ToString(), 19, index, "SHAT_GMAR_LETASHLUM");
+
+
                     oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = curSidur.dShatGmarMenahelMusach;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                     curSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
@@ -136,6 +143,8 @@ namespace KdsShinuyim.ShinuyImpl
                 }
                 else if (!bIdkunRashShatGmar && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)// && !bLoLeadken)
                 {
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM.ToString(), dShatGmarLetashlumToUpd.ToString(), 19, index, "SHAT_GMAR_LETASHLUM");
+
                     oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = dShatGmarLetashlumToUpd;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                     curSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
@@ -291,7 +300,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void FixedShatHatchalaAndGmarToMafilim26(SidurDM oSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar, ShinuyInputData inputData)
+        private void FixedShatHatchalaAndGmarToMafilim26(SidurDM oSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar, ShinuyInputData inputData, int index)
         {
             DateTime dRequiredShatHatchala = DateTime.MinValue;
             DateTime dRequiredShatGmar = DateTime.MinValue;
@@ -329,6 +338,9 @@ namespace KdsShinuyim.ShinuyImpl
 
                     if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)
                     {
+                        InsertLogSidur(inputData, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM.ToString(), dShatHatchalaLetashlumToUpd.ToString(), 26, index,"SHAT_HATCHALA_LETASHLUM");
+
+
                         oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = dShatHatchalaLetashlumToUpd;
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                         oSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
@@ -339,6 +351,8 @@ namespace KdsShinuyim.ShinuyImpl
 
                     if (!bIdkunRashShatGmar && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)
                     {
+                        InsertLogSidur(inputData, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM.ToString(), dShatGmarLetashlumToUpd.ToString(), 26, index, "SHAT_GMAR_LETASHLUM");
+
                         oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = dShatGmarLetashlumToUpd;
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                         oSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
@@ -354,7 +368,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void FixedShatHatchalaAndGmarSidurMapa27(SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
+        private void FixedShatHatchalaAndGmarSidurMapa27(ShinuyInputData inputData,SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, int index)
         {
             string sug_sidur = "";
             try
@@ -365,6 +379,9 @@ namespace KdsShinuyim.ShinuyImpl
 
                 if (!curSidur.bSidurMyuhad && sug_sidur != "69")
                 {
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM.ToString(), curSidur.dFullShatHatchala.ToString(), 27, index,"SHAT_HATCHALA_LETASHLUM");
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM.ToString(), curSidur.dFullShatGmar.ToString(), 27, index, "SHAT_GMAR_LETASHLUM");
+                    
                     oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = curSidur.dFullShatHatchala;
                     oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = curSidur.dFullShatGmar;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;

@@ -139,7 +139,7 @@ namespace KdsLibrary.Controls
 
             
             imgCal.ID = "Img" + _calendar.ID;
-            imgCal.ImageUrl = urlAbs + "/Images/B_calander.png";
+            imgCal.ImageUrl = urlAbs + "Images/B_calander.png";
             imgCal.Style.Add("padding-right", "5px");
             imgCal.ImageAlign = ImageAlign.Middle;
 

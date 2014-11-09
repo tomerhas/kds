@@ -7,6 +7,7 @@ using System.Text;
 using KDSCommon.UDT;
 using ObjectCompare;
 
+
 namespace KDSCommon.DataModels.Shinuyim
 {
     public class ShinuyInputData
@@ -20,6 +21,7 @@ namespace KDSCommon.DataModels.Shinuyim
             bFirstSidurZakaiLenesiot = false;
           //  bHeadrutMachalaMiluimTeuna = false;
             bHaveCount = true;
+            iSederBizua = 0;
 
             oCollSidurimOvdimIns = new COLL_SIDURIM_OVDIM();
             oCollSidurimOvdimDel = new COLL_SIDURIM_OVDIM();
@@ -35,7 +37,11 @@ namespace KDSCommon.DataModels.Shinuyim
             oCollSidurimOvdimUpdRecorder = new ModificationRecorderCollection<OBJ_SIDURIM_OVDIM>();
             oCollPeilutOvdimUpdRecorder = new ModificationRecorderCollection<OBJ_PEILUT_OVDIM>();
 
-            LogCollection = new ShinuyLogCollection();
+            oCollLogsDay = new COLL_LOG_DAY_KELET();
+            oCollLogsSidur = new COLL_LOG_SIDUR_KELET();
+            oCollLogsPeilut = new COLL_LOG_PEILUT_KELET();
+
+         //   LogCollection = new ShinuyLogCollection();
         }
         public int iMisparIshi { get; set; }
         public DateTime CardDate { get; set; }
@@ -48,8 +54,9 @@ namespace KDSCommon.DataModels.Shinuyim
       //  public bool bHeadrutMachalaMiluimTeuna { get; set; }
         public int iSugYom { get; set; }
         public long? BtchRequestId { get; set; }
-        public bool bHaveCount { get; set; } 
-
+        public bool bHaveCount { get; set; }
+        public int iSederBizua { get; set; }
+       
         public OrderedDictionary htEmployeeDetails { get; set; }
         public OrderedDictionary htSpecialEmployeeDetails { get; set; }
         public OrderedDictionary htFullEmployeeDetails { get; set; }
@@ -67,7 +74,7 @@ namespace KDSCommon.DataModels.Shinuyim
         public clParametersDM oParam { get; set; }
         public MeafyenimDM oMeafyeneyOved { get; set; }
 
-        public ShinuyLogCollection LogCollection { get; set; }
+      //  public ShinuyLogCollection LogCollection { get; set; }
         /**/
         public OBJ_YAMEY_AVODA_OVDIM oObjYameyAvodaUpd { get; set; }
 
@@ -87,6 +94,10 @@ namespace KDSCommon.DataModels.Shinuyim
     //    public COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd { get; set; }
         public COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns { get; set; }
         public COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimDel { get; set; }
-        
+
+              
+        public COLL_LOG_DAY_KELET oCollLogsDay{ get; set; }
+        public COLL_LOG_SIDUR_KELET oCollLogsSidur { get; set; }
+        public COLL_LOG_PEILUT_KELET oCollLogsPeilut { get; set; }
     }
 }

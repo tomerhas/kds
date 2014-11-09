@@ -178,8 +178,12 @@ namespace KdsShinuyim.ShinuyImpl
             PeilutDM oPeilut;
             int j;
             SourceObj SourceObject;
+            string oldVal;
 
             try{
+                oldVal = oSidur.dFullShatHatchala.ToString();
+                InsertLogSidur(inputData, oSidur.iMisparSidur, dShatYetziaFirst, oldVal, dShatYetziaFirst.ToString(), 5, i,"SHAT_YETZIA");
+
                 NewSidur oNewSidurim = FindSidurOnHtNewSidurim(oSidur.iMisparSidur, oSidur.dFullShatHatchala, inputData.htNewSidurim);
 
                 oNewSidurim.SidurIndex = i;
@@ -206,6 +210,8 @@ namespace KdsShinuyim.ShinuyImpl
                         }
                     }
 
+                    InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, oNewSidurim.ShatHatchalaNew, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, oldVal, oNewSidurim.ShatHatchalaNew.ToString(), 5, i, j,"SHAT_HATCHALA_SIDUR");
+
                 }
                 //UpdatePeiluyotMevutalotYadani(i, oNewSidurim, oObjSidurimOvdimUpd);
                 UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oNewSidurim.ShatHatchalaNew, inputData);
@@ -214,6 +220,7 @@ namespace KdsShinuyim.ShinuyImpl
                 oSidur.dFullShatHatchala = oNewSidurim.ShatHatchalaNew;
                 oSidur.sShatHatchala = oSidur.dFullShatHatchala.ToString("HH:mm");
                 oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;
+
             }
             catch (Exception ex)
             {
@@ -399,6 +406,8 @@ namespace KdsShinuyim.ShinuyImpl
                 if (iIndexElement == 0) dShatYetiza = oObjPeilutOvdimIns.SHAT_YETZIA;
                 iNumHachanotMechonaForSidur += 1;
                 iMeshechHachanotMechona += int.Parse(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(3, 3));
+
+                InsertLogPeilut(inputData, oPeilutNew.iPeilutMisparSidur, oPeilutNew.dFullShatYetzia, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "", oPeilutNew.dFullShatYetzia.ToString(), 5, iIndexSidur, 0, "SHAT_YETZIA");
 
                 //  }
             }
@@ -601,6 +610,8 @@ namespace KdsShinuyim.ShinuyImpl
                 iNumHachanotMechonaForSidur += 1;
                 iMeshechHachanotMechona += int.Parse(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(3, 3));
                 iMeshechHachanotMechonaNosafot += int.Parse(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(3, 3)); ;
+
+                InsertLogPeilut(inputData, oPeilutNew.iPeilutMisparSidur, oPeilutNew.dFullShatYetzia, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "", oPeilutNew.dFullShatYetzia.ToString(), 5, iIndexSidur, 0, "SHAT_YETZIA");
             }
             catch (Exception ex)
             {

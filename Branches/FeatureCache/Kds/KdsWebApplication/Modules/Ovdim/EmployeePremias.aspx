@@ -8,7 +8,8 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 
 <script src='../../js/jquery.js' type='text/javascript'></script>
-<script src='../../js/jquery.simplemodal.js' type='text/javascript'></script>
+<%--<script src='../../js/jquery.simplemodal.js' type='text/javascript'></script>--%>
+     <script src='../../js/jquery.simplemodal.1.4.4.min.js' type='text/javascript'></script>
 <script src='../../js/basic.js' type='text/javascript'></script>
 
 </asp:Content>

@@ -10,14 +10,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
     <link href="../../StyleSheet.css" type="text/css" rel="stylesheet" />
     <base target="_self" />
+    <script src='../../js/jquery-1.11.1.min.js' type='text/javascript'></script>  
     <script src="../../Js/GeneralFunction.js" type="text/javascript"></script>
     <script src="../../Js/WorkCard.js" type="text/javascript"></script>
     <script src="../../Js/String.js" type="text/javascript"></script>
-    <script src='../../js/jquery.js' type='text/javascript'></script>    
+    <script src='../../js/jquery-ui.min.js' type='text/javascript'></script>  
+    <script src='../../js/KdsErrorMessage.js' type='text/javascript'></script>  
+     
+    <link type='text/css' href='../../css/jquery-ui.min.css' rel='stylesheet'/>
 </head>
 <body dir="rtl" style="margin:0px">
-    <form id="frmWorkCard" runat="server" >    
-    <asp:ScriptManager runat="server" ID="ScriptManagerKds" EnablePartialRendering="true" >        
+    <form id="frmWorkCard" runat="server" > 
+          <div id="dialog" title="שגיאת מערכת">
+             <div >משתמש יקר ארעה שגיאה במערכת. אנא פנה למנהל המערכת.</div>
+             <br />
+             <a href="#" onclick="ToggleDisplay()">פרטי השגיאה:</a>
+             <div id="dialogContent" dir="ltr" style="width: 380px; height: 200px; overflow-y: scroll;overflow-x:scroll;display: none"></div>
+         </div>   
+    <asp:ScriptManager runat="server" ID="ScriptManagerKds" EnablePartialRendering="true" 
+        OnAsyncPostBackError="ScriptManager_AsyncPostBackError"
+>        
+
         <Scripts>            
             <asp:ScriptReference Name="MicrosoftAjax.js" />
             <asp:ScriptReference Name="MicrosoftAjaxWebForms.js" />
@@ -616,7 +629,10 @@
             <br/>
                   <label id="msgErrCar" runat="server" style="display:none">חסר מספר רכב, כרטיס עבודה לא יועבר לתשלום </label>       
             <br/>
-     </asp:Panel>     
+     </asp:Panel>  
+        
+        
+           
         <input type="hidden" runat="server" id="hidGoremMeasher" />
         <input type="hidden" runat="server" id="hidSource" />
         <input type="hidden" runat="server" id="hidLvl1Chg" />

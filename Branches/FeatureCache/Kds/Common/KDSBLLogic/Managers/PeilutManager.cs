@@ -667,6 +667,11 @@ namespace KdsLibrary.KDSLogic.Managers
 
         private DataTable GetDTElementim()
         {
+            DataTable dtElementim = new DataTable();
+            var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+            dtElementim = kavimDal.GetMeafyeneyElementByKod(0, DateTime.Parse("01/08/2014"));
+            //return dtElementim;
+
             var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
             return  cache.GetCacheItem<DataTable>(CachedItems.Elementim);
         }

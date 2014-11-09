@@ -77,6 +77,7 @@ namespace KdsShinuyim.ShinuyImpl
 
                             if (dShatGmar != oObjSidurimOvdimUpd.SHAT_GMAR)
                             {
+                                InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_GMAR.ToString(), dShatGmar.ToString(), 10, iIndexSidur, "SHAT_GMAR");
                                 oObjSidurimOvdimUpd.SHAT_GMAR = dShatGmar;
                                 oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
 

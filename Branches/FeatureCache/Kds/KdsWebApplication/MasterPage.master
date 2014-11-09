@@ -19,16 +19,23 @@
     </script>
     <form id="form1" runat="server">
 <%--    <AjxToolKit:ToolkitScriptManager ID="ScriptManagerKds" runat="server" EnablePartialRendering="true" EnablePageMethods="true"  EnableScriptGlobalization="true"  EnableScriptLocalization="true" >--%>
-    <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true"  EnableScriptGlobalization="true"  EnableScriptLocalization="true" >        
+    <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true" 
+         EnableScriptGlobalization="true"  EnableScriptLocalization="true" OnAsyncPostBackError="ScriptManager_AsyncPostBackError">        
     <Scripts>
     <asp:ScriptReference Path="~/Js/String.js" />
     <asp:ScriptReference Path="~/Js/GeneralFunction.js" />
-    <asp:ScriptReference Path="~/Js/jquery.js" />
-    <asp:ScriptReference Path="~/Js/jquery.simplemodal.js" />
+     <asp:ScriptReference Path="~/Js/jquery-1.11.1.min.js" />    
+     <asp:ScriptReference Path="~/Js/jquery-ui.min.js" />    
+   <%-- <asp:ScriptReference Path="~/Js/jquery.js" />--%>
+   <%-- <asp:ScriptReference Path="~/Js/jquery.simplemodal.js" />--%>
+     <asp:ScriptReference Path="~/Js/jquery.simplemodal.1.4.4.min.js" />   
     <asp:ScriptReference Path="~/Js/basic.js" />
+    <asp:ScriptReference Path="~/Js/KdsErrorMessage.js" />
+  
 
     </Scripts>
   </asp:ScriptManager>
+         <link type='text/css' href='/css/jquery-ui.min.css' rel='stylesheet'/>
 <%--</AjxToolKit:ToolkitScriptManager>--%>
 <asp:UpdateProgress  runat="server" id="Progress1" DisplayAfter="0" >
     <ProgressTemplate>
@@ -57,8 +64,12 @@
              function btnConfirm_Click() {
                  $("ModalPopupEx").hide();
              }
+
+         
+
     </script>                            
 
+       
     <table width="780px" cellpadding="0" cellspacing="0" border="0">                              
         <tr>
             <td>
@@ -210,7 +221,12 @@
               </tr>
          </table>
 
-
+         <div id="dialog" title="שגיאת מערכת">
+             <div >משתמש יקר ארעה שגיאה במערכת. אנא פנה למנהל המערכת.</div>
+             <br />
+             <a href="#" onclick="ToggleDisplay()">פרטי השגיאה:</a>
+             <div id="dialogContent" dir="ltr" style="width: 380px; height: 200px; overflow-y: scroll;overflow-x:scroll;display: none"></div>
+         </div>
     </form>
 </body>
  <script language="javascript" type="text/javascript">
@@ -220,9 +236,7 @@
      $(".spaceMenu:last").css('display', 'none');
 
 
-  
-  
- 
+   
 
  </script>
 </html>

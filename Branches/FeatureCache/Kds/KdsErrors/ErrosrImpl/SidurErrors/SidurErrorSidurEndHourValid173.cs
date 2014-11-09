@@ -71,10 +71,8 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
 
                 }
             }
-
-            if ((!string.IsNullOrEmpty(input.curSidur.sShatGmar) && dSidurEndHour < dStartLimitHour) && (dStartLimitHour.Year != DateHelper.cYearNull) ||
-                (!string.IsNullOrEmpty(input.curSidur.sShatGmar) && dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year != DateHelper.cYearNull) ||
-                (!string.IsNullOrEmpty(input.curSidur.sShatGmar) && !string.IsNullOrEmpty(input.curSidur.sShatHatchala) && input.curSidur.dFullShatHatchala >= input.curSidur.dFullShatGmar))
+            if (((!string.IsNullOrEmpty(input.curSidur.sShatGmar) && dSidurEndHour < dStartLimitHour) && (dStartLimitHour.Year != DateHelper.cYearNull)) ||
+                  ((!string.IsNullOrEmpty(input.curSidur.sShatGmar) && dSidurEndHour > dEndLimitHour) && (dEndLimitHour.Year != DateHelper.cYearNull)))
             {
                 AddNewError(input);
                 return false;

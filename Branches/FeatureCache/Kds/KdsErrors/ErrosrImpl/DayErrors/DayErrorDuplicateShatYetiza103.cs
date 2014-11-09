@@ -65,7 +65,7 @@ namespace KdsErrors.ErrosrImpl.DayErrors
             {
                 var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
                 dtMeafyenim = kavimDal.GetMeafyeneyElementByKod(peilut.lMakatNesia, cardDate);
-                if (dtMeafyenim.Select("KOD_MEAFYEN = 9") != null)
+                if (dtMeafyenim.Select("KOD_MEAFYEN = 9").Length >0)
                 {
                     shouldProcess = false;
                 }

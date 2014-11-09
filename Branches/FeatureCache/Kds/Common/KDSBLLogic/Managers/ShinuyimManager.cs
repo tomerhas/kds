@@ -83,6 +83,23 @@ namespace KDSBLLogic.Managers
             _container.Resolve<IShinuyimDAL>().UpdateAprrovalErrors(oCollShgiotMeusharot);
         }
 
+        public void SaveLogsShinuyKelet(ShinuyInputData inputData)
+        {
+            try
+            {  
+                _container.Resolve<IShinuyimDAL>().SaveLogsShinuyKelet(inputData);
+            }
+            catch (Exception ex)
+            {
+                //IMailManager mailManager = _container.Resolve<IMailManager>();
+                //// string from = ConfigurationManager.AppSettings["NoRep"].ToString();
+                //string RecipientsList = ConfigurationManager.AppSettings["MailErrorWorkCard"];
+                //string subject = "תקלה בשמירת נתונים למספר אישי: " + inputData.iMisparIshi + "  תאריך:" + inputData.CardDate;
+                //mailManager.SendMessage(new MailMessageWrapper(RecipientsList) { Subject = subject, Body = ex.Message });
+                throw ex;
+            }
+
+        }
         public void SaveShinuyKelet(ShinuyInputData inputData)
         {
             try

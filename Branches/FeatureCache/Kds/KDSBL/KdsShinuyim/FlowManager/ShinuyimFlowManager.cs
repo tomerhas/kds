@@ -48,6 +48,7 @@ namespace KdsShinuyim.FlowManager
                              try
                              {
                                  shinuyObj.ExecShinuy(inputData);
+                                 //
                              }
                              catch (Exception ex)
                              {
@@ -92,6 +93,9 @@ namespace KdsShinuyim.FlowManager
             {
                 var shinuyimManager = _container.Resolve<IShinuyimManager>();
 
+                SaveLogs(inputData);
+               // shinuyimManager.SaveLogsShinuyKelet(inputData);
+
                 shinuyimManager.SaveShinuyKelet(inputData);
 
                 if (inputData.oCollIdkunRashemet.Count > 0)
@@ -103,6 +107,33 @@ namespace KdsShinuyim.FlowManager
                 if (inputData.oCollApprovalErrors.Count > 0)
                     shinuyimManager.UpdateAprrovalErrors(inputData.oCollApprovalErrors);
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void SaveLogs(ShinuyInputData inputData)
+        {
+             try
+            {
+                if (inputData.oCollLogsDay.Count >0 || inputData.oCollLogsSidur.Count >0 || inputData.oCollLogsPeilut.Count >0)
+                {
+                    var shinuyimManager = _container.Resolve<IShinuyimManager>();
+
+                    if (inputData.oCollLogsDay.Count == 0)
+                    {
+                        OBJ_LOG_DAY_KELET objDayLog = new OBJ_LOG_DAY_KELET();
+                        objDayLog.MISPAR_ISHI = inputData.iMisparIshi;
+                        objDayLog.TAARICH = inputData.CardDate;
+                        if (inputData.UserId.HasValue)
+                            objDayLog.MEADKEN_ACHARON = (int)inputData.UserId;
+                        objDayLog.SEDER_BIZUA = 0;
+                        inputData.oCollLogsDay.Add(objDayLog);
+                    }
+
+                    shinuyimManager.SaveLogsShinuyKelet(inputData);
+                }
+             }    
             catch (Exception ex)
             {
                 throw ex;

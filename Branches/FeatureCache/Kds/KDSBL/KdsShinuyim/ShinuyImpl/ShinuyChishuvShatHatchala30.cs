@@ -12,6 +12,7 @@ using KdsShinuyim.Enums;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 
+
 namespace KdsShinuyim.ShinuyImpl
 {
     public class ShinuyChishuvShatHatchala30: ShinuyBase
@@ -29,7 +30,7 @@ namespace KdsShinuyim.ShinuyImpl
         {
             try
             {
-                inputData.bUsedMazanTichnun = false;
+              //  inputData.bUsedMazanTichnun = false;
                 for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
                     SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
@@ -88,8 +89,8 @@ namespace KdsShinuyim.ShinuyImpl
                                     oPeilut = (PeilutDM)curSidur.htPeilut[i];
                                     if (isElemntLoMashmauti(oPeilut) || oPeilut.iMakatType == enMakatType.mEmpty.GetHashCode())
                                         dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilut, curSidur, inputData, ref bUsedMazanTichnunInSidur)));
-                                    if (bUsedMazanTichnunInSidur)
-                                        inputData.bUsedMazanTichnun = true;   
+                                    //if (bUsedMazanTichnunInSidur)
+                                    //    inputData.bUsedMazanTichnun = true;   
                                 }
                             }
                         }
@@ -163,10 +164,14 @@ namespace KdsShinuyim.ShinuyImpl
             PeilutDM oPeilut;
             SourceObj SourceObject;
             OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
+            string oldVal;
             try
             {
                 if (dShatHatchalaNew != curSidur.dFullShatHatchala)
                 {
+                    oldVal=curSidur.dFullShatHatchala.ToString();
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, dShatHatchalaNew, oldVal, dShatHatchalaNew.ToString(), 30, iSidurIndex, "SHAT_HATCHALA");
+
                     oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
                     NewSidur oNewSidurim = FindSidurOnHtNewSidurim(curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData.htNewSidurim);
 
@@ -175,15 +180,17 @@ namespace KdsShinuyim.ShinuyImpl
                     oNewSidurim.ShatHatchalaNew = dShatHatchalaNew;
 
                     UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpdRecorder);
+
                     //עדכון שעת התחלה סידור של כל הפעילויות לסידור
                     for (int j = 0; j < curSidur.htPeilut.Count; j++)
                     {
                         oPeilut = (PeilutDM)curSidur.htPeilut[j];
+                       
                         if (!CheckPeilutObjectDelete(iSidurIndex, j,inputData))
                         {
                             
                             oObjPeilutUpd = GetUpdPeilutObject(iSidurIndex, oPeilut, inputData, oObjSidurimOvdimUpd, out SourceObject);
-                                        
+                                      
                             if (SourceObject == SourceObj.Insert)
                             {
                                 oObjPeilutUpd.SHAT_HATCHALA_SIDUR = dShatHatchalaNew;
@@ -195,6 +202,9 @@ namespace KdsShinuyim.ShinuyImpl
                             }
 
                         }
+
+                        InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, dShatHatchalaNew, oPeilut.dFullShatYetzia,oPeilut.lMakatNesia, oldVal,  dShatHatchalaNew.ToString(), 30, iSidurIndex, j,"SHAT_HATCHALA_SIDUR");
+
                     }
                     //UpdatePeiluyotMevutalotYadani(iSidurIndex,oNewSidurim, oObjSidurimOvdimUpd);
                     UpdateIdkunRashemet(curSidur.iMisparSidur, curSidur.dFullShatHatchala, dShatHatchalaNew, inputData);

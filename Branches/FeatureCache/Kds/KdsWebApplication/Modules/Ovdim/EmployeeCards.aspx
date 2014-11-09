@@ -5,7 +5,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 
 <script src='../../js/jquery.js' type='text/javascript'></script>
-<script src='../../js/jquery.simplemodal.js' type='text/javascript'></script>
+<%--<script src='../../js/jquery.simplemodal.js' type='text/javascript'>
+</script>--%>
+    <script src='../../js/jquery.simplemodal.1.4.4.min.js' type='text/javascript'></script>
+          
 <script src='../../js/basic.js' type='text/javascript'></script>
 
 <link type='text/css' href='../../css/basic.css' rel='stylesheet' media='screen' />
@@ -353,6 +356,7 @@
                var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
                document.getElementById("divHourglass").style.display = 'block';
                var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
+             
                if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
                document.getElementById("divHourglass").style.display = 'none';
                document.getElementById("ctl00_KdsContent_btnExecute").click();

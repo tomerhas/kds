@@ -38,6 +38,9 @@ namespace KdsShinuyim.ShinuyImpl
                     {
                         SidurLoLetashlum11(curSidur, i, inputData);
                     }
+
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, "0", curSidur.iLoLetashlum.ToString(), 11, i, "LO_LETASHLUM");
+                  
                 }
             }
             catch (Exception ex)

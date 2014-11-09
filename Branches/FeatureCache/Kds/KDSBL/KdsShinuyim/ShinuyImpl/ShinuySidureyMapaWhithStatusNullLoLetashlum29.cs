@@ -43,6 +43,7 @@ namespace KdsShinuyim.ShinuyImpl
             bool bHaveSidurFromMatala = false;
             bool bHaveSidurVisaFromMapa = false;
             int i = 0;
+            string oVal;
             try
             {
                 if (inputData.htEmployeeDetails != null)
@@ -78,6 +79,7 @@ namespace KdsShinuyim.ShinuyImpl
                         {
                             if (!CheckIdkunRashemet("LO_LETASHLUM", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
                             {
+                                oVal = curSidur.iLoLetashlum.ToString();
                                 oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
 
                                 curSidur.iLoLetashlum = 1;
@@ -87,6 +89,9 @@ namespace KdsShinuyim.ShinuyImpl
                                 oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
 
                                 inputData.htEmployeeDetails[i] = curSidur;
+
+                                InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oVal, oObjSidurimOvdimUpd.LO_LETASHLUM.ToString(), 29, i, "LO_LETASHLUM");
+                  
                             }
                         }
                     }

@@ -105,6 +105,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         else { base.CreateUser(); }
     }
 
+    protected void ScriptManager_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e)
+    {
+        ScriptManagerKds.AsyncPostBackErrorMessage = e.Exception.ToString(); 
+    }
 
     private void SetUserKiosk(string[] arrParamsKiosk)
     {
@@ -927,7 +931,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              if (Request.UrlReferrer != null) //התחברות מהבית
              {
                  string sDomain = clGeneral.AsDomain(Request.UrlReferrer.ToString()) + Request.ApplicationPath;
-                 clnDate.ImageUrl = sDomain + "/Images/B_calander.png";
+                 clnDate.ImageUrl = sDomain + "Images/B_calander.png";
              }
              //התייצבות
              bParticipationAllowed = SetParticipation();
@@ -2619,6 +2623,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void btnUpdatePrint_click(object sender, EventArgs e)
     {
+        
         if (SaveCard())
         {
             RefreshScreen();
@@ -3018,7 +3023,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         try
         {
             //fill changes data for compare
-
+         
             bool bResult = false;
             clWorkCard _WorkCard = new clWorkCard();
                 

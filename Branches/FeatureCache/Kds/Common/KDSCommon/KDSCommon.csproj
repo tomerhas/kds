@@ -82,8 +82,6 @@
     <Compile Include="DataModels\Shinuyim\FlowShinuyResult.cs" />
     <Compile Include="Interfaces\Shinuyim\IShinuyLogCollection.cs" />
     <Compile Include="DataModels\Shinuyim\ShinuyInputData.cs" />
-    <Compile Include="DataModels\Shinuyim\ShinuyLogCollection.cs" />
-    <Compile Include="DataModels\Shinuyim\SingleShinuyLog.cs" />
     <Compile Include="DataModels\SidurDM.cs" />
     <Compile Include="Enums\BatchExecutionType.cs" />
     <Compile Include="Enums\CardStatus.cs" />
@@ -159,6 +157,9 @@
     <Compile Include="UDT\Coll_Chishuv_Sidur.cs" />
     <Compile Include="UDT\Coll_Chishuv_Yomi.cs" />
     <Compile Include="UDT\Coll_Idkun_Rashemet.cs" />
+    <Compile Include="UDT\Coll_Log_Day_Kelet.cs" />
+    <Compile Include="UDT\Coll_Log_Peilut_Kelet.cs" />
+    <Compile Include="UDT\Coll_Log_Sidur_Kelet.cs" />
     <Compile Include="UDT\Coll_Meafyeney_Oved.cs" />
     <Compile Include="UDT\Coll_Mispar_Ishi_Sug_Chishuv.cs" />
     <Compile Include="UDT\Coll_Obj_Kavim.cs" />
@@ -176,6 +177,9 @@
     <Compile Include="UDT\Obj_Idkun_Rashemet.cs" />
     <Compile Include="UDT\Obj_Kavim.cs" />
     <Compile Include="UDT\Obj_Logtaskmsg.cs" />
+    <Compile Include="UDT\Obj_Log_Day_Kelet.cs" />
+    <Compile Include="UDT\Obj_Log_Peilut_Kelet.cs" />
+    <Compile Include="UDT\Obj_Log_Sidur_Kelet.cs" />
     <Compile Include="UDT\Obj_Meafyeney_Oved.cs" />
     <Compile Include="UDT\Obj_Mispar_Ishi_Sug_Chishuv.cs" />
     <Compile Include="UDT\Obj_Ovdim_Im_Shinuy_Hr.cs" />

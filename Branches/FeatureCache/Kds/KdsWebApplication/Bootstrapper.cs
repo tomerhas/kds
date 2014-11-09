@@ -68,7 +68,7 @@ namespace KdsWebApplication
             container.RegisterType<IShinuyimManager, ShinuyimManager>();
             container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
             container.RegisterType<ILogBakashot, LogBakashot>();
-            container.RegisterType<IShinuyLogCollection, ShinuyLogCollection>();
+          //  container.RegisterType<IShinuyLogCollection, ShinuyLogCollection>();
 
             //Containers
 

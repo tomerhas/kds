@@ -16,5 +16,6 @@ namespace KDSCommon.Interfaces.Managers
         void DeleteIdkunRashemet(COLL_IDKUN_RASHEMET oCollIdkunRashemetDel);
         void UpdateAprrovalErrors(COLL_SHGIOT_MEUSHAROT oCollShgiotMeusharot);
         void SaveShinuyKelet(ShinuyInputData inputData);
+        void SaveLogsShinuyKelet(ShinuyInputData inputData);
     }
 }

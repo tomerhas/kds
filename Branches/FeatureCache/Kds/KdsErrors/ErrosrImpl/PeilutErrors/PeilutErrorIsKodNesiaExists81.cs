@@ -27,7 +27,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
                 if (input.curPeilut.iMakatValid != 0)
                     isValid = false;
             }
-            else if (input.curPeilut.iMakatType == enMakatType.mElement.GetHashCode() && input.curPeilut.lMakatNesia.ToString().Substring(0, 3) != "700" && (input.curPeilut.lMakatNesia.ToString().Length < 8 || input.curPeilut.iMakatValid != 0))
+            else if (input.curPeilut.iMakatType == enMakatType.mElement.GetHashCode() && input.curPeilut.lMakatNesia.ToString().Substring(0, 3) != "700" &&  input.curPeilut.iMakatValid != 0)
                 isValid = false;
 
             if (!isValid)

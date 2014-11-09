@@ -6,6 +6,8 @@ using KDSCommon.DataModels;
 using KDSCommon.DataModels.Shinuyim;
 using KdsShinuyim.Enums;
 using Microsoft.Practices.Unity;
+using KDSCommon.UDT;
+
 
 namespace KdsShinuyim.ShinuyImpl
 {
@@ -37,7 +39,8 @@ namespace KdsShinuyim.ShinuyImpl
         {
             SidurDM curSidur = new SidurDM();
             int iLina = 0;
-            int iCountLina = 0;
+            int iCountLina = 0; 
+            string oldVal;
             try
             {
 
@@ -52,7 +55,15 @@ namespace KdsShinuyim.ShinuyImpl
                     }
                 }
 
-                if (iCountLina == 1) inputData.oObjYameyAvodaUpd.LINA = iLina;
+                if (iCountLina == 1)
+                {
+                    oldVal = inputData.oObjYameyAvodaUpd.LINA.ToString(); 
+
+                    inputData.oObjYameyAvodaUpd.LINA = iLina;
+
+                    InsertLogDay(inputData, oldVal, iLina.ToString(), 7, "LINA");
+                  
+                }
                 else inputData.oObjYameyAvodaUpd.LINA = 0;
 
                 inputData.oObjYameyAvodaUpd.UPDATE_OBJECT = 1;

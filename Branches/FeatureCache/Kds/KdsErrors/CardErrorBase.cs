@@ -249,10 +249,21 @@ namespace KdsErrors
 
         private bool IsOvedMutaamForEmptyPeilut(ErrorInputData input)
         {
+            int makat;
             //. עובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה (יודעים שעובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה לפי ערכים 6, 7 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים) במקרה זה יש לבדוק אם הסידור מכיל רק נסיעות ריקות, מפעילים את הרוטינה לזיהוי מקט
-            return ((input.OvedDetails.sMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode().ToString() ||
-                   input.OvedDetails.sMutamut == clGeneral.enMutaam.enMutaam7.GetHashCode().ToString())
-                   && (input.curSidur.bSidurNotEmpty));
+            if (((input.OvedDetails.sMutamut == enMutaam.enMutaam6.GetHashCode().ToString() ||
+                   input.OvedDetails.sMutamut == enMutaam.enMutaam7.GetHashCode().ToString())
+                   && (input.curSidur.bSidurNotEmpty)))
+            {
+                foreach (PeilutDM peilut in input.curSidur.htPeilut.Values.Cast<PeilutDM>().ToList())
+                {
+                    makat = int.Parse(peilut.lMakatNesia.ToString().Substring(0, 3));
+                    if (makat == 701 || makat == 702 || makat == 711)
+                        return false;
+                }
+                return true;
+            }
+            return false;
 
         }
 
@@ -345,5 +356,17 @@ namespace KdsErrors
             }
         }
 
+        protected bool HaveSidurNahgutInDay(ErrorInputData inputData)
+        {
+            SidurDM sidur;
+            for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
+            {
+                sidur  = (SidurDM)inputData.htEmployeeDetails[i];
+                var cacheManager = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+                if(_container.Resolve<ISidurManager>().IsSidurNahagut(inputData.drSugSidur, sidur))
+                   return true;
+            }
+            return false;
+        }
     } 
 }

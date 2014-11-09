@@ -18,8 +18,11 @@ namespace KdsErrors.ErrosrImpl.DayErrors
         {
             if (input.oMeafyeneyOved.IsMeafyenExist(51)) //|| (oMeafyeneyOved.IsMeafyenExist(61)))
             {
-                if (input.bHaveSidurNahagut)
+                if (HaveSidurNahgutInDay(input))
+                {
+                    AddNewError(input);
                     return false;
+                }
             }
 
             return true;

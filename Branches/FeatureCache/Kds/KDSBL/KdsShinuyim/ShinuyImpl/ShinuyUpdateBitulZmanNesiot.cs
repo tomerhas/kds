@@ -29,9 +29,21 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
+            string oZmanHaloch, oZmanChazor, oBitulNesiot;
             try
             {
+                oZmanHaloch = inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH.ToString();
+                oZmanChazor = inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR.ToString();
+                oBitulNesiot = inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString();
+               
                 UpdateBitulZmanNesiot(inputData);
+
+                if (oZmanHaloch != inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH.ToString())
+                    InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH.ToString(), 0, "ZMAN_NESIA_HALOCH");
+                if (oZmanChazor != inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR.ToString())
+                    InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR.ToString(), 0, "ZMAN_NESIA_HAZOR");
+                if (oBitulNesiot != inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString())
+                    InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString(), 0, "BITUL_ZMAN_NESIOT");
             }
              catch (Exception ex)
             {
@@ -171,6 +183,7 @@ namespace KdsShinuyim.ShinuyImpl
         {
             int iZmanNesia = 0;
             SidurDM cutSidur;
+            string oldVal;
             try{
                 if ((iSidurZakaiLenesiaYetzia > -1 && iSidurZakaiLenesiaKnisa > -1) || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT", inputData) && inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
                 {
@@ -185,9 +198,10 @@ namespace KdsShinuyim.ShinuyImpl
                             OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
                             cutSidur = (SidurDM)inputData.htEmployeeDetails[iSidurZakaiLenesiaKnisa];
                             oObjSidurimOvdimUpd = GetSidurOvdimObject(cutSidur.iMisparSidur, cutSidur.dFullShatHatchala, inputData);
-
+                            oldVal = oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString();
                             oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisaYetiza.GetHashCode();
                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                            InsertLogDay(inputData, oldVal, oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString(), 0, "MEZAKE_NESIOT");
                         }
                     }
                 }
@@ -228,6 +242,7 @@ namespace KdsShinuyim.ShinuyImpl
         {
             int iZmanNesia = 0;
             int iErechMeafyen=0;
+            string oldVal;
             try{
                 if (iSidurZakaiLenesiaYetzia > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT", inputData) && inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
                 {
@@ -244,8 +259,10 @@ namespace KdsShinuyim.ShinuyImpl
                         SidurDM cutSidur = (SidurDM)inputData.htEmployeeDetails[iSidurZakaiLenesiaYetzia];
                         oObjSidurimOvdimUpd = GetSidurOvdimObject(cutSidur.iMisparSidur, cutSidur.dFullShatHatchala, inputData);
 
+                        oldVal = oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString();
                         oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiYetiza.GetHashCode();
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                        InsertLogDay(inputData, oldVal, oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString(), 0, "MEZAKE_NESIOT");
                     }
                     if (IsOvedZakaiLZmanNesiaMeAvoda(inputData.oMeafyeneyOved) && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR", inputData)))
                     {
@@ -285,6 +302,7 @@ namespace KdsShinuyim.ShinuyImpl
         {
             int iZmanNesia = 0;
             int iErechMeafyen;
+            string oldVal;
             try{
             //לפחות אחד הסידורים מזכה בזמן נסיעה (סידור מזכה בזמן נסיעות אם יש לו ערך 1 (זכאי) במאפיין 14 (זכאות לזמן נסיעה) בטבלת סידורים מיוחדים/מאפייני סוג סידור
                 if (iSidurZakaiLenesiaKnisa > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT", inputData) && inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
@@ -299,8 +317,10 @@ namespace KdsShinuyim.ShinuyImpl
                         SidurDM cutSidur = (SidurDM)inputData.htEmployeeDetails[iSidurZakaiLenesiaKnisa];
                         oObjSidurimOvdimUpd = GetSidurOvdimObject(cutSidur.iMisparSidur, cutSidur.dFullShatHatchala, inputData);
 
+                        oldVal = oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString();
                         oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisa.GetHashCode();
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                        InsertLogDay(inputData, oldVal, oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString(), 0, "MEZAKE_NESIOT");
 
                     }
                     //עבור מאפיין 51: 

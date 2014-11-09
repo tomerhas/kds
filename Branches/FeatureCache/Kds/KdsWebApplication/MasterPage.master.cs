@@ -74,6 +74,11 @@ public partial class MasterPage : System.Web.UI.MasterPage
         }
     }
 
+    protected void ScriptManager_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e)
+    {
+        ScriptManagerKds.AsyncPostBackErrorMessage = e.Exception.ToString();
+    }
+
     public ImageButton ImageExcelClick 
     { 
         get { return ImageExcel; }
@@ -104,7 +109,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     protected void ImageHome_Click(object sender, ImageClickEventArgs e)
     {
-        Response.Redirect("~/Main.aspx");
+        Response.Redirect("~/Main.aspx", false);
     }
 
 }

@@ -41,6 +41,7 @@ namespace KdsShinuyim.ShinuyImpl
             SidurDM oSidur;
             bool bNotDegem64 = false;
             int CountPeiluyot = 0;
+            string oVal;
             try
             {
                 //   בדיקה האם כל הרכבים המדווחים בפעילויות באותו תאריך הם מדגם 64 
@@ -66,6 +67,7 @@ namespace KdsShinuyim.ShinuyImpl
                     }
                 }
 
+                oVal = inputData.oObjYameyAvodaUpd.TACHOGRAF.ToString();
                 //יש לבדוק שלפחות אחד הרכבים המדווחים באותו תאריך אינו מדגם 64  (דגם שאינו מכיל טכוגרף).
                 if (inputData.bSidurNahagut && (bNotDegem64 || CountPeiluyot == 0))
                 {
@@ -81,6 +83,9 @@ namespace KdsShinuyim.ShinuyImpl
                     inputData.oObjYameyAvodaUpd.TACHOGRAF = "0";
                     inputData.oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                 }
+
+                if (oVal != inputData.oObjYameyAvodaUpd.TACHOGRAF)
+                    InsertLogDay(inputData, oVal, inputData.oObjYameyAvodaUpd.TACHOGRAF.ToString(), 0, "TACHOGRAF");
 
             }
             catch (Exception ex)

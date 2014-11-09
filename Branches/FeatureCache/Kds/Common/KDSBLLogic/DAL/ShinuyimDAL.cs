@@ -19,6 +19,7 @@ namespace KDSBLLogic.DAL
         public const string cProUpdIdkunRashemet = "pkg_ovdim.pro_ins_idkuney_rashemet";
         public const string cProDeleteIdkunRashemet = "pkg_ovdim.pro_delete_idkuney_rashemet";
         public const string cProShinuyKelet = "pkg_errors.pro_shinuy_kelet";
+        public const string cProSaveLogShinuyKelet = "pkg_errors.pro_save_log_shinuy_kelet";
 
         public DataTable GetIdkuneyRashemet(int iMisparIshi, DateTime dTaarich)
         {
@@ -138,7 +139,23 @@ namespace KDSBLLogic.DAL
             }
         }
 
-       
+
+        public void SaveLogsShinuyKelet(ShinuyInputData inputData)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_coll_log_day_kelet", ParameterType.ntOracleArray, inputData.oCollLogsDay, ParameterDir.pdInput, "COLL_LOG_DAY_KELET");
+                oDal.AddParameter("p_coll_log_sidur_kelet", ParameterType.ntOracleArray, inputData.oCollLogsSidur, ParameterDir.pdInput, "COLL_LOG_SIDUR_KELET");
+                oDal.AddParameter("p_coll_log_peilut_kelet", ParameterType.ntOracleArray, inputData.oCollLogsPeilut, ParameterDir.pdInput, "COLL_LOG_PEILUT_KELET");
+
+                oDal.ExecuteSP(cProSaveLogShinuyKelet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }

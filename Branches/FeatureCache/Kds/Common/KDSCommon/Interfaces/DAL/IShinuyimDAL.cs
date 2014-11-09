@@ -16,5 +16,7 @@ namespace KDSCommon.Interfaces.DAL
         void DeleteIdkunRashemet(COLL_IDKUN_RASHEMET oCollIdkunRashemetDel);
         void UpdateAprrovalErrors(COLL_SHGIOT_MEUSHAROT oCollShgiotMeusharot);
         void SaveShinuyKelet(ShinuyInputData inputData, COLL_YAMEY_AVODA_OVDIM collYemeyAvodaOvdimUpd, COLL_SIDURIM_OVDIM oraSidurimCollUpd, COLL_OBJ_PEILUT_OVDIM oraPeilutCollUpd);
+        void SaveLogsShinuyKelet(ShinuyInputData inputData);
+ 
     }
 }

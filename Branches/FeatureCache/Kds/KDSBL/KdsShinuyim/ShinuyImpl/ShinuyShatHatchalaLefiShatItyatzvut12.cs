@@ -40,7 +40,7 @@ namespace KdsShinuyim.ShinuyImpl
           }
           catch (Exception ex)
           {
-              throw new Exception("ShinuyMisparSidurVisa02: " + ex.Message);
+              throw new Exception("ShinuyShatHatchalaLefiShatItyatzvut12: " + ex.Message);
           }
 
         }
@@ -282,7 +282,6 @@ namespace KdsShinuyim.ShinuyImpl
                                             oPeilut.dFullShatYetzia = oObjPeilutOvdimUpd.NEW_SHAT_YETZIA;
 
                                         }
-
                                         oPeilut.sShatYetzia = oPeilut.dFullShatYetzia.ToString("HH:mm");
                                     }
                                 }

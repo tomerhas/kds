@@ -1345,5 +1345,58 @@ namespace KdsShinuyim.ShinuyImpl
 
             return bSidurNihulTnua;
         }
+
+        protected void InsertLogDay(ShinuyInputData inputData, string oldVal,string newVal, int kod, string heara)
+        {
+            OBJ_LOG_DAY_KELET objDayLog = new OBJ_LOG_DAY_KELET();
+            objDayLog.MISPAR_ISHI = inputData.iMisparIshi;
+            objDayLog.TAARICH = inputData.CardDate;
+            objDayLog.OLD_VAL = oldVal;
+            objDayLog.NEW_VAL = newVal;
+            objDayLog.KOD_SHINUY = kod;
+             if (inputData.UserId.HasValue)
+                    objDayLog.MEADKEN_ACHARON = (int)inputData.UserId;
+             objDayLog.SEDER_BIZUA = ++inputData.iSederBizua;
+             objDayLog.HEARA = heara;
+            inputData.oCollLogsDay.Add(objDayLog);
+        }
+
+        protected void InsertLogSidur(ShinuyInputData inputData,int mispar_sidur,DateTime shat_hatchala, string oldVal, string newVal, int kod, int indexSidur,string heara)
+        {
+            OBJ_LOG_SIDUR_KELET objSidurLog = new OBJ_LOG_SIDUR_KELET();
+            objSidurLog.MISPAR_ISHI = inputData.iMisparIshi;
+            objSidurLog.TAARICH = inputData.CardDate;
+            objSidurLog.MISPAR_SIDUR = mispar_sidur;
+            objSidurLog.SHAT_HATCHALA = shat_hatchala;
+            objSidurLog.INDEX_SIDUR = indexSidur;
+            objSidurLog.OLD_VAL = oldVal;
+            objSidurLog.NEW_VAL = newVal;
+            objSidurLog.KOD_SHINUY = kod;
+            if (inputData.UserId.HasValue)
+                objSidurLog.MEADKEN_ACHARON = (int)inputData.UserId;
+            objSidurLog.SEDER_BIZUA = ++inputData.iSederBizua;
+            objSidurLog.HEARA = heara;
+            inputData.oCollLogsSidur.Add(objSidurLog);
+        }
+
+        protected void InsertLogPeilut(ShinuyInputData inputData, int mispar_sidur, DateTime shat_hatchala, DateTime shat_yetzia ,long makat,string oldVal, string newVal, int kod, int indexSidur, int indexPeilut ,string heara)
+        {
+            OBJ_LOG_PEILUT_KELET objPeilutLog = new OBJ_LOG_PEILUT_KELET();
+            objPeilutLog.MISPAR_ISHI = inputData.iMisparIshi;
+            objPeilutLog.TAARICH = inputData.CardDate;
+            objPeilutLog.MISPAR_SIDUR = mispar_sidur;
+            objPeilutLog.SHAT_HATCHALA = shat_hatchala;
+            objPeilutLog.SHAT_YETZIA = shat_yetzia;
+            objPeilutLog.INDEX_SIDUR = indexSidur;
+            objPeilutLog.INDEX_PEILUT = indexPeilut;
+            objPeilutLog.OLD_VAL = oldVal;
+            objPeilutLog.NEW_VAL = newVal;
+            objPeilutLog.KOD_SHINUY = kod;
+            objPeilutLog.MAKAT_NESIA = makat;
+            if (inputData.UserId.HasValue)
+                objPeilutLog.MEADKEN_ACHARON = (int)inputData.UserId;
+            objPeilutLog.SEDER_BIZUA = ++inputData.iSederBizua;
+            inputData.oCollLogsPeilut.Add(objPeilutLog);
+        }
     }
 }

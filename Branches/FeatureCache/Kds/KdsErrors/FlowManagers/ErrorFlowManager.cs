@@ -62,7 +62,7 @@ namespace KdsErrors.FlowManagers
                 for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
                     inputData.curSidur = (SidurDM)inputData.htEmployeeDetails[i];
-                    inputData.iSidur = i;
+                    inputData.iSidur = i;    
                     inputData.drSugSidur = _container.Resolve<ISidurManager>().GetOneSugSidurMeafyen(inputData.curSidur.iSugSidurRagil, inputData.CardDate);
                     oSidurErrors.ExecuteFlow(inputData, 1);
                     for (int j = 0; j < inputData.curSidur.htPeilut.Count; j++)

@@ -20,18 +20,18 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
         public override bool InternalIsCorrect(ErrorInputData input)
         {
        
-            long lMakatNesia = input.curPeilut.lMakatNesia;
+           // long lMakatNesia = input.curPeilut.lMakatNesia;
             
-            if ((enMakatType)input.curPeilut.iMakatType == enMakatType.mElement
-                && input.curPeilut.iElementLeYedia == 2 && lMakatNesia > 0)
-            {
-                return true;
-            }
+            //if ((enMakatType)input.curPeilut.iMakatType == enMakatType.mElement
+            //    && input.curPeilut.iElementLeYedia == 2 && lMakatNesia > 0)
+            //{
+            //    return true;
+            //}
 
             if (!(string.IsNullOrEmpty(input.curPeilut.sShatYetzia)))
             {
-                if ((!((input.curPeilut.iMakatType == (long)enMakatType.mElement.GetHashCode()) && (input.curPeilut.iElementLeYedia == 2))) && (lMakatNesia > 0))
-                {
+                //if ((!((input.curPeilut.iMakatType == (long)enMakatType.mElement.GetHashCode()) && (input.curPeilut.iElementLeYedia == 2))) && (lMakatNesia > 0))
+                //{
                     if (input.curSidur.dFullShatHatchala.Year > DateHelper.cYearNull)
                     {//בדיקה 121
                         if (input.curPeilut.dFullShatYetzia < input.curSidur.dFullShatHatchala)
@@ -52,7 +52,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
                     //        isValid = false;
                     //    }
                     //}
-                }
+              //  }
             }
           //שעת פעילות נמוכה משעת התחלת הסידור
             return true;

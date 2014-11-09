@@ -40,6 +40,7 @@ namespace KdsErrors.FlowManagers.SubFlowManagers
             errorTypeList.Add(ErrorTypes.errMisparSiduriOtoNotExists); //139
             errorTypeList.Add(ErrorTypes.errElementTimeBiggerThanSidurTime);//129
             errorTypeList.Add(ErrorTypes.errShatPeilutSmallerThanShatHatchalaSidur);//121
+            errorTypeList.Add(ErrorTypes.errShatPeilutBiggerThanShatGmarSidur);//122
             errorTypeList.Add(ErrorTypes.errPeilutForSidurNonValid); //84
             errorTypeList.Add(ErrorTypes.errOtoNoNotExists); //69
             errorTypeList.Add(ErrorTypes.errRechevMushbat); //211
@@ -49,7 +50,7 @@ namespace KdsErrors.FlowManagers.SubFlowManagers
             errorTypeList.Add(ErrorTypes.errHighValueKisuyTor);//87
             errorTypeList.Add(ErrorTypes.errElementInSpecialSidurNotAllowed);//123
             errorTypeList.Add(ErrorTypes.errNesiaInSidurVisaNotAllowed); //125
-            errorTypeList.Add(ErrorTypes.errHighValueKisuyTor);//166
+            errorTypeList.Add(ErrorTypes.errHmtanaTimeNotValid);//166
             errorTypeList.Add(ErrorTypes.errSidurNamlakWithoutNesiaCard);//13
             errorTypeList.Add(ErrorTypes.errCurrentPeilutInPrevPeilut); //162
             errorTypeList.Add(ErrorTypes.errTimeMechineInPeilutNotValid);//86

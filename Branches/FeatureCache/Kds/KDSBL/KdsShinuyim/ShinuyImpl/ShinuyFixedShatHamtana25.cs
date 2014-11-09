@@ -155,7 +155,9 @@ namespace KdsShinuyim.ShinuyImpl
 
         private void UpdateHamtana(PeilutDM oElement, string sZmanElement, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, int IndexSidur,int IndexPeilut, ShinuyInputData inputData, SidurDM curSidur)
         {
+            string oVal;
             try{
+                oVal = oElement.lMakatNesia.ToString();
                 SourceObj SourceObject;
                 OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd = GetUpdPeilutObject(IndexSidur, oElement, inputData, oObjSidurimOvdimUpd, out SourceObject);
                 oElement.lMakatNesia = long.Parse(oElement.lMakatNesia.ToString().Replace(oElement.lMakatNesia.ToString().Substring(3, 3), sZmanElement));
@@ -164,6 +166,8 @@ namespace KdsShinuyim.ShinuyImpl
                // oElement = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oElement, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
                 UpdatePeilut(inputData.iMisparIshi, inputData.CardDate, oElement, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
                 curSidur.htPeilut[IndexPeilut] = oElement;
+
+                InsertLogPeilut(inputData, oObjSidurimOvdimUpd.MISPAR_SIDUR, oObjSidurimOvdimUpd.SHAT_HATCHALA, oElement.dFullShatYetzia, oElement.lMakatNesia, oVal, oElement.lMakatNesia.ToString(), 25, IndexSidur, IndexPeilut, "MAKAT_NESIA");            
             }
             catch (Exception ex)
             {
