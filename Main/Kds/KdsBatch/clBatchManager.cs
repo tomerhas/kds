@@ -3273,7 +3273,7 @@ namespace KdsBatch
                     if (oPeilut.iMakatValid != 0)              
                          isValid = false;
                  }
-                else if (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && oPeilut.lMakatNesia.ToString().Substring(0, 3) != "700" && (oPeilut.lMakatNesia.ToString().Length < 8 || oPeilut.iMakatValid != 0))
+                else if (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && oPeilut.lMakatNesia.ToString().Substring(0, 3) != "700" &&  oPeilut.iMakatValid != 0)
                     isValid = false;
 
                 if (!isValid)
@@ -4376,11 +4376,11 @@ namespace KdsBatch
             long lMakatNesia = oPeilut.lMakatNesia;
             clKavim oKavim = new clKavim();
 
-            if ((clKavim.enMakatType)oPeilut.iMakatType == clKavim.enMakatType.mElement
-                && oPeilut.iElementLeYedia == 2 && lMakatNesia > 0)
-            {
-                return isValid;
-            }
+            //if ((clKavim.enMakatType)oPeilut.iMakatType == clKavim.enMakatType.mElement
+            //    && oPeilut.iElementLeYedia == 2 && lMakatNesia > 0)
+            //{
+            //    return isValid;
+            //}
 
             try
             {   //12עקב שינוי שעת התחלה של סידור יכול להיווצר מצב בו יש פעילות המתחילה לפני שעת התחלת הסידור החדשה. אין לבצע את הבדיקה אם הפעילות היא אלמנט (מתחיל ב- 7) והיא לידיעה. פעילות היא לידיעה לפי פרמטר 3 (פעולה / ידיעה בלבד) בטבלת מאפייני אלמנטים121-
@@ -4389,8 +4389,8 @@ namespace KdsBatch
                     
                 if (!(string.IsNullOrEmpty(oPeilut.sShatYetzia)))
                 {
-                    if ((!((oPeilut.iMakatType == (long)clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.iElementLeYedia == 2))) && (lMakatNesia > 0))
-                    {
+                    //if ((!((oPeilut.iMakatType == (long)clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.iElementLeYedia == 2))) && (lMakatNesia > 0))
+                    //{
                         if (oSidur.dFullShatHatchala.Year > clGeneral.cYearNull)
                         {//בדיקה 121
                             if (oPeilut.dFullShatYetzia < oSidur.dFullShatHatchala)
@@ -4413,7 +4413,7 @@ namespace KdsBatch
                                 isValid = false;
                             }
                         }
-                    }
+                    //}
                 }
             }
             catch (Exception ex)
@@ -6643,11 +6643,21 @@ namespace KdsBatch
 
         private bool IsOvedMutaamForEmptyPeilut(ref clSidur oSidur)
         {
+            int makat;
             //. עובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה (יודעים שעובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה לפי ערכים 6, 7 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים) במקרה זה יש לבדוק אם הסידור מכיל רק נסיעות ריקות, מפעילים את הרוטינה לזיהוי מקט
-            return ((oOvedYomAvodaDetails.sMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode().ToString() ||
+            if (((oOvedYomAvodaDetails.sMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode().ToString() ||
                    oOvedYomAvodaDetails.sMutamut == clGeneral.enMutaam.enMutaam7.GetHashCode().ToString())
-                   && (oSidur.bSidurNotEmpty)); 
-
+                   && (oSidur.bSidurNotEmpty)))
+            {
+                foreach (clPeilut peilut in oSidur.htPeilut.Values.Cast<clPeilut>().ToList())
+                {
+                    makat = int.Parse(peilut.lMakatNesia.ToString().Substring(0, 3));
+                    if (makat == 701 || makat == 702 || makat == 711)
+                        return false;
+                }
+               return true;
+            }
+            return false;
         }
 
         private bool IsHmtanaTimeValid166(ref clSidur oSidur, ref clPeilut oPeilut, ref DataTable dtErrors)
