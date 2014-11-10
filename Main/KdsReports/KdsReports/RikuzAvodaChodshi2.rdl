@@ -7166,7 +7166,7 @@
               <Width>0.9cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>1.76122cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.71598cm</Width>
@@ -7369,7 +7369,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>מחלה משרד הביטחון</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -8139,14 +8139,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox298">
+                    <Textbox Name="R292">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!R292.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -8157,7 +8157,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox298</rd:DefaultName>
+                      <rd:DefaultName>R292</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -8806,17 +8806,17 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <TablixMembers>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(ReportItems!CNT_HEADRUT.Value &lt; 3, False, True)</Hidden>
-              </Visibility>
-            </TablixMember>
-            <TablixMember>
-              <Visibility>
                 <Hidden>=iif(ReportItems!CNT_HEADRUT.Value &lt; 2, False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
                 <Hidden>=iif(ReportItems!CNT_HEADRUT.Value &lt; 1, False, True)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Fields!R292.Value &lt;&gt; Nothing, False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -8909,7 +8909,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <Top>7.63403cm</Top>
         <Left>9.24428cm</Left>
         <Height>1.24282cm</Height>
-        <Width>23.12452cm</Width>
+        <Width>23.98574cm</Width>
         <ZIndex>13</ZIndex>
         <Style>
           <Border>
@@ -12797,8 +12797,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <FixedColumnHeaders>true</FixedColumnHeaders>
         <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>dsRechiveyShonot</DataSetName>
-        <Top>7.81597cm</Top>
-        <Left>0.05108cm</Left>
+        <Top>7.63076cm</Top>
+        <Left>0.07754cm</Left>
         <Height>1.24282cm</Height>
         <Width>40.19928cm</Width>
         <ZIndex>17</ZIndex>
@@ -12816,7 +12816,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
       </Border>
     </Style>
   </Body>
-  <Width>15.8466in</Width>
+  <Width>15.86743in</Width>
   <Page>
     <PageHeight>13in</PageHeight>
     <PageWidth>9in</PageWidth>
@@ -13270,6 +13270,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <Field Name="R290">
           <DataField>R290</DataField>
           <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="R292">
+          <DataField>R292</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>

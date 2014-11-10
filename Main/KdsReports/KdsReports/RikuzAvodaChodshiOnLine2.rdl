@@ -26,7 +26,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox12</rd:DefaultName>
         <Top>0.56733cm</Top>
-        <Left>7.45428cm</Left>
+        <Left>7.8247cm</Left>
         <Height>0.50271cm</Height>
         <Width>5.05749cm</Width>
         <Style>
@@ -44,7 +44,7 @@
         <Value>logo1</Value>
         <Sizing>FitProportional</Sizing>
         <Top>0.02646cm</Top>
-        <Left>19.21944cm</Left>
+        <Left>19.58986cm</Left>
         <Height>1.15604cm</Height>
         <Width>1.26188cm</Width>
         <ZIndex>1</ZIndex>
@@ -87,7 +87,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
         <Top>0.179cm</Top>
-        <Left>13.96018cm</Left>
+        <Left>14.3306cm</Left>
         <Height>0.89104cm</Height>
         <Width>4.72895cm</Width>
         <ZIndex>2</ZIndex>
@@ -331,7 +331,7 @@
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>5.61155cm</Top>
-        <Left>2.47765cm</Left>
+        <Left>2.84807cm</Left>
         <Height>0.46373cm</Height>
         <Width>16.92904cm</Width>
         <ZIndex>3</ZIndex>
@@ -1096,7 +1096,7 @@
         </TablixRowHierarchy>
         <DataSetName>dsPirteyOved</DataSetName>
         <Top>1.51143cm</Top>
-        <Left>0.01666cm</Left>
+        <Left>0.38708cm</Left>
         <Height>0.79611cm</Height>
         <Width>20.46462cm</Width>
         <ZIndex>4</ZIndex>
@@ -1125,7 +1125,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>5.73669cm</Top>
-        <Left>0.29642cm</Left>
+        <Left>0.66684cm</Left>
         <Height>0.29819cm</Height>
         <Width>1.26948cm</Width>
         <ZIndex>5</ZIndex>
@@ -1157,7 +1157,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>5.29246cm</Top>
-        <Left>19.54168cm</Left>
+        <Left>19.9121cm</Left>
         <Height>0.24807cm</Height>
         <Width>0.97887cm</Width>
         <ZIndex>6</ZIndex>
@@ -1184,7 +1184,7 @@
               <Width>0.9cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>1.46895cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.94169cm</Width>
@@ -1387,7 +1387,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>מחלה משרד הביטחון</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -2157,14 +2157,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox298">
+                    <Textbox Name="R292">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!R292.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -2175,7 +2175,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox298</rd:DefaultName>
+                      <rd:DefaultName>R292</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -2824,17 +2824,17 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <TablixMembers>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(ReportItems!CNT_HEADRUT.Value &lt; 3, False, True)</Hidden>
-              </Visibility>
-            </TablixMember>
-            <TablixMember>
-              <Visibility>
                 <Hidden>=iif(ReportItems!CNT_HEADRUT.Value &lt; 2, False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
                 <Hidden>=iif(ReportItems!CNT_HEADRUT.Value &lt; 1, False, True)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Fields!R292.Value &lt;&gt; Nothing, False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -2925,9 +2925,9 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsHeadruyot</DataSetName>
         <Top>6.41204cm</Top>
-        <Left>9.29578cm</Left>
+        <Left>9.47384cm</Left>
         <Height>1.24282cm</Height>
-        <Width>23.28046cm</Width>
+        <Width>23.84941cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -4907,7 +4907,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>DsRechivim</DataSetName>
         <Top>2.38943cm</Top>
-        <Left>0.0161cm</Left>
+        <Left>0.38652cm</Left>
         <Height>1.05506cm</Height>
         <Width>20.46992cm</Width>
         <ZIndex>8</ZIndex>
@@ -8225,7 +8225,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsRechivimChodshiym</DataSetName>
         <Top>3.44448cm</Top>
-        <Left>0.01666cm</Left>
+        <Left>0.38708cm</Left>
         <Height>1.49815cm</Height>
         <Width>20.46981cm</Width>
         <ZIndex>9</ZIndex>
@@ -8601,7 +8601,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsPirteyOved</DataSetName>
         <Top>3.23615in</Top>
-        <Left>3.67318in</Left>
+        <Left>3.81901in</Left>
         <Height>0.47013in</Height>
         <Width>4.40866in</Width>
         <ZIndex>10</ZIndex>
@@ -8836,7 +8836,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsKizuz</DataSetName>
         <Top>3.7866in</Top>
-        <Left>3.67318in</Left>
+        <Left>3.81901in</Left>
         <Height>0.47013in</Height>
         <Width>4.42199in</Width>
         <ZIndex>11</ZIndex>
@@ -8864,7 +8864,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </Paragraph>
         </Paragraphs>
         <Top>3.45628in</Top>
-        <Left>0.51772in</Left>
+        <Left>0.66355in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
         <ZIndex>12</ZIndex>
@@ -8901,7 +8901,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Paragraphs>
         <rd:DefaultName>Textbox84</rd:DefaultName>
         <Top>3.12484in</Top>
-        <Left>0.1167in</Left>
+        <Left>0.26253in</Left>
         <Height>0.15625in</Height>
         <Width>1.58763in</Width>
         <ZIndex>13</ZIndex>
@@ -8938,7 +8938,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Paragraphs>
         <rd:DefaultName>Textbox84</rd:DefaultName>
         <Top>2.02525in</Top>
-        <Left>0.00656in</Left>
+        <Left>0.15239in</Left>
         <Height>0.11458in</Height>
         <Width>1.58763in</Width>
         <ZIndex>14</ZIndex>
@@ -8975,7 +8975,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Paragraphs>
         <rd:DefaultName>Textbox84</rd:DefaultName>
         <Top>6.19076in</Top>
-        <Left>6.43703in</Left>
+        <Left>6.58286in</Left>
         <Height>0.11458in</Height>
         <Width>1.7543in</Width>
         <ZIndex>15</ZIndex>
@@ -9213,7 +9213,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsKizuzNeemanim</DataSetName>
         <Top>4.36784in</Top>
-        <Left>3.67318in</Left>
+        <Left>3.81901in</Left>
         <Height>0.51042in</Height>
         <Width>4.42282in</Width>
         <ZIndex>16</ZIndex>
@@ -9454,7 +9454,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
         <Top>5.02608in</Top>
-        <Left>2.87225in</Left>
+        <Left>3.01808in</Left>
         <Height>1.09523in</Height>
         <Width>3.96481in</Width>
         <ZIndex>17</ZIndex>
@@ -12832,7 +12832,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <FixedColumnHeaders>true</FixedColumnHeaders>
         <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>dsRechiveyShonot</DataSetName>
-        <Top>6.38102cm</Top>
+        <Top>6.43394cm</Top>
+        <Left>0.18521cm</Left>
         <Height>1.24282cm</Height>
         <Width>40.15839cm</Width>
         <ZIndex>18</ZIndex>
@@ -12843,10 +12844,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>6.37825in</Height>
+    <Height>6.38872in</Height>
     <Style />
   </Body>
-  <Width>15.81039in</Width>
+  <Width>15.88331in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -13389,6 +13390,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <Field Name="R290">
           <DataField>R290</DataField>
           <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="R292">
+          <DataField>R292</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
