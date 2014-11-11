@@ -400,7 +400,8 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
       }
      } 
              
-    function GetOvedMisparSucc(result) {
+     function GetOvedMisparSucc(result) {
+        // debugger;
            if (result == '' || result == "null" || result == null  ) {
            
                 alert('שם לא נמצא');                                    
@@ -422,7 +423,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
     }
     
     function GetOvedNameSucceeded(result) {
-       
+     //   debugger;
         if (result == '' || result == "null" || result == null) {
             alert('מספר אישי לא קיים');
             document.getElementById("ctl00_KdsContent_txtName").value = '';
@@ -463,7 +464,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
     }
      
     function continue_click() {
-   
+      //  debugger;
         var rdo = document.getElementById("ctl00_KdsContent_rdoId");
         if (rdo.checked) {
 
@@ -478,6 +479,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
         }
         document.getElementById("ctl00_KdsContent_btnSearch").click();
         document.getElementById("ctl00_KdsContent_txtPremiaMinutes").disabled = false;
+        document.getElementById("ctl00_KdsContent_btnUpdate").disabled = false;
     }
 //    function onchange_ddStatuses() {
 //        document.getElementById("ctl00_KdsContent_ddMonths").selectedIndex = 0;
