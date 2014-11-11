@@ -1009,6 +1009,8 @@ namespace KdsBatch
                 //ימי נוכחות לעובד (רכיב 109)
                 CalcRechiv109();
 
+                //יכמות ימי עבודה שעובד נכח בעבודה (רכיב 293) 
+                CalcRechiv293();
                 //משמרת שנייה במשק (רכיב 125) 
                 CalcRechiv125();
 
@@ -4097,6 +4099,21 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiv293()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YemeyNochechut.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.YemeyNochechut.GetHashCode(), fSumDakotRechiv);  
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyNochechut.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
+        
         private void CalcRechiv110()
         {
             float fSumDakotRechiv;

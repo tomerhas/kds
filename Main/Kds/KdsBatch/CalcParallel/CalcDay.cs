@@ -438,6 +438,9 @@ namespace KdsBatch
                 //ימי נוכחות לעובד (רכיב 109)
                 CalcRechiv109();
 
+                //יכמות ימי עבודה שעובד נכח בעבודה (רכיב 293) 
+                CalcRechiv293();
+
                 //דקות פרמיה בתוך המכסה  (רכיב 27) 
                 CalcRechiv27();
 
@@ -3620,7 +3623,8 @@ namespace KdsBatch
                           (objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 8)  ||
                           (objOved.objPirteyOved.iSibotMutamut == 1 ) ) )
                          fErechRechiv = objOved.objPirteyOved.iZmanMutamut / fMichsaYomit;
-                                
+
+                    fErechRechiv = float.Parse(Math.Round(fErechRechiv, 2, MidpointRounding.AwayFromZero).ToString());   
                     addRowToTable(clGeneral.enRechivim.YomMachalaMisradHaBitachon.GetHashCode(), fErechRechiv);
                 }
 
@@ -4623,7 +4627,10 @@ namespace KdsBatch
                                 {
                                     fNesiotTchilatYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Haloch"].ToString());
                                     if (bLogNahag)
-                                        fNesiotTchilatYom = fNesiotTchilatYom - 45;
+                                    {
+
+                                        fNesiotTchilatYom = fNesiotTchilatYom - GetDakotHafchataMizmanNesia();
+                                    }
                                     if (fNesiotTchilatYom < 0)
                                     {
                                         fNesiotTchilatYom = 0;
@@ -4633,7 +4640,7 @@ namespace KdsBatch
                                 {
                                     fNesiotTchilatYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Haloch"].ToString());
                                     if (bLogNahag)
-                                        fNesiotTchilatYom = fNesiotTchilatYom - 45;
+                                        fNesiotTchilatYom = fNesiotTchilatYom - GetDakotHafchataMizmanNesia();
                                     fNesiotTchilatYom = Math.Min(fNesiotTchilatYom, (float.Parse((DateTime.Parse(rowMezakeNesia[0]["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(RowKodem["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString())));
                                     if (fNesiotTchilatYom < 0)
                                     {
@@ -4681,7 +4688,7 @@ namespace KdsBatch
                                 {
                                     fNesiotSofYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Hazor"].ToString());
                                     if (bLogNahag)
-                                        fNesiotSofYom = fNesiotSofYom - 45;
+                                        fNesiotSofYom = fNesiotSofYom - GetDakotHafchataMizmanNesia();
                                     if (fNesiotSofYom < 0)
                                     {
                                         fNesiotSofYom = 0;
@@ -4691,7 +4698,7 @@ namespace KdsBatch
                                 {
                                     fNesiotSofYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Hazor"].ToString());
                                     if (bLogNahag)
-                                        fNesiotSofYom = fNesiotSofYom - 45;
+                                        fNesiotSofYom = fNesiotSofYom - GetDakotHafchataMizmanNesia();
                                     fNesiotSofYom = Math.Min(fNesiotSofYom, float.Parse((DateTime.Parse(RowNext["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(rowMezakeNesia[0]["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString()));
                                     if (fNesiotSofYom < 0)
                                     {
@@ -4747,6 +4754,22 @@ namespace KdsBatch
             }
         }
 
+        private int GetDakotHafchataMizmanNesia()
+        {
+            try
+            {
+                int dakot = 45;
+                if (objOved.Taarich >= objOved.objParameters.dTaarichHafalatHafchataZmanNesia)
+                    if (!String.IsNullOrEmpty(objOved.objMeafyeneyOved.sMeafyen51))
+                        dakot = objOved.objParameters.iDakotHafchataZmanNesia;
+               
+                return dakot;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
         private void CalcRechiv96()
         {
             float fSumDakotRechiv;
@@ -4913,6 +4936,23 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiv293()
+        {
+            float  fDakotNochehut;
+            try
+            {
+                fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
+                if(fDakotNochehut>0)
+                    addRowToTable(clGeneral.enRechivim.YemeyNochechut.GetHashCode(), 1);
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyNochechut.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+          
+        }
+        
         private void CalcRechiv110()
         {
             float fDakotNochehut, fMichsaMechushevet, fYomMachala, fYomMachaltHorim, fYomMachalaBoded, fYomMachalaBenZug;

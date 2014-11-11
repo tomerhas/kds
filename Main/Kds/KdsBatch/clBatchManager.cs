@@ -6652,10 +6652,9 @@ namespace KdsBatch
                 foreach (clPeilut peilut in oSidur.htPeilut.Values.Cast<clPeilut>().ToList())
                 {
                     makat = int.Parse(peilut.lMakatNesia.ToString().Substring(0, 3));
-                    if (makat == 701 || makat == 702 || makat == 711)
-                        return false;
+                    if (makat != 701 && makat != 702 && makat != 711 && (clKavim.enMakatType)peilut.iMakatType != clKavim.enMakatType.mEmpty)
+                        return true;
                 }
-               return true;
             }
             return false;
         }

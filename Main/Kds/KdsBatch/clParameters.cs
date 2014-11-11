@@ -218,6 +218,8 @@ namespace KdsBatch
         public DateTime dTaarichBitulEshel; // -283 תאריך ביטול תשלום אש"ל לפי סיבה עבודה סמויה 
         public DateTime dTaarichBitulNosafotAlTikni; // -284 תאריך ביטול מכסת שעות נוספות לעל תקני 
         public DateTime dTaarichHafalatNochechutBeyomMiluim; // -285 תאריך הפעלת חישוב רכיב נוכחות ביום מילואים
+        public DateTime dTaarichHafalatHafchataZmanNesia; // -286 תאריך הפעלת הפחתת 60 דקות בזמן נסיעה 
+        public int iDakotHafchataZmanNesia; // -287 דקות להפחתה מזמן נסיעה  
 
         public float fBasisLechishuvPremia; //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
         public float fMichsatSaotChodshitET; //503 -אגד תעבורה- מכסת שעות חודשית 
@@ -1043,10 +1045,18 @@ namespace KdsBatch
                 sTmp = GetOneParam(284, dCardDate);
                 dTaarichBitulNosafotAlTikni = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
-                //283
+                //285
                 sTmp = GetOneParam(285, dCardDate);
                 dTaarichHafalatNochechutBeyomMiluim = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
+                //286
+                sTmp = GetOneParam(286, dCardDate);
+                dTaarichHafalatHafchataZmanNesia = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+                
+                //287
+                sTmp = GetOneParam(287, dCardDate);
+                iDakotHafchataZmanNesia = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+                
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);
                 fMichsatSaotChodshitET = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
