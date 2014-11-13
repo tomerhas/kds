@@ -151,6 +151,7 @@ namespace KdsLibrary
         public const string cProGetAllErrorsAndFields = "pkg_errors.pro_get_all_shgiot";
         public const string cProGetApprovalErrors = "pkg_errors.get_approval_errors";
         public const string cProGetShgiotNoActive = "Pkg_Errors.pro_get_shgiot_active";
+        public const string cProSaveCardIsUsed = "Pkg_Errors.fun_save_card_is_used";
 #endregion
 
 #region pkg_ovdim constants

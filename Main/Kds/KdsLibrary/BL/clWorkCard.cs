@@ -257,6 +257,30 @@ namespace KdsLibrary.BL
             }
         }
         
+        public int SaveWCInUsed(int mispar_ishi,DateTime taarich,int meadken_ol)
+        {
+           int meadken=0;
+           clDal oDal = new clDal();
+            try{
+
+               // oDal.AddParameter("p_is_used", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_is_used", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, mispar_ishi, ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
+                oDal.AddParameter("p_meadken_ol", ParameterType.ntOracleInteger, meadken_ol, ParameterDir.pdInput);
+               // oDal.AddParameter("p_is_used", ParameterType.ntOracleInteger, meadken, ParameterDir.pdOutput);
+
+                oDal.ExecuteSP(clGeneral.cProSaveCardIsUsed);
+
+                meadken = int.Parse(oDal.GetValParam("p_is_used").ToString());
+
+                 return meadken;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public void SaveEmployeeCard(COLL_YAMEY_AVODA_OVDIM oCollYameyAvodaUpd, COLL_SIDURIM_OVDIM oCollSidurimOvdimUpd,
                                      COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd, COLL_SIDURIM_OVDIM oCollSidurimOvdimIns,
                                      COLL_SIDURIM_OVDIM oCollSidurimOvdimDel, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimDel,

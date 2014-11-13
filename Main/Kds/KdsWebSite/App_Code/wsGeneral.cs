@@ -44,7 +44,16 @@ public class wsGeneral : System.Web.Services.WebService
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
     }
-    
+
+   [WebMethod(EnableSession = true)]
+    public void FreeWC(int iMisparIshi, string dDateCard, int imeadkenOl)
+    {
+      //  int iMisparIshi=0; string dDateCard="0";
+        clWorkCard _WorkCard = new clWorkCard();
+        int iLoginUser = int.Parse(Session["LoginUserEmp"].ToString());
+       if (iLoginUser==imeadkenOl)
+         _WorkCard.SaveWCInUsed(iMisparIshi, DateTime.Parse(dDateCard), 0);
+    }
     
     [WebMethod(EnableSession = true)]
     public string IsCardExists(int iMisparIshi, string sWorkCard)
@@ -2535,6 +2544,8 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
+
+   
     private void UpdateSidurimCash(int iSidurNumber, int iSidurIndex, DateTime dCardDate)
     {        
         clSidur _Sidur;

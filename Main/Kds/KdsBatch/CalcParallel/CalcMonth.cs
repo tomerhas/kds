@@ -6297,16 +6297,19 @@ namespace KdsBatch
             float fSumDakotRechiv, fNochehutPremia;
             try
             {
-                if (objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.MenahelMoreNehiga.GetHashCode())
+                if (objOved.Month < objOved.objParameters.dTaarichBitulPremiaNahagutForHoraa)
                 {
-
-                    if (objOved.objMeafyeneyOved.iMeafyen60 <= 0)
+                    if (objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.MenahelMoreNehiga.GetHashCode())
                     {
-                        fNochehutPremia = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.NochechutLepremyaMenahel.GetHashCode());
-                        fSumDakotRechiv = (objOved.objParameters.fAchuzPremiaMenahel * fNochehutPremia) / 100;
-                        addRowToTable(clGeneral.enRechivim.PremyaMenahel.GetHashCode(), fSumDakotRechiv);
-                    }
 
+                        if (objOved.objMeafyeneyOved.iMeafyen60 <= 0)
+                        {
+                            fNochehutPremia = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.NochechutLepremyaMenahel.GetHashCode());
+                            fSumDakotRechiv = (objOved.objParameters.fAchuzPremiaMenahel * fNochehutPremia) / 100;
+                            addRowToTable(clGeneral.enRechivim.PremyaMenahel.GetHashCode(), fSumDakotRechiv);
+                        }
+
+                    }
                 }
             }
             catch (Exception ex)
