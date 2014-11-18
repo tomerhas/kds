@@ -258,8 +258,8 @@ namespace KdsErrors
                 foreach (PeilutDM peilut in input.curSidur.htPeilut.Values.Cast<PeilutDM>().ToList())
                 {
                     makat = int.Parse(peilut.lMakatNesia.ToString().Substring(0, 3));
-                    if (makat == 701 || makat == 702 || makat == 711)
-                        return false;
+                    if (makat != 701 && makat != 702 && makat != 711 && (enMakatType)peilut.iMakatType != enMakatType.mEmpty)
+                        return true;
                 }
                 return true;
             }
