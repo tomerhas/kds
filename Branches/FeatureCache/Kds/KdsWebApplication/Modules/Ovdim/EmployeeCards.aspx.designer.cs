@@ -210,6 +210,15 @@ public partial class Modules_Ovdim_EmployeeCards {
     protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidFromEmda;
     
     /// <summary>
+    /// HidLoginUse control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.HtmlControls.HtmlInputHidden HidLoginUse;
+    
+    /// <summary>
     /// HiddenEmployeeCardsPage control.
     /// </summary>
     /// <remarks>

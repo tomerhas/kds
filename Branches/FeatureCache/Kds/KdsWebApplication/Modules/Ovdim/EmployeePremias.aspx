@@ -48,7 +48,7 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
                         </td>
                         <td>
                             <asp:Button Text="הצג" ID="btnExecute"  Enabled="false"
-                                runat="server" CssClass="ImgButtonSearch" />
+                                runat="server" CssClass="ImgButtonSearch"  OnClientClick="DisabledSearchTR(false);"/>
                         </td>
                     </tr>
                 </table>
@@ -63,7 +63,7 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
     <fieldset > 
         <legend>חיפוש לפי</legend>      
         <table class="FilterTable" style="width:100%;"> 
-            <tr>
+           <tr id="trSearchMI" runat="server">
                 <td class="InternalLabel" style="width:80px;">
                     <asp:UpdatePanel ID="UpdatePanel3" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
@@ -296,12 +296,20 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
     
     <script language="javascript" type="text/javascript">
   
-    function load()
-    {
-        window.moveTo(0,0);
-        window.resizeTo(screen.availWidth,screen.availHeight);
-        
-       SetTextBox();
+    function load() {
+        window.moveTo(0, 0);
+        window.resizeTo(screen.availWidth, screen.availHeight);
+
+        SetTextBox();
+        DisabledSearchTR(true);
+    }
+
+    function DisabledSearchTR(val) {
+        document.getElementById("ctl00_KdsContent_txtId").disabled = val;
+        document.getElementById("ctl00_KdsContent_txtName").disabled = val;
+        document.getElementById("ctl00_KdsContent_btnSearch").disabled = val;
+        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").disabled = val;
+        document.getElementById("ctl00_KdsContent_btnUpdate").disabled = val;
     }
     
     function SetTextBox()
@@ -467,6 +475,8 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
             //    document.getElementById("ctl00_KdsContent_txtName").select();
         }
         document.getElementById("ctl00_KdsContent_btnSearch").click();
+        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").disabled = false;
+        document.getElementById("ctl00_KdsContent_btnUpdate").disabled = false;
     }
 //    function onchange_ddStatuses() {
 //        document.getElementById("ctl00_KdsContent_ddMonths").selectedIndex = 0;

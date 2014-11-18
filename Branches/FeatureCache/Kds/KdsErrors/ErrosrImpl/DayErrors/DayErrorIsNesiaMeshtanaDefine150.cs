@@ -39,6 +39,7 @@ namespace KdsErrors.ErrosrImpl.DayErrors
 
                     if (iZmanNesiaChazor == -1 || iZmanNesiaHaloch == -1)
                     {
+                        AddNewError(input);
                         return false;
 
                     }

@@ -144,7 +144,7 @@
                     <td>
                         <input type="hidden" runat="server" id="hidMeasherMistayeg" />  
                         <input type="hidden" id="hidRefresh" runat="server"/>
-                        <asp:Button runat="server" ID="btnRefreshOvedDetails" Text="הצג" OnClientClick="RefreshBtn();"  OnClick="btnRefreshOvedDetails_Click"
+                        <asp:Button runat="server" ID="btnRefreshOvedDetails" Text="הצג" OnClientClick="FreeWC();RefreshBtn();"  OnClick="btnRefreshOvedDetails_Click"
                             CausesValidation="false" CssClass="ImgButtonShow"  TabIndex="2" Style="height: 30px; width:54px"/>
                             <input type="hidden" runat="server" id="hidSave"/>                                                                                                                                               
                     </td>                                            
@@ -210,11 +210,11 @@
                         <td width="1px" class="WorkCardTdBorder"></td>
                         <td width="48px"></td>
                         <td width="15px">
-                            <asp:Button runat="server" ID="btnPrevCard" CssClass="btnPrevDay"  OnClientClick="RefreshBtn();SetNewDate(-1);" OnClick="btnRefreshOvedDetails_Click"
+                               <asp:Button runat="server" ID="btnPrevCard" CssClass="btnPrevDay"  OnClientClick="FreeWC();RefreshBtn();SetNewDate(-1);" OnClick="btnRefreshOvedDetails_Click"
                                 CausesValidation="false" Height="25px" />                                    
                         </td>
                         <td align="right" width="25px">
-                            <asp:Button runat="server" ID="btnNextCard" CssClass="btnNextDay"  OnClientClick="RefreshBtn();SetNewDate(1);" OnClick="btnRefreshOvedDetails_Click"
+                            <asp:Button runat="server" ID="btnNextCard" CssClass="btnNextDay"  OnClientClick="FreeWC();RefreshBtn();SetNewDate(1);" OnClick="btnRefreshOvedDetails_Click"
                                 CausesValidation="false" Height="25px" />                                    
                         </td>
                         <td width="105px" align="right" >
@@ -456,7 +456,7 @@
                                                     Width="170px" OnClick="btnConfirm_click" CausesValidation="false" OnClientClick= 'return PageValidity(2);'/>
                                             </td>
                                             <td align="left">
-                                                 <asp:Button runat="server" ID="btnCancel" Text="סגור ללא עדכון" CssClass="btnWorkCardUpdate" CausesValidation="false" OnClientClick="DisabledButtons(2); CloseWindow();return false;" />                                    
+                                                  <asp:Button runat="server" ID="btnCancel" Text="סגור ללא עדכון" CssClass="btnWorkCardUpdate" CausesValidation="false" OnClientClick="FreeWC();DisabledButtons(2); CloseWindow();return false;" />                                    
                                             </td>
                                         </tr>
                                     </table>                                                                                                  
@@ -644,7 +644,8 @@
         <input type="hidden" runat="server" id="hidDriver"/>
         <input type="hidden" runat="server" id="hidUpdateBtn"/>
         <input type="hidden" runat="server" id="hidSdrInd"/>
-        <input type="hidden" runat="server" id="hidPrevHalbasha"/>        
+        <input type="hidden" runat="server" id="hidPrevHalbasha"/>     
+        <input type="hidden" runat="server" id="hidMiMeadkenOL"/>      
     </form>   
     <script language="vbscript" type="text/vbscript">
         sub ShiftTab()
@@ -893,6 +894,10 @@
                             },150);
             return true;
         }
+
+        window.onbeforeunload = function () {
+            window.returnValue= $get("txtId").value +'|'+ $get("clnDate").value +'|'+ $get("hidMiMeadkenOL").value;  
+        };
     </script>
 </body>
 </html>

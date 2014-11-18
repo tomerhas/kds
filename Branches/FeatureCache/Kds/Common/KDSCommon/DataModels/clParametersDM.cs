@@ -182,6 +182,15 @@ namespace KDSCommon.DataModels
         public int iMinNuchehutVisaPnimRishon2; //227 - מינימום הנוכחות לויזה - יום ראשון-   מ- 14:00
         public DateTime dTaarichmichsatHachanatMechona; // - 278
         public DateTime dTaarichPremiatNahagut; // - 279  תאריך שינוי לוגיקת פרמית נהגות 
+
+        public DateTime dTaarichBitulEshel; // -283 תאריך ביטול תשלום אש"ל לפי סיבה עבודה סמויה 
+        public DateTime dTaarichBitulNosafotAlTikni; // -284 תאריך ביטול מכסת שעות נוספות לעל תקני 
+        public DateTime dTaarichHafalatNochechutBeyomMiluim; // -285 תאריך הפעלת חישוב רכיב נוכחות ביום מילואים
+        public DateTime dTaarichHafalatHafchataZmanNesia; // -286 תאריך הפעלת הפחתת 60 דקות בזמן נסיעה 
+        public int iDakotHafchataZmanNesia; // -287 דקות להפחתה מזמן נסיעה  
+        public DateTime dTaarichBitulPremiaNahagutForHoraa; // -288 תאריך ביטול פרמיית נהגות לסידור הוראת נהיגה 
+
+
         public int iMaxNochehutVisaPnim; //228 - ויזה פנים -יום ראשון - מקסימום נוכחות
         public int iMinNochehutVisaPnim; //229 - ויזה פנים -יום ראשון - מינימום נוכחות
         public int iNochehutVisaPnimNoShabaton; //230 - ויזה פנים נוכחות - לא שבתון

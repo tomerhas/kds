@@ -3994,6 +3994,174 @@ Public Class ClKds
             sr.Close()
         End Try
     End Sub
+    Public Sub TryKdsFileAgtan()
+
+        'in web.config & app.config key="KdsInputFileNamePundakim" default value="Agtan*.TXT"
+        Dim FileName As String = ConfigurationSettings.AppSettings("KdsInputFileNameAgtan")
+        If Trim(FileName) = "" Then
+            FileName = "A01SN_AGTAN.DAT"
+        End If
+        Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePath") '"\\KDSTEST\Files"
+        Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPath") '"inkds_old\"
+        Dim FileNameOld As String
+        Dim MyFile As String
+        Dim ShaonimNumber As Integer
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim strErrorOfFiles As String = String.Empty
+        Dim ErrorCounter As Integer = 0
+        Dim NewMyFile As String
+
+
+        Try
+            MyFile = Dir(InPath & FileName)
+            If Not MyFile = "" Then
+                ShaonimNumber = oBatch.InsertProcessLog(2, 2, KdsLibrary.BL.RecordStatus.Wait, "Agtan", 0)
+
+                While Not MyFile = ""
+                    Try
+                        NewMyFile = ""
+                        NewMyFile = LoadKdsFileAgtan(MyFile, ShaonimNumber)
+                    Catch ex As Exception
+                        ErrorCounter = ErrorCounter + 1
+                        strErrorOfFiles = strErrorOfFiles & ErrorCounter.ToString() & "." & ex.Message & vbCr
+                    End Try
+                    FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
+                    File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after copy Agtan " & MyFile, 0)
+                    File.Delete(InPath & MyFile)
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete Agtan " & MyFile, 0)
+
+                    FileNameOld = Left(NewMyFile, Len(NewMyFile) - 4) & ".old"
+                    File.Copy(InPath & NewMyFile, InPath & SubFolder & FileNameOld, True)
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after copy NewMyFile " & NewMyFile, 0)
+                    File.Delete(InPath & NewMyFile)
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete NewMyFile " & NewMyFile, 0)
+
+                    MyFile = Dir()
+                End While
+                oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, "Agtan", 0)
+                If (strErrorOfFiles <> String.Empty) Then
+                    Throw New Exception(strErrorOfFiles)
+                End If
+            End If
+
+        Catch ex As Exception
+            oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Agtan aborted" & ex.Message, 3)
+            Throw ex
+        End Try
+    End Sub
+    Public Function LoadKdsFileAgtan(ByVal InFileName, ByVal ShaonimNumber) As String
+
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim sr As StreamReader
+        Dim sw As StreamWriter
+        Dim ErrFileName As String
+        Dim OutFileName As String
+        Dim line As String
+        Dim InPathNFile As String
+        Dim SRV_D_TAARICH As String
+        Dim srv_d_in_out As String
+        Dim SRV_D_ISHI As String
+        Dim SRV_D_KNISA_X As String
+        Dim srv_d_maamad As String
+        Dim SRV_D_MIKUM_Kod As String
+        Dim SRV_D_MIKUM As String
+        Dim SRV_D_MIKUM_KNISA As String
+        Dim SRV_D_YETZIA_X As String
+        Dim SRV_D_MIKUM_YETZIA As String
+        Dim Outline As String
+        Dim OutFile As String
+
+
+        Try
+
+            ErrFileName = ConfigurationSettings.AppSettings("KdsFilePath") & "Agtan" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & CStr(Now.Second) & ".err"
+            InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & InFileName
+            OutFileName = ConfigurationSettings.AppSettings("KdsFilePath") & "Agtan" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & ".TXT"
+            OutFile = "Agtan" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & ".TXT"
+
+            sr = New StreamReader(InPathNFile)
+            sw = New StreamWriter(OutFileName, False)
+
+            line = sr.ReadLine
+            If Trim(line) = "" Then
+                line = sr.ReadLine
+            End If
+            While Not ((Trim(line) Is Nothing) Or (Trim(line) = ""))
+                Try
+                    SRV_D_TAARICH = Mid(line, 5, 4) & Mid(line, 3, 2) & Mid(line, 1, 2) 'convert from format=ddmmyyyy 
+                    srv_d_in_out = Mid(line, 9, 3) 'A10=in, B20=out
+                    SRV_D_ISHI = Mid(line, 12, 5)
+                    SRV_D_MIKUM_Kod = Mid(line, 22, 2) 'M0=19501, P0=20101
+                    If SRV_D_MIKUM_Kod = "M0" Then
+                        SRV_D_MIKUM = "195"
+                    ElseIf SRV_D_MIKUM_Kod = "P0" Then
+                        SRV_D_MIKUM = "201"
+                    Else
+                        SRV_D_MIKUM = "000"
+                        'todo: Error mikum
+                    End If
+                    If srv_d_in_out = "A10" Then
+                        SRV_D_KNISA_X = Mid(line, 17, 4) 'format=hhmm
+                        SRV_D_MIKUM_KNISA = SRV_D_MIKUM
+                        SRV_D_YETZIA_X = "0000"
+                        SRV_D_MIKUM_YETZIA = SRV_D_MIKUM
+                    ElseIf srv_d_in_out = "B20" Then
+                        SRV_D_YETZIA_X = Mid(line, 17, 4) 'format=hhmm
+                        SRV_D_MIKUM_YETZIA = SRV_D_MIKUM
+                        SRV_D_KNISA_X = "0000"
+                        SRV_D_MIKUM_KNISA = SRV_D_MIKUM
+                    Else
+                        SRV_D_KNISA_X = "0000"
+                        SRV_D_MIKUM_KNISA = SRV_D_MIKUM
+                        SRV_D_YETZIA_X = "0000"
+                        SRV_D_MIKUM_YETZIA = SRV_D_MIKUM
+                        'todo: error in-out kod
+                    End If
+                    'prepare line for Agtan:
+                    '7769062014100646100095902106115180100150702106115180000000000000000000000        99001000000000101  
+                    Outline = ""
+                    Outline = SRV_D_ISHI & "0"
+                    Outline = Outline & SRV_D_TAARICH & "00000"
+                    Outline = Outline & SRV_D_KNISA_X & "00000000"
+                    Outline = Outline & SRV_D_MIKUM_KNISA & "000"
+                    Outline = Outline & SRV_D_YETZIA_X & "00000000"
+                    Outline = Outline & SRV_D_MIKUM_YETZIA
+                    Outline = Outline & "000000000000000000000        9900100000000"
+                    If Not SRV_D_MIKUM_KNISA = "000" Then
+                        Outline = Outline & "01"
+                    Else
+                        Outline = Outline & "00"
+                    End If
+                    If Not SRV_D_MIKUM_YETZIA = "000" Then
+                        Outline = Outline & "01"
+                    Else
+                        Outline = Outline & "00"
+                    End If
+                    Outline = Outline & "  "
+                    sw.WriteLine(Outline)
+                Catch ex As Exception
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Agtan aborted" & ex.Message, 3)
+                    Throw ex
+                End Try
+                line = sr.ReadLine
+                While Trim(line) = "" And Not sr.EndOfStream
+                    line = sr.ReadLine
+                End While
+            End While
+            sw.Close()
+
+            LoadKdsFile(OutFile)
+            Return OutFile
+
+        Catch ex As Exception
+            sw.Close()
+            oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Agtan aborted line " & ex.Message, 3)
+            Throw ex
+        Finally
+            sr.Close()
+        End Try
+    End Function
 
 #End Region
 

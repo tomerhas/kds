@@ -817,4 +817,13 @@
       <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
     </Filter>
   </Report>
+  <Report  RdlName="RdlOvdimPeilim" Roles="kds_administrators" FilterByLine="3" PageHeader="עובדים פעילים" ZoomPercent="100">
+    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  RunAtServer="true" Required="true">
+      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
+    </Filter>
+    <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true">
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
+      <!--<FilterValidator ValidatorName="ValidPresenceAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
+    </Filter>
+  </Report>
 </DynamicReport>

@@ -183,6 +183,7 @@
         </tr>
      </table>
        <input type="hidden" runat="server" id="hidFromEmda" name="hidFromEmda" />
+       <input type="hidden" runat="server" id="HidLoginUse" name="HidLoginUse" />
        <input type="hidden" runat="server" id="HiddenEmployeeCardsPage" value="Employee Cards Page Loaded Ok" name="HiddenEmployeeCardsPage" />  
      <div id="divHeadruyot_Parent" style="display:none;">
         <div id="divHeadruyot">
@@ -355,9 +356,18 @@
                var WCardDate = RowDate;
                var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
                document.getElementById("divHourglass").style.display = 'block';
-               var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
-             
-               if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
+            var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
+             // var ReturnWin = window.open('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
+
+            if (ReturnWin == '' || ReturnWin == 'undefined' || ReturnWin == undefined)
+                   ReturnWin = false;
+               else {
+                   var DatailsSplit = ReturnWin.split('|');
+
+                   var userLogin = document.getElementById("ctl00_KdsContent_HidLoginUse").value;
+                   if (ReturnWin == userLogin);
+                   wsGeneral.FreeWC(DatailsSplit[0], DatailsSplit[1], DatailsSplit[2]);
+               }
                document.getElementById("divHourglass").style.display = 'none';
                document.getElementById("ctl00_KdsContent_btnExecute").click();
                return ReturnWin;

@@ -82,7 +82,9 @@ namespace KdsBatch
               fErech = GetErechRechiv(clGeneral.enRechivim.MachalatYeledImMugbalutOved.GetHashCode());
               sErua460.Append(FormatNumber(fErech, 4, 2));
 
-              sErua460.Append(GetBlank(4));//פוזיציה 8
+              fErech = GetErechRechiv(clGeneral.enRechivim.YomMachalaMisradHaBitachon.GetHashCode());
+              sErua460.Append(FormatNumber(fErech, 4, 2));
+              //sErua460.Append(GetBlank(4));//פוזיציה 8
               sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode()), 4, 2));
 
               sErua460.Append(GetBlank(37));

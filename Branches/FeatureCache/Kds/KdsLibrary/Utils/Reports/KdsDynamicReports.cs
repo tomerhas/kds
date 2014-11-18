@@ -591,7 +591,8 @@ namespace KdsLibrary.Utils.Reports
         AverageOvdimBeSnif=111,
         Keytanot=957,
         RptRitzatChishuv=1002,
-        RptSidureyVaadOvdim=301
+        RptSidureyVaadOvdim=301,
+        RdlOvdimPeilim = 203
 
     }
     public enum Orientation

@@ -48,6 +48,15 @@ public partial class Modules_Ovdim_EmployeePremias {
     protected global::System.Web.UI.WebControls.Button btnExecute;
     
     /// <summary>
+    /// trSearchMI control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.HtmlControls.HtmlTableRow trSearchMI;
+    
+    /// <summary>
     /// UpdatePanel3 control.
     /// </summary>
     /// <remarks>

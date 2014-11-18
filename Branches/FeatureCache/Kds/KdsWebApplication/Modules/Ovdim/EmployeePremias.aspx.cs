@@ -274,7 +274,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
     void btnSearch_Click(object sender, EventArgs e)
     {
         string id =txtId.Text;
-        if (ListOvdim.Value.IndexOf(";" + id + ";") > -1)
+        if ((checkPremiaTluyaBemefyenIshi(int.Parse(ddStatuses.SelectedValue)) == 0) || ListOvdim.Value.IndexOf(";" + id + ";") > -1)
         {
             btnUpdate.Enabled = true;
             txtPremiaMinutes.Enabled = true;
@@ -356,6 +356,8 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         NikuySadot();
         AutoCompleteExtenderID.ContextKey = ddStatuses.SelectedValue;
         AutoCompleteExtenderByName.ContextKey = ddStatuses.SelectedValue;
+        ScriptManager.RegisterStartupScript(ddStatuses, ddStatuses.GetType(), "", "DisabledSearchTR(true);", true);
+
         //if (ddStatuses.SelectedIndex > 0)
         //{
         //    txtPremiaMinutes.Enabled = true;
@@ -371,6 +373,8 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
     void ddMonths_SelectedIndexChanged(object sender, EventArgs e)
     {
         NikuySadot();
+        ScriptManager.RegisterStartupScript(ddStatuses, ddStatuses.GetType(), "", "DisabledSearchTR(true);", true);
+ 
     }
     private void NikuySadot()
     {

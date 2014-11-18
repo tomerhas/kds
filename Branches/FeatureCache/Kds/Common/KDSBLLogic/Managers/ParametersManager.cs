@@ -820,6 +820,30 @@ namespace KdsLibrary
                 sTmp = GetOneParam(279, dCardDate);
                 cls.dTaarichPremiatNahagut = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
+                //283
+                sTmp = GetOneParam(283, dCardDate);
+                cls.dTaarichBitulEshel = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+                //284
+                sTmp = GetOneParam(284, dCardDate);
+                cls.dTaarichBitulNosafotAlTikni = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+                //285
+                sTmp = GetOneParam(285, dCardDate);
+                cls.dTaarichHafalatNochechutBeyomMiluim = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+                //286
+                sTmp = GetOneParam(286, dCardDate);
+                cls.dTaarichHafalatHafchataZmanNesia = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+                //287
+                sTmp = GetOneParam(287, dCardDate);
+                cls.iDakotHafchataZmanNesia = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //288
+                sTmp = GetOneParam(288, dCardDate);
+                cls.dTaarichBitulPremiaNahagutForHoraa = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+                
 
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);

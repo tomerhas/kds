@@ -17,6 +17,7 @@ using KdsShinuyim.Enums;
 using KdsShinuyim.ShinuyImpl;
 using Microsoft.Practices.Unity;
 using ObjectCompare;
+using System.Configuration;
 
 
 namespace KdsShinuyim.FlowManager
@@ -93,7 +94,8 @@ namespace KdsShinuyim.FlowManager
             {
                 var shinuyimManager = _container.Resolve<IShinuyimManager>();
 
-                SaveLogs(inputData);
+                if (bool.Parse((string)ConfigurationSettings.AppSettings["SaveLogsShinuyeyKelet"]))
+                    SaveLogs(inputData);
                // shinuyimManager.SaveLogsShinuyKelet(inputData);
 
                 shinuyimManager.SaveShinuyKelet(inputData);

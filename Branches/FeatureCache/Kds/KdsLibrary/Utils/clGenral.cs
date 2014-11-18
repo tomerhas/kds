@@ -153,6 +153,7 @@ namespace KdsLibrary
         public const string cProGetAllErrorsAndFields = "pkg_errors.pro_get_all_shgiot";
         public const string cProGetApprovalErrors = "pkg_errors.get_approval_errors";
         public const string cProGetShgiotNoActive = "Pkg_Errors.pro_get_shgiot_active";
+        public const string cProSaveCardIsUsed = "Pkg_Errors.fun_save_card_is_used";
 #endregion
 
 #region pkg_ovdim constants
@@ -851,6 +852,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             MachalatYeledImMugbalutOved=289,
             MachalatYeledImMugbalutMaavid = 290,
             NochehutByameyMiluim = 291,
+            YomMachalaMisradHaBitachon = 292,
+            YemeyNochechut =293,
             NosafotBeNeemanut=281,
             HalbashaTchilatYom=931,
             HalbashaSofYom=932,
