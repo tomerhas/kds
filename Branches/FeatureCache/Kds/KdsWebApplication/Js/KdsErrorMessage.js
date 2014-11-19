@@ -22,7 +22,7 @@ function pageLoad() {
 function onEndRequest(sender, args) {
     var errObj = args.get_error();
     if (errObj) {
-       // alert(errObj.message);
+       alert(errObj.message);
         $("#dialog")
             .data("errMsg", errObj.message)
             .dialog("open");
@@ -38,6 +38,7 @@ $(function () {
             $(".ui-dialog-titlebar-close").hide();
             var data = $("#dialog").data("errMsg");
             $("#dialogContent").text(data);
+            $("#dialog").show();
         },
         buttons: {
             "סגור": function () {

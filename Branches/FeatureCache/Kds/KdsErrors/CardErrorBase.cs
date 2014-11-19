@@ -261,7 +261,7 @@ namespace KdsErrors
                     if (makat != 701 && makat != 702 && makat != 711 && (enMakatType)peilut.iMakatType != enMakatType.mEmpty)
                         return true;
                 }
-                return true;
+                //return true;
             }
             return false;
 

@@ -31,13 +31,13 @@ namespace KdsShinuyim.FlowManager
             _container = container;
         }
 
-        public FlowShinuyResult ExecShinuyim(int misparIshi, DateTime cardDate, long? btchRequest = null, int? userId = null)
+        public FlowShinuyResult ExecShinuyim(int misparIshi, DateTime cardDate,bool bSaveChange, long? btchRequest = null, int? userId = null)
         {
              ShinuyInputData inputData = null;
             try
             {
                  inputData = FillInputData(misparIshi, cardDate, btchRequest, userId);
-
+                 
                  if (inputData.OvedDetails.bOvedDetailsExists)
                  {
                      List<ShinuyTypes> ShinuyimExecOrderList = GetExecOrderList();
@@ -58,7 +58,8 @@ namespace KdsShinuyim.FlowManager
                              }
                      });
 
-                     SaveDataBase(inputData);
+                     if(bSaveChange)
+                        SaveDataBase(inputData);
                  }
             }
             catch (Exception ex)

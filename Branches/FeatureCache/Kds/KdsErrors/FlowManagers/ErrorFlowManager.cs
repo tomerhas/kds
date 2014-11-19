@@ -29,12 +29,13 @@ namespace KdsErrors.FlowManagers
             _container = container;
         }
 
-        public FlowErrorResult ExecuteFlow(int misparIshi, DateTime cardDate, long? btchRequest = null, int? userId = null)
+        public FlowErrorResult ExecuteFlow(int misparIshi, DateTime cardDate,bool bSaveChange, long? btchRequest = null, int? userId = null)
         {
             
             var inputData = FillInputData(misparIshi, cardDate, btchRequest, userId);
+
             if (inputData.OvedDetails.bOvedDetailsExists)
-                ExecuteFlow(inputData);
+                ExecuteFlow(inputData, bSaveChange);
     
             return FillResult( inputData);
         }
@@ -50,7 +51,7 @@ namespace KdsErrors.FlowManagers
             return flowResult;
         }
 
-        private void ExecuteFlow(ErrorInputData inputData)
+        private void ExecuteFlow(ErrorInputData inputData, bool bSaveChange)
         {
             ISubErrorFlowManager oYomErrors = _container.Resolve<ISubErrorFlowFactory>().GetFlowManager(SubFlowManagerTypes.OvedYomFlowManager);
             ISubErrorFlowManager oSidurErrors = _container.Resolve<ISubErrorFlowFactory>().GetFlowManager(SubFlowManagerTypes.OvedSidurErrorFlowManager);
@@ -75,26 +76,29 @@ namespace KdsErrors.FlowManagers
                 }
                 oYomErrors.ExecuteFlow(inputData, 2);
 
-                ErrorsDal errDal = _container.Resolve<ErrorsDal>();
-
-                //Delete errors from shgiot
-                errDal.DeleteErrorsFromTbShgiot(inputData.iMisparIshi, inputData.CardDate);
-                //Remove shgiot meusharot
-                string sArrKodShgia = RemoveShgiotMeusharotFromDt(inputData.dtErrors);
-                bool haveShgiot = false;
-                //Validate shgiot letezuga
-                if (sArrKodShgia.Length > 0)
+                if (bSaveChange)
                 {
-                    sArrKodShgia = sArrKodShgia.Substring(0, sArrKodShgia.Length - 1);
-                    haveShgiot = errDal.CheckShgiotLetzuga(sArrKodShgia);
+                    ErrorsDal errDal = _container.Resolve<ErrorsDal>();
+
+                    //Delete errors from shgiot
+                    errDal.DeleteErrorsFromTbShgiot(inputData.iMisparIshi, inputData.CardDate);
+                    //Remove shgiot meusharot
+                    string sArrKodShgia = RemoveShgiotMeusharotFromDt(inputData.dtErrors);
+                    bool haveShgiot = false;
+                    //Validate shgiot letezuga
+                    if (sArrKodShgia.Length > 0)
+                    {
+                        sArrKodShgia = sArrKodShgia.Substring(0, sArrKodShgia.Length - 1);
+                        haveShgiot = errDal.CheckShgiotLetzuga(sArrKodShgia);
+                    }
+                    //Insert errors to shgiot
+
+                    if (inputData.dtErrors.Rows.Count > 0)
+                        errDal.InsertErrorsToTbShgiot(inputData.dtErrors, inputData.CardDate);
+
+                    //Update 
+                    errDal.UpdateRitzatShgiotDate(inputData.iMisparIshi, inputData.CardDate, haveShgiot);
                 }
-                //Insert errors to shgiot
-
-                if (inputData.dtErrors.Rows.Count > 0)
-                    errDal.InsertErrorsToTbShgiot(inputData.dtErrors, inputData.CardDate);
-
-                //Update 
-                errDal.UpdateRitzatShgiotDate(inputData.iMisparIshi, inputData.CardDate, haveShgiot);
             }
             catch (Exception ex)
             {

@@ -532,23 +532,24 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          bool bResult = true;
          clDefinitions _Defintion = new clDefinitions();
          bool bLoadNewCard=false;
+         bool bSaveChange = true;
          try
          {
              IOvedManager ovedManager = ServiceLocator.Current.GetInstance<IOvedManager>();
              var oOvedYomAvodaDetails = ovedManager.CreateOvedDetails(iMisparIshi, dDateCard);
-
+            
              if (ViewState["LoadNewCard"] != null)
                  bLoadNewCard = (bool.Parse(ViewState["LoadNewCard"].ToString()) == true);
              if ((hidChanges.Value.ToLower() != "true") &&
                  (((oOvedYomAvodaDetails.iStatus == CardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()) && (!Page.IsPostBack) && (Request.QueryString["WCardUpdate"] == null))
-                    || ((Request.QueryString["WCardUpdate"] == null) && (oOvedYomAvodaDetails.iStatus == CardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode() || bWcIsUsed))
+                    || ((Request.QueryString["WCardUpdate"] == null) && (oOvedYomAvodaDetails.iStatus == CardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()
+                    || (bWcIsUsed && (CardStatus)oOvedYomAvodaDetails.iStatus != CardStatus.Error)))
                  ))     
              // || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()     
              {       
                  // oBatchManager.InitGeneralData();
-                 _wcResult.CardStatus = CardStatus.Calculate;
-                // _StatusCard = CardStatus.Calculate;
-                 ViewState["CardStatus"] = CardStatus.Calculate;
+                 _wcResult.CardStatus = (CardStatus)oOvedYomAvodaDetails.iStatus;
+                 ViewState["CardStatus"] = (CardStatus)oOvedYomAvodaDetails.iStatus;
                  bInpuDataResult = true;
                  bResult = true;
              }
@@ -556,10 +557,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              {
                  if (oOvedYomAvodaDetails.iBechishuvSachar != clGeneral.enBechishuvSachar.bsActive.GetHashCode())
                  {
+                     if (bWcIsUsed && (CardStatus)oOvedYomAvodaDetails.iStatus == CardStatus.Error)
+                         bSaveChange = false;
+                     
                  //שינויי קלט
                  if (!(hidExecInputChg.Value.Equals("0")))
                  {
-                     var result = oBatchManager.MainInputDataNew(iMisparIshi, dDateCard);
+                     var result = oBatchManager.MainInputDataNew(iMisparIshi, dDateCard, bSaveChange);
                      bInpuDataResult = result.IsSuccess;
                      if (!bInpuDataResult)
                          //שינויי קלט
@@ -579,7 +583,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                      if ((hidErrChg.Value.Equals("")) || ((hidErrChg.Value.Equals("0"))))
                      {
                          //New code for errors
-                         var result = oBatchManager.MainOvedErrorsNew(iMisparIshi, dDateCard);
+                         var result = oBatchManager.MainOvedErrorsNew(iMisparIshi, dDateCard, bSaveChange);
                          bResult = result.IsSuccess;
                          ViewState["CardStatus"] = result.CardStatus;
                          Session["Errors"] = result.Errors;

@@ -48,18 +48,18 @@ namespace KdsBatch
             _iUserId = iUserId;
         }
 
-        public FlowErrorResult MainOvedErrorsNew(int iMisparIshi, DateTime dCardDate)
+        public FlowErrorResult MainOvedErrorsNew(int iMisparIshi, DateTime dCardDate, bool bSaveChange=true)
         {
             var errorFlowManager = ServiceLocator.Current.GetInstance<IErrorFlowManager>();
-            FlowErrorResult errorResults = errorFlowManager.ExecuteFlow(iMisparIshi, dCardDate,_btchRequest,_iUserId);
+            FlowErrorResult errorResults = errorFlowManager.ExecuteFlow(iMisparIshi, dCardDate, bSaveChange,_btchRequest, _iUserId);
 
             return errorResults;        
         }
 
-        public FlowShinuyResult MainInputDataNew(int iMisparIshi, DateTime dCardDate)
+        public FlowShinuyResult MainInputDataNew(int iMisparIshi, DateTime dCardDate, bool bSaveChange=true)
         {
             var shinuyFlowManager = ServiceLocator.Current.GetInstance<IShinuyimFlowManager>();
-            FlowShinuyResult shinuyResults = shinuyFlowManager.ExecShinuyim(iMisparIshi, dCardDate,_btchRequest,_iUserId);
+            FlowShinuyResult shinuyResults = shinuyFlowManager.ExecShinuyim(iMisparIshi, dCardDate, bSaveChange,_btchRequest, _iUserId);
 
             return shinuyResults;
             }

@@ -9,7 +9,7 @@ namespace KDSCommon.Interfaces.Errors
 {
     public interface IErrorFlowManager
     {
-        FlowErrorResult ExecuteFlow(int misparIshi, DateTime cardDate, long? btchRequest = null, int? userId = null);
+        FlowErrorResult ExecuteFlow(int misparIshi, DateTime cardDate,bool bSaveChange, long? btchRequest = null, int? userId = null);
         CardStatus GetCardStatus(ErrorInputData inputData);
     }
 }

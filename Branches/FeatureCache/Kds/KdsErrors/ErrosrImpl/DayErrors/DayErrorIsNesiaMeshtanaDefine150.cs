@@ -34,7 +34,7 @@ namespace KdsErrors.ErrosrImpl.DayErrors
 
                     if (IsOvedZakaiLZmanNesiaMeAvoda(input) || IsOvedZakaiLZmanNesiaLeMeAvoda(input))
                     {
-                        iZmanNesiaChazor = GetZmanNesiaMeshtana(input.htEmployeeDetails.Count - 1, 1, input);
+                        iZmanNesiaChazor = GetZmanNesiaMeshtana(input.htEmployeeDetails.Count - 1, 2, input);
                     }
 
                     if (iZmanNesiaChazor == -1 || iZmanNesiaHaloch == -1)
