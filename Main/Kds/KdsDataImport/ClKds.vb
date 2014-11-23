@@ -4502,6 +4502,9 @@ Public Class ClKds
                 While Not MyFile = ""
                     Try
                         LoadKdsFileMeshek(MyFile)
+
+                        'File.Copy(InPath & MyFile, InPath & "201411.old\" & MyFile, True)
+                        'File.Delete(InPath & MyFile)
                     Catch ex As Exception
                         ErrorCounter = ErrorCounter + 1
                         strErrorOfFiles = strErrorOfFiles & ErrorCounter.ToString() & "." & ex.Message & vbCr
@@ -4532,7 +4535,8 @@ Public Class ClKds
         Dim NumLInDS As Integer
 
         Try
-            InPathNFile = "\\KDSTEST\Files\inkds_old\201411.old\" & MyFile
+            'InPathNFile = "\\KDSTEST\Files\inkds_old\201411.old\" & MyFile
+            InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & "inkds_old\201411.old\" & MyFile
             oDal = New KdsLibrary.DAL.clDal
             sr = New StreamReader(InPathNFile)
             line = sr.ReadLine
@@ -4562,6 +4566,8 @@ Public Class ClKds
 
         Catch ex As Exception
             Throw ex
+        Finally
+            sr.Close()
         End Try
     End Sub
 
