@@ -283,7 +283,7 @@
         return false;
         }        
       else {
-          FreeWC();
+         // FreeWC();
         CloseWindow();return false;}      
     }
     function CheckChangesBeforePrint(){    
@@ -298,18 +298,18 @@
         return true;
     }
 
-    function FreeWC() {
+    //function FreeWC() {
         
-        var iMisparIshi = $get("txtId").value;
-        var dCardDate = $get("clnDate").value;
-        var imeadkenOl = $get("hidMiMeadkenOL").value;
-       // alert('ddd');
-        wsGeneral.FreeWC(iMisparIshi, dCardDate, imeadkenOl);
-      //  alert('ddd');
+    //    var iMisparIshi = $get("txtId").value;
+    //    var dCardDate = $get("clnDate").value;
+    //    var imeadkenOl = $get("hidMiMeadkenOL").value;
+    //   // alert('ddd');
+    //    wsGeneral.FreeWC(iMisparIshi, dCardDate, imeadkenOl);
+    //  //  alert('ddd');
 
-      //  sleep(5000);
+    //  //  sleep(5000);
 
-    }
+    //}
 
     function sleep(milliseconds) {
         var start = new Date().getTime();

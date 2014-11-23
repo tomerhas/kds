@@ -59,7 +59,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     private int iMisparIshiKiosk;
     private DataTable dtPakadim;
     private bool bRashemet;
-    private bool bWcIsUsed;
+    //private bool bWcIsUsed;
    // private int iMiMeadkenOL;
    // private bool bNextCardErrorNotFound;
     private int iMisparIshiIdkunRashemet;
@@ -237,7 +237,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              //else
              //   bWorkCardEmpty = ((iDays <= oBatchManager.oParam.iDaysToViewWorkCard) && ((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))));
 
-             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bWcIsUsed) && (!bParam252) && (!((bParam263) && (CardIsEmpty(oBatchManager)))))
+             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bParam252) && (!((bParam263) && (CardIsEmpty(oBatchManager)))))
              {                                   
                  //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                  //רק במידה ולא נעשה שינוי בכרטיס    
@@ -472,12 +472,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
          try
          {
+          
              clOvedYomAvoda oOvedYomAvodaDetails = new clOvedYomAvoda(iMisparIshi, dDateCard);
              if (ViewState["LoadNewCard"] != null)
                  bLoadNewCard = (bool.Parse(ViewState["LoadNewCard"].ToString()) == true);
              if ((hidChanges.Value.ToLower() != "true") &&
                  (((oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()) && (!Page.IsPostBack) && (Request.QueryString["WCardUpdate"] == null))
-                 || ((Request.QueryString["WCardUpdate"] == null) && (oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode() || bWcIsUsed))
+                 || ((Request.QueryString["WCardUpdate"] == null) && (oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode() || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode() ))
                  ))
              // || oOvedYomAvodaDetails.iBechishuvSachar == clGeneral.enBechishuvSachar.bsActive.GetHashCode()     
              {      
@@ -526,14 +527,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                  {
                      //string sScript = "alert('לא ניתן לעלות כרטיס עבודה'); window.location.href = '" + this.PureUrlRoot + "/Main.aspx';";
                      string sScript = "alert('לא ניתן לעלות כרטיס עבודה'); CloseWindow();";
-                     ScriptManager.RegisterStartupScript(Page, this.GetType(), "InputDataFailed", sScript, true);
+                     ScriptManager.RegisterClientScriptBlock(Page, this.GetType(), "InputDataFailed", sScript, true);
                  }
                  else
                  {
                      string sScript = "alert('לא ניתן לעלות כרטיס עבודה'); window.close();";
-                     ScriptManager.RegisterStartupScript(Page, this.GetType(), "InputDataFailed", sScript, true);
+                     ScriptManager.RegisterClientScriptBlock(Page, this.GetType(), "InputDataFailed", sScript, true);
                  }
-                 FreeWC();
+               //  FreeWC();
              }
              return bResult;
          }
@@ -543,12 +544,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          }
      }
 
-     private void FreeWC()
-     {
-         clWorkCard _WorkCard = new clWorkCard();
-         if(int.Parse(hidMiMeadkenOL.Value) == int.Parse( LoginUser.UserInfo.EmployeeNumber) )
-            _WorkCard.SaveWCInUsed(int.Parse(txtId.Text), DateTime.Parse(clnDate.Text), 0);
-     }
+     //private void FreeWC()
+     //{
+     //    clWorkCard _WorkCard = new clWorkCard();
+     //    if(int.Parse(hidMiMeadkenOL.Value) == int.Parse( LoginUser.UserInfo.EmployeeNumber) )
+     //       _WorkCard.SaveWCInUsed(int.Parse(txtId.Text), DateTime.Parse(clnDate.Text), 0);
+     //}
 
      protected bool SetNextErrorCardDate()
      {
@@ -559,8 +560,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
          sNextErrorCardDate = clWorkCard.GetNextErrorCard(int.Parse(txtId.Text), DateTime.Parse(clnDate.Text)).ToShortDateString();
          bFound = (!(sNextErrorCardDate.Equals(clnDate.Text)));
-         if (bFound)
-             FreeWC();
+         //if (bFound)
+         //    FreeWC();
          clnDate.Text = sNextErrorCardDate;        
          return bFound;
      }
@@ -673,18 +674,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
              //אתחול פרמטרים
              SetEmployeeCardData();
-             int  iMiMeadkenOL = _WorkCard.SaveWCInUsed(iMisparIshi, dDateCard, int.Parse(LoginUser.UserInfo.EmployeeNumber.ToString()));
-             if (iMiMeadkenOL == 0)
-                 bWcIsUsed = false;
-             else{
-                 if (iMiMeadkenOL == int.Parse( LoginUser.UserInfo.EmployeeNumber))
-                     bWcIsUsed = false;
-                 else bWcIsUsed =true;
-             }
-             if (iMiMeadkenOL == 0)
-                 hidMiMeadkenOL.Value = LoginUser.UserInfo.EmployeeNumber;
-             else
-                 hidMiMeadkenOL.Value = iMiMeadkenOL.ToString();
+             //int  iMiMeadkenOL = _WorkCard.SaveWCInUsed(iMisparIshi, dDateCard, int.Parse(LoginUser.UserInfo.EmployeeNumber.ToString()));
+             //if (iMiMeadkenOL == 0)
+             //    bWcIsUsed = false;
+             //else{
+             //    if (iMiMeadkenOL == int.Parse( LoginUser.UserInfo.EmployeeNumber))
+             //        bWcIsUsed = false;
+             //    else bWcIsUsed =true;
+             //}
+             //if (iMiMeadkenOL == 0)
+             //    hidMiMeadkenOL.Value = LoginUser.UserInfo.EmployeeNumber;
+             //else
+             //    hidMiMeadkenOL.Value = iMiMeadkenOL.ToString();
 
              oBatchManager = new clBatchManager(iMisparIshi, dDateCard);
              SetPageDefault();
@@ -905,15 +906,15 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
              if ((((((iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
                  && (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))) || ((dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString())))))
-                 || (bChishuvShachar) || (bCalculateAndNotRashemet) || (bWcIsUsed)
+                 || (bChishuvShachar) || (bCalculateAndNotRashemet) 
                  || (WorkCardWasUpdateAndDriver(bWorkCardWasUpdate)))
-                 EnabledFrames(false, (bChishuvShachar || bCalculateAndNotRashemet || bWcIsUsed));
+                 EnabledFrames(false, (bChishuvShachar || bCalculateAndNotRashemet ));
              else
-                 EnabledFrames(true, (bChishuvShachar || bCalculateAndNotRashemet || bWcIsUsed));
+                 EnabledFrames(true, (bChishuvShachar || bCalculateAndNotRashemet ));
            
 
              btnHamara.Disabled = (!EnabledHamaraForDay());
-             ddlTachograph.Enabled = (EnabledTachograph() && (!bChishuvShachar) && (!bWcIsUsed));
+             ddlTachograph.Enabled = (EnabledTachograph() && (!bChishuvShachar) );
              EnabledFields();
              SecurityManager.AuthorizePage(this, true);
              BindSibotLehashlamaLeyom();
@@ -961,13 +962,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      private string SendScript(bool bChishuvShachar, bool bCalculateAndNotRashemet)
      {
          string sScript = "";
-         if ((bChishuvShachar) || (bCalculateAndNotRashemet) || (bWcIsUsed))
+         if ((bChishuvShachar) || (bCalculateAndNotRashemet) )
          {
              sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",true);";
              if (bChishuvShachar)
                  sScript = sScript + ChisuvShacharMsg();// " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר י
-             else if (bWcIsUsed)
-                    sScript = sScript + WCIsUsedMsg();
+             //else if (bWcIsUsed)
+             //       sScript = sScript + WCIsUsedMsg();
          }
          else
          {
@@ -985,13 +986,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      {
          return  " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
      }
-     private string WCIsUsedMsg()
-     {
-         string name;
-         clOvdim oOvdim = new clOvdim();
-         name = oOvdim.GetOvedFullName(int.Parse(hidMiMeadkenOL.Value));
-         return " alert('כרטיס נמצא בעדכון משתמש אחר " + name + ", לצורך ביצוע עדכונים בכרטיס אנא נסה במועד מאוחר יותר');"; 
-     }
+     //private string WCIsUsedMsg()
+     //{
+     //    string name;
+     //    clOvdim oOvdim = new clOvdim();
+     //    name = oOvdim.GetOvedFullName(int.Parse(hidMiMeadkenOL.Value));
+     //    return " alert('כרטיס נמצא בעדכון משתמש אחר " + name + ", לצורך ביצוע עדכונים בכרטיס אנא נסה במועד מאוחר יותר');"; 
+     //}
     
      private bool HasVehicleTypeWithOutTachograph()
      {
@@ -2666,7 +2667,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 EventLog.WriteEntry("kds", Page.Title + ": path = " + sPathFilePrint + sFileName, EventLogEntryType.Error);
                 //EventLog.WriteEntry("kds", "sIp" + sIp, EventLogEntryType.Error);
                 sScript += "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000); ";
-                FreeWC();
+                //FreeWC();
                 ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);          
             }
             else
@@ -2754,7 +2755,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 else
                 {
                     sScript = "window.close();";
-                    FreeWC();
+               //     FreeWC();
                     ScriptManager.RegisterStartupScript(Page, this.GetType(), "closeCard", sScript, true);
                 }
             }

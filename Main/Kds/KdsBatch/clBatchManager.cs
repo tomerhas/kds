@@ -5463,7 +5463,7 @@ namespace KdsBatch
 
                         if (IsOvedZakaiLZmanNesiaMeAvoda() || IsOvedZakaiLZmanNesiaLeMeAvoda())
                         {
-                            iZmanNesiaChazor = GetZmanNesiaMeshtana(htEmployeeDetails.Count-1, 1, dDateCard);
+                            iZmanNesiaChazor = GetZmanNesiaMeshtana(htEmployeeDetails.Count-1, 2, dDateCard);
                          }
 
                         if (iZmanNesiaChazor == -1 || iZmanNesiaHaloch == -1)

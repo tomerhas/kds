@@ -107,7 +107,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                
                 SetDefault();
                 hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1").ToString();
-                HidLoginUse.Value = LoginUser.UserInfo.EmployeeNumber;
+               // HidLoginUse.Value = LoginUser.UserInfo.EmployeeNumber;
                 if (!bool.Parse(hidFromEmda.Value))
                 {
                     divNetunim.Style.Add("overflow-y", "hidden");               

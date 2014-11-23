@@ -57,12 +57,10 @@ function SaveScrollPosToHidden()
 { 
    $get('SD_hidScrollPos').value=$get("SD_dvS").scrollTop;
 }
-function window.onload()
-{    
+window.onload = function () {
     SetSidurimCollapseImg();
-    HasSidurHashlama();    
-}
-
+    HasSidurHashlama();     
+};
 </script>
 <script src="../../Js/Sidurim.js" type="text/javascript"></script>
 
