@@ -1243,7 +1243,7 @@ Public Class ClKds
                         '    KdsSql = KdsSql & KdsSql2
                         '    KdsSql2 = ""
                         'End If
-                        End If
+                    End If
                 Catch ex As Exception
                     oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.Faild, "clKdsline " & ex.Message, 6)
                     ''**KdsWriteProcessLog(2, 1, 3, "clKdsline " & ex.Message, "6")
@@ -4351,9 +4351,9 @@ Public Class ClKds
                         End If
                     Else
                         'todo: err
-                        End If
-                    Else
-                        'totd: error!
+                    End If
+                Else
+                    'totd: error!
                 End If
             ElseIf Knisa = 0 And Yetzia > 0 Then
                 If EfesY Then
