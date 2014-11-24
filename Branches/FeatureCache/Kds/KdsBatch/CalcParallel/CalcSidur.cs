@@ -1198,6 +1198,13 @@ namespace KdsBatch
                         {
                             fSumDakotRechiv = oCalcBL.GetSumErechRechiv(_dtChishuvSidur.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
                         }
+
+                        if (objOved.Taarich > objOved.objParameters.dTaarichBitulEshel &&  IsSidurShaon(drSidurim[I]))
+                        {
+                            if (drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString() == "10" || drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString() == "10")
+                                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(_dtChishuvSidur.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        }
+
                         if (fSumDakotRechiv > 0)
                             addRowToTable(iKodRechiv, dShatHatchalaSidur, iMisparSidur, fSumDakotRechiv);
 

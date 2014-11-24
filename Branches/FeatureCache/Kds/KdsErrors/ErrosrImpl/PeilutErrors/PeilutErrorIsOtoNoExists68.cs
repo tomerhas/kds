@@ -17,18 +17,16 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
         }
         public override bool InternalIsCorrect(ErrorInputData input)
         {
-            bool isValid = true;
-
+           
             //בדיקה ברמת פעילות
           
             //אסור לדווח רכב בסידור שיש לו מאפיין 43 (אסור לדווח מספר רכב). הבדיקה רלוונטית גם לסידורים מיוחדים וגם לסידורים רגילים.                
-            if (input.curPeilut.lOtoNo > 0)
-            {
+           
                 //TB_Sidurim_Meyuchadim נבדוק אם קיים מאפיין 43: לסידורים מיוחדים נבדוק בטבלת 
                 //לסידורים רגילים נבדוק את המאפיין מהתנועה
                 if (input.curSidur.bSidurMyuhad)
                 {
-                    if ((input.curSidur.bNoOtoNoExists) && (input.curSidur.sNoOtoNo == "1"))
+                    if ((input.curSidur.bNoOtoNoExists) && (input.curSidur.sNoOtoNo == "1") && IsPeilutDoreshetMisparRechev(input.curPeilut))
                     {
                         AddNewError(input);
                         return false;
@@ -39,14 +37,13 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
                 {
                     if (input.drSugSidur.Length > 0)
                     {
-                        if ((!String.IsNullOrEmpty(input.drSugSidur[0]["asur_ledaveach_mispar_rechev"].ToString())) && (input.drSugSidur[0]["asur_ledaveach_mispar_rechev"].ToString() == "1"))
+                        if ((!String.IsNullOrEmpty(input.drSugSidur[0]["asur_ledaveach_mispar_rechev"].ToString())) && (input.drSugSidur[0]["asur_ledaveach_mispar_rechev"].ToString() == "1") && IsPeilutDoreshetMisparRechev(input.curPeilut))
                         {
                             AddNewError(input);
                             return false;
                         }
-                    }
+                    } 
                 }
-            }
             //מספר רכב בסידור תפקיד
             return true;
         }

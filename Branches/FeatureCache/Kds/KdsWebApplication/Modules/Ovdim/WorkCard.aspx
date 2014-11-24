@@ -161,7 +161,8 @@
                 </table>                 
             </td>
            </tr>            
-         </table>   
+         </table>  
+              <input type="hidden" runat="server" name="hidMiMeadkenOL" id="hidMiMeadkenOL"/>    
         </ContentTemplate>
         <Triggers>                                                                                                                                
             <asp:AsyncPostBackTrigger ControlID="btnConfirm" />                                                                    
@@ -645,7 +646,7 @@
         <input type="hidden" runat="server" id="hidUpdateBtn"/>
         <input type="hidden" runat="server" id="hidSdrInd"/>
         <input type="hidden" runat="server" id="hidPrevHalbasha"/>     
-        <input type="hidden" runat="server" id="hidMiMeadkenOL"/>      
+         
     </form>   
     <script language="vbscript" type="text/vbscript">
         sub ShiftTab()

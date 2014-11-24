@@ -28,12 +28,10 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
                 iPeilutMisparSidur = input.curPeilut.iPeilutMisparSidur;
                 if (iPeilutMisparSidur > 0)
                 {
-                    if (input.curSidur.htPeilut.Count == 1)
-                    {
-                        if (input.curPeilut.iMakatType == enMakatType.mElement.GetHashCode() && input.curPeilut.bMisparSidurMatalotTnuaExists && input.curPeilut.iMisparSidurMatalotTnua == iPeilutMisparSidur)
-                            flag = false;
-                    }
-                        
+                    
+                    if (input.curPeilut.iMakatType == enMakatType.mElement.GetHashCode() && input.curPeilut.bMisparSidurMatalotTnuaExists && input.curPeilut.iMisparSidurMatalotTnua == iPeilutMisparSidur)
+                        flag = false;
+                       
                     if (flag)
                     {
                         AddNewError(input);

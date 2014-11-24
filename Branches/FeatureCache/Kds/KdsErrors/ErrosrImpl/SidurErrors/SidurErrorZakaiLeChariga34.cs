@@ -30,7 +30,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
                         sLookUp = GetLookUpKods("ctb_divuch_hariga_meshaot", input);
                         iShatGmar = int.Parse(input.curSidur.sShatGmar.Remove(2, 1).Substring(0, 2));
                         //אם ערך חריגה תקין, אבל אין זכאות לחריגה נעלה שגיאה
-                        if (((sLookUp.IndexOf(input.curSidur.sChariga)) != -1) && (!input.curSidur.bZakaiLeCharigaExists) && (iShatGmar < 28))  //לא קיים מאפיין 35
+                        if (((sLookUp.IndexOf(input.curSidur.sChariga)) != -1) && (!input.curSidur.bZakaiLeCharigaExists))  //לא קיים מאפיין 35
                         {
                             AddNewError(input);
                             return false;

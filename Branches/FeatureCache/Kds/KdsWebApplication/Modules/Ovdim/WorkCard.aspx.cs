@@ -631,9 +631,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      }
      private void FreeWC()
      {
-         clWorkCard _WorkCard = new clWorkCard();
-         if (int.Parse(hidMiMeadkenOL.Value) == int.Parse(LoginUser.UserInfo.EmployeeNumber))
-             _WorkCard.SaveWCInUsed(int.Parse(txtId.Text), DateTime.Parse(clnDate.Text), 0);
+         wsGeneral oGeneral = new wsGeneral();
+         oGeneral.FreeWC(int.Parse(txtId.Text), clnDate.Text, int.Parse(hidMiMeadkenOL.Value));
      }
 
      protected bool SetNextErrorCardDate()

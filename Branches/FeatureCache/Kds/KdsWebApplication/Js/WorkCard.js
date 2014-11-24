@@ -303,12 +303,9 @@
         var iMisparIshi = $get("txtId").value;
         var dCardDate = $get("clnDate").value;
         var imeadkenOl = $get("hidMiMeadkenOL").value;
-        // alert('ddd');
-        wsGeneral.FreeWC(iMisparIshi, dCardDate, imeadkenOl);
-        //  alert('ddd');
-
-        //  sleep(5000);
-
+        //alert('dCardDate' + dCardDate);
+       // alert(document.getElementById("hidMiMeadkenOL").value);
+        wsGeneral.FreeWC(iMisparIshi, dCardDate, imeadkenOl);   
     }
 
     function sleep(milliseconds) {

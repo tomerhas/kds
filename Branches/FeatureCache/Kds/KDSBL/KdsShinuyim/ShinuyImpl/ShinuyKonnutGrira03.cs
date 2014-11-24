@@ -82,7 +82,7 @@ namespace KdsShinuyim.ShinuyImpl
                 iNumSidur2 = int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().PadLeft(5, '0').Substring(0, 2));
                 if (Minutes > inputData.oParam.iMinZmanGriraDarom)
                 {
-                    if (iNumSidur2 >= 25 || iNumSidur2 == 4 || (iNumSidur2 == 22 &&
+                    if (iNumSidur2 >= 25 || iNumSidur2 == 4 || iNumSidur2 == 5 || (iNumSidur2 == 22 &&
                                   (curSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString() || curSidur.sErevShishiChag == "1" || curSidur.sSidurDay == enDay.Shabat.GetHashCode().ToString() || curSidur.sShabaton == "1")))
                    // if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().Substring(0, 2)) >= 25)
                     {
@@ -100,7 +100,7 @@ namespace KdsShinuyim.ShinuyImpl
                 else if (Minutes > inputData.oParam.iMinZmanGriraTzafon && Minutes <= inputData.oParam.iMinZmanGriraDarom)
                 {
                    // if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().Substring(0, 2)) >= 25)
-                    if (iNumSidur2 >= 25 || iNumSidur2 == 4 || (iNumSidur2 == 22 &&
+                    if (iNumSidur2 >= 25 || iNumSidur2 == 4 || iNumSidur2 == 5 || (iNumSidur2 == 22 &&
                                    (curSidur.sSidurDay == enDay.Shishi.GetHashCode().ToString() || curSidur.sErevShishiChag == "1" || curSidur.sSidurDay == enDay.Shabat.GetHashCode().ToString() || curSidur.sShabaton == "1")))
                                
                     {

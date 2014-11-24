@@ -368,5 +368,14 @@ namespace KdsErrors
             }
             return false;
         }
+        protected bool IsPeilutDoreshetMisparRechev(PeilutDM oPeilut)
+        {
+            enMakatType oMakatType = (enMakatType)oPeilut.iMakatType;
+
+            if (((oMakatType == enMakatType.mKavShirut) || (oMakatType == enMakatType.mEmpty) || (oMakatType == enMakatType.mNamak) || (oMakatType == enMakatType.mVisa)
+                           || (oMakatType == enMakatType.mElement && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")) || ((oPeilut.iMakatType == enMakatType.mElement.GetHashCode()) && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "700" && (oPeilut.bBusNumberMustExists) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "701") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "712") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "711")))
+                return true;
+            return false;
+        }
     } 
 }
