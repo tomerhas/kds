@@ -4290,10 +4290,10 @@ Public Class ClKds
                     'exit, complete dup
                 ElseIf KNull Then
                     ' upd out
-                    UpdY = True
+                    UpdYK = True
                 ElseIf EfesY Then
                     ' upd in
-                    UpdK = True
+                    UpdKY = True
                 ElseIf K And (Not Y) Then
                     ' new in & out, err dup in
                     NewK = True
