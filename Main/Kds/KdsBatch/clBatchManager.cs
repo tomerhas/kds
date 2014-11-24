@@ -4207,11 +4207,10 @@ namespace KdsBatch
                             //sMakatNesia = htEmployeeDetails["MakatNesia"].ToString();
                             if (iPeilutMisparSidur > 0)
                             {
-                                if (oSidur.htPeilut.Count == 1)
-                                {
-                                    if (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && oPeilut.bMisparSidurMatalotTnuaExists && oPeilut.iMisparSidurMatalotTnua == iPeilutMisparSidur)
-                                        flag = false;
-                                }
+                              
+                                if (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && oPeilut.bMisparSidurMatalotTnuaExists && oPeilut.iMisparSidurMatalotTnua == iPeilutMisparSidur)
+                                    flag = false;
+                                
                                 if (flag)
                                 {
                                     drNew = dtErrors.NewRow();
@@ -4298,7 +4297,7 @@ namespace KdsBatch
                             sLookUp = GetLookUpKods("ctb_divuch_hariga_meshaot");
                             iShatGmar = int.Parse(oSidur.sShatGmar.Remove(2, 1).Substring(0, 2));
                             //אם ערך חריגה תקין, אבל אין זכאות לחריגה נעלה שגיאה
-                            if (((sLookUp.IndexOf(oSidur.sChariga)) != -1) && (!oSidur.bZakaiLeCharigaExists) && (iShatGmar < 28))  //לא קיים מאפיין 35
+                            if (((sLookUp.IndexOf(oSidur.sChariga)) != -1) && (!oSidur.bZakaiLeCharigaExists) )  //לא קיים מאפיין 35
                             {
                                 drNew = dtErrors.NewRow();
                                 InsertErrorRow(oSidur, ref drNew, "סידור אינו זכאי לחריגה", enErrors.errZakaiLeCharigaValueNotValid.GetHashCode());
@@ -4901,38 +4900,36 @@ namespace KdsBatch
             //בדיקה ברמת פעילות
             try
             {
-                //אסור לדווח רכב בסידור שיש לו מאפיין 43 (אסור לדווח מספר רכב). הבדיקה רלוונטית גם לסידורים מיוחדים וגם לסידורים רגילים.                
-                if (oPeilut.lOtoNo > 0)
+                //TB_Sidurim_Meyuchadim נבדוק אם קיים מאפיין 43: לסידורים מיוחדים נבדוק בטבלת 
+                //לסידורים רגילים נבדוק את המאפיין מהתנועה
+                if (oSidur.bSidurMyuhad)
                 {
-                    //TB_Sidurim_Meyuchadim נבדוק אם קיים מאפיין 43: לסידורים מיוחדים נבדוק בטבלת 
-                    //לסידורים רגילים נבדוק את המאפיין מהתנועה
-                    if (oSidur.bSidurMyuhad)
+
+                    if (oSidur.bNoOtoNoExists && oSidur.sNoOtoNo == "1" && IsPeilutDoreshetMisparRechev(oPeilut))
                     {
-                        if ((oSidur.bNoOtoNoExists) && (oSidur.sNoOtoNo=="1"))
+                        drNew = dtErrors.NewRow();
+                        InsertErrorRow(oSidur, ref drNew, "פעילות הדורשת מספר רכב בסידור שאסור לדווח מספר רכב", enErrors.errOtoNoExists.GetHashCode());
+                        //drNew["oto_no"] = oPeilut.lOtoNo;
+                        InsertPeilutErrorRow(oPeilut, ref drNew);
+                        //drNew["makat_nesia"] = oPeilut.lMakatNesia;
+                        dtErrors.Rows.Add(drNew);
+                        isValid = false;
+                    }
+                }
+                else //סידור רגיל
+                {
+                    if (drSugSidur.Length > 0)
+                    {
+                        if ((!String.IsNullOrEmpty(drSugSidur[0]["asur_ledaveach_mispar_rechev"].ToString())) && (drSugSidur[0]["asur_ledaveach_mispar_rechev"].ToString() =="1")
+                            &&  IsPeilutDoreshetMisparRechev(oPeilut))
                         {
                             drNew = dtErrors.NewRow();
-                            InsertErrorRow(oSidur, ref drNew, "מספר רכב בסידור תפקיד", enErrors.errOtoNoExists.GetHashCode());
+                            InsertErrorRow(oSidur, ref drNew, "פעילות הדורשת מספר רכב בסידור שאסור לדווח מספר רכב", enErrors.errOtoNoExists.GetHashCode());
                             //drNew["oto_no"] = oPeilut.lOtoNo;
-                            InsertPeilutErrorRow(oPeilut, ref drNew);
                             //drNew["makat_nesia"] = oPeilut.lMakatNesia;
+                            InsertPeilutErrorRow(oPeilut, ref drNew);
                             dtErrors.Rows.Add(drNew);
                             isValid = false;
-                        }
-                    }
-                    else //סידור רגיל
-                    {
-                        if (drSugSidur.Length > 0)
-                        {
-                            if ((!String.IsNullOrEmpty(drSugSidur[0]["asur_ledaveach_mispar_rechev"].ToString())) && (drSugSidur[0]["asur_ledaveach_mispar_rechev"].ToString() =="1"))
-                            {
-                                drNew = dtErrors.NewRow();
-                                InsertErrorRow(oSidur, ref drNew, "מספר רכב בסידור תפקיד", enErrors.errOtoNoExists.GetHashCode());
-                                //drNew["oto_no"] = oPeilut.lOtoNo;
-                                //drNew["makat_nesia"] = oPeilut.lMakatNesia;
-                                InsertPeilutErrorRow(oPeilut, ref drNew);
-                                dtErrors.Rows.Add(drNew);
-                                isValid = false;
-                            }
                         }
                     }
                 }                
@@ -4947,6 +4944,15 @@ namespace KdsBatch
             return isValid;
         }
 
+        private bool IsPeilutDoreshetMisparRechev(clPeilut oPeilut)
+        {
+             clKavim.enMakatType oMakatType = (clKavim.enMakatType)oPeilut.iMakatType;
+             
+            if (((oMakatType == clKavim.enMakatType.mKavShirut) || (oMakatType == clKavim.enMakatType.mEmpty) || (oMakatType == clKavim.enMakatType.mNamak) || (oMakatType == clKavim.enMakatType.mVisa)
+                           || (oMakatType == clKavim.enMakatType.mElement && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")) || ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "700" && (oPeilut.bBusNumberMustExists) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "701") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "712") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "711")))
+                 return true;
+             return false;
+        }
         private bool IsNesiaTimeNotValid91(float fSidurTime, DateTime dCardDate, ref clSidur oSidur, ref clPeilut oPeilut, ref DataTable dtErrors)
         {
             int iElementTime = 0;            
@@ -11030,7 +11036,7 @@ namespace KdsBatch
                             iNumSidur2 = int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().PadLeft(5, '0').Substring(0, 2));
                             if (Minutes > _oParameters.iMinZmanGriraDarom)
                             {
-                                if (iNumSidur2 >= 25 || iNumSidur2 == 4 || (iNumSidur2 == 22 && 
+                                if (iNumSidur2 >= 25 || iNumSidur2 == 4 || iNumSidur2 == 5 || (iNumSidur2 == 22 && 
                                     (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString() || oSidur.sErevShishiChag == "1" || oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString() || oSidur.sShabaton == "1")))
                                 {
                                     oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
@@ -11046,7 +11052,7 @@ namespace KdsBatch
                             }
                             else if (Minutes > _oParameters.iMinZmanGriraTzafon && Minutes <= _oParameters.iMinZmanGriraDarom)
                             {
-                                if (iNumSidur2 >= 25 || iNumSidur2 == 4 || (iNumSidur2 == 22 &&
+                                if (iNumSidur2 >= 25 || iNumSidur2 == 4 || iNumSidur2 == 5 || (iNumSidur2 == 22 &&
                                      (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString() || oSidur.sErevShishiChag == "1" || oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString() || oSidur.sShabaton == "1")))
                                 {
                                     oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
