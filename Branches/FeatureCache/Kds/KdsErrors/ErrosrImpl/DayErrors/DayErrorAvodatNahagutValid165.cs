@@ -16,15 +16,17 @@ namespace KdsErrors.ErrosrImpl.DayErrors
         }
         public override bool InternalIsCorrect(ErrorInputData input)
         {
-            if (input.oMeafyeneyOved.IsMeafyenExist(51)) //|| (oMeafyeneyOved.IsMeafyenExist(61)))
+            if(!CheckIdkunRashemet("BITUL_ZMAN_NESIOT",input))
             {
-                if (HaveSidurNahgutInDay(input))
+                if (input.oMeafyeneyOved.IsMeafyenExist(51)) //|| (oMeafyeneyOved.IsMeafyenExist(61)))
                 {
-                    AddNewError(input);
-                    return false;
+                    if (HaveSidurNahgutInDay(input))
+                    {
+                        AddNewError(input);
+                        return false;
+                    }
                 }
             }
-
             return true;
         }
 

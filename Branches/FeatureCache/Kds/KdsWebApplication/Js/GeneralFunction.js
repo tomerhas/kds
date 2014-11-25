@@ -340,6 +340,7 @@ function GetDateDDMMYYYY(dDate){
    }
 
    function unloadCard() {
+       FreeWC();
        alert(' זמן ההתחברות הסתיים, יש להכנס מחדש לכרטיס העבודה');
        window.close();
    }

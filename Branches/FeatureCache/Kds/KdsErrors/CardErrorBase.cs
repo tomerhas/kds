@@ -377,5 +377,27 @@ namespace KdsErrors
                 return true;
             return false;
         }
+
+
+        protected bool CheckIdkunRashemet(string sFieldToChange, ErrorInputData inputData)
+        {
+            bool bHaveIdkun = false;
+            DataRow[] drIdkunim;
+            try
+            {
+                drIdkunim = inputData.IdkuneyRashemet.Select("shem_db='" + sFieldToChange.ToUpper() + "'");
+                if (drIdkunim.Length > 0)
+                    bHaveIdkun = true;
+
+                //if (sFieldToChange.ToUpper() == "SHAT_HATCHALA")
+                //    bHaveIdkun = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bHaveIdkun;
+        }
+        
     } 
 }

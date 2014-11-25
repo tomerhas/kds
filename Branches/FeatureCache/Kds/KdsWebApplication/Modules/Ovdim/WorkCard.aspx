@@ -162,7 +162,8 @@
             </td>
            </tr>            
          </table>  
-              <input type="hidden" runat="server" name="hidMiMeadkenOL" id="hidMiMeadkenOL"/>    
+              <input type="hidden" runat="server" name="hidMiMeadkenOL" id="hidMiMeadkenOL"/>  
+              <input type="hidden" runat="server" name="hidPratim" id="hidPratim"/>    
         </ContentTemplate>
         <Triggers>                                                                                                                                
             <asp:AsyncPostBackTrigger ControlID="btnConfirm" />                                                                    

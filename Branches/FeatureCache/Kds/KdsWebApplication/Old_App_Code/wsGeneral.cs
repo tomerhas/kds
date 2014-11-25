@@ -57,7 +57,7 @@ public class wsGeneral : System.Web.Services.WebService
     {
         //  int iMisparIshi=0; string dDateCard="0";
         clWorkCard _WorkCard = new clWorkCard();
-        int iLoginUser = int.Parse(Session["LoginUserEmp"].ToString());
+        int iLoginUser = int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber); //int.Parse(Session["LoginUserEmp"].ToString());
         if (iLoginUser == imeadkenOl)
             _WorkCard.SaveWCInUsed(iMisparIshi, DateTime.Parse(dDateCard), 0);
     }

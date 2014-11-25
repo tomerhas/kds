@@ -255,6 +255,24 @@ public partial class Modules_Ovdim_WorkCard {
     protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblCardStatus;
     
     /// <summary>
+    /// hidMiMeadkenOL control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidMiMeadkenOL;
+    
+    /// <summary>
+    /// hidPratim control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidPratim;
+    
+    /// <summary>
     /// upGeneralDetails control.
     /// </summary>
     /// <remarks>
@@ -1270,13 +1288,4 @@ public partial class Modules_Ovdim_WorkCard {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidPrevHalbasha;
-    
-    /// <summary>
-    /// hidMiMeadkenOL control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidMiMeadkenOL;
 }

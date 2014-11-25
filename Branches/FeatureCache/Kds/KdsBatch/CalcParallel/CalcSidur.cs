@@ -1199,7 +1199,7 @@ namespace KdsBatch
                             fSumDakotRechiv = oCalcBL.GetSumErechRechiv(_dtChishuvSidur.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
                         }
 
-                        if (objOved.Taarich > objOved.objParameters.dTaarichBitulEshel &&  IsSidurShaon(drSidurim[I]))
+                        if (objOved.Taarich >= objOved.objParameters.dTaarichBitulEshel &&  IsSidurShaon(drSidurim[I]))
                         {
                             if (drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString() == "10" || drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString() == "10")
                                 fSumDakotRechiv = oCalcBL.GetSumErechRechiv(_dtChishuvSidur.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
@@ -2477,8 +2477,7 @@ namespace KdsBatch
                 {
                     if (!string.IsNullOrEmpty(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString()))
                     {
-                        if ((( (int.Parse(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString()) == 10 || int.Parse(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_OUT"].ToString()) == 10)
-                               && objOved.Taarich < objOved.objParameters.dTaarichBitulEshel) ||
+                        if (( (int.Parse(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString()) == 10 || int.Parse(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_OUT"].ToString()) == 10)||
                              (objOved.objMeafyeneyOved.GetMeafyen(50).Value == "1" && objOved.objPirteyOved.iIsuk == 178)) && IsSidurShaon(drSidurim[I]))
                         {
                             iMisparSidur = int.Parse(drSidurim[I]["MISPAR_SIDUR"].ToString());

@@ -34,7 +34,7 @@ namespace KDSCommon.DataModels.Errors
         public DataTable  ErrorsNotActive { get; set; }
         public DataTable LookUp { get; set; }
         public DataTable dtMatzavOved { get; set; }
-      
+        public DataTable IdkuneyRashemet { get; set; }
 
         public OvedYomAvodaDetailsDM OvedDetails { get; set; }
         public MeafyenimDM oMeafyeneyOved { get; set; }

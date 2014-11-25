@@ -234,6 +234,9 @@ namespace KdsErrors.FlowManagers
             inputData.iLastMisaprSidur = iLast;
             inputData.dtErrors = BuildErrorDataTable();
 
+            var shinuyManager = _container.Resolve<IShinuyimManager>();
+            inputData.IdkuneyRashemet = shinuyManager.GetIdkuneyRashemet(misparIshi, cardDate);
+
             return inputData;
         }
 

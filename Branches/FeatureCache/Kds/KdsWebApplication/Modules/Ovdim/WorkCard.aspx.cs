@@ -736,8 +736,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          DataTable dtLicenseNumbers = new DataTable();
          clWorkCard _WorkCard = new clWorkCard();
          try
-         {          
-             
+         {
+           
              ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
              //אם נלחץ השגוי הבא, נמצא את התאריך של הכרטיס הבא השגוי
              if (hidNextErrCard.Value.Equals("1"))
@@ -755,6 +755,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
              //אתחול פרמטרים
              SetEmployeeCardData();
+             hidPratim.Value = iMisparIshi.ToString() + "|" + dDateCard.ToShortDateString();
              int iMiMeadkenOL = _WorkCard.SaveWCInUsed(iMisparIshi, dDateCard, int.Parse(LoginUser.UserInfo.EmployeeNumber.ToString()));
              if (iMiMeadkenOL == 0)
                  bWcIsUsed = false;
