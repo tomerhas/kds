@@ -2164,7 +2164,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R292.Value</Value>
+                              <Value>=iif(Round(Fields!R292.Value,2)&gt;0,Round(Fields!R292.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -12833,7 +12833,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>dsRechiveyShonot</DataSetName>
         <Top>6.43394cm</Top>
-        <Left>0.18521cm</Left>
+        <Left>0cm</Left>
         <Height>1.24282cm</Height>
         <Width>40.15839cm</Width>
         <ZIndex>18</ZIndex>

@@ -222,6 +222,10 @@
       <FullPath>SpecificAverage.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>SubRdlIturim.rdl</Name>
+      <FullPath>SubRdlIturim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Tigburim.rdl</Name>
       <FullPath>Tigburim.rdl</FullPath>
     </ProjectItem>
@@ -248,8 +252,12 @@
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>SubRdlIturim.rdl</Name>
-      <FullPath>SubRdlIturim.rdl</FullPath>
+      <Name>RdlOvdimPeilim.rdl</Name>
+      <FullPath>RdlOvdimPeilim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Report2.rdl</Name>
+      <FullPath>Report2.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
