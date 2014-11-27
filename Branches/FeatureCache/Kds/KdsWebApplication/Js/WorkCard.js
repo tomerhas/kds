@@ -304,9 +304,9 @@
         var dCardDate = Pratim[1];
         var imeadkenOl = $get("hidMiMeadkenOL").value;
       
-       alert('dCardDate' + dCardDate);
-       alert('iMisparIshi' + iMisparIshi);
-       alert('imeadkenOl' + imeadkenOl);
+       //alert('dCardDate' + dCardDate);
+     //  alert('iMisparIshi' + iMisparIshi);
+      // alert('imeadkenOl' + imeadkenOl);
        // alert(document.getElementById("hidMiMeadkenOL").value);
         wsGeneral.FreeWC(iMisparIshi, dCardDate, imeadkenOl);   
     }
