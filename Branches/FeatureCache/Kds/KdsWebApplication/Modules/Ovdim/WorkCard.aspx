@@ -666,11 +666,14 @@
               case 13: //Enter           
                  if ((document.activeElement.id!='btnRefreshOvedDetails') &&  (document.activeElement.id!='btnUpdateCard')){  
                      if (($get("txtId").value).length>5)
+                     {
+                         FreeWC();
                          SetBarCode();
+                     }
                      else{              
                          event.returnValue=false;
                          event.cancel = true;
-                      }
+                     }
                  }                 
                  break;  
               case 107: //+

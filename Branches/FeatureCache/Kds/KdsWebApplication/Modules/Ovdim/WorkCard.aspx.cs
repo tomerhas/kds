@@ -113,7 +113,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
     private void SetUserKiosk(string[] arrParamsKiosk)
     {
-        iMisparIshiKiosk = int.Parse(arrParamsKiosk[0].ToString());
+        iMisparIshiKiosk = 84041; // int.Parse(arrParamsKiosk[0].ToString());
 
         LoginUser = LoginUser.GetLimitedUser(iMisparIshiKiosk.ToString());
         LoginUser.InjectEmployeeNumber(iMisparIshiKiosk.ToString());
@@ -605,7 +605,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              }
              }
              if (!bResult)
-             {                
+             {
+                 FreeWC();
                  if ((Request.QueryString["Page"] != null) || ((Session["arrParams"] != null)))
                  {
                      //string sScript = "alert('לא ניתן לעלות כרטיס עבודה'); window.location.href = '" + this.PureUrlRoot + "/Main.aspx';";
@@ -616,8 +617,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                  {
                      string sScript = "alert('לא ניתן לעלות כרטיס עבודה'); window.close();";
                      ScriptManager.RegisterClientScriptBlock(Page, this.GetType(), "InputDataFailed", sScript, true);
-                 }
-                 FreeWC();
+                 }   
              }
 
              if (bResult) 
@@ -775,7 +775,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              bRashemet = LoginUser.IsRashemetProfile(LoginUser);
             
              SetRashemetVars(bRashemet);
-             hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
+             hidFromEmda.Value = "true"; // (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
              iMisparIshiIdkunRashemet = ((int.Parse)(LoginUser.UserInfo.EmployeeNumber)).Equals(iMisparIshi) ? iMisparIshi : 0;
 
            //  oBatchManager.iLoginUserId =int.Parse(LoginUser.UserInfo.EmployeeNumber);
@@ -1069,7 +1069,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          string name;
          clOvdim oOvdim = new clOvdim();
          name = oOvdim.GetOvedFullName(int.Parse(hidMiMeadkenOL.Value));
-         return " alert('כרטיס נמצא בעדכון משתמש אחר " + name + ", לצורך ביצוע עדכונים בכרטיס אנא נסה במועד מאוחר יותר');";
+         return " alert('כרטיס נמצא בעדכון משתמש: " + name + ", לצורך ביצוע עדכונים בכרטיס אנא נסה במועד מאוחר יותר');";
      }
      private bool HasVehicleTypeWithOutTachograph()
      {

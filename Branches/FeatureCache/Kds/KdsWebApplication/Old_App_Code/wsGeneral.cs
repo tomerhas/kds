@@ -25,6 +25,7 @@ using KDSCommon.Enums;
 using KDSCommon.Interfaces.Managers;
 using KDSCommon.Helpers;
 using KDSCommon.Interfaces.DAL;
+using System.Diagnostics;
 
 //using System.Web.UI;
 //using System.IO;
@@ -58,6 +59,7 @@ public class wsGeneral : System.Web.Services.WebService
         //  int iMisparIshi=0; string dDateCard="0";
         clWorkCard _WorkCard = new clWorkCard();
         int iLoginUser = int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber); //int.Parse(Session["LoginUserEmp"].ToString());
+        EventLog.WriteEntry("kdsDev", "LoginUser=" + LoginUser.GetLoginUser().UserInfo.EmployeeNumber, EventLogEntryType.Error);
         if (iLoginUser == imeadkenOl)
             _WorkCard.SaveWCInUsed(iMisparIshi, DateTime.Parse(dDateCard), 0);
     }
