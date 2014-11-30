@@ -174,12 +174,20 @@
       <FullPath>RdlCountOvdeyMeshekShabat.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RdlOvdimPeilim.rdl</Name>
+      <FullPath>RdlOvdimPeilim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RdlPrecenceOvdeyMeshekShishiShabat.rdl</Name>
       <FullPath>RdlPrecenceOvdeyMeshekShishiShabat.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>RdlReportMushalimDetails.rdl</Name>
       <FullPath>RdlReportMushalimDetails.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Report2.rdl</Name>
+      <FullPath>Report2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Report4.rdl</Name>
@@ -251,14 +259,6 @@
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
-    <ProjectItem>
-      <Name>RdlOvdimPeilim.rdl</Name>
-      <FullPath>RdlOvdimPeilim.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Report2.rdl</Name>
-      <FullPath>Report2.rdl</FullPath>
-    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
@@ -267,7 +267,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://sql2012tst.egged.intra/reportserver</TargetServerURL>
+        <TargetServerURL>http://ksafimrs01/reportserver</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>
