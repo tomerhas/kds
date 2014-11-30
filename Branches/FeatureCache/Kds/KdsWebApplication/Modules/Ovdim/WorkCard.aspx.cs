@@ -113,7 +113,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
     private void SetUserKiosk(string[] arrParamsKiosk)
     {
-        iMisparIshiKiosk = 84041; // int.Parse(arrParamsKiosk[0].ToString());
+        iMisparIshiKiosk = int.Parse(arrParamsKiosk[0].ToString());
 
         LoginUser = LoginUser.GetLimitedUser(iMisparIshiKiosk.ToString());
         LoginUser.InjectEmployeeNumber(iMisparIshiKiosk.ToString());
@@ -775,7 +775,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              bRashemet = LoginUser.IsRashemetProfile(LoginUser);
             
              SetRashemetVars(bRashemet);
-             hidFromEmda.Value = "true"; // (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
+             hidFromEmda.Value =  (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
              iMisparIshiIdkunRashemet = ((int.Parse)(LoginUser.UserInfo.EmployeeNumber)).Equals(iMisparIshi) ? iMisparIshi : 0;
 
            //  oBatchManager.iLoginUserId =int.Parse(LoginUser.UserInfo.EmployeeNumber);
