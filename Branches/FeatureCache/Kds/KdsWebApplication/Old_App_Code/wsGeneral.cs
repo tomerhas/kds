@@ -56,12 +56,22 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void FreeWC(int iMisparIshi, string dDateCard, int imeadkenOl)
     {
-        //  int iMisparIshi=0; string dDateCard="0";
-        clWorkCard _WorkCard = new clWorkCard();
-        int iLoginUser = int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber); //int.Parse(Session["LoginUserEmp"].ToString());
-        EventLog.WriteEntry("kds", "KdsDev_LoginUser=" + LoginUser.GetLoginUser().UserInfo.EmployeeNumber, EventLogEntryType.Error);
-        if (iLoginUser == imeadkenOl)
-            _WorkCard.SaveWCInUsed(iMisparIshi, DateTime.Parse(dDateCard), 0);
+        try
+        {
+            EventLog.WriteEntry("kds", "KdsDev_FreeWC", EventLogEntryType.Error);
+            clWorkCard _WorkCard = new clWorkCard();
+            int iLoginUser = int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber); //int.Parse(Session["LoginUserEmp"].ToString());
+            EventLog.WriteEntry("kds", "KdsDev_LoginUser=" + LoginUser.GetLoginUser().UserInfo.EmployeeNumber, EventLogEntryType.Error);
+            if (iLoginUser == imeadkenOl)
+                _WorkCard.SaveWCInUsed(iMisparIshi, DateTime.Parse(dDateCard), 0);
+        }
+        catch (Exception ex)
+        {
+            if (LoginUser.GetLoginUser() == null)
+            {
+                EventLog.WriteEntry("kds", "KdsDev_FreeWC_ex" + ex.Message, EventLogEntryType.Error);
+            }
+        }
     }
     
     [WebMethod(EnableSession = true)]
