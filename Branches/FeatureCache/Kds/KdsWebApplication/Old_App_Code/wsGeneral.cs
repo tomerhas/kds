@@ -59,12 +59,8 @@ public class wsGeneral : System.Web.Services.WebService
         int iLoginUser = int.Parse(Session["LoginUserEmp"].ToString());
         try
         {
-            EventLog.WriteEntry("kds", "KdsDev_FreeWC_Login_User=" + iLoginUser, EventLogEntryType.Error);
-            clWorkCard _WorkCard = new clWorkCard();
-          //  EventLog.WriteEntry("kds", "KdsDev_FreeWC_before_iLoginUser", EventLogEntryType.Error);
-          //  EventLog.WriteEntry("kds", "KdsDev_FreeWC_LoginUser.GetLoginUser()" + LoginUser.GetLoginUser(), EventLogEntryType.Error);
-          //  int iLoginUser = int.Parse(LoginUser.GetLimitedUser.UserInfo.EmployeeNumber); //int.Parse(Session["LoginUserEmp"].ToString());
-          //  EventLog.WriteEntry("kds", "KdsDev_LoginUser=" + LoginUser.GetLoginUser().UserInfo.EmployeeNumber, EventLogEntryType.Error);
+           // EventLog.WriteEntry("kds", "KdsDev_FreeWC_Login_User=" + iLoginUser, EventLogEntryType.Error);
+            clWorkCard _WorkCard = new clWorkCard();         
             if (iLoginUser == imeadkenOl)
                 _WorkCard.SaveWCInUsed(iMisparIshi, DateTime.Parse(dDateCard), 0);
         }
