@@ -56,9 +56,12 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void FreeWC(int iMisparIshi, string dDateCard, int imeadkenOl)
     {
-        int iLoginUser = int.Parse(Session["LoginUserEmp"].ToString());
+        int iLoginUser; 
         try
         {
+            if (Session["LoginUserEmp"] != null)
+                iLoginUser = int.Parse(Session["LoginUserEmp"].ToString());
+            else iLoginUser = int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber);
            // EventLog.WriteEntry("kds", "KdsDev_FreeWC_Login_User=" + iLoginUser, EventLogEntryType.Error);
             clWorkCard _WorkCard = new clWorkCard();         
             if (iLoginUser == imeadkenOl)
@@ -644,7 +647,7 @@ public class wsGeneral : System.Web.Services.WebService
                 case clGeneral.enProfile.enVaadatPikuah :
                     dt = oOvdim.GetActiveWorkers(prefixText, DateTime.Parse(Params[2]), DateTime.Parse(Params[3]));
                     break;
-                case clGeneral.enProfile.enMenahelImKfufim : 
+                case clGeneral.enProfile.enMenahelImKfufim :   
                     dt = oOvdim.GetOvdimToUser(prefixText + "%", clGeneral.GetIntegerValue(Params[1]));
                     break;
                 default:
@@ -1706,10 +1709,12 @@ public class wsGeneral : System.Web.Services.WebService
             //AutoComplete for new sidur
             string[] Params = contextKey.Split(';');
             _MeasherOMistayeg = (clGeneral.enMeasherOMistayeg)int.Parse(Params[2]);
-            if (_MeasherOMistayeg==clGeneral.enMeasherOMistayeg.ValueNull)
+            if (_MeasherOMistayeg == clGeneral.enMeasherOMistayeg.ValueNull)
                 dt = oUtils.getKodElement(prefixText, Params[0], Params[1]);
-            else                
-                dt = oUtils.getkodSidurimWhithOutList(prefixText, Params[0], Params[1]);
+            else
+            {
+                dt = oUtils.getkodSidurimWhithOutList(prefixText, Params[0], Params[1], Params[3]);
+            }
 
             return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);        
         }
@@ -1738,19 +1743,41 @@ public class wsGeneral : System.Web.Services.WebService
 
 
     [WebMethod]
-    public string GetSidurDetailsFromTnua(int sidur, string date)
+    public string GetSidurDetailsFromTnua(int sidur, string date, string MeafyenList)
     {
-        DataTable PirteySidur;
-        int result;
+        clUtils oUtils = new clUtils();
+        DataTable PirteySidur, dtMeafyeneySidur;
+        int result, sugSidur;
+        string sSql;
 
         try
         {
             var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
             PirteySidur = kavimDal.GetSidurDetailsFromTnua(sidur, DateTime.Parse(date), out result);
-            if (result == 1)
+
+            if (MeafyenList.Length > 0)
+            {
+                if (PirteySidur.Rows.Count > 0)
+                {
+                    if (PirteySidur.Rows[0]["sugsidur"].ToString() != "")
+                    {
+                        sugSidur = int.Parse(PirteySidur.Rows[0]["sugsidur"].ToString());
+                        dtMeafyeneySidur = oUtils.InitDtMeafyeneySugSidur(DateTime.Parse(date), DateTime.Parse(date));
+                        sSql = "sug_sidur=" + sugSidur + " and kod_meafyen in (" + MeafyenList + ") and erech=1 ";
+                        if (dtMeafyeneySidur.Select(sSql).Length > 0)
+                            return "0";
+                        else return "-2";
+                    }
+                    return "-1";
+                }
                 return "-1";
-            return "0";
-            //return teur;
+            }
+            else
+            {
+                if (result == 1)
+                    return "-1";
+                return "0";
+            }
         }
         catch (Exception ex)
         {
@@ -1888,23 +1915,24 @@ public class wsGeneral : System.Web.Services.WebService
         string sWriter = "";
         DateTime dSidurStartHour, dActiveStartHour;        
         bool bProfileRashemet = (bool)Session["ProfileRashemet"];
+        bool bProfileMenahelBankShaot = (bool)Session["ProfileMenahelBankShaot"];
       //  DataTable dt = (DataTable)Session["Errors"];
         DataTable dtErr = new DataTable();
         switch (iLevel)
         {
             case 1:
-                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, iMisparIshi, DateTime.Parse(sCardDate), sFieldName);
+                ds = clDefinitions.GetErrorsForFields((bProfileRashemet || bProfileMenahelBankShaot), iMisparIshi, DateTime.Parse(sCardDate), sFieldName);
                 break;
             case 2:
                 dSidurStartHour = DateTime.Parse(sSidurStartHour);
-                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, iMisparIshi, DateTime.Parse(sCardDate), 
+                ds = clDefinitions.GetErrorsForFields((bProfileRashemet || bProfileMenahelBankShaot), iMisparIshi, DateTime.Parse(sCardDate), 
                      iSidurNumber, dSidurStartHour, sFieldName, ref dtErr);
                 Session["Errors"] = dtErr;
                 break;
             case 3:
                 dSidurStartHour = DateTime.Parse(sSidurStartHour);
                 dActiveStartHour = DateTime.Parse(sPeilutShatYetiza);
-                ds = clDefinitions.GetErrorsForFields(bProfileRashemet,  iMisparIshi, DateTime.Parse(sCardDate), 
+                ds = clDefinitions.GetErrorsForFields((bProfileRashemet || bProfileMenahelBankShaot), iMisparIshi, DateTime.Parse(sCardDate), 
                      iSidurNumber, dSidurStartHour, dActiveStartHour, iMisparKnisa, sFieldName);
                 break;
         }
@@ -2332,7 +2360,7 @@ public class wsGeneral : System.Web.Services.WebService
         }
     }
     [WebMethod]
-    public int MeafyenSidurMapaExists(int imisSidur, string sTaarich, int iMeafyen, int iErech)
+    public int MeafyenSidurMapaExists(int imisSidur, string sTaarich, string sMeafyenList)
     {
         clUtils oUtils = new clUtils();
         DataTable PirteySidur, dtMeafyeneySidur;
@@ -2342,20 +2370,27 @@ public class wsGeneral : System.Web.Services.WebService
         {
             var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
             PirteySidur = kavimDal.GetSidurDetailsFromTnua(imisSidur,DateTime.Parse(sTaarich), out result);
-            if (PirteySidur.Rows.Count > 0)
+            if (sMeafyenList.Length>0)
             {
-                if (PirteySidur.Rows[0]["sugsidur"].ToString() != "")
+                if (PirteySidur.Rows.Count > 0)
                 {
-                    sugSidur = int.Parse(PirteySidur.Rows[0]["sugsidur"].ToString());
-                    dtMeafyeneySidur = oUtils.InitDtMeafyeneySugSidur(DateTime.Parse(sTaarich), DateTime.Parse(sTaarich));
-                    sSql = "sug_sidur=" + sugSidur + " and kod_meafyen=99 and erech=1 ";
-                    if (dtMeafyeneySidur.Select(sSql).Length > 0)
-                        return 1;
-                    else return -1;
+                    if (PirteySidur.Rows[0]["sugsidur"].ToString() != "")
+                    {
+                        sugSidur = int.Parse(PirteySidur.Rows[0]["sugsidur"].ToString());
+                        dtMeafyeneySidur = oUtils.InitDtMeafyeneySugSidur(DateTime.Parse(sTaarich), DateTime.Parse(sTaarich));
+                        sSql = "sug_sidur=" + sugSidur + " and kod_meafyen in (" + sMeafyenList + ") and erech=1 ";
+                        if (dtMeafyeneySidur.Select(sSql).Length == sMeafyenList.Split(',').Length)
+                            return 1;
+                        else return -1;
+                    }
+                    return -2;
                 }
                 return -2;
             }
-            return -2;
+
+            if (result == 1)
+                return -2;
+            return 1;
         }
         catch (Exception ex)
         {

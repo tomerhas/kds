@@ -96,6 +96,9 @@ namespace KDSCommon.DataModels
 
         public string sRashaiLedaveach; //מאפיין 99
         public bool bRashaiLedaveachExists;
+        
+        public string sMenahelBankRashaiLedaveach; //מאפיין 104
+        public bool bMenahelBankRashaiLedaveach;
 
         //public string sSidurNetzerKod;
         public string sSidurNotInShabtonKod;

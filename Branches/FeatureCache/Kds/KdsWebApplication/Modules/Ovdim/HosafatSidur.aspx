@@ -71,6 +71,7 @@
      function MisSiduri_onChange() {
          var misSidur;
          var sugSidur = document.getElementById("sugSidur").value;
+         var MeafyenList="";
   //    debugger;
          if (sugSidur == 1) {
              misSidur = document.getElementById("txtMisSidurMapa").value;
@@ -86,15 +87,23 @@
                      document.getElementById("wsBack").value = "-1";
                  }
                  else {
+                 
                      if (sugSidur == 1) {
                          var Param252 = document.getElementById("Params").attributes("Param252").value;
                          var taarichSplit = taarich.split('/');
                          var TaarichCa = new Date(taarichSplit[2], taarichSplit[1] - 1, taarichSplit[0], '00', '00', '00');
                          var TaarichTemp = new Date();
-                             TaarichTemp = new Date(TaarichTemp.setDate(TaarichTemp.getDate() - Param252));
-                         if (document.getElementById("StatusCard").value == -1 && TaarichCa>=TaarichTemp)
-                             wsGeneral.MeafyenSidurMapaExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
-                         else wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
+                         TaarichTemp = new Date(TaarichTemp.setDate(TaarichTemp.getDate() - Param252));
+                         if (document.getElementById("hidMenahelBankShaot").value == "true")
+                             MeafyenList ="104";
+                         if (document.getElementById("StatusCard").value == -1 && TaarichCa >= TaarichTemp) {
+                             if (MeafyenList.length > 0)
+                                 MeafyenList = MeafyenList + ",99";
+                             else MeafyenList = "99";
+                             wsGeneral.MeafyenSidurMapaExists(misSidur, taarich, MeafyenList, MeafyenSidurExistsSucceded);
+                         }
+                         else wsGeneral.MeafyenSidurMapaExists(misSidur, taarich, MeafyenList, CheckTeurSucceded);
+                             //wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, MeafyenList, CheckTeurSucceded);
                      }
                  }
              }
@@ -131,7 +140,7 @@
                  wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
          }
          else if (result == -1) {
-                 document.getElementById("vldMisMapa").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
+                 document.getElementById("vldMisMapa").errormessage = "  אינך רשאי לדווח סידור זה / כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
                  ShowValidatorCalloutExtender("vldExSidurMapa");
                  document.getElementById("wsBack").value = "-1";
              }
@@ -145,7 +154,7 @@
      function CheckTeurSucceded(result) {
          var sugSidur = document.getElementById("sugSidur").value;
        //  debugger;
-         if (result != -1) {
+         if (result == 1) {
              document.getElementById("btnShow").disabled = false;
              document.getElementById("btnShow").focus();
            
@@ -154,9 +163,13 @@
         
          }
          else {
+             if (result == -1)
+                 document.getElementById("vldMisMapa").errormessage = "אינך רשאי לדווח סידור עבודה זה";
+             else
                  document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
-                 ShowValidatorCalloutExtender("vldExSidurMapa");
-                 document.getElementById("wsBack").value = "0";
+             
+                ShowValidatorCalloutExtender("vldExSidurMapa");
+                document.getElementById("wsBack").value = "0";
          }
      }
 
@@ -1468,6 +1481,7 @@
         <input type="hidden" id="StatusCard" name="StatusCard"  runat="server"  />
         <input type="hidden" id="sug_sidur_tnua" name="sug_sidur_tnua"  runat="server"  />
         <input type="hidden" id="wsBack" name="wsBack"  runat="server" value="0"  />
+        <input type="hidden" id="hidMenahelBankShaot" name="hidMenahelBankShaot"  runat="server"  />
          </ContentTemplate>
     </asp:UpdatePanel>
        <input type="button" ID="btnCopy" runat="server" style="display: none;" />

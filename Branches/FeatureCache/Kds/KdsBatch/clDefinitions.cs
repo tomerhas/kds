@@ -838,6 +838,7 @@ namespace KdsBatch
 
             return ds;
         }
+   
         private static DataSet GetErrorForFieldFromDB(string sFieldName, int iShgiotLeoved)
         {
             clDal _Dal = new clDal();

@@ -96,6 +96,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
           //  btnMapa.Style["disabled"] = "disabled";
             SetFixedHeaderGrid(pnlgrdPeiluyot.ClientID, Header);
             sugSidur.Value = "1";
+            hidMenahelBankShaot.Value = "true";// LoginUser.IsMenahelBankShaot(LoginUser).ToString();
             //AautoTeurSidur.ContextKey = "27,53;99200,99214";
             //AautoKodSidur.ContextKey = "27,53;99200,99214";
             if (Request.QueryString["CardDate"] != null)

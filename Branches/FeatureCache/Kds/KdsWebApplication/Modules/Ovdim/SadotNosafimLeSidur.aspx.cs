@@ -1588,7 +1588,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         DataSet dsFieldsErrors;
         DataView dvFieldsErrors;
         String _ContolType = oObj.GetType().ToString();
-        bool IsRasehmet = LoginUser.IsRashemetProfile(LoginUser.GetLoginUser()); // == true ? 1:0;
+        bool IsRasehmet = LoginUser.IsRashemetProfile(LoginUser.GetLoginUser()) || LoginUser.IsMenahelBankShaot(LoginUser.GetLoginUser());// == true ? 1:0;
         dsFieldsErrors = clDefinitions.GetErrorsForFields(IsRasehmet, ErrorsList, int.Parse(txtId.Value), DateTime.Parse(clnDate.Value),
             int.Parse(MisSidur.Value), DateTime.Parse(ShatHatchala.Value), sFieldName);
         dvFieldsErrors = new DataView(dsFieldsErrors.Tables[0]);
@@ -1612,7 +1612,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         DataSet dsFieldsErrors;
         DataView dvFieldsErrors;
         String _ContolType = oObj.GetType().ToString();
-        bool IsRasehmet =LoginUser.IsRashemetProfile(LoginUser.GetLoginUser());
+        bool IsRasehmet = LoginUser.IsRashemetProfile(LoginUser.GetLoginUser()) || LoginUser.IsMenahelBankShaot(LoginUser.GetLoginUser());
 
         dsFieldsErrors = clDefinitions.GetErrorsForFields(IsRasehmet, ErrorsList, iMisparIshi, dCardDate, iMisparSidur, dShatHatchala, dPeilutShatYetiza, iMisparKnisa, sFieldName);
         dvFieldsErrors = new DataView(dsFieldsErrors.Tables[0]);

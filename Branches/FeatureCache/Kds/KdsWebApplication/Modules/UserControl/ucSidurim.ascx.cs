@@ -124,6 +124,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     public const int SIDUR_HITYAZVUT2 = 99214;
     public const int MEAFYEN_SIDUR_HADRUT1 = 53;
     public const int MEAFYEN_SIDUR_HADRUT2 = 27;
+    public const int MEAFYEN_SIDUR_MENAHEL_BANK = 104;
     public const int MEAFYEN_CARD_NULL = 99; //מאפיין שמציין סידור ללא התייחסות
     public const string FORMAT_NUMERIC_INPUT = "0123456789";
     public const long MAKAT_VISA = 50000000;
@@ -134,6 +135,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     public bool bAtLeatOneSidurIsNOTNahagutOrTnua = false;
     public bool bAtLeastOneSidurInShabat = false;
     private bool _ProfileRashemet;
+    private bool _ProfileMenahelBankShaot;
     private int _MisparIshiIdkunRashemet;
     private const string COL_TRIP_EMPTY = "ריקה";
     private string _sAddPeilut="";
@@ -213,6 +215,18 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         get
         {
             return _ProfileRashemet;
+        }
+    }
+
+    public bool ProfileMenahelBankShaot
+    {
+        set
+        {
+            _ProfileMenahelBankShaot = value;
+        }
+        get
+        {
+            return _ProfileMenahelBankShaot;
         }
     }
     public int MisparIshiIdkunRashemet
@@ -2327,6 +2341,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                                    ref HtmlTableCell hCollapseCell,
                                    ref HtmlTableCell hErrCell, int iIndex)
     {
+        string sMeafyenbank = "";
         //הכנסת סידור חדש
         //LiteralControl lDummy = new LiteralControl();
         //lDummy.Text = " ";
@@ -2373,17 +2388,22 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //add ajax autocomlete control        
         oAutoComplete = AddAutoCompleteCtl("ACSidur" + iIndex, 25, true, oTextBox.ID, "getKodSidurimWhithOutList", "~/Modules/WebServices/wsGeneral.asmx");
        // oAutoComplete.OnClientItemSelected = "chkNewSidur";
-        //ננטרל סידורי התייצבות והיעדרות      
+        //ננטרל סידורי התייצבות והיעדרות     
+        if (ProfileMenahelBankShaot)
+            sMeafyenbank = MEAFYEN_SIDUR_MENAHEL_BANK +",";
         if (MeasherOMistayeg == clGeneral.enMeasherOMistayeg.ValueNull)
         {
             //אם הסידור הוא ללא התייחסות וגם בטווח של 45 יום אחורה ,לא נאפשר סידורים שאין להם מאפיין 99
-            if (clDefinitions.GetDiffDays(CardDate, DateTime.Now) +1 <= Param252)
-                oAutoComplete.ContextKey = MEAFYEN_CARD_NULL + ";1;" + MeasherOMistayeg.GetHashCode();
+            if (clDefinitions.GetDiffDays(CardDate, DateTime.Now) + 1 <= Param252)
+                oAutoComplete.ContextKey = sMeafyenbank + MEAFYEN_CARD_NULL + ";1;" + MeasherOMistayeg.GetHashCode();
             else
-                oAutoComplete.ContextKey =  ";;" + MeasherOMistayeg.GetHashCode();
+            {
+                sMeafyenbank = sMeafyenbank.Replace(',',' ').Trim();
+                oAutoComplete.ContextKey = sMeafyenbank + ";;" + MeasherOMistayeg.GetHashCode();
+            }
         }
         else
-            oAutoComplete.ContextKey = MEAFYEN_SIDUR_HADRUT1 + "," + MEAFYEN_SIDUR_HADRUT2 + ";" + SIDUR_HITYAZVUT1 + "," + SIDUR_HITYAZVUT2 + ";" + MeasherOMistayeg.GetHashCode(); 
+            oAutoComplete.ContextKey = MEAFYEN_SIDUR_HADRUT1 + "," + MEAFYEN_SIDUR_HADRUT2 + ";" + SIDUR_HITYAZVUT1 + "," + SIDUR_HITYAZVUT2 + ";" + MeasherOMistayeg.GetHashCode() + ";" + sMeafyenbank.Replace(',', ' ').Trim(); 
 
         hCell.Controls.Add(oAutoComplete);
 
@@ -4438,7 +4458,16 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //לא נאפשר עדכון סידור אם לסידור לא קיים מאפיין 99
         if ((MeasherOMistayeg == clGeneral.enMeasherOMistayeg.ValueNull) && (!bRashaiLedavech) && (LoginUserId != MisparIshi) && (bNewWorkCard))
             bEnable = false;
-
+        else if (ProfileMenahelBankShaot)
+        {
+            if (oSidur.bSidurMyuhad) //סידור מיוחד
+                bEnable = oSidur.bMenahelBankRashaiLedaveach;
+            else
+            {
+                if (drSugSidur.Length > 0)
+                    bEnable = (drSugSidur[0]["ledivuach_menahel_meshek"].ToString() == "1");
+            }
+        }
         return bEnable;
     }
     protected void AddAttribute(Control oObj, string sAttrName, string sAttrValue)
@@ -5266,7 +5295,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         DataView dvFieldsErrors;
         String _ContolType = oObj.GetType().ToString();
 
-        dsFieldsErrors = clDefinitions.GetErrorsForFields(ProfileRashemet,ErrorsList, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dOldFullShatHatchala, sFieldName);
+        dsFieldsErrors = clDefinitions.GetErrorsForFields((ProfileRashemet || ProfileMenahelBankShaot),ErrorsList, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dOldFullShatHatchala, sFieldName);
         dvFieldsErrors = new DataView(dsFieldsErrors.Tables[0]);
         dvFieldsErrors.RowFilter = "SHOW_ERROR=1";
 
@@ -5288,7 +5317,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         String _ContolType = oObj.GetType().ToString();
         bool bError = false;
 
-        dsFieldsErrors = clDefinitions.GetErrorsForFields(ProfileRashemet, ErrorsList, iMisparIshi, dCardDate, iMisparSidur, dFullShatHatchala, dPeilutShatYetiza, iMisparKnisa, sFieldName);
+        dsFieldsErrors = clDefinitions.GetErrorsForFields((ProfileRashemet || ProfileMenahelBankShaot), ErrorsList, iMisparIshi, dCardDate, iMisparSidur, dFullShatHatchala, dPeilutShatYetiza, iMisparKnisa, sFieldName);
         dvFieldsErrors = new DataView(dsFieldsErrors.Tables[0]);
         dvFieldsErrors.RowFilter = "SHOW_ERROR=1";
 

@@ -413,7 +413,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             enRashemet = 2,
             enRashemetAll = 3,
             enMenahelImKfufim = 5,
-            enVaadatPikuah = 6 
+            enVaadatPikuah = 6,
+            enMenahelBankMeshek = 9
         }
         public enum enOnatiut
         {

@@ -137,6 +137,27 @@ namespace KdsLibrary.Security
                 throw ex;
             }
         }
+
+        public static bool IsMenahelBankShaot(LoginUser oLoginUser)
+        {
+            bool bMenahelBankShaot = false;
+            try
+            {
+                for (int i = 0; i < oLoginUser.UserProfiles.Length; i++)
+                {
+                    if (oLoginUser.UserProfiles[i].Role == clGeneral.enProfile.enMenahelBankMeshek.GetHashCode())
+                    {
+                        bMenahelBankShaot = true;
+                        break;
+                    }
+                }
+                return bMenahelBankShaot;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         #endregion
 
         
