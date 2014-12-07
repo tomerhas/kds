@@ -358,13 +358,16 @@
                document.getElementById("divHourglass").style.display = 'block';
             var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
              // var ReturnWin = window.open('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
-
+            alert('ReturnWin='+ReturnWin);
             if (ReturnWin == '' || ReturnWin == 'undefined' || ReturnWin == undefined)
                    ReturnWin = false;
                else {
                    var DatailsSplit = ReturnWin.split('|');
-
+                   alert('DatailsSplit1=' +DatailsSplit[0]);
+                   alert('DatailsSplit2=' +DatailsSplit[1]);
+                   alert('DatailsSplit3=' +DatailsSplit[2]);
                    var userLogin = document.getElementById("ctl00_KdsContent_HidLoginUse").value;
+                alert('userLogin='+userLogin);
                    if (ReturnWin == userLogin);
                    wsGeneral.FreeWC(DatailsSplit[0], DatailsSplit[1], DatailsSplit[2]);
                }
