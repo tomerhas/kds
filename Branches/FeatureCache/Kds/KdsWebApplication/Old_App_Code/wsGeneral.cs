@@ -647,7 +647,8 @@ public class wsGeneral : System.Web.Services.WebService
                 case clGeneral.enProfile.enVaadatPikuah :
                     dt = oOvdim.GetActiveWorkers(prefixText, DateTime.Parse(Params[2]), DateTime.Parse(Params[3]));
                     break;
-                case clGeneral.enProfile.enMenahelImKfufim :   
+                case clGeneral.enProfile.enMenahelImKfufim :
+                case clGeneral.enProfile.enMenahelBankMeshek:   
                     dt = oOvdim.GetOvdimToUser(prefixText + "%", clGeneral.GetIntegerValue(Params[1]));
                     break;
                 default:

@@ -4010,7 +4010,9 @@ namespace KdsBatch
                            //  fDakotZikuy100 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ShaotShabat100.GetHashCode(), objOved.Taarich);
                            fZmanRetzifutShabat275 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanRetzifutShabat); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanRetzifutShabat.GetHashCode(), objOved.Taarich);
 
-                           fSumDakotRechiv = (fDakotNahagut + fDakotTnua + fDakotTafkid + fZmanRetzifutShabat275) - (fDakotZikuyChofesh + fTosefetZmanNesia);
+                           fSumDakotRechiv = (fDakotNahagut + fDakotTnua + fDakotTafkid + fZmanRetzifutShabat275) - fDakotZikuyChofesh;
+                           if (fDakotTafkid > 0)
+                               fSumDakotRechiv -= fTosefetZmanNesia;
 
                            if (objOved.objMeafyeneyOved.GetMeafyen(92).IntValue>0 &&  oCalcBL.CheckYomShishi(objOved.SugYom))
                            {

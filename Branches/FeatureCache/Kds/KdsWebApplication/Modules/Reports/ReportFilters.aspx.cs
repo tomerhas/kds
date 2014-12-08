@@ -78,7 +78,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         _sProfilUser= profil.ToString();
                         break;
                     }
-                    else if (profil == clGeneral.enProfile.enMenahelImKfufim.GetHashCode())
+                    else if (profil == clGeneral.enProfile.enMenahelImKfufim.GetHashCode() || profil == clGeneral.enProfile.enMenahelBankMeshek.GetHashCode())
                         _sProfilUser=  profil.ToString();
                 }
             }                    
