@@ -2463,7 +2463,8 @@ namespace KdsBatch
                     if (!string.IsNullOrEmpty(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString()))
                     {
                         if (( (int.Parse(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_IN"].ToString()) == 10 || int.Parse(drSidurim[I]["KOD_SIBA_LEDIVUCH_YADANI_OUT"].ToString()) == 10) ||
-                             (objOved.objMeafyeneyOved.sMeafyen50 == "1" && objOved.objPirteyOved.iIsuk==178 ) )  && IsSidurShaon(drSidurim[I]) )
+                             (objOved.objMeafyeneyOved.sMeafyen50 == "1" && objOved.objPirteyOved.iIsuk==178 ) ||
+                             (objOved.Taarich >= objOved.objParameters.dTaarichHafalatEshelMichshuv && (objOved.objPirteyOved.iIsuk == 124 || objOved.objPirteyOved.iIsuk == 127))) && IsSidurShaon(drSidurim[I]))
                         {
                             iMisparSidur = int.Parse(drSidurim[I]["MISPAR_SIDUR"].ToString());
                             dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
@@ -2472,135 +2473,10 @@ namespace KdsBatch
                             dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
                             dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
 
-                            //ב.	אם דקות נוכחות לתשלום (רכיב 1) של סידור > 0 וגם דקות נוכחות לתשלום (רכיב 1) של סידור < 240 דקות [שליפת פרמטר (קוד פרמטר = 65)] וגם שעת התחלה לתשלום של סידור < 04:01 [שליפת פרמטר (קוד פרמטר = 70)] וגם שעת גמר לתשלום של סידור > 04:59 [שליפת פרמטר (קוד פרמטר = 71)] אזי  רכיב אש"ל בוקר מבקרים (רכיב 39) עם ערך = 1. אין לפתוח רשומה לשאר הרכיבים (זכאי רק לאש"ל בוקר). 
-                            if ((fDakotNochehutSidur > 0) && (fDakotNochehutSidur < objOved.objParameters.iNochehutMinRetzufa) &&
-                                (dShatHatchalaLetashlum < objOved.objParameters.dHatchalaEshelBoker) &&
-                                 (dShatGmarLetashlum > objOved.objParameters.dGmarEshelBoker))
-                            {
-                                addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                            }
-
-                            //ג.	אם דקות נוכחות לתשלום (רכיב 1) של סידור >= 240 דקות [שליפת פרמטר (קוד פרמטר = 65)] וגם דקות נוכחות לתשלום (רכיב 1) של סידור <= 479 דקות [שליפת פרמטר (קוד פרמטר = 66)] 
-                            if ((fDakotNochehutSidur >= objOved.objParameters.iNochehutMinRetzufa) &&
-                                (fDakotNochehutSidur <= objOved.objParameters.iNochehutMaxEshel1))
-                            {
-                                if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanHatchalaBoker) &&
-                                (dShatGmarLetashlum < objOved.objParameters.dZmanSiyumBoker))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-
-                                if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanHatchalaBoker) &&
-                               (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumBoker))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-
-                                if ((dShatHatchalaLetashlum > objOved.objParameters.dZmanHatchalaBoker) &&
-                              (dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumTzharayim) &&
-                              (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumBoker) &&
-                              (dShatGmarLetashlum < objOved.objParameters.dZmanHatchalaErev))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-
-                                if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumTzharayim) &&
-                             (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-
-                                if ((dShatHatchalaLetashlum > objOved.objParameters.dZmanSiyumTzharayim) &&
-                            (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-                            }
-
-                            //ד.	אם דקות נוכחות לתשלום (רכיב 1) של סידור > 479 דקות [שליפת פרמטר (קוד פרמטר = 66)]   וגם דקות נוכחות לתשלום (רכיב 1) של סידור <= 599 דקות [שליפת פרמטר (קוד פרמטר = 67)]  
-                            if ((fDakotNochehutSidur >= objOved.objParameters.iNochehutMaxEshel1) &&
-                               (fDakotNochehutSidur <= objOved.objParameters.iNochehutMaxEshel))
-                            {
-                                if ((dShatHatchalaLetashlum >= objOved.objParameters.dZmanHatchalaBoker2) &&
-                                (dShatGmarLetashlum < objOved.objParameters.dZmanSiyumBoker))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-
-                                if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumBoker) &&
-                               (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumBoker) && (dShatGmarLetashlum < objOved.objParameters.dZmanHatchalaErev))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-
-                                if ((dShatHatchalaLetashlum > objOved.objParameters.dZmanSiyumBoker) &&
-                             (dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumTzharayim) &&
-                             (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-
-                                }
-
-
-                                if ((dShatHatchalaLetashlum > objOved.objParameters.dZmanSiyumTzharayim) &&
-                            (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-
-                                if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumBoker) &&
-                            (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-                            }
-
-                            //ה.	אם דקות נוכחות לתשלום (רכיב 1) של סידור >= 600 דקות  (10 שעות) [שליפת פרמטר (קוד פרמטר = 68)] 
-                            if (fDakotNochehutSidur >= objOved.objParameters.iNochehueMinEshel)
-                            {
-                                if ((dShatHatchalaLetashlum >= objOved.objParameters.dZmanHatchalaBoker2) &&
-                                (dShatGmarLetashlum < objOved.objParameters.dZmanSiyumBoker))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-
-                                if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumBoker) &&
-                               (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumBoker) &&
-                               (dShatGmarLetashlum < objOved.objParameters.dZmanSiyumTzharayim))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-
-                                if ((dShatHatchalaLetashlum > objOved.objParameters.dZmanSiyumBoker) &&
-                                    (dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumTzharayim) &&
-                              (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-
-                                if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumBoker) &&
-                             (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumTzharayim))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-
-                                if (dShatHatchalaLetashlum > objOved.objParameters.dZmanSiyumTzharayim)
-                                {
-                                    addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                }
-                            }
-
+                            if (objOved.objPirteyOved.iIsuk!= 124 && objOved.objPirteyOved.iIsuk != 127)
+                                CalcRechiveyEshel(iMisparSidur, dShatHatchalaSidur, fDakotNochehutSidur, dShatHatchalaLetashlum, dShatGmarLetashlum);
+                            else
+                                CalcRechiveyEshelMichshuv(iMisparSidur, dShatHatchalaSidur, fDakotNochehutSidur, dShatHatchalaLetashlum, dShatGmarLetashlum);
                         }
                     }
                 }
@@ -2616,6 +2492,244 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiveyEshel(int iMisparSidur, DateTime dShatHatchalaSidur, float fDakotNochehutSidur, DateTime dShatHatchalaLetashlum, DateTime dShatGmarLetashlum)
+        {
+            try{
+                //ב.	אם דקות נוכחות לתשלום (רכיב 1) של סידור > 0 וגם דקות נוכחות לתשלום (רכיב 1) של סידור < 240 דקות [שליפת פרמטר (קוד פרמטר = 65)] וגם שעת התחלה לתשלום של סידור < 04:01 [שליפת פרמטר (קוד פרמטר = 70)] וגם שעת גמר לתשלום של סידור > 04:59 [שליפת פרמטר (קוד פרמטר = 71)] אזי  רכיב אש"ל בוקר מבקרים (רכיב 39) עם ערך = 1. אין לפתוח רשומה לשאר הרכיבים (זכאי רק לאש"ל בוקר). 
+                if ((fDakotNochehutSidur > 0) && (fDakotNochehutSidur < objOved.objParameters.iNochehutMinRetzufa) &&
+                    (dShatHatchalaLetashlum < objOved.objParameters.dHatchalaEshelBoker) &&
+                     (dShatGmarLetashlum > objOved.objParameters.dGmarEshelBoker))
+                {
+                    addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                }
+
+                //ג.	אם דקות נוכחות לתשלום (רכיב 1) של סידור >= 240 דקות [שליפת פרמטר (קוד פרמטר = 65)] וגם דקות נוכחות לתשלום (רכיב 1) של סידור <= 479 דקות [שליפת פרמטר (קוד פרמטר = 66)] 
+                if ((fDakotNochehutSidur >= objOved.objParameters.iNochehutMinRetzufa) &&
+                    (fDakotNochehutSidur <= objOved.objParameters.iNochehutMaxEshel1))
+                {
+                    if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanHatchalaBoker) &&
+                    (dShatGmarLetashlum < objOved.objParameters.dZmanSiyumBoker))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanHatchalaBoker) &&
+                   (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumBoker))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                        addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if ((dShatHatchalaLetashlum > objOved.objParameters.dZmanHatchalaBoker) &&
+                  (dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumTzharayim) &&
+                  (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumBoker) &&
+                  (dShatGmarLetashlum < objOved.objParameters.dZmanHatchalaErev))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumTzharayim) &&
+                 (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                        addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if ((dShatHatchalaLetashlum > objOved.objParameters.dZmanSiyumTzharayim) &&
+                (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+                }
+
+                //ד.	אם דקות נוכחות לתשלום (רכיב 1) של סידור > 479 דקות [שליפת פרמטר (קוד פרמטר = 66)]   וגם דקות נוכחות לתשלום (רכיב 1) של סידור <= 599 דקות [שליפת פרמטר (קוד פרמטר = 67)]  
+                if ((fDakotNochehutSidur >= objOved.objParameters.iNochehutMaxEshel1) &&
+                   (fDakotNochehutSidur <= objOved.objParameters.iNochehutMaxEshel))
+                {
+                    if ((dShatHatchalaLetashlum >= objOved.objParameters.dZmanHatchalaBoker2) &&
+                    (dShatGmarLetashlum < objOved.objParameters.dZmanSiyumBoker))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumBoker) &&
+                   (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumBoker) && (dShatGmarLetashlum < objOved.objParameters.dZmanHatchalaErev))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                        addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if ((dShatHatchalaLetashlum > objOved.objParameters.dZmanSiyumBoker) &&
+                 (dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumTzharayim) &&
+                 (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+
+                    }
+
+
+                    if ((dShatHatchalaLetashlum > objOved.objParameters.dZmanSiyumTzharayim) &&
+                (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumBoker) &&
+                (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                        addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+                }
+
+                //ה.	אם דקות נוכחות לתשלום (רכיב 1) של סידור >= 600 דקות  (10 שעות) [שליפת פרמטר (קוד פרמטר = 68)] 
+                if (fDakotNochehutSidur >= objOved.objParameters.iNochehueMinEshel)
+                {
+                    if ((dShatHatchalaLetashlum >= objOved.objParameters.dZmanHatchalaBoker2) &&
+                    (dShatGmarLetashlum < objOved.objParameters.dZmanSiyumBoker))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumBoker) &&
+                   (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumBoker) &&
+                   (dShatGmarLetashlum < objOved.objParameters.dZmanSiyumTzharayim))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                        addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if ((dShatHatchalaLetashlum > objOved.objParameters.dZmanSiyumBoker) &&
+                        (dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumTzharayim) &&
+                  (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumBoker) &&
+                 (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumTzharayim))
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                        addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if (dShatHatchalaLetashlum > objOved.objParameters.dZmanSiyumTzharayim)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                 throw (ex);
+            }
+        }
+        private void CalcRechiveyEshelMichshuv(int iMisparSidur, DateTime dShatHatchalaSidur, float fDakotNochehutSidur, DateTime dShatHatchalaLetashlum, DateTime dShatGmarLetashlum)
+        {
+            try
+            {
+                //1 
+                if (objOved.SugYom == clGeneral.enSugYom.Chol.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() ||
+                   objOved.SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.Purim.GetHashCode())
+                {
+                    if (dShatHatchalaLetashlum < objOved.objParameters.dParam290 && dShatGmarLetashlum > objOved.objParameters.dParam290 &&
+                        dShatGmarLetashlum <= objOved.objParameters.dParam291 &&
+                        float.Parse((dShatGmarLetashlum - objOved.objParameters.dParam290).TotalMinutes.ToString()) >= objOved.objParameters.dParam296)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if (dShatHatchalaLetashlum < objOved.objParameters.dParam290 && dShatGmarLetashlum > objOved.objParameters.dParam290 &&
+                        dShatGmarLetashlum > objOved.objParameters.dParam291 &&
+                        float.Parse((objOved.objParameters.dParam291 - objOved.objParameters.dParam290).TotalMinutes.ToString()) >= objOved.objParameters.dParam296)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if (dShatHatchalaLetashlum >= objOved.objParameters.dParam290 && dShatGmarLetashlum <= objOved.objParameters.dParam291 &&
+                        float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString()) >= objOved.objParameters.dParam296)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if (dShatHatchalaLetashlum >= objOved.objParameters.dParam290 && dShatGmarLetashlum > objOved.objParameters.dParam291 &&
+                        float.Parse((objOved.objParameters.dParam291 - dShatHatchalaLetashlum).TotalMinutes.ToString()) >= objOved.objParameters.dParam296)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+                }
+
+                if (objOved.SugYom == clGeneral.enSugYom.Shabat.GetHashCode() || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
+                {
+                    if (dShatHatchalaLetashlum < objOved.objParameters.dParam292 && dShatGmarLetashlum > objOved.objParameters.dParam292 &&
+                        dShatGmarLetashlum <= objOved.objParameters.dParam293 &&
+                        float.Parse((dShatGmarLetashlum - objOved.objParameters.dParam292).TotalMinutes.ToString()) >= objOved.objParameters.dParam297)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if (dShatHatchalaLetashlum < objOved.objParameters.dParam292 && dShatGmarLetashlum > objOved.objParameters.dParam292 &&
+                        dShatGmarLetashlum > objOved.objParameters.dParam293 &&
+                        float.Parse((objOved.objParameters.dParam293 - objOved.objParameters.dParam292).TotalMinutes.ToString()) >= objOved.objParameters.dParam297)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if (dShatHatchalaLetashlum >= objOved.objParameters.dParam292 && dShatGmarLetashlum <= objOved.objParameters.dParam293 &&
+                      float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString()) >= objOved.objParameters.dParam297)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if (dShatHatchalaLetashlum >= objOved.objParameters.dParam292 && dShatGmarLetashlum > objOved.objParameters.dParam293 &&
+                        float.Parse((objOved.objParameters.dParam293 - dShatHatchalaLetashlum).TotalMinutes.ToString()) >= objOved.objParameters.dParam297)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+                }
+                //3
+                if (objOved.SugYom == clGeneral.enSugYom.Shishi.GetHashCode() || oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom))
+                {
+                    if (dShatHatchalaLetashlum < objOved.objParameters.dParam294 && dShatGmarLetashlum > objOved.objParameters.dParam294 &&
+                       dShatGmarLetashlum <= objOved.objParameters.dParam295 &&
+                       float.Parse((dShatGmarLetashlum - objOved.objParameters.dParam294).TotalMinutes.ToString()) >= objOved.objParameters.dParam298)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if (dShatHatchalaLetashlum < objOved.objParameters.dParam294 && dShatGmarLetashlum > objOved.objParameters.dParam294 &&
+                        dShatGmarLetashlum > objOved.objParameters.dParam295 &&
+                        float.Parse((objOved.objParameters.dParam295 - objOved.objParameters.dParam294).TotalMinutes.ToString()) >= objOved.objParameters.dParam298)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if (dShatHatchalaLetashlum >= objOved.objParameters.dParam294 && dShatGmarLetashlum <= objOved.objParameters.dParam295 &&
+                        float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString()) >= objOved.objParameters.dParam298)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+
+                    if (dShatHatchalaLetashlum >= objOved.objParameters.dParam294 && dShatGmarLetashlum > objOved.objParameters.dParam295 &&
+                        float.Parse((objOved.objParameters.dParam295 - dShatHatchalaLetashlum).TotalMinutes.ToString()) >= objOved.objParameters.dParam298)
+                    {
+                        addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                    }
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+     
         public void CalcRechiv44()
         {
             //כמות גמול חסכון נוספות (רכיב 44)
@@ -7563,6 +7677,32 @@ namespace KdsBatch
             {
                 drSidurim = null;
             }
+        }
+
+        public void CalcRechiv295()
+        {
+            DataRow[] drSidurim;
+            int iMisparSidur=0;
+            DateTime dShatHatchalaSidur= DateTime.MinValue;
+            float fErech;
+           
+            try{
+                drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null");
+                for (int I = 0; I < drSidurim.Length; I++)
+                {
+                    iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
+                    dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
+
+                    fErech = oPeilut.CalcRechiv295(iMisparSidur, dShatHatchalaSidur);
+                    
+                    addRowToTable(clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                }
+          }
+          catch (Exception ex)
+          {
+            clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
+            throw (ex);
+          }
         }
 
         public void CalcRechiv932()

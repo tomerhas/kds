@@ -221,6 +221,20 @@ namespace KdsBatch
         public DateTime dTaarichHafalatHafchataZmanNesia; // -286 תאריך הפעלת הפחתת 60 דקות בזמן נסיעה 
         public int iDakotHafchataZmanNesia; // -287 דקות להפחתה מזמן נסיעה  
         public DateTime dTaarichBitulPremiaNahagutForHoraa; // -288 תאריך ביטול פרמיית נהגות לסידור הוראת נהיגה 
+        public DateTime dTaarichHafalatEshelMichshuv;//תאריך הפעלת תשלום אש"ל לעובדי חטיבת המחשוב 289
+        public DateTime dParam290;//290
+        public DateTime dParam291;//291
+        public DateTime dParam292;//292
+        public DateTime dParam293;//293
+        public DateTime dParam294;//294
+        public DateTime dParam295;//295
+        public int dParam296;//296
+        public int dParam297;//296
+        public int dParam298;//298
+
+        public DateTime dParam299; // -299 
+        public int iMaxYamimGmulYeriET; // 300 מקס כמות ימים לקבל גמול ירי אגד תעבורה 
+        public DateTime dParam301; // -301
 
         public float fBasisLechishuvPremia; //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
         public float fMichsatSaotChodshitET; //503 -אגד תעבורה- מכסת שעות חודשית 
@@ -1061,7 +1075,59 @@ namespace KdsBatch
                 //288
                 sTmp = GetOneParam(288, dCardDate);
                 dTaarichBitulPremiaNahagutForHoraa = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
-                
+
+                //289
+                sTmp = GetOneParam(289, dCardDate);
+                dTaarichHafalatEshelMichshuv = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+                 //290
+                sTmp = GetOneParam(290, dCardDate);
+                dParam290 = GetParamHour(sTmp, dCardDate);
+
+                 //291
+                sTmp = GetOneParam(291, dCardDate);
+                dParam291 = GetParamHour(sTmp, dCardDate.AddDays(1));
+  
+                    //292
+                sTmp = GetOneParam(292, dCardDate);
+                dParam292 = GetParamHour(sTmp, dCardDate);
+                 //293
+                sTmp = GetOneParam(293, dCardDate);
+                dParam293 = GetParamHour(sTmp, dCardDate.AddDays(1));
+
+                //294
+                sTmp = GetOneParam(294, dCardDate);
+                dParam294 = GetParamHour(sTmp, dCardDate);
+
+                //295
+                sTmp = GetOneParam(295, dCardDate);
+                dParam295 = GetParamHour(sTmp, dCardDate);
+
+                //296
+                sTmp = GetOneParam(296, dCardDate);
+                dParam296 = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //297
+                sTmp = GetOneParam(297, dCardDate);
+                dParam297 = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //298
+                sTmp = GetOneParam(298, dCardDate);
+                dParam298 = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //299
+                sTmp = GetOneParam(299, dCardDate);
+                dParam299 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+                //300
+                sTmp = GetOneParam(300, dCardDate);
+                iMaxYamimGmulYeriET = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //301
+                sTmp = GetOneParam(301, dCardDate);
+                dParam301 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);
                 fMichsatSaotChodshitET = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
