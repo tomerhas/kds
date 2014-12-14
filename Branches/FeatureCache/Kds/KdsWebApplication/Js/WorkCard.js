@@ -532,7 +532,7 @@
     }
    function ShowDrvErr(){
        var iLaoved;
-        if ($get("hidRashemet").value=="1")
+       if ($get("hidRashemet").value == "1" || $get("hidMenahelBank").value == "1")
             iLaoved="0";
            else
             iLaoved="1";

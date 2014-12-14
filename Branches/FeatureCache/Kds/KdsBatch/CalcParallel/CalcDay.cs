@@ -8015,7 +8015,7 @@ namespace KdsBatch
                     oSidur.CalcRechiv295();
                     fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), objOved.Taarich);
 
-                    addRowToTable(clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), 1);
+                    addRowToTable(clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), fErechRechiv);
                 }
             }
             catch (Exception ex)

@@ -1236,6 +1236,15 @@ public partial class Modules_Ovdim_WorkCard {
     protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidRashemet;
     
     /// <summary>
+    /// hidMenahelBank control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidMenahelBank;
+    
+    /// <summary>
     /// hidFromEmda control.
     /// </summary>
     /// <remarks>

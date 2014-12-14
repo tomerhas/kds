@@ -2471,7 +2471,14 @@ public class wsGeneral : System.Web.Services.WebService
                         if (dr.Length == 0)
                             sReturnCode = "1| מספר סידור שגוי";
 
-                        if (((clGeneral.enMeasherOMistayeg)iMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull) 
+                        var bProfileMenahelBankShaot = (bool)Session["ProfileMenahelBankShaot"];
+                        if (bProfileMenahelBankShaot)
+                        {
+                            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=104 and erech='1'");
+                            if (dr.Length == 0)
+                                sReturnCode = "1| אינך רשאי לדווח סידור עבודה זה ";
+                        }
+                        else if (((clGeneral.enMeasherOMistayeg)iMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull) 
                             && (clDefinitions.GetDiffDays(DateTime.Parse(sSidurDate), DateTime.Now) + 1 <= _parameters.iValidDays))
                         {   //אם כרטיס ללא התייחסות נבדוק שלא הקלידו סידור ללא מאפיין 99 עם ערך 1
                             //אבל רק במידה והכרטיס הוא בטוו 45 יום (פרמטר 252)

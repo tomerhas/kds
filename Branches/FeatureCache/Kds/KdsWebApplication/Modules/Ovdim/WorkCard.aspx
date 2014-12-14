@@ -641,6 +641,7 @@
         <input type="hidden" runat="server" id="hidLvl2Chg" />
         <input type="hidden" runat="server" id="hidLvl3Chg" />     
         <input type="hidden" runat="server" id="hidRashemet" />  
+        <input type="hidden" runat="server" id="hidMenahelBank" />  
         <input type="hidden" runat="server" id="hidFromEmda" />  
         <input type="hidden" runat="server" id="hidSadotLSidur" />
         <input type="hidden" runat="server" id="hidDriver"/>

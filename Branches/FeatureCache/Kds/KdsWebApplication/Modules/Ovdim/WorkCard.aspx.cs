@@ -656,7 +656,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          Session["ProfileRashemet"] = bRashemet;
          Session["ProfileMenahelBankShaot"] = bMenahelBankShaot;
          hidRashemet.Value = bRashemet ? "1" : "0";
-        
+         hidMenahelBank.Value = bMenahelBankShaot ? "1" : "0";
          //כפתור מסך עדכונים לעובד
          btnDrvErrors.Style.Add("Display", "block");  
          //כפתור השגוי הבא יוצג רק לרשמת/מנהל מערכת        
