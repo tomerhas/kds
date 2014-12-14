@@ -1521,6 +1521,9 @@ namespace KdsBatch
                 //רכיב 932 - הלבשה סוף יום
                 CalcRechiv932();
 
+                //ימים עם נסיעה ברכב ממוגן ירי - אגד תעבורה (רכיב 295) 
+                CalcRechiv295();
+
                 //טיפול בחופש ע"ח שעות נוספות 
                 ChangingChofeshFromShaotNosafot();
 
@@ -4138,6 +4141,26 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyAvodaLeloMeyuchadim.GetHashCode(), _dTaarichChishuv, "",ex);
+                throw (exec);
+            }
+        }
+
+        private void CalcRechiv295()
+        {
+            float fErechRechiv;
+            try
+            {
+                if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30  && objOved.Month >= objOved.objParameters.dParam301)
+                {
+                    fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode());
+                    fErechRechiv = Math.Min(fErechRechiv, objOved.objParameters.iMaxYamimGmulYeriET);
+                    addRowToTable(clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), fErechRechiv);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), _dTaarichChishuv, "", ex);
                 throw (exec);
             }
         }

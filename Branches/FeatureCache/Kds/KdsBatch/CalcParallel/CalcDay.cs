@@ -627,6 +627,9 @@ namespace KdsBatch
                 //אגד תעבורה פער בין מכסה רגילה למוקטנת(רכיב 278)
                 CalcRechiv278();
 
+                //ימים עם נסיעה ברכב ממוגן ירי - אגד תעבורה (רכיב 295) 
+                CalcRechiv295();
+
             //}
             //catch (Exception ex)
             //{
@@ -4964,7 +4967,7 @@ namespace KdsBatch
             try
             {
                 fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
-                if(fDakotNochehut>0)
+                if(fDakotNochehut>0 && objOved.Taarich >= objOved.objParameters.dParam299)
                     addRowToTable(clGeneral.enRechivim.YemeyNochechut.GetHashCode(), 1);
             }
             catch (Exception ex)
@@ -7998,6 +8001,26 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyChofeshHeadrut.GetHashCode(), objOved.Taarich, "",ex);
+                throw (exec);
+            }
+        }
+
+        private void CalcRechiv295()
+        {
+            float fErechRechiv;
+            try
+            {
+                if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30 &&  objOved.Taarich >= objOved.objParameters.dParam301)
+                {
+                    oSidur.CalcRechiv295();
+                    fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), objOved.Taarich);
+
+                    addRowToTable(clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), objOved.Taarich, "", ex);
                 throw (exec);
             }
         }

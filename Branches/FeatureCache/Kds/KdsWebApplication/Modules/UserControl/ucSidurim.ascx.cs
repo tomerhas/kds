@@ -2341,7 +2341,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                                    ref HtmlTableCell hCollapseCell,
                                    ref HtmlTableCell hErrCell, int iIndex)
     {
-        string sMeafyenbank = "";
+        string sMeafyenim = "";
         //הכנסת סידור חדש
         //LiteralControl lDummy = new LiteralControl();
         //lDummy.Text = " ";
@@ -2389,21 +2389,25 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oAutoComplete = AddAutoCompleteCtl("ACSidur" + iIndex, 25, true, oTextBox.ID, "getKodSidurimWhithOutList", "~/Modules/WebServices/wsGeneral.asmx");
        // oAutoComplete.OnClientItemSelected = "chkNewSidur";
         //ננטרל סידורי התייצבות והיעדרות     
+
         if (ProfileMenahelBankShaot)
-            sMeafyenbank = MEAFYEN_SIDUR_MENAHEL_BANK +",";
+            sMeafyenim = MEAFYEN_SIDUR_MENAHEL_BANK.ToString();
         if (MeasherOMistayeg == clGeneral.enMeasherOMistayeg.ValueNull)
         {
             //אם הסידור הוא ללא התייחסות וגם בטווח של 45 יום אחורה ,לא נאפשר סידורים שאין להם מאפיין 99
             if (clDefinitions.GetDiffDays(CardDate, DateTime.Now) + 1 <= Param252)
-                oAutoComplete.ContextKey = sMeafyenbank + MEAFYEN_CARD_NULL + ";1;" + MeasherOMistayeg.GetHashCode();
+            {
+                if (sMeafyenim == "")
+                    sMeafyenim = MEAFYEN_CARD_NULL.ToString();
+                oAutoComplete.ContextKey = sMeafyenim +  ";1;" + MeasherOMistayeg.GetHashCode();
+            }
             else
             {
-                sMeafyenbank = sMeafyenbank.Replace(',',' ').Trim();
-                oAutoComplete.ContextKey = sMeafyenbank + ";;" + MeasherOMistayeg.GetHashCode();
+                oAutoComplete.ContextKey = sMeafyenim + ";;" + MeasherOMistayeg.GetHashCode();
             }
         }
         else
-            oAutoComplete.ContextKey = MEAFYEN_SIDUR_HADRUT1 + "," + MEAFYEN_SIDUR_HADRUT2 + ";" + SIDUR_HITYAZVUT1 + "," + SIDUR_HITYAZVUT2 + ";" + MeasherOMistayeg.GetHashCode() + ";" + sMeafyenbank.Replace(',', ' ').Trim(); 
+            oAutoComplete.ContextKey = MEAFYEN_SIDUR_HADRUT1 + "," + MEAFYEN_SIDUR_HADRUT2 + ";" + SIDUR_HITYAZVUT1 + "," + SIDUR_HITYAZVUT2 + ";" + MeasherOMistayeg.GetHashCode() + ";" + sMeafyenim; 
 
         hCell.Controls.Add(oAutoComplete);
 

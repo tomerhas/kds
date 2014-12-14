@@ -2382,7 +2382,10 @@ public class wsGeneral : System.Web.Services.WebService
                         sSql = "sug_sidur=" + sugSidur + " and kod_meafyen in (" + sMeafyenList + ") and erech=1 ";
                         if (dtMeafyeneySidur.Select(sSql).Length == sMeafyenList.Split(',').Length)
                             return 1;
-                        else return -1;
+                        else if (dtMeafyeneySidur.Select(sSql).Length == 0)
+                            return 0;
+                        else if (dtMeafyeneySidur.Select(sSql).Length == 1)
+                            return int.Parse( dtMeafyeneySidur.Rows[0]["kod_meafyen"].ToString());
                     }
                     return -2;
                 }

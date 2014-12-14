@@ -986,10 +986,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              //במידה והמשתמש הוא מנהל עם כפופים (לצפיה או לעדכון) וגם המספר האישי של הכרטיס שונה מממספר האישי של המשתמש שנכנס
              //או שהתאריך הוא תאריך של היום. לא נאפשר עדכון כרטיס
              KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
-             if ((((((iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
-                 && (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))) || ((dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString())))))
+             if ((((iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates && (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber)))
+                  || ((dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString())))))
                   || (bChishuvShachar) || (bCalculateAndNotRashemet) || (bWcIsUsed)
-                 || (WorkCardWasUpdateAndDriver(bWorkCardWasUpdate)))
+                  || (WorkCardWasUpdateAndDriver(bWorkCardWasUpdate)))
                  EnabledFrames(false, (bChishuvShachar || bCalculateAndNotRashemet || bWcIsUsed));
              else
                  EnabledFrames(true, (bChishuvShachar || bCalculateAndNotRashemet || bWcIsUsed));

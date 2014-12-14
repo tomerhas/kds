@@ -94,7 +94,7 @@
                          var TaarichCa = new Date(taarichSplit[2], taarichSplit[1] - 1, taarichSplit[0], '00', '00', '00');
                          var TaarichTemp = new Date();
                          TaarichTemp = new Date(TaarichTemp.setDate(TaarichTemp.getDate() - Param252));
-                         if (document.getElementById("hidMenahelBankShaot").value == "true")
+                         if (document.getElementById("hidMenahelBankShaot").value == "True")
                              MeafyenList ="104";
                          if (document.getElementById("StatusCard").value == -1 && TaarichCa >= TaarichTemp) {
                              if (MeafyenList.length > 0)
@@ -139,16 +139,25 @@
               else 
                  wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
          }
-         else if (result == -1) {
-                 document.getElementById("vldMisMapa").errormessage = "  אינך רשאי לדווח סידור זה / כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
-                 ShowValidatorCalloutExtender("vldExSidurMapa");
-                 document.getElementById("wsBack").value = "-1";
+         else{ 
+             if (result == 0) {
+             
+                if (document.getElementById("hidMenahelBankShaot").value == "True")
+                    document.getElementById("vldMisMapa").errormessage = "  אינך רשאי לדווח סידור עבודה זה";
+                 else 
+                    document.getElementById("vldMisMapa").errormessage = "  כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";               
              }
              else if (result == -2) {
                  document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
-                 ShowValidatorCalloutExtender("vldExSidurMapa");
-                 document.getElementById("wsBack").value = "-1";
              }
+             else if (result == 104) 
+                 document.getElementById("vldMisMapa").errormessage = "  כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
+                 else if (result == 99)
+                     document.getElementById("vldMisMapa").errormessage = "  אינך רשאי לדווח סידור עבודה זה";
+             
+            ShowValidatorCalloutExtender("vldExSidurMapa");
+            document.getElementById("wsBack").value = "-1";
+          }
      }
 
      function CheckTeurSucceded(result) {

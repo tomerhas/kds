@@ -168,6 +168,12 @@ namespace KdsBatch
                   CreateDataEtToRechiv("085", fErech, 0, 10, 2);
 
               }
+              fErech = GetErechRechiv(clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), "erech_rechiv_a");
+              if (fErech > 0)
+              {
+                  CreateDataEtToRechiv("077", fErech, 0, 10, 2);
+
+              }
             if (_ListErua.Count>0)
                 return _ListErua;
             return null;

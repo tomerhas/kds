@@ -189,7 +189,21 @@ namespace KDSCommon.DataModels
         public DateTime dTaarichHafalatHafchataZmanNesia; // -286 תאריך הפעלת הפחתת 60 דקות בזמן נסיעה 
         public int iDakotHafchataZmanNesia; // -287 דקות להפחתה מזמן נסיעה  
         public DateTime dTaarichBitulPremiaNahagutForHoraa; // -288 תאריך ביטול פרמיית נהגות לסידור הוראת נהיגה 
-
+        public DateTime dTaarichHafalatEshelMichshuv;//תאריך הפעלת תשלום אש"ל לעובדי חטיבת המחשוב 289
+        
+        public DateTime dParam290;//290
+        public DateTime dParam291;//291
+        public DateTime dParam292;//292
+        public DateTime dParam293;//293
+        public DateTime dParam294;//294
+        public DateTime dParam295;//295
+        public int dParam296;//296
+        public int dParam297;//296
+        public int dParam298;//298
+ 
+        public DateTime dParam299;//299
+        public int iMaxYamimGmulYeriET; // 300 מקס כמות ימים לקבל גמול ירי אגד תעבורה 
+        public DateTime dParam301; // -301
 
         public int iMaxNochehutVisaPnim; //228 - ויזה פנים -יום ראשון - מקסימום נוכחות
         public int iMinNochehutVisaPnim; //229 - ויזה פנים -יום ראשון - מינימום נוכחות

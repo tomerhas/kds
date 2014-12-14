@@ -62,7 +62,7 @@ namespace KdsLibrary.Security
         ViewAll=2,
         ViewOnlyEmployeeData=3,
         UpdateEmployeeData=4,
-        UpdateEmployeeDataAndViewOnlySubordinates=5,
-        UpdateEmployeeDataAndSubordinates=6
+        UpdateEmployeeDataAndSubordinates=5,
+        UpdateEmployeeDataAndViewOnlySubordinates=6
     }
 }

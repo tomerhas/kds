@@ -325,6 +325,51 @@ namespace KdsBatch
             }
          }
 
+         public float CalcRechiv295(int iMisparSidur, DateTime dShatHatchalaSidur)
+         {
+             DataRow[] drPeiluyot;
+             DataRow drDetailsPeilut;
+             int iMisparKnisa = 0, migun;
+             DateTime dShatYetzia = DateTime.MinValue;
+             int iMakatType;
+             enMakatType oMakatType;
+
+             try
+             {
+                 // dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "");
+
+                 for (int J = 0; J < drPeiluyot.Length; J++)
+                 {
+                     iMisparKnisa = int.Parse(drPeiluyot[J]["Mispar_Knisa"].ToString());
+                     dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
+                     iMakatType = StaticBL.GetMakatType(int.Parse(drPeiluyot[J]["makat_nesia"].ToString()));
+                     oMakatType = (enMakatType)iMakatType;
+
+                     if (oMakatType == enMakatType.mNamak || oMakatType == enMakatType.mKavShirut)
+                     {
+                         drDetailsPeilut = GetDetailsFromCatalaog(objOved.Taarich, long.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString()));
+
+                         if (!String.IsNullOrEmpty(drDetailsPeilut["Migun"].ToString()))
+                         {
+                             migun = int.Parse(drDetailsPeilut["Migun"].ToString());
+                             if (migun == 1 || migun == 2 || migun == 3 || migun == 4)
+                                 return 1;
+                         }
+                     }
+                 }
+                 return 0;
+             }
+             catch (Exception ex)
+             {
+                 throw (ex);
+             }
+             finally
+             {
+                 drPeiluyot = null;
+             }
+         }
+
          public void CalcRechiv214(int iMisparSidur,  DateTime dShatHatchalaSidur)
          {
             // DataTable dtPeiluyot;

@@ -843,7 +843,57 @@ namespace KdsLibrary
                 //288
                 sTmp = GetOneParam(288, dCardDate);
                 cls.dTaarichBitulPremiaNahagutForHoraa = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+                //289
+                sTmp = GetOneParam(289, dCardDate);
+                cls.dTaarichHafalatEshelMichshuv = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
                 
+                //290
+                sTmp = GetOneParam(290, dCardDate);
+                cls.dParam290 = GetParamHour(sTmp, dCardDate);
+
+                //291
+                sTmp = GetOneParam(291, dCardDate);
+                cls.dParam291 = GetParamHour(sTmp, dCardDate.AddDays(1));
+
+                //292
+                sTmp = GetOneParam(292, dCardDate);
+                cls.dParam292 = GetParamHour(sTmp, dCardDate);
+                //293
+                sTmp = GetOneParam(293, dCardDate);
+                cls.dParam293 = GetParamHour(sTmp, dCardDate.AddDays(1));
+
+                //294
+                sTmp = GetOneParam(294, dCardDate);
+                cls.dParam294 = GetParamHour(sTmp, dCardDate);
+
+                //295
+                sTmp = GetOneParam(295, dCardDate);
+                cls.dParam295 = GetParamHour(sTmp, dCardDate);
+
+                //296
+                sTmp = GetOneParam(296, dCardDate);
+                cls.dParam296 = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //297
+                sTmp = GetOneParam(297, dCardDate);
+                cls.dParam297 = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //298
+                sTmp = GetOneParam(298, dCardDate);
+                cls.dParam298 = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //299
+                sTmp = GetOneParam(299, dCardDate);
+                cls.dParam299 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+ 
+                //300
+                sTmp = GetOneParam(300, dCardDate);
+                cls.iMaxYamimGmulYeriET = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //301
+                sTmp = GetOneParam(301, dCardDate);
+                cls.dParam301 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);
