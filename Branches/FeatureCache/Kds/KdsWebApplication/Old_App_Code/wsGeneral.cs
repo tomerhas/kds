@@ -2451,7 +2451,8 @@ public class wsGeneral : System.Web.Services.WebService
         DataTable dtMeafyenim= new DataTable();
         DataRow[] dr;
         clParametersDM _parameters = (clParametersDM)Session["Parameters"];
-                
+        bool flag = true; 
+       
         if ((iSidurNumber.Equals(SIDUR_HITYAZVUT_A)) || (iSidurNumber.Equals(SIDUR_HITYAZVUT_B)))
             sReturnCode = "1|לא ניתן לדווח סידור התייצבות";
         else            
@@ -2469,16 +2470,12 @@ public class wsGeneral : System.Web.Services.WebService
                     {
                         dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber);
                         if (dr.Length == 0)
-                            sReturnCode = "1| מספר סידור שגוי";
-
-                        var bProfileMenahelBankShaot = (bool)Session["ProfileMenahelBankShaot"];
-                        if (bProfileMenahelBankShaot)
                         {
-                            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=104 and erech='1'");
-                            if (dr.Length == 0)
-                                sReturnCode = "1| אינך רשאי לדווח סידור עבודה זה ";
+                            flag = false;
+                            sReturnCode = "1| מספר סידור שגוי";
                         }
-                        else if (((clGeneral.enMeasherOMistayeg)iMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull) 
+                       
+                        if (((clGeneral.enMeasherOMistayeg)iMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull) 
                             && (clDefinitions.GetDiffDays(DateTime.Parse(sSidurDate), DateTime.Now) + 1 <= _parameters.iValidDays))
                         {   //אם כרטיס ללא התייחסות נבדוק שלא הקלידו סידור ללא מאפיין 99 עם ערך 1
                             //אבל רק במידה והכרטיס הוא בטוו 45 יום (פרמטר 252)
@@ -2486,6 +2483,13 @@ public class wsGeneral : System.Web.Services.WebService
                             if (dr.Length == 0)
                                 sReturnCode = "1| כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
                         }
+                        else if (flag && (bool)Session["ProfileMenahelBankShaot"])
+                        {
+                            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=104 and erech='1'");
+                            if (dr.Length == 0)
+                                sReturnCode = "1| אינך רשאי לדווח סידור עבודה זה ";
+                        }
+
                     }
                 }
             }
