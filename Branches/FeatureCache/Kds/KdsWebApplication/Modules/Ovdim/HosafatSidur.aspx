@@ -140,6 +140,7 @@
                  wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
          }
          else{ 
+            
              if (result == 0) {
              
                 if (document.getElementById("hidMenahelBankShaot").value == "True")
@@ -172,10 +173,14 @@
         
          }
          else {
-             if (result == -1)
-                 document.getElementById("vldMisMapa").errormessage = "אינך רשאי לדווח סידור עבודה זה";
-             else
-                 document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
+             if (result == 0) {                 
+                 if (document.getElementById("hidMenahelBankShaot").value == "True")
+                     document.getElementById("vldMisMapa").errormessage = "  אינך רשאי לדווח סידור עבודה זה";
+             }          
+             else if (result == -1)
+                    document.getElementById("vldMisMapa").errormessage = "אינך רשאי לדווח סידור עבודה זה";
+                 else
+                     document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
              
                 ShowValidatorCalloutExtender("vldExSidurMapa");
                 document.getElementById("wsBack").value = "0";

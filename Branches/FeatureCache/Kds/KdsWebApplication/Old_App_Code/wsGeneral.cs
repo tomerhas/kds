@@ -2384,7 +2384,7 @@ public class wsGeneral : System.Web.Services.WebService
                             return 1;
                         else if (dtMeafyeneySidur.Select(sSql).Length == 0)
                             return 0;
-                        else if (dtMeafyeneySidur.Select(sSql).Length == 1)
+                        else if (dtMeafyeneySidur.Select(sSql).Length == 1 && sMeafyenList.Split(',').Length >1)
                             return int.Parse( dtMeafyeneySidur.Rows[0]["kod_meafyen"].ToString());
                     }
                     return -2;
