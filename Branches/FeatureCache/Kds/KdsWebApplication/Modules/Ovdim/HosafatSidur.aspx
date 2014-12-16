@@ -89,14 +89,9 @@
                  else {
                  
                      if (sugSidur == 1) {
-                         var Param252 = document.getElementById("Params").attributes("Param252").value;
-                         var taarichSplit = taarich.split('/');
-                         var TaarichCa = new Date(taarichSplit[2], taarichSplit[1] - 1, taarichSplit[0], '00', '00', '00');
-                         var TaarichTemp = new Date();
-                         TaarichTemp = new Date(TaarichTemp.setDate(TaarichTemp.getDate() - Param252));
                          if (document.getElementById("hidMenahelBankShaot").value == "True")
                              MeafyenList ="104";
-                         if (document.getElementById("StatusCard").value == -1 && TaarichCa >= TaarichTemp) {
+                         if (IsCartisLeloHityachasut()) {
                              if (MeafyenList.length > 0)
                                  MeafyenList = MeafyenList + ",99";
                              else MeafyenList = "99";
@@ -126,6 +121,19 @@
          }
      }
 
+     function IsCartisLeloHityachasut()
+     {
+         var taarich = document.getElementById("TaarichCA").value;
+         var Param252 = document.getElementById("Params").attributes("Param252").value;
+         var taarichSplit = taarich.split('/');
+         var TaarichCa = new Date(taarichSplit[2], taarichSplit[1] - 1, taarichSplit[0], '00', '00', '00');
+         var TaarichTemp = new Date();
+         TaarichTemp = new Date(TaarichTemp.setDate(TaarichTemp.getDate() - Param252));
+
+         if (document.getElementById("StatusCard").value == -1 && TaarichCa >= TaarichTemp)
+             return true;
+         else return false;
+     }
      function MeafyenSidurExistsSucceded(result) {
          var sugSidur = document.getElementById("sugSidur").value;
          var taarich = document.getElementById("TaarichCA").value;
@@ -142,11 +150,12 @@
          else{ 
             
              if (result == 0) {
-             
-                if (document.getElementById("hidMenahelBankShaot").value == "True")
+                 if (IsCartisLeloHityachasut())
+                     document.getElementById("vldMisMapa").errormessage = "  כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";               
+                 else if (document.getElementById("hidMenahelBankShaot").value == "True")
                     document.getElementById("vldMisMapa").errormessage = "  אינך רשאי לדווח סידור עבודה זה";
-                 else 
-                    document.getElementById("vldMisMapa").errormessage = "  כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";               
+                    else 
+                     document.getElementById("vldMisMapa").errormessage = "  כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
              }
              else if (result == -2) {
                  document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
