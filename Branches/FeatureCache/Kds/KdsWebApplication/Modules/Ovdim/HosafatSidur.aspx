@@ -171,28 +171,21 @@
      }
 
      function CheckTeurSucceded(result) {
+
          var sugSidur = document.getElementById("sugSidur").value;
-       //  debugger;
-         if (result == 1) {
+         //  debugger;
+         if (result != -1) {
              document.getElementById("btnShow").disabled = false;
              document.getElementById("btnShow").focus();
-           
+
              document.getElementById("wsBack").value = "1";
              document.getElementById("Button1").click();
-        
+
          }
          else {
-             if (result == 0) {                 
-                 if (document.getElementById("hidMenahelBankShaot").value == "True")
-                     document.getElementById("vldMisMapa").errormessage = "  אינך רשאי לדווח סידור עבודה זה";
-             }          
-             else if (result == -1)
-                    document.getElementById("vldMisMapa").errormessage = "אינך רשאי לדווח סידור עבודה זה";
-                 else
-                     document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
-             
-                ShowValidatorCalloutExtender("vldExSidurMapa");
-                document.getElementById("wsBack").value = "0";
+             document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
+             ShowValidatorCalloutExtender("vldExSidurMapa");
+             document.getElementById("wsBack").value = "0";
          }
      }
 
