@@ -1744,41 +1744,19 @@ public class wsGeneral : System.Web.Services.WebService
 
 
     [WebMethod]
-    public string GetSidurDetailsFromTnua(int sidur, string date, string MeafyenList)
+    public string GetSidurDetailsFromTnua(int sidur, string date)
     {
-        clUtils oUtils = new clUtils();
-        DataTable PirteySidur, dtMeafyeneySidur;
-        int result, sugSidur;
-        string sSql;
+        DataTable PirteySidur;
+        int result;
 
         try
         {
             var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
             PirteySidur = kavimDal.GetSidurDetailsFromTnua(sidur, DateTime.Parse(date), out result);
-
-            if (MeafyenList.Length > 0)
-            {
-                if (PirteySidur.Rows.Count > 0)
-                {
-                    if (PirteySidur.Rows[0]["sugsidur"].ToString() != "")
-                    {
-                        sugSidur = int.Parse(PirteySidur.Rows[0]["sugsidur"].ToString());
-                        dtMeafyeneySidur = oUtils.InitDtMeafyeneySugSidur(DateTime.Parse(date), DateTime.Parse(date));
-                        sSql = "sug_sidur=" + sugSidur + " and kod_meafyen in (" + MeafyenList + ") and erech=1 ";
-                        if (dtMeafyeneySidur.Select(sSql).Length > 0)
-                            return "0";
-                        else return "-2";
-                    }
-                    return "-1";
-                }
+            if (result == 1)
                 return "-1";
-            }
-            else
-            {
-                if (result == 1)
-                    return "-1";
-                return "0";
-            }
+            return "0";
+            //return teur;
         }
         catch (Exception ex)
         {
