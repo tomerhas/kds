@@ -3975,8 +3975,10 @@ namespace KdsBatch
         private void CalcRechiv78()
         {
             float fSumDakotRechiv, fDakotNahagut, fDakotTnua, fDakotTafkid, fTosefetZmanNesia, fDakotZikuyChofesh, fDakotNochehut;
-            float fDakotRechiv76, fDakotRechiv77, fZmanRetzifutShabat275, fNosafotShabatKizuz, fMichsaYomit;
+            float fZmanRetzifutShabat275, fNosafotShabatKizuz, fMichsaYomit;
             Boolean bShishiErevChag = false, bNotCalc=false;
+            DataRow[] drSidurim;
+            DateTime dShatHatchalaLetashlum, dShatGmarLetashlum;
             float fRechivEzer;
             try
             {
@@ -4016,6 +4018,22 @@ namespace KdsBatch
                            fSumDakotRechiv = (fDakotNahagut + fDakotTnua + fDakotTafkid + fZmanRetzifutShabat275) - fDakotZikuyChofesh;
                            if (fDakotTafkid > 0)
                                fSumDakotRechiv -= fTosefetZmanNesia;
+
+                           if (objOved.objPirteyOved.iIsuk != 122 && objOved.objPirteyOved.iIsuk != 123 && objOved.objPirteyOved.iIsuk != 124 && objOved.objPirteyOved.iIsuk != 127)
+                           {
+                               drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null");
+                               for (int i = 0; i < drSidurim.Length; i++)
+                               {
+                                   dShatHatchalaLetashlum = DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString());
+                                   dShatGmarLetashlum = DateTime.Parse(drSidurim[i]["shat_gmar_letashlum"].ToString());
+
+                                   if (dShatHatchalaLetashlum < objOved.objParameters.dShatMaavarYom && dShatGmarLetashlum > objOved.objParameters.dShatMaavarYom)
+                                   {
+                                       fSumDakotRechiv -= float.Parse((dShatGmarLetashlum - objOved.objParameters.dShatMaavarYom).TotalMinutes.ToString());
+                                       break;
+                                   }
+                               }
+                           }
 
                            if (objOved.objMeafyeneyOved.GetMeafyen(92).IntValue>0 &&  oCalcBL.CheckYomShishi(objOved.SugYom))
                            {

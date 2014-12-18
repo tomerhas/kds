@@ -43,7 +43,10 @@ namespace KDSBLLogic.Managers
 
         public void SendMessage(MailMessageWrapper message, DirectionType direction = DirectionType.Ltr)
         {
-            MailMessage mm = new MailMessage(_mailFromAddress, message.RcipientsList);
+           // MailMessage mm = new MailMessage(_mailFromAddress, message.RcipientsList);
+            MailMessage mm = new MailMessage(); 
+            mm.From = new MailAddress(_mailFromAddress);
+            mm.To.Add(FormatMultipleEmailAddresses(message.RcipientsList));
             mm.Body = message.Body;
             mm.Subject = message.Subject;
 
@@ -56,6 +59,14 @@ namespace KDSBLLogic.Managers
             client.Send(mm);
         }
 
+        private string FormatMultipleEmailAddresses(string emailAddresses)
+        {
+            var delimiters = new[] { ',', ';' };
+
+            var addresses = emailAddresses.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+
+            return string.Join(",", addresses);
+        }
         public MailAddressCollection CreateAddressesFromAppSettings(string appSettingKey)
         {
             string RecipientsList = ConfigurationManager.AppSettings[appSettingKey];
