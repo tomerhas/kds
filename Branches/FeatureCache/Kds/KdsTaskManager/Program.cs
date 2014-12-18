@@ -11,6 +11,9 @@ namespace KdsTaskManager
     {
         static void Main(string[] args)
         {
+            Bootstrapper b = new Bootstrapper();
+            b.Init();
+
             Utilities.EventLogSource = ConfigurationSettings.AppSettings["EventLogSource"].ToString();
             Utilities.Debug = (KdsLibrary.clGeneral.GetIntegerValue(ConfigurationSettings.AppSettings["Debug"].ToString()) == 1) ? true : false;
             Utilities.RecipientsList = (ConfigurationSettings.AppSettings["RecipientsMailList"].ToString()).Split(';');
