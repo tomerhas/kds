@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="KdsDev">
+  <ConnectionProperties>
+    <Extension>ORACLE</Extension>
+    <ConnectString>Data Source=kdsdev;Unicode=True</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>3aac0cca-412f-46b5-ba3d-da2c428f8cf7</DataSourceID>
+</RptDataSource>
