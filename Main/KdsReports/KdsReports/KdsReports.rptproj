@@ -14,6 +14,10 @@
       <Name>KdsProd.rds</Name>
       <FullPath>KdsProd.rds</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>KdsDev.rds</Name>
+      <FullPath>KdsDev.rds</FullPath>
+    </ProjectItem>
   </DataSources>
   <DataSets />
   <Reports>
@@ -186,6 +190,10 @@
       <FullPath>RdlReportMushalimDetails.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RdlTigburim.rdl</Name>
+      <FullPath>RdlTigburim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Report2.rdl</Name>
       <FullPath>Report2.rdl</FullPath>
     </ProjectItem>
@@ -234,6 +242,10 @@
       <FullPath>SubRdlIturim.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>TestGalit.rdl</Name>
+      <FullPath>TestGalit.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Tigburim.rdl</Name>
       <FullPath>Tigburim.rdl</FullPath>
     </ProjectItem>
@@ -267,7 +279,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://ksafimrs01/reportserver</TargetServerURL>
+        <TargetServerURL>http://sql2012tst.egged.intra/reportserver</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>
