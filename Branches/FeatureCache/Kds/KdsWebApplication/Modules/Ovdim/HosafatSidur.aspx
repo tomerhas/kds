@@ -97,7 +97,7 @@
                              else MeafyenList = "99";
                              wsGeneral.MeafyenSidurMapaExists(misSidur, taarich, MeafyenList, MeafyenSidurExistsSucceded);
                          }
-                         else wsGeneral.MeafyenSidurMapaExists(misSidur, taarich, MeafyenList, CheckTeurSucceded);
+                         else wsGeneral.MeafyenSidurMapaExists(misSidur, taarich, MeafyenList, MeafyenSidurExistsSucceded);
                              //wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, MeafyenList, CheckTeurSucceded);
                      }
                  }
@@ -150,6 +150,7 @@
          else{ 
             
              if (result == 0) {
+              
                  if (IsCartisLeloHityachasut())
                      document.getElementById("vldMisMapa").errormessage = "  כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";               
                  else if (document.getElementById("hidMenahelBankShaot").value == "True")
@@ -171,7 +172,6 @@
      }
 
      function CheckTeurSucceded(result) {
-
          var sugSidur = document.getElementById("sugSidur").value;
          //  debugger;
          if (result != -1) {
