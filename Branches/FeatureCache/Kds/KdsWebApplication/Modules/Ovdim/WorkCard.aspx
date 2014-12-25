@@ -21,15 +21,13 @@
 </head>
 <body dir="rtl" style="margin:0px">
     <form id="frmWorkCard" runat="server" > 
-          <div id="dialog" title="שגיאת מערכת" >
+        <%--  <div id="dialog" title="שגיאת מערכת" >
              <div >משתמש יקר ארעה שגיאה במערכת. אנא פנה למנהל המערכת.</div>
              <br />
              <a href="#" onclick="ToggleDisplay()">פרטי השגיאה:</a>
              <div id="dialogContent" dir="ltr" style="width: 380px; height: 200px; overflow-y: scroll;overflow-x:scroll;display: none"></div>
-         </div>   
-    <asp:ScriptManager runat="server" ID="ScriptManagerKds" EnablePartialRendering="true" 
-        OnAsyncPostBackError="ScriptManager_AsyncPostBackError"
->        
+         </div>   --%>
+    <asp:ScriptManager runat="server" ID="ScriptManagerKds" EnablePartialRendering="true" >     <%--   OnAsyncPostBackError="ScriptManager_AsyncPostBackError"--%>    
 
         <Scripts>            
             <asp:ScriptReference Name="MicrosoftAjax.js" />

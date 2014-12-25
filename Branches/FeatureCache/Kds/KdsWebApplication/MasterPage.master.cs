@@ -74,10 +74,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
         }
     }
 
-    protected void ScriptManager_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e)
-    {
-        ScriptManagerKds.AsyncPostBackErrorMessage = e.Exception.ToString();
-    }
+    //protected void ScriptManager_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e)
+    //{
+    //    ScriptManagerKds.AsyncPostBackErrorMessage = e.Exception.ToString();
+    //}
 
     public ImageButton ImageExcelClick 
     { 

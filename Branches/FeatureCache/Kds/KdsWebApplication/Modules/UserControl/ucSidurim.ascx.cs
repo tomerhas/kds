@@ -1612,7 +1612,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         SidurDM  _Sidur = (SidurDM)_DataSource[iSidurIndex];
         PeilutDM _Peilut = (PeilutDM)_Sidur.htPeilut[iPeilutIndex];
-        PeilutDM _NewPeilut = null;
+        PeilutDM _NewPeilut = new PeilutDM();
        // DateTime dPeilutShatYetiza;
 
 
@@ -2189,7 +2189,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         int iAddDay = 0;
         SidurDM _Sidur = (SidurDM)_DataSource[iSidurIndex];
         PeilutDM _Peilut = (PeilutDM)_Sidur.htPeilut[iPeilutIndex];
-        PeilutDM _PeilutReka = null;
+        PeilutDM _PeilutReka = new PeilutDM();
         GridView _GridView;
         GridViewRow _GridRow;
 

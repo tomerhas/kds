@@ -33,6 +33,7 @@ namespace KdsShinuyim.ShinuyImpl
               //  inputData.bUsedMazanTichnun = false;
                 for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
+                    inputData.bUsedMazanTichnun = false;
                     SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
                     if (!CheckIdkunRashemet("SHAT_HATCHALA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
                     {

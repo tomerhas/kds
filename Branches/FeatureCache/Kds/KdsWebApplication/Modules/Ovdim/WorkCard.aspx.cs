@@ -107,10 +107,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         else { base.CreateUser(); }
     }
 
-    protected void ScriptManager_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e)
-    {
-        ScriptManagerKds.AsyncPostBackErrorMessage = e.Exception.ToString(); 
-    }
+    //protected void ScriptManager_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e)
+    //{
+    //    ScriptManagerKds.AsyncPostBackErrorMessage = e.Exception.ToString(); 
+    //}
 
     private void SetUserKiosk(string[] arrParamsKiosk)
     {
