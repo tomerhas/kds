@@ -8601,7 +8601,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsPirteyOved</DataSetName>
         <Top>3.23615in</Top>
-        <Left>3.81901in</Left>
+        <Left>3.75404in</Left>
         <Height>0.47013in</Height>
         <Width>4.40866in</Width>
         <ZIndex>10</ZIndex>
@@ -8836,7 +8836,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsKizuz</DataSetName>
         <Top>3.7866in</Top>
-        <Left>3.81901in</Left>
+        <Left>3.75404in</Left>
         <Height>0.47013in</Height>
         <Width>4.42199in</Width>
         <ZIndex>11</ZIndex>
@@ -8945,40 +8945,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <Visibility>
           <Hidden>=iif(Sum(Fields!SIMUN.Value, "DsRechivim")=0, True, False)</Hidden>
         </Visibility>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox102">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=" הודפס ע''י " &amp; Parameters!P_USER.Value</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox84</rd:DefaultName>
-        <Top>6.19076in</Top>
-        <Left>6.58286in</Left>
-        <Height>0.11458in</Height>
-        <Width>1.7543in</Width>
-        <ZIndex>15</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -9213,10 +9179,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsKizuzNeemanim</DataSetName>
         <Top>4.36784in</Top>
-        <Left>3.81901in</Left>
+        <Left>3.75404in</Left>
         <Height>0.51042in</Height>
         <Width>4.42282in</Width>
-        <ZIndex>16</ZIndex>
+        <ZIndex>15</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("dsKizuzNeemanim")&gt;0 ,false,true)</Hidden>
         </Visibility>
@@ -9453,11 +9419,11 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>5.02608in</Top>
-        <Left>3.01808in</Left>
+        <Top>5.11784in</Top>
+        <Left>2.99747in</Left>
         <Height>1.09523in</Height>
         <Width>3.96481in</Width>
-        <ZIndex>17</ZIndex>
+        <ZIndex>16</ZIndex>
         <Visibility>
           <Hidden>=iif (Sum(Fields!ISOVEDDORB.Value, "dsPirteyOved")= "0", True, False)</Hidden>
         </Visibility>
@@ -12833,28 +12799,72 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>dsRechiveyShonot</DataSetName>
         <Top>6.43394cm</Top>
-        <Left>0cm</Left>
+        <Left>0.3175cm</Left>
         <Height>1.24282cm</Height>
         <Width>40.15839cm</Width>
-        <ZIndex>18</ZIndex>
+        <ZIndex>17</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
           </Border>
         </Style>
       </Tablix>
+      <Textbox Name="Textbox102">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=" הודפס ע''י " &amp; Parameters!P_USER.Value</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox84</rd:DefaultName>
+        <Top>6.22696in</Top>
+        <Left>6.12809in</Left>
+        <Height>0.11458in</Height>
+        <Width>1.7543in</Width>
+        <ZIndex>18</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>6.38872in</Height>
+    <Height>6.36932in</Height>
     <Style />
   </Body>
-  <Width>15.88331in</Width>
+  <Width>15.93539in</Width>
   <Page>
+    <PageFooter>
+      <Height>1.19062cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
     <LeftMargin>0cm</LeftMargin>
     <RightMargin>0cm</RightMargin>
     <TopMargin>0.1cm</TopMargin>
-    <BottomMargin>0.05cm</BottomMargin>
+    <BottomMargin>0cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
