@@ -164,7 +164,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                 </td>
                 <td style="width:50px">
                     <asp:UpdatePanel ID="upPremiaMinutes" runat="server" 
-                        RenderMode="Inline" UpdateMode="Conditional">
+                        RenderMode="Block" UpdateMode="Conditional">
                         <ContentTemplate> 
                             <asp:TextBox ID="txtPremiaMinutes" runat="server"  MaxLength="4"
                                 AutoComplete="Off" style="width:50px;">
@@ -442,7 +442,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
              document.getElementById("ctl00_KdsContent_btnSearch").disabled = false;
          }
     }
-    function GetDakotPremiyaSucc(result){
+    function GetDakotPremiyaSucc(result) {
         document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = result;
     }
     function Onclick_UpdatePremiaMinutes() {
@@ -464,7 +464,8 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
     }
      
     function continue_click() {
-      //  debugger;
+        //  debugger;
+        
         var rdo = document.getElementById("ctl00_KdsContent_rdoId");
         if (rdo.checked) {
 
@@ -480,6 +481,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
         document.getElementById("ctl00_KdsContent_btnSearch").click();
         document.getElementById("ctl00_KdsContent_txtPremiaMinutes").disabled = false;
         document.getElementById("ctl00_KdsContent_btnUpdate").disabled = false;
+        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = "";
     }
 //    function onchange_ddStatuses() {
 //        document.getElementById("ctl00_KdsContent_ddMonths").selectedIndex = 0;
