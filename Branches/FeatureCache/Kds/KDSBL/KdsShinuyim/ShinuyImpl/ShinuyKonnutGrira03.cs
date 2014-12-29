@@ -171,7 +171,7 @@ namespace KdsShinuyim.ShinuyImpl
                                 }
                                 if (iTypeGrira == 1)
                                 {
-                                    SetBitulZmanNesiot(oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
+                                  //  SetBitulZmanNesiot(oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
 
                                     SetZmanHashlama(oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira, iGriraNum, inputData);
                                 }
@@ -213,7 +213,7 @@ namespace KdsShinuyim.ShinuyImpl
                                             SetShatGmarGrira( oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
                                         if (iTypeGrira == 1)
                                         {
-                                            SetBitulZmanNesiot(oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
+                                         //   SetBitulZmanNesiot(oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
 
                                             SetZmanHashlama(oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira,iGriraNum ,inputData);
                                         }
