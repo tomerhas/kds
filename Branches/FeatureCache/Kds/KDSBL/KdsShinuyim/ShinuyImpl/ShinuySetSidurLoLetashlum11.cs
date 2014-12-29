@@ -300,22 +300,23 @@ namespace KdsShinuyim.ShinuyImpl
             bool bLoLetashlumAutomati = false;
             try
             {
-                if (inputData.iSugYom > 19 || (inputData.iSugYom == 10 && (inputData.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || inputData.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())))
+                if (!(curSidur.iLoLetashlum == 1 && curSidur.iKodSibaLoLetashlum == 23) &&
+                (inputData.iSugYom > 19 || (inputData.iSugYom == 10 && (inputData.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || inputData.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))))
                 {
-                    if (curSidur.bSidurMyuhad)
-                    {//סידור מיוחד
-                        if (!string.IsNullOrEmpty(curSidur.sHeadrutTypeKod))
-                        {
-                            if ((curSidur.sHeadrutTypeKod == enMeafyenSidur53.enMachala.GetHashCode().ToString()) ||
-                                (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enMilueim.GetHashCode().ToString()) ||
-                                (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enTeuna.GetHashCode().ToString()) ||
-                                (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enEvel.GetHashCode().ToString()))
+               
+                        if (curSidur.bSidurMyuhad)
+                        {//סידור מיוחד
+                            if (!string.IsNullOrEmpty(curSidur.sHeadrutTypeKod))
                             {
-                                bLoLetashlumAutomati = true;
+                                if ((curSidur.sHeadrutTypeKod == enMeafyenSidur53.enMachala.GetHashCode().ToString()) ||
+                                    (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enMilueim.GetHashCode().ToString()) ||
+                                    (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enTeuna.GetHashCode().ToString()) ||
+                                    (curSidur.sHeadrutTypeKod == enMeafyenSidur53.enEvel.GetHashCode().ToString()))
+                                {
+                                    bLoLetashlumAutomati = true;
+                                }
                             }
                         }
-                    }
-
                 }
                 //תנאי שביעי לסעיף 11
 
