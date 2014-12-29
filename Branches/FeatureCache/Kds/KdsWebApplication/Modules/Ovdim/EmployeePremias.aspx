@@ -164,7 +164,7 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
                 </td>
                 <td style="width:50px">
                     <asp:UpdatePanel ID="upPremiaMinutes" runat="server" 
-                        RenderMode="Inline" UpdateMode="Conditional">
+                        RenderMode="Block" UpdateMode="Conditional">
                         <ContentTemplate> 
                             <asp:TextBox ID="txtPremiaMinutes" runat="server"  MaxLength="4"
                                 AutoComplete="Off" style="width:50px;">
@@ -477,6 +477,7 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
         document.getElementById("ctl00_KdsContent_btnSearch").click();
         document.getElementById("ctl00_KdsContent_txtPremiaMinutes").disabled = false;
         document.getElementById("ctl00_KdsContent_btnUpdate").disabled = false;
+        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = "";
     }
 //    function onchange_ddStatuses() {
 //        document.getElementById("ctl00_KdsContent_ddMonths").selectedIndex = 0;

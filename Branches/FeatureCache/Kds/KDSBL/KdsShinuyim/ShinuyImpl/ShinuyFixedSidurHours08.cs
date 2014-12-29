@@ -42,7 +42,9 @@ namespace KdsShinuyim.ShinuyImpl
                     //נקרא את נתוני הסידור הקודם
                     oSidurPrev = (SidurDM)inputData.htEmployeeDetails[i - 1];
 
-                    if (curSidur.iLoLetashlum == 0 && oSidurPrev.iLoLetashlum == 0)
+                    if (curSidur.iLoLetashlum == 0 && oSidurPrev.iLoLetashlum == 0 &&
+                      (!curSidur.bSidurMyuhad || (curSidur.bSidurMyuhad && IsMatala(curSidur))) &&
+                       (!oSidurPrev.bSidurMyuhad || (oSidurPrev.bSidurMyuhad && IsMatala(oSidurPrev))))
                     {
                         oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
                         oPrevObjSidurimOvdimUpd = GetSidurOvdimObject(oSidurPrev.iMisparSidur, oSidurPrev.dFullShatHatchala,inputData);
@@ -70,6 +72,23 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
+        private bool IsMatala(SidurDM oSidur)
+        {
+            PeilutDM oPeilut;
+            if (oSidur.bSidurMyuhad)
+            {
+                for (int j = 0; j < oSidur.htPeilut.Count; j++)
+                {
+                    oPeilut = (PeilutDM)oSidur.htPeilut[j];
+
+                    if (oPeilut.lMisparMatala > 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         private DateTime ChangeShatHatchala(ShinuyInputData inputData, DateTime datePrevShatGmar, DateTime dateCurrShatHatchala, SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, int i)
         {
             OBJ_PEILUT_OVDIM oObjPeilutUpd;
