@@ -163,21 +163,21 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                     </asp:Label>
                 </td>
                 <td style="width:50px">
-                    <asp:UpdatePanel ID="upPremiaMinutes" runat="server" 
-                        RenderMode="Block" UpdateMode="Conditional">
+                   <asp:UpdatePanel ID="upPremiaMinutes" runat="server" 
+                        RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
                             <asp:TextBox ID="txtPremiaMinutes" runat="server"  MaxLength="4"
                                 AutoComplete="Off" style="width:50px;">
-                            </asp:TextBox>
-                         </ContentTemplate>
-                       <Triggers>
+                           </asp:TextBox>
+                          </ContentTemplate>
+                     <Triggers>
                             <asp:AsyncPostBackTrigger ControlID="ddStatuses" />
                             <asp:AsyncPostBackTrigger ControlID="btnExecute" />
                             <asp:AsyncPostBackTrigger ControlID="btnSearch" /> 
                            <asp:AsyncPostBackTrigger ControlID="txtId" />
                             <asp:AsyncPostBackTrigger ControlID="txtName" />
                        </Triggers> 
-                 </asp:UpdatePanel>                         
+                 </asp:UpdatePanel>                      
                 </td>
                 <td colspan="5">
                      <asp:UpdatePanel ID="upUpdate" runat="server" 
@@ -443,6 +443,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
          }
     }
     function GetDakotPremiyaSucc(result) {
+        alert(result);
         document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = result;
     }
     function Onclick_UpdatePremiaMinutes() {
@@ -478,10 +479,12 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
             document.getElementById("ctl00_KdsContent_txtId").disabled = true;
             //    document.getElementById("ctl00_KdsContent_txtName").select();
         }
-        document.getElementById("ctl00_KdsContent_btnSearch").click();
+        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = "";
         document.getElementById("ctl00_KdsContent_txtPremiaMinutes").disabled = false;
         document.getElementById("ctl00_KdsContent_btnUpdate").disabled = false;
-        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = "";
+        document.getElementById("ctl00_KdsContent_btnSearch").click();
+       
+     
     }
 //    function onchange_ddStatuses() {
 //        document.getElementById("ctl00_KdsContent_ddMonths").selectedIndex = 0;
