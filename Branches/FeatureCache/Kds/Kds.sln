@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsLibrary", "KdsLibrary\KdsLibrary.csproj", "{B3E759EC-2A7B-4C38-9013-730C3A628AA8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsDefinition", "KdsDefinition\KdsDefinition.csproj", "{547669FA-B1B3-446C-8E8A-82E279AB2C4C}"
@@ -64,9 +62,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items (2)", "Solut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DropDownCheckBoxes", "DropDownCheckBoxes\DropDownCheckBoxes.csproj", "{DC5FD4C5-70C8-4EC1-A9EA-B0A3FB7AE1D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsTaskManagerTester", "Tests\KdsTaskManagerTester\KdsTaskManagerTester.csproj", "{F685A3F0-4A35-4714-BD73-4FFC12829143}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 22
+		SccNumberOfProjects = 23
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
 		SccLocalPath0 = .
@@ -144,6 +144,10 @@ Global
 		SccProjectUniqueName21 = DropDownCheckBoxes\\DropDownCheckBoxes.csproj
 		SccProjectName21 = DropDownCheckBoxes
 		SccLocalPath21 = DropDownCheckBoxes
+		SccProjectUniqueName22 = Tests\\KdsTaskManagerTester\\KdsTaskManagerTester.csproj
+		SccProjectTopLevelParentUniqueName22 = Kds.sln
+		SccProjectName22 = Tests/KdsTaskManagerTester
+		SccLocalPath22 = Tests\\KdsTaskManagerTester
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -736,7 +740,32 @@ Global
 		{DC5FD4C5-70C8-4EC1-A9EA-B0A3FB7AE1D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC5FD4C5-70C8-4EC1-A9EA-B0A3FB7AE1D3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DC5FD4C5-70C8-4EC1-A9EA-B0A3FB7AE1D3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DC5FD4C5-70C8-4EC1-A9EA-B0A3FB7AE1D3}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{DC5FD4C5-70C8-4EC1-A9EA-B0A3FB7AE1D3}.Release|x86.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsProd01|.NET.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsProd01|Any CPU.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsProd01|Any CPU.Build.0 = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsProd01|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsProd01|Mixed Platforms.Build.0 = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsProd01|x86.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsTest|.NET.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsTest|Any CPU.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsTest|Any CPU.Build.0 = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsTest|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsTest|Mixed Platforms.Build.0 = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.KdsTest|x86.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Release|.NET.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F685A3F0-4A35-4714-BD73-4FFC12829143}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -753,5 +782,6 @@ Global
 		{FD6ABF10-65F1-4091-A046-31681A93D563} = {A6620A11-F241-4F85-994D-C9158FAD93EF}
 		{ECF904B0-35DE-4570-86BA-7676D617F07B} = {6F053E40-5E3D-4B67-B748-8B51AF74C5D5}
 		{7B74C39D-09A2-4820-BDB1-A43186F127EE} = {6F053E40-5E3D-4B67-B748-8B51AF74C5D5}
+		{F685A3F0-4A35-4714-BD73-4FFC12829143} = {6F053E40-5E3D-4B67-B748-8B51AF74C5D5}
 	EndGlobalSection
 EndGlobal

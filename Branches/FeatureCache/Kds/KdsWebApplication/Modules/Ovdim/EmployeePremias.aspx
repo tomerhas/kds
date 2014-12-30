@@ -474,10 +474,11 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
             document.getElementById("ctl00_KdsContent_txtId").disabled = true;
             //    document.getElementById("ctl00_KdsContent_txtName").select();
         }
-        document.getElementById("ctl00_KdsContent_btnSearch").click();
+      
+        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = "";
         document.getElementById("ctl00_KdsContent_txtPremiaMinutes").disabled = false;
         document.getElementById("ctl00_KdsContent_btnUpdate").disabled = false;
-        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = "";
+        document.getElementById("ctl00_KdsContent_btnSearch").click();
     }
 //    function onchange_ddStatuses() {
 //        document.getElementById("ctl00_KdsContent_ddMonths").selectedIndex = 0;

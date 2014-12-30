@@ -12,26 +12,42 @@ namespace KdsTaskManager
         private Type _Type;
         private MethodInfo _MethodInfo;
         private object[] _parameters;
-        private ReferenceDefinitions _oReferenceDefinitions;
-        private Reference _Reference;
+        //private ReferenceDefinitions _oReferenceDefinitions;
+        //private Reference _Reference;
         private Assembly _Dllfile;
         private ConstructorInfo _ConstructorInfo;
 
 
         public ProgramCommand(Action ActionToExecute)
         {
-            _ActionToExecute = ActionToExecute;
-            _parameters = null;
+            #region Garbage code
+            //_ActionToExecute = ActionToExecute;
+            //_parameters = null;
+            //try
+            //{
+            //    _oReferenceDefinitions = ReferenceDefinitions.GetInstance();
+            //    _Reference = _oReferenceDefinitions.ReferenceList.Find(refItem => refItem.Name == _ActionToExecute.LibraryName);
+            //    if (_Reference == null)
+            //        throw new Exception("Reference path not defined in xml for library " + _ActionToExecute.LibraryName);
+            //    _Dllfile = Assembly.LoadFile(_Reference.FullPath);
+            //    if (_Dllfile == null)
+            //        throw new Exception("Problem in loading the assembly reference " + _Reference.FullPath);
+            //    _Type = _Dllfile.GetType(_ActionToExecute.LibraryName);
+            //    _ConstructorInfo = _Type.GetConstructor(Type.EmptyTypes);
+            //    if (_ConstructorInfo == null)
+            //        throw new Exception("Object " + _ActionToExecute.LibraryName + " creation failed or is not valid");
+            //}
+            //catch (Exception ex)
+            //{
+            //    _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex), DateTime.MinValue, DateTime.Now);
+            //    _MessageStart.UpdateTaskLog();
+            //    throw ex;
+            //}
+            #endregion
             try
             {
-                _oReferenceDefinitions = ReferenceDefinitions.GetInstance();
-                _Reference = _oReferenceDefinitions.ReferenceList.Find(refItem => refItem.Name == _ActionToExecute.LibraryName);
-                if (_Reference == null)
-                    throw new Exception("Reference path not defined in xml for library " + _ActionToExecute.LibraryName);
-                _Dllfile = Assembly.LoadFile(_Reference.FullPath);
-                if (_Dllfile == null)
-                    throw new Exception("Problem in loading the assembly reference " + _Reference.FullPath);
-                _Type = _Dllfile.GetType(_ActionToExecute.LibraryName);
+                _ActionToExecute = ActionToExecute;
+                _Type = Type.GetType(_ActionToExecute.LibraryName);
                 _ConstructorInfo = _Type.GetConstructor(Type.EmptyTypes);
                 if (_ConstructorInfo == null)
                     throw new Exception("Object " + _ActionToExecute.LibraryName + " creation failed or is not valid");
@@ -42,7 +58,6 @@ namespace KdsTaskManager
                 _MessageStart.UpdateTaskLog();
                 throw ex;
             }
-
         }
 
         /// <remarks>Fill the Type and MethodInfo</remarks>

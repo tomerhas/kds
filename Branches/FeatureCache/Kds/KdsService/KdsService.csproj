@@ -156,6 +156,10 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="App.Debug.config">
+      <DependentUpon>App.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="App.KdsTest.config">
       <DependentUpon>App.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -248,7 +252,6 @@
     <Microsoft.Build.Tasks.Copy SourceFiles="@(MyFiles)" DestinationFolder="..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)\"/>
     <Message Text="Source files= $(MyFiles)" />
     <Message Text="Out dir = ..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)\" />-->
-
   </Target>
   <PropertyGroup>
     <!--<TransformXml Source="@(AppConfigWithTargetPath)" Transform="$(ProjectConfigTransformFileName)" Destination="@(AppConfigWithTargetPath->'$(OutDir)%(TargetPath)')" />-->

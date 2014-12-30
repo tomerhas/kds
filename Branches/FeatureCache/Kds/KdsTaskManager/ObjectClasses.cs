@@ -30,6 +30,10 @@ namespace KdsTaskManager
     }
     public class Action
     {
+        public Action()
+        {
+            Parameters = new List<Parameter>();
+        }
         public int IdGroup { get; set; }
         public TypeCommand TypeCommand { get; set; }
         public string LibraryName { get; set; }
