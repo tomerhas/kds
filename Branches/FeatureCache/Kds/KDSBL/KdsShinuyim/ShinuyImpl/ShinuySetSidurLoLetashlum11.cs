@@ -87,9 +87,9 @@ namespace KdsShinuyim.ShinuyImpl
                                         if (!bSign)
                                         {
                                             //תנאי 6
-                                            bSign = Condition6Saif11(curSidur, inputData);
-                                            if (!bSign)
-                                            {
+                                            //bSign = Condition6Saif11(curSidur, inputData);
+                                            //if (!bSign)
+                                            //{
                                                 bSign = ConditionSidurHeadrut(curSidur,  inputData);
                                                 if (!bSign)
                                                 {
@@ -122,11 +122,11 @@ namespace KdsShinuyim.ShinuyImpl
                                                     iKodSibaLoLetashlum = 22;
                                                 }
 
-                                            }
-                                            else
-                                            {
-                                                iKodSibaLoLetashlum = 13;
-                                            }
+                                            //}
+                                            //else
+                                            //{
+                                            //    iKodSibaLoLetashlum = 13;
+                                            //}
                                         }
                                         else
                                         {
