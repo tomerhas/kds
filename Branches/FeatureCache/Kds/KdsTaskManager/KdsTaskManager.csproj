@@ -199,7 +199,7 @@
   <PropertyGroup>
     <PostBuildEvent>copy $(ProjectDir)\xml\*.xml $(TargetDir)
 
-XCOPY /Y /R "$(SolutionDir)$(ProjectName)\bin\$(ConfigurationName)\*" "..\..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)\"
+XCOPY  "$(SolutionDir)$(ProjectName)\bin\$(ConfigurationName)\*" "..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)"  /Y/I
 </PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />

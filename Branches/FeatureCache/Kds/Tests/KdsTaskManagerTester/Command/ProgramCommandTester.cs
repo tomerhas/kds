@@ -100,11 +100,11 @@ namespace KdsTaskManagerTester.Command
         public void ProgramCommandCtor_CreateInstance_Succeed()
         {
             KdsTaskManager.Action ac = new KdsTaskManager.Action();
-            //ac.LibraryName = "KdsBatch.TaskManager.Utils,KdsBatch";
+            ac.LibraryName = "KdsBatch.TaskManager.Utils,KdsBatch";
             //ac.CommandName = "ShguimHrChanges";
 
-            ac.LibraryName = "KdsBatch.History.ManagerTask,KdsBatch";
-            ac.CommandName = "ChkControlAtSdrn";
+          //  ac.LibraryName = "KdsBatch.History.ManagerTask,KdsBatch";
+            ac.CommandName = "RunShguimOfSdrn";
 
             ProgramCommand pc = new ProgramCommand(ac);
             pc.Run();

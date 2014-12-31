@@ -27,7 +27,20 @@ namespace KdsService
 {
     public class BatchService : IBatchService
     {
+        public BatchService()
+        {
+            ICalcExecuter executer = ServiceLocator.Current.GetInstance<ICalcExecuter>();
+            executer.Completed+=ExecuterCompleted;
+        }
 
+        private void ExecuterCompleted(object sender, CompletedExecutionEventArgs e)
+        {
+            Debug.WriteLine("Completed batch id {0}" , e.BatchId);
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(e.BatchId, "I", 0, "END");
+            clDefinitions.UpdateLogBakasha(e.BatchId, DateTime.Now, (int)clGeneral.enStatusRequest.ToBeEnded);
+        }
+
+       
         #region Methods
         private void RunExecuteInputDataAndErrorsThread(object param)
         {
@@ -51,7 +64,7 @@ namespace KdsService
         private void RunShinuyimVeShguimBatch(object param)
         {
             clUtils oUtils = new clUtils();
-            string sArguments = "";
+           // string sArguments = "";
             int iStatus = 0;
             object[] args = param as object[];
             long lRequestNum = (long)args[0];
@@ -59,15 +72,15 @@ namespace KdsService
             var logger = ServiceLocator.Current.GetInstance<ILogBakashot>();
             enCalcType TypeShguyim = ((enCalcType)Enum.Parse(typeof(enCalcType), args[2].ToString()));
             BatchExecutionType ExecutionTypeShguim = ((BatchExecutionType)Enum.Parse(typeof(BatchExecutionType), args[3].ToString()));
-            Tuple<bool,FileInfo> KdsCalcul = null;
+           // Tuple<bool,FileInfo> KdsCalcul = null;
             try
             {
                 logger.InsertLog(lRequestNum, "I", 0, "START");
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["ShinuimShguimsProcessesNb"]);
-                KdsCalcul = GetCalculPath();
+                //KdsCalcul = GetCalculPath();
 
-                if(KdsCalcul.Item1==true)
-                    logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.Item2.FullName);
+                //if(KdsCalcul.Item1==true)
+                //    logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.Item2.FullName);
                 switch (TypeShguyim)
                 {
                     case enCalcType.ShinuyimVeShguyim:
@@ -86,13 +99,20 @@ namespace KdsService
                 // oCalcDal.PrepareDataLeChishuv(dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
                 logger.InsertLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
                      
-                if (KdsCalcul.Item1)
-                {
-                    sArguments = TypeShguyim.GetHashCode() + " " + lRequestNum.ToString() + " " + ExecutionTypeShguim.GetHashCode();
-                    iStatus = RunMultiProcesses(lRequestNum, KdsCalcul.Item2, sArguments, iCntProcesses);
+                //if (KdsCalcul.Item1)
+                //{
+                //    sArguments = TypeShguyim.GetHashCode() + " " + lRequestNum.ToString() + " " + ExecutionTypeShguim.GetHashCode();
+                    CalcParam calcParam = new CalcParam()
+                    {
+                        TypeCalc = TypeShguyim,
+                        RequestNum = lRequestNum,
+                        ExecutionType = ExecutionTypeShguim
+                    };
+                    RunMultiProcesses2(calcParam,  iCntProcesses);
+                    //iStatus = RunMultiProcesses(lRequestNum, KdsCalcul.Item2, sArguments, iCntProcesses);
                     //  iStatus = RunKdsCalcul(KdsCalcul, lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzatTest, bRitzaGorefet, iCntProcesses);
-                }
-                else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                
+               // else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
 
             }
             catch (Exception ex)
@@ -104,42 +124,55 @@ namespace KdsService
 
                 throw ex;
             }
-            finally
-            {
-                CheckProcessesTerminated(KdsCalcul.Item2, lRequestNum, iStatus);
-            }
+            //finally
+            //{
+            //    CheckProcessesTerminated(KdsCalcul.Item2, lRequestNum, iStatus);
+            //}
             //LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
 
-        private int RunMultiProcesses(long BakashaId, FileInfo FileToRun, string sArguments, int CountOfProcesses)
+        private void RunMultiProcesses2(CalcParam calcParam, int CountOfProcesses)
         {
-            try
+            ICalcExecuter executer = ServiceLocator.Current.GetInstance<ICalcExecuter>();
+            executer.UpdateOnCompleted(CountOfProcesses);
+            for (int i = 1; i <= CountOfProcesses; i++)
             {
-                for (int i = 1; i <= CountOfProcesses; i++)
-                {
-                    Process _process = new Process();
-                    _process.StartInfo.RedirectStandardOutput = false;
-                    _process.StartInfo.FileName = FileToRun.FullName;
-                    _process.StartInfo.UseShellExecute = false;
-                    _process.StartInfo.WorkingDirectory = FileToRun.DirectoryName;
-                    _process.StartInfo.RedirectStandardError = true;
-                    _process.StartInfo.Arguments = sArguments + " " + i.ToString();
-                    _process.Start();
-                    _process.PriorityClass = ProcessPriorityClass.BelowNormal;
-                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(BakashaId, "I", 0, FileToRun.Name + " " + i.ToString() + " was started.");
-
-                    _process.Dispose();
-                }
-                return clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
-            }
-            catch (Exception ex)
-            {
-                clGeneral.LogError(ex.StackTrace);
-                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(BakashaId, "E", 0, "RunMultiProcesses: " + ex.Message);
-
-                return clGeneral.enStatusRequest.Failure.GetHashCode();
+                var copy = calcParam.Clone();
+                copy.ProcessId = i;
+                executer.Add(copy);
             }
         }
+
+        //private int RunMultiProcesses(long BakashaId, FileInfo FileToRun, string sArguments, int CountOfProcesses)
+        //{
+        //    try
+        //    {
+        //        for (int i = 1; i <= CountOfProcesses; i++)
+        //        {
+
+        //            Process _process = new Process();
+        //            _process.StartInfo.RedirectStandardOutput = false;
+        //            _process.StartInfo.FileName = FileToRun.FullName;
+        //            _process.StartInfo.UseShellExecute = false;
+        //            _process.StartInfo.WorkingDirectory = FileToRun.DirectoryName;
+        //            _process.StartInfo.RedirectStandardError = true;
+        //            _process.StartInfo.Arguments = sArguments + " " + i.ToString();
+        //            _process.Start();
+        //            _process.PriorityClass = ProcessPriorityClass.BelowNormal;
+        //            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(BakashaId, "I", 0, FileToRun.Name + " " + i.ToString() + " was started.");
+
+        //            _process.Dispose();
+        //        }
+        //        return clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        clGeneral.LogError(ex.StackTrace);
+        //        ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(BakashaId, "E", 0, "RunMultiProcesses: " + ex.Message);
+
+        //        return clGeneral.enStatusRequest.Failure.GetHashCode();
+        //    }
+        //}
 
         private void CheckProcessesTerminated(FileInfo FileToRun, long BakashaID, int Status)
         {
@@ -163,7 +196,7 @@ namespace KdsService
             clCalcDal oCalcDal = new clCalcDal();
             DateTime dFrom;
             DataTable dtParametrim;
-            string sArguments = "";
+            //string sArguments = "";
             int result, resultK,iStatus = 0;
             object[] args = param as object[];
             long lRequestNum = (long)args[0];
@@ -179,9 +212,9 @@ namespace KdsService
             {
                 logger.InsertLog(lRequestNum, "I", 0, "START");             
                 iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["CalculProcessesNb"]);
-                KdsCalcul = GetCalculPath();
-                if(KdsCalcul.Item1)
-                    logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.Item2.FullName);
+                //KdsCalcul = GetCalculPath();
+                //if(KdsCalcul.Item1)
+                //    logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.Item2.FullName);
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
                 dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString())) * -1);
                 dAdChodesh = dAdChodesh.AddMonths(1).AddDays(-1);
@@ -192,19 +225,30 @@ namespace KdsService
                 if (result > 0 && resultK > 0)
                 {
                     logger.InsertLog(lRequestNum, "I", 0, "result: " + result + " resultK:" + resultK);
-                    if (KdsCalcul.Item1)
-                    {
+                    //if (KdsCalcul.Item1)
+                    //{
                         logger.InsertLog(lRequestNum, "I", 0, "KdsCalcul is Exists:" + KdsCalcul.Item1.ToString());
-                        sArguments = enCalcType.MonthlyCalc.GetHashCode() + " " + lRequestNum.ToString() + " " + dFrom.ToShortDateString() + " " + dAdChodesh.ToShortDateString() + " " +
-                                                 sMaamad + " " + bRitzatTest.GetHashCode().ToString() + " " + bRitzaGorefet.GetHashCode().ToString();
+                        //sArguments = enCalcType.MonthlyCalc.GetHashCode() + " " + lRequestNum.ToString() + " " + dFrom.ToShortDateString() + " " + dAdChodesh.ToShortDateString() + " " +
+                        //                         sMaamad + " " + bRitzatTest.GetHashCode().ToString() + " " + bRitzaGorefet.GetHashCode().ToString();
+                        CalcParam calcParam = new CalcParam()
+                        {
+                            TypeCalc = enCalcType.MonthlyCalc,
+                            RequestNum = lRequestNum,
+                            From = dFrom,
+                            To = dAdChodesh,
+                            Mamad = sMaamad,
+                            RitzaGorefet = bRitzaGorefet,
+                            RitzaTest = bRitzatTest
+                        };
                         //  iStatus = oUtils.RunKdsCalcul(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
-                        iStatus = RunMultiProcesses(lRequestNum, KdsCalcul.Item2, sArguments, iCntProcesses);
-                    }
-                    else
-                    {
-                        iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                        logger.InsertLog(lRequestNum, "I", 0, "KdsCalcul is Exists:" + KdsCalcul.Item1.ToString());
-                    }
+                        //iStatus = RunMultiProcesses(lRequestNum, KdsCalcul.Item2, sArguments, iCntProcesses);
+                         RunMultiProcesses2(calcParam,iCntProcesses);
+                    //}
+                    //else
+                    //{
+                    //    iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                    //    logger.InsertLog(lRequestNum, "I", 0, "KdsCalcul is Exists:" + KdsCalcul.Item1.ToString());
+                    //}
                 }
                 else
                 {
@@ -220,12 +264,14 @@ namespace KdsService
        
                 throw ex;
             }
-            finally
-            {
-                CheckProcessesTerminated(KdsCalcul.Item2, lRequestNum, iStatus);
-            }
+            //finally
+            //{
+            //    CheckProcessesTerminated(KdsCalcul.Item2, lRequestNum, iStatus);
+            //}
             //LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
+
+       
 
         private void RunInsetRecordsToHistory(object param)
         {
@@ -250,27 +296,33 @@ namespace KdsService
             int result, iStatus = 0;
             object[] args = param as object[];
             long lRequestNum = (long)args[0];
-            string path, exfile, sArguments;
+           // string path, exfile, sArguments;
             FileInfo KdsCalcul = null;
             var logger = ServiceLocator.Current.GetInstance<ILogBakashot>();
             try
             {
                 logger.InsertLog(lRequestNum, "I", 0, "START");             
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["PremiotProcessesNb"]);
-                path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
-                exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
-                KdsCalcul = new FileInfo( exfile);
+              //  path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
+               // exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
+              //  KdsCalcul = new FileInfo( exfile);
                 logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);        
                 result = oCalcDal.PrepareDataLeChishuvPremiyot(iCntProcesses);
                 logger.InsertLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
                 if (result > 0)
                 {
-                    if (KdsCalcul.Exists)
-                    {
-                        sArguments = enCalcType.PremiotCalc.GetHashCode() + " " + lRequestNum.ToString();
-                        iStatus = RunMultiProcesses(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
-                    }
-                    else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                    //if (KdsCalcul.Exists)
+                    //{
+
+                      //  sArguments = enCalcType.PremiotCalc.GetHashCode() + " " + lRequestNum.ToString();
+                        CalcParam calcParam = new CalcParam()
+                        {
+                            TypeCalc = enCalcType.PremiotCalc,
+                            RequestNum = lRequestNum
+                        };
+                         RunMultiProcesses2(calcParam, iCntProcesses);
+                    //}
+                    //else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 }
             }
             catch (Exception ex)
@@ -281,10 +333,10 @@ namespace KdsService
                 logger.InsertLog(lRequestNum, "E", 0, "RunCalcBatchPremiyot: " + ex.Message);
                 throw ex;
             }
-            finally
-            {
-                CheckProcessesTerminated(KdsCalcul, lRequestNum, iStatus);
-            }
+            //finally
+            //{
+            //    CheckProcessesTerminated(KdsCalcul, lRequestNum, iStatus);
+            //}
             //LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
         //private void RunCalcBatchThread(object param)
@@ -422,18 +474,25 @@ namespace KdsService
                
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["RikuzimsProcessesNb"]);
 
-                calculPath = GetCalculPath();
-                if(calculPath.Item1)
-                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "KdsRikuzims will run from " + calculPath.Item2.FullName);
+               // calculPath = GetCalculPath();
+                //if(calculPath.Item1)
+                //    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "KdsRikuzims will run from " + calculPath.Item2.FullName);
                  
-                 if (calculPath.Item1==true)
-                {
+                // if (calculPath.Item1==true)
+                //{
                     oBatch.DeleteRikuzimPdf(iRequestIdForRikuzim);
                     result = _ClReport.GetProPrepareOvdimRikuzim(lRequestNum,iRequestIdForRikuzim, iCntProcesses);
-                    sArguments = enCalcType.Rikuzim.GetHashCode() + " " + lRequestNum.ToString() + " " + iRequestIdForRikuzim.ToString();
-                    iStatus = RunMultiProcesses(lRequestNum, calculPath.Item2, sArguments, iCntProcesses);
-                }
-                else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                   // sArguments = enCalcType.Rikuzim.GetHashCode() + " " + lRequestNum.ToString() + " " + iRequestIdForRikuzim.ToString();
+
+                    CalcParam calcParam = new CalcParam()
+                    {
+                        TypeCalc = enCalcType.Rikuzim,
+                        RequestNum = lRequestNum,
+                        RequzimId = iRequestIdForRikuzim
+                    };
+                    RunMultiProcesses2(calcParam, iCntProcesses);
+                //}
+                //else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
             }
             catch (Exception ex)
             {
@@ -443,10 +502,10 @@ namespace KdsService
 
                 throw ex;
             }
-            finally
-            {
-                CheckProcessesTerminated(calculPath.Item2, lRequestNum, iStatus);
-            }
+            //finally
+            //{
+            //    CheckProcessesTerminated(calculPath.Item2, lRequestNum, iStatus);
+            //}
             LogThreadEnd("YeziratRikuzim", lRequestNum);
         }
 

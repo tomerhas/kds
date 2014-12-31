@@ -147,7 +147,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculExecuters\BaseExecuter.cs" />
     <Compile Include="Bootsrapper.cs" />
+    <Compile Include="CalculBL\clCalculMain.cs" />
+    <Compile Include="CalculBL\clShinuimVeShguimBatch.cs" />
+    <Compile Include="CalculBL\clTask.cs" />
+    <Compile Include="CalculExecuters\CalculExecuter.cs" />
+    <Compile Include="CalculExecuters\ICalcExecuter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BatchService.cs" />
@@ -210,10 +216,6 @@
     <ProjectReference Include="..\KDSBL\KdsShinuyim\KdsShinuyim.csproj">
       <Project>{fd6abf10-65f1-4091-a046-31681a93d563}</Project>
       <Name>KdsShinuyim</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KdsCalcul\KdsCalcul.csproj">
-      <Project>{48efb3db-ead6-43a8-aced-c5c8340fe244}</Project>
-      <Name>KdsCalcul</Name>
     </ProjectReference>
     <ProjectReference Include="..\KdsDataImport\KdsDataImport.vbproj">
       <Project>{d4a152ec-27eb-4c8c-bdab-4012680da683}</Project>

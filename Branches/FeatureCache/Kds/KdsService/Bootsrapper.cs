@@ -84,6 +84,8 @@ namespace KdsService
             container.RegisterType<IParametersDAL, ParametersDAL>();
             container.RegisterType<ILogDAL, LogDAL>();
 
+            container.RegisterInstance<ICalcExecuter>(container.Resolve<CalculExecuter>());
+
             //var manager = container.Resolve<ISimpleCacheManager<int>>();
             //var item = container.Resolve<ISimpleCacheManager<string>>();
             InitServiceLocator(container);
