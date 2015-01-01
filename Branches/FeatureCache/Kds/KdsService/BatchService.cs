@@ -251,24 +251,25 @@ namespace KdsService
             object[] args = param as object[];
             long lRequestNum = (long)args[0];
             string path, exfile, sArguments;
-            FileInfo KdsCalcul = null;
             var logger = ServiceLocator.Current.GetInstance<ILogBakashot>();
+            Tuple<bool, FileInfo> KdsCalcul = null;
             try
             {
+               
                 logger.InsertLog(lRequestNum, "I", 0, "START");
                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["PremiotProcessesNb"]);
-                path = ConfigurationManager.AppSettings["MultiProcessesAppPath"].ToString();
-                exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
-                KdsCalcul = new FileInfo(exfile);
-                logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
+                KdsCalcul = GetCalculPath();
+                if (KdsCalcul.Item1)
+                    logger.InsertLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.Item2.FullName);
+              
                 result = oCalcDal.PrepareDataLeChishuvPremiyot(iCntProcesses);
                 logger.InsertLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
                 if (result > 0)
                 {
-                    if (KdsCalcul.Exists)
+                    if (KdsCalcul.Item1)
                     {
                         sArguments = enCalcType.PremiotCalc.GetHashCode() + " " + lRequestNum.ToString();
-                        iStatus = RunMultiProcesses(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
+                        iStatus = RunMultiProcesses(lRequestNum, KdsCalcul.Item2, sArguments, iCntProcesses);
                     }
                     else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 }
@@ -283,7 +284,7 @@ namespace KdsService
             }
             finally
             {
-                CheckProcessesTerminated(KdsCalcul, lRequestNum, iStatus);
+                CheckProcessesTerminated(KdsCalcul.Item2, lRequestNum, iStatus);
             }
             //LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
