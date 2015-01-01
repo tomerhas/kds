@@ -677,10 +677,8 @@ namespace KdsLibrary.BL
         public void InsertKnisot(COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdim)
         {
             clDal oDal = new clDal();
-            string x = null; //--
             try
             {
-                string[] y = x.Split(';');//--
                 oDal.AddParameter("p_coll_obj_peilut_ovdim", ParameterType.ntOracleArray, oCollPeilutOvdim, ParameterDir.pdInput, "COLL_OBJ_PEILUT_OVDIM");
                 oDal.ExecuteSP(clGeneral.cProInsertKnisot);
             }
