@@ -8,6 +8,6 @@ namespace KDSCommon.Interfaces.Shinuyim
 {
     public interface IShinuyimFlowManager
     {
-        FlowShinuyResult ExecShinuyim(int misparIshi, DateTime cardDate, bool bSaveChange,long? btchRequest = null, int? userId = null);
+        FlowShinuyResult ExecShinuyim(int misparIshi, DateTime cardDate,long? btchRequest = null, int? userId = null);
     }
 }

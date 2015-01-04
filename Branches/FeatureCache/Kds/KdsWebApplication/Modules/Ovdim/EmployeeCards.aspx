@@ -361,12 +361,12 @@
            
             if (ReturnWin == '' || ReturnWin == 'undefined' || ReturnWin == undefined)
                    ReturnWin = false;
-               else {
-                   var DatailsSplit = ReturnWin.split('|');                 
-                   var userLogin = document.getElementById("ctl00_KdsContent_HidLoginUse").value;            
-                   if (ReturnWin == userLogin);
-                   wsGeneral.FreeWC(DatailsSplit[0], DatailsSplit[1], DatailsSplit[2]);
-               }
+               //else {
+               //    var DatailsSplit = ReturnWin.split('|');                 
+               //    var userLogin = document.getElementById("ctl00_KdsContent_HidLoginUse").value;            
+               //    if (ReturnWin == userLogin);
+               //    wsGeneral.FreeWC(DatailsSplit[0], DatailsSplit[1], DatailsSplit[2]);
+               //}
                document.getElementById("divHourglass").style.display = 'none';
                document.getElementById("ctl00_KdsContent_btnExecute").click();
                return ReturnWin;

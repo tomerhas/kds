@@ -29,13 +29,13 @@ namespace KdsErrors.FlowManagers
             _container = container;
         }
 
-        public FlowErrorResult ExecuteFlow(int misparIshi, DateTime cardDate,bool bSaveChange, long? btchRequest = null, int? userId = null)
+        public FlowErrorResult ExecuteFlow(int misparIshi, DateTime cardDate, long? btchRequest = null, int? userId = null)
         {
             
             var inputData = FillInputData(misparIshi, cardDate, btchRequest, userId);
 
             if (inputData.OvedDetails.bOvedDetailsExists)
-                ExecuteFlow(inputData, bSaveChange);
+                ExecuteFlow(inputData);
     
             return FillResult( inputData);
         }
@@ -51,7 +51,7 @@ namespace KdsErrors.FlowManagers
             return flowResult;
         }
 
-        private void ExecuteFlow(ErrorInputData inputData, bool bSaveChange)
+        private void ExecuteFlow(ErrorInputData inputData)
         {
             ISubErrorFlowManager oYomErrors = _container.Resolve<ISubErrorFlowFactory>().GetFlowManager(SubFlowManagerTypes.OvedYomFlowManager);
             ISubErrorFlowManager oSidurErrors = _container.Resolve<ISubErrorFlowFactory>().GetFlowManager(SubFlowManagerTypes.OvedSidurErrorFlowManager);
@@ -76,8 +76,8 @@ namespace KdsErrors.FlowManagers
                 }
                 oYomErrors.ExecuteFlow(inputData, 2);
 
-                if (bSaveChange)
-                {
+                //if (bSaveChange)
+                //{
                     ErrorsDal errDal = _container.Resolve<ErrorsDal>();
 
                     //Delete errors from shgiot
@@ -98,7 +98,7 @@ namespace KdsErrors.FlowManagers
 
                     //Update 
                     errDal.UpdateRitzatShgiotDate(inputData.iMisparIshi, inputData.CardDate, haveShgiot);
-                }
+                //}
             }
             catch (Exception ex)
             {

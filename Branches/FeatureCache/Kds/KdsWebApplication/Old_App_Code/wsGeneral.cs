@@ -53,25 +53,25 @@ public class wsGeneral : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
-    [WebMethod(EnableSession = true)]
-    public void FreeWC(int iMisparIshi, string dDateCard, int imeadkenOl)
-    {
-        int iLoginUser; 
-        try
-        {
-            if (Session["LoginUserEmp"] != null)
-                iLoginUser = int.Parse(Session["LoginUserEmp"].ToString());
-            else iLoginUser = int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber);
-           // EventLog.WriteEntry("kds", "KdsDev_FreeWC_Login_User=" + iLoginUser, EventLogEntryType.Error);
-            clWorkCard _WorkCard = new clWorkCard();         
-            if (iLoginUser == imeadkenOl)
-                _WorkCard.SaveWCInUsed(iMisparIshi, DateTime.Parse(dDateCard), 0);
-        }
-        catch (Exception ex)
-        {   
-           EventLog.WriteEntry("kds", "KdsDev_FreeWC_ex" + ex.Message, EventLogEntryType.Error);  
-        }
-    }
+    //[WebMethod(EnableSession = true)]
+    //public void FreeWC(int iMisparIshi, string dDateCard, int imeadkenOl)
+    //{
+    //    int iLoginUser; 
+    //    try
+    //    {
+    //        if (Session["LoginUserEmp"] != null)
+    //            iLoginUser = int.Parse(Session["LoginUserEmp"].ToString());
+    //        else iLoginUser = int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber);
+    //       // EventLog.WriteEntry("kds", "KdsDev_FreeWC_Login_User=" + iLoginUser, EventLogEntryType.Error);
+    //        clWorkCard _WorkCard = new clWorkCard();         
+    //        if (iLoginUser == imeadkenOl)
+    //            _WorkCard.SaveWCInUsed(iMisparIshi, DateTime.Parse(dDateCard), 0);
+    //    }
+    //    catch (Exception ex)
+    //    {   
+    //       EventLog.WriteEntry("kds", "KdsDev_FreeWC_ex" + ex.Message, EventLogEntryType.Error);  
+    //    }
+    //}
     
     [WebMethod(EnableSession = true)]
     public string IsCardExists(int iMisparIshi, string sWorkCard)
