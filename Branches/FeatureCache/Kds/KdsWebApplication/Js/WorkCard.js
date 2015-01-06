@@ -705,7 +705,7 @@ function onMeasherSuccuss(result,iStatus)
 {
     if (result=='0')   
         alert("אירעה שגיאה -סטטוס כרטיס לא התעדכן");
-    else {        
+    else {   
         $get("btnPrint").disabled = false;
         $get("btnPrint").className = "btnWorkCardPrint";
         
@@ -719,6 +719,13 @@ function onMeasherSuccuss(result,iStatus)
             $get("btnApprove").className = "ImgButtonApprovalRegularDisabled";
             $get("btnNotApprove").className = "ImgButtonDisApproveChecked"; 
         }
+
+        if ($get('hidFromEmda').value =='true') 
+        {  
+           // $get("btnPrint").disabled = false;                
+           // $get("btnPrint").className="btnWorkCardPrint";
+            document.all('btnPrint').click(); 
+        }  
     }
 }
 function CloseWindow()

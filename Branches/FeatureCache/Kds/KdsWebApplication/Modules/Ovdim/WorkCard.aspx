@@ -842,13 +842,12 @@
          function btnMeasherOrMistayeg_onclick(value)
          {               
             SetMeasher(value); 
-            if ($get('hidFromEmda').value =='true') 
-            {    
-                sleep(2000);
-                $get("btnPrint").disabled = false;                
-                $get("btnPrint").className="btnWorkCardPrint";
-                document.all('btnPrint').click(); 
-            }            
+            //if ($get('hidFromEmda').value =='true') 
+            //{  
+            //    $get("btnPrint").disabled = false;                
+            //    $get("btnPrint").className="btnWorkCardPrint";
+            //    document.all('btnPrint').click(); 
+            //}            
          }   
          
         var prm = Sys.WebForms.PageRequestManager.getInstance();
