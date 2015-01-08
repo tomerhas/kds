@@ -144,7 +144,7 @@ namespace KDSBLLogic.Managers
                            };
                 Dictionary<int, Meafyen> Meafyenim = List.ToDictionary(item => item.kod, item =>
                 {
-                    return new Meafyen((item.exist == 1), item.value);
+                    return new Meafyen((item.exist == 1), item.value,item.erech_ishi);
                 }
                     );
                 return Meafyenim;

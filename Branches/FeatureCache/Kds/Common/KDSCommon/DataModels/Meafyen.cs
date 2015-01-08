@@ -36,10 +36,11 @@ namespace KDSCommon.DataModels
         {
             Kod = kod;
         }
-        public Meafyen(bool isExist, string Val)
+        public Meafyen(bool isExist, string Val, string erech_ishi)
         {
             Value = Val;
             IsExist = isExist;
+            ErechIshi = erech_ishi == null ? "" : erech_ishi.Trim();  
         }
     }
 }
