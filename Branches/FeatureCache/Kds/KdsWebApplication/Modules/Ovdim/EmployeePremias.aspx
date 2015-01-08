@@ -164,7 +164,7 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
                 </td>
                 <td style="width:50px">
                     <asp:UpdatePanel ID="upPremiaMinutes" runat="server" 
-                        RenderMode="Block" UpdateMode="Conditional">
+                        RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
                             <asp:TextBox ID="txtPremiaMinutes" runat="server"  MaxLength="4"
                                 AutoComplete="Off" style="width:50px;">
