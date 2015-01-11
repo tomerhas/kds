@@ -1803,7 +1803,7 @@ namespace KdsBatch
 
                     fMichsaMechushevet = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsaYomitMechushevet); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);  
                     fDakotNochehut = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutLetashlum); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich); 
-
+                    clLogBakashot.InsertErrorToLog(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), objOved.Taarich, "126=" + fMichsaMechushevet + ";1=" + fDakotNochehut);
                     if (fMichsaMechushevet > 0)
                     {
                         if (fDakotNochehut >= fMichsaMechushevet)
@@ -1811,14 +1811,19 @@ namespace KdsBatch
                             fSumDakotRechiv = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotPremiaYomit); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), objOved.Taarich);
                             fSumDakotRechiv += oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotPremiaVisa); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotPremiaVisa.GetHashCode(), objOved.Taarich);
                             fSumDakotRechiv = fSumDakotRechiv / fDakotNochehut * fMichsaMechushevet;
-                        }
+                            clLogBakashot.InsertErrorToLog(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), objOved.Taarich, "30=" + oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotPremiaYomit) + ";28=" + oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotPremiaVisa) + ";calc=" + fSumDakotRechiv);
+                           }
                         else
                         {
                             fSumDakotRechiv = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotPremiaYomit); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), objOved.Taarich);
                             fSumDakotRechiv += oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotPremiaVisa); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotPremiaVisa.GetHashCode(), objOved.Taarich);
+                            clLogBakashot.InsertErrorToLog(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), objOved.Taarich, "30=" + oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotPremiaYomit) + ";28=" + oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotPremiaVisa) + ";calc=" + fSumDakotRechiv);
+                          //  clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), objOved.Taarich, "30=" + oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotPremiaYomit) + ";28=" + oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotPremiaVisa) + ";calc=" + fSumDakotRechiv);
                         }
 
                         fSumDakotRechiv = float.Parse(Math.Floor(fSumDakotRechiv).ToString());
+                        clLogBakashot.InsertErrorToLog(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), objOved.Taarich, "fSumDakotRechiv_floor=" + fSumDakotRechiv);
+                      //  clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), objOved.Taarich, "fSumDakotRechiv_floor=" + fSumDakotRechiv);
                         addRowToTable(clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), fSumDakotRechiv);
                     }
                 }
