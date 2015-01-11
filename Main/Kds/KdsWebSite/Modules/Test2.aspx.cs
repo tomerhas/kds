@@ -134,7 +134,7 @@ public partial class Modules_Test2 : System.Web.UI.Page
         obClManager.HRChangesMatzavPirteyBrerotmechdal();
 
         //KdsBatch.HrWorkersChanges.clMain obClManager = new KdsBatch.HrWorkersChanges.clMain();
-        //obClManager.HRChangesMeafyenim();
+        obClManager.HRChangesMeafyenim();
     }
 
     //protected void OnClick_ShinuyMeafyenim(object sender, EventArgs e)
