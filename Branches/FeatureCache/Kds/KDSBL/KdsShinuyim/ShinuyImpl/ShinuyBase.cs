@@ -123,6 +123,36 @@ namespace KdsShinuyim.ShinuyImpl
             }
 
         }
+
+        //protected void DeleteIdkuneyRashemetLepeilut( int iMisparSidur, DateTime dShatHatchala, DateTime dShatYetzia, ShinuyInputData inputData)
+        //{
+        //    //bool bHaveIdkun = false;
+        //    DataRow dr;
+        //    OBJ_IDKUN_RASHEMET ObjIdkunRashemet;
+        //    try
+        //    {
+        //        for (int i = 0; i < inputData.IdkuneyRashemet.Rows.Count; i++)
+        //        {
+        //            dr = inputData.IdkuneyRashemet.Rows[i];
+
+        //            if (int.Parse(dr["MISPAR_SIDUR"].ToString()) == iMisparSidur && dr["shat_hatchala"].ToString() == dShatHatchala.ToString() && dr["shat_yetzia"].ToString() == dShatYetzia.ToString())
+        //            {
+        //                ObjIdkunRashemet = FillIdkunRashemet(dr, inputData);
+        //                inputData.oCollIdkunRashemetDel.Add(ObjIdkunRashemet);
+        //                inputData.IdkuneyRashemet.Rows.RemoveAt(i);
+        //            }
+
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+
+        //}
+   
+
         protected NewSidur FindSidurOnHtNewSidurim(int iMisparSidur, DateTime dShatHatchala, OrderedDictionary htNewSidurim)
         {
             NewSidur oNewSidurim = null;

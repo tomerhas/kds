@@ -188,6 +188,7 @@ namespace KdsShinuyim.ShinuyImpl
                                 oObjPeilutOvdimDel = new OBJ_PEILUT_OVDIM();
                                 oObjPeilutOvdimDel=InsertToObjPeilutOvdimForDelete(oPeilut, oSidur,inputData);
                                 inputData.oCollPeilutOvdimDel.Add(oObjPeilutOvdimDel);
+                                //DeleteIdkuneyRashemetLepeilut(oSidur.iMisparSidur, oSidur.dOldFullShatHatchala, oPeilut.dFullShatYetzia, inputData);                      
                                 oSidur.htPeilut.RemoveAt(j);
                                 j = j - 1;
 
@@ -197,6 +198,7 @@ namespace KdsShinuyim.ShinuyImpl
                                         && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_YETZIA == oPeilut.dFullShatYetzia) && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.MISPAR_KNISA == oPeilut.iMisparKnisa))
                                     {
                                         //oCollPeilutOvdimUpd.Value[i].UPDATE_OBJECT = 0;
+                                   //     DeleteIdkuneyRashemetLepeilut(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, inputData);
                                         inputData.oCollPeilutOvdimUpdRecorder.RemoveAt(i);
                                     }
                                 }
@@ -209,6 +211,7 @@ namespace KdsShinuyim.ShinuyImpl
                                         if ((inputData.oCollPeilutOvdimIns.Value[i].MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollPeilutOvdimIns.Value[i].SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
                                             && (inputData.oCollPeilutOvdimIns.Value[i].SHAT_YETZIA == oPeilut.dFullShatYetzia) && (inputData.oCollPeilutOvdimIns.Value[i].MISPAR_KNISA == oPeilut.iMisparKnisa))
                                         {
+                                         //   DeleteIdkuneyRashemetLepeilut(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, inputData);
                                             inputData.oCollPeilutOvdimIns.RemoveAt(i);
                                             i -= 1;
                                         }
@@ -244,6 +247,7 @@ namespace KdsShinuyim.ShinuyImpl
                                                 && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_YETZIA == oPeilut.dFullShatYetzia) && (inputData.oCollPeilutOvdimUpdRecorder[i].ContainedItem.MISPAR_KNISA == oPeilut.iMisparKnisa))
                                             {
                                                 //oCollPeilutOvdimUpd.Value[i].UPDATE_OBJECT = 0;
+                                            //    DeleteIdkuneyRashemetLepeilut(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, inputData);
                                                 inputData.oCollPeilutOvdimUpdRecorder.RemoveAt(i);
                                             }
                                         }
@@ -256,6 +260,7 @@ namespace KdsShinuyim.ShinuyImpl
                                                 if ((inputData.oCollPeilutOvdimIns.Value[i].MISPAR_SIDUR == oSidur.iMisparSidur) && (inputData.oCollPeilutOvdimIns.Value[i].SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
                                                     && (inputData.oCollPeilutOvdimIns.Value[i].SHAT_YETZIA == oPeilut.dFullShatYetzia) && (inputData.oCollPeilutOvdimIns.Value[i].MISPAR_KNISA == oPeilut.iMisparKnisa))
                                                 {
+                                                  //  DeleteIdkuneyRashemetLepeilut(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, inputData);
                                                     inputData.oCollPeilutOvdimIns.RemoveAt(i);
                                                     i -= 1;
                                                 }

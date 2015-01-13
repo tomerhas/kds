@@ -370,6 +370,54 @@ namespace KdsBatch
              }
          }
 
+         public float CalcRechiv296(int iMisparSidur, DateTime dShatHatchalaSidur)
+         {
+             DataRow[] drPeiluyot;
+             int iMisparKnisa = 0;
+             float fErech = 0;
+           
+             DateTime dShatYetzia = DateTime.MinValue;
+             int iMakatType;
+             enMakatType oMakatType;
+             try
+             {
+                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "");
+
+                 for (int J = 0; J < drPeiluyot.Length; J++)
+                 {
+                     iMisparKnisa = int.Parse(drPeiluyot[J]["Mispar_Knisa"].ToString());
+                     dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
+                     iMakatType = StaticBL.GetMakatType(int.Parse(drPeiluyot[J]["makat_nesia"].ToString()));
+                     oMakatType = (enMakatType)iMakatType;
+
+                     if (oMakatType != enMakatType.mVisa && oMakatType != enMakatType.mElement && oMakatType != enMakatType.mEmpty && iMisparKnisa == 0)
+                     {
+                         if (drPeiluyot[J]["oto_no"].ToString().Length > 0)
+                         {
+                             if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and (SHASSIS_TYPE=6 or TRAFFIC_ASSIGMENT=1) ").Length > 0)
+                             {
+                                 if (J == 0)
+                                     fErech += 1;
+                                 else
+                                     fErech += float.Parse("1.25");
+                             }
+                             else if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and (TRAFFIC_ASSIGMENT in (2,7)) ").Length > 0)
+                             {
+                                 if (J == 0)
+                                     fErech += 2;
+                                 else
+                                     fErech += float.Parse("2.25");
+                             }
+                         }
+                     }
+                 }
+                 return fErech;
+             }
+             catch (Exception ex)
+             {
+                 throw (ex);
+             }
+         }
          public void CalcRechiv214(int iMisparSidur,  DateTime dShatHatchalaSidur)
          {
             // DataTable dtPeiluyot;

@@ -216,6 +216,9 @@ namespace KdsBatch
                 //דקות כיסוי תור (רכיב 218
                 CalcRechiv218();
 
+                //זמן בגין אלמנטים זרים בנהגות (רכיב 296) :
+                CalcRechiv296();
+
                 //דקות פרמיה בשבת  (רכיב 26 ) 
                 CalcRechiv26();
 
@@ -1689,6 +1692,25 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiv296()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                if (objOved.Taarich >= objOved.objParameters.dTaarichChishuvElementZar)
+                {
+                    oSidur.CalcRechiv296();
+                    fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.ZmanElementZarNahagut.GetHashCode(), objOved.Taarich);
+                    addRowToTable(clGeneral.enRechivim.ZmanElementZarNahagut.GetHashCode(), fSumDakotRechiv);
+                }
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanElementZarNahagut.GetHashCode(), objOved.Taarich, "", ex);
+                throw (exec);
+            }
+
+        }
 
         private void CalcRechiv26()
         {
