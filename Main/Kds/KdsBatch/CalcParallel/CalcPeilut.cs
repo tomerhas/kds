@@ -372,6 +372,55 @@ namespace KdsBatch
              }
          }
 
+         public float CalcRechiv296(int iMisparSidur, DateTime dShatHatchalaSidur)
+         {
+             DataRow[] drPeiluyot;
+             int iMisparKnisa = 0;
+             float fErech = 0;
+             clKavim _Kavim = new clKavim();
+             DateTime dShatYetzia = DateTime.MinValue;
+             int iMakatType;
+             clKavim.enMakatType oMakatType;
+             try
+             {
+                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "");
+
+                 for (int J = 0; J < drPeiluyot.Length; J++)
+                 {
+                     iMisparKnisa = int.Parse(drPeiluyot[J]["Mispar_Knisa"].ToString());
+                     dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
+                     iMakatType = _Kavim.GetMakatType(int.Parse(drPeiluyot[J]["makat_nesia"].ToString()));
+                     oMakatType = (clKavim.enMakatType)iMakatType;
+
+                     if (oMakatType != clKavim.enMakatType.mVisa && oMakatType != clKavim.enMakatType.mElement && oMakatType != clKavim.enMakatType.mEmpty && iMisparKnisa ==0)
+                     {
+                         if (drPeiluyot[J]["oto_no"].ToString().Length > 0)
+                         {
+                             if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and (SHASSIS_TYPE=6 or TRAFFIC_ASSIGMENT=1) ").Length > 0)
+                             {
+                                 if (J == 0)
+                                     fErech += 1;
+                                 else
+                                     fErech += float.Parse("1.25");  
+                             }
+                             else if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and (TRAFFIC_ASSIGMENT in (2,7)) ").Length > 0)
+                             {
+                                 if (J == 0)
+                                     fErech += 2;
+                                 else
+                                     fErech += float.Parse("2.25");
+                             }
+                         }
+                     }
+                 }
+                 return fErech;
+             }
+             catch (Exception ex)
+             {
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanElementZarNahagut.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 throw (ex);
+             }
+         }
          public void CalcRechiv214(int iMisparSidur,  DateTime dShatHatchalaSidur)
          {
             // DataTable dtPeiluyot;

@@ -235,6 +235,7 @@ namespace KdsBatch
         public DateTime dParam299; // -299 
         public int iMaxYamimGmulYeriET; // 300 מקס כמות ימים לקבל גמול ירי אגד תעבורה 
         public DateTime dParam301; // -301
+        public DateTime dTaarichChishuvElementZar; // -302 תאריך התחלת חישוב זמן בגין אלמנטים זרים בנהגות    
 
         public float fBasisLechishuvPremia; //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
         public float fMichsatSaotChodshitET; //503 -אגד תעבורה- מכסת שעות חודשית 
@@ -1127,6 +1128,9 @@ namespace KdsBatch
                 sTmp = GetOneParam(301, dCardDate);
                 dParam301 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
+                //301
+                sTmp = GetOneParam(302, dCardDate);
+                dTaarichChishuvElementZar = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);
