@@ -1449,7 +1449,7 @@ namespace KdsBatch
 
                                     if ((fDakotHagdara + fDakotLepremia) > 0)
                                     {
-                                        if (objOved.Taarich > objOved.objParameters.dTaarichChishuvElementZar)
+                                        if (objOved.Taarich < objOved.objParameters.dTaarichChishuvElementZar)
                                             fErechRechiv = float.Parse((fDakotHagdara + fSumDakotSikun + fDakotHistaglut + fDakotKisuyTor + fDakotLepremia + (fSachNesiot * objOved.objParameters.fElementZar) + fTosefetGil - fNuchehutLepremia).ToString());
                                         else
                                         {
@@ -1499,7 +1499,7 @@ namespace KdsBatch
 
                             if ((fDakotHagdara + fDakotLepremia) > 0)
                             {
-                                if (objOved.Taarich > objOved.objParameters.dTaarichChishuvElementZar)
+                                if (objOved.Taarich < objOved.objParameters.dTaarichChishuvElementZar)
                                     fErechRechiv = float.Parse((fDakotHagdara + fSumDakotSikun + fDakotHistaglut + fDakotKisuyTor + fDakotLepremia + (fSachNesiot * objOved.objParameters.fElementZar) + fTosefetGil - fNuchehutLepremia).ToString());
                                 else
                                 {
@@ -1784,7 +1784,7 @@ namespace KdsBatch
                                    
                                     if ((fDakotHagdara + fDakotLepremia) > 0)
                                     {
-                                        if (objOved.Taarich > objOved.objParameters.dTaarichChishuvElementZar)
+                                        if (objOved.Taarich < objOved.objParameters.dTaarichChishuvElementZar)
                                             fErechRechiv = float.Parse((fDakotHagdara + fSumDakotSikun + fDakotHistaglut + fDakotKisuyTor + fDakotLepremia + (fSachNesiot * objOved.objParameters.fElementZar) + fTosefetGil - fNuchehutLepremia).ToString());
                                         else
                                         {
@@ -1839,7 +1839,7 @@ namespace KdsBatch
 
                              if ((fDakotHagdara + fDakotLepremia) > 0)
                              {
-                                 if (objOved.Taarich > objOved.objParameters.dTaarichChishuvElementZar)
+                                 if (objOved.Taarich < objOved.objParameters.dTaarichChishuvElementZar)
                                      fErechRechiv = float.Parse((fDakotHagdara + fSumDakotSikun + fDakotHistaglut + fDakotKisuyTor + fDakotLepremia + (fSachNesiot * objOved.objParameters.fElementZar) + fTosefetGil - fNuchehutLepremia).ToString());            
                                  else
                                  {
@@ -5591,7 +5591,7 @@ namespace KdsBatch
 
                                     if ((fDakotHagdara + fDakotLepremia) > 0)
                                     {
-                                        if (objOved.Taarich > objOved.objParameters.dTaarichChishuvElementZar)
+                                        if (objOved.Taarich < objOved.objParameters.dTaarichChishuvElementZar)
                                             fErechRechiv = float.Parse((fDakotHagdara + fSumDakotSikun + fDakotHistaglut + fDakotKisuyTor + fDakotLepremia + (fSachNesiot * objOved.objParameters.fElementZar) + fTosefetGil - fNuchehutLepremia).ToString());    
                                         else
                                         {
@@ -5638,7 +5638,7 @@ namespace KdsBatch
 
                              if ((fDakotHagdara + fDakotLepremia) > 0)
                              {
-                                 if (objOved.Taarich > objOved.objParameters.dTaarichChishuvElementZar)
+                                 if (objOved.Taarich < objOved.objParameters.dTaarichChishuvElementZar)
                                      fErechRechiv = float.Parse((fDakotHagdara + fSumDakotSikun + fDakotHistaglut + fDakotKisuyTor + fDakotLepremia + (fSachNesiot * objOved.objParameters.fElementZar) + fTosefetGil - fNuchehutLepremia).ToString());
                                  else
                                  {
