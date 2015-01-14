@@ -305,6 +305,9 @@ Inherits="Modules_Ovdim_EmployeePremias" Codebehind="EmployeePremias.aspx.cs" %>
     }
 
     function DisabledSearchTR(val) {
+        document.getElementById("ctl00_KdsContent_txtId").value = "";
+        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = "";
+        document.getElementById("ctl00_KdsContent_txtName").value = "";
         document.getElementById("ctl00_KdsContent_txtId").disabled = val;
         document.getElementById("ctl00_KdsContent_txtName").disabled = val;
         document.getElementById("ctl00_KdsContent_btnSearch").disabled = val;
