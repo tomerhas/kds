@@ -413,7 +413,8 @@ namespace KdsBatch
                          }
                      }
                  }
-                 return fErech;
+
+                 return float.Parse(Math.Round(fErech, 2, MidpointRounding.AwayFromZero).ToString());
              }
              catch (Exception ex)
              {
