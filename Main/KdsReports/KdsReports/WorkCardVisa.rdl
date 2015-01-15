@@ -1191,7 +1191,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!SNIF.Value</Value>
+                                                <Value>=iif(Fields!SNIF_GIYUS_KAV.Value &lt;&gt; "" and Fields!SNIF_GIYUS_KAV.Value &lt;&gt; Fields!SNIF.Value  ,Fields!SNIF.Value + " ("+Fields!SNIF_GIYUS_KAV.Value +") " ,Fields!SNIF.Value)</Value>
                                                 <Style>
                                                   <FontSize>11pt</FontSize>
                                                   <FontWeight>Bold</FontWeight>
@@ -2925,6 +2925,10 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
         </Field>
         <Field Name="S_LIST">
           <DataField>S_LIST</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SNIF_GIYUS_KAV">
+          <DataField>SNIF_GIYUS_KAV</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
