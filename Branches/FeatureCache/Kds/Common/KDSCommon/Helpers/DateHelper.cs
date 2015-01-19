@@ -224,7 +224,13 @@ namespace KDSCommon.Helpers
                 if ((dTaarich.DayOfWeek.GetHashCode() + 1) == enDay.Shabat.GetHashCode())
                 { iSugYom = 20; }
                 else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == enDay.Shishi.GetHashCode()) // && !(dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["Shishi_Muhlaf"].ToString() == "1") && (GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
-                { iSugYom = 10; }
+                {
+                    if (dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom).Length > 0)
+                    {
+                        if (!(dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["Shbaton"].ToString() == "1"))
+                            iSugYom = 10;
+                    }
+                }
                 return iSugYom;
             }
             else
