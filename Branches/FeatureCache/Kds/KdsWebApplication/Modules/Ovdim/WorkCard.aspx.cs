@@ -2350,7 +2350,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         if (_wcResult.oOvedYomAvodaDetails != null && _wcResult.oOvedYomAvodaDetails.bOvedDetailsExists)
         {
             oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)_wcResult.oOvedYomAvodaDetails.iMeasherOMistayeg;
-            EventLog.WriteEntry("Kds", "oMasherOMistayeg: " + oMasherOMistayeg, EventLogEntryType.Error);
+          //  EventLog.WriteEntry("Kds", "oMasherOMistayeg: " + oMasherOMistayeg, EventLogEntryType.Error);
             switch (oMasherOMistayeg)
             {
                 case clGeneral.enMeasherOMistayeg.Measher:
@@ -2375,6 +2375,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         }
         else
         {
+          //  EventLog.WriteEntry("Kds", "oMasherOMistayeg ELSE " ,EventLogEntryType.Error);
             strImageUrlApprove = "ImgButtonApprovalRegularDisabled";
             strImageUrlNotApprove = "ImgButtonDisApprovalCheckedDisabled";
         }
@@ -2699,6 +2700,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //לכן רק אם לא התחברנו מהבית ונדפיס ישירות, אחרת נפתח PDF
             if (hidFromEmda.Value == "true") 
             {
+                SetImageForButtonMeasherOMistayeg();
                 ViewState["PrintWcFromEmda"] = "true";
                 string sScript = "";
                 string sIp;
