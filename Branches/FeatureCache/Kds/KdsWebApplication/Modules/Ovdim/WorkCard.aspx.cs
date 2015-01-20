@@ -779,7 +779,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              bMenahelBankShaot = LoginUser.IsMenahelBankShaot(LoginUser);
 
              SetRashemetVars(bRashemet, bMenahelBankShaot);
-             hidFromEmda.Value = "true";// (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
+             hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
              iMisparIshiIdkunRashemet = ((int.Parse)(LoginUser.UserInfo.EmployeeNumber)).Equals(iMisparIshi) ? iMisparIshi : 0;
 
            //  oBatchManager.iLoginUserId =int.Parse(LoginUser.UserInfo.EmployeeNumber);
@@ -2757,7 +2757,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //EventLog.WriteEntry("kds", "sIp" + sIp, EventLogEntryType.Error);
                 sScript += "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000); ";
                 //FreeWC();
-              //  ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);          
+                ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);          
             }
             else
             {
