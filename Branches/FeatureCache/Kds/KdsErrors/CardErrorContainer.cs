@@ -147,6 +147,7 @@ namespace KdsErrors
             Add(_container.Resolve<PeilutErrorHightValueDakotBefoal179>());
             Add(_container.Resolve<PeilutErrorKisuyTorLifneyHatchalatSidur189>());
             Add(_container.Resolve<PeilutErrorIsRechevMushbat211>());
+            Add(_container.Resolve<PeilutErrorElementNehigaForMatalaLoNahagut213>());
             
            
 

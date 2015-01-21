@@ -32,6 +32,9 @@ namespace KDSCommon.DataModels
         public bool bElementIgnoreHafifaBetweenNesiotExists;
         public string sElementIgnoreReka = "";
         public bool bElementIgnoreReka;
+        public int iSectorZviraZmanEelement;//מאפיין 14
+       // public bool bSectorZviraZmanEelement;
+        
 
         public string sElementZviraZman = "";
         public string sElementInMinutes = "";

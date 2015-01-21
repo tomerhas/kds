@@ -57,6 +57,7 @@ namespace KdsErrors.FlowManagers.SubFlowManagers
             errorTypeList.Add(ErrorTypes.errDuplicateTravle);//151
             errorTypeList.Add(ErrorTypes.errHightValueDakotBefoal);//179
             errorTypeList.Add(ErrorTypes.errKisuyTorLifneyHatchalatSidur);//189
+            errorTypeList.Add(ErrorTypes.errElementNehigaForMatalaLoNahagut213);//213
 
             ExecuteListOfErrors(errContainer, input, errorTypeList, ErrorSubLevel.Peilut);
 

@@ -2700,7 +2700,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //לכן רק אם לא התחברנו מהבית ונדפיס ישירות, אחרת נפתח PDF
             if (hidFromEmda.Value == "true") 
             {
-                SetImageForButtonMeasherOMistayeg();
+              
                 ViewState["PrintWcFromEmda"] = "true";
                 string sScript = "";
                 string sIp;
@@ -2796,7 +2796,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //string sCloseAllBtn = "";
         bool bChishuvShachar = false;
         bool  bCalculateAndNotRashemet = false;
-
+        SetImageForButtonMeasherOMistayeg();
         hidExecInputChg.Value = "";
         if (hidChanges.Value.ToLower() == "true")
             btnShowPrintMsg_Click(sender, e);

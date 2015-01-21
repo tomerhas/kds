@@ -8,14 +8,14 @@ namespace KdsLibrary.Utils.Reports
 {
     public class clReportFunctions
     {
-        public static DataTable GetMonthsList(string Name,Boolean disdplayFirst, string firstText)
+        public static DataTable GetMonthsList(string Name,Boolean disdplayFirst, string firstText,int ParamNumMonth)
         {
             DataTable dt = null;
             ReportName rptName = (ReportName)Enum.Parse(typeof(ReportName), Name);
             DataTable dtParametrim = new DataTable();
             clUtils oUtils = new clUtils();
             int num;
-            dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+            dtParametrim = oUtils.getErechParamByKod(ParamNumMonth.ToString(), DateTime.Now.ToShortDateString());
             num= int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString())-1;
 
             dt = clGeneral.FillDateInDataTable(num, DateTime.Now.AddMonths(-1), disdplayFirst, firstText);

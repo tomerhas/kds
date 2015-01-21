@@ -88,7 +88,7 @@ namespace KdsShinuyim.ShinuyImpl
                                 for (i = iIndexPeilutMashmautit - 1; i >= 0; i--)
                                 {
                                     oPeilut = (PeilutDM)curSidur.htPeilut[i];
-                                    if (isElemntLoMashmauti(oPeilut) || oPeilut.iMakatType == enMakatType.mEmpty.GetHashCode())
+                                    if ((isElemntLoMashmauti(oPeilut) && string.IsNullOrEmpty(oPeilut.sLoNitzbarLishatGmar)) || oPeilut.iMakatType == enMakatType.mEmpty.GetHashCode())
                                         dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilut, curSidur, inputData, ref bUsedMazanTichnunInSidur)));
                                     //if (bUsedMazanTichnunInSidur)
                                     //    inputData.bUsedMazanTichnun = true;   
