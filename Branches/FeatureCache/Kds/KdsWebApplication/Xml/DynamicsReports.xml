@@ -374,6 +374,10 @@
     <Filter ParameterName="P_KOD_YECHIDA" Caption="יחידה ארגונית" BoxeType="ListBox" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="Select Kod_Yechida, Teur_Yechida From CTB_Yechida order by 2" ValueField="Kod_Yechida" TextField="Teur_Yechida" />
     </Filter>
+
+    <!--<Filter ParameterName="P_Rechiv" Caption="עיסוק" BoxeType="DropDownCheckBoxes" DataType="System.Int32">
+      <DropDownList QueryType="Select"  Select="select distinct tb.TEUR_ISUK || ' (' || tb.KOD_ISUK  || ')' TEUR_ISUK, tb.KOD_ISUK from CTB_ISUK tb order by 1" ValueField="KOD_ISUK" TextField="TEUR_ISUK" />
+    </Filter>-->
   </Report>
 
   <Report  RdlName="AverageOvdimBeSnif" Roles="kds_administrators" FilterByLine="2" PageHeader="ממוצעים - עבור עובדים בסניף" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy">

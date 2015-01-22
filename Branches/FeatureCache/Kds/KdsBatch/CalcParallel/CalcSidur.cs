@@ -5834,6 +5834,7 @@ namespace KdsBatch
 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    fZmanAruchatTzharyim = 0;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -5891,6 +5892,9 @@ namespace KdsBatch
 
                         for (int I = 0; I < _drSidurim.Length; I++)
                         {
+                            fZmanAruchatBokerSidur = 0;
+                            fZmanAruchatTzharimSidur = 0;
+                            fZmanAruchatErevSidur = 0;
                             iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                             dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                             dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
@@ -6434,6 +6438,7 @@ namespace KdsBatch
 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    fZmanAruchatTzharyim = 0;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -6543,6 +6548,7 @@ namespace KdsBatch
 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    fZmanAruchatTzharyim = 0;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -7791,6 +7797,10 @@ namespace KdsBatch
 
                     for (int I = 0; I < _drSidurim.Length; I++)
                     {
+                        fZmanAruchatBokerSidur = 0;
+                        fZmanAruchatTzharimSidur = 0;
+                        fZmanAruchatErevSidur = 0;
+
                         iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                         dShatGmarLetashlumSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());

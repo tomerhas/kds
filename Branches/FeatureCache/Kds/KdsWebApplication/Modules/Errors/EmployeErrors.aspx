@@ -150,7 +150,12 @@
                 </td>
                
             </tr>                   
-         </table>                
+         </table>  
+            <%-- <asp:DropDownCheckBoxes ID="DropDownCheckBoxes1" runat="server" AddJQueryReference="True"  UseButtons="False"  UseSelectAllNode="True" TextAlign="Right" >
+                            <Style SelectBoxWidth="250"  DropDownBoxBoxWidth="250" DropDownBoxBoxHeight="150"  />
+                            <Texts SelectBoxCaption="" OnClickSelectAll="onclick='ClickHiddenButton(-1);'" SelectAllNode="הכל" SelectAllStyle="Style='font-weight:bold; '"   />                          
+                        </asp:DropDownCheckBoxes>
+                                --%>
    </fieldset>
       
    <fieldset class="FilterFieldSet"  style="width:970px"  >    
@@ -283,11 +288,12 @@
        }
 
        function ClickHiddenButton(val) {
-           // debugger;
+          // debugger;
            var arrValue = null;
            var sThisVal = "";
            var ipos = -1, i;
 
+         //  alert($('#DDLShgiot checks input:checkbox'));
            if (val == "-1") {
                var allitems = $('#checks input:checkbox');
                var items = $('#checks input:checked');

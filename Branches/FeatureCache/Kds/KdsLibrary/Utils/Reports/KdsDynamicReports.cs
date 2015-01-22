@@ -509,7 +509,8 @@ namespace KdsLibrary.Utils.Reports
         DropDown,
         ListBox,
         ListElementSelector,
-        ListBoxExtended
+        ListBoxExtended,
+        DropDownCheckBoxes
     }
 
     public enum KdsQueryType

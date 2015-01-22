@@ -336,6 +336,10 @@
       <Project>{1CF6ED40-3036-4B17-AB5A-35F5C265C28C}</Project>
       <Name>KDSCommon</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DropDownCheckBoxes\DropDownCheckBoxes.csproj">
+      <Project>{dc5fd4c5-70c8-4ec1-a9ea-b0a3fb7ae1d3}</Project>
+      <Name>DropDownCheckBoxes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
       <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
       <Name>DalOraInfra</Name>

@@ -12,6 +12,7 @@ using KdsLibrary.Controls;
 using System.Reflection;
 using AjaxControlToolkit.Design;
 using DalOraInfra.DAL;
+using Saplin.Controls;
 
 
 
@@ -129,7 +130,7 @@ namespace KdsLibrary.Utils.Reports
             _Td = new TableCell();
             _Td.Attributes.Add("Align", "Right");
             _Td.Attributes.Add("vAlign", "Top");
-            if ((Filter.BoxeType == KdsBoxeType.ListBoxExtended) || (Filter.BoxeType == KdsBoxeType.RadioButtonList))
+            if ((Filter.BoxeType == KdsBoxeType.ListBoxExtended) || (Filter.BoxeType == KdsBoxeType.RadioButtonList) || (Filter.BoxeType == KdsBoxeType.DropDownCheckBoxes)) //**
                 _Td.Style.Add("padding-top", "10px");
             Label Lb = new Label();
             Lb.Text = Filter.Caption + ":";
@@ -272,6 +273,9 @@ namespace KdsLibrary.Utils.Reports
                 case KdsBoxeType.RadioButtonList :
                     _ObjReturned = (object)GetRadioButtonList(Filter);
                     break;
+                //case KdsBoxeType.DropDownCheckBoxes:
+                //    _ObjReturned = (object)GetDropDownCheckBoxesControl(Filter);
+                //    break;
             }
             return _ObjReturned;
         }
@@ -322,6 +326,35 @@ namespace KdsLibrary.Utils.Reports
             _Controls.Add(Ddl.ID);
             return Ddl; 
         }
+        //private DropDownCheckBoxes GetDropDownCheckBoxesControl(KdsFilter filter)
+        //{
+        //    DropDownCheckBoxes Ddl = new DropDownCheckBoxes();
+        //    Ddl.ID = filter.ParameterName;
+        //    Ddl.DataTextField = filter.DropDownList.TextField;
+        //    Ddl.DataValueField = filter.DropDownList.ValueField;
+        //    Ddl.Attributes.Add("dir", "rtl");
+        //    Ddl.Style.SelectBoxWidth= 250 ;
+        //    Ddl.Style.DropDownBoxBoxWidth=250;// DropDownBoxBoxHeight='150'"; 
+        //    Ddl.Texts.SelectBoxCaption = "";
+        //    Ddl.TextAlign = TextAlign.Right;
+        //    Ddl.Texts.SelectAllNode = "הכל";
+        //    Ddl.UseSelectAllNode = true; 
+        //    if (filter.RunAtServer)
+        //    {
+        //        Ddl.Attributes.Add("OnChange", "FireControlChanged()");
+        //        Ddl.Attributes.Add("runat", "server");
+        //    }
+        //    if (filter.IsParent)
+        //    {
+        //        Ddl.AutoPostBack = true;
+        //        Ddl.TextChanged += new EventHandler(Control_TextChanged);
+        //    }
+        //    Ddl.DataSource = GetListValueDataSource(filter);
+        //    Ddl.DataBind();
+        //    _Controls.Add(Ddl.ID);
+        //    return Ddl; 
+        //}
+        
         private ListBox GetListboxControl(KdsFilter filter)
         {
             ListBox List = new ListBox();
