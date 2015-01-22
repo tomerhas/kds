@@ -160,7 +160,7 @@ namespace KdsBatch
             DataRow[] drs;
             try
             {
-                drs = objOved.DtYemeyAvoda.Select("taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
+                drs = objOved.DtYemeyAvoda.Select("taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')", "SHAT_HATCHALA_SIDUR");
                 if (drs != null && drs.Length > 0)
                     objOved.DtYemeyAvodaYomi = drs.CopyToDataTable();
                 else objOved.DtYemeyAvodaYomi = objOved.DtYemeyAvoda.Clone();
