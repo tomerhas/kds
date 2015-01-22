@@ -16039,7 +16039,7 @@ namespace KdsBatch
                                 for (i = iIndexPeilutMashmautit-1; i >= 0; i--)
                                 {
                                     oPeilut = (clPeilut)oSidur.htPeilut[i];
-                                    if (isElemntLoMashmauti(oPeilut) || oPeilut.iMakatType == clKavim.enMakatType.mEmpty.GetHashCode())
+                                    if ((isElemntLoMashmauti(oPeilut) && string.IsNullOrEmpty(oPeilut.sLoNitzbarLishatGmar)) || oPeilut.iMakatType == clKavim.enMakatType.mEmpty.GetHashCode())
                                         dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilut, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur)));
                                     //if (bUsedMazanTichnunInSidur)
                                     //    bUsedMazanTichnun = true;     
