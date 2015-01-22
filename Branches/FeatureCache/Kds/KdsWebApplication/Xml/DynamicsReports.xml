@@ -145,7 +145,7 @@
     </Filter>
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DriverWithoutSignature" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="DriverWithPlaints" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
          <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
@@ -155,7 +155,7 @@
   <Report  RdlName="DisregardDrivers" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נהגים משובצים שלא שלחו כרטיס עבודה מהסניף" ProductionType="Heavy">
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DisregardDrivers" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="DriverWithPlaints" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
@@ -165,7 +165,7 @@
   <Report  RdlName="DisregardDriversVisot" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נהגים משובצים שלא שלחו כרטיס עבודה מהסניף - ויזות" ProductionType="Heavy">
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DisregardDrivers" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="DisregardDriversVisot" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
@@ -301,7 +301,7 @@
     </Filter>
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DisregardDrivers" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="IdkuneyRashemetMasach4" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
@@ -314,7 +314,7 @@
     <Filter ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DescriptionAllComponents" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="303" DataType="System.Int32" />
@@ -384,7 +384,7 @@
     <Filter ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DescriptionAllComponents" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="AverageOvdimBeSnif" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
@@ -392,7 +392,7 @@
     </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String"  >
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="AverageOvdimBeSnif" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="הכל" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
@@ -414,7 +414,7 @@
     <Filter ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DescriptionAllComponents" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="AverageSnifInEzor" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
@@ -422,7 +422,7 @@
     </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String"  >
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="AverageSnifInEzor" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="הכל" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
@@ -437,7 +437,7 @@
     <Filter ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DescriptionAllComponents" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="AverageSnifEzor" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
@@ -445,7 +445,7 @@
     </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String"  >
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="AverageSnifEzor" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="הכל" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
@@ -470,7 +470,7 @@
   </Report>
 
 
-  <Report  RdlName="SpecificAverage" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ממוצעים על פי רכיבים" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy" >
+  <!--<Report  RdlName="SpecificAverage" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ממוצעים על פי רכיבים" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy" >
     <Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String"  >
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
         <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
@@ -482,7 +482,7 @@
     </Filter>
     <Filter ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
     <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
-      <!--<FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>-->
+      --><!--<FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>--><!--
     </Filter>
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
@@ -507,10 +507,10 @@
       <FilterValidator ValidatorName="RechivExist"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת רכיב" ValidationFunction="IsEmpty"/>
       <DropDownList QueryType="Select"  Select="select  R.KOD_RECHIV,R.TEUR_RECHIV from CTB_RECHIVIM r order by 2" ValueField="KOD_RECHIV" TextField="TEUR_RECHIV" />
     </Filter>
-  </Report>
+  </Report>-->
 
 
-  <Report  RdlName="DescriptionAllComponents" Roles="kds_administrators" FilterByLine="3" PageHeader="פירוט כל הרכיבים" ProductionType="Heavy">
+  <!--<Report  RdlName="DescriptionAllComponents" Roles="kds_administrators" FilterByLine="3" PageHeader="פירוט כל הרכיבים" ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
@@ -532,7 +532,7 @@
     <Filter ParameterName="P_COMPANYID" Caption="קוד חברה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_CompanyId" ValueField="Kod_Hevra" TextField="Teur_Hevra" />
     </Filter>
-  </Report>
+  </Report>-->
 
   <!--<Report  RdlName="AverageLeOved" Roles="kds_administrators" FilterByLine="4" PageHeader="ממוצעים - כל הרכיבים" ProductionType="Heavy">
     

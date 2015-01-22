@@ -207,7 +207,7 @@ namespace KdsLibrary.KDSLogic.Managers
                         cls.sDivuchInSidurVisa = drMeafyeneyElements["divuch_in_sidur_visa"].ToString();
                         cls.sDivuchInSidurMeyuchad = drMeafyeneyElements["divuach_besidur_meyuchad"].ToString();
 
-                        cls.iSectorZviraZmanEelement = String.IsNullOrEmpty(drMeafyeneyElements["sector_zvira_zman_haelement"].ToString()) ? 0 : int.Parse(drMeafyeneyElements["sector_zvira_zman_haelement"].ToString());
+                        cls.iSectorZviraZmanEelement = String.IsNullOrEmpty(drMeafyeneyElements["element_zvira_zman"].ToString()) ? 0 : int.Parse(drMeafyeneyElements["element_zvira_zman"].ToString());
 
 
                     }
@@ -288,7 +288,7 @@ namespace KdsLibrary.KDSLogic.Managers
                         cls.bBitulBiglalIchurLasidurExists = !String.IsNullOrEmpty(drMeafyeneyElements["bitul_biglal_ichur_lasidur"].ToString());
                         cls.sDivuchInSidurVisa = drMeafyeneyElements["divuch_in_sidur_visa"].ToString();
                         cls.sDivuchInSidurMeyuchad = drMeafyeneyElements["divuach_besidur_meyuchad"].ToString();
-                        cls.iSectorZviraZmanEelement = String.IsNullOrEmpty(drMeafyeneyElements["sector_zvira_zman_haelement"].ToString()) ? 0 : int.Parse(drMeafyeneyElements["sector_zvira_zman_haelement"].ToString());
+                        cls.iSectorZviraZmanEelement = String.IsNullOrEmpty(drMeafyeneyElements["element_zvira_zman"].ToString()) ? 0 : int.Parse(drMeafyeneyElements["element_zvira_zman"].ToString());
 
                     }
                 }
@@ -364,7 +364,7 @@ namespace KdsLibrary.KDSLogic.Managers
             cls.iElementLeShatGmar = System.Convert.IsDBNull(dr["peilut_mashmautit"]) ? 0 : int.Parse(dr["peilut_mashmautit"].ToString());
 
             cls.iKodShinuyPremia = System.Convert.IsDBNull(dr["kod_shinuy_premia"]) ? 0 : int.Parse(dr["kod_shinuy_premia"].ToString());
-            cls.iSectorZviraZmanEelement = String.IsNullOrEmpty(dr["sector_zvira_zman_haelement"].ToString()) ? 0 : int.Parse(dr["sector_zvira_zman_haelement"].ToString());
+            cls.iSectorZviraZmanEelement = String.IsNullOrEmpty(dr["element_zvira_zman"].ToString()) ? 0 : int.Parse(dr["element_zvira_zman"].ToString());
 
             //נבדוק מה סוג הפעילות )שירות,נמק,ריקה,אלמנט,וסות) ונשלח בהתאם לתנועה
             SetKavDetails(cls, dtPeiluyot, cls.lMakatNesia);
