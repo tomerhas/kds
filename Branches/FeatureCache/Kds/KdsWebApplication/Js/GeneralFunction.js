@@ -372,3 +372,72 @@ function GetDateDDMMYYYY(dDate){
            continue_click();
        }
    }
+
+   function ClickHiddenButton(val, clientId,IdAllVal) {
+       //   debugger;
+       //   alert(clientId.id);
+       var arrValue = null;
+       var sThisVal = "";
+       var ipos = -1, i;
+       //var captionId = "'" + '<%=DDLShgiot.ClientID %>' + "_caption" + "'"; //'<%=DDLShgiot.ClientID %>' + "_caption";
+       var captionId = clientId.id + "_caption"; //'<%=DDLShgiot.ClientID %>' + "_caption";
+       // var checksId = '<%=DDLShgiot.ClientID %>';
+
+
+       if (val == "-1") {
+           var allitems = $("#" + clientId.id + " input:checkbox");
+           var items = $("#" + clientId.id + " input:checked");
+           //alert(items.length);
+           // alert(allitems.length);
+           if (items.length < (allitems.length - 1)) {
+               //  alert('1');
+               $("#" + captionId)[0].innerText = "הכל";
+           }
+           else $("#" + captionId)[0].innerText = "";
+       }
+       else {
+           if (IdAllVal != null)
+            {
+               if ($("#" + captionId)[0].innerText != "") {
+                   if ($("#" + captionId)[0].innerText.indexOf('הכל') > -1)
+                       $("#" + captionId[0]).innerText = document.getElementById(IdAllVal.id).value;
+           }
+
+               arrValue = $("#" + captionId)[0].innerText.split(",");
+           }
+
+
+
+           if (arrValue != null) {
+               for (i = 0; i < arrValue.length; i++) {
+                   if (arrValue[i] == val)
+                       ipos = i;
+               }
+
+               if (ipos > -1) {
+                   for (i = 0; i < arrValue.length; i++) {
+                       if (i != ipos)
+                           sThisVal += "," + arrValue[i];
+                   }
+               }
+               else {
+                   for (i = 0; i < arrValue.length; i++)
+                       if (Number(arrValue[i]) < Number(val))
+                           sThisVal += "," + arrValue[i];
+                       else {
+                           if ((sThisVal + ",").indexOf("," + val + ",") == -1)
+                               sThisVal += "," + val;
+                           sThisVal += "," + arrValue[i];
+                       }
+
+                   if (sThisVal.indexOf("," + val + ",") == -1)
+                       sThisVal += "," + val;
+               }
+               $("#" + captionId)[0].innerText = sThisVal.substring(1, sThisVal.length);
+           }
+           else {
+               sThisVal = val;
+               $("#" + captionId)[0].innerText = sThisVal;
+           }
+       }
+   }

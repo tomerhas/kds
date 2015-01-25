@@ -367,7 +367,7 @@ namespace Saplin.Controls
             // Add caption
             //if (!string.IsNullOrEmpty(Texts.SelectBoxCaption))
             //{
-                writer.AddAttribute(HtmlTextWriterAttribute.Id, "caption");
+            writer.AddAttribute(HtmlTextWriterAttribute.Id, ClientID + "_caption");
                 writer.RenderBeginTag(HtmlTextWriterTag.Div);
               //  writer.AddAttribute(HtmlTextWriterAttribute.Class, !string.IsNullOrEmpty(Style.SelectBoxCssClass) ? Style.SelectBoxCssClass + " " + selectCssClass : selectCssClass);
                 writer.WriteEncodedText(Texts.SelectBoxCaption);

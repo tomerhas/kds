@@ -124,9 +124,9 @@
                    <%--  <asp:UpdatePanel ID="UpdatePanel3" runat="server" RenderMode="Inline" UpdateMode="Always"   >
                         <ContentTemplate>    --%>
                         
-                       <asp:DropDownCheckBoxes ID="DDLShgiot" runat="server" AddJQueryReference="True"  UseButtons="False"  UseSelectAllNode="True" TextAlign="Right" >
+                       <asp:DropDownCheckBoxes ID="DDLShgiot" runat="server" AddJQueryReference="True"  UseButtons="False" Width="250" Height="150"  UseSelectAllNode="True" TextAlign="Right" >
                             <Style SelectBoxWidth="250"  DropDownBoxBoxWidth="250" DropDownBoxBoxHeight="150"  />
-                            <Texts SelectBoxCaption="" OnClickSelectAll="onclick='ClickHiddenButton(-1);'" SelectAllNode="הכל" SelectAllStyle="Style='font-weight:bold; '"   />                          
+                            <Texts SelectBoxCaption="" SelectAllNode="הכל" SelectAllStyle="Style='font-weight:bold; '"   />                          
                         </asp:DropDownCheckBoxes>
                       
 
@@ -154,8 +154,8 @@
             <%-- <asp:DropDownCheckBoxes ID="DropDownCheckBoxes1" runat="server" AddJQueryReference="True"  UseButtons="False"  UseSelectAllNode="True" TextAlign="Right" >
                             <Style SelectBoxWidth="250"  DropDownBoxBoxWidth="250" DropDownBoxBoxHeight="150"  />
                             <Texts SelectBoxCaption="" OnClickSelectAll="onclick='ClickHiddenButton(-1);'" SelectAllNode="הכל" SelectAllStyle="Style='font-weight:bold; '"   />                          
-                        </asp:DropDownCheckBoxes>
-                                --%>
+                        </asp:DropDownCheckBoxes>--%>
+                                
    </fieldset>
       
    <fieldset class="FilterFieldSet"  style="width:970px"  >    
@@ -287,75 +287,8 @@
            SetTextBox();
        }
 
-       function ClickHiddenButton(val) {
-          // debugger;
-           var arrValue = null;
-           var sThisVal = "";
-           var ipos = -1, i;
-
-         //  alert($('#DDLShgiot checks input:checkbox'));
-           if (val == "-1") {
-               var allitems = $('#checks input:checkbox');
-               var items = $('#checks input:checked');
-               if (items.length < (allitems.length - 1))
-                   $('#caption')[0].innerText = "הכל";
-               else $('#caption')[0].innerText = "";
-           }
-           else {
-               if ($('#caption')[0].innerText != "") {
-                   if ($('#caption')[0].innerText.indexOf('הכל') > -1)
-                       $('#caption')[0].innerText = document.getElementById("ctl00_KdsContent_inputAllShgiot").value;
-
-                   arrValue = $('#caption')[0].innerText.split(",");
-               }
-
-
-
-               if (arrValue != null) {
-                   for (i = 0; i < arrValue.length; i++) {
-                       if (arrValue[i] == val)
-                           ipos = i;
-                   }
-
-                   if (ipos > -1) {
-                       for (i = 0; i < arrValue.length; i++) {
-                           if (i != ipos)
-                               sThisVal += "," + arrValue[i];
-                       }
-                   }
-                   else {
-                       for (i = 0; i < arrValue.length; i++)
-                           if (Number(arrValue[i]) < Number(val))
-                               sThisVal += "," + arrValue[i];
-                           else {
-                               if ((sThisVal + ",").indexOf("," + val + ",") == -1)
-                                   sThisVal += "," + val;
-                               sThisVal += "," + arrValue[i];
-                           }
-
-                       if (sThisVal.indexOf("," + val + ",") == -1)
-                           sThisVal += "," + val;
-                   }
-                   $('#caption')[0].innerText = sThisVal.substring(1, sThisVal.length);
-               }
-               else {
-                   sThisVal = val;
-                   $('#caption')[0].innerText = sThisVal;
-               }
-           }
-           //  $('#checks input:checkbox').each(function () {
-           //$('#checks input:checked').each(function () {
-           //    if (this.checked)
-           //        sThisVal = $(this).val();
-           //});
-           //var text
-           //var items = $("#DDLShgiot input[type='checkbox']");
-           //for (var i = 0; i < items.length; i++)
-           //    text = items[i].textContent;
-           // debugger;
-           // $("#hidButDDlCB").click();
-           // document.getElementById("ctl00_KdsContent_hidButDDlCB").click();
-       }
+     
+         
        function SetTextBox() {
 
            var rdo = document.getElementById("ctl00_KdsContent_rdoId");

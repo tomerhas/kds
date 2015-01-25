@@ -145,15 +145,7 @@ public partial class Modules_Errors_EmployeErrors {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::Saplin.Controls.DropDownCheckBoxes DDLShgiot;
-
-    ///// <summary>
-    ///// DDLShgiot control.
-    ///// </summary>
-    ///// <remarks>
-    ///// Auto-generated field.
-    ///// To modify move field declaration from designer file to code-behind file.
-    ///// </remarks>
-    //protected global::Saplin.Controls.DropDownCheckBoxes DropDownCheckBoxes1;
+    
     /// <summary>
     /// upExecute control.
     /// </summary>
