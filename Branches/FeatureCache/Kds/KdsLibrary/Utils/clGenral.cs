@@ -15,6 +15,7 @@ using KDSCommon.UDT;
 using DalOraInfra.DAL;
 using KDSCommon.Helpers;
 using KDSCommon.Enums;
+using Saplin.Controls;
 
 namespace KdsLibrary
 {
@@ -1380,7 +1381,17 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                     foreach (ListItem Item in ((RadioButtonList)ctl).Items)
                         if (Item.Selected)
                             StrListValues = Item.Value;
-                    return StrListValues; 
+                    return StrListValues;
+                case "Saplin.Controls.DropDownCheckBoxes":
+                    if (((DropDownCheckBoxes)ctl).SelectAllIsChecked())
+                        return "";
+                    else
+                    {
+                        foreach (ListItem Item in ((DropDownCheckBoxes)ctl).Items)
+                            if (Item.Selected)
+                                StrListValues += Item.Value.ToString() + ",";
+                        return (StrListValues.Length > 0) ? StrListValues.Remove(StrListValues.Length - 1) : "";
+                    }
                 default: return null;
             }
 

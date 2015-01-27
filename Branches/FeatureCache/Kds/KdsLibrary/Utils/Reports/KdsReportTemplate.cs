@@ -273,9 +273,9 @@ namespace KdsLibrary.Utils.Reports
                 case KdsBoxeType.RadioButtonList :
                     _ObjReturned = (object)GetRadioButtonList(Filter);
                     break;
-                //case KdsBoxeType.DropDownCheckBoxes:
-                //    _ObjReturned = (object)GetDropDownCheckBoxesControl(Filter);
-                //    break;
+                case KdsBoxeType.DropDownCheckBoxes:
+                    _ObjReturned = (object)GetDropDownCheckBoxesControl(Filter);
+                    break;
             }
             return _ObjReturned;
         }
@@ -326,34 +326,44 @@ namespace KdsLibrary.Utils.Reports
             _Controls.Add(Ddl.ID);
             return Ddl; 
         }
-        //private DropDownCheckBoxes GetDropDownCheckBoxesControl(KdsFilter filter)
-        //{
-        //    DropDownCheckBoxes Ddl = new DropDownCheckBoxes();
-        //    Ddl.ID = filter.ParameterName;
-        //    Ddl.DataTextField = filter.DropDownList.TextField;
-        //    Ddl.DataValueField = filter.DropDownList.ValueField;
-        //    Ddl.Attributes.Add("dir", "rtl");
-        //    Ddl.Style.SelectBoxWidth= 250 ;
-        //    Ddl.Style.DropDownBoxBoxWidth=250;// DropDownBoxBoxHeight='150'"; 
-        //    Ddl.Texts.SelectBoxCaption = "";
-        //    Ddl.TextAlign = TextAlign.Right;
-        //    Ddl.Texts.SelectAllNode = "הכל";
-        //    Ddl.UseSelectAllNode = true; 
-        //    if (filter.RunAtServer)
-        //    {
-        //        Ddl.Attributes.Add("OnChange", "FireControlChanged()");
-        //        Ddl.Attributes.Add("runat", "server");
-        //    }
-        //    if (filter.IsParent)
-        //    {
-        //        Ddl.AutoPostBack = true;
-        //        Ddl.TextChanged += new EventHandler(Control_TextChanged);
-        //    }
-        //    Ddl.DataSource = GetListValueDataSource(filter);
-        //    Ddl.DataBind();
-        //    _Controls.Add(Ddl.ID);
-        //    return Ddl; 
-        //}
+        private DropDownCheckBoxes GetDropDownCheckBoxesControl(KdsFilter filter)
+        {
+            DropDownCheckBoxes Ddl = new DropDownCheckBoxes();
+            Ddl.ID = filter.ParameterName;
+            Ddl.DataTextField = filter.DropDownList.TextField;
+            Ddl.DataValueField = filter.DropDownList.ValueField;
+           Ddl.Attributes.Add("dir", "rtl");
+            Ddl.Style.SelectBoxWidth = 250;
+            Ddl.Style.DropDownBoxBoxWidth = 250;// DropDownBoxBoxHeight='150'"; 
+            Ddl.Texts.SelectBoxCaption = "";
+          //  Ddl.TextAlign = TextAlign.Right;
+           Ddl.Texts.SelectAllNode = "הכל";
+         //  Ddl.Texts.SelectAllStyle = "style='text-align:left'";
+            Ddl.UseSelectAllNode = true;
+            if (filter.RunAtServer)
+            {
+                Ddl.Attributes.Add("OnChange", "FireControlChanged()");
+                Ddl.Attributes.Add("runat", "server");
+            }
+            if (filter.IsParent)
+            {
+                Ddl.AutoPostBack = true;
+                Ddl.TextChanged += new EventHandler(Control_TextChanged);
+            }
+            Ddl.DataSource = GetListValueDataSource(filter);
+            Ddl.DataBind();
+            _Controls.Add(Ddl.ID);
+
+            //foreach (ListItem item in (Ddl as ListControl).Items)
+            //{
+
+            //    // item.Attributes.Add("valueAsNumber", item.Value);
+            //    item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value + ",ctl00_KdsContent_" + Ddl.ClientID + ",null);");
+            //}
+            //Ddl.Texts.OnClickSelectAll = "onclick='ClickHiddenButton(-1,ctl00_KdsContent_" + Ddl.ClientID + ",null);'";
+
+            return Ddl;
+        }
         
         private ListBox GetListboxControl(KdsFilter filter)
         {

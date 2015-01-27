@@ -398,6 +398,7 @@ namespace Saplin.Controls
 
 
                 writer.AddStyleAttribute(HtmlTextWriterStyle.Display, "block");
+                writer.AddStyleAttribute(HtmlTextWriterStyle.Direction, "rtl");
                 writer.RenderBeginTag(HtmlTextWriterTag.Span);
                 writer.Write(selectAllHtml);
                 writer.RenderEndTag();
