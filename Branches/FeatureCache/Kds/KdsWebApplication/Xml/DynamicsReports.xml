@@ -356,10 +356,6 @@
     <Filter ParameterName="P_MAMAD_HR" Caption="מעמד" BoxeType="DropDownCheckBoxes" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="Select Distinct Kod_Maamad_HR, Teur_Maamad_HR From CTB_Maamad order by 2 " ValueField="Kod_Maamad_HR" TextField="Teur_Maamad_HR" />
    </Filter>
-    <!--<Filter ParameterName="P_MAMAD_HR" Caption="מעמד" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="Select Distinct Kod_Maamad_HR, Teur_Maamad_HR From CTB_Maamad order by 2 " ValueField="Kod_Maamad_HR" TextField="Teur_Maamad_HR" />
-    </Filter>-->
-
  
     <Filter ParameterName="P_SNIF" Caption="סניף אב" BoxeType="DropDownCheckBoxes" DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_kod_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av">
@@ -367,29 +363,13 @@
       </DropDownList>
     </Filter>
     
-    <!--<Filter ParameterName="P_SNIF" Caption="סניף אב" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_kod_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av">
-        <Condition Name="P_KOD_EZOR" ParameterType="ntOracleInteger" ControlReference="P_EZOR"></Condition>
-      </DropDownList>
-      </Filter>-->
-      <!--<DropDownList QueryType="StoredProcedure"  Select="pkg_utils.pro_get_snif_av" ValueField="Code" TextField="Description">
-        <Condition Name="P_KOD_EZOR" ParameterType="ntOracleInteger" ControlReference="P_EZOR"></Condition>
-      </DropDownList>-->
-      <!--<DropDownList QueryType="StoredProcedure"  Select="pkg_utils.pro_get_snif_av" ValueField="Code" TextField="Description" />-->
-      <!--<DropDownList QueryType="Select"  Select="select KOD_SNIF_AV,teur_snif_av from ctb_snif_av ORDER BY teur_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" />-->
-    
      <Filter ParameterName="P_ISUK" Caption="עיסוק" BoxeType="DropDownCheckBoxes" DataType="System.Int32">
        <DropDownList QueryType="Select"  Select="select distinct tb.TEUR_ISUK || ' (' || tb.KOD_ISUK  || ')' TEUR_ISUK, tb.KOD_ISUK from CTB_ISUK tb order by 1" ValueField="KOD_ISUK" TextField="TEUR_ISUK" />
    </Filter>
-    <!--<Filter ParameterName="P_ISUK" Caption="עיסוק" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="select distinct tb.TEUR_ISUK || ' (' || tb.KOD_ISUK  || ')' TEUR_ISUK, tb.KOD_ISUK from CTB_ISUK tb order by 1" ValueField="KOD_ISUK" TextField="TEUR_ISUK" />
-    </Filter>-->
+   
    <Filter ParameterName="P_KOD_YECHIDA" Caption="יחידה ארגונית" BoxeType="DropDownCheckBoxes" DataType="System.Int32">
      <DropDownList QueryType="Select"  Select="Select Kod_Yechida, Teur_Yechida From CTB_Yechida order by 2" ValueField="Kod_Yechida" TextField="Teur_Yechida" />
     </Filter>
-    <!--<Filter ParameterName="P_KOD_YECHIDA" Caption="יחידה ארגונית" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="Select Kod_Yechida, Teur_Yechida From CTB_Yechida order by 2" ValueField="Kod_Yechida" TextField="Teur_Yechida" />
-    </Filter>-->
 
     <Filter ParameterName="P_Rechiv" Caption="רכיב" BoxeType="DropDownCheckBoxes" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="select  R.KOD_RECHIV, R.KOD_RECHIV || '-' || R.TEUR_RECHIV TEUR_RECHIV from CTB_RECHIVIM R" ValueField="KOD_RECHIV" TextField="TEUR_RECHIV" />
