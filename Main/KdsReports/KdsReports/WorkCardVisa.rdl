@@ -1030,7 +1030,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>סניף</Value>
+                                                <Value>סניף אב - גיוס לקו</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -1191,7 +1191,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Fields!SNIF_GIYUS_KAV.Value &lt;&gt; "" and Fields!SNIF_GIYUS_KAV.Value &lt;&gt; Fields!SNIF.Value  ,Fields!SNIF.Value + " ("+Fields!SNIF_GIYUS_KAV.Value +") " ,Fields!SNIF.Value)</Value>
+                                                <Value>=iif(Fields!SNIF_GIYUS_KAV.Value &lt;&gt; "" and Fields!SNIF_GIYUS_KAV.Value &lt;&gt; Fields!SNIF.Value  ,Fields!SNIF.Value + " - "+Fields!SNIF_GIYUS_KAV.Value  ,Fields!SNIF.Value)</Value>
                                                 <Style>
                                                   <FontSize>11pt</FontSize>
                                                   <FontWeight>Bold</FontWeight>
