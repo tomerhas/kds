@@ -222,53 +222,6 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     }
 
 
-    //private void LoadDropDownCheckBoxes1()
-    //{
-    //    DataTable dt;
-    //    clBatch oBatch = new clBatch();
-    //    try
-    //    {
-    //        dt = oBatch.GetErrorsActive();
-    //        foreach (DataRow dr in dt.Rows)
-    //        {
-    //            dr["teur_shgia"] = dr["kod_shgia"] + "-" + dr["teur_shgia"]; 
-    //        }
-    //        DropDownCheckBoxes1.DataTextField = "teur_shgia";
-    //        DropDownCheckBoxes1.DataValueField = "kod_shgia";
-    //        DropDownCheckBoxes1.DataSource = dt;
-    //        DropDownCheckBoxes1.DataBind();
-
-    //      //  DDLShgiot.Texts.SelectBoxCaption = "בחר";
-    //   //     DDLShgiot.Attributes.Add("onclick", "ClickHiddenButton();");
-    //        foreach (ListItem item in (DropDownCheckBoxes1 as ListControl).Items)
-    //        {
-                
-    //           // item.Attributes.Add("valueAsNumber", item.Value);
-    //            item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value +");");
-    //        }
-    //        if (InputHiddenBack.Value == "true")
-    //        {
-    //            var shgiot = InputHiddenBack.Attributes["shgiot"];
-    //            if (shgiot.Length>0)
-    //            {
-    //                if (shgiot.Split((char.Parse(","))).Length != ((DropDownCheckBoxes1 as ListControl).Items).Count)
-    //                    DropDownCheckBoxes1.Texts.SelectBoxCaption = shgiot;
-    //                else DropDownCheckBoxes1.Texts.SelectBoxCaption = "הכל";
-                    
-    //                shgiot = "," + shgiot + ",";
-    //                foreach (ListItem item in (DropDownCheckBoxes1 as ListControl).Items)
-    //                {
-    //                    if (shgiot.IndexOf("," + item.Value + ",") > -1)
-    //                        item.Selected = true;
-    //                }   
-    //            }
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        KdsLibrary.clGeneral.BuildError(Page, ex.Message);
-    //    }
-    //}
 
     private void LoadShgiot()
     {
@@ -292,9 +245,9 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             {
 
                 // item.Attributes.Add("valueAsNumber", item.Value);
-                item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value + "," + DDLShgiot.ClientID + "," + inputAllShgiot.ClientID + ");");
+                item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value + "," + DDLShgiot.ClientID+ ");");
             }
-            DDLShgiot.Texts.OnClickSelectAll = "onclick='ClickHiddenButton(-1," + DDLShgiot.ClientID + "," + inputAllShgiot.ClientID + ");'";
+            DDLShgiot.Texts.OnClickSelectAll = "onclick='ClickHiddenButton(-1," + DDLShgiot.ClientID + ");'";
             if (InputHiddenBack.Value == "true")
             {
                 var shgiot = InputHiddenBack.Attributes["shgiot"];

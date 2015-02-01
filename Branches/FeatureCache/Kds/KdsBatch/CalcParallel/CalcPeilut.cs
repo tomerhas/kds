@@ -375,10 +375,10 @@ namespace KdsBatch
              DataRow[] drPeiluyot;
              int iMisparKnisa = 0;
              float fErech = 0;
-           
              DateTime dShatYetzia = DateTime.MinValue;
              int iMakatType;
              enMakatType oMakatType;
+             bool IsFirst = true;
              try
              {
                  drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "");
@@ -390,27 +390,34 @@ namespace KdsBatch
                      iMakatType = StaticBL.GetMakatType(int.Parse(drPeiluyot[J]["makat_nesia"].ToString()));
                      oMakatType = (enMakatType)iMakatType;
 
-                     if (oMakatType != enMakatType.mVisa && oMakatType != enMakatType.mElement && oMakatType != enMakatType.mEmpty && iMisparKnisa == 0)
+                     if (oMakatType != enMakatType.mVisa && oMakatType != enMakatType.mElement && oMakatType != enMakatType.mEmpty && oMakatType != enMakatType.mVisut && iMisparKnisa == 0)
                      {
                          if (drPeiluyot[J]["oto_no"].ToString().Length > 0)
                          {
                              if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and (SHASSIS_TYPE=6 or TRAFFIC_ASSIGMENT=1) ").Length > 0)
                              {
-                                 if (J == 0)
+                                 if (IsFirst)
+                                 {
                                      fErech += 1;
+                                     IsFirst = false;
+                                 }
                                  else
                                      fErech += float.Parse("1.25");
                              }
                              else if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and (TRAFFIC_ASSIGMENT in (2,7)) ").Length > 0)
                              {
-                                 if (J == 0)
+                                 if (IsFirst)
+                                 {
                                      fErech += 2;
+                                     IsFirst = false;
+                                 }
                                  else
                                      fErech += float.Parse("2.25");
                              }
                          }
                      }
                  }
+
                  return float.Parse(Math.Round(fErech, 2, MidpointRounding.AwayFromZero).ToString());
              }
              catch (Exception ex)
@@ -418,6 +425,7 @@ namespace KdsBatch
                  throw (ex);
              }
          }
+   
          public void CalcRechiv214(int iMisparSidur,  DateTime dShatHatchalaSidur)
          {
             // DataTable dtPeiluyot;

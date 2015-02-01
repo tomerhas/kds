@@ -340,11 +340,7 @@ namespace KdsLibrary.Utils.Reports
            Ddl.Texts.SelectAllNode = "הכל";
          //  Ddl.Texts.SelectAllStyle = "style='text-align:left'";
             Ddl.UseSelectAllNode = true;
-            if (filter.RunAtServer)
-            {
-                Ddl.Attributes.Add("OnChange", "FireControlChanged()");
-                Ddl.Attributes.Add("runat", "server");
-            }
+           
             if (filter.IsParent)
             {
                 Ddl.AutoPostBack = true;
@@ -352,15 +348,22 @@ namespace KdsLibrary.Utils.Reports
             }
             Ddl.DataSource = GetListValueDataSource(filter);
             Ddl.DataBind();
+            if (filter.RunAtServer)
+            {
+                 
+                Ddl.Attributes.Add("OnChange", "FireControlChanged()");
+                Ddl.Attributes.Add("runat", "server");
+                //   HtmlInputCheckBox cb = Ddl.FindControl(Ddl.ID + "_sll") as HtmlInputCheckBox;
+                //   cb.Attributes.Add("runat", "server");
+                foreach (ListItem item in (Ddl as ListControl).Items)
+                {
+
+                    // item.Attributes.Add("valueAsNumber", item.Value);
+                    item.Attributes.Add("runat", "server");
+                }
+            
+            }
             _Controls.Add(Ddl.ID);
-
-            //foreach (ListItem item in (Ddl as ListControl).Items)
-            //{
-
-            //    // item.Attributes.Add("valueAsNumber", item.Value);
-            //    item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value + ",ctl00_KdsContent_" + Ddl.ClientID + ",null);");
-            //}
-            //Ddl.Texts.OnClickSelectAll = "onclick='ClickHiddenButton(-1,ctl00_KdsContent_" + Ddl.ClientID + ",null);'";
 
             return Ddl;
         }

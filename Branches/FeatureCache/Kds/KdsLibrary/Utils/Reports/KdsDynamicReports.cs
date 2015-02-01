@@ -279,6 +279,7 @@ namespace KdsLibrary.Utils.Reports
             get { return _DropDownList; }
             set { _DropDownList = value; }
         }
+
     }
     public class FilterValidator
     {
