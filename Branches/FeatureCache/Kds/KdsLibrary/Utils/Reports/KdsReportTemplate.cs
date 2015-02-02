@@ -350,17 +350,9 @@ namespace KdsLibrary.Utils.Reports
             Ddl.DataBind();
             if (filter.RunAtServer)
             {
-                 
-                Ddl.Attributes.Add("OnChange", "FireControlChanged()");
-                Ddl.Attributes.Add("runat", "server");
-                //   HtmlInputCheckBox cb = Ddl.FindControl(Ddl.ID + "_sll") as HtmlInputCheckBox;
-                //   cb.Attributes.Add("runat", "server");
-                foreach (ListItem item in (Ddl as ListControl).Items)
-                {
 
-                    // item.Attributes.Add("valueAsNumber", item.Value);
-                    item.Attributes.Add("runat", "server");
-                }
+                Ddl.Attributes.Add("onchange", "FireControlChanged()");
+               Ddl.Attributes.Add("runat", "server");
             
             }
             _Controls.Add(Ddl.ID);

@@ -245,9 +245,10 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             {
 
                 // item.Attributes.Add("valueAsNumber", item.Value);
-                item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value + "," + DDLShgiot.ClientID+ ");");
+                item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value + ");");
+               // item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value + "," + DDLShgiot.ClientID+ ");");
             }
-            DDLShgiot.Texts.OnClickSelectAll = "onclick='ClickHiddenButton(-1," + DDLShgiot.ClientID + ");'";
+           DDLShgiot.Texts.OnClickSelectAll = "onclick='ClickHiddenButton(-1);'";
             if (InputHiddenBack.Value == "true")
             {
                 var shgiot = InputHiddenBack.Attributes["shgiot"];

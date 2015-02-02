@@ -138,6 +138,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //case ReportName.Average:
                 //    ((TextBox)TdFilter.FindControl("P_STARTDATE")).TextChanged += new EventHandler(EndDate_OnChanged);
                 //    break;
+                    
             }
             //if (TdFilter.FindControl("P_STARTDATE") != null && TdFilter.FindControl("P_STARTDATE").GetType().Name == "TextBox")
             //    ((TextBox)TdFilter.FindControl("P_STARTDATE")).TextChanged += new EventHandler(EndDate_OnChanged);

@@ -114,6 +114,7 @@
    <%--  <Triggers><asp:PostBackTrigger ControlID="btnDisplay"  /></Triggers>--%>
     </asp:UpdatePanel>
     <script language="javascript" type="text/javascript">
+       
         function CancelAllSelectedItems() {
             var src = document.getElementsByTagName("Select");
             for (var objNumber = 0; objNumber < src.length; objNumber++) {
@@ -126,7 +127,7 @@
                 }
             }
         }
-        function FireControlChanged() {
+        function  FireControlChanged() {
             CancelAllSelectedItems();
             var BtControlChanged = document.getElementById("ctl00_KdsContent_BtControlChanged");
             BtControlChanged.click();

@@ -283,29 +283,25 @@
            SetTextBox();
        }
 
-       function ClickHiddenButton(val, clientId) {
+       function ClickHiddenButton(val) {
            // debugger;
            var arrValue = null;
            var sThisVal = "";
            var ipos = -1, i;
-           var captionId = clientId.id + "_caption";
 
-           //  alert($('#DDLShgiot checks input:checkbox'));
            if (val == "-1") {
-               //var allitems = $('#checks input:checkbox');
-               //var items = $('#checks input:checked');
-               var allitems = $("#" + clientId.id + " input:checkbox");
-               var items = $("#" + clientId.id + " input:checked");
+               var allitems = $('#checks input:checkbox');
+               var items = $('#checks input:checked');
                if (items.length < (allitems.length - 1))
-                   $("#" + captionId)[0].innerText = "הכל";
-               else $("#" + captionId)[0].innerText = "";
+                   $('#caption')[0].innerText = "הכל";
+               else $('#caption')[0].innerText = "";
            }
            else {
-               if ($("#" + captionId)[0].innerText != "") {
-                   if ($("#" + captionId)[0].innerText.indexOf('הכל') > -1)
-                       $("#" + captionId)[0].innerText = document.getElementById("ctl00_KdsContent_inputAllShgiot").value;
+               if ($('#caption')[0].innerText != "") {
+                   if ($('#caption')[0].innerText.indexOf('הכל') > -1)
+                       $('#caption')[0].innerText = document.getElementById("ctl00_KdsContent_inputAllShgiot").value;
 
-                   arrValue = $("#" + captionId)[0].innerText.split(",");
+                   arrValue = $('#caption')[0].innerText.split(",");
                }
 
 
@@ -335,14 +331,75 @@
                        if (sThisVal.indexOf("," + val + ",") == -1)
                            sThisVal += "," + val;
                    }
-                   $("#" + captionId)[0].innerText = sThisVal.substring(1, sThisVal.length);
+                   $('#caption')[0].innerText = sThisVal.substring(1, sThisVal.length);
                }
                else {
                    sThisVal = val;
-                   $("#" + captionId)[0].innerText = sThisVal;
+                   $('#caption')[0].innerText = sThisVal;
                }
            }
+          
        }
+       //function ClickHiddenButton(val, clientId) {
+       //    // debugger;
+       //    var arrValue = null;
+       //    var sThisVal = "";
+       //    var ipos = -1, i;
+       //    var captionId = clientId.id + "_caption";
+
+       //    //  alert($('#DDLShgiot checks input:checkbox'));
+       //    if (val == "-1") {
+       //        //var allitems = $('#checks input:checkbox');
+       //        //var items = $('#checks input:checked');
+       //        var allitems = $("#" + clientId.id + " input:checkbox");
+       //        var items = $("#" + clientId.id + " input:checked");
+       //        if (items.length < (allitems.length - 1))
+       //            $("#" + captionId)[0].innerText = "הכל";
+       //        else $("#" + captionId)[0].innerText = "";
+       //    }
+       //    else {
+       //        if ($("#" + captionId)[0].innerText != "") {
+       //            if ($("#" + captionId)[0].innerText.indexOf('הכל') > -1)
+       //                $("#" + captionId)[0].innerText = document.getElementById("ctl00_KdsContent_inputAllShgiot").value;
+
+       //            arrValue = $("#" + captionId)[0].innerText.split(",");
+       //        }
+
+
+
+       //        if (arrValue != null) {
+       //            for (i = 0; i < arrValue.length; i++) {
+       //                if (arrValue[i] == val)
+       //                    ipos = i;
+       //            }
+
+       //            if (ipos > -1) {
+       //                for (i = 0; i < arrValue.length; i++) {
+       //                    if (i != ipos)
+       //                        sThisVal += "," + arrValue[i];
+       //                }
+       //            }
+       //            else {
+       //                for (i = 0; i < arrValue.length; i++)
+       //                    if (Number(arrValue[i]) < Number(val))
+       //                        sThisVal += "," + arrValue[i];
+       //                    else {
+       //                        if ((sThisVal + ",").indexOf("," + val + ",") == -1)
+       //                            sThisVal += "," + val;
+       //                        sThisVal += "," + arrValue[i];
+       //                    }
+
+       //                if (sThisVal.indexOf("," + val + ",") == -1)
+       //                    sThisVal += "," + val;
+       //            }
+       //            $("#" + captionId)[0].innerText = sThisVal.substring(1, sThisVal.length);
+       //        }
+       //        else {
+       //            sThisVal = val;
+       //            $("#" + captionId)[0].innerText = sThisVal;
+       //        }
+       //    }
+       //}
          
        function SetTextBox() {
 

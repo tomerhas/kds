@@ -336,11 +336,11 @@
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
-    <Filter ParameterName="P_COMPANYID" Caption="חברה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
+    <Filter ParameterName="P_COMPANYID" Caption="חברה" BoxeType="DropDown" DataType="System.Int32"  >
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_CompanyId" ValueField="Kod_Hevra" TextField="Teur_Hevra" />
     </Filter>
 
-    <Filter ParameterName="P_MAMAD" Caption="מעמד ראשי"  BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" Required="true" >
+    <Filter ParameterName="P_MAMAD" Caption="מעמד ראשי"  BoxeType="DropDown" DataType="System.Int32" Required="true" >
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_maamadot" ValueField="kod" TextField="description" />
     </Filter>
     <Filter ParameterName="P_MAMAD_HR" Caption="מעמד" BoxeType="ListBox" DataType="System.Int32">
@@ -361,7 +361,7 @@
       <DropDownList QueryType="Select"  Select="Select Kod_Yechida, Teur_Yechida From CTB_Yechida order by 2" ValueField="Kod_Yechida" TextField="Teur_Yechida" />
     </Filter>
 
-   <Filter ParameterName="P_Rechiv" Caption="רכיב" BoxeType="DropDownCheckBoxes" DataType="System.Int32">
+   <Filter ParameterName="P_RECHIV" Caption="רכיב" BoxeType="DropDownCheckBoxes"  DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="select  R.KOD_RECHIV, R.KOD_RECHIV || '-' || R.TEUR_RECHIV TEUR_RECHIV from CTB_RECHIVIM R order by  R.KOD_RECHIV desc " ValueField="KOD_RECHIV" TextField="TEUR_RECHIV" />
     </Filter>
   </Report>
@@ -520,113 +520,6 @@
       <DropDownList QueryType="Select"  Select="select distinct tb.TEUR_ISUK || ' (' || tb.KOD_ISUK  || ')' TEUR_ISUK, tb.KOD_ISUK from CTB_ISUK tb order by 1" ValueField="KOD_ISUK" TextField="TEUR_ISUK" />
     </Filter>
   </Report>
-
-
-  <!--<Report  RdlName="SpecificAverage" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ממוצעים על פי רכיבים" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy" >
-    <Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String"  >
-      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
-        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
-        <ParameterOfFunction Type="ByValue" Value="הכל" DataType="System.String" />
-        <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
-      </DropDownList>
-      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
-    </Filter>
-    <Filter ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
-    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
-      --><!--<FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>--><!--
-    </Filter>
-    <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
-      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
-    </Filter>
-    <Filter ParameterName="P_COMPANYID" Caption="קוד חברה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
-      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_CompanyId" ValueField="Kod_Hevra" TextField="Teur_Hevra" />
-    </Filter>
-    <Filter ParameterName="P_SNIF" Caption="סניף אב" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="select KOD_SNIF_AV,teur_snif_av from ctb_snif_av ORDER BY teur_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" />
-    </Filter>
-    <Filter ParameterName="P_MAMAD" Caption="מעמד" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="Select Distinct Kod_Maamad_HR, Teur_Maamad_HR From CTB_Maamad order by 2 " ValueField="Kod_Maamad_HR" TextField="Teur_Maamad_HR" />
-    </Filter>
-    <Filter ParameterName="P_ISUK" Caption="עיסוק" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="select distinct tb.TEUR_ISUK || ' (' || tb.KOD_ISUK  || ')' TEUR_ISUK, tb.KOD_ISUK from CTB_ISUK tb order by 1" ValueField="KOD_ISUK" TextField="TEUR_ISUK" />
-    </Filter>
-    <Filter ParameterName="P_KOD_YECHIDA" Caption="יחידה ארגונית" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="Select Kod_Yechida, Teur_Yechida From CTB_Yechida order by 2" ValueField="Kod_Yechida" TextField="Teur_Yechida" />
-    </Filter>
-    <Filter ParameterName="P_SPECIFICRECHIVS" Caption="רכיב" BoxeType="ListBox" DataType="System.Int32" Required="true">
-      <FilterValidator ValidatorName="ValidCountOfRechiv" ErrorMessageValidator="מותר לבחור עד 14 רכיבים" ValidationFunction="CountRechiv"/>
-      <FilterValidator ValidatorName="RechivExist"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת רכיב" ValidationFunction="IsEmpty"/>
-      <DropDownList QueryType="Select"  Select="select  R.KOD_RECHIV,R.TEUR_RECHIV from CTB_RECHIVIM r order by 2" ValueField="KOD_RECHIV" TextField="TEUR_RECHIV" />
-    </Filter>
-  </Report>-->
-
-
-  <!--<Report  RdlName="DescriptionAllComponents" Roles="kds_administrators" FilterByLine="3" PageHeader="פירוט כל הרכיבים" ProductionType="Heavy">
-    <Filter ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
-      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
-      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DescriptionAllComponents" DataType="System.String" />
-        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
-        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
-        <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
-      </DropDownList>
-    </Filter>
-    <Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String" RunAtServer="true"  Required="true" >
-      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DescriptionAllComponents" DataType="System.String" />
-        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
-        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
-        <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
-      </DropDownList>
-      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
-    </Filter>
-    <Filter ParameterName="P_COMPANYID" Caption="קוד חברה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
-      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_CompanyId" ValueField="Kod_Hevra" TextField="Teur_Hevra" />
-    </Filter>
-  </Report>-->
-
-  <!--<Report  RdlName="AverageLeOved" Roles="kds_administrators" FilterByLine="4" PageHeader="ממוצעים - כל הרכיבים" ProductionType="Heavy">
-    
-    <Filter   ParameterName="P_STARTDATE" Caption="מחודש" BoxeType="DropDown" DataType="System.String"  RunAtServer="true"  Required="true" >
-      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
-      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DescriptionAllComponents" DataType="System.String" />
-        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
-        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
-      </DropDownList>
-    </Filter>
-    <Filter  ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String" RunAtServer="true"  Required="true" >
-      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DescriptionAllComponents" DataType="System.String" />
-        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
-        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
-      </DropDownList>
-      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
-    </Filter>
-    <Filter   ParameterName="P_COMPANYID" Caption="קוד חברה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
-      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_CompanyId" ValueField="Kod_Hevra" TextField="Teur_Hevra" />
-    </Filter>
-    <Filter   ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
-    </Filter>
-    <Filter  ParameterName="P_SNIF" Caption="סניף אב" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="select KOD_SNIF_AV,teur_snif_av from ctb_snif_av ORDER BY teur_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" />
-    </Filter>
-    <Filter  ParameterName="P_KOD_YECHIDA" Caption="יחידה ארגונית" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="Select Kod_Yechida, Teur_Yechida From CTB_Yechida order by 2" ValueField="Kod_Yechida" TextField="Teur_Yechida" />
-    </Filter>
-    <Filter  ParameterName="P_MAMAD" Caption="מעמד" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="Select Distinct Kod_Maamad_HR, Teur_Maamad_HR From CTB_Maamad order by 2 " ValueField="Kod_Maamad_HR" TextField="Teur_Maamad_HR" />
-    </Filter>
-    <Filter  ParameterName="P_ISUK" Caption="עיסוק" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="select distinct tb.TEUR_ISUK || ' (' || tb.KOD_ISUK  || ')' TEUR_ISUK, tb.KOD_ISUK from CTB_ISUK tb order by 1" ValueField="KOD_ISUK" TextField="TEUR_ISUK" />
-    </Filter>
-    <Filter   ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
-      <FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>
-    </Filter>
-
-  </Report>-->
 
   <Report  RdlName="HityazvutBePundakimHitchashbenut" Roles="kds_administrators" FilterByLine="2" PageHeader="פונדקים-התחשבנות (סך התייצבויות) למחלקת לקוחות" ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  RunAtServer="true"  Required="true" >
