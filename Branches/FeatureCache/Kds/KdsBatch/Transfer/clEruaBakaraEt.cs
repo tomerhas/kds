@@ -74,8 +74,8 @@ namespace KdsBatch
               sBakaraEt.Append(FormatNumberWithPoint((fErech/60), 5, 1) + ";");
               sBakaraEt.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode(), "erech_rechiv_a"), 2, 0) + ";");
               sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode(), "erech_rechiv_a") / 60, 6, 2) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), "erech_rechiv_a") / 60, 6, 2));
-          
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), "erech_rechiv_a") / 60, 6, 2) + ";");
+              sBakaraEt.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), "erech_rechiv_a"), 2, 0));
               if (!IsEmptyErua(sBakaraEt.ToString().Replace(";", "").Replace(".", "")) )
               {
                   ListErua.Add(sBakaraEt.ToString());
