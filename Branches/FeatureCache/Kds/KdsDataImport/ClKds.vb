@@ -12,9 +12,9 @@ Imports KdsLibrary.clGeneral
 
 
 
-'Imports kernel32
-'Imports Oracle.DataAccess.Client
-'Imports System.Net
+
+
+
 Public Class ClKds
     'todo: in all places use the kds web-config
     'todo: add getrow to utils instead of Getrowkds
@@ -247,6 +247,21 @@ Public Class ClKds
                                     sw.WriteLine("sdrn manas:wrong kod " & ds.Tables(0).Rows(0).Item("erech").ToString & SRV_D_TAARICH & SRV_D_ISHI)
                                     oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "sdrn manas:wrong kod " & ds.Tables(0).Rows(0).Item("erech").ToString & SRV_D_TAARICH & SRV_D_ISHI, 6)
                                     ''**  KdsWriteProcessLog(2, 1, 4, "sdrn manas:wrong kod " & ds.Tables(0).Rows(0).Item("erech").ToString & SRV_D_TAARICH & SRV_D_ISHI, "6")
+                                End If
+                            End If
+                            '20141116: sidur meshek
+                            ds = Nothing
+                            ds = New DataSet
+                            oDal.ClearCommand()
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                            oDal.AddParameter("pIshi", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
+                            oDal.ExecuteSP("PKG_BATCH.pro_IfSidurMeshek", ds)
+                            NumLInDS = ds.Tables(0).Rows.Count
+                            If Not NumLInDS = 0 Then
+                                If ds.Tables(0).Rows(0).Item("cntMeshek").ToString = "1" Then
+                                    'todo: calc_D_new_sidur = "99031"
+                                    LoadRecMeshek(line)
                                 End If
                             End If
                         End If
@@ -2212,7 +2227,7 @@ Public Class ClKds
                 'todo: when after sdrn should 
                 teur = "shguyim"
                 iNumSeq = oBatch.InsertProcessLog(8, 1, KdsLibrary.BL.RecordStatus.Wait, "shguyim", 0)
-                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(BatchRequestSource.ImportProcess, BatchExecutionType.All, dTaarich, lRequestNum)
+                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, BatchExecutionType.All, dTaarich, lRequestNum)
                 'todo: when after rfrsh should 
                 'KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcessForChangesInHR , KdsBatch.BatchExecutionType.All, dTaarich, lRequestNum)
                 'todo: check table tb_log_bakashot for errors etc
@@ -4162,6 +4177,407 @@ Public Class ClKds
             sr.Close()
         End Try
     End Function
+    '20141116:
+    Public Sub LoadRecMeshek(ByVal line)
+
+        Dim oDal As clDal
+        Dim ds As DataSet
+        Dim ds1 As DataSet
+        Dim ds2 As DataSet
+        Dim ds3 As DataSet
+        Dim ds4 As DataSet
+        Dim SRV_D_ISHI As String
+        Dim SRV_D_TAARICH As String
+        Dim SRV_D_KNISA_X As String
+        Dim SRV_D_MIKUM_KNISA As String
+        Dim SRV_D_YETZIA_X As String
+        Dim SRV_D_MIKUM_YETZIA As String
+        Dim NumLInDS As Integer
+        Dim KY As Boolean
+        Dim KNull As Boolean
+        Dim EfesY As Boolean
+        Dim K As Boolean
+        Dim Y As Boolean
+        Dim UpdK As Boolean
+        Dim UpdY As Boolean
+        Dim UpdKY As Boolean
+        Dim UpdYK As Boolean
+        Dim Knisa As Integer
+        Dim Yetzia As Integer
+        Dim NewK As Boolean
+        Dim NewY As Boolean
+
+
+        Try
+            SRV_D_ISHI = Mid(line, 1, 5)
+            SRV_D_TAARICH = Mid(line, 7, 8) 'format=yyyymmdd
+            SRV_D_KNISA_X = Mid(line, 20, 4) 'format=hhmm
+            SRV_D_YETZIA_X = Mid(line, 38, 4)
+            If Not (Mid(line, 32, 3) = "000" Or Trim(Mid(line, 32, 3)) = "") And Trim(Mid(line, 95, 2)) = "" Then
+                SRV_D_MIKUM_KNISA = Mid(line, 32, 3) & "00"
+            ElseIf ((Mid(line, 32, 3) = "000" Or Trim(Mid(line, 32, 3)) = "")) Then
+                SRV_D_MIKUM_KNISA = Mid(line, 32, 3) & "00"
+            Else
+                SRV_D_MIKUM_KNISA = Mid(line, 32, 3) & Mid(line, 95, 2)
+            End If
+            If Not (Mid(line, 50, 3) = "000" Or Trim(Mid(line, 50, 3)) = "") And Trim(Mid(line, 97, 2)) = "" Then
+                SRV_D_MIKUM_YETZIA = Mid(line, 50, 3) & "00"
+            ElseIf ((Mid(line, 50, 3) = "000" Or Trim(Mid(line, 50, 3)) = "")) Then
+                SRV_D_MIKUM_YETZIA = Mid(line, 50, 3) & "00"
+            Else
+                SRV_D_MIKUM_YETZIA = Mid(line, 50, 3) & Mid(line, 97, 2)
+            End If
+
+            ds = New DataSet
+            ds1 = New DataSet
+            ds2 = New DataSet
+            ds3 = New DataSet
+            ds4 = New DataSet
+            oDal = New clDal
+
+            oDal.ClearCommand()
+            oDal.AddParameter("pIshi", ParameterType.ntOracleInteger, CInt(SRV_D_ISHI), ParameterDir.pdInput)
+            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+            oDal.AddParameter("pKnisaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 1, 2)), ParameterDir.pdInput)
+            oDal.AddParameter("pKnisaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 3, 2)), ParameterDir.pdInput)
+            oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 1, 2)), ParameterDir.pdInput)
+            oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 3, 2)), ParameterDir.pdInput)
+            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
+            oDal.ExecuteSP("Pkg_clock.pro_GetRowMeshek", ds)
+
+            NumLInDS = 0
+            KY = False
+            K = False
+            Y = False
+            EfesY = False
+            KNull = False
+            UpdK = False
+            UpdY = False
+            UpdKY = False
+            UpdYK = False
+            NewK = False
+            NewY = False
+
+            NumLInDS = ds.Tables(0).Rows.Count
+            If Not NumLInDS = 0 Then
+                If ds.Tables(0).Rows(0).Item("KY").ToString = "1" Then
+                    KY = True
+                End If
+                If ds.Tables(0).Rows(0).Item("KNull").ToString = "1" Then
+                    KNull = True
+                End If
+                If ds.Tables(0).Rows(0).Item("EfesY").ToString = "1" Then
+                    EfesY = True
+                End If
+                If ds.Tables(0).Rows(0).Item("K").ToString = "1" Then
+                    K = True
+                End If
+                If ds.Tables(0).Rows(0).Item("Y").ToString = "1" Then
+                    Y = True
+                End If
+            Else
+                'totd: error!
+            End If
+
+            If Trim(SRV_D_KNISA_X) = "" Then
+                Knisa = 0
+            Else
+                Knisa = CInt(Trim(SRV_D_KNISA_X))
+            End If
+
+            If Trim(SRV_D_YETZIA_X) = "" Then
+                Yetzia = 0
+            Else
+                Yetzia = CInt(Trim(SRV_D_YETZIA_X))
+            End If
+
+            If Knisa > 0 And Yetzia > 0 Then
+                If KY Then
+                    'exit, complete dup
+                ElseIf KNull Then
+                    ' upd out
+                    UpdYK = True
+                ElseIf EfesY Then
+                    ' upd in
+                    UpdKY = True
+                ElseIf K And (Not Y) Then
+                    ' new in & out, err dup in
+                    NewK = True
+                    NewY = True
+                ElseIf Y And (Not K) Then
+                    'new in & out, err dup out
+                    NewK = True
+                    NewY = True
+                ElseIf (Not K) And (Not Y) Then
+                    'new in & out
+                    NewK = True
+                    NewY = True
+                Else
+                    'totd: error!
+                End If
+            ElseIf Knisa > 0 And Yetzia = 0 Then
+                If KNull Then
+                    'exit, complete dup
+                ElseIf K Then
+                    'exit, complete dup
+                ElseIf (Not K) Then
+                    oDal.ClearCommand()
+                    oDal.AddParameter("pIshi", ParameterType.ntOracleInteger, CInt(SRV_D_ISHI), ParameterDir.pdInput)
+                    oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                    oDal.AddParameter("pKnisaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 1, 2)), ParameterDir.pdInput)
+                    oDal.AddParameter("pKnisaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 3, 2)), ParameterDir.pdInput)
+                    oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 1, 2)), ParameterDir.pdInput)
+                    oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 3, 2)), ParameterDir.pdInput)
+                    oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
+                    oDal.ExecuteSP("Pkg_clock.pro_GetRowEfesYMeshek", ds1)
+                    'check efes & y>knisa -> upd in,
+                    'else new in, out=null
+                    If ds1.Tables(0).Rows.Count > 0 Then
+                        If Not ds1.Tables(0).Rows(0).Item("ct").ToString = "0" Then
+                            UpdK = True
+                        Else
+                            oDal.ClearCommand()
+                            oDal.AddParameter("pIshi", ParameterType.ntOracleInteger, CInt(SRV_D_ISHI), ParameterDir.pdInput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                            oDal.AddParameter("pKnisaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 1, 2)), ParameterDir.pdInput)
+                            oDal.AddParameter("pKnisaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 3, 2)), ParameterDir.pdInput)
+                            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
+                            oDal.ExecuteSP("Pkg_clock.pro_GetYNullMeshek", ds3)
+                            If ds3.Tables(0).Rows.Count > 0 Then
+                                If Len(ds3.Tables(0).Rows(0).Item("gmar").ToString) = 12 Then
+                                    SRV_D_YETZIA_X = Mid(ds3.Tables(0).Rows(0).Item("gmar").ToString, 9, 4)
+                                    UpdKY = True
+                                Else
+                                    NewK = True
+                                End If
+                            Else
+                                'err, 
+                                NewK = True
+                            End If
+                        End If
+                    Else
+                        'todo: err
+                    End If
+                Else
+                    'totd: error!
+                End If
+            ElseIf Knisa = 0 And Yetzia > 0 Then
+                If EfesY Then
+                    'exit, complete dup
+                ElseIf Y Then
+                    'exit, complete dup
+                ElseIf (Not Y) Then
+                    oDal.ClearCommand()
+                    oDal.AddParameter("pIshi", ParameterType.ntOracleInteger, CInt(SRV_D_ISHI), ParameterDir.pdInput)
+                    oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                    oDal.AddParameter("pKnisaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 1, 2)), ParameterDir.pdInput)
+                    oDal.AddParameter("pKnisaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 3, 2)), ParameterDir.pdInput)
+                    oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 1, 2)), ParameterDir.pdInput)
+                    oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 3, 2)), ParameterDir.pdInput)
+                    oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
+                    oDal.ExecuteSP("Pkg_clock.pro_GetRowKNullMeshek", ds2)
+                    'todo: check null & k<yetzia -> upd out,
+                    'else new out, in=00010101
+                    If ds2.Tables(0).Rows.Count > 0 Then
+                        If Not ds2.Tables(0).Rows(0).Item("ct").ToString = "0" Then
+                            UpdY = True
+                        Else
+                            oDal.ClearCommand()
+                            oDal.AddParameter("pIshi", ParameterType.ntOracleInteger, CInt(SRV_D_ISHI), ParameterDir.pdInput)
+                            oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                            oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 1, 2)), ParameterDir.pdInput)
+                            oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 3, 2)), ParameterDir.pdInput)
+                            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
+                            oDal.ExecuteSP("Pkg_clock.pro_GetKNullMeshek", ds4)
+                            If ds4.Tables(0).Rows.Count > 0 Then
+                                If Len(ds4.Tables(0).Rows(0).Item("knisa").ToString) = 12 Then
+                                    SRV_D_KNISA_X = Mid(ds4.Tables(0).Rows(0).Item("knisa").ToString, 9, 4)
+                                    UpdYK = True
+                                Else
+                                    NewY = True
+                                End If
+                            Else
+                                NewY = True
+                                'todo: err
+                            End If
+                        End If
+                    End If
+                End If
+            End If
+
+
+
+
+            If NewK And NewY Then
+                'new both
+                oDal.ClearCommand()
+                oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleVarchar, "99031", ParameterDir.pdInput)
+                oDal.AddParameter("pKnisaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 1, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("pKnisaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 3, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_MIKUM_KNISA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, ParameterDir.pdInput)
+                oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 1, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 3, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_MIKUM_YETZIA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_YETZIA, ParameterDir.pdInput)
+                oDal.ExecuteSP("Pkg_clock.pro_new_recMeshek")
+            ElseIf NewK Then
+                'new in, out=null
+                oDal.ClearCommand()
+                oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleVarchar, "99031", ParameterDir.pdInput)
+                oDal.AddParameter("pKnisaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 1, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("pKnisaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 3, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_MIKUM_KNISA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, ParameterDir.pdInput)
+                oDal.ExecuteSP("Pkg_clock.pro_new_recMeshekIN")
+            ElseIf NewY Then
+                'new out, in=00010101
+                oDal.ClearCommand()
+                oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                oDal.AddParameter("calc_D_new_sidur", ParameterType.ntOracleVarchar, "99031", ParameterDir.pdInput)
+                oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 1, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 3, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_MIKUM_YETZIA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_YETZIA, ParameterDir.pdInput)
+                oDal.ExecuteSP("Pkg_clock.pro_new_recMeshekOUT")
+            ElseIf UpdK Then
+                'update knisa where knisa < 00020101 
+                oDal.ClearCommand()
+                oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                oDal.AddParameter("pKnisaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 1, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("pKnisaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 3, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_MIKUM_KNISA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, ParameterDir.pdInput)
+                oDal.ExecuteSP("Pkg_clock.pro_UpdEfesKMeshek")
+            ElseIf UpdKY Then
+                'update knisa where knisa < 00020101 
+                oDal.ClearCommand()
+                oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                oDal.AddParameter("pKnisaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 1, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("pKnisaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 3, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_MIKUM_KNISA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_KNISA, ParameterDir.pdInput)
+                oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 1, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 3, 2)), ParameterDir.pdInput)
+                oDal.ExecuteSP("Pkg_clock.pro_UpdEfesKYMeshek")
+            ElseIf UpdY Then
+                'update yetzia where gmar is null
+                oDal.ClearCommand()
+                oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 1, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 3, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_MIKUM_YETZIA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_YETZIA, ParameterDir.pdInput)
+                oDal.ExecuteSP("Pkg_clock.pro_UpdYNullMeshek")
+            ElseIf UpdYK Then
+                'update yetzia where gmar is null
+                oDal.ClearCommand()
+                oDal.AddParameter("SRV_D_ISHI", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_TAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 1, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_YETZIA_X, 3, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_MIKUM_YETZIA", ParameterType.ntOracleVarchar, SRV_D_MIKUM_YETZIA, ParameterDir.pdInput)
+                oDal.AddParameter("pKnisaHH", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 1, 2)), ParameterDir.pdInput)
+                oDal.AddParameter("pKnisaMM", ParameterType.ntOracleInteger, CInt(Mid(SRV_D_KNISA_X, 3, 2)), ParameterDir.pdInput)
+                oDal.ExecuteSP("Pkg_clock.pro_UpdKYNullMeshek")
+
+            Else
+                'todo: err
+            End If
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Sub
+    Public Sub TryKdsFileMeshek()
+
+        Dim FileName As String = "DO1-KDS*.OLD"
+        Dim InPath As String = "\\KDSTEST\Files\inkds_old\201411.old\"
+        Dim MyFile As String
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim strErrorOfFiles As String = String.Empty
+        Dim ErrorCounter As Integer = 0
+
+
+        Try
+            MyFile = Dir(InPath & FileName)
+            If Not MyFile = "" Then
+
+                While Not MyFile = ""
+                    Try
+                        LoadKdsFileMeshek(MyFile)
+
+                        'File.Copy(InPath & MyFile, InPath & "201411.old\" & MyFile, True)
+                        'File.Delete(InPath & MyFile)
+                    Catch ex As Exception
+                        ErrorCounter = ErrorCounter + 1
+                        strErrorOfFiles = strErrorOfFiles & ErrorCounter.ToString() & "." & ex.Message & vbCr
+                    End Try
+
+                    MyFile = Dir()
+                End While
+                If (strErrorOfFiles <> String.Empty) Then
+                    Throw New Exception(strErrorOfFiles)
+                End If
+            End If
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Sub
+
+    Public Sub LoadKdsFileMeshek(ByVal MyFile)
+
+        Dim oDal As clDal
+        Dim sr As StreamReader
+        Dim ds As DataSet
+        Dim InPathNFile As String
+        Dim line As String
+        Dim SRV_D_ISHI As String
+        Dim SRV_D_new_sidur As String
+        Dim SRV_D_TAARICH As String
+        Dim NumLInDS As Integer
+
+        Try
+            'InPathNFile = "\\KDSTEST\Files\inkds_old\201411.old\" & MyFile
+            InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & "inkds_old\201411.old\" & MyFile
+            oDal = New clDal
+            sr = New StreamReader(InPathNFile)
+            line = sr.ReadLine
+            While Not line Is Nothing
+                SRV_D_ISHI = Mid(line, 1, 5)
+                SRV_D_new_sidur = Mid(line, 82, 5)
+                SRV_D_TAARICH = Mid(line, 7, 8) 'format=yyyymmdd
+                If SRV_D_new_sidur = "99001" Then
+                    '20141119: sidur meshek
+                    ds = Nothing
+                    ds = New DataSet
+                    oDal.ClearCommand()
+                    oDal.AddParameter("pDt", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+                    oDal.AddParameter("pIshi", ParameterType.ntOracleVarchar, SRV_D_ISHI, ParameterDir.pdInput)
+                    oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
+                    oDal.ExecuteSP("PKG_BATCH.pro_IfSidurMeshek", ds)
+                    NumLInDS = ds.Tables(0).Rows.Count
+                    If Not NumLInDS = 0 Then
+                        If ds.Tables(0).Rows(0).Item("cntMeshek").ToString = "1" Then
+                            'todo: calc_D_new_sidur = "99031"
+                            LoadRecMeshek(line)
+                        End If
+                    End If
+                End If
+                line = sr.ReadLine
+            End While
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            sr.Close()
+        End Try
+    End Sub
+
+
 
 #End Region
 
