@@ -4072,7 +4072,7 @@ Public Class ClKds
         Dim srv_d_in_out As String
         Dim SRV_D_ISHI As String
         Dim SRV_D_KNISA_X As String
-        Dim srv_d_maamad As String
+        'Dim srv_d_maamad As String
         Dim SRV_D_MIKUM_Kod As String
         Dim SRV_D_MIKUM As String
         Dim SRV_D_MIKUM_KNISA As String
@@ -4114,21 +4114,26 @@ Public Class ClKds
                         SRV_D_KNISA_X = Mid(line, 17, 4) 'format=hhmm
                         SRV_D_MIKUM_KNISA = SRV_D_MIKUM
                         SRV_D_YETZIA_X = "0000"
-                        SRV_D_MIKUM_YETZIA = SRV_D_MIKUM
+                        ' 20150208:SRV_D_MIKUM_YETZIA = SRV_D_MIKUM
+                        SRV_D_MIKUM_YETZIA = "000"
                     ElseIf srv_d_in_out = "B20" Then
                         SRV_D_YETZIA_X = Mid(line, 17, 4) 'format=hhmm
                         SRV_D_MIKUM_YETZIA = SRV_D_MIKUM
                         SRV_D_KNISA_X = "0000"
-                        SRV_D_MIKUM_KNISA = SRV_D_MIKUM
+                        ' 20150208:SRV_D_MIKUM_KNISA = SRV_D_MIKUM
+                        SRV_D_MIKUM_KNISA = "000"
                     Else
                         SRV_D_KNISA_X = "0000"
-                        SRV_D_MIKUM_KNISA = SRV_D_MIKUM
+                        ' 20150208:SRV_D_MIKUM_KNISA = SRV_D_MIKUM
+                        SRV_D_MIKUM_KNISA = "000"
                         SRV_D_YETZIA_X = "0000"
-                        SRV_D_MIKUM_YETZIA = SRV_D_MIKUM
+                        ' 20150208:SRV_D_MIKUM_YETZIA = SRV_D_MIKUM
+                        SRV_D_MIKUM_YETZIA = "000"
                         'todo: error in-out kod
                     End If
                     'prepare line for Agtan:
                     '7769062014100646100095902106115180100150702106115180000000000000000000000        99001000000000101  
+                    '7769062015020846100072901106115180000000000000000000000000000000000000000        99001000000000100  
                     Outline = ""
                     Outline = SRV_D_ISHI & "0"
                     Outline = Outline & SRV_D_TAARICH & "00000"
