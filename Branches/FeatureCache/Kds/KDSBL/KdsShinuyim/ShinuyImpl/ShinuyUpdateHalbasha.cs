@@ -37,7 +37,7 @@ namespace KdsShinuyim.ShinuyImpl
                 UpdateHalbasha(inputData);
 
                 if (oHalbasha != inputData.oObjYameyAvodaUpd.HALBASHA.ToString())
-                    InsertLogDay(inputData, oHalbasha, inputData.oObjYameyAvodaUpd.HALBASHA.ToString(), 0, "HALBASHA");
+                    InsertLogDay(inputData, oHalbasha, inputData.oObjYameyAvodaUpd.HALBASHA.ToString(), 43, 7);
                
             }
             catch (Exception ex)
@@ -188,7 +188,7 @@ namespace KdsShinuyim.ShinuyImpl
                     oObjSidurimOvdimUpd.MEZAKE_HALBASHA = ZmanHalbashaType.ZakaiKnisa.GetHashCode(); ;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
 
-                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oHalbasa, oObjSidurimOvdimUpd.MEZAKE_HALBASHA.ToString(), 0, iSidurZakaiLehalbashaKnisa, "MEZAKE_HALBASHA");
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oHalbasa, oObjSidurimOvdimUpd.MEZAKE_HALBASHA.ToString(), 0, iSidurZakaiLehalbashaKnisa, null,"MEZAKE_HALBASHA");
 
                 }
 
@@ -201,7 +201,7 @@ namespace KdsShinuyim.ShinuyImpl
                     oObjSidurimOvdimUpd.MEZAKE_HALBASHA = ZmanHalbashaType.ZakaiYetiza.GetHashCode(); ;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
 
-                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oHalbasa, oObjSidurimOvdimUpd.MEZAKE_HALBASHA.ToString(), 0, iSidurZakaiLehalbashaYetzia, "MEZAKE_HALBASHA");
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oHalbasa, oObjSidurimOvdimUpd.MEZAKE_HALBASHA.ToString(), 0, iSidurZakaiLehalbashaYetzia, null,"MEZAKE_HALBASHA");
                 }
 
                 if (iSidurZakaiLehalbashaYetzia > -1 && iSidurZakaiLehalbashaKnisa == iSidurZakaiLehalbashaYetzia)
@@ -213,7 +213,7 @@ namespace KdsShinuyim.ShinuyImpl
                     oObjSidurimOvdimUpd.MEZAKE_HALBASHA = ZmanHalbashaType.ZakaiKnisaYetiza.GetHashCode(); ;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
 
-                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oHalbasa, oObjSidurimOvdimUpd.MEZAKE_HALBASHA.ToString(), 0, iSidurZakaiLehalbashaYetzia, "MEZAKE_HALBASHA");
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oHalbasa, oObjSidurimOvdimUpd.MEZAKE_HALBASHA.ToString(), 0, iSidurZakaiLehalbashaYetzia,null, "MEZAKE_HALBASHA");
                 }
 
                 

@@ -182,7 +182,7 @@ namespace KdsShinuyim.ShinuyImpl
 
             try{
                 oldVal = oSidur.dFullShatHatchala.ToString();
-                InsertLogSidur(inputData, oSidur.iMisparSidur, dShatYetziaFirst, oldVal, dShatYetziaFirst.ToString(), 5, i,"SHAT_YETZIA");
+                InsertLogSidur(inputData, oSidur.iMisparSidur, dShatYetziaFirst, oldVal, dShatYetziaFirst.ToString(), 5, i,35);
 
                 NewSidur oNewSidurim = FindSidurOnHtNewSidurim(oSidur.iMisparSidur, oSidur.dFullShatHatchala, inputData.htNewSidurim);
 
@@ -210,7 +210,7 @@ namespace KdsShinuyim.ShinuyImpl
                         }
                     }
 
-                    InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, oNewSidurim.ShatHatchalaNew, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, oldVal, oNewSidurim.ShatHatchalaNew.ToString(), 5, i, j,"SHAT_HATCHALA_SIDUR");
+                    InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, oNewSidurim.ShatHatchalaNew, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, oldVal, oNewSidurim.ShatHatchalaNew.ToString(), 5, i, j,14);
 
                 }
                 //UpdatePeiluyotMevutalotYadani(i, oNewSidurim, oObjSidurimOvdimUpd);
@@ -407,7 +407,7 @@ namespace KdsShinuyim.ShinuyImpl
                 iNumHachanotMechonaForSidur += 1;
                 iMeshechHachanotMechona += int.Parse(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(3, 3));
 
-                InsertLogPeilut(inputData, oPeilutNew.iPeilutMisparSidur, oPeilutNew.dFullShatYetzia, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "", oPeilutNew.dFullShatYetzia.ToString(), 5, iIndexSidur, 0, "SHAT_YETZIA");
+                InsertLogPeilut(inputData, oPeilutNew.iPeilutMisparSidur, oPeilutNew.dFullShatYetzia, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "", oPeilutNew.dFullShatYetzia.ToString(), 5, iIndexSidur, 0, 35);
 
                 //  }
             }
@@ -611,7 +611,7 @@ namespace KdsShinuyim.ShinuyImpl
                 iMeshechHachanotMechona += int.Parse(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(3, 3));
                 iMeshechHachanotMechonaNosafot += int.Parse(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(3, 3)); ;
 
-                InsertLogPeilut(inputData, oPeilutNew.iPeilutMisparSidur, oPeilutNew.dFullShatYetzia, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "", oPeilutNew.dFullShatYetzia.ToString(), 5, iIndexSidur, 0, "SHAT_YETZIA");
+                InsertLogPeilut(inputData, oPeilutNew.iPeilutMisparSidur, oPeilutNew.dFullShatYetzia, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "", oPeilutNew.dFullShatYetzia.ToString(), 5, iIndexSidur, 0, 35);
             }
             catch (Exception ex)
             {

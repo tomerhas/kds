@@ -29,17 +29,23 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
+            int lo_letashlum, kod_siba;
             try
             {
                 for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
                     SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
+                    lo_letashlum = curSidur.iLoLetashlum;
+                    kod_siba = curSidur.iKodSibaLoLetashlum;
                     if (!CheckIdkunRashemet("LO_LETASHLUM", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
                     {
                         SidurLoLetashlum11(curSidur, i, inputData);
                     }
 
-                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, "0", curSidur.iLoLetashlum.ToString(), 11, i, "LO_LETASHLUM");
+                    if(lo_letashlum != curSidur.iLoLetashlum)
+                        InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, lo_letashlum.ToString(), curSidur.iLoLetashlum.ToString(), 11, i, 25);
+                    if (kod_siba != curSidur.iKodSibaLoLetashlum)
+                        InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, kod_siba.ToString(), curSidur.iKodSibaLoLetashlum.ToString(), 11, i ,null,"KOD_SIBA_LO_LETASHLUM");
                   
                 }
             }

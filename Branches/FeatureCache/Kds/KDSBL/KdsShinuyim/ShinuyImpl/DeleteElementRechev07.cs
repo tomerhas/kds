@@ -74,7 +74,8 @@ namespace KdsShinuyim.ShinuyImpl
                     {
                         //אם זוהי פעילות יחידה בסידור – לא לבטל אלא לסמן את הסידור "לא לתשלום
                         if (oSidur.htPeilut.Count > 1)
-                        {   
+                        {
+                            InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, "", "", 7, 0, 0, null,"peilut deleted");
                             OBJ_PEILUT_OVDIM oObjPeilutOvdimDel =  InsertToObjPeilutOvdimForDelete( oPeilut,  oSidur, inputData);
                             inputData.oCollPeilutOvdimDel.Add(oObjPeilutOvdimDel);
                             oSidur.htPeilut.RemoveAt(iIndexPeilut);

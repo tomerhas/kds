@@ -26,13 +26,16 @@ namespace KdsShinuyim.ShinuyImpl
 
         public override void ExecShinuy(ShinuyInputData inputData)
         {
+            string chariga, outMichsa, hashlama;
             try
             {
                 for (int i = 0; i < inputData.htEmployeeDetails.Count; i++)
                 {
                     SidurDM curSidur = (SidurDM)inputData.htEmployeeDetails[i];
                     OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
-
+                    chariga= oObjSidurimOvdimUpd.CHARIGA.ToString();
+                    outMichsa = oObjSidurimOvdimUpd.OUT_MICHSA.ToString();
+                    hashlama = oObjSidurimOvdimUpd.HASHLAMA.ToString();
                     //מחוץ למכסה
                     if (!CheckIdkunRashemet("OUT_MICHSA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
                         UpdateOutMichsa(inputData,curSidur, oObjSidurimOvdimUpd);
@@ -45,6 +48,14 @@ namespace KdsShinuyim.ShinuyImpl
                     if (!CheckIdkunRashemet("HASHLAMA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
                         UpdateHashlamaForSidur(curSidur, i, oObjSidurimOvdimUpd, inputData);
 
+                    if(chariga != oObjSidurimOvdimUpd.CHARIGA.ToString())
+                        InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, chariga, oObjSidurimOvdimUpd.CHARIGA.ToString(), 45, i, 21);
+
+                    if(outMichsa != oObjSidurimOvdimUpd.OUT_MICHSA.ToString())
+                        InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, outMichsa, oObjSidurimOvdimUpd.OUT_MICHSA.ToString(), 46, i, 24);
+
+                    if(hashlama != oObjSidurimOvdimUpd.HASHLAMA.ToString())
+                        InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, hashlama, oObjSidurimOvdimUpd.HASHLAMA.ToString(), 0, i, 45,"HASHLAMA SIDUR");
                 }
             }
             catch (Exception ex)

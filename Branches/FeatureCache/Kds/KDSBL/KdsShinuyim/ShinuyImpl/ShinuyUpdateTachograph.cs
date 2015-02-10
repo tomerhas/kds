@@ -85,7 +85,7 @@ namespace KdsShinuyim.ShinuyImpl
                 }
 
                 if (oVal != inputData.oObjYameyAvodaUpd.TACHOGRAF)
-                    InsertLogDay(inputData, oVal, inputData.oObjYameyAvodaUpd.TACHOGRAF.ToString(), 0, "TACHOGRAF");
+                    InsertLogDay(inputData, oVal, inputData.oObjYameyAvodaUpd.TACHOGRAF.ToString(), 41, 5);
 
             }
             catch (Exception ex)

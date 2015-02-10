@@ -148,7 +148,7 @@ namespace KdsShinuyim.FlowManager
             {
                 List<IShinuy> listShinuyim = new List<IShinuy>();
 
-                listShinuyim.Add(_container.Resolve<DeleteSidureyRetzifut>());
+           //     listShinuyim.Add(_container.Resolve<DeleteSidureyRetzifut>());
                 listShinuyim.Add(_container.Resolve<IpusArachimBeforeTahalich>());
                 listShinuyim.Add(_container.Resolve<ShinuyMisparSidur01>());
                 listShinuyim.Add(_container.Resolve<ShinuyMisparSidurVisa02>());
@@ -189,7 +189,7 @@ namespace KdsShinuyim.FlowManager
 
             try
             {
-                listShinuyim.Add(ShinuyTypes.DeleteSidureyRetzifut);
+           //     listShinuyim.Add(ShinuyTypes.DeleteSidureyRetzifut);
                 listShinuyim.Add(ShinuyTypes.IpusArachimBeforeTahalich);
                 listShinuyim.Add(ShinuyTypes.ShinuyMisparSidur01);
                 listShinuyim.Add(ShinuyTypes.ShinuyMisparSidurVisa02);

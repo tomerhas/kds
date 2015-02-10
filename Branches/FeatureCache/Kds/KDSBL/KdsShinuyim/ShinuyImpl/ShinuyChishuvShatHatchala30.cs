@@ -171,7 +171,7 @@ namespace KdsShinuyim.ShinuyImpl
                 if (dShatHatchalaNew != curSidur.dFullShatHatchala)
                 {
                     oldVal=curSidur.dFullShatHatchala.ToString();
-                    InsertLogSidur(inputData, curSidur.iMisparSidur, dShatHatchalaNew, oldVal, dShatHatchalaNew.ToString(), 30, iSidurIndex, "SHAT_HATCHALA");
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, dShatHatchalaNew, oldVal, dShatHatchalaNew.ToString(), 30, iSidurIndex, 14);
 
                     oObjSidurimOvdimUpd = GetUpdSidurObject(curSidur, inputData);
                     NewSidur oNewSidurim = FindSidurOnHtNewSidurim(curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData.htNewSidurim);
@@ -204,7 +204,7 @@ namespace KdsShinuyim.ShinuyImpl
 
                         }
 
-                        InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, dShatHatchalaNew, oPeilut.dFullShatYetzia,oPeilut.lMakatNesia, oldVal,  dShatHatchalaNew.ToString(), 30, iSidurIndex, j,"SHAT_HATCHALA_SIDUR");
+                        InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, dShatHatchalaNew, oPeilut.dFullShatYetzia,oPeilut.lMakatNesia, oldVal,  dShatHatchalaNew.ToString(), 30, iSidurIndex, j,14);
 
                     }
                     //UpdatePeiluyotMevutalotYadani(iSidurIndex,oNewSidurim, oObjSidurimOvdimUpd);

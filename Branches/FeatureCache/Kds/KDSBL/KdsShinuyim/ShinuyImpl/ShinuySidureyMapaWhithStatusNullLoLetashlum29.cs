@@ -90,7 +90,7 @@ namespace KdsShinuyim.ShinuyImpl
 
                                 inputData.htEmployeeDetails[i] = curSidur;
 
-                                InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oVal, oObjSidurimOvdimUpd.LO_LETASHLUM.ToString(), 29, i, "LO_LETASHLUM");
+                                InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oVal, oObjSidurimOvdimUpd.LO_LETASHLUM.ToString(), 29, i, 25);
                   
                             }
                         }

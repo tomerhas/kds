@@ -79,7 +79,6 @@
     <Compile Include="DataModels\NewSidur.cs" />
     <Compile Include="FlowManager\ShinuyimFlowManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShinuyImpl\DeleteSidureyRetzifut.cs" />
     <Compile Include="ShinuyImpl\SetBooleanParams.cs" />
     <Compile Include="ShinuyImpl\ShinuyAddElementMechine05.cs" />
     <Compile Include="ShinuyImpl\ShinuyBase.cs" />

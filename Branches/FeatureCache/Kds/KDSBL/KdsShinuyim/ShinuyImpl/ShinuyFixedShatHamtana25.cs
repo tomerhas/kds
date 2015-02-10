@@ -92,7 +92,7 @@ namespace KdsShinuyim.ShinuyImpl
             SidurDM oSidurNext = null;
             PeilutDM oElement;
             double dPaar, dZmanElement;
-            string sZmanElement;
+            string sZmanElement,sOldVal;
             OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
           
             try
@@ -121,6 +121,7 @@ namespace KdsShinuyim.ShinuyImpl
                     {
                         if (!CheckIdkunRashemet("SHAT_GMAR", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
                         {
+                            sOldVal = curSidur.dFullShatGmar.ToString();
                             //במידה ובסידור הראשון מביניהם לא קיים אלמנט - מוסיפים אלמנט המתנה 724xxxxx.
                             dZmanElement = Math.Min(iSumElementLesidur + dPaar, inputData.oParam.iMaxZmanHamtanaEilat);
                             sZmanElement = dZmanElement.ToString().PadLeft(3, (char)48);
@@ -140,8 +141,9 @@ namespace KdsShinuyim.ShinuyImpl
                             curSidur.sShatGmar = curSidur.dFullShatGmar.ToString("HH:mm");
                             oObjSidurimOvdimUpd.SHAT_GMAR = curSidur.dFullShatGmar;
                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                           // htEmployeeDetails[I] = oSidur;
-                            //}
+
+                            InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, sOldVal, curSidur.dFullShatGmar.ToString(), 25, I, 15);
+
                         }
                     }
                 }
@@ -167,7 +169,7 @@ namespace KdsShinuyim.ShinuyImpl
                 UpdatePeilut(inputData.iMisparIshi, inputData.CardDate, oElement, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
                 curSidur.htPeilut[IndexPeilut] = oElement;
 
-                InsertLogPeilut(inputData, oObjSidurimOvdimUpd.MISPAR_SIDUR, oObjSidurimOvdimUpd.SHAT_HATCHALA, oElement.dFullShatYetzia, oElement.lMakatNesia, oVal, oElement.lMakatNesia.ToString(), 25, IndexSidur, IndexPeilut, "MAKAT_NESIA");            
+                InsertLogPeilut(inputData, oObjSidurimOvdimUpd.MISPAR_SIDUR, oObjSidurimOvdimUpd.SHAT_HATCHALA, oElement.dFullShatYetzia, oElement.lMakatNesia, oVal, oElement.lMakatNesia.ToString(), 25, IndexSidur, IndexPeilut, 36);            
             }
             catch (Exception ex)
             {

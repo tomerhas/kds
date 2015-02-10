@@ -39,11 +39,11 @@ namespace KdsShinuyim.ShinuyImpl
                 UpdateBitulZmanNesiot(inputData);
 
                 if (oZmanHaloch != inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH.ToString())
-                    InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH.ToString(), 0, "ZMAN_NESIA_HALOCH");
+                    InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH.ToString(), 42, 40);
                 if (oZmanChazor != inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR.ToString())
-                    InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR.ToString(), 0, "ZMAN_NESIA_HAZOR");
+                    InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR.ToString(), 42, 41);
                 if (oBitulNesiot != inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString())
-                    InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString(), 0, "BITUL_ZMAN_NESIOT");
+                    InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString(), 42, 4);
             }
              catch (Exception ex)
             {
@@ -201,7 +201,7 @@ namespace KdsShinuyim.ShinuyImpl
                             oldVal = oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString();
                             oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisaYetiza.GetHashCode();
                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                            InsertLogDay(inputData, oldVal, oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString(), 0, "MEZAKE_NESIOT");
+                            InsertLogDay(inputData, oldVal, oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString(), 0,null, "MEZAKE_NESIOT");
                         }
                     }
                 }
@@ -262,7 +262,7 @@ namespace KdsShinuyim.ShinuyImpl
                         oldVal = oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString();
                         oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiYetiza.GetHashCode();
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                        InsertLogDay(inputData, oldVal, oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString(), 0, "MEZAKE_NESIOT");
+                        InsertLogDay(inputData, oldVal, oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString(), 42,null, "MEZAKE_NESIOT");
                     }
                     if (IsOvedZakaiLZmanNesiaMeAvoda(inputData.oMeafyeneyOved) && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR", inputData)))
                     {
@@ -320,7 +320,7 @@ namespace KdsShinuyim.ShinuyImpl
                         oldVal = oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString();
                         oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisa.GetHashCode();
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                        InsertLogDay(inputData, oldVal, oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString(), 0, "MEZAKE_NESIOT");
+                        InsertLogDay(inputData, oldVal, oObjSidurimOvdimUpd.MEZAKE_NESIOT.ToString(), 42, null,"MEZAKE_NESIOT");
 
                     }
                     //עבור מאפיין 51: 

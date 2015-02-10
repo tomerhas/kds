@@ -73,6 +73,7 @@ namespace KdsShinuyim.ShinuyImpl
                             inputData.oObjYameyAvodaUpd.HASHLAMA_LEYOM = 1;
                             inputData.oObjYameyAvodaUpd.SIBAT_HASHLAMA_LEYOM = 1;
                             inputData.oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                            InsertLogDay(inputData, "0", inputData.oObjYameyAvodaUpd.HASHLAMA_LEYOM.ToString(), 48, 9);
                         }
                     }
                 }

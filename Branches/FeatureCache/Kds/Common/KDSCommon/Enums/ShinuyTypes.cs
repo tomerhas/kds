@@ -7,8 +7,8 @@ namespace KdsShinuyim.Enums
 {
     public enum ShinuyTypes
     {
-        DeleteSidureyRetzifut=1,
-        IpusArachimBeforeTahalich,
+        //DeleteSidureyRetzifut=1,
+        IpusArachimBeforeTahalich=1,
         ShinuyMisparSidur01,
         ShinuyMisparSidurVisa02,
         ShinuyMergerSiduryMapa28,

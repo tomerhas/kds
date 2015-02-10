@@ -42,16 +42,20 @@ namespace KDSCommon.UDT
         private bool m_TAARICH_IDKUN_ACHARONIsNull;
         
         private string m_NEW_VAL;
-        
-        private int m_MISPAR_SIDURI;
-        
-        private bool m_MISPAR_SIDURIIsNull;
+
+        private int m_MISPAR_SIDURI_LOG;
+
+        private bool m_MISPAR_SIDURI_LOGIsNull;
         
         private string m_OLD_VAL;
         
         private int m_SEDER_BIZUA;
         
         private bool m_SEDER_BIZUAIsNull;
+
+        private int m_SADE;
+
+        private bool m_SADEIsNull;
 
         private string m_HEARA;
         
@@ -62,8 +66,9 @@ namespace KDSCommon.UDT
             this.m_MISPAR_ISHIIsNull = true;
             this.m_MEADKEN_ACHARONIsNull = true;
             this.m_TAARICH_IDKUN_ACHARONIsNull = true;
-            this.m_MISPAR_SIDURIIsNull = true;
+            this.m_MISPAR_SIDURI_LOGIsNull = true;
             this.m_SEDER_BIZUAIsNull = true;
+            this.m_SADEIsNull = true;
         }
         
         public OBJ_LOG_DAY_KELET(string str) {
@@ -197,20 +202,20 @@ namespace KDSCommon.UDT
         [OracleObjectMappingAttribute("MISPAR_SIDURI")]
         public int MISPAR_SIDURI {
             get {
-                return this.m_MISPAR_SIDURI;
+                return this.m_MISPAR_SIDURI_LOG;
             }
             set {
-                this.m_MISPAR_SIDURI = value;
-                this.m_MISPAR_SIDURIIsNull = false;
+                this.m_MISPAR_SIDURI_LOG = value;
+                this.m_MISPAR_SIDURI_LOGIsNull = false;
             }
         }
         
         public bool MISPAR_SIDURIIsNull {
             get {
-                return this.m_MISPAR_SIDURIIsNull;
+                return this.m_MISPAR_SIDURI_LOGIsNull;
             }
             set {
-                this.m_MISPAR_SIDURIIsNull = value;
+                this.m_MISPAR_SIDURI_LOGIsNull = value;
             }
         }
         
@@ -247,7 +252,8 @@ namespace KDSCommon.UDT
                 this.m_SEDER_BIZUAIsNull = false;
             }
         }
-        
+
+      
         public bool SEDER_BIZUAIsNull {
             get {
                 return this.m_SEDER_BIZUAIsNull;
@@ -256,7 +262,33 @@ namespace KDSCommon.UDT
                 this.m_SEDER_BIZUAIsNull = value;
             }
         }
-        
+
+        [OracleObjectMappingAttribute("SADE")]
+        public int SADE
+        {
+            get
+            {
+                return this.m_SADE;
+            }
+            set
+            {
+                this.m_SADE  = value;
+                this.m_SADEIsNull = false;
+            }
+        }
+
+        public bool SADEIsNull
+        {
+            get
+            {
+                return this.m_SADEIsNull;
+            }
+            set
+            {
+                this.m_SADEIsNull = value;
+            }
+        }
+
         public virtual void FromCustomObject(Oracle.DataAccess.Client.OracleConnection con, System.IntPtr pUdt) {
             if ((TAARICHIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "TAARICH", this.TAARICH);
@@ -281,7 +313,10 @@ namespace KDSCommon.UDT
             if ((SEDER_BIZUAIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "SEDER_BIZUA", this.SEDER_BIZUA);
             }
-
+            if ((SADEIsNull == false))
+            {
+                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "SADE", this.SADE);
+            }
             Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "HEARA", this.HEARA);
           
         }
@@ -316,6 +351,11 @@ namespace KDSCommon.UDT
             this.SEDER_BIZUAIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "SEDER_BIZUA");
             if ((SEDER_BIZUAIsNull == false)) {
                 this.SEDER_BIZUA = ((int)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "SEDER_BIZUA")));
+            }
+            this.SADEIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "SADE");
+            if ((SADEIsNull == false))
+            {
+                this.SADE = ((int)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "SADE")));
             }
             this.HEARA = ((string)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "HEARA")));
         }

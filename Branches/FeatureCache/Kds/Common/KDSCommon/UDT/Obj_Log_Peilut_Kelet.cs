@@ -56,7 +56,11 @@ namespace KDSCommon.UDT
         private int m_SEDER_BIZUA;
         
         private bool m_SEDER_BIZUAIsNull;
-        
+
+        private int m_SADE;
+
+        private bool m_SADEIsNull;
+
         private int m_MEADKEN_ACHARON;
         
         private bool m_MEADKEN_ACHARONIsNull;
@@ -88,6 +92,7 @@ namespace KDSCommon.UDT
             this.m_SHAT_HATCHALAIsNull = true;
             this.m_MISPAR_SIDURI_LOGIsNull = true;
             this.m_SEDER_BIZUAIsNull = true;
+            this.m_SADEIsNull = true;
             this.m_MEADKEN_ACHARONIsNull = true;
             this.m_TAARICH_IDKUN_ACHARONIsNull = true;
             this.m_MAKAT_NESIAIsNull = true;
@@ -303,7 +308,32 @@ namespace KDSCommon.UDT
                 this.m_SEDER_BIZUAIsNull = value;
             }
         }
-        
+
+        [OracleObjectMappingAttribute("SADE")]
+        public int SADE
+        {
+            get
+            {
+                return this.m_SADE;
+            }
+            set
+            {
+                this.m_SADE = value;
+                this.m_SADEIsNull = false;
+            }
+        }
+
+        public bool SADEIsNull
+        {
+            get
+            {
+                return this.m_SADEIsNull;
+            }
+            set
+            {
+                this.m_SADEIsNull = value;
+            }
+        }
         [OracleObjectMappingAttribute("MEADKEN_ACHARON")]
         public int MEADKEN_ACHARON {
             get {
@@ -431,6 +461,10 @@ namespace KDSCommon.UDT
             if ((SEDER_BIZUAIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "SEDER_BIZUA", this.SEDER_BIZUA);
             }
+            if ((SADEIsNull == false))
+            {
+                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "SADE", this.SADE);
+            }
             if ((MEADKEN_ACHARONIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MEADKEN_ACHARON", this.MEADKEN_ACHARON);
             }
@@ -483,6 +517,12 @@ namespace KDSCommon.UDT
             this.SEDER_BIZUAIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "SEDER_BIZUA");
             if ((SEDER_BIZUAIsNull == false)) {
                 this.SEDER_BIZUA = ((int)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "SEDER_BIZUA")));
+            }
+
+            this.SADEIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "SADE");
+            if ((SADEIsNull == false))
+            {
+                this.SADE = ((int)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "SADE")));
             }
             this.MEADKEN_ACHARONIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "MEADKEN_ACHARON");
             if ((MEADKEN_ACHARONIsNull == false)) {

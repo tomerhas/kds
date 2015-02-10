@@ -1376,7 +1376,7 @@ namespace KdsShinuyim.ShinuyImpl
             return bSidurNihulTnua;
         }
 
-        protected void InsertLogDay(ShinuyInputData inputData, string oldVal,string newVal, int kod, string heara)
+        protected void InsertLogDay(ShinuyInputData inputData, string oldVal,string newVal, int kod, int? sade,string heara=null)
         {
             OBJ_LOG_DAY_KELET objDayLog = new OBJ_LOG_DAY_KELET();
             objDayLog.MISPAR_ISHI = inputData.iMisparIshi;
@@ -1387,11 +1387,14 @@ namespace KdsShinuyim.ShinuyImpl
              if (inputData.UserId.HasValue)
                     objDayLog.MEADKEN_ACHARON = (int)inputData.UserId;
              objDayLog.SEDER_BIZUA = ++inputData.iSederBizua;
-             objDayLog.HEARA = heara;
+             if (sade.HasValue)
+                 objDayLog.SADE = (int)sade;
+             if (heara != null)
+                 objDayLog.HEARA = heara.ToString();
             inputData.oCollLogsDay.Add(objDayLog);
         }
 
-        protected void InsertLogSidur(ShinuyInputData inputData,int mispar_sidur,DateTime shat_hatchala, string oldVal, string newVal, int kod, int indexSidur,string heara)
+        protected void InsertLogSidur(ShinuyInputData inputData,int mispar_sidur,DateTime shat_hatchala, string oldVal, string newVal, int kod, int indexSidur,int? sade,string heara=null)
         {
             OBJ_LOG_SIDUR_KELET objSidurLog = new OBJ_LOG_SIDUR_KELET();
             objSidurLog.MISPAR_ISHI = inputData.iMisparIshi;
@@ -1405,11 +1408,14 @@ namespace KdsShinuyim.ShinuyImpl
             if (inputData.UserId.HasValue)
                 objSidurLog.MEADKEN_ACHARON = (int)inputData.UserId;
             objSidurLog.SEDER_BIZUA = ++inputData.iSederBizua;
-            objSidurLog.HEARA = heara;
+            if(sade.HasValue)
+                objSidurLog.SADE = (int)sade;
+            if (heara!=null)
+                objSidurLog.HEARA = heara.ToString();
             inputData.oCollLogsSidur.Add(objSidurLog);
         }
 
-        protected void InsertLogPeilut(ShinuyInputData inputData, int mispar_sidur, DateTime shat_hatchala, DateTime shat_yetzia ,long makat,string oldVal, string newVal, int kod, int indexSidur, int indexPeilut ,string heara)
+        protected void InsertLogPeilut(ShinuyInputData inputData, int mispar_sidur, DateTime shat_hatchala, DateTime shat_yetzia ,long makat,string oldVal, string newVal, int kod, int indexSidur, int indexPeilut ,int? sade,string heara=null)
         {
             OBJ_LOG_PEILUT_KELET objPeilutLog = new OBJ_LOG_PEILUT_KELET();
             objPeilutLog.MISPAR_ISHI = inputData.iMisparIshi;
@@ -1425,6 +1431,10 @@ namespace KdsShinuyim.ShinuyImpl
             objPeilutLog.MAKAT_NESIA = makat;
             if (inputData.UserId.HasValue)
                 objPeilutLog.MEADKEN_ACHARON = (int)inputData.UserId;
+             if(sade != null)
+                objPeilutLog.SADE = (int)sade;
+            if (heara != null)
+                objPeilutLog.HEARA = heara.ToString();
             objPeilutLog.SEDER_BIZUA = ++inputData.iSederBizua;
             inputData.oCollLogsPeilut.Add(objPeilutLog);
         }
