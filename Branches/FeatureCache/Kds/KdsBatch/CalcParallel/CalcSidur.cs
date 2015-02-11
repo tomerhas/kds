@@ -6366,7 +6366,7 @@ namespace KdsBatch
                         bFirstSidur = true;
                     oPeilut.CalcRechiv217(iMisparSidur, dShatHatchalaSidur, bFirstSidur);
                     fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_PEILUT"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND KOD_RECHIV=" + clGeneral.enRechivim.DakotHagdara.GetHashCode().ToString() + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
-
+                    fErech = float.Parse(Math.Round(fErech, 2, MidpointRounding.AwayFromZero).ToString());
                     addRowToTable(clGeneral.enRechivim.DakotHagdara.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
 
                 }
@@ -7635,7 +7635,7 @@ namespace KdsBatch
                             if (drSidurim[I]["mezake_halbasha"].ToString() == "1" || drSidurim[I]["mezake_halbasha"].ToString() == "3")
                             {
                                 if (I == 0)
-                                    addRowToTable(clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode(), dShatHatchalaSidur, iMisparSidur, objOved.objParameters.iZmanHalbash);
+                                   fErech = objOved.objParameters.iParam307; // addRowToTable(clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode(), dShatHatchalaSidur, iMisparSidur, objOved.objParameters.iZmanHalbash);
                                 else
                                 {
                                     dShatGmarSidurKodem = dShatHatchalaSidur;
@@ -7645,9 +7645,12 @@ namespace KdsBatch
                                     else if ((I - 1) >= 0) dShatGmarSidurKodem = DateTime.Parse(drSidurim[I - 1]["shat_gmar_sidur"].ToString());
 
                                     fErech = Math.Min(objOved.objParameters.iZmanHalbash, float.Parse((dShatHatchalaSidur - dShatGmarSidurKodem).TotalMinutes.ToString()));
-                                    addRowToTable(clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
-
+                                   // addRowToTable(clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
                                 }
+                                if (objOved.Taarich >= objOved.objParameters.dParam309)
+                                    fErech = Math.Min(fErech, objOved.objParameters.iParam308);
+
+                                addRowToTable(clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
                             }
                         }
                     }

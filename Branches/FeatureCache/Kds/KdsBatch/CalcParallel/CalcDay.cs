@@ -4509,11 +4509,13 @@ namespace KdsBatch
                         if ((rowZmanHalbash[0]["halbasha"].ToString() == "1") || (rowZmanHalbash[0]["halbasha"].ToString() == "3"))
                         {
                             if ((rowMezakeHalbash[0]["mispar_sidur"].ToString() == RowKodem["mispar_sidur"].ToString()) && (rowMezakeHalbash[0]["shat_hatchala_sidur"].ToString() == RowKodem["shat_hatchala_sidur"].ToString()))
-                                fHalbashaTchilatYom = objOved.objParameters.iZmanHalbash;
+                                fHalbashaTchilatYom = objOved.objParameters.iParam307;
                             else fHalbashaTchilatYom = Math.Min(float.Parse((DateTime.Parse(rowMezakeHalbash[0]["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(RowKodem["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString()), objOved.objParameters.iZmanHalbash);
 
 
                         }
+                        if (objOved.Taarich >= objOved.objParameters.dParam309)
+                            fHalbashaTchilatYom=Math.Min(fHalbashaTchilatYom, objOved.objParameters.iParam308);
                     }
 
 

@@ -899,6 +899,29 @@ namespace KdsLibrary
                 sTmp = GetOneParam(302, dCardDate);
                 cls.dTaarichChishuvElementZar = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
+                //304
+                sTmp = GetOneParam(304, dCardDate);
+                cls.dParam304 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+                //305
+                sTmp = GetOneParam(305, dCardDate);
+                cls.dParam305 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+                //306
+                sTmp = GetOneParam(306, dCardDate);
+                cls.fParam306 = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
+                 //307
+                sTmp = GetOneParam(307, dCardDate);
+                cls.iParam307 = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //308
+                sTmp = GetOneParam(308, dCardDate);
+                cls.iParam308 = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //309
+                sTmp = GetOneParam(309, dCardDate);
+                cls.dParam309 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);
                 cls.fMichsatSaotChodshitET = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);

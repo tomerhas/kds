@@ -205,6 +205,12 @@ namespace KDSCommon.DataModels
         public int iMaxYamimGmulYeriET; // 300 מקס כמות ימים לקבל גמול ירי אגד תעבורה 
         public DateTime dParam301; // -301
         public DateTime dTaarichChishuvElementZar; // -302 תאריך התחלת חישוב זמן בגין אלמנטים זרים בנהגות  
+        public DateTime dParam304; //תאריך התחלה תוספת X אחוז רכיב דקות הגדרה )] 
+        public DateTime dParam305;// תאריך סיום תוספת X אחוז רכיב דקות הגדרה)]:
+        public float fParam306; // אחוז הגדלה רכיב דקות הגדרה
+        public int iParam307;//307
+        public int iParam308;//308
+        public DateTime dParam309; // -309
 
         public int iMaxNochehutVisaPnim; //228 - ויזה פנים -יום ראשון - מקסימום נוכחות
         public int iMinNochehutVisaPnim; //229 - ויזה פנים -יום ראשון - מינימום נוכחות

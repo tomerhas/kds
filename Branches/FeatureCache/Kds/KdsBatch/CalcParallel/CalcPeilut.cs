@@ -705,7 +705,10 @@ namespace KdsBatch
                          //}
                          if (drPeiluyot[J]["MAKAT_NESIA"].ToString().PadLeft(8, '0').Substring(0, 1) == "8" && drPeiluyot[J]["MAKAT_NESIA"].ToString().PadLeft(8, '0').Substring(6, 2) == "41")
                              bNoCalc = true;
-                         
+
+                         if (objOved.Taarich >= objOved.objParameters.dParam304 && objOved.Taarich <= objOved.objParameters.dParam305)
+                             fErech = fErech * objOved.objParameters.fParam306;
+                           
                          if (!bNoCalc)
                             addRowToTable(clGeneral.enRechivim.DakotHagdara.GetHashCode(), dShatHatchla, dShatYetzia, iMisparSidur, iMisparKnisa, fErech);
                      }
