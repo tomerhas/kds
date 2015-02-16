@@ -410,7 +410,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Xml\Sysman.xml" />
-    <None Include="Properties\PublishProfiles\KdsProd01Profile.pubxml" />
+    <None Include="Properties\PublishProfiles\KdsProd01.pubxml" />
     <None Include="Properties\PublishProfiles\KdsProd02.pubxml" />
     <None Include="Properties\PublishProfiles\KdsTestProfile.pubxml" />
     <None Include="Web.KdsProd01.config">
