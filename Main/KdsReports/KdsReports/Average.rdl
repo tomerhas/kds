@@ -683,6 +683,9 @@
                             <Parameter Name="P_MISPAR_ISHI">
                               <Value>=reportitems!mI.Value</Value>
                             </Parameter>
+                            <Parameter Name="P_RECHIV">
+                              <Value>=Parameters!P_RECHIV.Value</Value>
+                            </Parameter>
                           </Parameters>
                           <Top>2.26869cm</Top>
                           <Height>0.77376cm</Height>
@@ -1890,6 +1893,10 @@
           <QueryParameter Name="P_SECTORISUK">
             <Value>=Parameters!P_SECTORISUK.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="P_RECHIV">
+            <Value>=Parameters!P_RECHIV.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
           <QueryParameter Name="P_WORKERID">
             <Value>=Parameters!P_WORKERID.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
@@ -1978,6 +1985,10 @@
           </QueryParameter>
           <QueryParameter Name="P_SECTORISUK">
             <Value>=Parameters!P_SECTORISUK.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_RECHIV">
+            <Value>=Parameters!P_RECHIV.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="P_WORKERID">
             <Value>=Parameters!P_WORKERID.Value</Value>
@@ -2142,6 +2153,11 @@
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <Prompt>P SECTORISUK</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_RECHIV">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Prompt>P_RECHIV</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_WORKERID">
       <DataType>Integer</DataType>
