@@ -173,7 +173,7 @@
       <Name>KdsShinuyim</Name>
     </ProjectReference>
     <ProjectReference Include="..\KdsDataImport\KdsDataImport.vbproj">
-      <Project>{D4A152EC-27EB-4C8C-BDAB-4012680DA683}</Project>
+      <Project>{d4a152ec-27eb-4c8c-bdab-4012680da683}</Project>
       <Name>KdsDataImport</Name>
     </ProjectReference>
     <ProjectReference Include="..\KdsErrors\KdsErrors.csproj">
