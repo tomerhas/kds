@@ -96,12 +96,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KdsBatch">
-      <HintPath>..\KdsBatch\bin\KdsProd02\KdsBatch.dll</HintPath>
-    </Reference>
-    <Reference Include="KdsLibrary">
-      <HintPath>..\KdsLibrary\bin\KdsProd02\KdsLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -187,6 +181,14 @@
     <ProjectReference Include="..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
       <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
       <Name>DalOraInfra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsBatch\KdsBatch.csproj">
+      <Project>{482bda70-9af2-4498-9627-e9c43ee44fdf}</Project>
+      <Name>KdsBatch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
+      <Project>{b3e759ec-2a7b-4c38-9013-730c3a628aa8}</Project>
+      <Name>KdsLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\KdsWorkFlow\KdsWorkFlow.csproj">
       <Project>{8979010c-fe5c-4652-8027-fff2378353e3}</Project>
