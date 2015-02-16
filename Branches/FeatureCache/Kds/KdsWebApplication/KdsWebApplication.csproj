@@ -411,8 +411,12 @@
     </Content>
     <Content Include="Xml\Sysman.xml" />
     <None Include="Properties\PublishProfiles\KdsProd01Profile.pubxml" />
+    <None Include="Properties\PublishProfiles\KdsProd02.pubxml" />
     <None Include="Properties\PublishProfiles\KdsTestProfile.pubxml" />
     <None Include="Web.KdsProd01.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.KdsProd02.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.KdsTest.config">
@@ -1093,6 +1097,15 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'KdsProd01|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'KdsProd02|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>

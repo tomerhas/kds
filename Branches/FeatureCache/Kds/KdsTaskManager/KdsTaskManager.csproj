@@ -67,7 +67,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'KdsProd01|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\KdsProd01\</OutputPath>
+    <OutputPath>bin\KdsProd01\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'KdsProd02|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\KdsProd02\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -124,6 +133,12 @@
       <DependentUpon>App.config</DependentUpon>
     </None>
     <None Include="App.KdsTest.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
+    <None Include="App.KdsProd01.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
+    <None Include="App.KdsProd02.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
     <None Include="ClsDiagram.cd" />

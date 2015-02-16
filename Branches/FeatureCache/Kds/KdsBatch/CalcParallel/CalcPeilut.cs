@@ -398,7 +398,10 @@ namespace KdsBatch
                              {
                                  if (IsFirst)
                                  {
-                                     fErech += 1;
+                                     if (IsSidurBoker(iMisparSidur))
+                                        fErech += 2;
+                                     else
+                                         fErech += 1;
                                      IsFirst = false;
                                  }
                                  else
@@ -425,7 +428,17 @@ namespace KdsBatch
                  throw (ex);
              }
          }
-   
+         public bool IsSidurBoker(int mispar_sidur)
+         {
+             int sif;
+             if (mispar_sidur.ToString().Length > 4)
+             {
+                 sif = int.Parse(mispar_sidur.ToString().Substring(mispar_sidur.ToString().Length - 1, 1));
+                 if(sif ==1 || sif ==3 || sif ==5 || sif ==7 || sif ==9)
+                     return true;
+             }
+             return false;
+         }
          public void CalcRechiv214(int iMisparSidur,  DateTime dShatHatchalaSidur)
          {
             // DataTable dtPeiluyot;

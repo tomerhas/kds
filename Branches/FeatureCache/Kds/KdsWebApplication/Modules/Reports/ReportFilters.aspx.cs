@@ -871,6 +871,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.AverageSnifEzor:
                 case ReportName.Average:
                 case ReportName.Presence:
+                    if(rpt.NameReport == ReportName.Average) //להוריד כשמחזירים רכיב
+                        Params.Add("P_RECHIV", "");
                     //                Params.Add("P_WORKERVIEWLEVEL", ((int)PageModule.SecurityLevel).ToString());
                     Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
                     Params.Add("P_WORKERVIEWLEVEL", _sProfilUser);
