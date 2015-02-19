@@ -15,7 +15,7 @@
     <script src="../../Js/WorkCard.js" type="text/javascript"></script>
     <script src="../../Js/String.js" type="text/javascript"></script>
     <script src='../../js/jquery-ui.min.js' type='text/javascript'></script>  
-    <script src='../../js/KdsErrorMessage.js' type='text/javascript'></script>  
+  <%--  <script src='../../js/KdsErrorMessage.js' type='text/javascript'></script>  --%>
      
     <link type='text/css' href='../../css/jquery-ui.min.css' rel='stylesheet'/>
 </head>

@@ -32,7 +32,8 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
             drNew["Shat_Yetzia"] = string.IsNullOrEmpty(input.curPeilut.sShatYetzia) ? DateTime.MinValue : input.curPeilut.dFullShatYetzia;
             drNew["mispar_knisa"] =input.curPeilut.iMisparKnisa;
             drNew["makat_nesia"] = input.curPeilut.lMakatNesia;
-
+            if (input.curSidur.bSadotNosafim)
+                drNew["sadot_nosafim"] = 1;
             input.dtErrors.Rows.Add(drNew);
         }
     }

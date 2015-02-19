@@ -67,7 +67,7 @@ namespace KdsShinuyim.ShinuyImpl
                     }
                 }
 
-                oVal = inputData.oObjYameyAvodaUpd.TACHOGRAF.ToString();
+                oVal = inputData.oObjYameyAvodaUpd.TACHOGRAF.ToString() == "" ? "0" : inputData.oObjYameyAvodaUpd.TACHOGRAF.ToString();
                 //יש לבדוק שלפחות אחד הרכבים המדווחים באותו תאריך אינו מדגם 64  (דגם שאינו מכיל טכוגרף).
                 if (inputData.bSidurNahagut && (bNotDegem64 || CountPeiluyot == 0))
                 {

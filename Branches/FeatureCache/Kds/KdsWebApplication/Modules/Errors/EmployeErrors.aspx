@@ -129,7 +129,7 @@
                             <Texts SelectBoxCaption="" SelectAllNode="הכל" SelectAllStyle="Style='font-weight:bold; '"   />                          
                         </asp:DropDownCheckBoxes>
                       
-
+                   
                          <%--   </ContentTemplate>
                           
                           </asp:UpdatePanel>--%>
@@ -149,7 +149,8 @@
                    <asp:CustomValidator id="vldCmpDates" runat="server" ClientValidationFunction="CheckDates"  ErrorMessage="תאריך סיום קטן מתאריך התחלה" Display="Dynamic"    ></asp:CustomValidator>
                 </td>
                
-            </tr>                   
+            </tr>
+                 
          </table>  
                                 
    </fieldset>
@@ -283,63 +284,63 @@
            SetTextBox();
        }
 
-       function ClickHiddenButton(val) {
-           // debugger;
-           var arrValue = null;
-           var sThisVal = "";
-           var ipos = -1, i;
+       //function ClickHiddenButton(val) {
+       //    // debugger;
+       //    var arrValue = null;
+       //    var sThisVal = "";
+       //    var ipos = -1, i;
 
-           if (val == "-1") {
-               var allitems = $('#checks input:checkbox');
-               var items = $('#checks input:checked');
-               if (items.length < (allitems.length - 1))
-                   $('#caption')[0].innerText = "הכל";
-               else $('#caption')[0].innerText = "";
-           }
-           else {
-               if ($('#caption')[0].innerText != "") {
-                   if ($('#caption')[0].innerText.indexOf('הכל') > -1)
-                       $('#caption')[0].innerText = document.getElementById("ctl00_KdsContent_inputAllShgiot").value;
+       //    if (val == "-1") {
+       //        var allitems = $('#checks input:checkbox');
+       //        var items = $('#checks input:checked');
+       //        if (items.length < (allitems.length - 1))
+       //            $('#caption')[0].innerText = "הכל";
+       //        else $('#caption')[0].innerText = "";
+       //    }
+       //    else {
+       //        if ($('#caption')[0].innerText != "") {
+       //            if ($('#caption')[0].innerText.indexOf('הכל') > -1)
+       //                $('#caption')[0].innerText = document.getElementById("ctl00_KdsContent_inputAllShgiot").value;
 
-                   arrValue = $('#caption')[0].innerText.split(",");
-               }
+       //            arrValue = $('#caption')[0].innerText.split(",");
+       //        }
 
 
 
-               if (arrValue != null) {
-                   for (i = 0; i < arrValue.length; i++) {
-                       if (arrValue[i] == val)
-                           ipos = i;
-                   }
+       //        if (arrValue != null) {
+       //            for (i = 0; i < arrValue.length; i++) {
+       //                if (arrValue[i] == val)
+       //                    ipos = i;
+       //            }
 
-                   if (ipos > -1) {
-                       for (i = 0; i < arrValue.length; i++) {
-                           if (i != ipos)
-                               sThisVal += "," + arrValue[i];
-                       }
-                   }
-                   else {
-                       for (i = 0; i < arrValue.length; i++)
-                           if (Number(arrValue[i]) < Number(val))
-                               sThisVal += "," + arrValue[i];
-                           else {
-                               if ((sThisVal + ",").indexOf("," + val + ",") == -1)
-                                   sThisVal += "," + val;
-                               sThisVal += "," + arrValue[i];
-                           }
+       //            if (ipos > -1) {
+       //                for (i = 0; i < arrValue.length; i++) {
+       //                    if (i != ipos)
+       //                        sThisVal += "," + arrValue[i];
+       //                }
+       //            }
+       //            else {
+       //                for (i = 0; i < arrValue.length; i++)
+       //                    if (Number(arrValue[i]) < Number(val))
+       //                        sThisVal += "," + arrValue[i];
+       //                    else {
+       //                        if ((sThisVal + ",").indexOf("," + val + ",") == -1)
+       //                            sThisVal += "," + val;
+       //                        sThisVal += "," + arrValue[i];
+       //                    }
 
-                       if (sThisVal.indexOf("," + val + ",") == -1)
-                           sThisVal += "," + val;
-                   }
-                   $('#caption')[0].innerText = sThisVal.substring(1, sThisVal.length);
-               }
-               else {
-                   sThisVal = val;
-                   $('#caption')[0].innerText = sThisVal;
-               }
-           }
+       //                if (sThisVal.indexOf("," + val + ",") == -1)
+       //                    sThisVal += "," + val;
+       //            }
+       //            $('#caption')[0].innerText = sThisVal.substring(1, sThisVal.length);
+       //        }
+       //        else {
+       //            sThisVal = val;
+       //            $('#caption')[0].innerText = sThisVal;
+       //        }
+       //    }
           
-       }
+       //}
        //function ClickHiddenButton(val, clientId) {
        //    // debugger;
        //    var arrValue = null;

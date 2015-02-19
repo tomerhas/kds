@@ -25,8 +25,16 @@ namespace KdsShinuyim.ShinuyImpl
         {
             try
             {
+                string hashlama = inputData.oObjYameyAvodaUpd.HASHLAMA_LEYOM.ToString();
+                string sibat_hashlama = inputData.oObjYameyAvodaUpd.SIBAT_HASHLAMA_LEYOM.ToString();
+
                 if (!CheckIdkunRashemet("HASHLAMA_LEYOM", inputData))
                     UpdateHashlamaForYomAvoda(inputData);
+
+                if(hashlama != inputData.oObjYameyAvodaUpd.HASHLAMA_LEYOM.ToString())
+                    InsertLogDay(inputData, hashlama, inputData.oObjYameyAvodaUpd.HASHLAMA_LEYOM.ToString(), 48, 9);
+                if (sibat_hashlama != inputData.oObjYameyAvodaUpd.SIBAT_HASHLAMA_LEYOM.ToString())
+                    InsertLogDay(inputData, sibat_hashlama, inputData.oObjYameyAvodaUpd.SIBAT_HASHLAMA_LEYOM.ToString(), 48, 10);
             }
             catch (Exception ex)
             {
@@ -43,6 +51,7 @@ namespace KdsShinuyim.ShinuyImpl
             {
 
                 inputData.oObjYameyAvodaUpd.HASHLAMA_LEYOM = 0;
+                inputData.oObjYameyAvodaUpd.SIBAT_HASHLAMA_LEYOM = 0;
                 inputData.oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
 
                 //עבור מותאם בנהגות (מזהים לפי ערך 2 או 3 בקוד נתון 8 (ערך מותאמות)  בטבלת פרטי עובד) שהוא מותאם לזמן קצר (מזהים מותאם לזמן קצר לפי קיום ערך בפרמטר 20 (זמן מותאמות) בטבלת פרטי עובדים) שעבד ביום (לוקחים את כל זמני הסידורים,  מחשבים גמר פחות התחלה וסוכמים) פחות מזמן המותאמות שלו (הערך בפרמטר 20) וההפרש בין זמן העבודה לזמן המותאמות קטן מהערך בפרמטר 153 (מינימום השלמה חריגה למותאם בנהגות).
@@ -73,7 +82,7 @@ namespace KdsShinuyim.ShinuyImpl
                             inputData.oObjYameyAvodaUpd.HASHLAMA_LEYOM = 1;
                             inputData.oObjYameyAvodaUpd.SIBAT_HASHLAMA_LEYOM = 1;
                             inputData.oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                            InsertLogDay(inputData, "0", inputData.oObjYameyAvodaUpd.HASHLAMA_LEYOM.ToString(), 48, 9);
+                         
                         }
                     }
                 }

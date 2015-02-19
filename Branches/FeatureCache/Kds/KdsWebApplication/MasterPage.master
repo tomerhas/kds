@@ -30,7 +30,7 @@
    <%-- <asp:ScriptReference Path="~/Js/jquery.simplemodal.js" />--%>
      <asp:ScriptReference Path="~/Js/jquery.simplemodal.1.4.4.min.js" />   
     <asp:ScriptReference Path="~/Js/basic.js" />
-    <asp:ScriptReference Path="~/Js/KdsErrorMessage.js" />
+    <%--<asp:ScriptReference Path="~/Js/KdsErrorMessage.js" />--%>
   
 
     </Scripts>

@@ -56,7 +56,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                 for (int i = 0; i < dtParametrim.Rows.Count; i++)
                     Params.Attributes.Add("Param" + dtParametrim.Rows[i]["KOD_PARAM"].ToString(), dtParametrim.Rows[i]["ERECH_PARAM"].ToString());
             }
-            RefreshDDLShgiot_text();
+          //  RefreshDDLShgiot_text();
         }
         catch (Exception ex)
         {
@@ -239,16 +239,17 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             DDLShgiot.DataSource = dt;
             DDLShgiot.DataBind();
 
+         
           //  DDLShgiot.Texts.SelectBoxCaption = "בחר";
        //     DDLShgiot.Attributes.Add("onclick", "ClickHiddenButton();");
-            foreach (ListItem item in (DDLShgiot as ListControl).Items)
-            {
+           // foreach (ListItem item in (DDLShgiot as ListControl).Items)
+           // {
 
-                // item.Attributes.Add("valueAsNumber", item.Value);
-                item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value + ");");
-               // item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value + "," + DDLShgiot.ClientID+ ");");
-            }
-           DDLShgiot.Texts.OnClickSelectAll = "onclick='ClickHiddenButton(-1);'";
+           //     // item.Attributes.Add("valueAsNumber", item.Value);
+           //     item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value + ");");
+           //    // item.Attributes.Add("onclick", "ClickHiddenButton(" + item.Value + "," + DDLShgiot.ClientID+ ");");
+           // }
+           //DDLShgiot.Texts.OnClickSelectAll = "onclick='ClickHiddenButton(-1);'";
             if (InputHiddenBack.Value == "true")
             {
                 var shgiot = InputHiddenBack.Attributes["shgiot"];
