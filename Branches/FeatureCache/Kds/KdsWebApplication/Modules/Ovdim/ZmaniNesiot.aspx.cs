@@ -52,7 +52,7 @@ public partial class Modules_Ovdim_ZmaniNesiot : KdsLibrary.UI.KdsPage
        iMeafienIn = Int32.Parse(Request.QueryString["type".ToLower()]);
        sDate = Request.QueryString["date".ToLower()].ToString();
        dTarich = new DateTime(int.Parse(sDate.Substring(6,4)), int.Parse(sDate.Substring(3,2)), int.Parse(sDate.Substring(0,2)));
-       iKodMeafienIn = (Int32.Parse(Request.QueryString["Value".ToLower()]))/1000;
+       iKodMeafienIn = (Int32.Parse(Request.QueryString["Value".ToLower()]))/10000;
        iZmanMeafienIn = (Int32.Parse(Request.QueryString["Value".ToLower()])) - (iKodMeafienIn * 1000);
 
 

@@ -200,15 +200,15 @@ DropDownScript.prototype.updateSelectAll = function () {
             break;
         }
 
-    $("#" + this.divId + " input[type='checkbox']:first").attr("checked", allSelected);
+    $("#" + this.divId + " input[type='checkbox']:first").prop("checked", allSelected);
 }
 
 DropDownScript.prototype.selectAll = function () {
-    this.getItems().attr("checked", true);
+    this.getItems().prop("checked", true);
 }
 
 DropDownScript.prototype.deselectAll = function () {
-    this.getItems().attr("checked", false);
+    this.getItems().prop("checked", false);
 }
 
 DropDownScript.prototype.saveSelection = function () {
