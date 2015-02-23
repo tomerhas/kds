@@ -379,8 +379,10 @@ namespace KdsShinuyim.ShinuyImpl
 
                 if (!curSidur.bSidurMyuhad && sug_sidur != "69")
                 {
-                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM.ToString(), curSidur.dFullShatHatchala.ToString(), 27, index,16);
-                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM.ToString(), curSidur.dFullShatGmar.ToString(), 27, index, 17);
+                    if( oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM !=  curSidur.dFullShatHatchala)
+                        InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM.ToString(), curSidur.dFullShatHatchala.ToString(), 27, index,16);
+                    if (oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM != curSidur.dFullShatGmar)
+                        InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM.ToString(), curSidur.dFullShatGmar.ToString(), 27, index, 17);
                     
                     oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = curSidur.dFullShatHatchala;
                     oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = curSidur.dFullShatGmar;
