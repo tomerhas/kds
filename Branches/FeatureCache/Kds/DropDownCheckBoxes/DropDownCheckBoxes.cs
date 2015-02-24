@@ -95,24 +95,24 @@ namespace Saplin.Controls
         /// !!! Use in .aspx in Visual Studio 2008 instead of &lt;Style/&gt; to avoid 'Ambiguous match found' parsing error !!!
         /// CSS classes of HTML elements building the control, implicit width and height properties
         /// </summary>
-        [PersistenceMode(PersistenceMode.InnerProperty)]
-        public new DropDownStyle Style2
-        {
-            get
-            {
-                if (_style == null)
-                {
-                    _style = new DropDownStyle();
+        //[PersistenceMode(PersistenceMode.InnerProperty)]
+        //public new DropDownStyle Style2
+        //{
+        //    get
+        //    {
+        //        if (_style == null)
+        //        {
+        //            _style = new DropDownStyle();
 
-                    if (IsTrackingViewState)
-                    {
-                        ((IStateManager)_style).TrackViewState();
-                    }
-                }
+        //            if (IsTrackingViewState)
+        //            {
+        //                ((IStateManager)_style).TrackViewState();
+        //            }
+        //        }
 
-                return _style;
-            }
-        }
+        //        return _style;
+        //    }
+        //}
 
         /// <summary>
         /// Same as Style.SelectBoxCssClass

@@ -11,7 +11,7 @@ namespace Saplin.Controls
     /// </summary>
     public class DropDownTexts : StateManagedComplexProperty
     {
-        private StateBag viewState;
+       // private StateBag viewState;
         
         public DropDownTexts()
         {

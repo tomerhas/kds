@@ -288,7 +288,7 @@ function GetDateDDMMYYYY(dDate){
    function SimunExtendeIdClose(sorce, evarg) {
       //debugger;
        flag = false;
-       if (event ==null || event.keyCode != 13)
+     //  if (event ==null || event.keyCode != 13)
         GetOvedNameById();
    }
 
