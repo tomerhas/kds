@@ -52,7 +52,7 @@
         <table cellpadding="2" cellspacing="0" border="0" style="margin-top:4px"  >
             <tr>
                 <td>
-                    <asp:UpdatePanel ID="upRdoId" runat="server" RenderMode="Inline">
+                    <asp:UpdatePanel ID="upRdoId" runat="server" RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
                         <table>
                             <tr>                                
@@ -70,7 +70,7 @@
                                             EnableCaching="true"  CompletionListCssClass="ACLst"
                                             CompletionListHighlightedItemCssClass="ACLstItmSel"
                                             CompletionListItemCssClass="ACLstItmE"   
-                                            OnClientHidden="SimunExtendeIdClose"  OnClientShowing="SimunExtendeOpen"  >                         
+                                            OnClientHidden="SimunExtendeIdClose"  OnClientShowing="SimunExtendeOpen"  >                        
                                           </cc1:AutoCompleteExtender>                      
                                       <%-- </ContentTemplate>                       
                                     </asp:UpdatePanel>    --%>       
@@ -373,8 +373,8 @@
            }
 
            function continue_click() {
-            //   debugger;
-               var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value
+             
+              var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value;
               // var name = document.getElementById("ctl00_KdsContent_txtName").value
                wsGeneral.GetOvedSnifAndUnit(Number(iMisparIshi), GetOvedSnifAndUnitSucceeded);
                document.getElementById("ctl00_KdsContent_ddlMonth").focus();

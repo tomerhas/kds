@@ -286,8 +286,10 @@ function GetDateDDMMYYYY(dDate){
        flag = true;
    }
    function SimunExtendeIdClose(sorce, evarg) {
+      //debugger;
        flag = false;
-       GetOvedNameById();
+       if (event ==null || event.keyCode != 13)
+        GetOvedNameById();
    }
 
    function SimunExtendeNameClose(sorce, evarg) {
@@ -295,7 +297,7 @@ function GetDateDDMMYYYY(dDate){
        GetOvedIdByName();
    }
    function GetOvedNameById() {
-    //   debugger;
+      // debugger;
        if (flag == false) {
            var iKodOved = document.getElementById(oTxtId).value;
            if (iKodOved != "") {
@@ -346,7 +348,8 @@ function GetDateDDMMYYYY(dDate){
    }
 
    function GetOvedNameByIdSucceeded(result) {
-      // alert(result);
+       //  alert(result);
+      // debugger;
        if (result == '') {
            alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');
            document.getElementById(oTxtId).focus();
@@ -354,6 +357,7 @@ function GetDateDDMMYYYY(dDate){
            document.getElementById(oTxtId).value = "";
        }
        else {
+          // $('#ctl00_KdsContent_txtName').val(result);
            document.getElementById(oTxtName).value = result;
            continue_click();
        }
