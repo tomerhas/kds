@@ -572,6 +572,7 @@
     <ReportParameter Name="P_RECHIV">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
       <Prompt>P_RECHIV</Prompt>
     </ReportParameter>
   </ReportParameters>
