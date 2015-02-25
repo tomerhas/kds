@@ -348,13 +348,13 @@ namespace KdsLibrary.Utils.Reports
             }
             Ddl.DataSource = GetListValueDataSource(filter);
             Ddl.DataBind();
-            if (filter.RunAtServer)
-            {
+           // if (filter.RunAtServer)
+            //{
 
-                Ddl.Attributes.Add("onchange", "FireControlChanged()");
+              //  Ddl.Attributes.Add("onchange", "FireControlChanged()");
                Ddl.Attributes.Add("runat", "server");
             
-            }
+           // }
             _Controls.Add(Ddl.ID);
 
             return Ddl;
