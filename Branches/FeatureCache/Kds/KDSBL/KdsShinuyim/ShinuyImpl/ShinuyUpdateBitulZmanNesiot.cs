@@ -41,9 +41,9 @@ namespace KdsShinuyim.ShinuyImpl
                 if (oZmanHaloch != inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH.ToString())
                     InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH.ToString(), 42, 40);
                 if (oZmanChazor != inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR.ToString())
-                    InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR.ToString(), 42, 41);
+                    InsertLogDay(inputData, oZmanChazor, inputData.oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR.ToString(), 42, 41);
                 if (oBitulNesiot != inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString())
-                    InsertLogDay(inputData, oZmanHaloch, inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString(), 42, 4);
+                    InsertLogDay(inputData, oBitulNesiot, inputData.oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString(), 42, 4);
             }
              catch (Exception ex)
             {
