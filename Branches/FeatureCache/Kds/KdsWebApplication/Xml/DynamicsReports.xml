@@ -364,7 +364,9 @@
       </Filter>
 
       <Filter ParameterName="P_KOD_YECHIDA" Caption="יחידה ארגונית" BoxeType="DropDownCheckBoxes"  DataType="System.Int32">
-        <DropDownList QueryType="Select"  Select="Select Kod_Yechida, Teur_Yechida From CTB_Yechida order by 2" ValueField="Kod_Yechida" TextField="Teur_Yechida" />
+         <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_yechida" ValueField="Kod_Yechida" TextField="Teur_Yechida" >
+        </DropDownList>
+        <!--<DropDownList QueryType="Select"  Select="Select Kod_Yechida, Teur_Yechida From CTB_Yechida order by 2" ValueField="Kod_Yechida" TextField="Teur_Yechida" />-->
       </Filter>
 
 
