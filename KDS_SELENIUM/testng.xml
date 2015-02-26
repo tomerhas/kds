@@ -1,0 +1,31 @@
+<suite name="Suite">
+
+    <test name="KDS">
+    
+	<parameter name="sMispar_ishi" value="87903"/>
+	
+	<parameter name="CCC" value="87903"/>
+
+		<classes>
+
+		    <class name="automationFramework.Open_Work_Card" />
+
+		</classes>
+
+    </test>
+
+
+    <test name="KDS">
+    
+	<parameter name="sMispar_ishi" value="5465"/>
+	
+	<parameter name="CCC" value="87903"/>
+
+		<classes>
+
+		    <class name="automationFramework.Open_Work_Card" />
+
+		</classes>
+
+    </test>
+</suite>
