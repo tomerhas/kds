@@ -76,6 +76,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
 
             NewSidur oNewSidurim = FindSidurOnHtNewSidurim(curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData.htNewSidurim);
 
+           
             oNewSidurim.SidurIndex = iSidurIndex;
             oNewSidurim.SidurOld = curSidur.iMisparSidur;
 
@@ -93,6 +94,9 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
             oNewSidurim.ShatHatchalaNew = curSidur.dFullShatHatchala;
 
             UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpdRecorder);
+
+            InsertLogSidur(inputData, oNewSidurim.SidurNew, curSidur.dFullShatHatchala, oNewSidurim.SidurOld.ToString(), oNewSidurim.SidurNew.ToString(), 2, iSidurIndex, 13, null);
+
 
             DataRow[] drSidurMeyuchad;
             drSidurMeyuchad = inputData.dtTmpSidurimMeyuchadim.Select("mispar_sidur=" + oNewSidurim.SidurNew);
@@ -122,6 +126,8 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
 
                     //שינוי 02 - שלב שני
                     FixedMisparMatalatVisa02(oObjPeilutOvdimUpd, ref oPeilut, curSidur, oNewSidurim.SidurOld, SourceObject, inputData);
+
+                    InsertLogPeilut(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, oNewSidurim.SidurOld.ToString(), oNewSidurim.SidurNew.ToString(), 2, iSidurIndex, j, 13, null);
                   //?  oSidur.htPeilut[j] = oPeilut;
                 }
                 //UpdatePeiluyotMevutalotYadani(iSidurIndex,oNewSidurim, oObjSidurimOvdimUpd);
@@ -152,6 +158,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
             PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oObjPeilutOvdimIns, inputData.dtTmpMeafyeneyElements);
             oPeilutNew.iBitulOHosafa = 4;
             curSidur.htPeilut.Insert(0, 1, oPeilutNew);
+            InsertLogPeilut(inputData, oNewSidurim.SidurNew, curSidur.dFullShatHatchala, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "","",2, 0, 0, null, "hosafat peilut visa");
         }
         catch (Exception ex)
         {

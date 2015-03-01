@@ -94,6 +94,7 @@ namespace KdsShinuyim.ShinuyImpl
             OBJ_PEILUT_OVDIM oObjPeilutUpd;
             PeilutDM oPeilut;
             SourceObj SourceObject;
+            string oldVal;
             try
             {
                 if (!CheckIdkunRashemet("SHAT_HATCHALA", curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData))
@@ -103,11 +104,14 @@ namespace KdsShinuyim.ShinuyImpl
                         oPeilut = (PeilutDM)curSidur.htPeilut[0];
                         if (oPeilut.dFullShatYetzia.AddMinutes(-oPeilut.iKisuyTor) > curSidur.dFullShatHatchala)
                         {
+                            oldVal = curSidur.dFullShatHatchala.ToString();
                             NewSidur oNewSidurim = FindSidurOnHtNewSidurim(curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData.htNewSidurim);
 
                             oNewSidurim.SidurIndex = i;
                             oNewSidurim.SidurNew = curSidur.iMisparSidur;
                             oNewSidurim.ShatHatchalaNew = curSidur.dFullShatHatchala.AddMinutes(Math.Min(Math.Abs((datePrevShatGmar - dateCurrShatHatchala).TotalMinutes), (oPeilut.dFullShatYetzia.AddMinutes(-oPeilut.iKisuyTor) - curSidur.dFullShatHatchala).TotalMinutes));
+
+                            InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oldVal.ToString(), oNewSidurim.ShatHatchalaNew.ToString(), 8, i, 14, null);
 
                             UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpdRecorder);
                             for (int j = 0; j < curSidur.htPeilut.Count; j++)
@@ -116,7 +120,11 @@ namespace KdsShinuyim.ShinuyImpl
 
                                 if (!CheckPeilutObjectDelete(i, j, inputData))
                                 {
+
                                     oObjPeilutUpd = GetUpdPeilutObject(i, oPeilut, inputData, oObjSidurimOvdimUpd, out SourceObject);
+
+                                    InsertLogPeilut(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, curSidur.dFullShatHatchala.ToString(), oNewSidurim.ShatHatchalaNew.ToString(), 8,i, j, 14, null);
+                                   
                                     if (SourceObject == SourceObj.Insert)
                                     {
                                         oObjPeilutUpd.SHAT_HATCHALA_SIDUR = oNewSidurim.ShatHatchalaNew;
@@ -126,6 +134,8 @@ namespace KdsShinuyim.ShinuyImpl
                                         oObjPeilutUpd.NEW_SHAT_HATCHALA_SIDUR = oNewSidurim.ShatHatchalaNew;
                                         oObjPeilutUpd.UPDATE_OBJECT = 1;
                                     }
+
+                                    
                                 }
 
                             }
@@ -153,17 +163,23 @@ namespace KdsShinuyim.ShinuyImpl
         private void ChangeShatGmar(ShinuyInputData inputData, SidurDM oSidurPrev, DateTime datePrevShatGmar, DateTime dateCurrShatHatchala, OBJ_SIDURIM_OVDIM oPrevObjSidurimOvdimUpd, int i)
         {
             PeilutDM oPeilut;
+            string oldVal;
             try{
                 if (!CheckIdkunRashemet("SHAT_GMAR", oSidurPrev.iMisparSidur, oSidurPrev.dFullShatHatchala, inputData))
                 {
                     if (oSidurPrev.htPeilut.Values.Count > 0)
                     {
+                        oldVal = oSidurPrev.dFullShatGmar.ToString();
                         oPeilut = (PeilutDM)oSidurPrev.htPeilut[oSidurPrev.htPeilut.Values.Count - 1];
 
                         oPrevObjSidurimOvdimUpd.SHAT_GMAR = oSidurPrev.dFullShatGmar.AddMinutes(-(Math.Min(Math.Abs((datePrevShatGmar - dateCurrShatHatchala).TotalMinutes), Math.Abs((oSidurPrev.dFullShatGmar - oPeilut.dFullShatYetzia).TotalMinutes))));
                         oPrevObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                         oSidurPrev.dFullShatGmar = oPrevObjSidurimOvdimUpd.SHAT_GMAR;
-                        oSidurPrev.sShatGmar = oSidurPrev.dFullShatGmar.ToString("HH:mm");   
+                        oSidurPrev.sShatGmar = oSidurPrev.dFullShatGmar.ToString("HH:mm");
+
+                        InsertLogSidur(inputData, oSidurPrev.iMisparSidur, oSidurPrev.dFullShatHatchala, oldVal.ToString(), oSidurPrev.dFullShatGmar.ToString(), 8, i, 15, null);
+
+                       
                     }
                 }
             }

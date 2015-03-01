@@ -123,7 +123,8 @@ namespace KdsShinuyim.ShinuyImpl
                     oObjSidurimOvdimUpd.HASHLAMA = 0;
                     oObjSidurimOvdimUpd.OUT_MICHSA = 0;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-               
+
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, iNewMisparMatala.ToString(), iNewMisparSidur.ToString(), 1, iSidurIndex,13 , null);
 
                     for (int j = 0; j < ((SidurDM)(inputData.htEmployeeDetails[iSidurIndex])).htPeilut.Count; j++)
                     {
@@ -147,6 +148,8 @@ namespace KdsShinuyim.ShinuyImpl
                         }
                         oPeilut.iPeilutMisparSidur = iNewMisparSidur;
                         oPeilut.lMisparMatala = iNewMisparMatala;
+
+                        InsertLogPeilut(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, iNewMisparMatala.ToString(), iNewMisparSidur.ToString(), 1, iSidurIndex, j, 13, null);
                     }
                     //UpdatePeiluyotMevutalotYadani(iSidurIndex, oNewSidurim, oObjSidurimOvdimUpd);
                    

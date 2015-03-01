@@ -253,6 +253,8 @@ namespace KdsShinuyim.ShinuyImpl
                                 inputData.oCollPeilutOvdimDel.Add(oObjPeilutDel);
 
                                 oSidur.htPeilut.RemoveAt(j);
+                                InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, "", "", 5, i, j, null, "peilut deleted");
+                               
                                 j -= 1;
                                 for (l = 0; l <= inputData.oCollPeilutOvdimUpdRecorder.Count - 1; l++)
                                 {

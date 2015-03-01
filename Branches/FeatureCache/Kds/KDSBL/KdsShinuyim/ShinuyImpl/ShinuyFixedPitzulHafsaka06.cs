@@ -164,12 +164,16 @@ namespace KdsShinuyim.ShinuyImpl
 
                 if (bSidurNahagut && bNextSidurNahagut)
                 {
+                    InsertLogSidur(inputData, oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala, oObjSidurimOvdimUpd.PITZUL_HAFSAKA.ToString(), "1", 6, 0, 22, null);
+                    
                     oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 1;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                     oSidurFirst.sPitzulHafsaka = "1";
                 }
                 else if (inputData.oMeafyeneyOved.IsMeafyenExist(41) && (oSidurFirst.bSidurTafkid && oSidurFirst.iZakayLepizul > 0 && oNextSidur.bSidurTafkid && oNextSidur.iZakayLepizul > 0))
                 {
+                    InsertLogSidur(inputData, oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala, oObjSidurimOvdimUpd.PITZUL_HAFSAKA.ToString(), "1", 6, 0, 22, null);
+                    
                     oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 1;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                     oSidurFirst.sPitzulHafsaka = "1";

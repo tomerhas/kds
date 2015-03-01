@@ -45,7 +45,7 @@ namespace KdsShinuyim.ShinuyImpl
                     else
                     {
                         bool bHayavHityazvut=false; 
-                        CheckHovatHityazvut(curSidur, oObjSidurimOvdimUpd, 1, true, inputData.CardDate, ref bHayavHityazvut);
+                        CheckHovatHityazvut(inputData,curSidur, oObjSidurimOvdimUpd, 1, true, inputData.CardDate, ref bHayavHityazvut);
                         if (bHayavHityazvut)
                             if (!bFirstHayavHityazvut)
                                 bFirstHayavHityazvut = true;
@@ -75,14 +75,16 @@ namespace KdsShinuyim.ShinuyImpl
                 if (!bFirstHayavHityazvut)
                 { // מחפשים סידור שמצריך התייצבות )
 
-                    bNidrashHityazvut = CheckHovatHityazvut(curSidur, oObjSidurimOvdimUpd, 1, false, inputData.CardDate,ref bHayavHityazvut);
+                    bNidrashHityazvut = CheckHovatHityazvut(inputData,curSidur, oObjSidurimOvdimUpd, 1, false, inputData.CardDate, ref bHayavHityazvut);
                     if (bHayavHityazvut) bFirstHayavHityazvut = true;
 
                     if (bNidrashHityazvut)
                     {
+                        InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT.ToString(), "1", 23, iIndexSidur, null, "NIDRESHET_HITIATZVUT");
+                        
                         oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT = 1;
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-
+                        
                         CheckHityazvut(curSidur, oObjSidurimOvdimUpd, inputData);
                     }
                 }
@@ -100,11 +102,12 @@ namespace KdsShinuyim.ShinuyImpl
 
                     if (oSidurNidrashHityatvut != null)
                     {
-                        bNidrashHityazvut = CheckHovatHityazvut(curSidur, oObjSidurimOvdimUpd, 2,  false, inputData.CardDate,ref bHayavHityazvut);
+                        bNidrashHityazvut = CheckHovatHityazvut(inputData,curSidur, oObjSidurimOvdimUpd, 2,  false, inputData.CardDate,ref bHayavHityazvut);
                         if (bNidrashHityazvut)
                         {
                             bSecondHayavHityazvut = true;
-
+                            InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT.ToString(), "2", 23, iIndexSidur, null, "NIDRESHET_HITIATZVUT");
+                       
                             oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT = 2;
                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                             CheckHityazvut(curSidur,  oObjSidurimOvdimUpd,inputData);
@@ -114,6 +117,7 @@ namespace KdsShinuyim.ShinuyImpl
                     }
                 }
 
+                       
                 curSidur.iPtorMehitiatzvut = oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT;
                 curSidur.iNidreshetHitiatzvut = oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT;
                 curSidur.dShatHitiatzvut = oObjSidurimOvdimUpd.SHAT_HITIATZVUT;
@@ -164,7 +168,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private bool CheckHovatHityazvut(SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, int iHityazvut, bool bHaveIdkunRashamet, DateTime CardDate,ref bool bHayavHityazvut)
+        private bool CheckHovatHityazvut(ShinuyInputData inputData,SidurDM curSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, int iHityazvut, bool bHaveIdkunRashamet, DateTime CardDate, ref bool bHayavHityazvut)
         {
             bool bHaveMatala;
             bool bNidrashHityazvut = false;
@@ -191,6 +195,9 @@ namespace KdsShinuyim.ShinuyImpl
                         bHayavHityazvut = true;
                         if (curSidur.sHovatHityatzvut == "" && !bHaveIdkunRashamet)
                         {
+                            InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT.ToString(), "1", 23, 0, null, "PTOR_MEHITIATZVUT");
+                            InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT.ToString(), iHityazvut.ToString(), 23, 0, null, "NIDRESHET_HITIATZVUT");
+                            
                             oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT = 1;
                             oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT = iHityazvut;
                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
@@ -214,6 +221,9 @@ namespace KdsShinuyim.ShinuyImpl
                     {
                         if (drSugSidur[0]["lo_nidreshet_hityazvut"].ToString() != "" && !bHaveIdkunRashamet)
                         {
+                            InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT.ToString(), "1", 23, 0, null, "PTOR_MEHITIATZVUT");
+                            InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT.ToString(), iHityazvut.ToString(), 23, 0, null, "NIDRESHET_HITIATZVUT");
+                            
                             oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT = 1;
                             oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT = iHityazvut;
                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
@@ -270,6 +280,10 @@ namespace KdsShinuyim.ShinuyImpl
                                 }
                                 if (iPeletTnua == 2)
                                 {
+                                    if( oObjSidurimOvdimUpd.SHAT_HITIATZVUT.ToString() != oSidurHityatvut.dFullShatHatchala.ToString())
+                                        InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_HITIATZVUT.ToString(),oSidurHityatvut.dFullShatHatchala.ToString(), 23, 0, null, "NIDRESHET_HITIATZVUT");
+                                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN.ToString(), "1", 23, 0, null, "HACHTAMA_BEATAR_LO_TAKIN");
+                
                                     oObjSidurimOvdimUpd.SHAT_HITIATZVUT = oSidurHityatvut.dFullShatHatchala;
                                     oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN = "1";
                                     if (iCountHachtamaLoTakin == 0) bCheckSidurNosaf = true;
@@ -283,6 +297,8 @@ namespace KdsShinuyim.ShinuyImpl
                 {
                     if (CheckPtorHityatzvutTnua(curSidur, "",inputData) == 0)
                     {
+                        InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT.ToString(), "1", 23, 0, null, "PTOR_MEHITIATZVUT");
+                
                         oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT = 1;
                     }
                 }

@@ -75,11 +75,15 @@ namespace KdsShinuyim.ShinuyImpl
         private void UdateKonenutGrira(SidurDM curSidur,ShinuyInputData inputData, SidurDM oSidurKonenutGrira, OBJ_SIDURIM_OVDIM oObjSidurimConenutGriraUpd)
         {
             float Minutes, iNumSidur2;
-
+            string oldGmar, oldHatchala;
             try{
                 oObjSidurimConenutGriraUpd.UPDATE_OBJECT = 1;
                 Minutes = float.Parse((oSidurKonenutGrira.dFullShatGmar - oSidurKonenutGrira.dFullShatHatchala).TotalMinutes.ToString());
                 iNumSidur2 = int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().PadLeft(5, '0').Substring(0, 2));
+               
+                oldHatchala = oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM.ToString();
+                oldGmar = oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM.ToString();
+
                 if (Minutes > inputData.oParam.iMinZmanGriraDarom)
                 {
                     if (iNumSidur2 >= 25 || iNumSidur2 == 4 || iNumSidur2 == 5 || (iNumSidur2 == 22 &&
@@ -120,6 +124,12 @@ namespace KdsShinuyim.ShinuyImpl
                     oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
                     oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatGmar;
                 }
+
+                if( oldHatchala != oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM.ToString())
+                    InsertLogSidur(inputData, oSidurKonenutGrira.iMisparSidur, oSidurKonenutGrira.dFullShatHatchala, oldHatchala, oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM.ToString(), 3, 0, 16, null);
+                if(oldGmar != oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM.ToString())
+                    InsertLogSidur(inputData, oSidurKonenutGrira.iMisparSidur, oSidurKonenutGrira.dFullShatHatchala, oldGmar, oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM.ToString(), 3, 0, 17, null);
+
             }
             catch (Exception ex)
             {
@@ -161,7 +171,7 @@ namespace KdsShinuyim.ShinuyImpl
 
                                 if (iTypeGrira == 2)
                                 {
-                                    SetShatGmarGrira(oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
+                                    SetShatGmarGrira(inputData,  oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
                                     if (oObjSidurGriraUpd.UPDATE_OBJECT == 1)
                                     {
                                         oSidurGrira.dFullShatGmar = oObjSidurGriraUpd.SHAT_GMAR;
@@ -210,7 +220,7 @@ namespace KdsShinuyim.ShinuyImpl
                                         }
 
                                         if (iTypeGrira == 2)
-                                            SetShatGmarGrira( oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
+                                            SetShatGmarGrira(inputData, oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
                                         if (iTypeGrira == 1)
                                         {
                                          //   SetBitulZmanNesiot(oObjSidurGriraUpd, oSidurKonenutGrira, oSidurGrira);
@@ -285,9 +295,14 @@ namespace KdsShinuyim.ShinuyImpl
 
                 if (oObjSidurimOvdimUpd != null)
                 {
+                    InsertLogSidur(inputData, oSidurKonenutGrira.iMisparSidur, oSidurKonenutGrira.dFullShatHatchala, oObjSidurimOvdimUpd.LO_LETASHLUM.ToString(), "1", 3, 0, 25, null);
+                    InsertLogSidur(inputData, oSidurKonenutGrira.iMisparSidur, oSidurKonenutGrira.dFullShatHatchala, oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM.ToString(), "7", 3, 0, null, "KOD_SIBA_LO_LETASHLUM");
+
                     oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
                     oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 7;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+
+
                     // oCollSidurimOvdimUpd.Add(oObjSidurimOvdimUpd);
                 }
             }
@@ -297,13 +312,14 @@ namespace KdsShinuyim.ShinuyImpl
             }
         }
 
-        private void SetShatGmarGrira(OBJ_SIDURIM_OVDIM oObjSidurGriraUpd, SidurDM oSidurKonenutGrira, SidurDM oSidurGrira)
+        private void SetShatGmarGrira(ShinuyInputData inputData,OBJ_SIDURIM_OVDIM oObjSidurGriraUpd, SidurDM oSidurKonenutGrira, SidurDM oSidurGrira)
         {
             int iMerchav;
             float fTime;
+            string oldVal;
             try
             {
-
+                oldVal = oSidurKonenutGrira.dFullShatHatchala.ToString();
                 iMerchav = int.Parse((oSidurKonenutGrira.iMisparSidur).ToString().PadLeft(5, '0').Substring(0, 2)); 
 
                 fTime = float.Parse((oSidurGrira.dFullShatGmar - oSidurKonenutGrira.dFullShatHatchala).TotalMinutes.ToString());
@@ -320,6 +336,8 @@ namespace KdsShinuyim.ShinuyImpl
                     oObjSidurGriraUpd.UPDATE_OBJECT = 1;
                 }
 
+                if(oldVal != oObjSidurGriraUpd.SHAT_GMAR.ToString())
+                    InsertLogSidur(inputData, oSidurGrira.iMisparSidur, oSidurGrira.dFullShatHatchala, oldVal, oObjSidurGriraUpd.SUG_HASHLAMA.ToString(), 3, 0, 15,null);
             }
             catch (Exception ex)
             {
@@ -452,6 +470,7 @@ namespace KdsShinuyim.ShinuyImpl
             int iZmanHashlama = 0;
             int iMerchav = 0;
             float fSidurTime = 0;
+            string oldVal;
             try
             {
                 //אם זוהי גרירה ראשונה בפועל (זיהוי הסידור לפי הלוגיקה בסעיף סימון כוננות גרירה לא לתשלום) בתוך זמן סידור כוננות גרירה (זיהוי הסידור לפי הלוגיקה בסעיף סימון כוננות גרירה לא לתשלום) ואם סידור הכוננות הוא "מרחב צפון" (קוד הסניף שהוא 2 הספרות הראשונות של מספר הסידור קטן מ-25) וזמן הסידור (גמר - התחלה) פחות מהזמן המוגדר בפרמטר 164 (זמן גרירה מינימלי באזור צפון) אזי יש לסמן "2" בשדה "קוד השלמה". 
@@ -462,6 +481,7 @@ namespace KdsShinuyim.ShinuyImpl
 
                     fSidurTime = float.Parse((oSidurGrira.dFullShatGmar - oSidurGrira.dFullShatHatchala).TotalMinutes.ToString());
 
+                    oldVal = oObjSidurGriraUpd.SUG_HASHLAMA.ToString();
                     if (iGriraNum == 1) //גרירה ראשונה
                     {
                         if ((iMerchav < enMerchav.Tzafon.GetHashCode()) && (fSidurTime < inputData.oParam.iMinZmanGriraTzafon))
@@ -506,6 +526,9 @@ namespace KdsShinuyim.ShinuyImpl
 
                         }
                     }
+
+                    if(oldVal != oObjSidurGriraUpd.SUG_HASHLAMA.ToString())
+                        InsertLogSidur(inputData, oSidurGrira.iMisparSidur, oSidurGrira.dFullShatHatchala, oldVal, oObjSidurGriraUpd.SUG_HASHLAMA.ToString(), 3, 0, null, "SUG_HASHLAMA");
 
                 }
             }

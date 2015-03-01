@@ -120,7 +120,9 @@ namespace KdsShinuyim.ShinuyImpl
 
                 if (bSidurOkev)
                 {
-                     Marge(inputData, curSidur, oSidurPutzal);
+                    
+                    Marge(inputData, curSidur, oSidurPutzal);
+                    InsertLogSidur(inputData, oSidurPutzal.iMisparSidur, oSidurPutzal.dFullShatHatchala, "", "", 28, 0, null, "sidur deleted");
                     inputData.htEmployeeDetails.RemoveAt(I);
                     iCountSidurim -= 1;
                     I -= 1;
@@ -163,6 +165,7 @@ namespace KdsShinuyim.ShinuyImpl
                         inputData.oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
 
                     //    PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oPeilut.lMakatNesia, inputData.dtTmpMeafyeneyElements);
+                        InsertLogPeilut(inputData, oSidurPutzal.iMisparSidur, oSidurPutzal.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, "", "", 28, 0, 0, null,"hosafat peilut");
 
                         UpdatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oPeilut.lMakatNesia, inputData.dtTmpMeafyeneyElements);
 

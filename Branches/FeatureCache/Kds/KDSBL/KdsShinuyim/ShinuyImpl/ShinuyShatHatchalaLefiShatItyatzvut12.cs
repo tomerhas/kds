@@ -99,20 +99,28 @@ namespace KdsShinuyim.ShinuyImpl
             {
                 if (dShatHatchalaNew != curSidur.dFullShatHatchala)
                 {
+                   
                     NewSidur oNewSidurim = FindSidurOnHtNewSidurim(curSidur.iMisparSidur, curSidur.dFullShatHatchala, inputData.htNewSidurim);
 
                     oNewSidurim.SidurIndex = iSidurIndex;
                     oNewSidurim.SidurNew = curSidur.iMisparSidur;
                     oNewSidurim.ShatHatchalaNew = dShatHatchalaNew;
 
+                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, curSidur.dFullShatHatchala.ToString(), dShatHatchalaNew.ToString(), 12, iSidurIndex, 14, null);
+
+
                     UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpdRecorder);
                     //עדכון שעת התחלה סידור של כל הפעילויות לסידור
                     for (int j = 0; j < curSidur.htPeilut.Count; j++)
                     {
                         oPeilut = (PeilutDM)curSidur.htPeilut[j];
+                               
                         if (!CheckPeilutObjectDelete(iSidurIndex, j, inputData))
                         {
                             oObjPeilutUpd = GetUpdPeilutObject(iSidurIndex, oPeilut, inputData,oObjSidurimOvdimUpd, out SourceObject);
+
+                            InsertLogPeilut(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, curSidur.dFullShatHatchala.ToString(), dShatHatchalaNew.ToString(), 12, iSidurIndex, j, 14, null);
+                            
                             if (SourceObject == SourceObj.Insert)
                             {
                                 oObjPeilutUpd.SHAT_HATCHALA_SIDUR = dShatHatchalaNew;
@@ -143,7 +151,7 @@ namespace KdsShinuyim.ShinuyImpl
 
         private void FixedShatHatchalaLefiShatHachtamatItyatzvut12(ShinuyInputData inputData, PeilutDM oPeilut, SidurDM oSidur, OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd, SourceObj SourceObject, ref int j, ref bool bUpdateShatHatchala, ref DateTime dShatHatchalaNew)
         {
-            string sTempTime, sNewTempTime;
+            string sTempTime, sNewTempTime, oldVal;
             PeilutDM oNextPeilut = null;
             int iTempTime;
             sTempTime = "";
@@ -188,6 +196,8 @@ namespace KdsShinuyim.ShinuyImpl
                                 oObjPeilutOvdimDel = new OBJ_PEILUT_OVDIM();
                                 oObjPeilutOvdimDel=InsertToObjPeilutOvdimForDelete(oPeilut, oSidur,inputData);
                                 inputData.oCollPeilutOvdimDel.Add(oObjPeilutOvdimDel);
+
+                                InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, "", "", 12, 0, 0, null, "peilut deleted");
                                 //DeleteIdkuneyRashemetLepeilut(oSidur.iMisparSidur, oSidur.dOldFullShatHatchala, oPeilut.dFullShatYetzia, inputData);                      
                                 oSidur.htPeilut.RemoveAt(j);
                                 j = j - 1;
@@ -212,6 +222,7 @@ namespace KdsShinuyim.ShinuyImpl
                                             && (inputData.oCollPeilutOvdimIns.Value[i].SHAT_YETZIA == oPeilut.dFullShatYetzia) && (inputData.oCollPeilutOvdimIns.Value[i].MISPAR_KNISA == oPeilut.iMisparKnisa))
                                         {
                                          //   DeleteIdkuneyRashemetLepeilut(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, inputData);
+                                          //  InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, "", "", 12, 0, 0, null, "peilut deleted");
                                             inputData.oCollPeilutOvdimIns.RemoveAt(i);
                                             i -= 1;
                                         }
@@ -228,6 +239,8 @@ namespace KdsShinuyim.ShinuyImpl
                                     sNewTempTime = (iTempTime - dZmanLekizuz).ToString().PadLeft(3, (char)48);
                                     oObjPeilutOvdimUpd.MAKAT_NESIA = long.Parse(oObjPeilutOvdimUpd.MAKAT_NESIA.ToString().Replace(sTempTime, sNewTempTime));
                                    // oPeilut = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
+                                    InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oObjPeilutOvdimUpd.MAKAT_NESIA, oPeilut.lMakatNesia.ToString(), oObjPeilutOvdimUpd.MAKAT_NESIA.ToString(), 12, 0, 0, 36,null);
+
                                     UpdatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oObjPeilutOvdimUpd.MAKAT_NESIA, inputData.dtTmpMeafyeneyElements);
                                     oSidur.htPeilut[j] = oPeilut;
                                 }
@@ -239,6 +252,9 @@ namespace KdsShinuyim.ShinuyImpl
                                         oObjPeilutOvdimDel = new OBJ_PEILUT_OVDIM();
                                         oObjPeilutOvdimDel = InsertToObjPeilutOvdimForDelete(oPeilut, oSidur, inputData);
                                         inputData.oCollPeilutOvdimDel.Add(oObjPeilutOvdimDel);
+
+                                        InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, "", "", 12, 0, 0, null, "peilut deleted");
+                              
                                         oSidur.htPeilut.RemoveAt(j);
                                         j = j - 1;
                                         for (i = 0; i <= inputData.oCollPeilutOvdimUpdRecorder.Count - 1; i++)
@@ -271,6 +287,7 @@ namespace KdsShinuyim.ShinuyImpl
                                     }
                                     else
                                     {
+                                        oldVal = oPeilut.dFullShatYetzia.ToString();
                                         if (SourceObject == SourceObj.Insert)
                                         {
                                             oObjPeilutOvdimUpd.SHAT_YETZIA = oPeilut.dFullShatYetzia.AddMinutes(dZmanLekizuz);
@@ -288,10 +305,15 @@ namespace KdsShinuyim.ShinuyImpl
 
                                         }
                                         oPeilut.sShatYetzia = oPeilut.dFullShatYetzia.ToString("HH:mm");
+
+                                        InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, oSidur.dFullShatHatchala, oObjPeilutOvdimUpd.NEW_SHAT_YETZIA, oPeilut.lMakatNesia, oldVal, oObjPeilutOvdimUpd.NEW_SHAT_YETZIA.ToString(), 12, 0, 0, 35, null);
+                              
                                     }
                                 }
                                 else
                                 {
+                                    oldVal = oPeilut.dFullShatYetzia.ToString();
+
                                     if (SourceObject == SourceObj.Insert)
                                     {
                                         oObjPeilutOvdimUpd.SHAT_YETZIA = oPeilut.dFullShatYetzia.AddMinutes(dZmanLekizuz);
@@ -308,6 +330,7 @@ namespace KdsShinuyim.ShinuyImpl
                                     }
 
                                     oPeilut.sShatYetzia = oPeilut.dFullShatYetzia.ToString("HH:mm");
+                                    InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, oSidur.dFullShatHatchala, oObjPeilutOvdimUpd.NEW_SHAT_YETZIA, oPeilut.lMakatNesia, oldVal, oObjPeilutOvdimUpd.NEW_SHAT_YETZIA.ToString(), 12, 0, 0, 35, null);
                                 }
                             }
                         }
