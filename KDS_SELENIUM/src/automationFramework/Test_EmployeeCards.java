@@ -1,8 +1,8 @@
 package automationFramework;
 
+
 import java.io.File;
 import java.util.concurrent.TimeUnit;
-
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
@@ -15,7 +15,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
-
 import pageObjects.Employee_Card;
 import pageObjects.LogIn_Page;
 
@@ -51,9 +50,9 @@ public class Test_EmployeeCards {
       if (sMispar_ishi!=null) 
       {
     	  Employee_Card.Txt_Id(driver).sendKeys(sMispar_ishi);
-      }	  
-      if (sMispar_ishi!="74013" && sMispar_ishi!=null )
     	  Employee_Card.Txt_Id(driver).sendKeys(Keys.ENTER);
+  
+      } 
     	  
       if  (sMispar_ishi=="74013")
       {
@@ -81,7 +80,13 @@ public class Test_EmployeeCards {
 	      Employee_Card.Txt_name(driver).sendKeys(sName);
 	  }
       droplist.selectByVisibleText(sdate);
+     
+      
+      
       Employee_Card.Btn_Execute(driver).click();
+     
+    if ((sMispar_ishi!="74013"))
+      Assert.assertTrue("The grid Grd_Employee is not displayed", Employee_Card.Grd_Employee(driver).isDisplayed());
        
   }
   

@@ -6,8 +6,10 @@ import org.openqa.selenium.WebElement;
 
 public class Employee_Card {
 	
-	private static  WebElement element ;
-
+	private static WebElement element ;
+	
+	
+	   
 	
 	public static WebElement Txt_Id(WebDriver driver) {
 		
@@ -81,10 +83,18 @@ public static WebElement Txt_name(WebDriver driver) {
 
 	
 	
+public static  WebElement  Grd_Employee(WebDriver driver) {
+	
+	element=driver.findElement(By.id("ctl00_KdsContent_grdEmployee"));
+	
+	return element;
+	
+}
 	
 	
 	
-	
+
+
 	
 	
 	
