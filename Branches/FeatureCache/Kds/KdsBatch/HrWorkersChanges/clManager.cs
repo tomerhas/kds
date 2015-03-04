@@ -6,6 +6,7 @@ using System.Data;
 using KdsLibrary.BL;
 using System.Diagnostics;
 using KDSCommon.UDT;
+using System.Configuration;
 
 namespace KdsBatch.HrWorkersChanges
 {
@@ -60,9 +61,10 @@ namespace KdsBatch.HrWorkersChanges
             int j = 0;
             long size = 0;
             int indexArr = 0;
-            int godel = 40000;
+            int godel; //= 20000;
             try
             {
+                godel = int.Parse((string)ConfigurationSettings.AppSettings["CntHrChanges"]);
                 foreach (ClPeriodOfID Period in ListPeriod)
                 {
                     size = size + Period.CountOfDay;

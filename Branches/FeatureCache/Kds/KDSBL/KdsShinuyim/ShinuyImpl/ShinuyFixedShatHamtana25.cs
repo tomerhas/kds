@@ -194,6 +194,8 @@ namespace KdsShinuyim.ShinuyImpl
                 PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oObjPeilutOvdimIns, inputData.dtTmpMeafyeneyElements);
                 oPeilutNew.iBitulOHosafa = 4;
                 curSidur.htPeilut.Add(25 + curSidur.htPeilut.Count + 1, oPeilutNew);
+                
+                InsertLogPeilut(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjPeilutOvdimIns.SHAT_YETZIA, oObjPeilutOvdimIns.MAKAT_NESIA, "", "", 25, 0, 0, null, "peilut added");
             }
             catch (Exception ex)
             {

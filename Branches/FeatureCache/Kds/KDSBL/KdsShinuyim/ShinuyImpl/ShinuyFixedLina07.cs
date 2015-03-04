@@ -61,7 +61,8 @@ namespace KdsShinuyim.ShinuyImpl
 
                     inputData.oObjYameyAvodaUpd.LINA = iLina;
 
-                    InsertLogDay(inputData, oldVal, iLina.ToString(), 47, 6);
+                    if (oldVal != iLina.ToString())
+                        InsertLogDay(inputData, oldVal, iLina.ToString(), 47, 6);
                   
                 }
                 else inputData.oObjYameyAvodaUpd.LINA = 0;

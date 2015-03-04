@@ -470,7 +470,7 @@ namespace KdsShinuyim.ShinuyImpl
             int iZmanHashlama = 0;
             int iMerchav = 0;
             float fSidurTime = 0;
-            string oldVal;
+            string oldVal,oValHaslama;
             try
             {
                 //אם זוהי גרירה ראשונה בפועל (זיהוי הסידור לפי הלוגיקה בסעיף סימון כוננות גרירה לא לתשלום) בתוך זמן סידור כוננות גרירה (זיהוי הסידור לפי הלוגיקה בסעיף סימון כוננות גרירה לא לתשלום) ואם סידור הכוננות הוא "מרחב צפון" (קוד הסניף שהוא 2 הספרות הראשונות של מספר הסידור קטן מ-25) וזמן הסידור (גמר - התחלה) פחות מהזמן המוגדר בפרמטר 164 (זמן גרירה מינימלי באזור צפון) אזי יש לסמן "2" בשדה "קוד השלמה". 
@@ -482,6 +482,7 @@ namespace KdsShinuyim.ShinuyImpl
                     fSidurTime = float.Parse((oSidurGrira.dFullShatGmar - oSidurGrira.dFullShatHatchala).TotalMinutes.ToString());
 
                     oldVal = oObjSidurGriraUpd.SUG_HASHLAMA.ToString();
+                    oValHaslama = oObjSidurGriraUpd.HASHLAMA.ToString();
                     if (iGriraNum == 1) //גרירה ראשונה
                     {
                         if ((iMerchav < enMerchav.Tzafon.GetHashCode()) && (fSidurTime < inputData.oParam.iMinZmanGriraTzafon))
@@ -529,7 +530,8 @@ namespace KdsShinuyim.ShinuyImpl
 
                     if(oldVal != oObjSidurGriraUpd.SUG_HASHLAMA.ToString())
                         InsertLogSidur(inputData, oSidurGrira.iMisparSidur, oSidurGrira.dFullShatHatchala, oldVal, oObjSidurGriraUpd.SUG_HASHLAMA.ToString(), 3, 0, null, "SUG_HASHLAMA");
-
+                    if(oValHaslama != oObjSidurGriraUpd.HASHLAMA.ToString())
+                        InsertLogSidur(inputData, oSidurGrira.iMisparSidur, oSidurGrira.dFullShatHatchala, oValHaslama, oObjSidurGriraUpd.HASHLAMA.ToString(), 3, 0, 45);
                 }
             }
             catch (Exception ex)

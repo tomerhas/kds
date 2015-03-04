@@ -64,7 +64,7 @@ namespace KdsShinuyim.ShinuyImpl
                         oObjSidurimOvdimIns.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimIns.SHAT_GMAR;
                         inputData.oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
 
-                        InsertLogSidur(inputData, SIDUR_HEADRUT_BETASHLUM, oObjSidurimOvdimIns.SHAT_HATCHALA, "", "", 15, 0, null, "hosafat sidur 99801");
+                        InsertLogSidur(inputData, SIDUR_HEADRUT_BETASHLUM, oObjSidurimOvdimIns.SHAT_HATCHALA, "", "", 15, 0, null, "sidur added");
                     }
                 }
             }

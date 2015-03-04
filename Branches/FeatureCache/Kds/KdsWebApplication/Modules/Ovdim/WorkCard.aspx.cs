@@ -2730,7 +2730,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 sFileName = "WorkCard.pdf";
 
                 sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
-                EventLog.WriteEntry("Kds", "sPathFile: " + sPathFile, EventLogEntryType.Error);
+               // EventLog.WriteEntry("Kds", "sPathFile: " + sPathFile, EventLogEntryType.Error);
                 if (!Directory.Exists(sPathFile))
                 {
                     Directory.CreateDirectory(sPathFile);
@@ -2753,7 +2753,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     }
                 }
                
-                EventLog.WriteEntry("kds", Page.Title + ": path = " + sPathFilePrint + sFileName, EventLogEntryType.Error);
+              //  EventLog.WriteEntry("kds", Page.Title + ": path = " + sPathFilePrint + sFileName, EventLogEntryType.Error);
                 //EventLog.WriteEntry("kds", "sIp" + sIp, EventLogEntryType.Error);
                 sScript += "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000); ";
                 //FreeWC();

@@ -127,7 +127,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
                     //שינוי 02 - שלב שני
                     FixedMisparMatalatVisa02(oObjPeilutOvdimUpd, ref oPeilut, curSidur, oNewSidurim.SidurOld, SourceObject, inputData);
 
-                    InsertLogPeilut(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, oNewSidurim.SidurOld.ToString(), oNewSidurim.SidurNew.ToString(), 2, iSidurIndex, j, 13, null);
+                   
                   //?  oSidur.htPeilut[j] = oPeilut;
                 }
                 //UpdatePeiluyotMevutalotYadani(iSidurIndex,oNewSidurim, oObjSidurimOvdimUpd);
@@ -158,7 +158,7 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
             PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oObjPeilutOvdimIns, inputData.dtTmpMeafyeneyElements);
             oPeilutNew.iBitulOHosafa = 4;
             curSidur.htPeilut.Insert(0, 1, oPeilutNew);
-            InsertLogPeilut(inputData, oNewSidurim.SidurNew, curSidur.dFullShatHatchala, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "","",2, 0, 0, null, "hosafat peilut visa");
+            InsertLogPeilut(inputData, oNewSidurim.SidurNew, curSidur.dFullShatHatchala, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "","",2, 0, 0, null, "peilut added");
         }
         catch (Exception ex)
         {
@@ -168,8 +168,11 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
     //? Fמות גדולה של פרמטרים
     private void FixedMisparMatalatVisa02( OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd,ref PeilutDM oPeilut, SidurDM oSidur, int iOldMisparSidur, SourceObj SourceObject,ShinuyInputData inputData)
     {
+        string oMakat,oVisa;
         try
         {
+            oMakat=oObjPeilutOvdimUpd.MAKAT_NESIA.ToString();
+            oVisa = oObjPeilutOvdimUpd.MISPAR_VISA.ToString();
             if (SourceObject == SourceObj.Insert)
             {
                 oObjPeilutOvdimUpd.MISPAR_SIDUR = oSidur.iMisparSidur;
@@ -192,6 +195,11 @@ public class ShinuyMisparSidurVisa02 : ShinuyBase
             //       oPeilutNew.iMakatType = enMakatType.mVisa.GetHashCode();
            // oPeilut = oPeilutNew; //?
 
+            InsertLogPeilut(inputData, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, iOldMisparSidur.ToString(), oSidur.iMisparSidur.ToString(), 2, 0, 0, 13, null);
+            if (oMakat != oObjPeilutOvdimUpd.MAKAT_NESIA.ToString())
+                InsertLogPeilut(inputData, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, oMakat, oObjPeilutOvdimUpd.MAKAT_NESIA.ToString().ToString(), 2, 0, 0, 36, null);
+            if (oVisa != oObjPeilutOvdimUpd.MISPAR_VISA.ToString())
+                InsertLogPeilut(inputData, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, oVisa, oObjPeilutOvdimUpd.MISPAR_VISA.ToString(), 2, 0, 0, null, "MISPAR_VISA");
         }
         catch (Exception ex)
         {

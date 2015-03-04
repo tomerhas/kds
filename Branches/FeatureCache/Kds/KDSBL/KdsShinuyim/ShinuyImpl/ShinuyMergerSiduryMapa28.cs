@@ -165,7 +165,7 @@ namespace KdsShinuyim.ShinuyImpl
                         inputData.oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
 
                     //    PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oPeilut.lMakatNesia, inputData.dtTmpMeafyeneyElements);
-                        InsertLogPeilut(inputData, oSidurPutzal.iMisparSidur, oSidurPutzal.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, "", "", 28, 0, 0, null,"hosafat peilut");
+                        InsertLogPeilut(inputData, oSidurPutzal.iMisparSidur, oSidurPutzal.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, "", "", 28, 0, 0, null,"peilut added");
 
                         UpdatePeilut(inputData.iMisparIshi, inputData.CardDate, oPeilut, oPeilut.lMakatNesia, inputData.dtTmpMeafyeneyElements);
 
@@ -176,6 +176,8 @@ namespace KdsShinuyim.ShinuyImpl
 
                         OBJ_PEILUT_OVDIM oObjPeilutOvdimDel = InsertToObjPeilutOvdimForDelete(oPeilut, curSidur, inputData);
                         inputData.oCollPeilutOvdimDel.Add(oObjPeilutOvdimDel);
+
+                        InsertLogPeilut(inputData, oPeilut.iPeilutMisparSidur, curSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.lMakatNesia, "", "", 28, 0, 0, null, "peilut deleted");
                         curSidur.htPeilut.RemoveAt(j);
 
                         iCountPeiluyot -= 1;

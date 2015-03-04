@@ -182,14 +182,14 @@ namespace KdsShinuyim.ShinuyImpl
 
             try{
                 oldVal = oSidur.dFullShatHatchala.ToString();
-                InsertLogSidur(inputData, oSidur.iMisparSidur, dShatYetziaFirst, oldVal, dShatYetziaFirst.ToString(), 5, i,35);
-
+               
                 NewSidur oNewSidurim = FindSidurOnHtNewSidurim(oSidur.iMisparSidur, oSidur.dFullShatHatchala, inputData.htNewSidurim);
 
                 oNewSidurim.SidurIndex = i;
                 oNewSidurim.ShatHatchalaNew = dShatYetziaFirst;
                 oNewSidurim.SidurNew = oSidur.iMisparSidur;
 
+                InsertLogSidur(inputData, oSidur.iMisparSidur, dShatYetziaFirst, oldVal, dShatYetziaFirst.ToString(), 5, i, 14, null);
 
                 UpdateObjectUpdSidurim(oNewSidurim, inputData.oCollSidurimOvdimUpdRecorder);
                 for (j = 0; j < oSidur.htPeilut.Count; j++)
@@ -409,7 +409,7 @@ namespace KdsShinuyim.ShinuyImpl
                 iNumHachanotMechonaForSidur += 1;
                 iMeshechHachanotMechona += int.Parse(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(3, 3));
 
-                InsertLogPeilut(inputData, oPeilutNew.iPeilutMisparSidur, oPeilutNew.dFullShatYetzia, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "", oPeilutNew.dFullShatYetzia.ToString(), 5, iIndexSidur, 0, 35);
+                InsertLogPeilut(inputData, oPeilutNew.iPeilutMisparSidur, oPeilutNew.dFullShatYetzia, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "", "", 5, iIndexSidur, 0, null,"peilut added");
 
                 //  }
             }
@@ -613,7 +613,7 @@ namespace KdsShinuyim.ShinuyImpl
                 iMeshechHachanotMechona += int.Parse(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(3, 3));
                 iMeshechHachanotMechonaNosafot += int.Parse(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(3, 3)); ;
 
-                InsertLogPeilut(inputData, oPeilutNew.iPeilutMisparSidur, oPeilutNew.dFullShatYetzia, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "", oPeilutNew.dFullShatYetzia.ToString(), 5, iIndexSidur, 0, 35);
+                InsertLogPeilut(inputData, oPeilutNew.iPeilutMisparSidur, oPeilutNew.dFullShatYetzia, oPeilutNew.dFullShatYetzia, oPeilutNew.lMakatNesia, "", "", 5, iIndexSidur, 0, null, "peilut added");
             }
             catch (Exception ex)
             {

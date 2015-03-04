@@ -404,6 +404,7 @@ namespace KdsLibrary.BL
                     objDal.ClearCommand();
                 }
                 objDal.TxCommit();
+                objDal = null;
             }
             catch (Exception ex)
             {
