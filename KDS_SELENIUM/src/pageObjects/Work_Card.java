@@ -12,13 +12,48 @@ public class Work_Card {
  
  
  
+ public static WebElement Btn_Show (WebDriver driver){
+	 
+	    element = driver.findElement(By.id("btnRefreshOvedDetails"));
+	 
+	    return element;
+
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ public static WebElement Date (WebDriver driver){
+	 
+	    element = driver.findElement(By.id("clnDate"));
+	 
+	    return element;
+
+}
+ 
+ 
+ public static WebElement TxtId (WebDriver driver){
+	 
+	    element = driver.findElement(By.id("txtId"));
+	 
+	    return element;
+
+}
+ 
+ 
+ 
+ 
+ 
+ 
  public static WebElement Tachograph (WebDriver driver){
 	 
 	    element = driver.findElement(By.id("ddlTachograph"));
 	 
 	    return element;
 
-}
+   }
  
  
  
