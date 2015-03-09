@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <project name="KDS Build" default="build" basedir=".">
-	<description>The Hello World of build files.</description>
+	<description>The build process for KDS.</description>
 	<!--property name="build.type" value="KdsProd01"/-->
 	<target name="build">
 		<delete dir="../Deploy" />
