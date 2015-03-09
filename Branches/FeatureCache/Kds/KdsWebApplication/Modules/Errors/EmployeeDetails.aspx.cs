@@ -15,6 +15,8 @@ using KdsLibrary.Utils;
 using KdsLibrary;
 using KdsLibrary.UI;
 using KdsLibrary.UI.SystemManager;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Interfaces.Logs;
 public partial class Modules_Errors_EmployeeDetails : KdsPage
 {
     private DataTable dtMisparim = new DataTable();
@@ -158,6 +160,9 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
             dtMisparim.Columns.Add("MisparIshiIndex", System.Type.GetType("System.Int32"));
             dtMisparim.Columns.Add("MisparIshi", System.Type.GetType("System.Int32"));
             //for (iCount = 0; iCount <= arrMisparimIshi.Length - 1; iCount++)
+            if(Session["MisparimIshi"] == null)
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(0, "W", 0, "Session['MisparimIshi'] is null");
+           
             for (iCount = 0; iCount <= ((DataTable)Session["MisparimIshi"]).Rows.Count - 1; iCount++)
              {
                 dr = dtMisparim.NewRow();
@@ -170,7 +175,8 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
         }
         catch (Exception ex)
         {
-            throw ex;
+            
+            throw (ex);
         }
     }
     protected void grdOvedErrorCards_RowDataBound(object sender, GridViewRowEventArgs e)

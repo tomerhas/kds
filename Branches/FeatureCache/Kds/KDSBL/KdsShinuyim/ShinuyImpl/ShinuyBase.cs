@@ -16,6 +16,7 @@ using KdsShinuyim.Enums;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using ObjectCompare;
+using KDSCommon.Interfaces.Logs;
 
 namespace KdsShinuyim.ShinuyImpl
 {
@@ -225,7 +226,9 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                throw ex;
+                ServiceLocator.Current.GetInstance<ILogBakashot>().SetError(0, inputData.iMisparIshi, "W", 0, inputData.CardDate, "WorkCard", ex);
+                throw (ex);
+             
             }
             return oObjSidurimOvdim;
         }

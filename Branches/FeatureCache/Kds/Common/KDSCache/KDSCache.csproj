@@ -80,6 +80,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Implement\CacheBuilder.cs" />
     <Compile Include="Implement\KDSAgedQueueParameters.cs" />
     <Compile Include="Implement\KDSCacheManager.cs" />

@@ -79,6 +79,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="DataModels\clParametersDM.cs" />
     <Compile Include="DataModels\Errors\ErrorDualKey.cs" />
     <Compile Include="DataModels\Errors\FlowErrorResult.cs" />

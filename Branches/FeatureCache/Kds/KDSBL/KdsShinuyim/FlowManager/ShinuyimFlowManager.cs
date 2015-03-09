@@ -18,6 +18,7 @@ using KdsShinuyim.ShinuyImpl;
 using Microsoft.Practices.Unity;
 using ObjectCompare;
 using System.Configuration;
+using System.Diagnostics;
 
 
 namespace KdsShinuyim.FlowManager
@@ -149,32 +150,33 @@ namespace KdsShinuyim.FlowManager
                 List<IShinuy> listShinuyim = new List<IShinuy>();
 
            //     listShinuyim.Add(_container.Resolve<DeleteSidureyRetzifut>());
-                listShinuyim.Add(_container.Resolve<IpusArachimBeforeTahalich>());
-                listShinuyim.Add(_container.Resolve<ShinuyMisparSidur01>());
-                listShinuyim.Add(_container.Resolve<ShinuyMisparSidurVisa02>());
-                listShinuyim.Add(_container.Resolve<ShinuyMergerSiduryMapa28>());
-                listShinuyim.Add(_container.Resolve<ShinuyAddElementMechine05>());
-                listShinuyim.Add(_container.Resolve<ShinuyFixedShatGmar10>());
-                listShinuyim.Add(_container.Resolve<ShinuySetSidurLoLetashlum11>());
-                listShinuyim.Add(_container.Resolve<ShinuySidureyMapaWhithStatusNullLoLetashlum29>());
-                listShinuyim.Add(_container.Resolve<ShinuyFixedPitzulHafsaka06>());
-                listShinuyim.Add(_container.Resolve<ShinuyChishuvShatHatchala30>());
-                listShinuyim.Add(_container.Resolve<ShinuyFixedSidurHours08>());
-                listShinuyim.Add(_container.Resolve<ShinuyFixedItyatzvutNahag23>());
-                listShinuyim.Add(_container.Resolve<ShinuyimOutMichsaHashlamaChariga>());
-                listShinuyim.Add(_container.Resolve<DeleteElementRechev07>());
-                listShinuyim.Add(_container.Resolve<ShinuyShatHatchalaLefiShatItyatzvut12>());
-                listShinuyim.Add(_container.Resolve<ShinuyFixedShatHamtana25>());
-                listShinuyim.Add(_container.Resolve<ShinuyShatHatchalaGmar_19_26_27>());
-                listShinuyim.Add(_container.Resolve<SetBooleanParams>());
-                listShinuyim.Add(_container.Resolve<ShinuyHosafatSidurHeadrutWithPaymeny15>());
-                listShinuyim.Add(_container.Resolve<ShinuyUpdateTachograph>());
-                listShinuyim.Add(_container.Resolve<ShinuyHashlamaForYomAvoda>());
-                listShinuyim.Add(_container.Resolve<ShinuyUpdateBitulZmanNesiot>());
-                listShinuyim.Add(_container.Resolve<ShinuyKonnutGrira03>());
-                listShinuyim.Add(_container.Resolve<ShinuyFixedLina07>());
-                listShinuyim.Add(_container.Resolve<SetSidurObjects>());
-                listShinuyim.Add(_container.Resolve<ShinuyUpdateHalbasha>());
+                AddShinuy<IpusArachimBeforeTahalich>(listShinuyim);
+                AddShinuy<ShinuyMisparSidur01>(listShinuyim);
+                AddShinuy<ShinuyMisparSidurVisa02>(listShinuyim);
+                AddShinuy<ShinuyMergerSiduryMapa28>(listShinuyim);
+                AddShinuy<ShinuyAddElementMechine05>(listShinuyim);
+                AddShinuy<ShinuyFixedShatGmar10>(listShinuyim);
+                AddShinuy<ShinuySetSidurLoLetashlum11>(listShinuyim);
+                AddShinuy<ShinuySidureyMapaWhithStatusNullLoLetashlum29>(listShinuyim);
+                AddShinuy<ShinuyFixedPitzulHafsaka06>(listShinuyim);
+                AddShinuy<ShinuyChishuvShatHatchala30>(listShinuyim);
+                AddShinuy<ShinuyFixedSidurHours08>(listShinuyim);
+                AddShinuy<ShinuyFixedItyatzvutNahag23>(listShinuyim);
+                AddShinuy<ShinuyimOutMichsaHashlamaChariga>(listShinuyim);
+                AddShinuy<DeleteElementRechev07>(listShinuyim);
+                AddShinuy<ShinuyShatHatchalaLefiShatItyatzvut12>(listShinuyim);
+                AddShinuy<ShinuyFixedShatHamtana25>(listShinuyim);
+                AddShinuy<ShinuyShatHatchalaGmar_19_26_27>(listShinuyim);
+                AddShinuy<SetBooleanParams>(listShinuyim);
+                AddShinuy<ShinuyHosafatSidurHeadrutWithPaymeny15>(listShinuyim);
+                AddShinuy<ShinuyUpdateTachograph>(listShinuyim);
+                AddShinuy<ShinuyHashlamaForYomAvoda>(listShinuyim);
+                AddShinuy<ShinuyUpdateBitulZmanNesiot>(listShinuyim);
+                AddShinuy<ShinuyKonnutGrira03>(listShinuyim);
+                AddShinuy<ShinuyFixedLina07>(listShinuyim);
+                AddShinuy<SetSidurObjects>(listShinuyim);
+                AddShinuy<ShinuyUpdateHalbasha>(listShinuyim);
+         
 
                 return listShinuyim;
             }
@@ -183,6 +185,20 @@ namespace KdsShinuyim.FlowManager
                 throw ex;
             }
         }
+
+        private void AddShinuy<T>(List<IShinuy> list)  where T : ShinuyBase
+        {
+            var instance = _container.Resolve<T>();
+            if (!list.Contains(instance))
+            {
+                list.Add(instance as ShinuyBase);
+            }
+            else
+            {
+                Debug.Assert(true, "trying add same shinuy again");
+            }
+        }
+
         private List<ShinuyTypes> GetExecOrderList()
         {
             List<ShinuyTypes> listShinuyim = new List<ShinuyTypes>();
@@ -223,6 +239,8 @@ namespace KdsShinuyim.FlowManager
                 throw ex;
             }
         }
+
+  
 
         private ShinuyInputData FillInputData(int misparIshi, DateTime cardDate, long? btchRequest, int? userId)
         {

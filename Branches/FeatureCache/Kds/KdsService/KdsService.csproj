@@ -274,7 +274,7 @@
   </Target>
   <PropertyGroup>
     <!--<TransformXml Source="@(AppConfigWithTargetPath)" Transform="$(ProjectConfigTransformFileName)" Destination="@(AppConfigWithTargetPath->'$(OutDir)%(TargetPath)')" />-->
-    <PostBuildEvent>XCOPY  "$(SolutionDir)$(ProjectName)\bin\$(ConfigurationName)\*" "..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)"  /Y/I
-                    ECHO XCOPY  "$(SolutionDir)$(ProjectName)\bin\$(ConfigurationName)\*" "..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)\"  /Y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

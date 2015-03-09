@@ -208,6 +208,7 @@
     <TransformXml Source="@(AppConfigWithTargetPath)" Transform="$(ProjectConfigTransformFileName)" Destination="@(AppConfigWithTargetPath->'$(OutDir)%(TargetPath)')" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>XCOPY  "$(SolutionDir)$(ProjectName)\bin\$(ConfigurationName)\*" "..\..\..\..\Deploy\$(ConfigurationName)\$(ProjectName)"  /Y/I</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
