@@ -346,7 +346,7 @@
     <Content Include="Modules\Ovdim\WorkCard.aspx" />
     <Content Include="Modules\Ovdim\WorkCardErrors.aspx" />
     <Content Include="Modules\Ovdim\ZmaniNesiot.aspx" />
-    <Content Include="Modules\Premia\PremiaCalculation.aspx" />
+    <Content Include="Modules\Ovdim\Premia\PremiaCalculation.aspx" />
     <Content Include="Modules\Reports\BackgroundReport.aspx" />
     <Content Include="Modules\Reports\PresenceReport.aspx" />
     <Content Include="Modules\Reports\ReportFilters.aspx" />
@@ -694,11 +694,11 @@
     <Compile Include="Modules\Ovdim\ZmaniNesiot.aspx.designer.cs">
       <DependentUpon>ZmaniNesiot.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Premia\PremiaCalculation.aspx.cs">
+    <Compile Include="Modules\Ovdim\Premia\PremiaCalculation.aspx.cs">
       <DependentUpon>PremiaCalculation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Modules\Premia\PremiaCalculation.aspx.designer.cs">
+    <Compile Include="Modules\Ovdim\Premia\PremiaCalculation.aspx.designer.cs">
       <DependentUpon>PremiaCalculation.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\Reports\BackgroundReport.aspx.cs">
