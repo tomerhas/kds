@@ -23,7 +23,7 @@ import java.lang.Thread;
 
 
 
-public class Test_Work_Card {
+public class Test_Update_Day_WorkCard {
 
 	public WebDriver driver;
 	public WebElement element;
@@ -67,6 +67,7 @@ public class Test_Work_Card {
       Select droplist1 = new Select(Work_Card.Lina(driver));
       droplist1.selectByVisibleText(sLina); 
       Work_Card.Btn_Update(driver).click();
+      Thread.sleep(3000);
       Work_Card.Btn_Close(driver).click();
 	  
 	  
