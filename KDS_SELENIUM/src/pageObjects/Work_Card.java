@@ -12,6 +12,11 @@ public class Work_Card {
  
  
  
+
+ 
+ 
+ 
+ 
  public static WebElement Btn_Show (WebDriver driver){
 	 
 	    element = driver.findElement(By.id("btnRefreshOvedDetails"));
@@ -44,7 +49,13 @@ public class Work_Card {
  
  
  
- 
+ public static WebElement Day_Plus (WebDriver driver){
+	 
+	    element = driver.findElement(By.id("btnPlus2"));
+	 
+	    return element;
+
+}
  
  
  public static WebElement Tachograph (WebDriver driver){
@@ -117,8 +128,14 @@ public class Work_Card {
 	
 	 }
 	 
-	 
-	 
+		
+	 public static WebElement Btn_Close(WebDriver driver){
+		 
+		    element = driver.findElement(By.id("btnCloseCard"));
+		 
+		    return element;
+	
+	 }
 	 
 
 }

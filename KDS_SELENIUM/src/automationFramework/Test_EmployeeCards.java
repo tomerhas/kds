@@ -24,11 +24,11 @@ public class Test_EmployeeCards {
 	 @DataProvider(name = "Param_Id")
 	  public Object[][] Parameters_Id() {
 	          return new Object[][] {
-	           // { "74013","12/2014",null},
-	        	{ "87903","12/2014",null}
-	           // { "77104","02/2015",null},
-	           // { null,"12/2014","אבו שמסיה ראאפת"},
-	           // { null,"02/2015", "צפורי אלון"}
+	            { "74013","12/2014",null},
+	        	{ "87903","12/2014",null},
+	            { "77104","02/2015",null},
+	            { null,"12/2014","אבו שמסיה ראאפת"},
+	            { null,"02/2015", "צפורי אלון"}
 	           };
 	                    
 	          };
