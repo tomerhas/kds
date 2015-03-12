@@ -249,6 +249,7 @@ namespace KdsShinuyim.ShinuyImpl
             dShatHatchalaSidur = curSidur.dFullShatHatchala;
             dShatGmarSidur = curSidur.dFullShatGmar;
             int iCountHachtamaLoTakin = 0;
+            string Hachtama;
             //לחפש סידור התייצבות (99200):
             try
             {
@@ -282,8 +283,14 @@ namespace KdsShinuyim.ShinuyImpl
                                 {
                                     if( oObjSidurimOvdimUpd.SHAT_HITIATZVUT.ToString() != oSidurHityatvut.dFullShatHatchala.ToString())
                                         InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.SHAT_HITIATZVUT.ToString(),oSidurHityatvut.dFullShatHatchala.ToString(), 23, 0, null, "NIDRESHET_HITIATZVUT");
-                                    InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala, oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN.ToString(), "1", 23, 0, null, "HACHTAMA_BEATAR_LO_TAKIN");
-                
+
+                                    if (oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN != "1")
+                                    {
+                                        if (string.IsNullOrEmpty(oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN))
+                                            Hachtama = "";
+                                        else Hachtama = oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN.ToString();
+                                        InsertLogSidur(inputData, curSidur.iMisparSidur, curSidur.dFullShatHatchala,Hachtama , "1", 23, 0, null, "HACHTAMA_BEATAR_LO_TAKIN");
+                                    }
                                     oObjSidurimOvdimUpd.SHAT_HITIATZVUT = oSidurHityatvut.dFullShatHatchala;
                                     oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN = "1";
                                     if (iCountHachtamaLoTakin == 0) bCheckSidurNosaf = true;

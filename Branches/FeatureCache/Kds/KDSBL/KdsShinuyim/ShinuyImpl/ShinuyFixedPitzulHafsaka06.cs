@@ -55,7 +55,7 @@ namespace KdsShinuyim.ShinuyImpl
             }
             catch (Exception ex)
             {
-                throw new Exception("ShinuyFixedLina07: " + ex.Message);
+                throw new Exception("ShinuyFixedPitzulHafsaka06: " + ex.Message);
             }
         }
 
