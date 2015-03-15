@@ -189,21 +189,32 @@ namespace KdsShinuyim.ShinuyImpl
         {
             //מביא את הסידור לפי מפתח האינדקס
             OBJ_SIDURIM_OVDIM oObjSidurimOvdim = null;
+            OBJ_SIDURIM_OVDIM sidurOvdimContainer = null;
             try
             {
-                var sidurOvdimContainer = inputData.oCollSidurimOvdimUpdRecorder.SingleOrDefault(x =>
+                for (int i = 0; i <= inputData.oCollSidurimOvdimUpdRecorder.Count - 1; i++)
                 {
-                    if (x.ContainedItem.NEW_MISPAR_SIDUR == oSidur.iMisparSidur
-                        && x.ContainedItem.NEW_SHAT_HATCHALA == oSidur.dFullShatHatchala
-                        && x.ContainedItem.UPDATE_OBJECT == 1)
+                    if ((inputData.oCollSidurimOvdimUpdRecorder[i].ContainedItem.NEW_MISPAR_SIDUR == oSidur.iMisparSidur) &&
+                        (inputData.oCollSidurimOvdimUpdRecorder[i].ContainedItem.NEW_SHAT_HATCHALA == oSidur.dFullShatHatchala) &&
+                        inputData.oCollSidurimOvdimUpdRecorder[i].ContainedItem.UPDATE_OBJECT == 1)
                     {
-                        return true;
+                        sidurOvdimContainer = inputData.oCollSidurimOvdimUpdRecorder[i].ContainedItem;
                     }
-                    return false;
-                });
+                }
+               
+                //var sidurOvdimContainer = inputData.oCollSidurimOvdimUpdRecorder.SingleOrDefault(x =>
+                //{
+                //    if (x.ContainedItem.NEW_MISPAR_SIDUR == oSidur.iMisparSidur
+                //        && x.ContainedItem.NEW_SHAT_HATCHALA == oSidur.dFullShatHatchala
+                //        && x.ContainedItem.UPDATE_OBJECT == 1)
+                //    {
+                //        return true;
+                //    }
+                //    return false;
+                //});
                 if (sidurOvdimContainer != null)
                 {
-                    return sidurOvdimContainer.ContainedItem;
+                    return sidurOvdimContainer;
                 }
 
                 //Search for sidur ovdim in oCollSidurimOvdimIns collection
