@@ -78,6 +78,49 @@ public class Work_Card {
    }
  
  
+    public static WebElement Hamara (WebDriver driver){
+   	 
+	    element = driver.findElement(By.id("btnHamara"));
+	 
+	    return element;
+
+   }
+    
+    
+    
+    
+    public static WebElement Halbasha (WebDriver driver){
+      	 
+	    element = driver.findElement(By.id("ddlHalbasha"));
+	 
+	    return element;
+
+   }
+    
+    
+    
+    public static WebElement HashlamaForDay (WebDriver driver){
+     	 
+	    element = driver.findElement(By.id("btnHashlamaForDay"));
+	 
+	    return element;
+
+   }
+    
+    
+    
+    
+    public static WebElement HashlamaReason (WebDriver driver){
+    	 
+	    element = driver.findElement(By.id("ddlHashlamaReason"));
+	 
+	    return element;
+
+   }
+    
+    
+    
+   
  
 	 
 	 public static WebElement Start_Time(WebDriver driver){
@@ -115,6 +158,8 @@ public class Work_Card {
 		    return element;
 	
 	 }
+	 
+	 
 	 
 	 
 	 

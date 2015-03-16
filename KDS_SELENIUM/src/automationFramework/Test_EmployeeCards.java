@@ -96,11 +96,12 @@ public class Test_EmployeeCards {
   
  @BeforeMethod
   public void beforeMethod() {
-	  File file = new File("C:/Selenium/IEDriverServer.exe");
-	  System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
-	  driver = new InternetExplorerDriver();
-	  driver.navigate().to("http://kdstest");
-	 
+	  //File file = new File("C:/Selenium/IEDriverServer.exe");
+	  //System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+	  //driver = new InternetExplorerDriver();
+	  driver=Base.Initialize_browser();
+	  Base.Initialize_Webpage(driver);
+	  
 	  
 	  
   }
@@ -112,7 +113,7 @@ public class Test_EmployeeCards {
   public void afterMethod() {
 	
 	  
-	  driver.close();
+	  driver.quit();
   }
   
 }

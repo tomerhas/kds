@@ -9,6 +9,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
@@ -66,6 +67,10 @@ public class Test_Update_Day_WorkCard {
       droplist.selectByVisibleText(sTachograph); 
       Select droplist1 = new Select(Work_Card.Lina(driver));
       droplist1.selectByVisibleText(sLina); 
+      Assert.assertFalse(Work_Card.Hamara(driver).isEnabled(),"The Checkbox Hamara is Enabled");
+      Assert.assertFalse(Work_Card.Halbasha(driver).isEnabled(),"The Checkbox Halbasha is Enabled");
+      Assert.assertFalse(Work_Card.HashlamaForDay(driver).isEnabled(),"The Checkbox HashlamaForDay is Enabled");
+      Assert.assertFalse(Work_Card.HashlamaReason(driver).isEnabled(),"The Checkbox HashlamaReason is Enabled");
       Work_Card.Btn_Update(driver).click();
       Thread.sleep(3000);
       Work_Card.Btn_Close(driver).click();
@@ -78,26 +83,6 @@ public class Test_Update_Day_WorkCard {
   
 
   
-  
-  
-  
-  
-  
-  
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -106,17 +91,13 @@ public class Test_Update_Day_WorkCard {
 @BeforeMethod
   public void beforeMethod() {
 	  
-	  File file = new File("C:/Selenium/IEDriverServer.exe");
-	  System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
-	  driver = new InternetExplorerDriver();
-	  driver.navigate().to("http://kdstest");
-	  LogIn_Page.lnk_EmployeeCards(driver).click();
-	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	  Select droplist = new Select(Employee_Card.List_Month(driver));
-      droplist.selectByVisibleText("03/2015"); 
-      Employee_Card.Btn_Execute(driver).click();
-      Employee_Card.Link_Date(driver).click();
+	 
+	  driver = Base.Initialize_browser();
+	  Base.Initialize_Webpage(driver);
+	  Base.Enter_Workcard(driver);
 	  
+      
+      
   }
 
   @AfterMethod
