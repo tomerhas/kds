@@ -37,7 +37,7 @@ public class Test_Update_Car_No {
 	      for (String handle : driver.getWindowHandles()) {
 	      driver.switchTo().window(handle);}
 		  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		  WebDriverWait wait = new WebDriverWait(driver, 50);
+		  WebDriverWait wait = new WebDriverWait(driver, 80);
 		  wait.until(ExpectedConditions.textToBePresentInElementValue(Work_Card.TxtId(driver), "31777"));
 		  Work_Card.TxtId(driver).sendKeys("77104");
 		  Work_Card.Date(driver).sendKeys("03/03/2015");
@@ -57,7 +57,7 @@ public class Test_Update_Car_No {
 	      Work_Card.Car_Num(driver).sendKeys(sCar_No);
 	      Work_Card.Btn_Yes_Copy_Car_Num(driver).click();
 	      System.out.println(Work_Card.Assert_Car_Num(driver).getAttribute("value"));
-	      if (sCar_No=="22228")
+	      if (sCar_No=="34918")
 	      Assert.assertEquals(Work_Card.Assert_Car_Num(driver).getAttribute("value"),"34918");
 	      else {
 	      Assert.assertEquals(Work_Card.Assert_Car_Num(driver).getAttribute("value"),"22228");
