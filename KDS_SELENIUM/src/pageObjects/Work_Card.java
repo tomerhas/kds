@@ -161,6 +161,35 @@ public class Work_Card {
 	 
 	 
 	 
+	 public static WebElement Assert_Car_Num(WebDriver driver){
+		 
+		    element = driver.findElement(By.id("SD_000_ctl04_SD_000_ctl04CarNumber"));
+		 
+		    return element;
+	
+	 }
+	 
+	 
+	 
+	 
+	 public static WebElement Btn_No_Copy_Car_Num(WebDriver driver){
+		 
+		    element = driver.findElement(By.id("btnNo"));
+		 
+		    return element;
+	
+	 }
+	 
+	 
+	 
+	 public static WebElement Btn_Yes_Copy_Car_Num(WebDriver driver){
+		 
+		    element = driver.findElement(By.id("btnYes"));
+		 
+		    return element;
+	
+	 }
+	 
 	 
 	 
 	 
