@@ -411,6 +411,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             if ((OrderedDictionary)Session["Sidurim"]!= null)
             {
                 htFullEmployeeDetails = (OrderedDictionary)Session["Sidurim"];
+                FirstParticipate = null;
+                SecondParticipate = null;
                 for (int iIndex = 0; iIndex < htFullEmployeeDetails.Count; iIndex++)
                 {
                     BuildSidurAndPeiluyot(ref htFullEmployeeDetails, iIndex);
@@ -4253,6 +4255,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     SecondParticipate = oSidur;
                     break;
                 default:
+
                     break;
             }
         }

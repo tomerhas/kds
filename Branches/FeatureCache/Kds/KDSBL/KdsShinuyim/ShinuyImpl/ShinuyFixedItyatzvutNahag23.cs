@@ -64,7 +64,7 @@ namespace KdsShinuyim.ShinuyImpl
         {
             bool bNidrashHityazvut = false;
             bool bHayavHityazvut = false;
-          
+            int j;
             try
             {
                 
@@ -94,11 +94,29 @@ namespace KdsShinuyim.ShinuyImpl
                     // עדכון שדה התייצבות שניה - עוברים לפי השלבים הבאים:
                     //א. מחפשים סידור שמצריך התייצבות שניה  (סידור מפה) - עוברים על הסידורים, במידה ונתקלים בפער של יותר מהערך בפרמטר 91 (פער בין סידורי נהגות המחייב התייצבות חוזרת) 
                     //בין שעת הגמר של סידור (מפה או מיוחד) לבין שעת ההתחלה של סידור מפה הבא אחריו, פער זמנים כזה מחייב התייצבות נוספת בסידור שאחרי הפער.
-                    SidurDM oSidurPrev = (SidurDM)inputData.htEmployeeDetails[iIndexSidur - 1];
-                    if ((curSidur.dFullShatHatchala - oSidurPrev.dFullShatGmar).TotalMinutes > inputData.oParam.iPaarBeinSidurimMechayevHityazvut)
+                    j=iIndexSidur - 1;
+                    while (j >= 0)
                     {
-                        oSidurNidrashHityatvut = curSidur;
+                        SidurDM oSidurPrev = (SidurDM)inputData.htEmployeeDetails[j];
+                        if (oSidurPrev.iNidreshetHitiatzvut == 1 || oSidurPrev.iPtorMehitiatzvut == 1)
+                        {
+                            if ((curSidur.dFullShatHatchala - oSidurPrev.dFullShatGmar).TotalMinutes > inputData.oParam.iPaarBeinSidurimMechayevHityazvut)
+                            {
+                                oSidurNidrashHityatvut = curSidur;
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            j--;
+                        }
                     }
+                   
+                        //if ((curSidur.dFullShatHatchala - oSidurPrev.dFullShatGmar).TotalMinutes > inputData.oParam.iPaarBeinSidurimMechayevHityazvut)
+                        //{
+                        //    oSidurNidrashHityatvut = curSidur;
+                        //}
+                    
 
                     if (oSidurNidrashHityatvut != null)
                     {
