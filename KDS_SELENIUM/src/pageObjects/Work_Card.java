@@ -1,6 +1,7 @@
 package pageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -193,6 +194,17 @@ public class Work_Card {
 	 
 	 
 	 
+	 public static WebElement Validate_Car_No(WebDriver driver){
+		 
+		    element = driver.findElement(By.className("ajax__validatorcallout_error_message_cell"));
+		 
+		    return element;
+	
+	 }
+	 
+	 
+	 
+	 
 	
 	 public static WebElement Btn_Update(WebDriver driver){
 		 
@@ -202,14 +214,40 @@ public class Work_Card {
 	
 	 }
 	 
+	 
+	 
+
+
+	 
+	 
+	 
+	 
+	 public static WebElement Btn_Cancel_Update(WebDriver driver){
+		 
+		    element = driver.findElement(By.id("btnCancel"));
+		    
+		    
+		    return element;
+	
+	 }
+
+	 
+	 
+	 
+	 
 		
 	 public static WebElement Btn_Close(WebDriver driver){
 		 
 		    element = driver.findElement(By.id("btnCloseCard"));
+		    
 		 
 		    return element;
 	
 	 }
+	 
+	 
+	 
+	
 	 
 
 }
