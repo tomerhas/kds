@@ -1,5 +1,6 @@
 package automationFramework;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
@@ -40,15 +41,29 @@ public class Test_Update_Car_No {
   
   public void f( String sCar_No  )   throws InterruptedException {
 	  
-	      for (String handle : driver.getWindowHandles()) {
-	      driver.switchTo().window(handle);}
+         
+	     waitForNumberofWindowsToEqual(2);
+	     Set<String> handles = driver.getWindowHandles();
+	     String firstWinHandle = driver.getWindowHandle(); handles.remove(firstWinHandle);
+	     
+	     String winHandle=(String) handles.iterator().next();
+	     if (winHandle!=firstWinHandle){
+	    	 String secondWinHandle = winHandle;
+	    	 driver.switchTo().window(secondWinHandle);}
+	     
+	     //Thread.sleep(3000);
+	      //for (String handle : driver.getWindowHandles()) {
+	      //driver.switchTo().window(handle);}
 	      
+	     
+	      //driver.switchTo().window("window");
+	     
 	      //((JavascriptExecutor) driver).executeScript("window.showModalDialog = window.open;");
 		  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		 
 		  //WebDriverWait wait = new WebDriverWait(driver, 150);
 		  //wait.until(ExpectedConditions.textToBePresentInElementValue(Work_Card.TxtId(driver), "31777"));
-		  Thread.sleep(3000);
+		  //Thread.sleep(3000);
 		  
 		  Work_Card.TxtId(driver).sendKeys("77104");
 		  Work_Card.Date(driver).sendKeys("03/03/2015");
@@ -101,7 +116,13 @@ public class Test_Update_Car_No {
   
   
   
-  @BeforeMethod
+  private void waitForNumberofWindowsToEqual(int i) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+@BeforeMethod
   public void beforeMethod() {
 	  
 	  

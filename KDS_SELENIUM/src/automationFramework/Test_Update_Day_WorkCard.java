@@ -1,6 +1,7 @@
 package automationFramework;
 
 import java.io.File;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -53,12 +54,20 @@ public class Test_Update_Day_WorkCard {
 
 
 
-      for (String handle : driver.getWindowHandles()) {
-      driver.switchTo().window(handle);}
+      //for (String handle : driver.getWindowHandles()) {
+      //driver.switchTo().window(handle);}
+	  waitForNumberofWindowsToEqual(2);
+	     Set<String> handles = driver.getWindowHandles();
+	     String firstWinHandle = driver.getWindowHandle(); handles.remove(firstWinHandle);
+	     
+	     String winHandle=(String) handles.iterator().next();
+	     if (winHandle!=firstWinHandle){
+	    	 String secondWinHandle = winHandle;
+	    	 driver.switchTo().window(secondWinHandle);}
 	  driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
 	  //WebDriverWait wait = new WebDriverWait(driver, 350);
 	  //wait.until(ExpectedConditions.textToBePresentInElementValue(Work_Card.TxtId(driver), "31777"));
-	  Thread.sleep(3000);
+	  //Thread.sleep(3000);
 	  Work_Card.TxtId(driver).sendKeys("77104");
 	  Work_Card.Date(driver).sendKeys("03/03/2015");
 	  Work_Card.Btn_Show(driver).click();
@@ -84,6 +93,16 @@ public class Test_Update_Day_WorkCard {
   
 
   
+
+
+
+
+
+private void waitForNumberofWindowsToEqual(int i) {
+	// TODO Auto-generated method stub
+	
+}
+
 
 
 
