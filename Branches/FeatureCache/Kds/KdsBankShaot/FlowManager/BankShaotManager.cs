@@ -1,0 +1,171 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Practices.Unity;
+using System.Data;
+using KdsBankShaot.DAL;
+using KDSCommon.UDT;
+using KDSCommon.Interfaces;
+using KDSCommon.DataModels.BankShaot;
+using KDSCommon.Enums;
+using KDSCommon.Interfaces.Managers.BankShaot;
+using KDSCommon.Interfaces.Logs;
+
+namespace KdsBankShaot.FlowManager
+{
+    public class BankShaotManager : IBankShaotManager
+    {
+        private IUnityContainer _container;
+        
+        public BankShaotManager(IUnityContainer container)
+        {
+            _container = container;
+        }
+
+        public void ExecBankShaot(long BakashaId,DateTime Taarich)
+        {
+            BankShaotDal dal = new BankShaotDal();
+            DataTable TbYechidotBank = new DataTable();
+            BudgetData inputData = null;
+            COLL_BUDGET oCollBudgets = new COLL_BUDGET();
+            try
+            {
+               
+                TbYechidotBank = dal.GetYechidotLeChishuv(Taarich);
+
+                for (int i = 0; i < TbYechidotBank.Rows.Count; i++)
+                {
+                    try
+                    {
+                        inputData = FillBudgetData(int.Parse(TbYechidotBank.Rows[i][0].ToString()), Taarich, BakashaId);
+
+                        CalcBudgetToYechida(inputData);
+
+                        oCollBudgets.Add(inputData.objBudget);
+
+                        dal.SaveEmployeesBudget(inputData.kodYechida, inputData.Month, inputData.RequestId, inputData.UserId);
+                    }
+                    catch (Exception ex)
+                    {
+                        _container.Resolve<ILogBakashot>().InsertLog(inputData.RequestId, "E", 0, "ExecBankShaot: yechida= " +inputData.kodYechida +",err: "+ ex.Message,  null);
+                    }
+
+                }
+
+                dal.SaveNetuneyBudgets(oCollBudgets);
+            }
+            catch (Exception ex)
+            {
+                _container.Resolve<ILogBakashot>().InsertLog(inputData.RequestId, "E", 0, "ExecBankShaot: " + ex.Message, null);
+                throw ex;
+            }
+        }
+
+        private BudgetData FillBudgetData(int kodYechida, DateTime Taarich, long BakashaId)
+        {
+            BudgetData inputData = new BudgetData();
+            BankShaotDal dal = new BankShaotDal();
+
+            try
+            {
+                inputData.kodYechida = kodYechida;
+                inputData.Taarich = Taarich;
+                inputData.Month = DateTime.Parse("01/" + Taarich.Month.ToString() + "/" + Taarich.Year.ToString());
+                inputData.oParams = new ParametrimDM(PrepareParametrim(dal.GetParametrim(Taarich)));
+                inputData.tbNetuneyChishuv= dal.GetNetuneyOvdimToYechida(kodYechida, Taarich);
+                inputData.DtYemeyChol = dal.GetYemeyChol(inputData.Month);
+                inputData.cntYemeyChol = inputData.DtYemeyChol.Rows.Count;
+                inputData.RequestId = BakashaId;
+               // inputData.UserId = UserId;
+                // fill current budget
+
+                inputData.objBudget.KOD_YECHIDA = kodYechida;
+                inputData.objBudget.CHODESH = inputData.Month;
+                inputData.objBudget.TAARICH = Taarich;
+                inputData.objBudget.BAKASHA_ID = BakashaId;
+               
+               
+                return inputData;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+       private Dictionary<int, Param> PrepareParametrim(DataTable dtParametrim)
+       {
+           try
+           {
+               var List = from c in dtParametrim.AsEnumerable()
+                          select new
+                          {
+                              kod = int.Parse(c.Field<string>("kod_param").ToString()),
+                              //exist = Int32.Parse(c.Field<string>("source_meafyen").ToString()),
+                             value = c.Field<string>("erech"),
+                             // erech_ishi = c.Field<string>("erech_ishi_partany")
+                          };
+               Dictionary<int, Param> Parametrim = List.ToDictionary(item => item.kod, item =>
+               {
+                   return new Param(item.value);
+               }
+                   );
+               return Parametrim;
+
+           }
+           catch (Exception ex)
+           {
+               throw new Exception("PrepareParametrim :" + ex.Message);
+           }
+       }
+    
+       private void CalcBudgetToYechida(BudgetData inputData)
+       {
+           BankShaotDal dal = new BankShaotDal();
+           DataTable TbNetnim = new DataTable();
+           DataTable distinctValues=new DataTable();
+           DataView view;
+           DataRow[] rows;
+           int matzevet,calc;
+           float sum = 0;
+        
+           try
+           {
+             //  TbNetnim = dal.GetNetuneyOvdimToYechida(inputData.kodYechida, inputData.Taarich);
+
+                rows =inputData.tbNetuneyChishuv.Select("Teken=1 and budget_calc=1");
+                if (rows.Length>0){
+                    view = new DataView((inputData.tbNetuneyChishuv.Select("Teken=1 and budget_calc=1")).CopyToDataTable());
+                    distinctValues = view.ToTable(true, "ISUK", "YECHIDA_IRGUNIT");
+                }
+                inputData.objBudget.MICHSA_BASIC = distinctValues.Rows.Count * inputData.oParams.GetParam(4).FloatValue;
+
+                inputData.objBudget.AGE_ADDITION = inputData.tbNetuneyChishuv.Select("gil=" + enKodGil.enKashish.GetHashCode()).Length * inputData.oParams.GetParam(2).FloatValue;
+                inputData.objBudget.AGE_ADDITION += inputData.tbNetuneyChishuv.Select("gil=" + enKodGil.enKshishon.GetHashCode()).Length * inputData.oParams.GetParam(1).FloatValue;
+
+                inputData.objBudget.HALBASHA_ADDITION = inputData.tbNetuneyChishuv.Select("meafen44=1").Length * inputData.oParams.GetParam(3).FloatValue * inputData.cntYemeyChol;
+
+                //view = new DataView((inputData.tbNetuneyChishuv.Select("izun_matzevet=1")).CopyToDataTable());
+                //matzevet = view.ToTable(true, "ISUK").Rows.Count;
+                //view = new DataView((inputData.tbNetuneyChishuv.Select("budget_calc=1")).CopyToDataTable());
+                //calc = view.ToTable(true, "ISUK").Rows.Count;
+
+                //for (int i = 0; i < inputData.DtYemeyChol.Rows.Count; i++)
+                //{
+                //    sum=
+                //}
+
+                inputData.objBudget.BUDGET = inputData.objBudget.MICHSA_BASIC + inputData.objBudget.AGE_ADDITION + inputData.objBudget.HALBASHA_ADDITION;
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+
+       }
+    }
+}
+
+
