@@ -23,8 +23,8 @@ public partial class Modules_Test2 : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-       // IBankShaotManager bankManager = ServiceLocator.Current.GetInstance<IBankShaotManager>();
-       // bankManager.ExecBankShaot(1234, DateTime.Parse("01/01/2015"));
+        IBankShaotManager bankManager = ServiceLocator.Current.GetInstance<IBankShaotManager>();
+        bankManager.ExecBankShaot(1234, DateTime.Parse("01/01/2015"));
        
         //List<ListItem> Items = new List<ListItem>();
         //Items.Add(new ListItem("אגב", "1"));
