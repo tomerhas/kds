@@ -28,6 +28,8 @@ using KDSBLLogic.DAL;
 using KDSBLLogic.Managers;
 using KdsShinuyim;
 using KdsShinuyim.FlowManager;
+using KDSCommon.Interfaces.Managers.BankShaot;
+using KdsBankShaot.FlowManager;
 
 
 /// <summary>
@@ -71,6 +73,8 @@ namespace KdsTaskManager
             container.RegisterType<IShinuyimManager, ShinuyimManager>();
             container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
             container.RegisterType<ILogBakashot, LogBakashot>();
+             container.RegisterType<ILogBakashot, LogBakashot>();
+             container.RegisterType<IBankShaotManager, BankShaotManager>();
 
             //Containers
 

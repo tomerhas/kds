@@ -28,7 +28,10 @@ using KDSBLLogic.DAL;
 using KDSBLLogic.Managers;
 using KdsShinuyim;
 using KdsShinuyim.FlowManager;
+using KDSCommon.Interfaces.Managers.BankShaot;
+using KdsBankShaot.FlowManager;
 
+ 
 
 /// <summary>
 /// Summary description for Bootstrapper
@@ -71,7 +74,9 @@ namespace KdsService
             container.RegisterType<IShinuyimManager, ShinuyimManager>();
             container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
             container.RegisterType<ILogBakashot, LogBakashot>();
-
+            container.RegisterType<IBankShaotManager, BankShaotManager>();
+          //  container.RegisterType<IBankShaotManager, BankShaotManager>();
+            
             //Containers
 
             //DAL

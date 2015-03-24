@@ -529,12 +529,12 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         //    KnisaByDemand = 3
         //}
 
-        public enum enKodGil
-        {
-            enTzair = 0,
-            enKashish = 1,
-            enKshishon = 2
-        }
+        //public enum enKodGil
+        //{
+        //    enTzair = 0,
+        //    enKashish = 1,
+        //    enKshishon = 2
+        //}
 
       
         public enum enMeafyenSidur46
@@ -1068,7 +1068,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             Sleep=23,
             ShguimOfRetroSpaectSdrn = 24,
             IdkunMachalotOvdim=25,
-            BdikatYemeyMachala=26
+            BdikatYemeyMachala=26,
+            ChishuvBankShaotMeshek=27
         }
         public enum enBechishuvSachar
         {

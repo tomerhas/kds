@@ -28,6 +28,8 @@ using KDSBLLogic.Managers;
 using KdsShinuyim;
 using KdsShinuyim.FlowManager;
 using KDSCommon.DataModels.Shinuyim;
+using KDSCommon.Interfaces.Managers.BankShaot;
+using KdsBankShaot.FlowManager;
 
 namespace KdsWebApplication
 {
@@ -68,6 +70,7 @@ namespace KdsWebApplication
             container.RegisterType<IShinuyimManager, ShinuyimManager>();
             container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
             container.RegisterType<ILogBakashot, LogBakashot>();
+            container.RegisterType<IBankShaotManager, BankShaotManager>();
           //  container.RegisterType<IShinuyLogCollection, ShinuyLogCollection>();
 
             //Containers

@@ -101,13 +101,13 @@ namespace KdsBatch
                 fErech = GetErechRechiv(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode());
                 switch (_iGil)
                 {
-                    case 0: //clGeneral.enKodGil.enTzair.GetHashCode():
+                    case 0: //enKodGil.enTzair.GetHashCode():
                         fErech = fErech / 516;
                         break;
-                    case 1: //clGeneral.enKodGil.enKashish.GetHashCode():
+                    case 1: //enKodGil.enKashish.GetHashCode():
                         fErech = fErech / 444;
                         break;
-                    case 2: //clGeneral.enKodGil.enKshishon.GetHashCode():
+                    case 2: //enKodGil.enKshishon.GetHashCode():
                         fErech = fErech / 480;
                         break;
                 }

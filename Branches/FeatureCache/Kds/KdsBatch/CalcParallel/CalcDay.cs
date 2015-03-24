@@ -1978,11 +1978,11 @@ namespace KdsBatch
 
                                         if (fMichsaYomit > 0 && ((!bShish && !bErevChag) || ((bShish || bErevChag) && dShatHatchalaYom < dShatHatchalaShabaton)))
                                         {
-                                            if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
+                                            if (objOved.objPirteyOved.iGil == enKodGil.enKashish.GetHashCode())
                                             {
                                                 fTosefetGil = (fNuchehutLepremia * 30) / objOved.objParameters.iChalukaTosefetGilKashish;
                                             }
-                                            else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
+                                            else if (objOved.objPirteyOved.iGil == enKodGil.enKshishon.GetHashCode())
                                             {
                                                 fTosefetGil = (fNuchehutLepremia * 30) / objOved.objParameters.iChalukaTosefetGilKshishon;
 
@@ -2822,11 +2822,11 @@ namespace KdsBatch
                                 fMichsaYomit = fMichsaYomitMechushevet;
                             }
                             else{
-                                if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enTzair.GetHashCode())
+                                if (objOved.objPirteyOved.iGil == enKodGil.enTzair.GetHashCode())
                                 {
                                     fMichsaYomit = objOved.objParameters.iGmulNosafotTzair;
                                 }
-                                else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
+                                else if (objOved.objPirteyOved.iGil == enKodGil.enKshishon.GetHashCode())
                                 {
                                     fMichsaYomit = objOved.objParameters.iGmulNosafotKshishon;
                                 }
@@ -5158,19 +5158,19 @@ namespace KdsBatch
                     //יוצאים מהכלל/הנחות ברמת יום עבודה
                     if (iMeafyen1 == 23 || iMeafyen1 == 22 || iMeafyen1 == 63 || iMeafyen1 == 66 || (iMeafyen1 >= 70 && iMeafyen1 <= 75) || iMeafyen1 ==86)
                     {
-                        if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && (iSugYom == enSugYom.Chol.GetHashCode() || iSugYom == enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == enSugYom.Purim.GetHashCode()))
+                        if (objOved.objPirteyOved.iGil == enKodGil.enKashish.GetHashCode() && (iSugYom == enSugYom.Chol.GetHashCode() || iSugYom == enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == enSugYom.Purim.GetHashCode()))
                             fErechRechiv = 444;
-                      //  else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode() && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == clGeneral.enSugYom.Purim.GetHashCode()))
+                      //  else if (objOved.objPirteyOved.iGil == enKodGil.enKshishon.GetHashCode() && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == clGeneral.enSugYom.Purim.GetHashCode()))
                       //      fErechRechiv = 462;
                         else if ((iSugYom >= 13 && iSugYom <= 18) || iSugYom == 11)
                             fErechRechiv = 300;
-                        else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && iSugYom == enSugYom.ErevYomKipur.GetHashCode())
+                        else if (objOved.objPirteyOved.iGil == enKodGil.enKashish.GetHashCode() && iSugYom == enSugYom.ErevYomKipur.GetHashCode())
                             fErechRechiv = 270;
                     }
                     else
                    // if (int.Parse(objOved.objMeafyeneyOved.GetMeafyen(1).Value) != 22 && int.Parse(objOved.objMeafyeneyOved.GetMeafyen(1).Value) != 23 && int.Parse(objOved.objMeafyeneyOved.GetMeafyen(1).Value) != 71 && int.Parse(objOved.objMeafyeneyOved.GetMeafyen(1).Value) != 72)
                     {
-                        if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
+                        if (objOved.objPirteyOved.iGil == enKodGil.enKashish.GetHashCode())
                         {
                             if (objOved.objMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
                             {
@@ -5185,7 +5185,7 @@ namespace KdsBatch
                                     fErechRechiv = fErechRechiv - 60;
                             }
                         }
-                        else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
+                        else if (objOved.objPirteyOved.iGil == enKodGil.enKshishon.GetHashCode())
                         {
                             if (objOved.objMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
                             {
@@ -5210,11 +5210,11 @@ namespace KdsBatch
                    
                     if (rowSidurim.Length > 0 && iSugYom == enSugYom.Shishi.GetHashCode() && fErechRechiv == 0)
                     {
-                        if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
+                        if (objOved.objPirteyOved.iGil == enKodGil.enKashish.GetHashCode())
                         { fErechRechiv = 330; }
-                        else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
+                        else if (objOved.objPirteyOved.iGil == enKodGil.enKshishon.GetHashCode())
                         { fErechRechiv = 360; }
-                        else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enTzair.GetHashCode())
+                        else if (objOved.objPirteyOved.iGil == enKodGil.enTzair.GetHashCode())
                         { fErechRechiv = 390; }
                     }
 

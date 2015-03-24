@@ -57,6 +57,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLib\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ReportViewer.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Oracle.DataAccess, Version=4.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
@@ -410,6 +411,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Xml\Sysman.xml" />
+    <Fakes Include="Fakes\ClassLibrary1.fakes" />
     <None Include="Properties\PublishProfiles\KdsProd01.pubxml" />
     <None Include="Properties\PublishProfiles\KdsProd02.pubxml" />
     <None Include="Properties\PublishProfiles\KdsTestProfile.pubxml" />
@@ -1019,6 +1021,10 @@
     <ProjectReference Include="..\Infrastructure\DalOraInfra\DalOraInfra.csproj">
       <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
       <Name>DalOraInfra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsBankShaot\KdsBankShaot.csproj">
+      <Project>{f0816ffe-33ab-4f4f-85db-94125e09140b}</Project>
+      <Name>KdsBankShaot</Name>
     </ProjectReference>
     <ProjectReference Include="..\KdsBatch\KdsBatch.csproj">
       <Project>{482bda70-9af2-4498-9627-e9c43ee44fdf}</Project>

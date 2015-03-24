@@ -226,6 +226,10 @@
       <Project>{6ec931d1-0935-49f4-8a12-331ca207c256}</Project>
       <Name>DalOraInfra</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KdsBankShaot\KdsBankShaot.csproj">
+      <Project>{f0816ffe-33ab-4f4f-85db-94125e09140b}</Project>
+      <Name>KdsBankShaot</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsBatch\KdsBatch.csproj">
       <Project>{482BDA70-9AF2-4498-9627-E9C43EE44FDF}</Project>
       <Name>KdsBatch</Name>

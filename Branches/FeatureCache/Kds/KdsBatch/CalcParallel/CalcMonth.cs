@@ -2359,11 +2359,11 @@ namespace KdsBatch
                     fTempW = 1;
                 }
 
-                if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enTzair.GetHashCode())
+                if (objOved.objPirteyOved.iGil == enKodGil.enTzair.GetHashCode())
                 {
                     fTempZ = objOved.objParameters.iGmulNosafotTzair;
                 }
-                else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
+                else if (objOved.objPirteyOved.iGil == enKodGil.enKshishon.GetHashCode())
                 {
                     fTempZ = objOved.objParameters.iGmulNosafotKshishon;
                 }
@@ -6499,11 +6499,11 @@ namespace KdsBatch
                 ////else
                 ////{
                     fTempZ = 0;
-                    if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
+                    if (objOved.objPirteyOved.iGil == enKodGil.enKshishon.GetHashCode())
                     {
                         fTempZ = 3;
                     }
-                    else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
+                    else if (objOved.objPirteyOved.iGil == enKodGil.enKashish.GetHashCode())
                     {
                         fTempZ = 6;
                     }

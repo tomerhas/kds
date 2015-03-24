@@ -559,9 +559,9 @@ namespace KdsBatch
 
                 if (bChisuv)
                 {
-                    if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
+                    if (objOved.objPirteyOved.iGil == enKodGil.enKashish.GetHashCode())
                         fTosefetGil = (fNuchehutLepremia * 30) / objOved.objParameters.iChalukaTosefetGilKashish;
-                    else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
+                    else if (objOved.objPirteyOved.iGil == enKodGil.enKshishon.GetHashCode())
                         fTosefetGil = (fNuchehutLepremia * 30) / objOved.objParameters.iChalukaTosefetGilKshishon;
                 }
 

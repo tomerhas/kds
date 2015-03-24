@@ -82,6 +82,9 @@
     <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataModels\BankShaot\BudgetData.cs" />
+    <Compile Include="DataModels\BankShaot\Param.cs" />
+    <Compile Include="DataModels\BankShaot\ParametrimDM.cs" />
     <Compile Include="DataModels\clParametersDM.cs" />
     <Compile Include="DataModels\Errors\ErrorDualKey.cs" />
     <Compile Include="DataModels\Errors\FlowErrorResult.cs" />
@@ -92,6 +95,8 @@
     <Compile Include="DataModels\MeafyenimDM.cs" />
     <Compile Include="DataModels\PeilutDM.cs" />
     <Compile Include="DataModels\Shinuyim\FlowShinuyResult.cs" />
+    <Compile Include="Enums\enKodGil.cs" />
+    <Compile Include="Interfaces\Managers\BankShaot\IBankShaotManager.cs" />
     <Compile Include="Interfaces\Shinuyim\IShinuyLogCollection.cs" />
     <Compile Include="DataModels\Shinuyim\ShinuyInputData.cs" />
     <Compile Include="DataModels\SidurDM.cs" />
@@ -165,6 +170,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxies\BatchProxy.cs" />
     <Compile Include="UDT\Coll_Brerot_Mechdal_Meafyenim.cs" />
+    <Compile Include="UDT\Coll_Budget.cs" />
     <Compile Include="UDT\Coll_Chishuv_Chodesh.cs" />
     <Compile Include="UDT\Coll_Chishuv_Sidur.cs" />
     <Compile Include="UDT\Coll_Chishuv_Yomi.cs" />
@@ -183,6 +189,7 @@
     <Compile Include="UDT\Coll_Sidurim_Ovdim.cs" />
     <Compile Include="UDT\Coll_Yamey_Avoda_Ovdim.cs" />
     <Compile Include="UDT\Obj_Brerot_Mechdal_Meafyenim.cs" />
+    <Compile Include="UDT\Obj_Budget.cs" />
     <Compile Include="UDT\Obj_Chishuv_Chodesh.cs" />
     <Compile Include="UDT\Obj_Chishuv_Sidur.cs" />
     <Compile Include="UDT\Obj_Chishuv_Yomi.cs" />

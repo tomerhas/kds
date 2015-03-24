@@ -14,6 +14,7 @@ using KDSCommon.Interfaces.Logs;
 using System.Threading;
 using KDSCommon.Enums;
 using KDSCommon.Proxies;
+using KDSCommon.Interfaces.Managers.BankShaot;
 
 
 
@@ -672,5 +673,34 @@ namespace KdsBatch.TaskManager
             }
 			
         }
+
+
+         public void ChishuvBankShaotMeshek()
+         {
+             
+             long lRequestNum = 0;
+              
+             try
+             {
+                 IBankShaotManager BankManager = ServiceLocator.Current.GetInstance<IBankShaotManager>();
+                 lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.ChishuvBankShaotMeshek, "ChishuvBankShaotMeshek", -12);  
+                 
+                 BankManager.ExecBankShaot(lRequestNum,DateTime.Now.Date);
+                
+                 clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
+             }
+             catch (Exception ex)
+             {
+                 if (lRequestNum > 0)
+                 {
+                     ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, ex.Message);
+                     clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
+                 }
+                 else clGeneral.LogError(ex);
+
+                 throw (ex);
+             }
+
+         }
 	}
 }
