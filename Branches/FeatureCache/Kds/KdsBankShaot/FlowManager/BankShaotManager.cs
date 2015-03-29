@@ -45,7 +45,7 @@ namespace KdsBankShaot.FlowManager
 
                         oCollBudgets.Add(inputData.objBudget);
 
-                        dal.SaveEmployeesBudget(inputData.kodYechida, inputData.Month, inputData.RequestId, inputData.UserId);
+                        dal.SaveEmployeesBudget(inputData.kodYechida, Taarich, inputData.RequestId, inputData.UserId);
                     }
                     catch (Exception ex)
                     {
@@ -78,6 +78,7 @@ namespace KdsBankShaot.FlowManager
                 inputData.DtYemeyChol = dal.GetYemeyChol(inputData.Month);
                 inputData.cntYemeyChol = inputData.DtYemeyChol.Rows.Count;
                 inputData.RequestId = BakashaId;
+                inputData.SumMatzevetLechodesh = dal.GetMatzevetMiztaber(kodYechida, Taarich);
                // inputData.UserId = UserId;
                 // fill current budget
 
@@ -128,36 +129,37 @@ namespace KdsBankShaot.FlowManager
            DataTable distinctValues=new DataTable();
            DataView view;
            DataRow[] rows;
-           int matzevet,calc;
+           float matzevet;
+           int teken,calc;
            float sum = 0;
         
            try
            {
              //  TbNetnim = dal.GetNetuneyOvdimToYechida(inputData.kodYechida, inputData.Taarich);
 
-                rows =inputData.tbNetuneyChishuv.Select("Teken=1 and budget_calc=1");
+                rows =inputData.tbNetuneyChishuv.Select("Teken=1");
                 if (rows.Length>0){
-                    view = new DataView((inputData.tbNetuneyChishuv.Select("Teken=1 and budget_calc=1")).CopyToDataTable());
+                    view = new DataView(rows.CopyToDataTable());
                     distinctValues = view.ToTable(true, "ISUK", "YECHIDA_IRGUNIT");
                 }
+                teken = distinctValues.Rows.Count;
                 inputData.objBudget.MICHSA_BASIC = distinctValues.Rows.Count * inputData.oParams.GetParam(4).FloatValue;
 
                 inputData.objBudget.AGE_ADDITION = inputData.tbNetuneyChishuv.Select("gil=" + enKodGil.enKashish.GetHashCode()).Length * inputData.oParams.GetParam(2).FloatValue;
                 inputData.objBudget.AGE_ADDITION += inputData.tbNetuneyChishuv.Select("gil=" + enKodGil.enKshishon.GetHashCode()).Length * inputData.oParams.GetParam(1).FloatValue;
 
-                inputData.objBudget.HALBASHA_ADDITION = inputData.tbNetuneyChishuv.Select("meafen44=1").Length * inputData.oParams.GetParam(3).FloatValue * inputData.cntYemeyChol;
+                inputData.objBudget.HALBASHA_ADDITION = float.Parse(Math.Round((inputData.tbNetuneyChishuv.Select("meafyen44=1").Length * inputData.oParams.GetParam(3).FloatValue * inputData.cntYemeyChol)/60, 2, MidpointRounding.AwayFromZero).ToString());
 
-                //view = new DataView((inputData.tbNetuneyChishuv.Select("izun_matzevet=1")).CopyToDataTable());
-                //matzevet = view.ToTable(true, "ISUK").Rows.Count;
-                //view = new DataView((inputData.tbNetuneyChishuv.Select("budget_calc=1")).CopyToDataTable());
-                //calc = view.ToTable(true, "ISUK").Rows.Count;
-
-                //for (int i = 0; i < inputData.DtYemeyChol.Rows.Count; i++)
-                //{
-                //    sum=
-                //}
-
-                inputData.objBudget.BUDGET = inputData.objBudget.MICHSA_BASIC + inputData.objBudget.AGE_ADDITION + inputData.objBudget.HALBASHA_ADDITION;
+                rows = inputData.tbNetuneyChishuv.Select("izun_matzevet=1 and meafyen46='1'");
+                if (rows.Length > 0)
+                {
+                    view = new DataView(rows.CopyToDataTable());
+                    distinctValues = view.ToTable(true, "ISUK", "YECHIDA_IRGUNIT");
+                }
+                matzevet =(teken-rows.Length)*( inputData.oParams.GetParam(5).FloatValue /inputData.cntYemeyChol);
+                inputData.objBudget.IZUN_MATZEVET_LETEKEN = matzevet;
+                inputData.objBudget.IZUN_MATZEVET_LETEKEN_MIZTABER = inputData.SumMatzevetLechodesh + matzevet;
+                inputData.objBudget.BUDGET = inputData.objBudget.MICHSA_BASIC + inputData.objBudget.AGE_ADDITION + inputData.objBudget.HALBASHA_ADDITION + inputData.objBudget.IZUN_MATZEVET_LETEKEN_MIZTABER;
            }
            catch (Exception ex)
            {

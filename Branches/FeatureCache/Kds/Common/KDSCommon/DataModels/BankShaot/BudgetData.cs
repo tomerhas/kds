@@ -22,7 +22,8 @@ namespace KDSCommon.DataModels.BankShaot
         public int kodYechida { get; set; }
         public long RequestId { get; set; }
         public int cntYemeyChol { get; set; }
-       
+        public float SumMatzevetLechodesh { get; set; }
+
         public DataTable DtParamsBank { get; set; }
         public DataTable tbNetuneyChishuv { get; set; }
         public DataTable DtYemeyChol { get; set; }

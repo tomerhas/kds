@@ -17,6 +17,7 @@ namespace KdsBankShaot.DAL
         public const string cFunGetYemeyChol = "PKG_BANK_SHAOT.pro_get_yemey_chol";
         public const string cProSaveNetuneyBudgets = "PKG_BANK_SHAOT.pro_save_chishuv_budgets";
         public const string cProSaveBudgetEmployees = "PKG_BANK_SHAOT.pro_save_budget_employee";
+        public const string cFunGetMatzevetMiztaber = "PKG_BANK_SHAOT.fun_get_matzevet_miztaber";
 
         public DataTable GetYechidotLeChishuv(DateTime dTaarich)
         {
@@ -126,7 +127,28 @@ namespace KdsBankShaot.DAL
                 throw ex;
             }
         }
-       
-        
+
+        public float GetMatzevetMiztaber(int iKodYechida, DateTime dTaarich)
+        {
+             clDal oDal = new clDal();
+             float matzevet;
+            try
+            {
+
+                oDal.AddParameter("p_return", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_yechida", ParameterType.ntOracleInteger, iKodYechida, ParameterDir.pdInput);
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(cFunGetMatzevetMiztaber);
+
+                matzevet = float.Parse(oDal.GetValParam("p_return"));
+
+                return matzevet;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
