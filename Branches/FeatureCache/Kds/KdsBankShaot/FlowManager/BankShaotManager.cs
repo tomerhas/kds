@@ -67,14 +67,16 @@ namespace KdsBankShaot.FlowManager
         {
             BudgetData inputData = new BudgetData();
             BankShaotDal dal = new BankShaotDal();
-
+            DataSet dsNetunim;
             try
             {
                 inputData.kodYechida = kodYechida;
                 inputData.Taarich = Taarich;
                 inputData.Month = DateTime.Parse("01/" + Taarich.Month.ToString() + "/" + Taarich.Year.ToString());
                 inputData.oParams = new ParametrimDM(PrepareParametrim(dal.GetParametrim(Taarich)));
-                inputData.tbNetuneyChishuv= dal.GetNetuneyOvdimToYechida(kodYechida, Taarich);
+                dsNetunim = dal.GetNetuneyOvdimToYechida(kodYechida, Taarich);
+                inputData.tbNetuneyYechidot = dsNetunim.Tables[0];// dal.GetNetuneyOvdimToYechida(kodYechida, Taarich);
+                inputData.tbNetuneyChishuv = dsNetunim.Tables[1];
                 inputData.DtYemeyChol = dal.GetYemeyChol(inputData.Month);
                 inputData.cntYemeyChol = inputData.DtYemeyChol.Rows.Count;
                 inputData.RequestId = BakashaId;
@@ -137,10 +139,10 @@ namespace KdsBankShaot.FlowManager
            {
              //  TbNetnim = dal.GetNetuneyOvdimToYechida(inputData.kodYechida, inputData.Taarich);
 
-                rows =inputData.tbNetuneyChishuv.Select("Teken=1");
+               rows = inputData.tbNetuneyYechidot.Select("Teken=1 and budget_calc=1");
                 if (rows.Length>0){
                     view = new DataView(rows.CopyToDataTable());
-                    distinctValues = view.ToTable(true, "ISUK", "YECHIDA_IRGUNIT");
+                    distinctValues = view.ToTable(true, "ISUK", "KOD_YECHIDA");
                 }
                 teken = distinctValues.Rows.Count;
                 inputData.objBudget.MICHSA_BASIC = distinctValues.Rows.Count * inputData.oParams.GetParam(4).FloatValue;

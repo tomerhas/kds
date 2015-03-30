@@ -57,18 +57,20 @@ namespace KdsBankShaot.DAL
             }
         }
 
-        public DataTable GetNetuneyOvdimToYechida(int iKodYechida,DateTime dTaarich)
+        public DataSet GetNetuneyOvdimToYechida(int iKodYechida, DateTime dTaarich)
         {
             clDal oDal = new clDal();
-            DataTable dt = new DataTable();
+           // DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
             try
             {
                 oDal.AddParameter("p_yechida", ParameterType.ntOracleInteger, iKodYechida, ParameterDir.pdInput);
                 oDal.AddParameter("p_date", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
-                oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(cProGetpronetuneychishuv, ref dt);
+                oDal.AddParameter("p_cur_yechidot", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.AddParameter("p_cur_ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(cProGetpronetuneychishuv, ref ds);
 
-                return dt;
+                return ds;
             }
             catch (Exception ex)
             {

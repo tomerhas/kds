@@ -25,6 +25,7 @@ namespace KDSCommon.DataModels.BankShaot
         public float SumMatzevetLechodesh { get; set; }
 
         public DataTable DtParamsBank { get; set; }
+        public DataTable tbNetuneyYechidot { get; set; }
         public DataTable tbNetuneyChishuv { get; set; }
         public DataTable DtYemeyChol { get; set; }
         public ParametrimDM oParams { get; set; }
