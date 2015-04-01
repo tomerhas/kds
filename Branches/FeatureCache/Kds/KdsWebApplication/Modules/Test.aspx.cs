@@ -1060,6 +1060,32 @@ public partial class Modules_Test :Page
         
     }
 
+
+    protected void btnBankShaot_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
+            //++ clUtils.RunBakaratSDRN();
+            //++ clUtils.RunRetroSpectSDRN();
+            clUtils.ChishuvBankShaotMeshek();
+            //clTkinutMakatim objMakat = new clTkinutMakatim();
+            // objMakat.(DateTime.Parse(clnFromDate.Text));
+
+            //wsBatch oBatch = new wsBatch();
+            //oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
+        }
+        catch (Exception ex)
+        {
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(255, "E", 0, "", ex);
+
+            // var excep = clLogBakashot.SetError(0, "E", 0, null, ex);//--
+            // ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(excep.Log.RequestId, excep.Log.SugHodaa,excep.Log.KodYeshut,ex.Message );  //--
+            //++clGeneral.LogError(ex);
+        }
+    }
+        
+    
     protected void btnPremyot_Click(object sender, EventArgs e)
     {
 

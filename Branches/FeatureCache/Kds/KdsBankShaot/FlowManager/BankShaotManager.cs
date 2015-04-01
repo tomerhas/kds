@@ -149,8 +149,9 @@ namespace KdsBankShaot.FlowManager
 
                 inputData.objBudget.AGE_ADDITION = inputData.tbNetuneyChishuv.Select("gil=" + enKodGil.enKashish.GetHashCode()).Length * inputData.oParams.GetParam(2).FloatValue;
                 inputData.objBudget.AGE_ADDITION += inputData.tbNetuneyChishuv.Select("gil=" + enKodGil.enKshishon.GetHashCode()).Length * inputData.oParams.GetParam(1).FloatValue;
+                inputData.objBudget.HALBASHA_ADDITION = (inputData.tbNetuneyChishuv.Select("meafyen44=1").Length * inputData.oParams.GetParam(3).FloatValue * inputData.cntYemeyChol) / 60;
 
-                inputData.objBudget.HALBASHA_ADDITION = float.Parse(Math.Round((inputData.tbNetuneyChishuv.Select("meafyen44=1").Length * inputData.oParams.GetParam(3).FloatValue * inputData.cntYemeyChol)/60, 2, MidpointRounding.AwayFromZero).ToString());
+              //  inputData.objBudget.HALBASHA_ADDITION = float.Parse(Math.Round((inputData.tbNetuneyChishuv.Select("meafyen44=1").Length * inputData.oParams.GetParam(3).FloatValue * inputData.cntYemeyChol)/60, 2, MidpointRounding.AwayFromZero).ToString());
 
                 rows = inputData.tbNetuneyChishuv.Select("izun_matzevet=1 and meafyen46='1'");
                 if (rows.Length > 0)
@@ -158,7 +159,7 @@ namespace KdsBankShaot.FlowManager
                     view = new DataView(rows.CopyToDataTable());
                     distinctValues = view.ToTable(true, "ISUK", "YECHIDA_IRGUNIT");
                 }
-                matzevet =(teken-rows.Length)*( inputData.oParams.GetParam(5).FloatValue /inputData.cntYemeyChol);
+                matzevet = float.Parse(Math.Round(((teken - rows.Length) * (inputData.oParams.GetParam(5).FloatValue / inputData.cntYemeyChol)), 2, MidpointRounding.AwayFromZero).ToString());
                 inputData.objBudget.IZUN_MATZEVET_LETEKEN = matzevet;
                 inputData.objBudget.IZUN_MATZEVET_LETEKEN_MIZTABER = inputData.SumMatzevetLechodesh + matzevet;
                 inputData.objBudget.BUDGET = inputData.objBudget.MICHSA_BASIC + inputData.objBudget.AGE_ADDITION + inputData.objBudget.HALBASHA_ADDITION + inputData.objBudget.IZUN_MATZEVET_LETEKEN_MIZTABER;

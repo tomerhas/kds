@@ -264,6 +264,15 @@ public partial class Modules_Test {
     protected global::System.Web.UI.WebControls.Button btnRefreshMakatim;
     
     /// <summary>
+    /// btnBankShaot control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Button btnBankShaot;
+    
+    /// <summary>
     /// rdoTst control.
     /// </summary>
     /// <remarks>

@@ -180,7 +180,12 @@
                  <td>   
                  <asp:Button ID="btnRefreshMakatim" runat="server" onclick="btnRefreshMakatim_Click" 
                         Text="רענן מקטים" />
-                 </td>         
+                 </td>      
+                
+                 <td>   
+                 <asp:Button ID="btnBankShaot" runat="server" onclick="btnBankShaot_Click" 
+                        Text="בנק שעות משק " />
+                 </td>       
             </tr>
          </table>  
           <asp:RadioButton runat="server" AutoPostBack="true" ID="rdoTst" Text="בדיקה" 
