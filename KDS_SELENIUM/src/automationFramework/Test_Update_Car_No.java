@@ -3,13 +3,8 @@ package automationFramework;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -58,7 +53,7 @@ public class Test_Update_Car_No {
 	     
 	      //driver.switchTo().window("window");
 	     
-	      //((JavascriptExecutor) driver).executeScript("window.showModalDialog = window.open;");
+	      
 		  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		 
 		  //WebDriverWait wait = new WebDriverWait(driver, 150);
