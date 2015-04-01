@@ -1,20 +1,29 @@
 package automationFramework;
 
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
+import com.thoughtworks.selenium.Wait;
+
 import pageObjects.Work_Card;
 
 public class Test_Update_Car_No {
 	
+	private static final TimeUnit SECONDS = null;
 	public WebDriver driver;	
 	 
 	
@@ -56,9 +65,13 @@ public class Test_Update_Car_No {
 	      
 		  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		 
-		  //WebDriverWait wait = new WebDriverWait(driver, 150);
+		 // WebDriverWait wait = new WebDriverWait(driver, 150);
 		  //wait.until(ExpectedConditions.textToBePresentInElementValue(Work_Card.TxtId(driver), "31777"));
 		  //Thread.sleep(3000);
+		  
+		 
+		  
+		  
 		  
 		  Work_Card.TxtId(driver).sendKeys("77104");
 		  Work_Card.Date(driver).sendKeys("03/03/2015");

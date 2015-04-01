@@ -1,6 +1,6 @@
 <suite name="Suite">
 
-    <test name="KDS">
+    <test name="Work_Card">
     
 	
 
@@ -12,5 +12,29 @@
 		</classes>
 
     </test>
+    
+    
+     <test name="EmployeeCards">
+    
+	
+
+		<classes>
+
+		    <class name="automationFramework.Test_EmployeeCards" />
+		    
+
+		</classes>
+
+    </test>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 </suite>
