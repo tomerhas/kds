@@ -66,7 +66,7 @@ namespace KDSCommon.UDT
 
         private bool m_KOD_YECHIDAIsNull;
 
-        private float m_BAKASHA_ID;
+        private long m_BAKASHA_ID;
 
         private bool m_BAKASHA_IDIsNull;
 
@@ -397,7 +397,7 @@ namespace KDSCommon.UDT
         }
 
         [OracleObjectMappingAttribute("BAKASHA_ID")]
-        public float BAKASHA_ID
+        public long BAKASHA_ID
         {
             get
             {
@@ -534,7 +534,7 @@ namespace KDSCommon.UDT
             this.BAKASHA_IDIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "BAKASHA_ID");
             if ((BAKASHA_IDIsNull == false))
             {
-                this.BAKASHA_ID = ((float)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "BAKASHA_ID")));
+                this.BAKASHA_ID = ((long)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "BAKASHA_ID")));
             }
         }
 
