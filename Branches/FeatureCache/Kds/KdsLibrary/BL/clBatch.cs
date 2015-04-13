@@ -115,6 +115,30 @@ namespace KdsLibrary.BL
             return iRequestId;
         }
 
+        public long InsBakashaChishuvBankShaot(clGeneral.enGeneralBatchType iTypeRequest, string sDescription, clGeneral.enStatusRequest iStatus, int iUserId,string sMonth)
+        {
+            long iRequestId;
+
+            clTxDal objDal = new clTxDal();
+            try
+            {
+                objDal.TxBegin();
+                iRequestId = InsertBakasha(ref objDal, iTypeRequest, sDescription, iStatus, iUserId);
+
+                objDal.ClearCommand();
+                InsertBakashaParam(ref objDal, iRequestId, 1, sMonth);
+
+                objDal.TxCommit();
+            }
+            catch (Exception ex)
+            {
+                objDal.TxRollBack();
+                throw ex;
+            }
+
+            return iRequestId;
+        }
+
         public long InsBakashatChufshaRezifa(clGeneral.enGeneralBatchType iTypeRequest, string sDescription, clGeneral.enStatusRequest iStatus, int iUserId, long iRequestToSachar)
         {
             long iRequestId;

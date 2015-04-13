@@ -677,14 +677,16 @@ namespace KdsBatch.TaskManager
 
          public void ChishuvBankShaotMeshek()
          {
-             
+             string chodesh="";
              long lRequestNum = 0;
-              
+             clBatch objBatch = new clBatch();
              try
              {
                  IBankShaotManager BankManager = ServiceLocator.Current.GetInstance<IBankShaotManager>();
-                 lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.ChishuvBankShaotMeshek, "ChishuvBankShaotMeshek", -12);  
-                 
+              //   lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.ChishuvBankShaotMeshek, "ChishuvBankShaotMeshek", -12);
+                 chodesh =  DateTime.Now.Date.Month.ToString().PadLeft(2,'0') +"/"+ DateTime.Now.Date.Year;
+                 lRequestNum = objBatch.InsBakashaChishuvBankShaot(clGeneral.enGeneralBatchType.ChishuvBankShaotMeshek, "ChishuvBankShaotMeshek", clGeneral.enStatusRequest.InProcess, -12, chodesh);
+          
                  BankManager.ExecBankShaot(lRequestNum,DateTime.Now.Date);
                 
                  clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
