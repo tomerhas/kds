@@ -146,12 +146,12 @@ namespace KdsBankShaot.FlowManager
               inputData.objBudget.AGE_ADDITION += inputData.tbNetuneyChishuv.Select("budget_calc=1 and gil=" + enKodGil.enKshishon.GetHashCode()).Length * inputData.oParams.GetParam(1).FloatValue;
               inputData.objBudget.HALBASHA_ADDITION = (inputData.tbNetuneyChishuv.Select("budget_calc=1 and meafyen44=1").Length * inputData.oParams.GetParam(3).FloatValue * inputData.cntYemeyChol) / 60;
 
-               rows = inputData.tbNetuneyChishuv.Select("izun_matzevet=1 and meafyen46='1'");
-               if (rows.Length > 0)
-               {
-                   view = new DataView(rows.CopyToDataTable());
-                   distinctValues = view.ToTable(true, "ISUK", "YECHIDA_IRGUNIT");
-               }
+               rows = inputData.tbNetuneyChishuv.Select("izun_matzevet=1 and meafyen46='0'");
+               //if (rows.Length > 0)
+               //{
+               //    view = new DataView(rows.CopyToDataTable());
+               //    distinctValues = view.ToTable(true, "ISUK", "YECHIDA_IRGUNIT");
+               //}
 
                matzevet = float.Parse(Math.Round(((teken - rows.Length) * (inputData.oParams.GetParam(5).FloatValue / inputData.cntYemeyChol)), 2, MidpointRounding.AwayFromZero).ToString());
                inputData.objBudget.IZUN_MATZEVET_LETEKEN = matzevet;
