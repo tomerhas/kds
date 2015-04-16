@@ -137,7 +137,7 @@ namespace KdsBankShaot.DAL
             try
             {
 
-                oDal.AddParameter("p_return", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_return", ParameterType.ntOracleDecimal, null, ParameterDir.pdReturnValue);
                 oDal.AddParameter("p_yechida", ParameterType.ntOracleInteger, iKodYechida, ParameterDir.pdInput);
                 oDal.AddParameter("p_date", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
 
