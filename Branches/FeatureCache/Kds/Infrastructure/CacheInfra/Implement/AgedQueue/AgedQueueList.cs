@@ -27,6 +27,8 @@ namespace CacheInfra.Implement.AgedQueue
         {
             lock (_syncObj)
             {
+                if (GetItem(key) != null)
+                    return;
                 if (_agedList.Count < _maxItems)
                 {
                     CreateAgedItem(item, key);
@@ -61,6 +63,7 @@ namespace CacheInfra.Implement.AgedQueue
                 var item = _agedList.SingleOrDefault(x => x.Key.Equals(key));
                 if (item == null)
                     return null;
+                item.LastUpdated = DateTime.Now;
                 return item.Value; 
             }
         }

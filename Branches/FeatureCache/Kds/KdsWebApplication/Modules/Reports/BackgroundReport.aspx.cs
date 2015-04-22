@@ -28,8 +28,8 @@ public partial class Modules_Reports_BackgroundReport : System.Web.UI.Page
         clOvdim oOvdim = clOvdim.GetInstance();
         DataTable Dt = new DataTable();
         Dt = oOvdim.GetPirteyHitkashrut(UserId);
-        if ((Dt.Rows.Count > 0) && (Dt.Rows[0]["EMAIL"].ToString() != ""))
-            DivSendMail.Style.Add("Display", "block");
+        //if ((Dt.Rows.Count > 0) && (Dt.Rows[0]["EMAIL"].ToString() != ""))
+        //    DivSendMail.Style.Add("Display", "block");
     }
 
 
