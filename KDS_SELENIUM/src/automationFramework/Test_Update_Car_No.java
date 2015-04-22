@@ -1,5 +1,6 @@
 package automationFramework;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -48,12 +49,14 @@ public class Test_Update_Car_No {
          
 	     waitForNumberofWindowsToEqual(2);
 	     Set<String> handles = driver.getWindowHandles();
+	     System.out.println(handles);
 	     String firstWinHandle = driver.getWindowHandle(); handles.remove(firstWinHandle);
 	     
 	     String winHandle=(String) handles.iterator().next();
 	     if (winHandle!=firstWinHandle){
 	    	 String secondWinHandle = winHandle;
-	    	 driver.switchTo().window(secondWinHandle);}
+	    	 driver.switchTo().window(secondWinHandle);
+	    	 System.out.println(secondWinHandle);}
 	     
 	     //Thread.sleep(3000);
 	      //for (String handle : driver.getWindowHandles()) {
@@ -72,8 +75,8 @@ public class Test_Update_Car_No {
 		 
 		  
 		  
-		  
-		  Work_Card.TxtId(driver).sendKeys("77104");
+		  Work_Card.findElement(driver, By.id("txtId"),60).sendKeys("77104");
+		  //Work_Card.TxtId(driver).sendKeys("77104");
 		  Work_Card.Date(driver).sendKeys("03/03/2015");
 		  Work_Card.Btn_Show(driver).click();
 		  Thread.sleep(3000);	
@@ -131,7 +134,7 @@ public class Test_Update_Car_No {
 
 
 @BeforeMethod
-  public void beforeMethod() {
+  public void beforeMethod() throws IOException {
 	  
 	  
 	  driver=Base.Initialize_browser();
