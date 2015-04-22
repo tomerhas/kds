@@ -1,30 +1,20 @@
 package automationFramework;
 
 import java.io.IOException;
-import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
-import com.thoughtworks.selenium.Wait;
-
 import pageObjects.Work_Card;
 
 public class Test_Update_Car_No {
 	
-	private static final TimeUnit SECONDS = null;
 	public WebDriver driver;	
 	 
 	
@@ -47,7 +37,7 @@ public class Test_Update_Car_No {
   public void f( String sCar_No  )   throws InterruptedException {
 	  
          
-	     waitForNumberofWindowsToEqual(2);
+	   /*  waitForNumberofWindowsToEqual(2);
 	     Set<String> handles = driver.getWindowHandles();
 	     System.out.println(handles);
 	     String firstWinHandle = driver.getWindowHandle(); handles.remove(firstWinHandle);
@@ -56,7 +46,7 @@ public class Test_Update_Car_No {
 	     if (winHandle!=firstWinHandle){
 	    	 String secondWinHandle = winHandle;
 	    	 driver.switchTo().window(secondWinHandle);
-	    	 System.out.println(secondWinHandle);}
+	    	 System.out.println(secondWinHandle);}*/
 	     
 	     //Thread.sleep(3000);
 	      //for (String handle : driver.getWindowHandles()) {
@@ -73,10 +63,12 @@ public class Test_Update_Car_No {
 		  //Thread.sleep(3000);
 		  
 		 
+
+		  Base a=new Base();
+		  a.waitForWindow("WorkCard",driver);
 		  
-		  
-		  Work_Card.findElement(driver, By.id("txtId"),60).sendKeys("77104");
-		  //Work_Card.TxtId(driver).sendKeys("77104");
+		  //Work_Card.findElement(driver, By.id("txtId"),60).sendKeys("77104");
+		  Work_Card.TxtId(driver).sendKeys("77104");
 		  Work_Card.Date(driver).sendKeys("03/03/2015");
 		  Work_Card.Btn_Show(driver).click();
 		  Thread.sleep(3000);	
@@ -127,13 +119,7 @@ public class Test_Update_Car_No {
   
   
   
-  private void waitForNumberofWindowsToEqual(int i) {
-	// TODO Auto-generated method stub
-	
-}
-
-
-@BeforeMethod
+  @BeforeMethod
   public void beforeMethod() throws IOException {
 	  
 	  
