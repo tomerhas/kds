@@ -1,6 +1,5 @@
 package automationFramework;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -120,7 +119,7 @@ public class Test_Update_Car_No {
   
   
   @BeforeMethod
-  public void beforeMethod() throws IOException {
+  public void beforeMethod()  {
 	  
 	  
 	  driver=Base.Initialize_browser();
