@@ -60,18 +60,7 @@ public class Test_Empty_Driving_Mapa {
 	  
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+ 
   
   
   
@@ -91,12 +80,7 @@ public class Test_Empty_Driving_Mapa {
 
   
   
-  
-  
-  
-  
-  
-  
+ 
   
   
   
