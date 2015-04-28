@@ -13,7 +13,7 @@ import org.testng.annotations.AfterMethod;
 
 import pageObjects.Work_Card;
 
-public class Test_Empty_Driving_Mapa {
+public class Test_Empty_Activity_Mapa {
 	
 	public WebDriver driver;	
 	
@@ -39,8 +39,8 @@ public class Test_Empty_Driving_Mapa {
 	  Work_Card.Btn_Show(driver).click();
 	  Work_Card.AddRekaUp_mapa(driver).click();
 	  Thread.sleep(2000);
-	  System.out.println(Work_Card.Makat_Num(driver).getAttribute("value"));
-	  Assert.assertEquals("60375800",Work_Card.Makat_Num(driver).getAttribute("value"));
+	  System.out.println(Work_Card.Makat_Num_Reka_Mapa(driver).getAttribute("value"));
+	  Assert.assertEquals("60375800",Work_Card.Makat_Num_Reka_Mapa(driver).getAttribute("value"));
 	  Work_Card.AddRekadw_mapa(driver).click();
 	  WebDriverWait wait = new WebDriverWait(driver, 30);
 	  wait.until(ExpectedConditions.alertIsPresent());
@@ -48,7 +48,7 @@ public class Test_Empty_Driving_Mapa {
 	  System.out.println(alert.getText());
 	  Assert.assertEquals("לא נמצאה נסיעה ריקה שתוכננה במפה",alert.getText());
 	  alert.accept();
-	  Work_Card.Cancel_Activity(driver).click();
+	  Work_Card.Cancel_Empty_Activity_Mapa(driver).click();
 	  Work_Card.Btn_Update(driver).click();
 	  Thread.sleep(3000);
 	  Work_Card.Btn_Close(driver).click();
