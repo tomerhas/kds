@@ -9,6 +9,9 @@
 		    <class name="automationFramework.Test_Update_Car_No" />
 		    <class name="automationFramework.Test_Update_Day_WorkCard" />
             <class name="automationFramework.Test_Empty_Driving_Mapa" />
+            <class name="automationFramework.Test_Empty_Activity_Between" />
+            
+            
 		</classes>
 
     </test>
