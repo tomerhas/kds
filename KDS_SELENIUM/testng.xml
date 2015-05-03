@@ -10,6 +10,7 @@
 		    <class name="automationFramework.Test_Update_Day_WorkCard" />
             <class name="automationFramework.Test_Empty_Activity_Mapa" />
             <class name="automationFramework.Test_Empty_Activity_Between" />
+            <class name="automationFramework.Test_Add_Absences" />
             
             
 		</classes>

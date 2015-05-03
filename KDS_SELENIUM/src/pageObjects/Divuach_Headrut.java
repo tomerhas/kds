@@ -9,12 +9,7 @@ public class Divuach_Headrut {
 	 private static WebElement element;
 
 	
-	 public static WebElement  Btn_Add_Absence (WebDriver driver){
-		 
-		  element = driver.findElement(By.id("btnAddHeadrut"));
-		    
-		 
-		   return element;  }
+	
 	 
 	 
 	 
