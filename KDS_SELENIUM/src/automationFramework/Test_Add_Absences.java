@@ -1,6 +1,5 @@
 package automationFramework;
 
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
@@ -14,7 +13,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
 import pageObjects.Divuach_Headrut;
-import pageObjects.Employee_Card;
 import pageObjects.Work_Card;
 
 public class Test_Add_Absences {
