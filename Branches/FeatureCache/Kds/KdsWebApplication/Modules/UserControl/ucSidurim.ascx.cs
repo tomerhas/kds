@@ -2252,7 +2252,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         
         if ((lMakatStart == 0) || (iSidurIndexOrg==0))       
-            sScript = "alert(' לא ניתן להשלים נסיעה ריקה');";                
+            sScript = "alert('לא ניתן להשלים נסיעה ריקה');";                
         else
         {
             DataTable _NesiaDetails = new DataTable();
@@ -2283,7 +2283,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         
         if (lMakatEnd == 0)
         {
-            sScript = "alert(' לא ניתן להשלים נסיעה ריקה');";
+            sScript = "alert('לא ניתן להשלים נסיעה ריקה');";
            // ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "AddReka", sScript, true);
         }
         else
