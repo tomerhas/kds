@@ -35,7 +35,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  wait.until(ExpectedConditions.alertIsPresent());
 	  Alert alert=driver.switchTo().alert();
 	  System.out.println(alert.getText());
-	  Assert.assertEquals(" לא ניתן להשלים נסיעה ריקה",alert.getText());
+	  Assert.assertEquals("לא ניתן להשלים נסיעה ריקה",alert.getText());
 	  alert.accept();
 	  Work_Card.Assert_Reka_Between_Not_Found(driver).click();
 	  wait.until(ExpectedConditions.alertIsPresent());

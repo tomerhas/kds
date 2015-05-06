@@ -110,10 +110,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
   
   
   
-  private void waitForNumberofWindowsToEqual(int i) {
-	// TODO Auto-generated method stub
-	
-}
+
 
 
 
