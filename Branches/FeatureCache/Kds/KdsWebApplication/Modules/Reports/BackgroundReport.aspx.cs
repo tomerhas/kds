@@ -28,8 +28,8 @@ public partial class Modules_Reports_BackgroundReport : System.Web.UI.Page
         clOvdim oOvdim = clOvdim.GetInstance();
         DataTable Dt = new DataTable();
         Dt = oOvdim.GetPirteyHitkashrut(UserId);
-        //if ((Dt.Rows.Count > 0) && (Dt.Rows[0]["EMAIL"].ToString() != ""))
-        //    DivSendMail.Style.Add("Display", "block");
+        if ((Dt.Rows.Count > 0) && (Dt.Rows[0]["EMAIL"].ToString() != ""))
+            DivSendMail.Style.Add("Display", "block");
     }
 
 
@@ -54,7 +54,7 @@ public partial class Modules_Reports_BackgroundReport : System.Web.UI.Page
             foreach (KeyValuePair<string, string> Control in ControlsList)
                 ColUdt.Add(new OBJ_REPORT_PARAM(Control.Key, Control.Value));
 
-            _SendToMail = CkSendInEmail.Checked;
+            _SendToMail =  CkSendInEmail.Checked;
             _BakashaId = objBatch.RunReportsBatch(clGeneral.enGeneralBatchType.CreateHeavyReports, PageHeader + ":" + TxtDescription.Text, clGeneral.enStatusRequest.InProcess, UserId, ColUdt, ReportName, _Extension, _DestinationFolder, _SendToMail);
             sMessage = " בקשתך נשלחה לביצוע ומספרה הוא: " + _BakashaId;
         }

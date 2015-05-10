@@ -124,7 +124,7 @@
       </DropDownList>
     </Filter>
   </Report>
-  <Report  RdlName="DriverWithoutSignature" Roles="kds_administrators" FilterByLine="3" PageHeader="נהגים שלא החתימו התייצבות - מרוכז ומפורט" Orientation="Landscape" ProductionType="Heavy">
+  <!--<Report  RdlName="DriverWithoutSignature" Roles="kds_administrators" FilterByLine="3" PageHeader="נהגים שלא החתימו התייצבות - מרוכז ומפורט" Orientation="Landscape" ProductionType="Heavy">
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32" Required="true">
       <FilterValidator ValidatorName="ValidEzor"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת איזור" ValidationFunction="ValidateCheckBoxList"/>
       <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
@@ -137,8 +137,72 @@
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
       </DropDownList>
     </Filter>
+  </Report>-->
+   <Report  RdlName="RdlHityazvutSignatureMissing" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - מרוכז ומפורט" Orientation="Landscape" >
+    <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
+      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
+        <ParameterOfFunction Type="ByValue" Value="RdlHityazvutSignatureMissing" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
+        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
+      </DropDownList>
+    </Filter>
+     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32" Required="true">
+      <FilterValidator ValidatorName="ValidEzor"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת איזור" ValidationFunction="ValidateCheckBoxList"/>
+      <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
+    </Filter>
+   
+    <Filter ParameterName="P_SNIF" Caption="סניף אב" BoxeType="DropDownCheckBoxes"  DataType="System.Int32">
+        <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_kod_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" >
+        </DropDownList>
+      </Filter>
+
+      <Filter ParameterName="P_SNIF_TNUA" Caption="סניף תנועה" BoxeType="DropDownCheckBoxes"  DataType="System.Int32">
+        <DropDownList QueryType="Select"  Select="select KOD_SNIF_TNUAA,teur_snif_tnuaa ||' (' ||KOD_SNIF_TNUAA||')' teur from ctb_snifey_tnuaa ORDER BY KOD_SNIF_TNUAA" ValueField="KOD_SNIF_TNUAA" TextField="teur" />  
+      </Filter>
+   
+     <Filter ParameterName="P_SIBA" Caption="סיבת אי החתמה" BoxeType="DropDownCheckBoxes"  DataType="System.Int32">
+       <DropDownList QueryType="Select"  Select="select KOD_siba,teur_siba from ctb_sibot_ledivuch_yadani ORDER BY teur_siba" ValueField="KOD_siba" TextField="teur_siba" />  
+       </Filter> 
+    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
+      <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdim" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
+    </Filter>
+    <Filter ParameterName="P_TYPE" Caption="פורמט" BoxeType="CheckBoxList" DataType="System.Int32" Required="true">
+      <DropDownList QueryType="Select"  Select="select 1 kod,'מרוכז' teur from dual union  select 2 kod,'מפורט' teur from dual" ValueField="kod" TextField="teur" />
+    </Filter>
   </Report>
-  <Report  RdlName="DriverWithPlaints" Roles="kds_administrators" FilterByLine="3" PageHeader="נהגים שלא החתימו התייצבות- תלונה" Orientation="Landscape" ProductionType="Heavy">
+  <Report  RdlName="RdlHityazvurMissingTluna" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - תלונה " Orientation="Landscape" >
+    <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
+      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
+        <ParameterOfFunction Type="ByValue" Value="RdlHityazvurMissingTluna" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
+        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
+      </DropDownList>
+    </Filter>
+     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32" Required="true">
+      <FilterValidator ValidatorName="ValidEzor"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת איזור" ValidationFunction="ValidateCheckBoxList"/>
+      <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
+    </Filter>
+   
+    <Filter ParameterName="P_SNIF" Caption="סניף אב" BoxeType="DropDownCheckBoxes"  DataType="System.Int32">
+        <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_kod_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" >
+        </DropDownList>
+      </Filter>
+
+      <Filter ParameterName="P_SNIF_TNUA" Caption="סניף תנועה" BoxeType="DropDownCheckBoxes"  DataType="System.Int32">
+        <DropDownList QueryType="Select"  Select="select KOD_SNIF_TNUAA,teur_snif_tnuaa ||' (' ||KOD_SNIF_TNUAA||')' teur from ctb_snifey_tnuaa ORDER BY KOD_SNIF_TNUAA" ValueField="KOD_SNIF_TNUAA" TextField="teur" />  
+      </Filter>
+   
+     <Filter ParameterName="P_SIBA" Caption="סיבת אי החתמה" BoxeType="DropDownCheckBoxes"  DataType="System.Int32">
+       <DropDownList QueryType="Select"  Select="select KOD_siba,teur_siba from ctb_sibot_ledivuch_yadani ORDER BY teur_siba" ValueField="KOD_siba" TextField="teur_siba" />  
+       </Filter>
+   
+      <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
+      <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdim" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
+    </Filter>
+  </Report>
+  <!--<Report  RdlName="DriverWithPlaints" Roles="kds_administrators" FilterByLine="3" PageHeader="נהגים שלא החתימו התייצבות- תלונה" Orientation="Landscape" ProductionType="Heavy">
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32" Required="true">
       <FilterValidator ValidatorName="ValidEzor"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת איזור" ValidationFunction="ValidateCheckBoxList"/>
       <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
@@ -151,11 +215,11 @@
          <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
       </DropDownList>
     </Filter>
-  </Report>
+  </Report>-->
   <Report  RdlName="DisregardDrivers" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נהגים משובצים שלא שלחו כרטיס עבודה מהסניף" ProductionType="Heavy">
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="DriverWithPlaints" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="DisregardDrivers" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
