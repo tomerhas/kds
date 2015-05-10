@@ -66,6 +66,8 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
       Work_Card.Date(driver).click();
 	  Work_Card.Date(driver).sendKeys("27042015");
 	  Work_Card.Btn_Show(driver).click();
+	  WebDriverWait wait = new WebDriverWait(driver,50);
+	  wait.until(ExpectedConditions.visibilityOf(Work_Card.Sidur_Num(driver)));
 	  Assert.assertEquals(Work_Card.Sidur_Num(driver).getText(),"99830");
 	  Work_Card.Cancel_Sidur(driver).click();
       Work_Card.Btn_Update(driver).click();
@@ -73,6 +75,8 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
       Work_Card.Date(driver).click();
 	  Work_Card.Date(driver).sendKeys("26042015");
 	  Work_Card.Btn_Show(driver).click();
+	  WebDriverWait wait1 = new WebDriverWait(driver,50);
+	  wait1.until(ExpectedConditions.visibilityOf(Work_Card.Cancel_Sidur(driver)));
 	  Work_Card.Cancel_Sidur(driver).click();
       Work_Card.Btn_Update(driver).click();
       Thread.sleep(2000);
@@ -85,8 +89,8 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  Select droplist2 = new Select(Divuach_Headrut.List_Absences(driver));
       droplist2.selectByVisibleText("היעדרות - תשלום יום עבודה"); 
       Divuach_Headrut.Btn_Update_Absence(driver).click();
-      WebDriverWait wait = new WebDriverWait(driver, 30);
-      wait.until(ExpectedConditions.alertIsPresent());
+      WebDriverWait wait2 = new WebDriverWait(driver, 30);
+      wait2.until(ExpectedConditions.alertIsPresent());
 	  Alert alert=driver.switchTo().alert();
 	  System.out.println(alert.getText());
 	  Assert.assertEquals("סידור ההיעדרות חופף בשעות עם סידור קיים",alert.getText());
@@ -95,6 +99,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  Base g= new Base();
 	  g.waitForWindow("WorkCard",driver);
       Work_Card.Btn_Close(driver).click();
+      
      
 	  
 	  
