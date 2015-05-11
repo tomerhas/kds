@@ -138,10 +138,10 @@
       </DropDownList>
     </Filter>
   </Report>-->
-   <Report  RdlName="RdlHityazvutSignatureMissing" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - מרוכז ומפורט" Orientation="Landscape" >
+   <Report  RdlName="RdlHityazvutMissing" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - מרוכז ומפורט" Orientation="Landscape" >
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="RdlHityazvutSignatureMissing" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="RdlHityazvutMissing" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
@@ -171,10 +171,10 @@
       <DropDownList QueryType="Select"  Select="select 1 kod,'מרוכז' teur from dual union  select 2 kod,'מפורט' teur from dual" ValueField="kod" TextField="teur" />
     </Filter>
   </Report>
-  <Report  RdlName="RdlHityazvurMissingTluna" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - תלונה " Orientation="Landscape" >
+  <Report  RdlName="RdlHityazvutMissingTluna" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - תלונה " Orientation="Landscape" >
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="RdlHityazvurMissingTluna" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="RdlHityazvutMissingTluna" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />

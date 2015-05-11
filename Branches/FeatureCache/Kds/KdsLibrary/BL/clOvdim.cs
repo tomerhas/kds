@@ -1881,6 +1881,25 @@ namespace KdsLibrary.BL
                throw ex;
            }
        }
+
+
+       public void SaveToBarcodeTable(int iMisparIshi, DateTime dCardDate, int iMeadken)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                //עדכון TB_YAMEY_OVODA_OVDIM
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
+                oDal.AddParameter("p_meadken", ParameterType.ntOracleInteger, iMeadken, ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cProSaveToBarcodeTable);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 

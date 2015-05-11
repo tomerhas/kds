@@ -158,7 +158,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             switch (Report.NameReport)
             {
                 case ReportName.DriverWithoutTacograph:
-                case ReportName.RdlHityazvutSignatureMissing:
+                case ReportName.RdlHityazvutMissing:
                     if (!Page.IsPostBack)
                     {
                         Ezor.Enabled = ((PageModule.SecurityLevel == KdsSecurityLevel.ViewAll) ||
@@ -477,8 +477,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             case ReportName.Average:
                 dt = oReport.GetIdOfYameyAvoda(DateTime.Parse(EndMonth.ToString("dd/MM/yyyy")).AddDays(1).AddMonths(-7),EndMonth, (string)clGeneral.GetControlValue(CompanyId));
                 break;
-            case ReportName.RdlHityazvutSignatureMissing:
-            case ReportName.RdlHityazvurMissingTluna:
+            case ReportName.RdlHityazvutMissing:
+            case ReportName.RdlHityazvutMissingTluna:
             case ReportName.HityazvutBePundakimTlunot:
             case ReportName.HityazvutBePundakimKalkalit:
                 dt = oReport.GetOvdim(DateTime.Parse(CtrlStartDate),DateTime.Parse(CtrlEndDate));
@@ -595,8 +595,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.IdkuneyRashemet:
                     Auto_P_MIS_RASHEMET.ContextKey = "6,0133," + CtrlTaarichCa.ToShortDateString();
                     break;
-                case ReportName.RdlHityazvutSignatureMissing:
-                case ReportName.RdlHityazvurMissingTluna:
+                case ReportName.RdlHityazvutMissing:
+                case ReportName.RdlHityazvutMissingTluna:
                       chodesh = DateTime.Parse("01/" + (string)clGeneral.GetControlValue(Period));
                       MisparIshi.ContextKey = chodesh.ToShortDateString()+ ";" + chodesh.AddMonths(1).AddDays(-1).ToShortDateString();
                     break;

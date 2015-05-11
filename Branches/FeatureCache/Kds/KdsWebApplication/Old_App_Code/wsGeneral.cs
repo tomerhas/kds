@@ -2012,6 +2012,26 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
+
+
+    [WebMethod(EnableSession = true)]
+    public void SaveToBarcodeTable(int misIshi, string sCardDate)
+    {
+        clOvdim _Ovdim = clOvdim.GetInstance();
+        DateTime dDateCard = DateTime.Parse(sCardDate);
+        int iLoginUser = int.Parse(Session["LoginUserEmp"].ToString());
+        try
+        {
+
+            _Ovdim.SaveToBarcodeTable(misIshi, dDateCard, iLoginUser);
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
     [WebMethod(EnableSession=true)]
     public string SetMeasherOMistayeg(int iMisaprIshi, string sCardDate, int iStatus)
     {

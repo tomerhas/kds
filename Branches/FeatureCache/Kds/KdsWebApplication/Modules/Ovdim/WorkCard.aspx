@@ -833,10 +833,11 @@
             }
          }
          function SetBarCode()
-         {
+         {   
            var sKey = $get("txtId").value.split("|");                     
            $get("txtId").value =sKey[1];
            $get("clnDate").value = String(sKey[2]).substr(6,2) + "/" +  String(sKey[2]).substr(4,2) + "/" + String(sKey[2]).substr(0,4);                
+           wsGeneral.SaveToBarcodeTable(Number($get("txtId").value), $get("clnDate").value,null);
            $get("btnRefreshOvedDetails").click();          
          }
          function btnMeasherOrMistayeg_onclick(value)

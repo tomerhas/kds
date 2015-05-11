@@ -228,6 +228,7 @@ namespace KdsLibrary
         public const string cProGetArachimLeoved = "pkg_ovdim.pro_get_arachim_by_misIshi";
         public const string cProUpdIdkunRashemet = "pkg_ovdim.pro_ins_idkuney_rashemet";
         public const string cProDeleteIdkunRashemet = "pkg_ovdim.pro_delete_idkuney_rashemet";
+        public const string cProSaveToBarcodeTable = "pkg_ovdim.pro_save_barcode_table";
 
         public const string cProGetPirteyOvedLetkufot = "pkg_ovdim.pro_get_pirtey_oved_letkufot";
         public const string cProGetMeafyenOvedLetkufot = "pkg_ovdim.pro_get_meafyen_oved_letkufot";

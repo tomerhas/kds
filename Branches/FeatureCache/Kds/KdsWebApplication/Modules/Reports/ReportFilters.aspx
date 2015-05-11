@@ -8,7 +8,7 @@
     <script src="../../Js/ListBoxExtended.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            EnlargeFieldSetsForIE8(null, "RdlHityazvutSignatureMissing,DriverWithoutTacograph", 100);
+            EnlargeFieldSetsForIE8(null, "RdlHityazvutMissing,DriverWithoutTacograph", 100);
              
 
             var KamutIdkuneyRashemet = {
