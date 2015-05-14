@@ -348,6 +348,11 @@ namespace KdsLibrary.Utils.Reports
             }
             Ddl.DataSource = GetListValueDataSource(filter);
             Ddl.DataBind();
+            if (filter.RunAtServer)
+            //{
+            //    Ddl.Attributes.Add("onblur", "FireControlChanged()");
+            //    Ddl.AutoPostBack = true;
+            //}
            // if (filter.RunAtServer)
             //{
 

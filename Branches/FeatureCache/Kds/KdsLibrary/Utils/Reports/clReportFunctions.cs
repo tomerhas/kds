@@ -20,29 +20,22 @@ namespace KdsLibrary.Utils.Reports
 
             dt = clGeneral.FillDateInDataTable(num, DateTime.Now.AddMonths(-1), disdplayFirst, firstText);
 
-            //switch (rptName)
-            //{
-            //    case ReportName.PremiotPresence:
-            //    case ReportName.DriverWithoutSignature:
-            //    case ReportName.DriverWithoutTacograph:
-            //    case ReportName.HashvaatChodsheyRizotChishuv:
-            //    case ReportName.HashvaatRizotChishuv:
-            //    case ReportName.DescriptionAllComponents:
-            //    case ReportName.AbsentWorkers:
-            //    case ReportName.Average:
-            //    case ReportName.DriverWithPlaints:
-            //        dt = clGeneral.FillDateInDataTable(13, DateTime.Now.AddMonths(-1), disdplayFirst, firstText);
-            //        break;
-            //    case ReportName.DisregardDrivers:
-            //        dt = clGeneral.FillDateInDataTable(14, DateTime.Now.AddMonths(-1), disdplayFirst, firstText);
-            //        break;
-            //    //case ReportName.HashvaatRizotChishuv:
-            //    //    dt = clGeneral.FillDateInDataTable(13, DateTime.Now.AddMonths(-1), true, firstText);
-            //    //    break;
-            //}
             return dt;
         }
 
+        public static DataTable GetMonths(Boolean disdplayFirst, string firstText, int ParamNumMonth)
+        {
+            DataTable dt = null;
+            DataTable dtParametrim = new DataTable();
+            clUtils oUtils = new clUtils();
+            int num;
+            dtParametrim = oUtils.getErechParamByKod(ParamNumMonth.ToString(), DateTime.Now.ToShortDateString());
+            num = int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString())-1;
+
+            dt = clGeneral.FillDateInDataTable(num, DateTime.Now, disdplayFirst, firstText);
+
+            return dt;
+        }
 
         public static DataTable GetHoursDayList()
         {

@@ -140,15 +140,14 @@
   </Report>-->
    <Report  RdlName="RdlHityazvutMissing" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - מרוכז ומפורט" Orientation="Landscape" >
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
-      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="RdlHityazvutMissing" DataType="System.String" />
+      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonths" ValueField="Value" TextField="Month">
+      
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
       </DropDownList>
     </Filter>
-     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32" Required="true">
-      <FilterValidator ValidatorName="ValidEzor"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת איזור" ValidationFunction="ValidateCheckBoxList"/>
+     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32" >
       <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
    
@@ -173,8 +172,7 @@
   </Report>
   <Report  RdlName="RdlHityazvutMissingTluna" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - תלונה " Orientation="Landscape" >
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
-      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="RdlHityazvutMissingTluna" DataType="System.String" />
+      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonths" ValueField="Value" TextField="Month">
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />

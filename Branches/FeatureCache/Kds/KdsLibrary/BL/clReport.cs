@@ -374,7 +374,24 @@ namespace KdsLibrary.BL
             return dt;
         }
 
-
+        public DataTable GetSnifeyTnuaa(string p_ezor, string p_snif_av)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                clDal dal = new clDal();
+                dal.AddParameter("p_ezor", ParameterType.ntOracleVarchar, p_ezor, ParameterDir.pdInput);
+                dal.AddParameter("p_snif_av", ParameterType.ntOracleVarchar, p_snif_av, ParameterDir.pdInput); 
+                dal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                dal.ExecuteSP(clGeneral.cProGetSnifeyTnua, ref dt);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
+        
 
 
         public bool GetProPrepareOvdimRikuzim(long BakashaId ,long RequestIdForRikuzim, int NumOfProcesses)

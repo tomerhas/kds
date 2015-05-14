@@ -16,6 +16,7 @@ using KdsLibrary.Utils.Reports;
 using KdsLibrary.Controls;
 using KdsLibrary.UI.SystemManager;
 using Microsoft.Reporting.WebForms;
+using Saplin.Controls;
 //using Egged.WebCustomControls;
 
 
@@ -133,6 +134,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.ReportNesiotKfulot:
                     Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
                     break;
+                //case ReportName.RdlHityazvutMissing:
+                //    Ezor.SelectedIndexChanged += new EventHandler(Ezor_SelectedIndexChanged);
+                //    SnifCB.TextChanged += new EventHandler(Ezor_SelectedIndexChanged);
+                //    break;
                 //case ReportName.FindWorkerCard:
                 //case ReportName.Presence:
                 //case ReportName.Average:
@@ -163,7 +168,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     {
                         Ezor.Enabled = ((PageModule.SecurityLevel == KdsSecurityLevel.ViewAll) ||
                             (PageModule.SecurityLevel == KdsSecurityLevel.ViewOnlyEmployeeData));
-                        Ezor.SelectedIndex = Ezor.Items.IndexOf(Ezor.Items.FindByValue(RegionOfWorker.ToString()));
+                       // Ezor.SelectedIndex = Ezor.Items.IndexOf(Ezor.Items.FindByValue(RegionOfWorker.ToString()));
                     }
                     break;
                 case ReportName.Presence:
@@ -420,7 +425,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         DataTable dt = new DataTable();
         clReport oReport = clReport.GetInstance();
-        int p_ezor = int.Parse(clGeneral.GetControlValue(Region).ToString());
+        int p_ezor = 0;
+
+        p_ezor = int.Parse(clGeneral.GetControlValue(Region).ToString());
 
         dt = oReport.GetSnifimByEzor(p_ezor);
 
@@ -430,6 +437,22 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 
     }
 
+    //private void Ezor_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    DataTable dt = new DataTable();
+    //    clReport oReport = clReport.GetInstance();
+    //    string p_ezor,p_snif_av;
+
+    //    p_ezor = clGeneral.GetControlValue(Ezor).ToString();
+    //    p_snif_av = clGeneral.GetControlValue(SnifCB).ToString();
+
+    //    dt = oReport.GetSnifeyTnuaa(p_ezor, p_snif_av);
+
+    //    SnifTnuaCB.Items.Clear();
+    //    SnifTnuaCB.DataSource = dt;
+    //    SnifTnuaCB.DataBind();
+
+    //}
     protected void btnDisplay_Click(object sender, EventArgs e)
     {
         string sScript;
@@ -741,6 +764,17 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             ((TextBox)TdFilter.FindControl("P_ENDDATE")).Text = value;
         }
     }
+
+    
+    //private DropDownCheckBoxes SnifTnuaCB
+    //{
+    //    get { return (DropDownCheckBoxes)TdFilter.FindControl("P_SNIF_TNUA"); }
+    //}
+
+    //private DropDownCheckBoxes SnifCB
+    //{
+    //    get { return (DropDownCheckBoxes)TdFilter.FindControl("P_SNIF"); }
+    //}
 
     private DropDownList Chodesh
     {
