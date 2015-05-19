@@ -138,7 +138,7 @@
       </DropDownList>
     </Filter>
   </Report>-->
-   <Report  RdlName="RdlHityazvutMissing" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - מרוכז ומפורט" Orientation="Landscape" >
+   <Report  RdlName="RdlHityazvutMissing" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - מרוכז ומפורט" Orientation="Landscape"  ProductionType="Heavy">
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonths" ValueField="Value" TextField="Month">
       
@@ -170,7 +170,7 @@
       <DropDownList QueryType="Select"  Select="select 1 kod,'מרוכז' teur from dual union  select 2 kod,'מפורט' teur from dual" ValueField="kod" TextField="teur" />
     </Filter>
   </Report>
-  <Report  RdlName="RdlHityazvutMissingTluna" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - תלונה " Orientation="Landscape" >
+  <Report  RdlName="RdlHityazvutMissingTluna" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח אי החתמת התייצבות - תלונה " Orientation="Landscape"  ProductionType="Heavy">
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonths" ValueField="Value" TextField="Month">
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
@@ -179,7 +179,6 @@
       </DropDownList>
     </Filter>
      <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32" Required="true">
-      <FilterValidator ValidatorName="ValidEzor"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת איזור" ValidationFunction="ValidateCheckBoxList"/>
       <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
    
