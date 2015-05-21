@@ -2,6 +2,7 @@ package automationFramework;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -106,7 +107,8 @@ public class Test_Update_Car_No {
 	      Work_Card.Btn_Update(driver).click();
 	      Thread.sleep(3000);
 	      
-	      Work_Card.Btn_Close(driver).click();
+	      //Work_Card.Btn_Close(driver).click();
+	      Work_Card.find_Element(driver, 60, "btnCloseCard").click();
 	      }
 	      
 	      
