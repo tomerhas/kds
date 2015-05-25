@@ -2405,7 +2405,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             }
             else
             {
-                oAutoComplete.ContextKey = sMeafyenim + ";;" + MeasherOMistayeg.GetHashCode();
+                if (sMeafyenim != "")
+                    oAutoComplete.ContextKey = sMeafyenim + ";1;" + MeasherOMistayeg.GetHashCode();
+                else oAutoComplete.ContextKey = sMeafyenim + ";;" + MeasherOMistayeg.GetHashCode();
             }
         }
         else
