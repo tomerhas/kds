@@ -710,7 +710,9 @@ namespace KdsLibrary.BL
                 clDal dal = new clDal();
 
                 dal.AddParameter("p_prefix", ParameterType.ntOracleVarchar, sPrefix, ParameterDir.pdInput);
-                dal.AddParameter("p_kod_element", ParameterType.ntOracleVarchar, sKodElementList, ParameterDir.pdInput);
+                if (string.IsNullOrEmpty(sKodElementList))
+                    dal.AddParameter("p_kod_element", ParameterType.ntOracleVarchar, null, ParameterDir.pdInput);
+                else dal.AddParameter("p_kod_element", ParameterType.ntOracleVarchar, sKodElementList, ParameterDir.pdInput);
                 dal.AddParameter("p_value", ParameterType.ntOracleVarchar, sValue, ParameterDir.pdInput);
                 dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 dal.ExecuteSP(clGeneral.cProGetKodElement, ref dt);
