@@ -2480,7 +2480,7 @@ public class wsGeneral : System.Web.Services.WebService
                             dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=99 and erech='1'");
                             if (dr.Length == 0)
                                 sReturnCode = "1| כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
-                            else
+                            else if((bool)Session["ProfileMenahelBankShaot"])
                             {
                                 dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=104 and erech='1'");
                                 if (dr.Length == 0)
