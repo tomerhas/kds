@@ -44,11 +44,13 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  Assert.assertEquals("לא נמצאה ריקה מתאימה",alert1.getText());
 	  alert.accept();
 	  Work_Card.Add_Reka_Between(driver).click();
-	  Thread.sleep(2000);
+	  //Thread.sleep(2000);
+	  Work_Card.Wait_For_Element_Visibile(driver, 60, "SD_002_ctl05_SD_002_ctl05MakatNumber");
 	  Assert.assertEquals("61589900",Work_Card.Makat_Num_Reka_Between(driver).getAttribute("value"));
 	  Work_Card.Cancel__Empty_Activity_Between(driver).click();
 	  Work_Card.Btn_Update(driver).click();
-	  Thread.sleep(3000);
+	  //Thread.sleep(3000);
+	  Work_Card.Wait_For_Element_Stalenes(driver, "btnCloseCard");
 	  Work_Card.Btn_Close(driver).click();
 	  
 	  

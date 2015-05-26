@@ -71,7 +71,8 @@ public class Test_Update_Car_No {
 		  Work_Card.TxtId(driver).sendKeys("77104");
 		  Work_Card.Date(driver).sendKeys("03/03/2015");
 		  Work_Card.Btn_Show(driver).click();
-		  Thread.sleep(3000);	
+		  //Thread.sleep(3000);	
+		  Work_Card.Wait_For_Element_Visibile(driver, 60, "SD_000_ctl03_SD_000_ctl03CarNumber");
 		  Work_Card.Car_Num(driver).click();
 	      Work_Card.Car_Num(driver).sendKeys(sCar_No);
 	      if (sCar_No=="11111") {
@@ -105,10 +106,11 @@ public class Test_Update_Car_No {
 	      Assert.assertEquals(Work_Card.Assert_Car_Num(driver).getAttribute("value"),"22228");
           }
 	      Work_Card.Btn_Update(driver).click();
-	      Thread.sleep(3000);
+	      //Thread.sleep(3000);
 	      
 	      //Work_Card.Btn_Close(driver).click();
-	      Work_Card.find_Element(driver, 60, "btnCloseCard").click();
+	      Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard");
+	      Work_Card.Btn_Close(driver).click();
 	      }
 	      
 	      

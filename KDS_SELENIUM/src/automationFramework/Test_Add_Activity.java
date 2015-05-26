@@ -3,6 +3,7 @@ package automationFramework;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -36,8 +37,8 @@ public class Test_Add_Activity {
 	  Work_Card.Date(driver).click();
 	  Work_Card.Date(driver).sendKeys("17052015");
 	  Work_Card.Btn_Show(driver).click();
-	  Work_Card.find_Element(driver,60,"SD_imgAddPeilut0").click();
-	  Work_Card.find_Element(driver,60,"SD_000_ctl08_SD_000_ctl08ShatYetiza").clear();
+	  Work_Card.Wait_For_Element_Visibile(driver,60,"SD_imgAddPeilut0").click();
+	  Work_Card.Wait_For_Element_Visibile(driver,60,"SD_000_ctl08_SD_000_ctl08ShatYetiza").clear();
 	  Work_Card.Entry_Time_Add_Activity(driver).sendKeys("1514");
 	  Work_Card.Makat_Num_Add_Activity(driver).click();
 	  Work_Card.Makat_Num_Add_Activity(driver).sendKeys("79100500");
@@ -45,13 +46,12 @@ public class Test_Add_Activity {
 	  System.out.println(Work_Card.Assert_Activity_Car_No(driver).getAttribute("value"));
 	  Assert.assertEquals(Work_Card.Assert_Activity_Car_No(driver).getAttribute("value"),"62505");
 	  Work_Card.Btn_Update(driver).click();
-	  //Work_Card.waitForJStoLoad(driver);
-	  //Work_Card.waitForLoad(driver);
-	  Work_Card.Wait_For_Element_Stalenes(driver, 60, "SD_000_ctl08_SD_000_ctl08CancelPeilut").click();
-	  //Work_Card.waitForPageToLoad(driver);
-	  //Work_Card.Cancel_Sidur_Add_Activity(driver).click();
+      Work_Card.Wait_For_Element_Stalenes(driver,"SD_000_ctl08_SD_000_ctl08CancelPeilut");
+	  Work_Card.Cancel_Sidur_Add_Activity(driver).click();
 	  Work_Card.Btn_Update(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver, 60, "btnCloseCard").click();
+	  Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard");
+	  Work_Card.Btn_Close(driver).click();
+	  
 	  
 	  
 	  
@@ -92,7 +92,7 @@ public class Test_Add_Activity {
   public void afterMethod() {
 	  
 	  
-	  //driver.close();
+	  driver.quit();
   }
 
 }
