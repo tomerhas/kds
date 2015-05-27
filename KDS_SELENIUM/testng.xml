@@ -11,6 +11,7 @@
             <class name="automationFramework.Test_Empty_Activity_Mapa" />
             <class name="automationFramework.Test_Empty_Activity_Between" />
             <class name="automationFramework.Test_Add_Absences" />
+            <class name="automationFramework.Test_Add_Activity" />
             
             
 		</classes>
