@@ -76,7 +76,7 @@ public class Test_Update_Car_No {
 		  Work_Card.Car_Num(driver).click();
 	      Work_Card.Car_Num(driver).sendKeys(sCar_No);
 	      if (sCar_No=="11111") {
-	      Assert.assertEquals(Work_Card.Validate_Car_No(driver).getText(),"מספר רכב שגוי");
+	      Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"מספר רכב שגוי");
 	      
 	      Work_Card.Btn_Close(driver).click();
 	      
