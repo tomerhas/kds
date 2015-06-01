@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="KdsProd">
-  <ConnectionProperties>
-    <Extension>ORACLE</Extension>
-    <ConnectString>Data Source=kdsprd</ConnectString>
-  </ConnectionProperties>
-  <DataSourceID>d0130cc1-5a00-446d-a76c-f0219adfdb0e</DataSourceID>
-</RptDataSource>
