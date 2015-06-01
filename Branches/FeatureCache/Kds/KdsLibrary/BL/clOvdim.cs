@@ -1900,6 +1900,31 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+
+       public DataSet GetNochechutMerukezet(int iMisparIshi, int ovd_id,DateTime taarich_me, DateTime taarich_ad)
+       {
+           clDal oDal = new clDal();
+           DataSet ds = new DataSet();
+           try
+           {
+               oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+               oDal.AddParameter("p_taarich_me", ParameterType.ntOracleDate, taarich_me, ParameterDir.pdInput);
+               oDal.AddParameter("p_taarich_ad", ParameterType.ntOracleDate, taarich_ad, ParameterDir.pdInput, 100);
+               if(ovd_id>0)
+                   oDal.AddParameter("p_oved_id", ParameterType.ntOracleInteger, ovd_id, ParameterDir.pdInput);
+               else oDal.AddParameter("p_oved_id", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+               oDal.AddParameter("p_cur_ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+               oDal.AddParameter("p_cur_sidurim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+
+               oDal.ExecuteSP(clGeneral.cProGetNochechutMerukezet, ref ds);
+
+               return ds;
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
     }
 }
 

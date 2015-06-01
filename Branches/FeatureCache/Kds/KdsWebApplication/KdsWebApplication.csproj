@@ -252,6 +252,7 @@
     <Content Include="Images\menu-bar.jpg" />
     <Content Include="Images\menu-btn-off.jpg" />
     <Content Include="Images\menu-btn-on.jpg" />
+    <Content Include="Images\minus.png" />
     <Content Include="Images\openArrow.png" />
     <Content Include="Images\openArrow_red.png" />
     <Content Include="Images\opening-btn.png" />
@@ -284,6 +285,7 @@
     <Content Include="Images\spinnerSmall.gif" />
     <Content Include="Images\tabMinus.png" />
     <Content Include="Images\tabPlus.png" />
+    <Content Include="Images\tick.png" />
     <Content Include="Images\Title_activeV.png" />
     <Content Include="Images\Title_activeV_Dis.png" />
     <Content Include="Images\unpressed.jpg" />
@@ -340,6 +342,7 @@
     <Content Include="Modules\Ovdim\MonthlyQuotaVaadatPnim.aspx" />
     <Content Include="Modules\Ovdim\NetuneyOved.aspx" />
     <Content Include="Modules\Ovdim\NetuneyOvedModal.aspx" />
+    <Content Include="Modules\Ovdim\NochechutMerukezet.aspx" />
     <Content Include="Modules\Ovdim\Rechivim.aspx" />
     <Content Include="Modules\Ovdim\SadotNosafimLeSidur.aspx" />
     <Content Include="Modules\Ovdim\test5.aspx" />
@@ -646,6 +649,13 @@
     </Compile>
     <Compile Include="Modules\Ovdim\NetuneyOvedModal.aspx.designer.cs">
       <DependentUpon>NetuneyOvedModal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Ovdim\NochechutMerukezet.aspx.cs">
+      <DependentUpon>NochechutMerukezet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Ovdim\NochechutMerukezet.aspx.designer.cs">
+      <DependentUpon>NochechutMerukezet.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\Ovdim\Rechivim.aspx.cs">
       <DependentUpon>Rechivim.aspx</DependentUpon>
