@@ -144,8 +144,8 @@
                                                     <asp:BoundField DataField="SHAT_HATCHALA" HeaderText="שעת התחלה" ItemStyle-Width="0px"  ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild"  DataFormatString="{0:HH:mm dd/MM}" ItemStyle-HorizontalAlign="Center" />
                                                     <asp:TemplateField ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" HeaderText="שעת התחלה" >
                                                        <ItemTemplate>
-                                                           <asp:Label ID="HShatHatchala" runat="server" Font-Bold="true"></asp:Label>
-                                                           <asp:Label ID="TShatHatchala" runat="server"  ></asp:Label>
+                                                             <asp:Label ID="HShatHatchala" runat="server" Font-Bold="true"></asp:Label>
+                                                            <asp:Label ID="TShatHatchala" runat="server"  ></asp:Label>
                                                        </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:BoundField DataField="SHAT_GMAR" HeaderText="שעת גמר" ItemStyle-Width="0px"  ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" DataFormatString="{0:HH:mm dd/MM}" ItemStyle-HorizontalAlign="Center" />

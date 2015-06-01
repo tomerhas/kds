@@ -178,26 +178,27 @@ namespace KdsWebApplication.Modules.Ovdim
                 if (!string.IsNullOrEmpty(row[6].ToString()))
                 {
                     txt = e.Row.Cells[enGrdNochechut.ShatHatchalaHid.GetHashCode()].Text;
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchala.GetHashCode()].Controls[1])).Text = txt.Split(' ')[0];
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchala.GetHashCode()].Controls[3])).Text = txt.Split(' ')[1];
+                    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchala.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
+                    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchala.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
+                   
                 }
                 if (!string.IsNullOrEmpty(row[7].ToString()))
                 {
                     txt = e.Row.Cells[enGrdNochechut.ShatGmarHid.GetHashCode()].Text;
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmar.GetHashCode()].Controls[1])).Text = txt.Split(' ')[0];
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmar.GetHashCode()].Controls[3])).Text = txt.Split(' ')[1];
+                    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmar.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
+                    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmar.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
                 }
                 if (!string.IsNullOrEmpty(row[8].ToString()))
                 {
                     txt = e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlumHid.GetHashCode()].Text;
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlum.GetHashCode()].Controls[1])).Text = txt.Split(' ')[0];
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlum.GetHashCode()].Controls[3])).Text = txt.Split(' ')[1];
+                    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlum.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
+                    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlum.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
                 }
                 if (!string.IsNullOrEmpty(row[9].ToString()))
                 {
                     txt = e.Row.Cells[enGrdNochechut.ShatGmarLetashlumHid.GetHashCode()].Text;
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmarLetashlum.GetHashCode()].Controls[1])).Text = txt.Split(' ')[0];
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmarLetashlum.GetHashCode()].Controls[3])).Text = txt.Split(' ')[1];
+                    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmarLetashlum.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
+                    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmarLetashlum.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
                 }
               //  ((TextBox)e.Row.Cells[SHAT_YETZIA].FindControl("txtShatYezia")).ToolTip = e.Row.Cells[SHAT_YEZIA_DATE].Text.Split(' ')[1] + " " +
                 //                                                                                                 e.Row.Cells[SHAT_YEZIA_DATE].Text.Split(' ')[0];
