@@ -947,6 +947,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1814,6 +1815,9 @@
                 </SortExpression>
                 <SortExpression>
                   <Value>=Fields!MIYUN_MEMUZAIM.Value</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!TEUR_RECHIV.Value</Value>
                 </SortExpression>
               </SortExpressions>
             </TablixMember>

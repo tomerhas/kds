@@ -1584,6 +1584,14 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
                   <BreakLocation>Between</BreakLocation>
                 </PageBreak>
               </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!MISPAR_ISHI.Value</Value>
+                </SortExpression>
+              </SortExpressions>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
@@ -1596,7 +1604,8 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
             <Value>=Fields!TEUR_SNIF_AV.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Top>0.04633cm</Top>
+        <Top>0.23405cm</Top>
+        <Left>0.19769cm</Left>
         <Height>11.81273cm</Height>
         <Width>15.7622cm</Width>
         <Style>
@@ -1606,13 +1615,13 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>4.66892in</Height>
+    <Height>5.04392in</Height>
     <Style />
   </Body>
-  <Width>6.20559in</Width>
+  <Width>6.28342in</Width>
   <Page>
     <PageHeader>
-      <Height>0.48535cm</Height>
+      <Height>0.67056cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1633,7 +1642,7 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox33</rd:DefaultName>
-          <Left>7.22535cm</Left>
+          <Left>7.36499cm</Left>
           <Height>0.44125cm</Height>
           <Width>2.74064cm</Width>
           <Style>

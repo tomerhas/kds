@@ -51,9 +51,13 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>אגד - חטיבת המיחשוב 
-מערכת קדם שכר</Value>
-                <Style />
+                <Value>אגד חטיבת המחשוב/מערכות שכר ונוכחות</Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style>
@@ -63,9 +67,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox4</rd:DefaultName>
         <Top>0.64368cm</Top>
-        <Left>11.45738cm</Left>
+        <Left>10.18738cm</Left>
         <Height>0.89104cm</Height>
-        <Width>3.32465cm</Width>
+        <Width>4.59465cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>

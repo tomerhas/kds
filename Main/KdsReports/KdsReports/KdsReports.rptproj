@@ -14,10 +14,6 @@
       <Name>KdsProd.rds</Name>
       <FullPath>KdsProd.rds</FullPath>
     </ProjectItem>
-    <ProjectItem>
-      <Name>KdsDev.rds</Name>
-      <FullPath>KdsDev.rds</FullPath>
-    </ProjectItem>
   </DataSources>
   <DataSets />
   <Reports>
@@ -64,10 +60,6 @@
     <ProjectItem>
       <Name>DayDataEggT.rdl</Name>
       <FullPath>DayDataEggT.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>DescriptionAllComponents.rdl</Name>
-      <FullPath>DescriptionAllComponents.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>DisregardDrivers.rdl</Name>
@@ -178,6 +170,14 @@
       <FullPath>RdlCountOvdeyMeshekShabat.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RdlHityazvutMissing.rdl</Name>
+      <FullPath>RdlHityazvutMissing.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RdlHityazvutMissingTluna.rdl</Name>
+      <FullPath>RdlHityazvutMissingTluna.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RdlOvdimPeilim.rdl</Name>
       <FullPath>RdlOvdimPeilim.rdl</FullPath>
     </ProjectItem>
@@ -234,10 +234,6 @@
       <FullPath>RptSidureyVaadOvdim.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>SpecificAverage.rdl</Name>
-      <FullPath>SpecificAverage.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>SubRdlIturim.rdl</Name>
       <FullPath>SubRdlIturim.rdl</FullPath>
     </ProjectItem>
@@ -279,7 +275,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://sql2012tst.egged.intra/reportserver</TargetServerURL>
+        <TargetServerURL>http://ksafimrs01/reportserver</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>
