@@ -92,7 +92,7 @@ namespace KdsWebApplication.Modules.Ovdim
                 if (txtId.Text.Length > 0)
                     ovd_id = int.Parse(txtId.Text);
                 grdEmployee.PageSize  =30;
-                mis = 65929;//int.Parse(LoginUser.UserInfo.EmployeeNumber)
+                mis = int.Parse(LoginUser.UserInfo.EmployeeNumber)
                // ds = oOvdim.GetNochechutMerukezet(mis,ovd_id, DateTime.Parse("01/05/2015"), DateTime.Parse("01/05/2015"));
                 ds = oOvdim.GetNochechutMerukezet(mis,ovd_id, DateTime.Parse(clnFromDate.Text), DateTime.Parse(clnToDate.Text));
                 Session["Employees"] = new DataView(ds.Tables[0]);
