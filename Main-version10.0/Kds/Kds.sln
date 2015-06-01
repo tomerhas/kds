@@ -17,8 +17,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsTaskManager", "KdsTaskMa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedLib", "SharedLib", "{D593F9A4-F613-4334-87A4-EF44EBF1A196}"
 	ProjectSection(SolutionItems) = preProject
+		..\SharedLib\AjaxControlToolkit.DLL = ..\SharedLib\AjaxControlToolkit.DLL
+		..\SharedLib\Egged.WebCustomControls.dll = ..\SharedLib\Egged.WebCustomControls.dll
+		..\SharedLib\FastMember.dll = ..\SharedLib\FastMember.dll
+		..\SharedLib\Interop.Excel.dll = ..\SharedLib\Interop.Excel.dll
 		..\SharedLib\Microsoft.Practices.ServiceLocation.dll = ..\SharedLib\Microsoft.Practices.ServiceLocation.dll
 		..\SharedLib\Microsoft.Practices.Unity.dll = ..\SharedLib\Microsoft.Practices.Unity.dll
+		..\SharedLib\Microsoft.ReportViewer.Common.dll = ..\SharedLib\Microsoft.ReportViewer.Common.dll
+		..\SharedLib\Microsoft.ReportViewer.WebForms.dll = ..\SharedLib\Microsoft.ReportViewer.WebForms.dll
+		..\SharedLib\Oracle.DataAccess.dll = ..\SharedLib\Oracle.DataAccess.dll
 		..\SharedLib\Topshelf.dll = ..\SharedLib\Topshelf.dll
 	EndProjectSection
 EndProject
