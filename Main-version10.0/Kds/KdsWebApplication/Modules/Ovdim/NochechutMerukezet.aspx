@@ -4,9 +4,15 @@
 <%@ Register TagPrefix="kds" TagName="GridViewPager" Src="~/UserControls/GridViewPager.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-
-  
+   <script src="../../Js/GeneralFunction.js" type="text/javascript"></script>
     <style type="text/css">
+          .GVFixedFooter
+        {
+            font-weight: bold;
+            position: relative;
+            bottom: expression(getScrollBottom(this.parentNode.parentNode.parentNode.parentNode));
+        }
+
       .GridHeaderChild
             {
 	            color:Black;
@@ -56,8 +62,10 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
-  
-     <script src="../../Js/GeneralFunction.js" type="text/javascript"></script>
+   <script type="text/javascript" language="javascript">
+       var userId = iUserId;
+  </script>
+   
 
 <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:1000;width:150px" >
         <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
@@ -68,13 +76,19 @@
         <tr>
             <td style="width:10px"></td>
             <td class="InternalLabel" style="width:50px"> מתאריך:</td> 
-            <td align="right" dir="ltr" style="width:160px"> 
-                 <KdsCalendar:KdsCalendar runat="server" ID="clnFromDate"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>                            
+            <td align="right" dir="ltr" style="width:160px">                            
+                 <KdsCalendar:KdsCalendar runat="server" ID="clnFromDate" CalenderTabIndex="4"  AutoPostBack="false" OnChangeCalScript="onChange_FromDate();"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>           
+                 <asp:CustomValidator runat="server" id="vldFrom"   ControlToValidate="clnFromDate" ErrorMessage=""  Display="None"    ></asp:CustomValidator>
+                 <cc1:ValidatorCalloutExtender runat="server" ID="vldExFrom" BehaviorID="vldExFromDate"   TargetControlID="vldFrom" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
+               
             </td> 
             <td style="width:10px"></td>
             <td class="InternalLabel" style="width:70px"> עד תאריך:</td> 
             <td align="right" dir="ltr" style="width:160px"> 
-                 <KdsCalendar:KdsCalendar runat="server" ID="clnToDate"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>                            
+                 <KdsCalendar:KdsCalendar runat="server" ID="clnToDate"  AutoPostBack="false"  dir="rtl" OnChangeCalScript="onChange_ToDate();" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar> 
+                 <asp:CustomValidator runat="server" id="vldTo"   ControlToValidate="clnToDate" ErrorMessage=""  Display="None"    ></asp:CustomValidator>
+                 <cc1:ValidatorCalloutExtender runat="server" ID="vldExTo" BehaviorID="vldExToDate"   TargetControlID="vldTo" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
+                                          
             </td> 
             <td style="width:10px"></td>
 
@@ -87,7 +101,7 @@
                  <%-- <asp:RadioButton runat="server" ID="rdoMi"   GroupName="grpCardType"  OnClick="RbChange()"  Text="מספר אישי">   --%>     <%-- </asp:RadioButton>--%>
             </td>                          
           <td>
-                 <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" disabled="true"   MaxLength="5" style="width:100px;" TabIndex="1"></asp:TextBox>                            
+                 <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" disabled="true" onchange="CheckOvedId();"   MaxLength="5" style="width:100px;" TabIndex="1"></asp:TextBox>                            
                         <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                         TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                         EnableCaching="true"  CompletionListCssClass="ACLst"
@@ -102,7 +116,7 @@
             
                 <asp:UpdatePanel ID="upBtnShow" runat="server" RenderMode="Inline"  >
                   <ContentTemplate> 
-                        <asp:button ID="btnShow" runat="server" text="הצג" CssClass ="ImgButtonSearch"  onclick="btnShow_Click"  />
+                        <asp:button ID="btnShow" runat="server" text="הצג" CssClass ="ImgButtonSearch"     onclick="btnShow_Click"  />
                    </ContentTemplate>
               </asp:UpdatePanel> 
              
@@ -208,7 +222,8 @@
                            </Columns>
                            
                             <RowStyle CssClass="GridRow"   />
-                            <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />                          
+                            <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />    
+                            <FooterStyle CssClass="GVFixedFooter" />                      
                             <EmptyDataRowStyle CssClass="GridEmptyData" height="20px" Wrap="False"/>                                                    
                             <PagerTemplate>
                                          <kds:GridViewPager runat="server" ID="ucGridPager" />
@@ -221,10 +236,44 @@
             </td>     
         </tr>           
    </table>
- 
+  <input type="hidden" id="Params" name="Params"  runat="server" />
 <%--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>--%>
 
 <script type="text/javascript">
+
+    function CheckOvedId() {
+        var iKodOved = $('#<%=txtId.ClientID %>').val();   
+            if (iKodOved != "") {
+                if (IsNumeric(trim(iKodOved))) {
+                    if (userId > 0)
+                        wsGeneral.GetOvedToUser(iKodOved, userId, CheckOvedIdSucceeded);
+                    else
+                        wsGeneral.GetOvedName(iKodOved, CheckOvedIdSucceeded);
+                }
+                else {
+                    //alert("1212");
+                    alert("מספר אישי לא חוקי");
+                    document.getElementById(oTxtId).value = "";
+                    document.getElementById(oTxtId).focus();
+                }   
+        }
+    }
+
+    function CheckOvedIdSucceeded(result) {
+        var txtIdObj = $('#<%=txtId.ClientID %>');
+        var btShow = $('#<%=btnShow.ClientID %>');
+        
+        if (result == '') {
+            alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');
+            txtIdObj.focus();
+            btShow.prop("disabled", true);
+        }
+        else btShow.prop("disabled", false);
+    }
+    function getScrollBottom(p_oElem) {
+        return p_oElem.scrollHeight - p_oElem.scrollTop - p_oElem.clientHeight;
+    }
+
 
     function openDetails() {
 
@@ -239,6 +288,7 @@
             $(this).closest("tr").next().css('visibility', 'visible');
 
         });
+
     }
     function RbChange() {
       
@@ -272,6 +322,72 @@
         return ReturnWin;
     }
 
+    function onChange_FromDate() {
+        var sBehaviorId = 'vldExFromDate';
+        var FromDate = document.getElementById('ctl00_KdsContent_clnFromDate').value;
+        if (FromDate == "") {
+            document.getElementById("ctl00_KdsContent_vldFrom").errormessage = "חובה להזין תאריך";
+            $find(sBehaviorId)._ensureCallout();
+            $find(sBehaviorId).show(true);
+            $('#<%=btnShow.ClientID %>').prop("disabled", true);
+        }
+        else {
+            var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes["Param100"].value;//($('[id$=Params]')[0]).attributes["Param100"].value;// document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
+            var StartDateSplit = FromDate.split('/');
+            var StartDate = new Date(StartDateSplit[2], StartDateSplit[1] - 1, StartDateSplit[0], 0, 0, 0, 0);
+            var minDate = new Date();
+            minDate.setDate(1);
+            minDate.setMonth(minDate.getMonth() - Param100);
+            minDate.setHours(0);
+            minDate.setMinutes(0);
+            minDate.setSeconds(0);
+            minDate.setMilliseconds(0);
+
+            if (StartDate.getTime() < minDate.getTime()) {
+                document.getElementById("ctl00_KdsContent_vldFrom").errormessage = " לא ניתן להזין תאריך מעבר ל " + Param100 + " חודשים אחורה";
+                $find(sBehaviorId)._ensureCallout();
+                $find(sBehaviorId).show(true);
+                $('#<%=btnShow.ClientID %>').prop("disabled", true);
+                $('#<%=clnFromDate.ClientID %>').focus();
+            }
+            else
+                $('#<%=btnShow.ClientID %>').prop("disabled", false);
+
+            onChange_ToDate();
+        }
+    }
+
+    function onChange_ToDate() {
+       
+        var sBehaviorId = 'vldExToDate';
+        var ToDate = document.getElementById('ctl00_KdsContent_clnToDate').value;
+        if (ToDate == "") {
+            document.getElementById("ctl00_KdsContent_vldTo").errormessage = "חובה להזין תאריך";
+            $find(sBehaviorId)._ensureCallout();
+            $find(sBehaviorId).show(true);
+            $('#<%=btnShow.ClientID %>').prop("disabled", true);
+        }
+        else {
+            var StartDateSplit = document.getElementById('ctl00_KdsContent_clnFromDate').value.split('/');
+            var StartDate = new Date(StartDateSplit[2], StartDateSplit[1] - 1, StartDateSplit[0], 0, 0, 0, 0);
+            var EndDateSplit = ToDate.split('/');
+            var EndtDate = new Date(EndDateSplit[2], EndDateSplit[1] - 1, EndDateSplit[0], 0, 0, 0, 0);
+
+
+            if (StartDate.getTime() > EndtDate.getTime()) {
+                var sBehaviorId = 'vldExToDate';
+                document.getElementById("ctl00_KdsContent_vldTo").errormessage = " תאריך מ לא יכול להיות גדול מתאריך עד";
+                $find(sBehaviorId)._ensureCallout();
+                $find(sBehaviorId).show(true);
+                $('#<%=btnShow.ClientID %>').prop("disabled", true);
+                $('#<%=clnToDate.ClientID %>').focus();
+            }
+            else
+                $('#<%=btnShow.ClientID %>').prop("disabled", false);
+        }
+    }
+    
+   
     //$(document).ready(function () {
     //  //  alert($('#<%=grdEmployee.ClientID %>'));
   //  $('#<%=grdEmployee.ClientID %>').Scrollable({

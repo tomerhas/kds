@@ -55,10 +55,13 @@ namespace KdsWebApplication.Modules.Ovdim
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            DataTable dtParametrim = new DataTable();
+            clUtils oUtils = new clUtils();
+
             if (!Page.IsPostBack)
             {
 
-
+                ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
 
                 KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
                 if (iSecurity == KdsSecurityLevel.ViewAll) //|| iSecurity == KdsSecurityLevel.ViewOnlyEmployeeData)
@@ -76,7 +79,11 @@ namespace KdsWebApplication.Modules.Ovdim
                 }
 
                 clnFromDate.Text = DateTime.Now.AddDays(-1).ToShortDateString();
-                clnToDate.Text = DateTime.Now.ToShortDateString();
+                clnToDate.Text = DateTime.Now.AddDays(-1).ToShortDateString();
+                
+                dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+                for (int i = 0; i < dtParametrim.Rows.Count; i++)
+                    Params.Attributes.Add("Param" + dtParametrim.Rows[i]["KOD_PARAM"].ToString(), dtParametrim.Rows[i]["ERECH_PARAM"].ToString());
             }
 
         }
@@ -91,13 +98,15 @@ namespace KdsWebApplication.Modules.Ovdim
             {
                 if (txtId.Text.Length > 0)
                     ovd_id = int.Parse(txtId.Text);
-                grdEmployee.PageSize  =30;
+                grdEmployee.PageSize = 30;
                 mis = int.Parse(LoginUser.UserInfo.EmployeeNumber);
-               // ds = oOvdim.GetNochechutMerukezet(mis,ovd_id, DateTime.Parse("01/05/2015"), DateTime.Parse("01/05/2015"));
-                ds = oOvdim.GetNochechutMerukezet(mis,ovd_id, DateTime.Parse(clnFromDate.Text), DateTime.Parse(clnToDate.Text));
+                if (AutoCompleteExtenderID.ContextKey == "")
+                    mis = 0;
+                // ds = oOvdim.GetNochechutMerukezet(mis,ovd_id, DateTime.Parse("01/05/2015"), DateTime.Parse("01/05/2015"));
+                ds = oOvdim.GetNochechutMerukezet(mis, ovd_id, DateTime.Parse(clnFromDate.Text), DateTime.Parse(clnToDate.Text));
                 Session["Employees"] = new DataView(ds.Tables[0]);
-                Session["Nochechut"] = ds.Tables[1]; 
-                grdEmployee.DataSource =ds.Tables[0];
+                Session["Nochechut"] = ds.Tables[1];
+                grdEmployee.DataSource = ds.Tables[0];
                 grdEmployee.DataBind();
 
                 ScriptManager.RegisterStartupScript(btnShow, this.GetType(), "", "openDetails()", true);

@@ -31,6 +31,24 @@ namespace KdsWebApplication.Modules.Ovdim {
         protected global::KdsLibrary.Controls.KdsCalendar clnFromDate;
         
         /// <summary>
+        /// vldFrom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator vldFrom;
+        
+        /// <summary>
+        /// vldExFrom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ValidatorCalloutExtender vldExFrom;
+        
+        /// <summary>
         /// clnToDate control.
         /// </summary>
         /// <remarks>
@@ -38,6 +56,24 @@ namespace KdsWebApplication.Modules.Ovdim {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::KdsLibrary.Controls.KdsCalendar clnToDate;
+        
+        /// <summary>
+        /// vldTo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator vldTo;
+        
+        /// <summary>
+        /// vldExTo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ValidatorCalloutExtender vldExTo;
         
         /// <summary>
         /// txtId control.
@@ -101,5 +137,14 @@ namespace KdsWebApplication.Modules.Ovdim {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grdEmployee;
+        
+        /// <summary>
+        /// Params control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden Params;
     }
 }
