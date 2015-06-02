@@ -6,11 +6,17 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
    <script src="../../Js/GeneralFunction.js" type="text/javascript"></script>
     <style type="text/css">
-          .GVFixedFooter
+        .GridPagerNew
         {
-            font-weight: bold;
-            position: relative;
-            bottom: expression(getScrollBottom(this.parentNode.parentNode.parentNode.parentNode));
+	        border-color:#808080;	
+	        color:Black;
+	        background-color:#FCF9CD;
+	        font-size:15px;
+	        font-weight:bold;
+	        padding-right:300px;
+	        border-style:solid;
+	        border-width:1px;
+            text-align:center;    
         }
 
       .GridHeaderChild
@@ -126,17 +132,18 @@
     </table>  
         </fieldset>
  <br />
+   <asp:UpdatePanel ID="udGrid"  runat="server" RenderMode="Inline" UpdateMode="Always"  >
+                     <ContentTemplate>     
     <table > 
         <tr style="border:none">
             <td  style="border:none">          
-                <asp:UpdatePanel ID="udGrid"  runat="server" RenderMode="Inline" UpdateMode="Always"  >
-                     <ContentTemplate> 
+               
                       <%--  <asp:Button ID="btnRedirect" runat="server"  OnCommand="btnRedirect_Click"  />
                         <asp:textbox  ID="txtRowSelected" runat="server"  />--%>
-                           <div id="divNetunim" runat="server" dir="ltr" style="text-align:right;width:970px;overflow-x:hidden;overflow-y:scroll;height:500px;border:none">
+                           <div id="divNetunim" runat="server" dir="ltr" style="text-align:right;width:970px;overflow-x:hidden;overflow-y:scroll;height:300px;border:none">
                         <asp:GridView ID="grdEmployee" runat="server"  ShowHeader="False"
                              AllowPaging="true" PageSize="6" AutoGenerateColumns="false" CssClass="Grid"  
-                             Width="965px" EmptyDataText="לא נמצאו נתונים!"  
+                             Width="965px" EmptyDataText="לא נמצאו נתונים!" EmptyDataRowStyle-HorizontalAlign="Center"
                              OnRowDataBound="grdEmployee_RowDataBound" OnPageIndexChanging="grdEmployee_PageIndexChanging">
                             <Columns>
 
@@ -220,23 +227,25 @@
                                 
 
                            </Columns>
-                           
+                          
+
                             <RowStyle CssClass="GridRow"   />
                             <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />    
-                            <FooterStyle CssClass="GVFixedFooter" />                      
+                                            
                             <EmptyDataRowStyle CssClass="GridEmptyData" height="20px" Wrap="False"/>                                                    
                             <PagerTemplate>
                                          <kds:GridViewPager runat="server" ID="ucGridPager" />
+                                      
                             </PagerTemplate>  
                         </asp:GridView>
-                               </div>
-                     </ContentTemplate>
-                     
-                 </asp:UpdatePanel>      
+                       </div>        
             </td>     
         </tr>           
    </table>
-  <input type="hidden" id="Params" name="Params"  runat="server" />
+ 
+   </ContentTemplate>    
+ </asp:UpdatePanel>     
+     <input type="hidden" id="Params" name="Params"  runat="server" />
 <%--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>--%>
 
 <script type="text/javascript">
@@ -277,7 +286,8 @@
 
     function openDetails() {
 
-      
+        if ($('#<%=divNetunim.ClientID %>').parent().next().length>0)
+            $('#<%=divNetunim.ClientID %>').parent().next().remove();
 
         items = $("[src*=minus]");
 
@@ -289,6 +299,16 @@
 
         });
 
+      
+        var mis= $('#ctl00_KdsContent_grdEmployee')[0].lastChild.children.length-1;
+        var pager = $('#ctl00_KdsContent_grdEmployee')[0].lastChild.children[mis];
+        if (pager.innerHTML.indexOf("GridPager")>-1) {
+            $('#ctl00_KdsContent_grdEmployee')[0].lastChild.removeChild(pager);//[mis].removeChild();    
+            $('#<%=divNetunim.ClientID %>').parent().after("<div/>");
+            $('#<%=divNetunim.ClientID %>').closest("tr").after("<tr  class='GridPagerNew'>" + pager.innerHTML + "</tr>");
+        }
+     //   $('#<%=divNetunim.ClientID %>').parent().next().append("<tr><td>" + pager + "</td></tr>").addClass('GridPagerNew');
+
     }
     function RbChange() {
       
@@ -298,6 +318,7 @@
         if (selectedVal == 1) {
             txtIdObj.val('');
             txtIdObj.prop("disabled", true);
+            $('#<%=btnShow.ClientID %>').prop("disabled", false);
         }
         else {           
              txtIdObj.prop("disabled", false);
@@ -358,7 +379,8 @@
     }
 
     function onChange_ToDate() {
-       
+        var flag = false;
+        var msg;
         var sBehaviorId = 'vldExToDate';
         var ToDate = document.getElementById('ctl00_KdsContent_clnToDate').value;
         if (ToDate == "") {
@@ -373,10 +395,17 @@
             var EndDateSplit = ToDate.split('/');
             var EndtDate = new Date(EndDateSplit[2], EndDateSplit[1] - 1, EndDateSplit[0], 0, 0, 0, 0);
 
-
             if (StartDate.getTime() > EndtDate.getTime()) {
+                flag = true;
+                msg = "עד תאריך קטן מתאריך מ";
+            } else if( EndtDate.getTime()>(new Date()))
+            {
+                flag = true;
+                msg = "עד תאריך גדול מתאריך נוכחי";
+            }
+            if (flag) {
                 var sBehaviorId = 'vldExToDate';
-                document.getElementById("ctl00_KdsContent_vldTo").errormessage = " תאריך מ לא יכול להיות גדול מתאריך עד";
+                document.getElementById("ctl00_KdsContent_vldTo").errormessage = msg;//"תאריך עד קטן מתאריך מ";
                 $find(sBehaviorId)._ensureCallout();
                 $find(sBehaviorId).show(true);
                 $('#<%=btnShow.ClientID %>').prop("disabled", true);
