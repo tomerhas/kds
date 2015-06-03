@@ -140,8 +140,8 @@
                
                       <%--  <asp:Button ID="btnRedirect" runat="server"  OnCommand="btnRedirect_Click"  />
                         <asp:textbox  ID="txtRowSelected" runat="server"  />--%>
-                           <div id="divNetunim" runat="server" dir="ltr" style="text-align:right;width:970px;overflow-x:hidden;overflow-y:scroll;height:300px;border:none">
-                        <asp:GridView ID="grdEmployee" runat="server"  ShowHeader="False"
+                           <div id="divNetunim" runat="server" dir="ltr" style="text-align:right;width:970px;overflow-x:hidden;overflow-y:scroll;height:570px;border:none">
+                        <asp:GridView ID="grdEmployee" runat="server"  ShowHeader="False" style="background-color:white"
                              AllowPaging="true" PageSize="6" AutoGenerateColumns="false" CssClass="Grid"  
                              Width="965px" EmptyDataText="לא נמצאו נתונים!" EmptyDataRowStyle-HorizontalAlign="Center"
                              OnRowDataBound="grdEmployee_RowDataBound" OnPageIndexChanging="grdEmployee_PageIndexChanging">
@@ -275,9 +275,9 @@
         if (result == '') {
             alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');
             txtIdObj.focus();
-            btShow.prop("disabled", true);
+          //  btShow.prop("disabled", true);
         }
-        else btShow.prop("disabled", false);
+      //  else btShow.prop("disabled", false);
     }
     function getScrollBottom(p_oElem) {
         return p_oElem.scrollHeight - p_oElem.scrollTop - p_oElem.clientHeight;
@@ -318,7 +318,7 @@
         if (selectedVal == 1) {
             txtIdObj.val('');
             txtIdObj.prop("disabled", true);
-            $('#<%=btnShow.ClientID %>').prop("disabled", false);
+          //  $('#<%=btnShow.ClientID %>').prop("disabled", false);
         }
         else {           
              txtIdObj.prop("disabled", false);
