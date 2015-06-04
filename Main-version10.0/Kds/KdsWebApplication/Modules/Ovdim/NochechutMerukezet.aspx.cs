@@ -96,6 +96,7 @@ namespace KdsWebApplication.Modules.Ovdim
             int mis,ovd_id=0;
             try
             {
+               
                 if (txtId.Text.Length > 0)
                     ovd_id = int.Parse(txtId.Text);
                 grdEmployee.PageSize = 30;
@@ -108,10 +109,8 @@ namespace KdsWebApplication.Modules.Ovdim
                 Session["Nochechut"] = ds.Tables[1];
                 grdEmployee.DataSource = ds.Tables[0];
                 grdEmployee.DataBind();
-
-                ScriptManager.RegisterStartupScript(btnShow, this.GetType(), "", "openDetails()", true);
-
-               
+                divNetunim.Style["display"] = "block";
+                ScriptManager.RegisterStartupScript(hidBtnShow, this.GetType(), "", "openDetails();", true);    
 
             }
             catch (Exception ex)
@@ -280,7 +279,7 @@ namespace KdsWebApplication.Modules.Ovdim
             }
             grid.DataSource = dataView;
             grid.DataBind();
-            ScriptManager.RegisterStartupScript(btnShow, this.GetType(), "", "openDetails();", true);
+            ScriptManager.RegisterStartupScript(hidBtnShow, this.GetType(), "", "openDetails();", true);
 
 
         }

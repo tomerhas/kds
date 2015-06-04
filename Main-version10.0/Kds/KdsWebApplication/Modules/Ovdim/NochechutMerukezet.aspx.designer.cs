@@ -103,15 +103,6 @@ namespace KdsWebApplication.Modules.Ovdim {
         protected global::System.Web.UI.UpdatePanel upBtnShow;
         
         /// <summary>
-        /// btnShow control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnShow;
-        
-        /// <summary>
         /// udGrid control.
         /// </summary>
         /// <remarks>
@@ -137,6 +128,15 @@ namespace KdsWebApplication.Modules.Ovdim {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grdEmployee;
+        
+        /// <summary>
+        /// hidBtnShow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton hidBtnShow;
         
         /// <summary>
         /// Params control.

@@ -107,7 +107,7 @@
                  <%-- <asp:RadioButton runat="server" ID="rdoMi"   GroupName="grpCardType"  OnClick="RbChange()"  Text="מספר אישי">   --%>     <%-- </asp:RadioButton>--%>
             </td>                          
           <td>
-                 <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" disabled="true" onchange="CheckOvedId();"   MaxLength="5" style="width:100px;" TabIndex="1"></asp:TextBox>                            
+                 <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" disabled="true"    MaxLength="5" style="width:100px;" TabIndex="1"></asp:TextBox>                            
                         <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                         TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                         EnableCaching="true"  CompletionListCssClass="ACLst"
@@ -122,7 +122,8 @@
             
                 <asp:UpdatePanel ID="upBtnShow" runat="server" RenderMode="Inline"  >
                   <ContentTemplate> 
-                        <asp:button ID="btnShow" runat="server" text="הצג" CssClass ="ImgButtonSearch"     onclick="btnShow_Click"  />
+                      <input type="button" id="btnShow" name="btnShow" value="הצג" class="ImgButtonSearch" onclick="CheckOvedId();" />
+                      <%--  <asp:button ID="btnShow" runat="server" text="הצג" CssClass ="ImgButtonSearch" OnClientClick="CheckOvedId();"  />  --%>
                    </ContentTemplate>
               </asp:UpdatePanel> 
              
@@ -132,6 +133,7 @@
     </table>  
         </fieldset>
  <br />
+ 
    <asp:UpdatePanel ID="udGrid"  runat="server" RenderMode="Inline" UpdateMode="Always"  >
                      <ContentTemplate>     
     <table > 
@@ -140,7 +142,7 @@
                
                       <%--  <asp:Button ID="btnRedirect" runat="server"  OnCommand="btnRedirect_Click"  />
                         <asp:textbox  ID="txtRowSelected" runat="server"  />--%>
-                           <div id="divNetunim" runat="server" dir="ltr" style="text-align:right;width:970px;overflow-x:hidden;overflow-y:scroll;height:570px;border:none">
+                           <div id="divNetunim" runat="server"  dir="ltr" style="text-align:right;width:970px;overflow-x:hidden;overflow-y:scroll;height:570px;border:none">
                         <asp:GridView ID="grdEmployee" runat="server"  ShowHeader="False" style="background-color:white"
                              AllowPaging="true" PageSize="6" AutoGenerateColumns="false" CssClass="Grid"  
                              Width="965px" EmptyDataText="לא נמצאו נתונים!" EmptyDataRowStyle-HorizontalAlign="Center"
@@ -242,16 +244,23 @@
             </td>     
         </tr>           
    </table>
- 
+  <input type="button" ID="hidBtnShow"  runat="server"  onserverclick="btnShow_Click"  style="display:none" />
    </ContentTemplate>    
- </asp:UpdatePanel>     
+ </asp:UpdatePanel>   
+    
      <input type="hidden" id="Params" name="Params"  runat="server" />
 <%--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>--%>
 
 <script type="text/javascript">
 
     function CheckOvedId() {
-        var iKodOved = $('#<%=txtId.ClientID %>').val();   
+        $('#<%=divNetunim.ClientID %>').css("display", "none");
+        
+        $('#trPagerGrid').remove();
+        var selected = $("input[type='radio'][name='grpCardType']:checked"); 
+        var selectedVal = selected.val();
+        if (selectedVal == 2) {
+            var iKodOved = $('#<%=txtId.ClientID %>').val();
             if (iKodOved != "") {
                 if (IsNumeric(trim(iKodOved))) {
                     if (userId > 0)
@@ -260,29 +269,31 @@
                         wsGeneral.GetOvedName(iKodOved, CheckOvedIdSucceeded);
                 }
                 else {
-                    //alert("1212");
                     alert("מספר אישי לא חוקי");
-                    document.getElementById(oTxtId).value = "";
-                    document.getElementById(oTxtId).focus();
-                }   
+                    $('#<%=txtId.ClientID %>').val('');
+                    $('#<%=txtId.ClientID %>').focus();
+                }
+            }
+            else {
+                //alert("1212");
+                alert("יש להזין מספר אישי");
+                $('#<%=txtId.ClientID %>').val('');
+                $('#<%=txtId.ClientID %>').focus();
+            }
         }
+        else $('#<%=hidBtnShow.ClientID %>').click();
+
     }
 
     function CheckOvedIdSucceeded(result) {
         var txtIdObj = $('#<%=txtId.ClientID %>');
-        var btShow = $('#<%=btnShow.ClientID %>');
-        
         if (result == '') {
             alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');
             txtIdObj.focus();
-          //  btShow.prop("disabled", true);
         }
-      //  else btShow.prop("disabled", false);
+        else $('#<%=hidBtnShow.ClientID %>').click();
+ 
     }
-    function getScrollBottom(p_oElem) {
-        return p_oElem.scrollHeight - p_oElem.scrollTop - p_oElem.clientHeight;
-    }
-
 
     function openDetails() {
 
@@ -292,7 +303,7 @@
         items = $("[src*=minus]");
 
         items.each(function () {
-            $(this).closest("tr").after("<tr  Width='960px'  class='trGridChild'><td class='ItemRowChild'></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>")
+            $(this).closest("tr").after("<tr  Width='960px'  class='trGridChild'><td class='ItemRowChild'></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>");
 
            // $(this).attr("src", "../../Images/minus.png");
             $(this).closest("tr").next().css('visibility', 'visible');
@@ -305,7 +316,7 @@
         if (pager.innerHTML.indexOf("GridPager")>-1) {
             $('#ctl00_KdsContent_grdEmployee')[0].lastChild.removeChild(pager);//[mis].removeChild();    
             $('#<%=divNetunim.ClientID %>').parent().after("<div/>");
-            $('#<%=divNetunim.ClientID %>').closest("tr").after("<tr  class='GridPagerNew'>" + pager.innerHTML + "</tr>");
+            $('#<%=divNetunim.ClientID %>').closest("tr").after("<tr id='trPagerGrid'  class='GridPagerNew'>" + pager.innerHTML + "</tr>");
         }
      //   $('#<%=divNetunim.ClientID %>').parent().next().append("<tr><td>" + pager + "</td></tr>").addClass('GridPagerNew');
 
@@ -318,7 +329,7 @@
         if (selectedVal == 1) {
             txtIdObj.val('');
             txtIdObj.prop("disabled", true);
-          //  $('#<%=btnShow.ClientID %>').prop("disabled", false);
+         
         }
         else {           
              txtIdObj.prop("disabled", false);
@@ -339,7 +350,7 @@
             ReturnWin = false;
        
         document.getElementById("divHourglass").style.display = 'none';
-        document.getElementById("ctl00_KdsContent_btnShow").click();
+      //  document.getElementById("ctl00_KdsContent_btnShow").click();
         return ReturnWin;
     }
 
@@ -350,7 +361,7 @@
             document.getElementById("ctl00_KdsContent_vldFrom").errormessage = "חובה להזין תאריך";
             $find(sBehaviorId)._ensureCallout();
             $find(sBehaviorId).show(true);
-            $('#<%=btnShow.ClientID %>').prop("disabled", true);
+            $('#btnShow').prop("disabled", true);//*
         }
         else {
             var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes["Param100"].value;//($('[id$=Params]')[0]).attributes["Param100"].value;// document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
@@ -368,11 +379,12 @@
                 document.getElementById("ctl00_KdsContent_vldFrom").errormessage = " לא ניתן להזין תאריך מעבר ל " + Param100 + " חודשים אחורה";
                 $find(sBehaviorId)._ensureCallout();
                 $find(sBehaviorId).show(true);
-                $('#<%=btnShow.ClientID %>').prop("disabled", true);
                 $('#<%=clnFromDate.ClientID %>').focus();
+                $('#btnShow').prop("disabled", true);//*
             }
             else
-                $('#<%=btnShow.ClientID %>').prop("disabled", false);
+                $('#btnShow').prop("disabled", false);//*
+      
 
             onChange_ToDate();
         }
@@ -387,7 +399,8 @@
             document.getElementById("ctl00_KdsContent_vldTo").errormessage = "חובה להזין תאריך";
             $find(sBehaviorId)._ensureCallout();
             $find(sBehaviorId).show(true);
-            $('#<%=btnShow.ClientID %>').prop("disabled", true);
+            $('#btnShow').prop("disabled", true);
+        
         }
         else {
             var StartDateSplit = document.getElementById('ctl00_KdsContent_clnFromDate').value.split('/');
@@ -408,11 +421,12 @@
                 document.getElementById("ctl00_KdsContent_vldTo").errormessage = msg;//"תאריך עד קטן מתאריך מ";
                 $find(sBehaviorId)._ensureCallout();
                 $find(sBehaviorId).show(true);
-                $('#<%=btnShow.ClientID %>').prop("disabled", true);
+                $('#btnShow').prop("disabled", true);
                 $('#<%=clnToDate.ClientID %>').focus();
             }
             else
-                $('#<%=btnShow.ClientID %>').prop("disabled", false);
+                $('#btnShow').prop("disabled", false);
+         
         }
     }
     

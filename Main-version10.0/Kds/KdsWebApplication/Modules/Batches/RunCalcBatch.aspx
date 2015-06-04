@@ -45,11 +45,11 @@
                    </ContentTemplate>
               </asp:UpdatePanel> </td>
     </tr>
-      <tr>
-       <td colspan="3"><asp:RadioButton ID="chkTest" runat="server" Checked="true" GroupName="rdoTest" /> &nbsp; ריצת טסט</td>
+      <tr style="display:none" >
+       <td colspan="3"><asp:RadioButton ID="chkTest" runat="server"  GroupName="rdoTest" /> &nbsp; ריצת טסט</td>
        
-        <td colspan="2"><asp:RadioButton ID="chkNoTest" runat="server" GroupName="rdoTest" /> &nbsp;  ריצה בפועל</td>
-        <td colspan="2"></td>
+        <td colspan="2"><asp:RadioButton ID="chkNoTest" runat="server"  Checked="true" GroupName="rdoTest" /> &nbsp;  ריצה בפועל</td>
+        <td colspan="2"> </td>
     </tr>
  <tr>
          <td colspan="7" align="right">
