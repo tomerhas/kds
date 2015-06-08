@@ -54,17 +54,18 @@
          font-size:14px;
          font-family:Arial;
         }
-       .ItemRowGrid
-{
- border-right:hidden;
- border-left:hidden;
- border-bottom:hidden;
- padding-right:3px;
- font-size:14px;
- font-family:Arial;
-   font-weight:bold;
-}
-
+       .GridHeader2
+        {
+	        color:White;
+	        background-color:rgb(185,182,190);
+	        border-right:solid 1px #3F3F3F;
+	        height:20px;
+	        font-size:14px;
+	        font-weight:bold;
+            border-bottom:solid 1px #3F3F3F;
+            text-align:center;
+            vertical-align:middle;
+         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
@@ -162,8 +163,8 @@
                                                 <Columns>
 
                                                     <asp:HyperLinkField DataTextField="taarich" HeaderText="תאריך"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild"  NavigateUrl="#" ItemStyle-HorizontalAlign="Center" />
-                                                    <asp:BoundField DataField="mispar_sidur" HeaderText="מספר סידור"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />           
-                                                    <asp:BoundField DataField="TEUR_SIDUR_MEYCHAD"  ItemStyle-Width="0px" />
+                                                    <asp:BoundField DataField="TEUR_SIDUR_MEYCHAD" HeaderText="סידור"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />           
+                                                    <asp:BoundField DataField="mispar_sidur"  ItemStyle-Width="0px" />
                                                     <asp:BoundField DataField="SHAT_HATCHALA" HeaderText="שעת התחלה" ItemStyle-Width="0px"  ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild"  DataFormatString="{0:HH:mm dd/MM}" ItemStyle-HorizontalAlign="Center" />
                                                     <asp:TemplateField ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" HeaderText="שעת התחלה" >
                                                        <ItemTemplate>
@@ -180,21 +181,21 @@
                                                     </asp:TemplateField>
                                                     <asp:BoundField DataField="teur_in" HeaderText="אי החתמה התחלה"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
                                                     <asp:BoundField DataField="teur_out" HeaderText="אי החתמה גמר"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
-                                                    <asp:BoundField DataField="SHAT_HATCHALA_LETASHLUM" HeaderText="שעת התחלה לתשלום" ItemStyle-Width="0px"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" DataFormatString="{0:HH:mm dd/MM}" ItemStyle-HorizontalAlign="Center" />
-                                                    <asp:TemplateField ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" HeaderText="שעת התחלה לתשלום" >
+                                                    <asp:BoundField DataField="SHAT_HATCHALA_LETASHLUM" HeaderText="שעת התחלה לתשלום" ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild"  ItemStyle-HorizontalAlign="Center" />
+                                              <%--      <asp:TemplateField ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" HeaderText="שעת התחלה לתשלום" >
                                                        <ItemTemplate>
                                                            <asp:Label ID="HShatHatchalaLetashlum" runat="server" Font-Bold="true"></asp:Label>
                                                            <asp:Label ID="TShatHatchalaLetashlum" runat="server"  ></asp:Label>
                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
+                                                    </asp:TemplateField>--%>
 
-                                                    <asp:BoundField DataField="SHAT_GMAR_LETASHLUM" HeaderText="שעת גמר לתשלום" ItemStyle-Width="0px"     ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" DataFormatString="{0:HH:mm dd/MM}" ItemStyle-HorizontalAlign="Center" />
-                                                    <asp:TemplateField ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" HeaderText="שעת גמר לתשלום" >
+                                                    <asp:BoundField DataField="SHAT_GMAR_LETASHLUM" HeaderText="שעת גמר לתשלום"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
+                                               <%--     <asp:TemplateField ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" HeaderText="שעת גמר לתשלום" >
                                                        <ItemTemplate>
                                                            <asp:Label ID="HShatGmarLetashlum" runat="server" Font-Bold="true"></asp:Label>
                                                            <asp:Label ID="TShatGmarLetashlum" runat="server"  ></asp:Label>
                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
+                                                    </asp:TemplateField>--%>
                                                     <asp:BoundField DataField="TEUR_DIVUCH" HeaderText="חריגה"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
                                                     <asp:BoundField DataField="LO_LETASHLUM"  ItemStyle-Width="0px" />
                                                 
@@ -350,7 +351,8 @@
             ReturnWin = false;
        
         document.getElementById("divHourglass").style.display = 'none';
-      //  document.getElementById("ctl00_KdsContent_btnShow").click();
+        $('#<%=hidBtnShow.ClientID %>').click();
+        //document.getElementById("ctl00_KdsContent_btnShow").click();
         return ReturnWin;
     }
 

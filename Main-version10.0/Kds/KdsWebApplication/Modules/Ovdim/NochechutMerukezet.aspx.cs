@@ -29,17 +29,15 @@ namespace KdsWebApplication.Modules.Ovdim
         private enum enGrdNochechut
         {
             Taarich=0,
-            MisparSidur,
-            TeurSidurHid ,
+            TeurSidur,
+            MisparSidurHid,
             ShatHatchalaHid,
             ShatHatchala,
             ShatGmarHid,
             ShatGmar,
             KodSibaIN ,
             KodSibaOUT,
-            ShatHatchalaLetashlumHid,
             ShatHatchalaLetashlum,
-            ShatGmarLetashlumHid,
             ShatGmarLetashlum,
             Hariga,
             LoLetashlumHid,
@@ -166,12 +164,10 @@ namespace KdsWebApplication.Modules.Ovdim
             if (e.Row.RowType != DataControlRowType.EmptyDataRow && e.Row.RowType != DataControlRowType.Pager)
             {
                 e.Row.Cells[enGrdNochechut.LoLetashlumHid.GetHashCode()].Style.Add("display", "none");
-                e.Row.Cells[enGrdNochechut.TeurSidurHid.GetHashCode()].Style.Add("display", "none");
+                e.Row.Cells[enGrdNochechut.MisparSidurHid.GetHashCode()].Style.Add("display", "none");
                 e.Row.Cells[enGrdNochechut.ShatHatchalaHid.GetHashCode()].Style.Add("display", "none");
                 e.Row.Cells[enGrdNochechut.ShatGmarHid.GetHashCode()].Style.Add("display", "none");
-                e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlumHid.GetHashCode()].Style.Add("display", "none");
-                e.Row.Cells[enGrdNochechut.ShatGmarLetashlumHid.GetHashCode()].Style.Add("display", "none");
-                
+                    
             }
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -182,7 +178,7 @@ namespace KdsWebApplication.Modules.Ovdim
 
                 ((HyperLink)e.Row.Cells[enGrdNochechut.Taarich.GetHashCode()].Controls[0]).Attributes.Add("OnClick", "javascript:OpenEmpWorkCard('" + row[0] + ", " + row[1].ToString().Split(' ')[0] + "')");
 
-                ((WebControl)(e.Row.Cells[enGrdNochechut.MisparSidur.GetHashCode()])).ToolTip = e.Row.Cells[enGrdNochechut.TeurSidurHid.GetHashCode()].Text;
+                ((WebControl)(e.Row.Cells[enGrdNochechut.TeurSidur.GetHashCode()])).ToolTip = e.Row.Cells[enGrdNochechut.MisparSidurHid.GetHashCode()].Text;
                 if (!string.IsNullOrEmpty(row[6].ToString()))
                 {
                     txt = e.Row.Cells[enGrdNochechut.ShatHatchalaHid.GetHashCode()].Text;
@@ -196,18 +192,18 @@ namespace KdsWebApplication.Modules.Ovdim
                     ((Label)(e.Row.Cells[enGrdNochechut.ShatGmar.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
                     ((Label)(e.Row.Cells[enGrdNochechut.ShatGmar.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
                 }
-                if (!string.IsNullOrEmpty(row[8].ToString()))
-                {
-                    txt = e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlumHid.GetHashCode()].Text;
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlum.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlum.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
-                }
-                if (!string.IsNullOrEmpty(row[9].ToString()))
-                {
-                    txt = e.Row.Cells[enGrdNochechut.ShatGmarLetashlumHid.GetHashCode()].Text;
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmarLetashlum.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
-                    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmarLetashlum.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
-                }
+                //if (!string.IsNullOrEmpty(row[8].ToString()))
+                //{
+                //    txt = e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlumHid.GetHashCode()].Text;
+                //    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlum.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
+                //    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlum.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
+                //}
+                //if (!string.IsNullOrEmpty(row[9].ToString()))
+                //{
+                //    txt = e.Row.Cells[enGrdNochechut.ShatGmarLetashlumHid.GetHashCode()].Text;
+                //    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmarLetashlum.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
+                //    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmarLetashlum.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
+                //}
               //  ((TextBox)e.Row.Cells[SHAT_YETZIA].FindControl("txtShatYezia")).ToolTip = e.Row.Cells[SHAT_YEZIA_DATE].Text.Split(' ')[1] + " " +
                 //                                                                                                 e.Row.Cells[SHAT_YEZIA_DATE].Text.Split(' ')[0];
             }

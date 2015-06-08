@@ -5028,6 +5028,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }
     protected bool IsIdkunExists(int iMisparIshiIdkunRashemet,bool bProfileRashemet, ErrorLevel oLevel, int iPakadId, int iMisparSidur, DateTime dShatHatchala, DateTime dShatYetiza, int iMisparKnisa)
     {
+        if (_ProfileMenahelBankShaot)//  TB_Idkun_Rashemet  רשאי לעדכן שדה ללא תלות אם קיימות לשדה רשומה אחת או יותר בטבלה  kds_MenahelBameshek
+            bProfileRashemet = true;  // הלוגיקה היא כמו לרשמת...
+
         return clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet,bProfileRashemet, oLevel, iPakadId, iMisparSidur, dShatHatchala, dShatYetiza, iMisparKnisa, ref _dtIdkuneyRashemet);
     }
     protected void CreateShatHatchalaCell(SidurDM oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive)
