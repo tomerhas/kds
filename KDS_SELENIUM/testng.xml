@@ -11,11 +11,17 @@
             <class name="automationFramework.Test_Empty_Activity_Mapa" />
             <class name="automationFramework.Test_Empty_Activity_Between" />
             <class name="automationFramework.Test_Add_Absences" />
-            <class name="automationFramework.Test_Add_Activity" />
+            <class name="automationFramework.Test_Add_Activity" />  
+            <class name="automationFramework.Test_Add_Special_Schedule" />
             
             
 		</classes>
 
+
+
+	
+  
+  
     </test>
     
     
@@ -25,13 +31,16 @@
 
 		<classes>
 
-		    <class name="automationFramework.Test_EmployeeCards" />
+		     <class name="automationFramework.Test_EmployeeCards" /> 
 		    
 
 		</classes>
+		
+
+		
+		
 
     </test>
-    
     
     
     
