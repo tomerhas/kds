@@ -379,7 +379,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         || (IsSidurVisa())
                         || (IsSidurMatalaNotValidExists())
                         || (IsPeilutEilatExist())                        
-                        || IsSidurChosem());
+                        || IsSidurChosem()
+                        || (IsCarNumberErrorExists()));
          }
         
 
