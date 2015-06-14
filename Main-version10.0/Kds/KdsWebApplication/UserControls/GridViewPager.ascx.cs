@@ -79,7 +79,27 @@ public partial class UserControls_GridViewPager : System.Web.UI.UserControl, IGr
         int pageCount = gridView.PageCount;
 
         btnFirst.Enabled = btnPrevious.Enabled = (pageIndex != 0);
+        if (!btnFirst.Enabled)
+        {
+            btnFirst.Style.Add("color", "Gray");
+            btnPrevious.Style.Add("color", "Gray");
+        }
+        else{
+            btnFirst.Style.Add("color", "White");
+            btnPrevious.Style.Add("color", "White");
+        }
+
         btnNext.Enabled = btnLast.Enabled = (pageIndex < (pageCount - 1));
+        if (!btnNext.Enabled)
+        {
+            btnNext.Style.Add("color", "Gray");
+            btnLast.Style.Add("color", "Gray");
+        }
+        else
+        {
+            btnNext.Style.Add("color", "White");
+            btnLast.Style.Add("color", "White");
+        }
 
         ddlPageSelector.Items.Clear();
 

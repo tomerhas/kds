@@ -136,9 +136,9 @@
                
                       <%--  <asp:Button ID="btnRedirect" runat="server"  OnCommand="btnRedirect_Click"  />
                         <asp:textbox  ID="txtRowSelected" runat="server"  />--%>
-                           <div id="divNetunim" runat="server"  dir="ltr" style="text-align:right;width:970px;overflow-x:hidden;overflow-y:hidden;height:570px;border:none">
+                           <div id="divNetunim" runat="server"  dir="ltr" style="text-align:right;width:970px;overflow-x:hidden;overflow-y:scroll;border:none;height:600px">
                         <asp:GridView ID="grdEmployee" runat="server"  ShowHeader="False" style="background-color:white"
-                             AllowPaging="true" PageSize="6" AutoGenerateColumns="false" CssClass="Grid"  
+                             AllowPaging="true"  AutoGenerateColumns="false" CssClass="Grid"
                              Width="965px" EmptyDataText="לא נמצאו נתונים!" EmptyDataRowStyle-HorizontalAlign="Center"
                              OnRowDataBound="grdEmployee_RowDataBound" OnPageIndexChanging="grdEmployee_PageIndexChanging">
                             <Columns>
@@ -239,6 +239,8 @@
         </tr>           
    </table>
   <input type="button" ID="hidBtnShow"  runat="server"  onserverclick="btnShow_Click"  style="display:none" />
+  <input type="hidden" ID="hidRefresh" name="hidRefresh" runat="server"  value="false"  style="display:none" />
+  <input type="hidden" ID="hidScrollPos" name="hidScrollPos" runat="server"  value="0"  style="display:none" />
    </ContentTemplate>    
  </asp:UpdatePanel>   
     
@@ -246,6 +248,8 @@
 <%--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>--%>
 
 <script type="text/javascript">
+
+  //  var lastScrollPos = 0;
 
     function CheckOvedId() {
         $('#<%=divNetunim.ClientID %>').css("display", "none");
@@ -312,6 +316,8 @@
             $('#<%=divNetunim.ClientID %>').parent().after("<div/>");
             $('#<%=divNetunim.ClientID %>').closest("tr").after("<tr id='trPagerGrid'  class='GridPagerNew'>" + pager.innerHTML + "</tr>");
         }
+       
+        $('#<%=divNetunim.ClientID %>').scrollTop($('#<%=hidScrollPos.ClientID %>').val());
      //   $('#<%=divNetunim.ClientID %>').parent().next().append("<tr><td>" + pager + "</td></tr>").addClass('GridPagerNew');
 
     }
@@ -331,6 +337,9 @@
         
     }
 
+  
+   
+
     function OpenEmpWorkCard(RowData) {
         // debugger;
 
@@ -344,7 +353,12 @@
             ReturnWin = false;
        
         document.getElementById("divHourglass").style.display = 'none';
+        $('#<%=hidRefresh.ClientID %>').val("true");
+        $('#<%=hidScrollPos.ClientID %>').val( $('#<%=divNetunim.ClientID %>').scrollTop());
+       // alert(lastScrollPos);
         $('#<%=hidBtnShow.ClientID %>').click();
+       // $('#<%=divNetunim.ClientID %>').scrollTop(lastScrollPos);
+       // alert($('#<%=divNetunim.ClientID %>').scrollTop());
         //document.getElementById("ctl00_KdsContent_btnShow").click();
         return ReturnWin;
     }
