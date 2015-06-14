@@ -332,7 +332,6 @@
   <PropertyGroup>
     <PostBuildEvent>if not exist "$(SolutionDir)KdsWebSite\Resources\" mkdir "$(SolutionDir)KdsWebSite\Resources\" 
 Copy "$(ProjectDir)$(OutDir)Resources\*.*" "$(SolutionDir)KdsWebSite\Resources\"
-
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
