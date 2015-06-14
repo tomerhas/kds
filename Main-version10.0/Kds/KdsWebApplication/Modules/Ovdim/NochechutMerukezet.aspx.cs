@@ -97,7 +97,7 @@ namespace KdsWebApplication.Modules.Ovdim
                
                 if (txtId.Text.Length > 0)
                     ovd_id = int.Parse(txtId.Text);
-              //  grdEmployee.PageSize = 30;
+                grdEmployee.PageSize = 30;
                 mis = int.Parse(LoginUser.UserInfo.EmployeeNumber);
                 if (AutoCompleteExtenderID.ContextKey == "")
                     mis = 0;
