@@ -192,9 +192,9 @@
                                                 <asp:RequiredFieldValidator ID="ValidTxtImperNum_1" runat="server" ControlToValidate="txtImpersonate"
                                                     Text="The field cannot be empty" 
                                                     ValidationGroup="impersonate"></asp:RequiredFieldValidator>
-                                                <asp:RangeValidator ID="ValidTxtImperNum_2" runat="server" ControlToValidate="txtImpersonate" 
+                                          <%--      <asp:RangeValidator ID="ValidTxtImperNum_2" runat="server" ControlToValidate="txtImpersonate" 
                                                     ValidationGroup="impersonate" MinimumValue="0" MaximumValue="9999999"
-                                                    Text="The field must be number" ></asp:RangeValidator>
+                                                    Text="The field must be number" ></asp:RangeValidator>--%>
                                                 <asp:Button runat="server" ID="btnImpersonate" Text="החלף מ.א." ValidationGroup="impersonate" />
                                             </asp:Panel>
                                         </div>

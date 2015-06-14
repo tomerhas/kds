@@ -74,7 +74,9 @@ namespace KdsLibrary.Security
         private void CreateUserInfo()
         {
             _userInfo = new UserInfo();
-            _userInfo.Username =
+            if (HttpContext.Current.Session["Inject_User"] != null && HttpContext.Current.Session["Inject_User"] != "")
+                _userInfo.Username = HttpContext.Current.Session["Inject_User"].ToString();
+            else  _userInfo.Username = 
                 (ConfigurationManager.AppSettings["DebugModeUserName"] == "true") ? ConfigurationManager.AppSettings["DebugUserName"] : HttpContext.Current.Request.ServerVariables["LOGON_USER"];
             _userInfo.EmployeeNumber =
                 _exchangeSrv.getEmpNumByUserName(_userInfo.Username);

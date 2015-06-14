@@ -64,7 +64,11 @@ namespace KdsLibrary.UI
         {
             TextBox TxtImpersonate = new TextBox();
             TxtImpersonate = (TextBox)Master.FindControl("txtImpersonate");
-            LoginUser.InjectEmployeeNumber(TxtImpersonate.Text);
+
+            HttpContext.Current.Session["Inject_User"] = "EGGED_D\\" + TxtImpersonate.Text;
+            HttpContext.Current.Session.Remove("LoginUser");
+            Response.Redirect("~/Main.aspx", false);
+           // LoginUser.InjectEmployeeNumber(TxtImpersonate.Text);
         }
 
         #endregion

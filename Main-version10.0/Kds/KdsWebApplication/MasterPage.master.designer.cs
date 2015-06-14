@@ -300,15 +300,6 @@ public partial class MasterPage {
     protected global::System.Web.UI.WebControls.RequiredFieldValidator ValidTxtImperNum_1;
     
     /// <summary>
-    /// ValidTxtImperNum_2 control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.RangeValidator ValidTxtImperNum_2;
-    
-    /// <summary>
     /// btnImpersonate control.
     /// </summary>
     /// <remarks>
