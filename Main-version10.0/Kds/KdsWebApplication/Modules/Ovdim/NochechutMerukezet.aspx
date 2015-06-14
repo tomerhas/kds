@@ -54,17 +54,10 @@
          font-size:14px;
          font-family:Arial;
         }
-       .GridHeader2
+      .GridHeader2
         {
-	        color:White;
-	        background-color:rgb(185,182,190);
-	        border-right:solid 1px #3F3F3F;
-	        height:20px;
-	        font-size:14px;
-	        font-weight:bold;
-            border-bottom:solid 1px #3F3F3F;
-            text-align:center;
-            vertical-align:middle;
+	        background-color: #808080;	
+	        border-left:hidden;
          }
     </style>
 </asp:Content>
@@ -143,14 +136,14 @@
                
                       <%--  <asp:Button ID="btnRedirect" runat="server"  OnCommand="btnRedirect_Click"  />
                         <asp:textbox  ID="txtRowSelected" runat="server"  />--%>
-                           <div id="divNetunim" runat="server"  dir="ltr" style="text-align:right;width:970px;overflow-x:hidden;overflow-y:scroll;height:570px;border:none">
+                           <div id="divNetunim" runat="server"  dir="ltr" style="text-align:right;width:970px;overflow-x:hidden;overflow-y:hidden;height:570px;border:none">
                         <asp:GridView ID="grdEmployee" runat="server"  ShowHeader="False" style="background-color:white"
                              AllowPaging="true" PageSize="6" AutoGenerateColumns="false" CssClass="Grid"  
                              Width="965px" EmptyDataText="לא נמצאו נתונים!" EmptyDataRowStyle-HorizontalAlign="Center"
                              OnRowDataBound="grdEmployee_RowDataBound" OnPageIndexChanging="grdEmployee_PageIndexChanging">
                             <Columns>
 
-                                 <asp:TemplateField>
+                                 <asp:TemplateField  ItemStyle-CssClass="GridHeader2"   >
 
                                     <ItemTemplate>
 
@@ -220,7 +213,7 @@
 
                                 </asp:TemplateField>
 
-                                <asp:BoundField DataField="mispar_ishi"   ItemStyle-CssClass="GridHeader"   HeaderStyle-CssClass="GridHeader"     HeaderText="מספר אישי"  ItemStyle-HorizontalAlign="Center" />                                          
+                                <asp:BoundField DataField="mispar_ishi"   ItemStyle-CssClass="GridHeader"   HeaderStyle-CssClass="GridHeader"   HeaderStyle-BackColor="Gray"  HeaderText="מספר אישי"  ItemStyle-HorizontalAlign="Center" />                                          
                                 <asp:BoundField DataField="full_name" HeaderText="שם" ItemStyle-CssClass="GridHeader" HeaderStyle-CssClass="GridHeader"  ItemStyle-HorizontalAlign="Center" />
                                 <asp:BoundField DataField="TEUR_YECHIDA" HeaderText="יחידה ארגונית"  ItemStyle-CssClass="GridHeader" HeaderStyle-CssClass="GridHeader" ItemStyle-HorizontalAlign="Center" />
                                 <asp:BoundField DataField="START_TIME_ALLOWED" HeaderText="שעת התחלה מותרת" ItemStyle-CssClass="GridHeader" HeaderStyle-CssClass="GridHeader" ItemStyle-HorizontalAlign="Center" />
