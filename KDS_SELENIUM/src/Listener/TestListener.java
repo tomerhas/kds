@@ -42,10 +42,8 @@ public class TestListener implements ITestListener {
     	//File file = new File("C:/Selenium/iexploredriver.exe");
     	//System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
     	//WebDriver driver = new InternetExplorerDriver();
-    	WebDriver augmentedDriver = new Augmenter().augment(driver);
-        File scrFile = ((TakesScreenshot)augmentedDriver).
-                            getScreenshotAs(OutputType.FILE);
-    	//File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+    	
+    	File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
     	
          //The below method will save the screen shot in d drive with test method name 
             try {
