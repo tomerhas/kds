@@ -13,12 +13,15 @@ import org.openqa.selenium.remote.Augmenter;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.TestListenerAdapter;
 import org.openqa.selenium.WebDriver;
 //import com.pack.sample.TestBase;
 
+import automationFramework.Test_Menahel_Bameshek;
 
 
 
+/*
 public class TestListener implements ITestListener {
 	public static  WebDriver driver;
 	//WebDriver driver=null;
@@ -64,7 +67,50 @@ public class TestListener implements ITestListener {
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {   }
 
     public void onStart(ITestContext context) {   }
-}  
+}  */
+
+
+
+
+public class TestListener extends TestListenerAdapter{   
+           
+     @Override
+     public void onTestFailure(ITestResult result){ 
+            CaptureScreenShot(result);
+            System.out.println(result.getName()+" Test Failed \n");
+     }
+           
+     @Override
+     public void onTestSuccess(ITestResult result){
+           System.out.println(result.getName()+" Test Passed \n");
+     }
+           
+     @Override
+     public void onTestSkipped(ITestResult result){
+           System.out.println(result.getName()+" Test Skipped \n");
+     }
+            
+     public void CaptureScreenShot(ITestResult result){
+           Object obj  = result.getInstance();
+           WebDriver driver = ((Test_Menahel_Bameshek) obj).getDriver();
+                        
+           File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+                                         
+           try {
+        	      FileUtils.copyFile(scrFile, new File("C:\\selenium\\workspace\\KDS_SELENIUM\\SCREENSHOTS\\"+ result.getName()+".png"));
+                  //FileUtils.copyFile(scrFile, new File("C:\\SCREENSHOTS\\failure.png"));
+           }
+           catch (IOException e) {
+                e.printStackTrace();
+           }
+      } 
+}
+
+
+
+
+
+
 
 
 

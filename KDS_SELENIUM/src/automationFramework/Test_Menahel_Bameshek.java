@@ -1,50 +1,61 @@
 package automationFramework;
 
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
-
 import JDBC.DB_DML;
 import pageObjects.Employee_Card;
 import pageObjects.LogIn_Page;
 import pageObjects.Work_Card;
 
-import java.sql.SQLException;
-
-
+@Listeners ({Listener.TestListener.class})
 public class Test_Menahel_Bameshek {
+	  public WebDriver driver;
+	 //    protected String baseUrl;
+	           
+	     public WebDriver getDriver(){
+	              return driver;
+	     }
+	
+	//public WebDriver driver;
 	
 	
-	public WebDriver driver;
+/*	@Listeners ({Listener.TestListener.class})
+	public class FailedTestScreenCapture {
+	           
+	     protected WebDriver driver;
+	     protected String baseUrl;
+	           
+	     public WebDriver getDriver(){
+	              return driver;
+	     }*/
+	
+	
+	
+	
 	
 	
   @Test
-  public void f() throws InterruptedException, SQLException {
-	  
+  public void  Menahel_Bameshek() throws Exception {
 	  
 	
-	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  
+	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  LogIn_Page.Txt_Change_User(driver).sendKeys("igalr");
 	  LogIn_Page.Btn_Change_User(driver).click();
-	  
-	  
-	  //LogIn_Page.lnk_EmployeeCards(driver).click();	  
-	  //Employee_Card.Rdo_Name(driver).click();
-	  //LogIn_Page.lnk_Home_Page(driver).click();
 	  Work_Card.Wait_For_Element_Stalenes(driver,"ctl00_KdsContent_btnUpdWorkCard");
 	  LogIn_Page.lnk_EmployeeCards(driver).click();
 	  Employee_Card.Txt_Id(driver).clear();
-	  
 	  Employee_Card.Txt_Id(driver).sendKeys("87903");
 	  Employee_Card.Txt_Id(driver).sendKeys(Keys.TAB);
 	  WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -52,7 +63,7 @@ public class Test_Menahel_Bameshek {
       Alert alert=driver.switchTo().alert();
       Assert.assertEquals("מספר אישי לא קיים/אינך מורשה לצפות בעובד זה", alert.getText());
 	  alert.accept();
-	  Employee_Card.Txt_Id(driver).sendKeys("46194");
+	  Employee_Card.Txt_Id(driver).sendKeys("446194");
 	  Employee_Card.Txt_Id(driver).sendKeys(Keys.TAB);
 	  Select droplist = new Select(Employee_Card.List_Month(driver));
       droplist.selectByVisibleText("06/2015"); 
@@ -69,7 +80,6 @@ public class Test_Menahel_Bameshek {
       System.out.println(Work_Card.Assert_Sidur_disabled(driver).getAttribute("readonly"));
       Assert.assertTrue(true,Work_Card.Assert_Sidur_disabled(driver).getAttribute("readonly"));
       Work_Card.Btn_Add_Special(driver).click();
-      //Work_Card.Wait_For_Element_Visibile(driver, 60, "SD_lblSidur2");
       Work_Card.Lbl_Special_No(driver).sendKeys("99002");
 	  Work_Card.Lbl_Special_No(driver).sendKeys(Keys.TAB);
 	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"אינך רשאי לדווח סידור עבודה זה");
@@ -91,9 +101,6 @@ public class Test_Menahel_Bameshek {
       droplist2.selectByVisibleText("שעון לא מדויק/לא תקין");
       Work_Card.Btn_Update(driver).click();      
 	  DB_DML.deleteRecordFromTable("46194","to_date('11/06/2015','dd/mm/yyyy')","99001");
-	  //Work_Card.Wait_For_Element_Stalenes(driver,"btnUpdateCard");
-	  //Work_Card.Btn_Prev_Day(driver).click();
-	  
 	  Work_Card.Wait_For_Element_Stalenes(driver,"clnDate");
 	  Work_Card.Date(driver).click();
 	  Work_Card.Date(driver).sendKeys("10062015");
@@ -103,17 +110,17 @@ public class Test_Menahel_Bameshek {
       Work_Card.Lbl_Special_No(driver).sendKeys("99300");
 	  Work_Card.Lbl_Special_No(driver).sendKeys(Keys.TAB);
 	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה");
-	  Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard");
 	  Work_Card.Btn_Close(driver).click();
-	  //Work_Card.Btn_Cancel_Update(driver).click();
+	  JavascriptExecutor js = (JavascriptExecutor)driver; 
+      js.executeScript("arguments[0].click();", Work_Card.Btn_Cancel_Update(driver)); 
+      
 	  
-	  
-	  
+     
 	  
   }
+
   
-  
-  
+
   
  
   
@@ -143,7 +150,7 @@ public class Test_Menahel_Bameshek {
   public void afterMethod() {
 	  
 	
-	//  driver.quit();
+	  driver.quit();
 	  
 	  
   }
