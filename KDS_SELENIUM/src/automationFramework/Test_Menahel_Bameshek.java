@@ -1,6 +1,7 @@
 package automationFramework;
 
 import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -17,28 +18,16 @@ import JDBC.DB_DML;
 import pageObjects.Employee_Card;
 import pageObjects.LogIn_Page;
 import pageObjects.Work_Card;
+import utils.Utils;
+import utils.Base;
 
 @Listeners ({Listener.TestListener.class})
-public class Test_Menahel_Bameshek {
+public class Test_Menahel_Bameshek    extends Base {
 	  public WebDriver driver;
-	 //    protected String baseUrl;
-	           
-	     public WebDriver getDriver(){
-	              return driver;
-	     }
+	  
+	  
+	  
 	
-	//public WebDriver driver;
-	
-	
-/*	@Listeners ({Listener.TestListener.class})
-	public class FailedTestScreenCapture {
-	           
-	     protected WebDriver driver;
-	     protected String baseUrl;
-	           
-	     public WebDriver getDriver(){
-	              return driver;
-	     }*/
 	
 	
 	
@@ -46,8 +35,8 @@ public class Test_Menahel_Bameshek {
 	
 	
   @Test
-  public void  Menahel_Bameshek() throws Exception {
-	  
+  public void  Menahel_Bameshek() throws Exception      {
+	  driver=getDriver();
 	
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -63,13 +52,13 @@ public class Test_Menahel_Bameshek {
       Alert alert=driver.switchTo().alert();
       Assert.assertEquals("מספר אישי לא קיים/אינך מורשה לצפות בעובד זה", alert.getText());
 	  alert.accept();
-	  Employee_Card.Txt_Id(driver).sendKeys("446194");
+	  Employee_Card.Txt_Id(driver).sendKeys("46194");
 	  Employee_Card.Txt_Id(driver).sendKeys(Keys.TAB);
 	  Select droplist = new Select(Employee_Card.List_Month(driver));
       droplist.selectByVisibleText("06/2015"); 
       Employee_Card.Btn_Execute(driver).click();
       Employee_Card.Link_Date_Menahel_Bameshek(driver).click();
-      Base a =new Base();
+      Utils a =new Utils();
 	  a.waitForWindow("WorkCard",driver);
       Assert.assertFalse(Work_Card.Btn_Add_Absence(driver).isEnabled(),"Btn_Add_Absence is Enabled ");
       Assert.assertFalse(Work_Card.Btn_Add_Mapa(driver).isEnabled(),"Btn_Add_Mapa is Enabled ");
@@ -82,7 +71,7 @@ public class Test_Menahel_Bameshek {
       Work_Card.Btn_Add_Special(driver).click();
       Work_Card.Lbl_Special_No(driver).sendKeys("99002");
 	  Work_Card.Lbl_Special_No(driver).sendKeys(Keys.TAB);
-	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"אינך רשאי לדווח סידור עבודה זה");
+	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"אינך רשאי לדווח סידורר עבודה זה");
 	  Work_Card.Lbl_Special_No(driver).sendKeys("99850");
 	  Work_Card.Lbl_Special_No(driver).sendKeys(Keys.TAB);
 	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"יש לדווח במסך הוסף דיווח היעדרות");
@@ -124,7 +113,7 @@ public class Test_Menahel_Bameshek {
   
  
   
-  
+ /* 
   
   @BeforeMethod
   public void beforeMethod() {
@@ -153,6 +142,6 @@ public class Test_Menahel_Bameshek {
 	  driver.quit();
 	  
 	  
-  }
+  }*/
 
 }

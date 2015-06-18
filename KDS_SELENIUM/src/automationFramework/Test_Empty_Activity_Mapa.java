@@ -7,13 +7,22 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
 import pageObjects.Work_Card;
+import utils.Base;
+import utils.Utils;
 
-public class Test_Empty_Activity_Mapa {
+
+
+
+
+
+@Listeners ({Listener.TestListener.class})
+public class Test_Empty_Activity_Mapa   extends Base {
 	
 	public WebDriver driver;	
 	
@@ -31,7 +40,7 @@ public class Test_Empty_Activity_Mapa {
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  
 	  
-	  Base a= new Base();
+	  Utils a= new Utils();
 	  a.waitForWindow("WorkCard",driver);
 	  Work_Card.TxtId(driver).sendKeys("77104");
 	  Work_Card.Date(driver).click();
@@ -71,9 +80,8 @@ public class Test_Empty_Activity_Mapa {
   @BeforeMethod
   public void beforeMethod() {
 	  
-	  driver=Base.Initialize_browser();
-	  Base.Initialize_Webpage(driver);
-	  Base.Enter_Workcard(driver);
+	  driver=getDriver();
+	  Utils.Enter_Workcard(driver);
 	  
 	  
 	  
@@ -86,13 +94,6 @@ public class Test_Empty_Activity_Mapa {
   
   
   
-  
-  @AfterMethod
-  public void afterMethod() {
-	  
-	  driver.quit();
-	  
-	  
-  }
+
 
 }

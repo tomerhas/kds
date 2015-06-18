@@ -17,6 +17,12 @@ import org.testng.TestListenerAdapter;
 import org.openqa.selenium.WebDriver;
 //import com.pack.sample.TestBase;
 
+
+
+
+
+import utils.Utils;
+import utils.Base;
 import automationFramework.Test_Menahel_Bameshek;
 
 
@@ -72,7 +78,7 @@ public class TestListener implements ITestListener {
 
 
 
-public class TestListener extends TestListenerAdapter{   
+public class TestListener extends TestListenerAdapter{ 
            
      @Override
      public void onTestFailure(ITestResult result){ 
@@ -92,7 +98,7 @@ public class TestListener extends TestListenerAdapter{
             
      public void CaptureScreenShot(ITestResult result){
            Object obj  = result.getInstance();
-           WebDriver driver = ((Test_Menahel_Bameshek) obj).getDriver();
+           WebDriver driver =((Base) obj).getDriver();
                         
            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
                                          

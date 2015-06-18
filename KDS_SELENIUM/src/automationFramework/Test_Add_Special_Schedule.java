@@ -6,13 +6,26 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
 import pageObjects.Work_Card;
+import utils.Base;
+import utils.Utils;
 
-public class Test_Add_Special_Schedule {
+
+
+
+
+
+
+
+
+
+@Listeners ({Listener.TestListener.class})
+public class Test_Add_Special_Schedule  extends Base {
 	
 	public  WebDriver driver;
 	
@@ -21,7 +34,7 @@ public class Test_Add_Special_Schedule {
   public void f() {
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	  Base a =new Base();
+	  Utils a =new Utils();
 	  a.waitForWindow("WorkCard",driver);
 	  Work_Card.TxtId(driver).sendKeys("77104");
 	  Work_Card.Date(driver).click();
@@ -87,9 +100,10 @@ public class Test_Add_Special_Schedule {
   @BeforeMethod
   public void beforeMethod() {
 	  
-	  driver=Base.Initialize_browser();
-	  Base.Initialize_Webpage(driver);
-	  Base.Enter_Workcard(driver);
+	  //driver=Utils.Initialize_browser();
+	  //Utils.Initialize_Webpage(driver);
+	  driver=getDriver();
+	  Utils.Enter_Workcard(driver);
 	  
 	  
   }
@@ -105,22 +119,5 @@ public class Test_Add_Special_Schedule {
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  @AfterMethod
-  public void afterMethod() {
-	  
-	  driver.quit();
-	  
-  }
 
 }

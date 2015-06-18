@@ -7,13 +7,20 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
 import pageObjects.Work_Card;
+import utils.Base;
+import utils.Utils;
 
-public class Test_Update_Car_No {
+
+
+
+@Listeners ({Listener.TestListener.class})
+public class Test_Update_Car_No  extends Base {
 	
 	public WebDriver driver;	
 	 
@@ -64,7 +71,7 @@ public class Test_Update_Car_No {
 		  
 		 
 
-		  Base a=new Base();
+		  Utils a=new Utils();
 		  a.waitForWindow("WorkCard",driver);
 		  
 		  //Work_Card.findElement(driver, By.id("txtId"),60).sendKeys("77104");
@@ -126,9 +133,8 @@ public class Test_Update_Car_No {
   public void beforeMethod()  {
 	  
 	  
-	  driver=Base.Initialize_browser();
-	  Base.Initialize_Webpage(driver);
-	  Base.Enter_Workcard(driver);
+	  driver=getDriver();
+	  Utils.Enter_Workcard(driver);
 	  
 	  
   }
@@ -137,10 +143,6 @@ public class Test_Update_Car_No {
   
     
   
-  
-  @AfterMethod
-  public void afterMethod() {
-	  driver.quit();
-  }
+
    
 }
