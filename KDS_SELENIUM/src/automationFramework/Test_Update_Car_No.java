@@ -41,7 +41,7 @@ public class Test_Update_Car_No  extends Base {
 	
   @Test (dataProvider="Param_Car")
   
-  public void f( String sCar_No  )   throws InterruptedException {
+  public void Update_Car_No ( String sCar_No  )   throws InterruptedException {
 	  
          
 	   /*  waitForNumberofWindowsToEqual(2);

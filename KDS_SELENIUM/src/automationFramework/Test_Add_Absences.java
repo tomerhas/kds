@@ -60,6 +60,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
       Assert.assertEquals(Work_Card.Sidur_Num(driver).getText(),"99801");
 	  Work_Card.Cancel_Sidur(driver).click();
       Work_Card.Btn_Update(driver).click();
+      Work_Card.Wait_For_Element_Stalenes(driver, "btnAddHeadrut");
       Work_Card.Btn_Add_Absence(driver).click();
       Utils d= new Utils();
 	  d.waitForWindow("DivuachHeadrut",driver);

@@ -35,7 +35,7 @@ public class Test_Empty_Activity_Mapa   extends Base {
 	
 	
   @Test  
-  public void f() throws InterruptedException {
+  public void Empty_Activity_Mapa() throws InterruptedException {
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  

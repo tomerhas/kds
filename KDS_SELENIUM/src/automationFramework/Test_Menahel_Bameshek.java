@@ -71,7 +71,7 @@ public class Test_Menahel_Bameshek    extends Base {
       Work_Card.Btn_Add_Special(driver).click();
       Work_Card.Lbl_Special_No(driver).sendKeys("99002");
 	  Work_Card.Lbl_Special_No(driver).sendKeys(Keys.TAB);
-	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"אינך רשאי לדווח סידורר עבודה זה");
+	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"אינך רשאי לדווח סידור עבודה זה");
 	  Work_Card.Lbl_Special_No(driver).sendKeys("99850");
 	  Work_Card.Lbl_Special_No(driver).sendKeys(Keys.TAB);
 	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"יש לדווח במסך הוסף דיווח היעדרות");

@@ -31,7 +31,7 @@ public class Test_Add_Special_Schedule  extends Base {
 	
 	
   @Test
-  public void f() {
+  public void Test_Add_Special_Schedule () {
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  Utils a =new Utils();
