@@ -55,7 +55,7 @@ namespace KdsWebApplication.Modules.Ovdim
         {
             DataTable dtParametrim = new DataTable();
             clUtils oUtils = new clUtils();
-
+            bool flag = false;
             if (!Page.IsPostBack)
             {
 
@@ -65,17 +65,32 @@ namespace KdsWebApplication.Modules.Ovdim
                 if (iSecurity == KdsSecurityLevel.ViewAll) //|| iSecurity == KdsSecurityLevel.ViewOnlyEmployeeData)
                 {
                     AutoCompleteExtenderID.ContextKey = "";
+                    flag = true;
                 }
                 else if ((iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
                 {
                     AutoCompleteExtenderID.ContextKey = LoginUser.UserInfo.EmployeeNumber;
-
                 }
                 else
                 {
                     AutoCompleteExtenderID.ContextKey = "";// LoginUser.UserInfo.EmployeeNumber;
+                    flag = true;
+                   
                 }
 
+                if (flag)
+                {
+                    rbAllTD.Style.Add("display", "none");
+                    rdoMi.Style.Add("display", "none");
+                    // rdoMi.Style.Add("checked", "checked");
+                    rdoMi.Checked = true;
+                    //  txtId.Style["disabled"] = "false";
+                    //  txtId.Enabled = true;
+                }
+                else
+                {
+                    txtId.Enabled = false;
+                }
                 clnFromDate.Text = DateTime.Now.AddDays(-1).ToShortDateString();
                 clnToDate.Text = DateTime.Now.AddDays(-1).ToShortDateString();
                 

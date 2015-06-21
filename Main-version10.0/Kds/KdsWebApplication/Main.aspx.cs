@@ -20,7 +20,7 @@ public partial class _Main : KdsPage
     {
         try
         {
-
+            KdsPage kdsPage = this.Page as KdsPage;
             lblHellowUser.Text = "  ωμεν  " + LoginUser.UserInfo.EmployeeFullName;
             sUserId = LoginUser.UserInfo.EmployeeNumber;
             DisplayDivMessages = false;
@@ -40,6 +40,8 @@ public partial class _Main : KdsPage
                 tblLogTahalichim.Style["display"] = "none";
 
             }
+            if (ConfigurationManager.AppSettings["ImpersonateUser"] == "true")
+                SetImpersonatePanel();
         }
         catch (Exception ex)
         {
@@ -47,6 +49,26 @@ public partial class _Main : KdsPage
         }
     }
 
+    private void SetImpersonatePanel()
+    {
+       // Panel PnlImpersonate = new Panel();
+      //  Button ButImpersonate = new Button();
+      //  PnlImpersonate = (Panel)Master.FindControl("pnlImpersonate");
+      //  ButImpersonate = (Button)Master.FindControl("btnImpersonate");
+       btnImpersonate.Click +=new EventHandler(ButImpersonate_Click);   // Attributes.Add("OnClick", "ButImpersonate_Click");
+       pnlImpersonate.Visible = true;
+    }
+
+    private  void ButImpersonate_Click(object sender, EventArgs e)
+    {
+      //  TextBox TxtImpersonate = new TextBox();
+      //  TxtImpersonate = (TextBox)Master.FindControl("txtImpersonate");
+
+        HttpContext.Current.Session["Inject_User"] = "EGGED_D\\" + txtImpersonate.Text;
+        HttpContext.Current.Session.Remove("LoginUser");
+        Response.Redirect("~/Main.aspx", false);
+        // LoginUser.InjectEmployeeNumber(TxtImpersonate.Text);
+    }
     public override  bool EnableControlSecurity
     {
         get { return true; }

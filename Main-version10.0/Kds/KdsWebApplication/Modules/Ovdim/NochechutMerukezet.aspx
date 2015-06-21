@@ -92,16 +92,16 @@
             </td> 
             <td style="width:10px"></td>
 
-            <td style="width:150px;">&nbsp;&nbsp;
-                <input type="radio" id="rdoAll" onclick="RbChange()" value="1" checked="checked"    name="grpCardType" />כל העובדים הכפופים 
+            <td id="rbAllTD" runat="server" style="width:150px;">&nbsp;&nbsp;
+                <input type="radio" id="rdoAll" runat="server" onclick="RbChange()" value="1"   name="grpCardType" />כל העובדים הכפופים 
               </td>
               <%--  <asp:RadioButton runat="server"  ID="rdoAll" Checked="true"   OnClick="RbChange()"    GroupName="grpCardType" Text="כל העובדים הכפופים"> </asp:RadioButton></td>   --%>
              <td> 
-                    <input type="radio" id="rdoMi" onclick="RbChange()"  value="2"    name="grpCardType"  />מספר אישי
+                    <input type="radio" id="rdoMi" runat="server" onclick="RbChange()"  value="2"    name="grpCardType"  />מספר אישי
                  <%-- <asp:RadioButton runat="server" ID="rdoMi"   GroupName="grpCardType"  OnClick="RbChange()"  Text="מספר אישי">   --%>     <%-- </asp:RadioButton>--%>
             </td>                          
           <td>
-                 <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" disabled="true"    MaxLength="5" style="width:100px;" TabIndex="1"></asp:TextBox>                            
+                 <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl"    MaxLength="5" style="width:100px;" TabIndex="1"></asp:TextBox>                            
                         <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                         TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                         EnableCaching="true"  CompletionListCssClass="ACLst"
@@ -255,9 +255,10 @@
         $('#<%=divNetunim.ClientID %>').css("display", "none");
         
         $('#trPagerGrid').remove();
-        var selected = $("input[type='radio'][name='grpCardType']:checked"); 
-        var selectedVal = selected.val();
-        if (selectedVal == 2) {
+       // var selected = $("input[type='radio'][name='grpCardType']:checked"); 
+       // var selectedVal = selected.val();
+       // alert($("input[type='radio'][name='grpCardType']:checked"));
+        if ($("input[type='radio']")[1].checked) {
             var iKodOved = $('#<%=txtId.ClientID %>').val();
             if (iKodOved != "") {
                 if (IsNumeric(trim(iKodOved))) {
@@ -323,10 +324,10 @@
     }
     function RbChange() {
       
-        var selected = $("input[type='radio'][name='grpCardType']:checked"); 
-        var selectedVal = selected.val();
+     //   var selected = $("input[type='radio'][name='grpCardType']:checked"); 
+       // var selectedVal = selected.val();
         var txtIdObj = $('#<%=txtId.ClientID %>');
-        if (selectedVal == 1) {
+        if ($("input[type='radio']")[0].checked) {
             txtIdObj.val('');
             txtIdObj.prop("disabled", true);
          

@@ -45,11 +45,11 @@ public partial class Modules_Approvals_Approvals : KdsPage
         btnSubmit.Click += new EventHandler(btnSubmit_Click);
     }
 
-    protected override void ButImpersonate_Click(object sender, EventArgs e)
-    {
-        base.ButImpersonate_Click(sender, e);
-        BindRequestsDates();
-    }
+    //protected override void ButImpersonate_Click(object sender, EventArgs e)
+    //{
+    //    base.ButImpersonate_Click(sender, e);
+    //    BindRequestsDates();
+    //}
 
     void grdRequests_RowCreated(object sender, GridViewRowEventArgs e)
     {
@@ -143,8 +143,8 @@ public partial class Modules_Approvals_Approvals : KdsPage
     protected void Page_Load(object sender, EventArgs e)
     {
         DisableMasterUpdateProgress();
-        if (TxtImpersonate != null && !String.IsNullOrEmpty(TxtImpersonate.Text))
-            LoginUser.InjectEmployeeNumber(TxtImpersonate.Text);
+      //  if (TxtImpersonate != null && !String.IsNullOrEmpty(TxtImpersonate.Text))
+      //      LoginUser.InjectEmployeeNumber(TxtImpersonate.Text);
         _approvManage = new ApprovalManager(LoginUser);
         if (!IsPostBack)
         {

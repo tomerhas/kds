@@ -60,29 +60,12 @@ namespace KdsLibrary.UI
 
         }
 
-        protected virtual void ButImpersonate_Click(object sender, EventArgs e)
-        {
-            TextBox TxtImpersonate = new TextBox();
-            TxtImpersonate = (TextBox)Master.FindControl("txtImpersonate");
-
-            HttpContext.Current.Session["Inject_User"] = "EGGED_D\\" + TxtImpersonate.Text;
-            HttpContext.Current.Session.Remove("LoginUser");
-            Response.Redirect("~/Main.aspx", false);
-           // LoginUser.InjectEmployeeNumber(TxtImpersonate.Text);
-        }
+     
 
         #endregion
 
         #region Methods
-        public void SetImpersonatePanel()
-        {
-            Panel PnlImpersonate = new Panel();
-            Button ButImpersonate = new Button();
-            PnlImpersonate = (Panel)Master.FindControl("pnlImpersonate");
-            ButImpersonate = (Button)Master.FindControl("btnImpersonate");
-            ButImpersonate.Click +=new EventHandler(ButImpersonate_Click);   // Attributes.Add("OnClick", "ButImpersonate_Click");
-            PnlImpersonate.Visible = true;
-        }
+        
 
         public void ProvideMenuForRole()
         {
@@ -184,13 +167,13 @@ namespace KdsLibrary.UI
         #endregion
 
         #region Properties
-        protected TextBox TxtImpersonate
-        {
-            get
-            {
-                return (TextBox)Master.FindControl("txtImpersonate");
-            }
-        }
+        //protected TextBox TxtImpersonate
+        //{
+        //    get
+        //    {
+        //        return (TextBox)Master.FindControl("txtImpersonate");
+        //    }
+        //}
        
         public string PageHeader
         {

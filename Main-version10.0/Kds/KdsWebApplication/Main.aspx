@@ -4,12 +4,41 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">   
     <table width="99%" cellspacing="6px" border="0">
+         <tr>
+            <td colspan="2" >
+
+                <asp:UpdatePanel ID="UpdatePanelValidation" runat="server" RenderMode="Inline">
+                    <ContentTemplate>
+                    <div>
+                        <asp:ValidationSummary ID="vldGeneral" DisplayMode="BulletList"  runat="server" CssClass="ErrorMessage"  ValidationGroup="ErrGeneral"/>
+                    </div>
+                    <div>
+                        <asp:Panel ID="pnlImpersonate" runat="server" Visible="false">
+                            <asp:Label ID="Label1" runat="server" Text="מספר אישי להתחזות:"></asp:Label>
+                            <asp:TextBox runat="server" ID="txtImpersonate"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="ValidTxtImperNum_1" runat="server" ControlToValidate="txtImpersonate"
+                                Text="The field cannot be empty" 
+                                ValidationGroup="impersonate"></asp:RequiredFieldValidator>
+                        <%--      <asp:RangeValidator ID="ValidTxtImperNum_2" runat="server" ControlToValidate="txtImpersonate" 
+                                ValidationGroup="impersonate" MinimumValue="0" MaximumValue="9999999"
+                                Text="The field must be number" ></asp:RangeValidator>--%>
+                            <asp:Button runat="server" ID="btnImpersonate" Text="החלף מ.א." ValidationGroup="impersonate" />
+                        </asp:Panel>
+                    </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </td>
+        </tr> 
+        <tr style="height:20px">
+           <td  ></td>
+        </tr>
         <tr>
            <td colspan="2" class="SubTitleLabel"><asp:Label id="lblHellowUser" runat="server"></asp:Label></td>
         </tr>
           <tr>
             <td colspan="2" class="opening_head">ברוך הבא למערכת קדם שכר  - מערכת נוכחות ופעילויות</td>
         </tr>
+       
         <tr>
             <td class="opening_date" valign="top">
                 <table>

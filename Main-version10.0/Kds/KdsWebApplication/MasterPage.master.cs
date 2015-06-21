@@ -54,8 +54,8 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 UserId =int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber);
             else UserId = 0;
 
-            if (ConfigurationManager.AppSettings["ImpersonateUser"] == "true")
-                kdsPage.SetImpersonatePanel();
+            //if (ConfigurationManager.AppSettings["ImpersonateUser"] == "true")
+            //    kdsPage.SetImpersonatePanel();
         }
         if (kdsPage != null)
             ShowMessageReports(kdsPage.PureUrlRoot);
