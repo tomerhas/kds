@@ -40,6 +40,7 @@ public class Test_Menahel_Bameshek    extends Base {
 	
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	  DB_DML.deleteRecordFromTable("46194","to_date('11/06/2015','dd/mm/yyyy')","99001");
 	  LogIn_Page.Txt_Change_User(driver).sendKeys("igalr");
 	  LogIn_Page.Btn_Change_User(driver).click();
 	  Work_Card.Wait_For_Element_Stalenes(driver,"ctl00_KdsContent_btnUpdWorkCard");
@@ -89,7 +90,7 @@ public class Test_Menahel_Bameshek    extends Base {
       Select droplist2 = new Select(Work_Card.List_Reason_Out(driver));
       droplist2.selectByVisibleText("שעון לא מדויק/לא תקין");
       Work_Card.Btn_Update(driver).click();      
-	  DB_DML.deleteRecordFromTable("46194","to_date('11/06/2015','dd/mm/yyyy')","99001");
+	  
 	  Work_Card.Wait_For_Element_Stalenes(driver,"clnDate");
 	  Work_Card.Date(driver).click();
 	  Work_Card.Date(driver).sendKeys("10062015");
