@@ -42,6 +42,7 @@ namespace KdsWebApplication.Modules.Ovdim
             Hariga,
             LoLetashlumHid,
             LoLetashlumImg,
+            noch_yomit,
             noch_chodshit
         }
 
@@ -89,6 +90,7 @@ namespace KdsWebApplication.Modules.Ovdim
                 }
                 else
                 {
+                    rdoAll.Checked = true;
                     txtId.Enabled = false;
                 }
                 clnFromDate.Text = DateTime.Now.AddDays(-1).ToShortDateString();
@@ -184,6 +186,7 @@ namespace KdsWebApplication.Modules.Ovdim
         protected void gvNochechut_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             string txt;
+            bool LoLetashlum = false;
             if (e.Row.RowType != DataControlRowType.EmptyDataRow && e.Row.RowType != DataControlRowType.Pager)
             {
                 e.Row.Cells[enGrdNochechut.LoLetashlumHid.GetHashCode()].Style.Add("display", "none");
@@ -195,9 +198,12 @@ namespace KdsWebApplication.Modules.Ovdim
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 object[] row = ((DataRowView)(e.Row.DataItem)).Row.ItemArray;
-                
+
                 if (e.Row.Cells[enGrdNochechut.LoLetashlumHid.GetHashCode()].Text == "1")
-                    ((Image)(e.Row.Cells[enGrdNochechut.LoLetashlumImg.GetHashCode()].FindControl("imgOK1"))).Visible = true; //Style["dispaly"]="inline";                //if (LoginUser.IsLimitedUser)
+                {
+                    LoLetashlum = true;
+                    ((Image)(e.Row.Cells[enGrdNochechut.LoLetashlumImg.GetHashCode()].FindControl("imgOK1"))).Visible = true; //Style["dispaly"]="inline";
+                }//if (LoginUser.IsLimitedUser)
 
                 ((HyperLink)e.Row.Cells[enGrdNochechut.Taarich.GetHashCode()].Controls[0]).Attributes.Add("OnClick", "javascript:OpenEmpWorkCard('" + row[0] + ", " + row[1].ToString().Split(' ')[0] + "')");
 
@@ -207,14 +213,25 @@ namespace KdsWebApplication.Modules.Ovdim
                     txt = e.Row.Cells[enGrdNochechut.ShatHatchalaHid.GetHashCode()].Text;
                     ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchala.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
                     ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchala.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
-                   
+
                 }
+                else if (e.Row.Cells[enGrdNochechut.MisparSidurHid.GetHashCode()].Text != "&nbsp;" && !(LoLetashlum))
+                {
+                    e.Row.Cells[enGrdNochechut.ShatHatchala.GetHashCode()].Style.Add("background-color", "red");
+                }
+
+
                 if (!string.IsNullOrEmpty(row[7].ToString()))
                 {
                     txt = e.Row.Cells[enGrdNochechut.ShatGmarHid.GetHashCode()].Text;
                     ((Label)(e.Row.Cells[enGrdNochechut.ShatGmar.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
                     ((Label)(e.Row.Cells[enGrdNochechut.ShatGmar.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
                 }
+                else if (e.Row.Cells[enGrdNochechut.MisparSidurHid.GetHashCode()].Text != "&nbsp;" && !(LoLetashlum))
+                {
+                    e.Row.Cells[enGrdNochechut.ShatGmar.GetHashCode()].Style.Add("background-color", "red");
+                }
+                 
                 //if (!string.IsNullOrEmpty(row[8].ToString()))
                 //{
                 //    txt = e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlumHid.GetHashCode()].Text;

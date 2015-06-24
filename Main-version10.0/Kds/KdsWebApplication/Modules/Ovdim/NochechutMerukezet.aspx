@@ -200,6 +200,7 @@
                                                          </ItemTemplate>           
                                                     </asp:TemplateField>  
                                                   
+                                                    <asp:BoundField DataField="noch_yomit" HeaderText="נוספות יומי"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
                                                     <asp:BoundField DataField="noch_codshit" HeaderText="נוספות חודשי"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
    
 

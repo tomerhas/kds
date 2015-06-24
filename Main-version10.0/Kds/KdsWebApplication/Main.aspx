@@ -14,7 +14,7 @@
                     </div>
                     <div>
                         <asp:Panel ID="pnlImpersonate" runat="server" Visible="false">
-                            <asp:Label ID="Label1" runat="server" Text="מספר אישי להתחזות:"></asp:Label>
+                            <asp:Label ID="Label1" runat="server" Text="שם משתמש להתחזות:"></asp:Label>
                             <asp:TextBox runat="server" ID="txtImpersonate"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="ValidTxtImperNum_1" runat="server" ControlToValidate="txtImpersonate"
                                 Text="The field cannot be empty" 
