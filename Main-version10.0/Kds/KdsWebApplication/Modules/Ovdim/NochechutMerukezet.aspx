@@ -174,7 +174,7 @@
                                                     </asp:TemplateField>
                                                     <asp:BoundField DataField="teur_in" HeaderText="אי החתמה התחלה"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
                                                     <asp:BoundField DataField="teur_out" HeaderText="אי החתמה גמר"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
-                                                    <asp:BoundField DataField="SHAT_HATCHALA_LETASHLUM" HeaderText="שעת התחלה לתשלום" ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild"  ItemStyle-HorizontalAlign="Center" />
+                                                    <asp:BoundField DataField="SHAT_HATCHALA_LETASHLUM" HeaderText="ש. התחלה לתשלום" ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild"  ItemStyle-HorizontalAlign="Center" />
                                               <%--      <asp:TemplateField ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" HeaderText="שעת התחלה לתשלום" >
                                                        <ItemTemplate>
                                                            <asp:Label ID="HShatHatchalaLetashlum" runat="server" Font-Bold="true"></asp:Label>
@@ -182,26 +182,27 @@
                                                        </ItemTemplate>
                                                     </asp:TemplateField>--%>
 
-                                                    <asp:BoundField DataField="SHAT_GMAR_LETASHLUM" HeaderText="שעת גמר לתשלום"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
+                                                    <asp:BoundField DataField="SHAT_GMAR_LETASHLUM" HeaderText="ש. גמר לתשלום"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
                                                <%--     <asp:TemplateField ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" HeaderText="שעת גמר לתשלום" >
                                                        <ItemTemplate>
                                                            <asp:Label ID="HShatGmarLetashlum" runat="server" Font-Bold="true"></asp:Label>
                                                            <asp:Label ID="TShatGmarLetashlum" runat="server"  ></asp:Label>
                                                        </ItemTemplate>
                                                     </asp:TemplateField>--%>
-                                                    <asp:BoundField DataField="TEUR_DIVUCH" HeaderText="חריגה"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
+                                                    <asp:BoundField DataField="TEUR_DIVUCH" HeaderText="חריגה"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" HeaderStyle-Width="40px"  />
                                                     <asp:BoundField DataField="LO_LETASHLUM"  ItemStyle-Width="0px" />
                                                 
 
-                                                    <asp:TemplateField HeaderText="לא לתשלום"    ItemStyle-HorizontalAlign="Center"  ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild"  >
+                                                    <asp:TemplateField HeaderText="לא לתשלום"    ItemStyle-HorizontalAlign="Center"  ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" HeaderStyle-Width="50px"   >
                                                          <ItemTemplate>
                                                                 <asp:Image runat="server" ID="imgOK1" Visible="false"   ImageUrl="~/Images/tick.png" />
                                                           <%-- <asp:HyperLink  ID="imgButton" runat="server" NavigateUrl="#" ></asp:HyperLink>--%>
                                                          </ItemTemplate>           
                                                     </asp:TemplateField>  
                                                   
-                                                    <asp:BoundField DataField="noch_yomit" HeaderText="נוספות יומי"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
-                                                    <asp:BoundField DataField="noch_codshit" HeaderText="נוספות חודשי"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" />
+                                                    <asp:BoundField DataField="noch_yomit" HeaderText="נוספות יומי"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" HeaderStyle-Width="100px" />
+                                                    <asp:BoundField DataField="out_michsa" ItemStyle-Width="0px" />
+                                                    <asp:BoundField DataField="noch_codshit" HeaderText="נוספות חודשי"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center"  HeaderStyle-Width="80px"  />
    
 
                                                 </Columns>

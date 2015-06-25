@@ -43,6 +43,7 @@ namespace KdsWebApplication.Modules.Ovdim
             LoLetashlumHid,
             LoLetashlumImg,
             noch_yomit,
+            out_michsaHid,
             noch_chodshit
         }
 
@@ -193,7 +194,7 @@ namespace KdsWebApplication.Modules.Ovdim
                 e.Row.Cells[enGrdNochechut.MisparSidurHid.GetHashCode()].Style.Add("display", "none");
                 e.Row.Cells[enGrdNochechut.ShatHatchalaHid.GetHashCode()].Style.Add("display", "none");
                 e.Row.Cells[enGrdNochechut.ShatGmarHid.GetHashCode()].Style.Add("display", "none");
-                    
+                e.Row.Cells[enGrdNochechut.out_michsaHid.GetHashCode()].Style.Add("display", "none");  
             }
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -231,21 +232,12 @@ namespace KdsWebApplication.Modules.Ovdim
                 {
                     e.Row.Cells[enGrdNochechut.ShatGmar.GetHashCode()].Style.Add("background-color", "red");
                 }
-                 
-                //if (!string.IsNullOrEmpty(row[8].ToString()))
-                //{
-                //    txt = e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlumHid.GetHashCode()].Text;
-                //    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlum.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
-                //    ((Label)(e.Row.Cells[enGrdNochechut.ShatHatchalaLetashlum.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
-                //}
-                //if (!string.IsNullOrEmpty(row[9].ToString()))
-                //{
-                //    txt = e.Row.Cells[enGrdNochechut.ShatGmarLetashlumHid.GetHashCode()].Text;
-                //    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmarLetashlum.GetHashCode()].Controls[3])).Text = txt.Split(' ')[0];
-                //    ((Label)(e.Row.Cells[enGrdNochechut.ShatGmarLetashlum.GetHashCode()].Controls[1])).Text = txt.Split(' ')[1];
-                //}
-              //  ((TextBox)e.Row.Cells[SHAT_YETZIA].FindControl("txtShatYezia")).ToolTip = e.Row.Cells[SHAT_YEZIA_DATE].Text.Split(' ')[1] + " " +
-                //                                                                                                 e.Row.Cells[SHAT_YEZIA_DATE].Text.Split(' ')[0];
+                var out_michsa= e.Row.Cells[enGrdNochechut.out_michsaHid.GetHashCode()].Text.ToString();
+                if (!string.IsNullOrEmpty(out_michsa) && out_michsa !=  "&nbsp;")
+                {
+                    e.Row.Cells[enGrdNochechut.noch_yomit.GetHashCode()].Text += " (מ.ל " + e.Row.Cells[enGrdNochechut.out_michsaHid.GetHashCode()].Text.ToString() + ")";
+                }
+               
             }
         }
 
