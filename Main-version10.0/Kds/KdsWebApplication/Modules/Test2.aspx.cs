@@ -15,6 +15,7 @@ using System.Configuration;
 using KDSCommon.Interfaces.Managers;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Managers.BankShaot;
+using System.Data;
 //using Lesnikowski.Barcode; 
 
 public partial class Modules_Test2 : System.Web.UI.Page
@@ -22,6 +23,11 @@ public partial class Modules_Test2 : System.Web.UI.Page
     
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        string fileName = "C:\\Dev\\Kds\\Main-version10.0\\Kds\\KdsWebApplication\\Xml\\Sysman.xml";
+      
+        DataTable newTable = new DataTable();
+        newTable.ReadXml(fileName);
 
     //    IBankShaotManager bankManager = ServiceLocator.Current.GetInstance<IBankShaotManager>();
     //    bankManager.ExecBankShaot(3332, DateTime.Parse("15/04/2015"));
