@@ -17,6 +17,8 @@ using KdsLibrary.UI;
 using KdsLibrary.UI.SystemManager;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Logs;
+using System.Threading;
+
 public partial class Modules_Errors_EmployeeDetails : KdsPage
 {
     private DataTable dtMisparim = new DataTable();
@@ -27,22 +29,35 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        bool SessionNull = false;
         int iMisparIshi;
         if (!(Page.IsPostBack))
         {
-            ViewState["SortDirection"] = SortDirection.Descending;
-            ViewState["SortExp"] = "taarich";
-            lblMisparIshi.Text = (string)Request.QueryString["ID"];
-            iMisparIshi = int.Parse(lblMisparIshi.Text);
-            InputHiddenBack.Value = Session["Params"].ToString();
-            SetOvedDetailsDB(iMisparIshi);
-            SetOvedCards(iMisparIshi, "taarich", "ASC");           
-            divPeriod.InnerText = string.Concat("פרטי העובד לתקופה: ", (string)Request.QueryString["FromDate"], " - ", (string)Request.QueryString["ToDate"]);
-            LoadMessages((DataList)Master.FindControl("lstMessages"));
-            
+            if (Session["Params"] != null)
+            {
+                ViewState["SortDirection"] = SortDirection.Descending;
+                ViewState["SortExp"] = "taarich";
+                lblMisparIshi.Text = (string)Request.QueryString["ID"];
+                iMisparIshi = int.Parse(lblMisparIshi.Text);
+                InputHiddenBack.Value = Session["Params"].ToString();
+                SetOvedDetailsDB(iMisparIshi);
+                SetOvedCards(iMisparIshi, "taarich", "ASC");
+                divPeriod.InnerText = string.Concat("פרטי העובד לתקופה: ", (string)Request.QueryString["FromDate"], " - ", (string)Request.QueryString["ToDate"]);
+                LoadMessages((DataList)Master.FindControl("lstMessages"));
+            }
+            else SessionNull = true;
+            //{
+            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "UnloadPage", "alert('זמן ההתחברות הסתיים, יש להכנס מחדש למערכת');", true);
+            //    Response.Redirect("~/Main.aspx", false);
+            //}
         }
-        GetMisparimIshi();
-        SetButtons();        
+        if (SessionNull)
+            Response.Redirect("~/Main.aspx", false);
+        else
+        {
+            GetMisparimIshi();
+            SetButtons();
+        }
     }
 
     private void SetButtons()

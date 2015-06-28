@@ -155,7 +155,7 @@
 
                                                 <Columns>
 
-                                                    <asp:HyperLinkField DataTextField="taarich" HeaderText="תאריך"   ItemStyle-CssClass="ItemRowChild"  HeaderStyle-CssClass="GridHeaderChild"   NavigateUrl="#" ItemStyle-HorizontalAlign="Justify"   HeaderStyle-Width="85px"  />
+                                                    <asp:HyperLinkField DataTextField="taarich" HeaderText="תאריך"   ItemStyle-CssClass="ItemRowChild"  HeaderStyle-CssClass="GridHeaderChild"   NavigateUrl="#" ItemStyle-HorizontalAlign="Justify"   HeaderStyle-Width="90px"  />
                                                     <asp:BoundField DataField="TEUR_SIDUR_MEYCHAD" HeaderText="סידור"   ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild" ItemStyle-HorizontalAlign="Center" HeaderStyle-Width="75px" />           
                                                     <asp:BoundField DataField="mispar_sidur"  ItemStyle-Width="0px" />
                                                     <asp:BoundField DataField="SHAT_HATCHALA" HeaderText="שעת התחלה" ItemStyle-Width="0px"  ItemStyle-CssClass="ItemRowChild" HeaderStyle-CssClass="GridHeaderChild"  DataFormatString="{0:HH:mm dd/MM}" ItemStyle-HorizontalAlign="Center"  />
