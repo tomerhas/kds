@@ -29,12 +29,15 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        bool SessionNull = false;
+       
         int iMisparIshi;
-        if (!(Page.IsPostBack))
+        if (Session["Params"] == null)
+            GoToHomePage();
+        else
         {
-            if (Session["Params"] != null)
+            if (!(Page.IsPostBack))
             {
+                
                 ViewState["SortDirection"] = SortDirection.Descending;
                 ViewState["SortExp"] = "taarich";
                 lblMisparIshi.Text = (string)Request.QueryString["ID"];
@@ -44,19 +47,15 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
                 SetOvedCards(iMisparIshi, "taarich", "ASC");
                 divPeriod.InnerText = string.Concat("פרטי העובד לתקופה: ", (string)Request.QueryString["FromDate"], " - ", (string)Request.QueryString["ToDate"]);
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
+              
+                //{
+                //    ScriptManager.RegisterStartupScript(this, this.GetType(), "UnloadPage", "alert('זמן ההתחברות הסתיים, יש להכנס מחדש למערכת');", true);
+                //    Response.Redirect("~/Main.aspx", false);
+                //}
             }
-            else SessionNull = true;
-            //{
-            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "UnloadPage", "alert('זמן ההתחברות הסתיים, יש להכנס מחדש למערכת');", true);
-            //    Response.Redirect("~/Main.aspx", false);
-            //}
-        }
-        if (SessionNull)
-            Response.Redirect("~/Main.aspx", false);
-        else
-        {
+          
             GetMisparimIshi();
-            SetButtons();
+            SetButtons(); 
         }
     }
 
@@ -175,16 +174,18 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
             dtMisparim.Columns.Add("MisparIshiIndex", System.Type.GetType("System.Int32"));
             dtMisparim.Columns.Add("MisparIshi", System.Type.GetType("System.Int32"));
             //for (iCount = 0; iCount <= arrMisparimIshi.Length - 1; iCount++)
-            if(Session["MisparimIshi"] == null)
-                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(0, "W", 0, "Session['MisparimIshi'] is null");
-           
-            for (iCount = 0; iCount <= ((DataTable)Session["MisparimIshi"]).Rows.Count - 1; iCount++)
-             {
-                dr = dtMisparim.NewRow();
-                dr["MisparIshiIndex"] = iCount;
-                //dr["MisparIshi"] = arrMisparimIshi[iCount];
-                dr["MisparIshi"] = ((DataTable)Session["MisparimIshi"]).Rows[iCount]["mispar_ishi"];
-                dtMisparim.Rows.Add(dr);
+            if (Session["MisparimIshi"] == null)
+                GoToHomePage();
+               // ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(0, "W", 0, "Session['MisparimIshi'] is null");
+            else{
+                for (iCount = 0; iCount <= ((DataTable)Session["MisparimIshi"]).Rows.Count - 1; iCount++)
+                {
+                    dr = dtMisparim.NewRow();
+                    dr["MisparIshiIndex"] = iCount;
+                    //dr["MisparIshi"] = arrMisparimIshi[iCount];
+                    dr["MisparIshi"] = ((DataTable)Session["MisparimIshi"]).Rows[iCount]["mispar_ishi"];
+                    dtMisparim.Rows.Add(dr);
+                }
             }
             
         }
@@ -449,8 +450,13 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
     {
         try
         {
-             Session["Params"] = InputHiddenBack.Value;
-             Response.Redirect("EmployeErrors.aspx?Back=true", false);
+            if (Session["Params"] == null)
+                GoToHomePage();
+            else
+            {
+                Session["Params"] = InputHiddenBack.Value;
+                Response.Redirect("EmployeErrors.aspx?Back=true", false);
+            }
         }
         catch (Exception ex)
         {
@@ -479,9 +485,12 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
                 gridPager.PageIndexChanged += delegate(object pagerSender,
                     GridViewPageEventArgs pagerArgs)
                 {
-                    ChangeGridPage(int.Parse(pagerArgs.NewPageIndex.ToString()), grdOvedErrorCards,
-                           (DataView)Session["OvedCards"], "SortDirection",
-                           "SortExp");
+                    if (Session["OvedCards"] == null)
+                        GoToHomePage();
+                    else
+                        ChangeGridPage(int.Parse(pagerArgs.NewPageIndex.ToString()), grdOvedErrorCards,
+                               (DataView)Session["OvedCards"], "SortDirection",
+                               "SortExp");
                 };
             }
         }

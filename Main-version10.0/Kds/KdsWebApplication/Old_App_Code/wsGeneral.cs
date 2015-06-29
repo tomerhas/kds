@@ -579,16 +579,19 @@ public class wsGeneral : System.Web.Services.WebService
             if (contextKey == "1")
             {
                 dt = (DataTable)Session["MisparimIshi"];
-                drOvdimNumber = dt.Select("full_name like '" + prefixText.Replace("'", "''") + "'", " full_name asc");
-                foreach (DataRow dr in drOvdimNumber)
+                if (dt != null)
                 {
-                    sOvdimNumber += dr["mispar_ishi"] + ",";
-                }
+                    drOvdimNumber = dt.Select("full_name like '" + prefixText.Replace("'", "''") + "'", " full_name asc");
+                    foreach (DataRow dr in drOvdimNumber)
+                    {
+                        sOvdimNumber += dr["mispar_ishi"] + ",";
+                    }
 
-                if (sOvdimNumber.Length > 0)
-                {
-                    sOvdimNumber = sOvdimNumber.Substring(0, sOvdimNumber.Length - 1);
+                    if (sOvdimNumber.Length > 0)
+                    {
+                        sOvdimNumber = sOvdimNumber.Substring(0, sOvdimNumber.Length - 1);
 
+                    }
                 }
             }
 
@@ -705,17 +708,21 @@ public class wsGeneral : System.Web.Services.WebService
                         sSelect += " and TEUR_MAAMAD_HR='" + pirteySinun[2].ToString() + "'";
                 }
                 dt = (DataTable)Session["MisparimIshi"];
-                drOvdimNumber = dt.Select(sSelect, "mispar_ishi asc");
-                //drOvdimNumber = dt.Select("mispar_ishi_char  like '" + prefixText + "'", "mispar_ishi asc");
-                foreach (DataRow dr in drOvdimNumber)
+                if (dt != null)
                 {
-                    sOvdimNumber += dr["mispar_ishi"] + ",";
-                }
+                    drOvdimNumber = dt.Select(sSelect, "mispar_ishi asc");
+                    //drOvdimNumber = dt.Select("mispar_ishi_char  like '" + prefixText + "'", "mispar_ishi asc");
+                    foreach (DataRow dr in drOvdimNumber)
+                    {
+                        sOvdimNumber += dr["mispar_ishi"] + ",";
+                    }
 
-                if (sOvdimNumber.Length > 0)
-                {
-                    sOvdimNumber = sOvdimNumber.Substring(0, sOvdimNumber.Length - 1);
-                    dt = oOvdim.GetOvdimMisparIshi(prefixText, sOvdimNumber);
+                    if (sOvdimNumber.Length > 0)
+                    {
+                        sOvdimNumber = sOvdimNumber.Substring(0, sOvdimNumber.Length - 1);
+                        dt = oOvdim.GetOvdimMisparIshi(prefixText, sOvdimNumber);
+                    }
+                    else dt = new DataTable();
                 }
                 else dt = new DataTable();
             }

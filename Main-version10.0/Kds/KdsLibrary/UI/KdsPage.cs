@@ -65,7 +65,11 @@ namespace KdsLibrary.UI
         #endregion
 
         #region Methods
-        
+
+        protected void GoToHomePage()
+        {
+            Response.Redirect("~/Main.aspx", false);
+        }
 
         public void ProvideMenuForRole()
         {

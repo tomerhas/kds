@@ -1171,7 +1171,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             vldCustom.IsValid = false;
             vldCustom.ValidationGroup = "ErrGeneral";
             pPage.Validators.Add(vldCustom);
-            ((ValidationSummary)pPage.Master.FindControl("vldGeneral")).Visible = true;
+            if(pPage.Master.FindControl("vldGeneral") != null)
+                ((ValidationSummary)pPage.Master.FindControl("vldGeneral")).Visible = true;
             EventLog.WriteEntry(KdsEventLogSource, pPage.Title + ": " + sErr, EventLogEntryType.Error);
         }
 

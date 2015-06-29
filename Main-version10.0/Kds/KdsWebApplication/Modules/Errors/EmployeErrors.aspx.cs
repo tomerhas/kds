@@ -65,15 +65,21 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     }
     private void SlofParamsFromSession()
     {
-        string[] ParamsBack = Session["Params"].ToString().Split(';');
-        InputHiddenBack.Attributes.Add("Ezor", ParamsBack[0]);
-        InputHiddenBack.Attributes.Add("Snif", ParamsBack[1]);
-        InputHiddenBack.Attributes.Add("Maamad", ParamsBack[2]);
-        InputHiddenBack.Attributes.Add("Status", ParamsBack[3]);
-        InputHiddenBack.Attributes.Add("Shgiot", ParamsBack[4]);
-        InputHiddenBack.Attributes.Add("From", ParamsBack[5]);
-        InputHiddenBack.Attributes.Add("To", ParamsBack[6]);
-        InputHiddenBack.Attributes.Add("PageIndex", ParamsBack[7]);
+        string[] ParamsBack;
+        if (Session["Params"] == null)
+            GoToHomePage();
+        else
+        {
+            ParamsBack = Session["Params"].ToString().Split(';');
+            InputHiddenBack.Attributes.Add("Ezor", ParamsBack[0]);
+            InputHiddenBack.Attributes.Add("Snif", ParamsBack[1]);
+            InputHiddenBack.Attributes.Add("Maamad", ParamsBack[2]);
+            InputHiddenBack.Attributes.Add("Status", ParamsBack[3]);
+            InputHiddenBack.Attributes.Add("Shgiot", ParamsBack[4]);
+            InputHiddenBack.Attributes.Add("From", ParamsBack[5]);
+            InputHiddenBack.Attributes.Add("To", ParamsBack[6]);
+            InputHiddenBack.Attributes.Add("PageIndex", ParamsBack[7]);
+        }
     }
     private void SetDatesDefaults()
     {
@@ -362,38 +368,44 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
              if (txtId.Text != string.Empty)
              {
                  int iMisparIshi = int.Parse(txtId.Text);
-                 //if (Session["MisparimIshi"].ToString().IndexOf(iMisparIshi.ToString()) > -1)
-                 if (((DataTable)Session["MisparimIshi"]).Select("mispar_ishi=" + iMisparIshi.ToString()).Length > 0)
+
+                 if (Session["MisparimIshi"] == null)
+                     GoToHomePage();
+                 else
                  {
-                     dr = ((DataTable)Session["MisparimIshi"]).Select("mispar_ishi=" + iMisparIshi.ToString());
-                     dt = GetMisparimIshiFromSession();
-                     iPos = int.Parse(dr[0]["MisparIshiIndex"].ToString())+1;
-                   //  iPos = dv.Find(iMisparIshi) + 1;
-                     iPageIndex = iPos / grdEmployee.PageSize;
-                     if ((iPos % grdEmployee.PageSize) == 0)
+                     //if (Session["MisparimIshi"].ToString().IndexOf(iMisparIshi.ToString()) > -1)
+                     if (((DataTable)Session["MisparimIshi"]).Select("mispar_ishi=" + iMisparIshi.ToString()).Length > 0)
                      {
-                         iPageIndex = iPageIndex - 1;
-                         iPos = grdEmployee.PageSize - 1;
+                         dr = ((DataTable)Session["MisparimIshi"]).Select("mispar_ishi=" + iMisparIshi.ToString());
+                         dt = GetMisparimIshiFromSession();
+                         iPos = int.Parse(dr[0]["MisparIshiIndex"].ToString()) + 1;
+                         //  iPos = dv.Find(iMisparIshi) + 1;
+                         iPageIndex = iPos / grdEmployee.PageSize;
+                         if ((iPos % grdEmployee.PageSize) == 0)
+                         {
+                             iPageIndex = iPageIndex - 1;
+                             iPos = grdEmployee.PageSize - 1;
+                         }
+                         else
+                         {
+                             iPos = (iPos % grdEmployee.PageSize) - 1;
+                         }
+                         grdEmployee.PageIndex = iPageIndex;
+
+                         grdEmployee.DataSource = (DataView)Session["Ovdim_Details"];
+                         grdEmployee.DataBind();
+
+                         grdEmployee.Rows[iPos].BackColor = Color.FromArgb(206, 148, 15);//;.CornflowerBlue;
+                         grdEmployee.Rows[iPos].ForeColor = Color.White;
                      }
                      else
                      {
-                         iPos = (iPos % grdEmployee.PageSize) - 1;
+                         txtName.Text = "";
+                         txtId.Text = "";
+                         vldEmpNotExists.IsValid = false;
                      }
-                     grdEmployee.PageIndex = iPageIndex;
-
-                     grdEmployee.DataSource = (DataView)Session["Ovdim_Details"];
-                     grdEmployee.DataBind();
-
-                     grdEmployee.Rows[iPos].BackColor = Color.FromArgb(206, 148, 15);//;.CornflowerBlue;
-                     grdEmployee.Rows[iPos].ForeColor = Color.White;
+                     SetNameAndId();
                  }
-                 else
-                 {
-                     txtName.Text = "";
-                     txtId.Text = "";
-                     vldEmpNotExists.IsValid = false;
-                 }
-                 SetNameAndId();
              }
           
         }
@@ -648,6 +660,8 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             iColSort = GetCurrentColSort();
             lbl.Text = " ";
             e.Row.Cells[iColSort].Controls.Add(lbl);
+            if (Session["SortDirection"] == null)
+                Session["SortDirection"] = SortDirection.Ascending;
             if ((SortDirection)Session["SortDirection"] == SortDirection.Ascending)
             {
                 System.Web.UI.WebControls.Image ImageSort = new System.Web.UI.WebControls.Image();
@@ -677,17 +691,22 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
 
     private int GetCurrentColSort()
     {
-        string sSortExp = (string)Session["SortExp"];
-        int iColNum = -1;
-        try
+        string sSortExp;
+             int iColNum = -1;
+             try
         {
+        if (Session["SortDirection"] == null)
+            GoToHomePage();
+        else{
+            sSortExp = (string)Session["SortExp"];
+
             foreach (DataControlField dc in grdEmployee.Columns)
             {
                 iColNum++;
                 if (dc.SortExpression.Equals(sSortExp)) { break; }                
-            }
-
-            return iColNum;
+            } 
+        }
+        return iColNum;
         }
 
         catch (Exception ex)
@@ -699,9 +718,9 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     {
         string sDirection;
 
-        if ((string.Empty != (string)Session["SortExp"]) && (string.Compare(e.SortExpression, (string)Session["SortExp"], true) == 0))
+        if (Session["SortExp"] != null && (string.Empty != (string)Session["SortExp"]) && (string.Compare(e.SortExpression, (string)Session["SortExp"], true) == 0))
         {
-            if ((SortDirection)Session["SortDirection"] == SortDirection.Ascending)
+            if (Session["SortDirection"] != null && (SortDirection)Session["SortDirection"] == SortDirection.Ascending)
             {
                 sDirection = "DESC";
                 Session["SortDirection"] = SortDirection.Descending;
@@ -719,23 +738,33 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         }
         Session["SortExp"] = e.SortExpression;
 
-        //LoadOvdimGrid(e.SortExpression, sDirection);
-        ((DataView)Session["Ovdim_Details"]).Sort= string.Concat(e.SortExpression," ", sDirection);
-        grdEmployee.DataSource = (DataView)Session["Ovdim_Details"];
-        grdEmployee.PageIndex = 0;
-        InputHiddenBack.Value = "false";
-        grdEmployee.DataBind();
-        InsertMisparIshiToSession(((DataView)Session["Ovdim_Details"]).ToTable());
+        if (Session["Ovdim_Details"] == null || Session["Params"] == null)
+            GoToHomePage();
+        else
+        {
+            //LoadOvdimGrid(e.SortExpression, sDirection);
+            ((DataView)Session["Ovdim_Details"]).Sort = string.Concat(e.SortExpression, " ", sDirection);
+            grdEmployee.DataSource = (DataView)Session["Ovdim_Details"];
+            grdEmployee.PageIndex = 0;
+            InputHiddenBack.Value = "false";
+            grdEmployee.DataBind();
+            InsertMisparIshiToSession(((DataView)Session["Ovdim_Details"]).ToTable());
 
-        Session["Params"] = Session["Params"].ToString().Substring(0, Session["Params"].ToString().LastIndexOf(';')) + ";" + 0;
+            Session["Params"] = Session["Params"].ToString().Substring(0, Session["Params"].ToString().LastIndexOf(';')) + ";" + 0;
+        }
     }
 
     protected void grdEmployee_PageIndexChanging(object sender, GridViewPageEventArgs e)
-    {        
-        grdEmployee.PageIndex = e.NewPageIndex;      
-        //LoadOvdimGrid("", "");
-        grdEmployee.DataSource = (DataView)Session["Ovdim_Details"];
-        grdEmployee.DataBind();
+    {
+        if (Session["Ovdim_Details"] == null)
+            GoToHomePage();
+        else
+        {
+            grdEmployee.PageIndex = e.NewPageIndex;
+            //LoadOvdimGrid("", "");
+            grdEmployee.DataSource = (DataView)Session["Ovdim_Details"];
+            grdEmployee.DataBind();
+        }
     }
     protected void grdEmployee_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -818,23 +847,27 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                                 string sortDirViewStateKey, string sortExprViewStateKey)
     {
         //   SetChangesOfGridInDataview(grid, ref dataView);
-        
-         
-        grid.PageIndex = pageIndex;
-        Session["Params"] = Session["Params"].ToString().Substring(0, Session["Params"].ToString().LastIndexOf(';')) + ";" + pageIndex;
-        
-        string sortExpr = String.Empty;
-        SortDirection sortDir = SortDirection.Ascending;
-        if (ViewState[sortExprViewStateKey] != null)
+
+        if (Session["Params"] == null)
+            GoToHomePage();
+        else
         {
-            sortExpr = ViewState[sortExprViewStateKey].ToString();
-            if (ViewState[sortDirViewStateKey] != null)
-                sortDir = (SortDirection)ViewState[sortDirViewStateKey];
-            dataView.Sort = String.Format("{0} {1}", sortExpr,
-                ConvertSortDirectionToSql(sortDir));
+            grid.PageIndex = pageIndex;
+            Session["Params"] = Session["Params"].ToString().Substring(0, Session["Params"].ToString().LastIndexOf(';')) + ";" + pageIndex;
+
+            string sortExpr = String.Empty;
+            SortDirection sortDir = SortDirection.Ascending;
+            if (ViewState[sortExprViewStateKey] != null)
+            {
+                sortExpr = ViewState[sortExprViewStateKey].ToString();
+                if (ViewState[sortDirViewStateKey] != null)
+                    sortDir = (SortDirection)ViewState[sortDirViewStateKey];
+                dataView.Sort = String.Format("{0} {1}", sortExpr,
+                    ConvertSortDirectionToSql(sortDir));
+            }
+            grid.DataSource = dataView;
+            grid.DataBind();
         }
-        grid.DataSource = dataView;
-        grid.DataBind();
        
     }
     private string ConvertSortDirectionToSql(SortDirection sortDirection)
