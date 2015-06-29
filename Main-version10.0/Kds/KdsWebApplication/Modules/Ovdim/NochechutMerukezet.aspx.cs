@@ -2,6 +2,7 @@
 using KdsLibrary.Security;
 using KdsLibrary.UI;
 using KdsLibrary.UI.SystemManager;
+using KdsLibrary.Utils.Reports;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -126,6 +127,8 @@ namespace KdsWebApplication.Modules.Ovdim
                 Session["Nochechut"] = ds.Tables[1];
                 grdEmployee.DataSource = ds.Tables[0];
 
+                if (ds.Tables[0].Rows.Count > 0)
+                    btnPrint.Visible = true;
                 if (hidRefresh.Value == "false")
                 {
                     hidScrollPos.Value = "0";
@@ -337,7 +340,30 @@ namespace KdsWebApplication.Modules.Ovdim
 
             return newSortDirection;
         }
-        /********************/
+        protected void btnPrint_OnClick(object sender, EventArgs e)
+        {
+            Dictionary<string, string> ReportParameters = new Dictionary<string, string>();
+            string listMI = "";
+            if (txtId.Text.Length > 0)
+                listMI = txtId.Text;
+            else
+            {
+                DataView view = (DataView)Session["Employees"];
+                DataTable dt = view.ToTable(true,"mispar_ishi");
+                foreach (DataRow dr in dt.Rows)
+                    listMI += "," + dr[0];
+                if(listMI.Length>0)
+                   listMI = listMI.Substring(1);
+            }
+
+            ReportParameters.Add("P_MISPAR_ISHI", listMI);
+
+            ReportParameters.Add("P_STARTDATE", DateTime.Parse(clnFromDate.Text).ToShortDateString());
+            ReportParameters.Add("P_ENDDATE",  DateTime.Parse(clnToDate.Text).ToShortDateString());
+
+            ScriptManager.RegisterStartupScript(hidBtnShow, this.GetType(), "", "openDetails();", true);
+            OpenReport(ReportParameters, (Button)sender, ReportName.Presence.ToString());
+        }
     }
 
 

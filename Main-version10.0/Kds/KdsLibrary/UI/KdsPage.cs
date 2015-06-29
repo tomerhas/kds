@@ -11,6 +11,9 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using KdsLibrary.Security;
 using KdsLibrary.BL;
+using KdsLibrary.Utils.Reports;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace KdsLibrary.UI
 {
@@ -69,6 +72,40 @@ namespace KdsLibrary.UI
         protected void GoToHomePage()
         {
             Response.Redirect("~/Main.aspx", false);
+        }
+
+
+        protected void OpenReport(Dictionary<string, string> ReportParameters, Button btnScript, string sRdlName)
+        {
+            KdsReport _Report;
+            KdsDynamicReport _KdsDynamicReport;
+            string sDomain = "";
+            _KdsDynamicReport = KdsDynamicReport.GetKdsReport();
+            _Report = new KdsReport();
+            _Report = _KdsDynamicReport.FindReport(sRdlName);
+
+            KdsLibrary.BL.clReport rep = new KdsLibrary.BL.clReport();
+            DataTable dt = rep.GetReportDetails(((ReportName)Enum.Parse(typeof(ReportName), sRdlName)).GetHashCode());
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                DataRow dr = dt.Rows[0];
+                //_Report.PageHeader = dr["PageHeader"].ToString();
+                _Report.RSVersion = dr["RS_VERSION"].ToString();
+                _Report.URL_CONFIG_KEY = dr["URL_CONFIG_KEY"].ToString();
+                _Report.SERVICE_URL_CONFIG_KEY = dr["SERVICE_URL_CONFIG_KEY"].ToString();
+                _Report.EXTENSION = dr["EXTENSION"].ToString();
+                //_Report.RdlName = RdlName;
+            }
+
+            Session["Report"] = _Report;
+            Session["ReportParameters"] = ReportParameters;
+
+            sDomain = clGeneral.AsDomain(Request.UrlReferrer.ToString()) + Request.ApplicationPath;
+            EventLog.WriteEntry("kds", "Url: " + sDomain);
+            string sScript = "window.showModalDialog('" + sDomain + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
+
+            ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "ReportViewer", sScript, true);
+
         }
 
         public void ProvideMenuForRole()

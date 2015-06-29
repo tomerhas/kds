@@ -238,7 +238,12 @@
                         </asp:GridView>
                        </div>        
             </td>     
-        </tr>           
+        </tr> 
+        <tr>
+            <td style="float:left" >
+                 <asp:button ID="btnPrint" runat="server" Visible="false" text="הדפסה" CssClass ="ImgButtonSearch" OnClick="btnPrint_OnClick"  />
+            </td>
+        </tr>          
    </table>
   <input type="button" ID="hidBtnShow"  runat="server"  onserverclick="btnShow_Click"  style="display:none" />
   <input type="hidden" ID="hidRefresh" name="hidRefresh" runat="server"  value="false"  style="display:none" />
@@ -255,7 +260,7 @@
 
     function CheckOvedId() {
         $('#<%=divNetunim.ClientID %>').css("display", "none");
-        
+        $('#<%=btnPrint.ClientID %>').css("display", "none");
         $('#trPagerGrid').remove();
        // var selected = $("input[type='radio'][name='grpCardType']:checked"); 
        // var selectedVal = selected.val();
