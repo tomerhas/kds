@@ -586,7 +586,7 @@ namespace KdsLibrary.Utils.Reports
         RdlCountOvdeyMeshekShabat=304,
         RdlReportMushalimDetails=201,
         KamutIdkuneyRashemet=903,
-        Tigburim=202,
+        RdlTigburim=202,
         AverageSnifEzor=113,
         AverageSnifInEzor=112,
         AverageOvdimBeSnif=111,
