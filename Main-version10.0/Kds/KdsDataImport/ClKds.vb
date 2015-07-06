@@ -4585,6 +4585,246 @@ Public Class ClKds
         End Try
     End Sub
 
+    Public Sub TryKdsFileHarmony()
+
+        'in web.config & app.config key="KdsInputFileNameHarmony" default value="A01sn_buffer*.TXT"
+        Dim FileName As String = ConfigurationSettings.AppSettings("KdsInputFileNameHarmony")
+        If Trim(FileName) = "" Then
+            FileName = "A01SN_BUFFER_CLOCK_106_150630_123650.DAT"
+        End If
+        Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePath") '"\\KDSTEST\Files"
+        Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPath") '"inkds_old\"
+        Dim FileNameOld As String
+        Dim MyFile As String
+        Dim ShaonimNumber As Integer
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim strErrorOfFiles As String = String.Empty
+        Dim ErrorCounter As Integer = 0
+        'Dim NewMyFile As String
+
+
+        Try
+            MyFile = Dir(InPath & FileName)
+            If Not MyFile = "" Then
+                ShaonimNumber = oBatch.InsertProcessLog(2, 2, KdsLibrary.BL.RecordStatus.Wait, "Harmony", 0)
+
+                While Not MyFile = ""
+                    Try
+                        LoadKdsFileHarmony(MyFile, ShaonimNumber)
+                    Catch ex As Exception
+                        ErrorCounter = ErrorCounter + 1
+                        strErrorOfFiles = strErrorOfFiles & ErrorCounter.ToString() & "." & ex.Message & vbCr
+                    End Try
+                    FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
+                    File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after copy Harmony " & MyFile, 0)
+                    File.Delete(InPath & MyFile)
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete Harmony " & MyFile, 0)
+
+                    FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
+                    File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after copy HarmonyNewMyFile " & MyFile, 0)
+                    File.Delete(InPath & MyFile)
+                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete HarmonyNewMyFile " & MyFile, 0)
+
+                    MyFile = Dir()
+                End While
+                oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, "Harmony", 0)
+                If (strErrorOfFiles <> String.Empty) Then
+                    Throw New Exception(strErrorOfFiles)
+                End If
+            End If
+
+        Catch ex As Exception
+            oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Harmony aborted" & ex.Message, 3)
+            Throw ex
+        End Try
+    End Sub
+
+    Public Sub LoadKdsFileHarmony(ByVal InFileName, ByVal ShaonimNumber)
+
+        Dim oDal As clDal
+        Dim sr As StreamReader
+        Dim sw As StreamWriter
+        Dim ds As DataSet
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim InPathNFile As String
+        Dim ErrFileName As String
+        Dim line As String
+        Dim Status_data As String
+        Dim clock_num As String
+        Dim status_ans As String
+        Dim clock_inner_num As String
+        Dim date_data As String
+        Dim SwIsOpen As Boolean
+        Dim Restline As String
+        Dim i As Integer
+        Dim action_kod As String
+        Dim tbl_num As String
+        Dim SRV_D_ISHI As String
+        Dim SRV_D_ISHI_chk As String
+        Dim SRV_D_time As String
+        Dim site_kod As String
+        Dim clock_num_in_site As String
+        Dim clock_name As String
+        Dim rec_time_stmp As String
+        Dim EndOfline As String
+        Dim LineErrCnt As Integer
+        Dim SwBakara As Boolean
+
+
+
+        Try
+            ErrFileName = ConfigurationSettings.AppSettings("KdsFilePath") & "Harmony" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & CStr(Now.Second) & ".err"
+            InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & InFileName
+            oDal = New clDal
+            sr = New StreamReader(InPathNFile)
+            SwIsOpen = False
+            SwBakara = False
+            LineErrCnt = 0
+            line = sr.ReadLine
+            If Trim(line) = "" Then
+                line = sr.ReadLine
+                LineErrCnt = LineErrCnt + 1
+            End If
+            'd0080051160615F4606056181130A1006056181130                                                                                          10601ASHKLN2015061611304368<  
+            '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+            '         1         2         3         4         5         6         7         8         9         1         1         1         1         1         1        
+            '                                                                                                   0         1         2         3         4         5
+            While Not ((Trim(line) Is Nothing) Or (Trim(line) = ""))
+                If line.Length < 155 Then
+                    'todo: line is not complete!
+                Else
+                    'prefix:
+                    Status_data = Mid(line, 1, 1)
+                    clock_num = Mid(line, 2, 1)
+                    status_ans = Mid(line, 3, 1)    'z=not ok
+                    clock_inner_num = Mid(line, 4, 5)
+                    date_data = Mid(line, 9, 6)     'ddmmyy check validity
+                    'check date validity:
+                    If CInt(Mid(date_data, 1, 2)) > 31 Then
+                        'date not valid
+                        If SwIsOpen = False Then
+                            sw = New StreamWriter(ErrFileName, False)
+                            SwIsOpen = True
+                        End If
+                        sw.WriteLine("dd not valid " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
+                    ElseIf CInt(Mid(date_data, 3, 2)) > 12 Then
+                        If SwIsOpen = False Then
+                            sw = New StreamWriter(ErrFileName, False)
+                            SwIsOpen = True
+                        End If
+                        sw.WriteLine("mm not valid " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
+                    ElseIf CInt(date_data) < 10115 Then
+                        If SwIsOpen = False Then
+                            sw = New StreamWriter(ErrFileName, False)
+                            SwIsOpen = True
+                        End If
+                        sw.WriteLine("date not valid " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
+
+                        'todo: check line 184 for empty line (almost)
+
+                    End If
+                    'suffix:
+                    EndOfline = Mid(line, 15 + (14 * 7) + 20, 23)
+                    site_kod = Mid(EndOfline, 1, 3)
+                    clock_num_in_site = Mid(EndOfline, 4, 2)
+                    clock_name = Mid(EndOfline, 6, 6)
+                    rec_time_stmp = Mid(EndOfline, 12, 12) 'yyyymmddhhmmssss    'date not checked due to irrelevancy!!
+
+                    Try
+                        i = 0
+                        Restline = Mid(line, 15 + 14 * i, 14)
+                        While Not ((Trim(Restline) Is Nothing) Or (Trim(Restline) = "") Or i > 7)
+                            SwBakara = False
+                            action_kod = Mid(Restline, 1, 1)
+                            tbl_num = Mid(Restline, 2, 3)
+                            SRV_D_ISHI = Mid(Restline, 5, 5)
+                            If CInt(SRV_D_ISHI) < 0 Then
+                                'mispar_idhi not valid
+                                If SwIsOpen = False Then
+                                    sw = New StreamWriter(ErrFileName, False)
+                                    SwIsOpen = True
+                                End If
+                                sw.WriteLine("mispar_ishi not valid " & SRV_D_ISHI & " LineErrCnt=" & LineErrCnt & " ," & line)
+                            End If
+                            SRV_D_ISHI_chk = Mid(Restline, 10, 1) ' bikoret
+                            If SRV_D_ISHI_chk = "-" Then
+                                SwBakara = True
+                            End If
+                            SRV_D_time = Mid(Restline, 11, 4) 'format=hhmm
+                            'check date validity:
+                            If CInt(Mid(SRV_D_time, 1, 2)) > 23 Then
+                                'time not valid
+                                If SwIsOpen = False Then
+                                    sw = New StreamWriter(ErrFileName, False)
+                                    SwIsOpen = True
+                                End If
+                                sw.WriteLine("hh not valid " & SRV_D_time & " LineErrCnt=" & LineErrCnt & " ," & line)
+                            ElseIf CInt(Mid(SRV_D_time, 3, 2)) > 59 Then
+                                'time not valid
+                                If SwIsOpen = False Then
+                                    sw = New StreamWriter(ErrFileName, False)
+                                    SwIsOpen = True
+                                End If
+                                sw.WriteLine("mm not valid " & SRV_D_time & " LineErrCnt=" & LineErrCnt & " ," & line)
+                            End If
+
+                            If SwIsOpen = False And SwBakara = False Then
+                                'LoadHarmony(prepare s.p.):
+                                oDal.ClearCommand()
+                                oDal.AddParameter("pMISPAR_ISHI", ParameterType.ntOracleInteger, SRV_D_ISHI, ParameterDir.pdInput)
+                                oDal.AddParameter("pTAARICH", ParameterType.ntOracleVarchar, Mid(date_data, 1, 4) + "20" + Mid(date_data, 5, 2), ParameterDir.pdInput)
+                                oDal.AddParameter("pShaa", ParameterType.ntOracleVarchar, Mid(SRV_D_time, 1, 4), ParameterDir.pdInput)
+                                oDal.AddParameter("pMispar_shaon", ParameterType.ntOracleInteger, clock_num, ParameterDir.pdInput)
+                                oDal.AddParameter("pMISPAR_ISHI_chk", ParameterType.ntOracleInteger, SRV_D_ISHI_chk, ParameterDir.pdInput)
+                                oDal.AddParameter("pSTATUS_data", ParameterType.ntOracleVarchar, Status_data, ParameterDir.pdInput)
+                                oDal.AddParameter("pstatus_ans", ParameterType.ntOracleInteger, status_ans, ParameterDir.pdInput)
+                                oDal.AddParameter("pclock_inner_num", ParameterType.ntOracleInteger, clock_inner_num, ParameterDir.pdInput)
+                                oDal.AddParameter("psite_kod", ParameterType.ntOracleInteger, site_kod, ParameterDir.pdInput)
+                                oDal.AddParameter("pclock_num_in_site", ParameterType.ntOracleInteger, clock_num_in_site, ParameterDir.pdInput)
+                                oDal.AddParameter("pclock_name", ParameterType.ntOracleVarchar, clock_name, ParameterDir.pdInput)
+                                oDal.AddParameter("prec_time_stmp", ParameterType.ntOracleVarchar, rec_time_stmp, ParameterDir.pdInput)
+                                oDal.AddParameter("paction_kod", ParameterType.ntOracleVarchar, action_kod, ParameterDir.pdInput)
+                                oDal.AddParameter("ptbl_num", ParameterType.ntOracleVarchar, tbl_num, ParameterDir.pdInput)
+                                oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony")
+                            End If
+                            i = i + 1
+                            Restline = Mid(line, 15 + 14 * i, 14)
+                        End While
+
+                    Catch ex As Exception
+                        'oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Harmony aborted line " & LineErrCnt.ToString & ex.Message, 3)
+                        'Throw ex
+                        If SwIsOpen = False Then
+                            sw = New StreamWriter(ErrFileName, False)
+                            SwIsOpen = True
+                        End If
+                        sw.WriteLine("Restline not valid LineErrCnt=" & LineErrCnt & " ,Restline=" & Restline)
+                    End Try
+
+                End If
+                line = sr.ReadLine
+                LineErrCnt = LineErrCnt + 1
+                While Trim(line) = "" And Not sr.EndOfStream
+                    line = sr.ReadLine
+                    LineErrCnt = LineErrCnt + 1
+                End While
+            End While
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            sr.Close()
+            If SwIsOpen = True Then
+                oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.Faild, "Harmony " & Mid(InFileName, 19, Len(InFileName) - 4) & " " & ErrFileName, 3)
+                sw.Close()
+                Throw New Exception("Failure Harmony :" & InFileName)
+            End If
+        End Try
+
+    End Sub
+
 
 
 #End Region
