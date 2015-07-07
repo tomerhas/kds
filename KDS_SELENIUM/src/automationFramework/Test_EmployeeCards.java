@@ -1,24 +1,35 @@
 package automationFramework;
 
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
+
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
+
 import pageObjects.Employee_Card;
 import pageObjects.LogIn_Page;
+import utils.Base;
+import utils.Utils;
 
-public class Test_EmployeeCards {
+
+
+
+
+
+
+
+@Listeners ({Listener.TestListener.class})
+public class Test_EmployeeCards  extends Base {
 	public WebDriver driver;
 	
 	 @DataProvider(name = "Param_Id")
@@ -36,14 +47,15 @@ public class Test_EmployeeCards {
 	
 	
 
+	      
 	
  @Test(priority=0, dataProvider = "Param_Id")
 
  
   
-  public void f(String sMispar_ishi ,String sdate, String sName  ) {
+  public void  EmployeeCards (String sMispar_ishi ,String sdate, String sName  ) {
 	
-	
+	 
       LogIn_Page.lnk_EmployeeCards(driver).click();
       driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
       Assert.assertTrue("The radio button Rdo_Id is not selected ",Employee_Card.Rdo_Id(driver).isSelected());
@@ -78,7 +90,11 @@ public class Test_EmployeeCards {
 	  {
 		  Employee_Card.Txt_name(driver).click();
 	      Employee_Card.Txt_name(driver).sendKeys(sName);
+	      Employee_Card.List_Month(driver).sendKeys(Keys.ARROW_DOWN);
+	      Employee_Card.List_Month(driver).sendKeys(Keys.ENTER);
 	  }
+	  
+	 
       droplist.selectByVisibleText(sdate);
      
       
@@ -95,12 +111,10 @@ public class Test_EmployeeCards {
   
   
  @BeforeMethod
-  public void beforeMethod() {
-	  //File file = new File("C:/Selenium/IEDriverServer.exe");
-	  //System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
-	  //driver = new InternetExplorerDriver();
-	  driver=Base.Initialize_browser();
-	  Base.Initialize_Webpage(driver);
+  public void beforeMethod()  {
+	  
+	  driver=getDriver();
+	  Utils.Initialize_Webpage(driver);
 	  
 	  
 	  
@@ -109,11 +123,5 @@ public class Test_EmployeeCards {
   
   
   
-  @AfterMethod
-  public void afterMethod() {
-	
-	  
-	  driver.quit();
-  }
   
 }

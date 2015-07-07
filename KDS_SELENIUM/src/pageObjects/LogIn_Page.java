@@ -15,6 +15,48 @@ public class LogIn_Page {
 		    return element;
 		 
 		    }
+	 
+	 
+	 
+	 
+
+
+	 
+	 public static WebElement lnk_Home_Page(WebDriver driver){
+		 
+		    element = driver.findElement(By.id("ctl00_ImageHome"));
+		 
+		    return element;
+		 
+		    }
+	 
+	 
+	 
+
+	 
+	 public static WebElement Txt_Change_User(WebDriver driver){
+		 
+		    element = driver.findElement(By.id("ctl00_KdsContent_txtImpersonate"));
+		 
+		    return element;
+		 
+		    }
+	 
+	 
+	 
+	 
+
+	 
+	 public static WebElement Btn_Change_User(WebDriver driver){
+		 
+		    element = driver.findElement(By.id("ctl00_KdsContent_btnImpersonate"));
+		 
+		    return element;
+		 
+		    }
+	 
+	 
+	 
 	
 	
 	

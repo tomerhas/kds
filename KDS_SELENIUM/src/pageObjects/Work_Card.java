@@ -1,9 +1,16 @@
 package pageObjects;
 
+import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.google.common.base.Function;
 
 public class Work_Card {
 	
@@ -47,6 +54,32 @@ public class Work_Card {
 	    return element;
 
 }
+ 
+ 
+ 
+ 
+ public static WebElement Btn_Next_Day (WebDriver driver){
+	 
+	    element = driver.findElement(By.id("btnNextCard"));
+	 
+	    return element;
+
+}
+ 
+ 
+ 
+ 
+ 
+ public static WebElement Btn_Prev_Day (WebDriver driver){
+	 
+	    element = driver.findElement(By.id("btnPrevCard"));
+	 
+	    return element;
+
+}
+
+ 
+ 
  
  
  
@@ -194,7 +227,7 @@ public class Work_Card {
 	 
 	 
 	 
-	 public static WebElement Validate_Car_No(WebDriver driver){
+	 public static WebElement Validate_Popup(WebDriver driver){
 		 
 		    element = driver.findElement(By.className("ajax__validatorcallout_error_message_cell"));
 		 
@@ -217,9 +250,6 @@ public class Work_Card {
 	 
 	 
 
-
-	 
-	 
 	 
 	 
 	 public static WebElement Btn_Cancel_Update(WebDriver driver){
@@ -246,8 +276,380 @@ public class Work_Card {
 	 }
 	 
 	 
-	 
 	
+	
+	  
+		
+		 public static WebElement AddRekaUp_mapa(WebDriver driver){
+			 
+			    element = driver.findElement(By.id("SD_000_ctl03_AddRekaUpSD_000_ctl03"));
+			    
+			 
+			    return element;
+		
+		 }
+	  
+		 
+		 
+		 
+		  
+			
+		 public static WebElement AddRekadw_mapa(WebDriver driver){
+			 
+			    element = driver.findElement(By.id("SD_002_ctl04_AddRekaSD_002_ctl04"));
+			    
+			 
+			    return element;
+		
+		 }
+		 
+	  
+		 
+		 public static WebElement Makat_Num_Reka_Mapa(WebDriver driver){
+			 
+			    element = driver.findElement(By.id("SD_000_ctl03_SD_000_ctl03MakatNumber"));
+			    
+			 
+			    return element;
+		 }
+			    
+			    
+			    
+	     public static WebElement Cancel_Empty_Activity_Mapa (WebDriver driver){
+					 
+				  element = driver.findElement(By.id("SD_000_ctl03_SD_000_ctl03CancelPeilut"));
+				    
+				 
+				   return element;
+		
+		 }
+	  
+	  
+	     public static WebElement Assert_Reka_Between_Not_Found (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_001_ctl03_AddRekaSD_001_ctl03"));
+			    
+			 
+			   return element;  }
+			   
+			   
+	     
+	     
+		public static WebElement Assert_Reka_Between_Not_Able (WebDriver driver){
+					 
+			 element = driver.findElement(By.id("SD_000_ctl11_AddRekaSD_000_ctl11"));
+					    
+					 
+		      return element;
+			   
+	
+	 }
+	     
+	     
+		
+		
+		public static WebElement Add_Reka_Between (WebDriver driver){
+			 
+			 element = driver.findElement(By.id("SD_002_ctl03_AddRekaSD_002_ctl03"));
+					    
+					 
+		      return element;
+			   
+	
+	 }
+	     
 	 
+		
+		public static WebElement Cancel__Empty_Activity_Between  (WebDriver driver){
+			 
+			 element = driver.findElement(By.id("SD_002_ctl05_SD_002_ctl05CancelPeilut"));
+					    
+					 
+		      return element;
+			   
+	
+	 }
+		
+		
+		 public static WebElement Makat_Num_Reka_Between (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_002_ctl05_SD_002_ctl05MakatNumber"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 public static WebElement  Cancel_Sidur (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_imgCancel0"));
+			    
+			 
+			   return element;  }
+		
+		 
+		 
+		 public static WebElement  Sidur_Num (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_lblSidur0"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 public static WebElement  Btn_Add_Absence (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("btnAddHeadrut"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 
+	
+		 
+		 
+		 public static WebElement  Btn_Add_Activity (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_imgAddPeilut0"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 
+		 public static WebElement  Entry_Time_Add_Activity (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_000_ctl08_SD_000_ctl08ShatYetiza"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 public static WebElement  Makat_Num_Add_Activity (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_000_ctl08_SD_000_ctl08MakatNumber"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 
+		 public static WebElement  Car_Num_Add_Activity (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_000_ctl08_SD_000_ctl08CarNumber"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 public static WebElement  Cancel_Sidur_Add_Activity (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_000_ctl08_SD_000_ctl08CancelPeilut"));
+			    
+			 
+			   return element;  }
+		
+		 
+		
+		 
+		 public static WebElement  Assert_Activity_Car_No (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_000_ctl08_SD_000_ctl08CarNumber"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 
+		 public static WebElement  Btn_Add_Special (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("btnAddMyuchad"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 public static WebElement  Lbl_Special_No (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_lblSidur2"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 public static WebElement  Lbl_Special_No_Meshek (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_lblSidur0"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 
+		 public static WebElement  Assert_Sidur_disabled (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_txtSH1"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 public static WebElement  List_Reason_In (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_ddlResonIn2"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 public static WebElement  List_Reason_Out (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_ddlResonOut2"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 public static WebElement  Start_Time_Special (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_txtSH2"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 
+		 public static WebElement  End_Time_Special (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_txtSG2"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 
+		 public static WebElement  Cancel_Special_Schedule (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_imgCancel2"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 public static WebElement  Add_Activity_Special (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("SD_imgAddPeilut2"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 
+		 
+		 public static WebElement  Btn_Add_Mapa (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("btnFindSidur"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 
+		 public static WebElement  Btn_Calc_Items (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("btnCalcItem"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		
+		 
+		 public static WebElement  Btn_Driver_Errors (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("btnDrvErrors"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		
+		 public static WebElement  Btn_Clocks (WebDriver driver){
+			 
+			  element = driver.findElement(By.id("btnClock"));
+			    
+			 
+			   return element;  }
+		 
+		 
+		 
+		 
+		 
+		 public static WebElement Wait_For_Element_Visibile(final WebDriver driver, final int timeoutSeconds,String snameId) {
+			    FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+			    		
+			            .withTimeout(timeoutSeconds, TimeUnit.SECONDS)
+			            .pollingEvery(500, TimeUnit.MILLISECONDS)
+			            .ignoring(StaleElementReferenceException.class,ElementNotVisibleException.class);
+			            
+			    return wait.until(new Function<WebDriver, WebElement>() {
+			        public WebElement apply(WebDriver webDriver) {
+			        	WebDriverWait wait = new WebDriverWait(driver,50);
+			        	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id(snameId))));
+			        	element = driver.findElement(By.id(snameId));
+			        	System.out.println("Trying to find element " + element.toString()); 
+			            return element;
+			        }
+			    });
+			}
+		 
+		 
+			
 
-}
+
+		 
+		 public static WebElement Wait_For_Element_Stalenes( WebDriver driver,String snameId) {
+			   
+			  
+			        	WebDriverWait wait = new WebDriverWait(driver,40);
+			        	wait.until(ExpectedConditions.stalenessOf((driver.findElement(By.id(snameId)))));
+			        	
+			        	
+			            return element;
+			        }
+			  
+		 
+		 
+			}
+	
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		
+
+

@@ -1,7 +1,7 @@
 package automationFramework;
 
 import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
+
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -17,7 +17,6 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
-
 import pageObjects.Work_Card;
 import utils.Base;
 import utils.Utils;

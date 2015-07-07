@@ -41,5 +41,14 @@
 	<classpathentry kind="lib" path="C:/selenium/selenium-2.44.0/libs/xalan-2.7.1.jar"/>
 	<classpathentry kind="lib" path="C:/selenium/selenium-2.44.0/libs/xercesImpl-2.11.0.jar"/>
 	<classpathentry kind="lib" path="C:/selenium/selenium-2.44.0/libs/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc5.jar"/>
+	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc5_g.jar"/>
+	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc5dms.jar"/>
+	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc5dms_g.jar"/>
+	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc6_g.jar"/>
+	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc6dms.jar"/>
+	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc6dms_g.jar"/>
+	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/simplefan.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
