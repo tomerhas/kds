@@ -542,7 +542,7 @@ public class Work_Card {
 		 
 		 
 		 
-		 public static WebElement  Cancel_Special_Schedule (WebDriver driver){
+		 public static WebElement  Cancel_Schedule_02 (WebDriver driver){
 			 
 			  element = driver.findElement(By.id("SD_imgCancel2"));
 			    
