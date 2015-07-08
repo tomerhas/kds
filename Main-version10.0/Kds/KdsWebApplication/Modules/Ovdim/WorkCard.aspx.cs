@@ -2075,7 +2075,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         else
         {
             Label lblNesiot = new Label();
-            lblNesiot.ID = "lblTravelTime";
+            //lblNesiot.ID = "lblTravelTime";
             lblNesiot.Text = "זמן נסיעות";
             tdZmaniNesiot.Controls.Add(lblNesiot);
             ddlTravleTime.Enabled = false;
@@ -4537,7 +4537,16 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             if (sTmp==string.Empty)
                                 oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse("01/01/0001 00:00:00"));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
                             else
-                             oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmar.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
+                                {
+                                    var shaa = int.Parse(sTmp.Split(':')[0]);
+                                    var daka = int.Parse(sTmp.Split(':')[1]);
+                                    if (shaa >= 8 && shaa <= 23)
+                                        oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, dDateCard);
+                                    else if (shaa == 0 && daka == 0)
+                                        oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, dDateCard.AddDays(1));
+                                    else
+                                        oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmar.ToShortDateString()));
+                                }
 
                             oDDL = (DropDownList)this.FindControl("SD").FindControl("ddlException" + iIndex);
                             oObjSidurimOvdimUpd.CHARIGA = int.Parse(oDDL.SelectedValue);

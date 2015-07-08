@@ -688,12 +688,12 @@ namespace KdsShinuyim.ShinuyImpl
 
                 DateTime dShatHatchalaSidur = curSidur.dFullShatHatchala;
 
-                if (dShatHatchalaSidur == DateTime.MinValue)
+                if (dShatHatchalaSidur.ToShortDateString() == DateTime.MinValue.ToShortDateString())
                 {
                     dShatHatchalaSidur = inputData.CardDate;
                 }
 
-                if (dSidurShatGmar == DateTime.MinValue)
+                if (dSidurShatGmar.ToShortDateString() == DateTime.MinValue.ToShortDateString())
                 {
                     dSidurShatGmar = inputData.CardDate;
                 }
@@ -720,7 +720,7 @@ namespace KdsShinuyim.ShinuyImpl
                         }
                         if (oMeafyeneyOved.IsMeafyenExist(8))
                         {
-                            dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(8).Value);
+                            dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(8).Value);
                             bFromMeafyenGmar = true;
                         }
                         else
@@ -766,7 +766,7 @@ namespace KdsShinuyim.ShinuyImpl
 
                             if (oMeafyeneyOved.IsMeafyenExist(4))
                             {
-                                dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.GetMeafyen(4).Value);
+                                dShatGmarLetashlum = DateHelper.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.GetMeafyen(4).Value);
                                 bFromMeafyenGmar = true;
                             }
                             else
