@@ -84,8 +84,10 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  Hosafat_Sidur.Btn_Update_Mapa(driver).click();
 	  Utils e= new Utils();
 	  e.waitForWindow("WorkCard",driver);
-	  Work_Card.Wait_For_Element_Visibile(driver, 60, "SD_imgCancel2");
+	  Work_Card.Wait_For_Element_Visibile(driver, 80, "SD_imgCancel2");
+	  //Work_Card.Wait_For_Element_Stalenes(driver, "SD_imgCancel2");
 	  Work_Card.Cancel_Schedule_02(driver).click();
+	  //Work_Card.Wait_For_Element_Visibile(driver, 60, "btnUpdateCard");
 	  Work_Card.Btn_Update(driver).click();
 	  Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard");
 	  Work_Card.Btn_Close(driver).click();
