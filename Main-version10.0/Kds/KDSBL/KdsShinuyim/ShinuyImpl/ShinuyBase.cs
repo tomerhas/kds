@@ -688,15 +688,15 @@ namespace KdsShinuyim.ShinuyImpl
 
                 DateTime dShatHatchalaSidur = curSidur.dFullShatHatchala;
 
-                if (dShatHatchalaSidur.ToShortDateString() == DateTime.MinValue.ToShortDateString())
-                {
+               // if (dShatHatchalaSidur.ToShortDateString() == DateTime.MinValue.ToShortDateString())
+               // {
                     dShatHatchalaSidur = inputData.CardDate;
-                }
+                //}
 
-                if (dSidurShatGmar.ToShortDateString() == DateTime.MinValue.ToShortDateString())
-                {
+                //if (dSidurShatGmar.ToShortDateString() == DateTime.MinValue.ToShortDateString())
+               // {
                     dSidurShatGmar = inputData.CardDate;
-                }
+               // }
 
 
                 //קביעת מאפיינים מפעילים
