@@ -6,14 +6,15 @@
 
 		<classes>
 
-		    <class name="automationFramework.Test_Update_Car_No" />
+	        <class name="automationFramework.Test_Update_Car_No" />
 		    <class name="automationFramework.Test_Update_Day_WorkCard" />
             <class name="automationFramework.Test_Empty_Activity_Mapa" />
             <class name="automationFramework.Test_Empty_Activity_Between" />
             <class name="automationFramework.Test_Add_Absences" />
             <class name="automationFramework.Test_Add_Activity" />  
-            <class name="automationFramework.Test_Add_Special_Schedule" /> 
+            <class name="automationFramework.Test_Add_Special_Schedule" />  
             <class name="automationFramework.Test_Menahel_Bameshek" />
+            <class name="automationFramework.Test_Add_Schedule_Mapa" />
             
             
 		</classes>
@@ -32,7 +33,7 @@
 
 		<classes>
 
-		     <class name="automationFramework.Test_EmployeeCards" /> 
+		   <class name="automationFramework.Test_EmployeeCards" /> 
 		    
 
 		</classes>
