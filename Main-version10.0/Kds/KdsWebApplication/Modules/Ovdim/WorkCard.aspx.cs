@@ -4531,21 +4531,24 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             if (sTmp == string.Empty)
                                 oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse("01/01/0001 00:00:00"));
                             else
-                                oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp);
+                            {
+                                oDayToAdd = ((TextBox)(this.FindControl("SD").FindControl("txtDayAddSHL" + iIndex)));
+                                oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp).AddDays(int.Parse(oDayToAdd.Text));
+                            }
+
+                            //sTmp = ((TextBox)(this.FindControl("SD").FindControl("txtSHL" + iIndex))).Text;
+                            //if (sTmp == string.Empty)
+                            //    oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse("01/01/0001 00:00:00"));
+                            //else
+                            //    oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp);
 
                             sTmp = ((TextBox)(this.FindControl("SD").FindControl("txtSGL" + iIndex))).Text;
                             if (sTmp==string.Empty)
                                 oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse("01/01/0001 00:00:00"));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
                             else
                                 {
-                                    var shaa = int.Parse(sTmp.Split(':')[0]);
-                                    var daka = int.Parse(sTmp.Split(':')[1]);
-                                    if (shaa >= 8 && shaa <= 23)
-                                        oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, dDateCard);
-                                    else if (shaa == 0 && daka == 0)
-                                        oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, dDateCard.AddDays(1));
-                                    else
-                                        oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateHelper.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmar.ToShortDateString()));
+                                    oDayToAdd = ((TextBox)(this.FindControl("SD").FindControl("txtDayAddSGL" + iIndex)));                                  
+                                    oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp).AddDays(int.Parse(oDayToAdd.Text));           
                                 }
 
                             oDDL = (DropDownList)this.FindControl("SD").FindControl("ddlException" + iIndex);

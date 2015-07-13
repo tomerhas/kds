@@ -2618,6 +2618,24 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         txt.Text = ((oSidur.dFullShatGmar.ToShortDateString() == CardDate.ToShortDateString()) || (oSidur.dFullShatGmar.Year<DateHelper.cYearNull)) ? "0" : "1";
         hCell.Controls.Add(txt);
     }
+    protected void CreateAddDayToShatGmarLetashlumHiddenCell(ref HtmlTableCell hCell, int iIndex, SidurDM oSidur)
+    {
+        hCell = CreateTableCell("20px", "", "");
+        hCell.Style.Add("Display", "none");
+        TextBox txt = new TextBox();
+        txt.ID = "txtDayAddSGL" + iIndex;
+        txt.Text = ((oSidur.dFullShatGmarLetashlum.ToShortDateString() == CardDate.ToShortDateString()) || (oSidur.dFullShatGmarLetashlum.Year < DateHelper.cYearNull)) ? "0" : "1";
+        hCell.Controls.Add(txt);
+    }
+    protected void CreateAddDayToShatHatchalaLetashlumHiddenCell(ref HtmlTableCell hCell, int iIndex, SidurDM oSidur)
+    {
+        hCell = CreateTableCell("20px", "", "");
+        hCell.Style.Add("Display", "none");
+        TextBox txt = new TextBox();
+        txt.ID = "txtDayAddSHL" + iIndex;
+        txt.Text = ((oSidur.dFullShatHatchalaLetashlum.ToShortDateString() == CardDate.ToShortDateString()) || (oSidur.dFullShatHatchalaLetashlum.Year < DateHelper.cYearNull)) ? "0" : "1";
+        hCell.Controls.Add(txt);
+    }
     protected void CreateCancelFlagHiddenCell(SidurDM oSidur, ref HtmlTableCell hCell, int iIndex)
     {
         hCell = CreateTableCell("0px", "", "");
@@ -3951,6 +3969,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Controls.Add(oTextBox);
         if (EnabledValidator())
         {
+            oTextBox.Attributes.Add("onkeyup", "SetDay('5|" + iIndex + "');");
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
             oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WCSidurTxt';");
@@ -3964,6 +3983,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             hCell.Controls.Add(vldShatGmarLetashlum);
             hCell.Controls.Add(vldExShatGmarLetashlum);
         }
+        oTextBox.ToolTip = "תאריך גמר לתשלום הוא: " + oSidur.dFullShatGmarLetashlum.ToShortDateString();
         oTextBox.EnableViewState = false;
      
         
@@ -4005,11 +4025,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.MaxLength = MAX_LEN_HOUR;
         if (EnabledValidator())
         {
+            oTextBox.Attributes.Add("onkeyup", "SetDay('4|" + iIndex + "');");
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
             oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WCSidurTxt';");
             oTextBox.Attributes.Add("onfocus", "this.className='WCSidurTxtF';");
         }
+        oTextBox.ToolTip = "תאריך התחלה לתשלום הוא: " + oSidur.dFullShatHatchalaLetashlum.ToShortDateString();
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnabled ? "1" : "0");
 
         oTextBox.CssClass = "WCSidurTxt";
@@ -4026,6 +4048,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             hCell.Controls.Add(vldShatHatchalaLetashlum);
             hCell.Controls.Add(vldExShatHatchalaLetashlum);
         }
+      
       //  hCell.Style.Add("border-left", "solid 1px gray");
 
        // DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_Hatchala_Letashlum'");
@@ -4429,6 +4452,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 CreateAddDayToShatGmarHiddenCell(ref hCell, iIndex, oSidur);
                 hTable.Rows[0].Cells.Add(hCell);
            
+               //מספר ימים להוספה 0לשעת התחלה לתשלום  יום נוכחי או 1 יום הבא
+                CreateAddDayToShatHatchalaLetashlumHiddenCell(ref hCell, iIndex, oSidur);
+                hTable.Rows[0].Cells.Add(hCell);
+               //מספר ימים להוספה 0לשעת גמר לתשלום  יום נוכחי או 1 יום הבא
+                CreateAddDayToShatGmarLetashlumHiddenCell(ref hCell, iIndex, oSidur);
+                hTable.Rows[0].Cells.Add(hCell);
+         
                 //אם הכרטיס הוא ללא התייחסות וגם המספר של הגורם המטפל בכרטיס הוא לא בעל הכרטיס הנוכחי והסידור הוא ללא מאפיין 99, נחסום את הסידור לעריכה
                 if ((!bEnableSidur) && (!oSidur.oSidurStatus.Equals(SidurDM.enSidurStatus.enNew)))
                     hTable.Disabled = true;

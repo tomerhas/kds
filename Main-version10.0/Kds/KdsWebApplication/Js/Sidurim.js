@@ -1458,64 +1458,112 @@ function chkMkt(oRow) {
           else      
             _Add.value = "0";
       }
-    function SetDay(iInx){
+    function SetDay(iInx) {
+     
       $find("pBehvDate").hide();
-      var sEndHour;    
+      var sHour;    
       var sParamNxtDay;
       var dParamDate = new Date();
       var dItemDate = new Date();
       var arrItems = iInx.split("|");
       var sCardDate = $get("clnDate").value;
       var bRaiseNextDay = false;
-      if (arrItems[0] == '1') {//שעת גמר         
-          if (GetKeyPressPosition($get("SD_txtSG" + arrItems[1])) == 5){
-              bRaiseNextDay = true;
-              sEndHour = $get("SD_txtSG" + arrItems[1]).value;
-              var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
-              var dSidurTime = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
-              var _Add = $get("SD_txtDayAdd".concat(arrItems[1])).value;
-              if (sEndHour == '00:00') {
-                  _Add = '1'
-                  $get("SD_txtDayAdd".concat(arrItems[1])).value = '1';
-              }
-              dSidurTime.setDate(dSidurTime.getDate() + Number(_Add));
-              $get("SD_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);
-          }
-      }
-      else {//שעת יציאה
-          if (GetKeyPressPosition($get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0]) == 5) {
-              bRaiseNextDay = true;
-              sEndHour = $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].value;
-              sParamNxtDay = $get("SD_hidParam242").value;
-              var sYear = sCardDate.substr(sCardDate.length - 4, 4);
-              var sMonth = Number(sCardDate.substr(3, 2)) - 1;
-              var sDay = sCardDate.substr(0, 2);
-              var sSidurSG = $get("SD_txtSG" + arrItems[2]).value;
-              SetDate(dParamDate, Number(sYear), Number(sMonth), Number(sDay), Number(sParamNxtDay.substr(0, 2)), Number(sParamNxtDay.substr(3, 2)));
-              SetDate(dItemDate, Number(sYear), Number(sMonth), Number(sDay), Number(sSidurSG.substr(0, 2)), Number(sSidurSG.substr(3, 2)));
-          }
-      }
-      if (bRaiseNextDay) {
-          if (IsShatGmarInNextDay(sEndHour)) {
-              $get("SD_hidCurrIndx").value = iInx;
-              if (arrItems[0] == '1')//גמר
-                  $get("SD_btnShowMessage").click();
-              else
-                  if (($get("SD_txtDayAdd".concat(arrItems[2])).value == "1") || (dItemDate > dParamDate))
-                      $get("SD_btnShowMessage").click();
-                  else
-                  //נבדוק ששעת גמר לא השתנתה, אם שעת גמר של הסידור היא של היום הנוכחי נשנה גם את התאריך של שעת היציאה - שינוי שעת יציאה
-                  {
-                      if ($get("SD_txtDayAdd".concat(arrItems[2])).value == "0"){
-                          $get(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = "0";
-                      }
+
+      switch (arrItems[0]) {
+          case "1":
+              if (GetKeyPressPosition($get("SD_txtSG" + arrItems[1])) == 5) { 
+                  bRaiseNextDay = true;
+                  sHour = $get("SD_txtSG" + arrItems[1]).value;
+                  var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
+                  var dSidurTime = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
+                  var _Add = $get("SD_txtDayAdd".concat(arrItems[1])).value;
+                  if (sHour == '00:00') {
+                      _Add = '1'
+                      $get("SD_txtDayAdd".concat(arrItems[1])).value = '1';
                   }
+                  dSidurTime.setDate(dSidurTime.getDate() + Number(_Add));
+                  $get("SD_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);
+              }
+              break;
+          case "2":
+              if (GetKeyPressPosition($get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0]) == 5) {
+                  bRaiseNextDay = true;
+                  sHour = $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].value;
+                  sParamNxtDay = $get("SD_hidParam242").value;
+                  var sYear = sCardDate.substr(sCardDate.length - 4, 4);
+                  var sMonth = Number(sCardDate.substr(3, 2)) - 1;
+                  var sDay = sCardDate.substr(0, 2);
+                  var sSidurSG = $get("SD_txtSG" + arrItems[2]).value;
+                  SetDate(dParamDate, Number(sYear), Number(sMonth), Number(sDay), Number(sParamNxtDay.substr(0, 2)), Number(sParamNxtDay.substr(3, 2)));
+                  SetDate(dItemDate, Number(sYear), Number(sMonth), Number(sDay), Number(sSidurSG.substr(0, 2)), Number(sSidurSG.substr(3, 2)));
+              }
+              break;
+          case "4":
+         
+              if (GetKeyPressPosition($get("SD_txtSHL" + arrItems[1])) == 5) {
+                //  debugger;
+                  var isSidurGrira = ($("#SD_lblSidur".concat(arrItems[1])).html() == SIDUR_GRIRA);
+                  sHour = $get("SD_txtSHL" + arrItems[1]).value;
+                  if (((IsShatHatchalaInNextDay(sHour, isSidurGrira)) || (isSidurGrira && sHour == '00:00'))) {
+                      bRaiseNextDay = true;
+                    //  var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
+                  }
+                  var dSidurTime = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
+                //  var _Add = $get("SD_txtDayAddSHL".concat(arrItems[1])).value;
+                //  dSidurTime.setDate(dSidurTime.getDate() + Number(_Add));
+                  $get("SD_txtSHL".concat(arrItems[1])).title = "תאריך התחלה לתשלום הוא: " + GetDateDDMMYYYY(dSidurTime);
+
+              }
+              break;
+          case "5":
+              if (GetKeyPressPosition($get("SD_txtSGL" + arrItems[1])) == 5) {
+
+                  bRaiseNextDay = true;
+                  sHour = $get("SD_txtSGL" + arrItems[1]).value;
+                //  var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
+                  var dSidurTime = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
+                  var _Add = 0;//$get("SD_txtDayAddSGL".concat(arrItems[1])).value;
+                  if (sHour == '00:00') {
+                      _Add = '1'
+                      $get("SD_txtDayAddSGL".concat(arrItems[1])).value = '1';
+                  }
+                  dSidurTime.setDate(dSidurTime.getDate() + Number(_Add));
+                  $get("SD_txtSGL".concat(arrItems[1])).title = "תאריך גמר לתשלום הוא: " + GetDateDDMMYYYY(dSidurTime);
+              }
+              break;
+      }   
+      if (bRaiseNextDay) {
+          if (IsShatGmarInNextDay(sHour) || arrItems[0] =="4") {
+              $get("SD_hidCurrIndx").value = iInx;
+
+              switch (arrItems[0]) {
+                  case "1":
+                      $get("SD_btnShowMessage").click();
+                      break;
+                  case "2":
+
+                      if (($get("SD_txtDayAdd".concat(arrItems[2])).value == "1") || (dItemDate > dParamDate))
+                          $get("SD_btnShowMessage").click();
+                      else
+                          //נבדוק ששעת גמר לא השתנתה, אם שעת גמר של הסידור היא של היום הנוכחי נשנה גם את התאריך של שעת היציאה - שינוי שעת יציאה
+                      {
+                          if ($get("SD_txtDayAdd".concat(arrItems[2])).value == "0") {
+                              $get(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = "0";
+                          }
+                      }
+                  case "4": //שעת התחלה לתשלום
+                      $get("SD_btnShowMessage").click();
+                      break;
+                  case "5"://שעת גמר לתשלום
+                      $get("SD_btnShowMessage").click();
+                      break;
+              }
           }
           else
               if (arrItems[0] == '2')//יציאה    
               {
                   var iAdd;
-                  if (sEndHour == '00:00')
+                  if (sHour == '00:00')
                       iAdd = 1;
                   else
                       iAdd = 0;
@@ -1543,12 +1591,18 @@ function chkMkt(oRow) {
         SetDate(dSdDate, sYear, sMonth, sDay, '0', '0');         
         dSdDate.setDate(dSdDate.getDate() + Number(iDayToAdd));   
          
-        if (arrItems[0]=='1'){
-            $get("SD_txtDayAdd" + arrItems[1]).value = Number(iDayToAdd);            
-            $get("SD_txtSG" + arrItems[1]).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
-        }
-        else {
-            if (arrItems[0] == '3'){//שעת התחלה סידור
+        switch (arrItems[0]) {
+            case "1":
+                $get("SD_txtDayAdd" + arrItems[1]).value = Number(iDayToAdd);
+                $get("SD_txtSG" + arrItems[1]).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
+                break;
+            case "2":
+                $get(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = Number(iDayToAdd);
+                $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dSdDate);
+                //נשנה גם לכל הכניסות
+                ChangeKnisotHour($get(arrItems[1]), iDayToAdd, dSdDate);
+                break;
+            case "3":
                 var _SHNew = $get("SD_txtSH".concat(arrItems[1]));
                 sCardDate = $get("clnDate").value;
                 var iSidurKey = $get("SD_lblSidur".concat(arrItems[1])).innerHTML;
@@ -1558,14 +1612,41 @@ function chkMkt(oRow) {
                 _SHNew.title = "תאריך התחלת הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
                 $get("SD_lblDate".concat(arrItems[1])).innerHTML = GetDateDDMMYYYY(dSdDate);
                 wsGeneral.UpdateSidurDate(sCardDate, iSidurKey, _SHNew.getAttribute('OrgShatHatchala'), _SHNew.value, Number(iDayToAdd), arrItems[1]);
-            }
-            else {//2
-                $get(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = Number(iDayToAdd);
-                $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dSdDate);
-                //נשנה גם לכל הכניסות
-                ChangeKnisotHour($get(arrItems[1]), iDayToAdd, dSdDate);
-            }
+
+                break;
+            case "4":
+                $get("SD_txtDayAddSHL" + arrItems[1]).value = Number(iDayToAdd);
+                $get("SD_txtSHL" + arrItems[1]).title = "תאריך התחלה לתשלום הוא: " + GetDateDDMMYYYY(dSdDate);
+                break;
+            case "5":
+                $get("SD_txtDayAddSGL" + arrItems[1]).value = Number(iDayToAdd);
+                $get("SD_txtSGL" + arrItems[1]).title = "תאריך גמר לתשלום הוא: " + GetDateDDMMYYYY(dSdDate);
+                break;
         }
+
+        //if (arrItems[0]=='1'){
+        //    $get("SD_txtDayAdd" + arrItems[1]).value = Number(iDayToAdd);            
+        //    $get("SD_txtSG" + arrItems[1]).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
+        //}
+        //else {
+        //    if (arrItems[0] == '3'){//שעת התחלה סידור
+        //        var _SHNew = $get("SD_txtSH".concat(arrItems[1]));
+        //        sCardDate = $get("clnDate").value;
+        //        var iSidurKey = $get("SD_lblSidur".concat(arrItems[1])).innerHTML;
+        //        if (iSidurKey == '')
+        //            iSidurKey = $get("SD_lblSidur".concat(arrItems[1])).value;
+
+        //        _SHNew.title = "תאריך התחלת הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
+        //        $get("SD_lblDate".concat(arrItems[1])).innerHTML = GetDateDDMMYYYY(dSdDate);
+        //        wsGeneral.UpdateSidurDate(sCardDate, iSidurKey, _SHNew.getAttribute('OrgShatHatchala'), _SHNew.value, Number(iDayToAdd), arrItems[1]);
+        //    }
+        //    else {//2
+        //        $get(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = Number(iDayToAdd);
+        //        $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dSdDate);
+        //        //נשנה גם לכל הכניסות
+        //        ChangeKnisotHour($get(arrItems[1]), iDayToAdd, dSdDate);
+        //    }
+        //}
 
         if ((arrItems[0] == '1') || (arrItems[0] == '3')) {//שעת התחלה וגמר  
             //נחשב את משך הסידור בדקות             
