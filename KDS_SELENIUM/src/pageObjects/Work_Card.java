@@ -629,7 +629,7 @@ public class Work_Card {
 		 public static WebElement Wait_For_Element_Stalenes( WebDriver driver,String snameId) {
 			   
 			  
-			        	WebDriverWait wait = new WebDriverWait(driver,40);
+			        	WebDriverWait wait = new WebDriverWait(driver,60);
 			        	wait.until(ExpectedConditions.stalenessOf((driver.findElement(By.id(snameId)))));
 			        	
 			        	

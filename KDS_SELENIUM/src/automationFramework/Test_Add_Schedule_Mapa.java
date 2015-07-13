@@ -62,7 +62,10 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  Hosafat_Sidur.Btn_Update_Mapa(driver).click();
 	  Utils c= new Utils();
 	  c.waitForWindow("WorkCard",driver);
-	  Work_Card.Wait_For_Element_Visibile(driver, 60, "SD_imgCancel0");
+	  Work_Card.Wait_For_Element_Visibile(driver,60, "btnRefreshOvedDetails");
+	  Work_Card.Btn_Show(driver).click();
+	  //Work_Card.Wait_For_Element_Visibile(driver, 60, "SD_imgCancel0");
+	  
 	  Assert.assertEquals(Work_Card.Sidur_Num(driver).getText(), "58011");
 	  Work_Card.Cancel_Sidur(driver).click();
 	  Work_Card.Btn_Update(driver).click();
@@ -84,11 +87,14 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  Hosafat_Sidur.Btn_Update_Mapa(driver).click();
 	  Utils e= new Utils();
 	  e.waitForWindow("WorkCard",driver);
-	  Work_Card.Wait_For_Element_Visibile(driver, 80, "SD_imgCancel2");
+	  c.waitForWindow("WorkCard",driver);
+	  Work_Card.Wait_For_Element_Visibile(driver,60, "btnRefreshOvedDetails");
+	  //Work_Card.Wait_For_Element_Visibile(driver, 80, "SD_imgCancel2");
 	  //Work_Card.Wait_For_Element_Stalenes(driver, "SD_imgCancel2");
 	  Work_Card.Cancel_Schedule_02(driver).click();
 	  //Work_Card.Wait_For_Element_Visibile(driver, 60, "btnUpdateCard");
-	  //Work_Card.Btn_Update(driver).click();
+	  Work_Card.Wait_For_Element_Stalenes(driver, "btnUpdateCard");
+	  Work_Card.Btn_Update(driver).click();
 	  //Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard");
 	  //Work_Card.Btn_Close(driver).click();
 	  
