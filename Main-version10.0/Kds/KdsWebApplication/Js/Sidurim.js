@@ -1459,7 +1459,7 @@ function chkMkt(oRow) {
             _Add.value = "0";
       }
     function SetDay(iInx) {
-     
+    
       $find("pBehvDate").hide();
       var sHour;    
       var sParamNxtDay;
@@ -1501,10 +1501,10 @@ function chkMkt(oRow) {
           case "4":
          
               if (GetKeyPressPosition($get("SD_txtSHL" + arrItems[1])) == 5) {
-                //  debugger;
+                  $get("SD_txtDayAddSHL".concat(arrItems[1])).value = '0';
                   var isSidurGrira = ($("#SD_lblSidur".concat(arrItems[1])).html() == SIDUR_GRIRA);
                   sHour = $get("SD_txtSHL" + arrItems[1]).value;
-                  if (((IsShatHatchalaInNextDay(sHour, isSidurGrira)) || (isSidurGrira && sHour == '00:00'))) {
+                  if (isSidurGrira && (CheckShaaInParam(sHour, "276") || sHour == '00:00')) {
                       bRaiseNextDay = true;
                     //  var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
                   }
@@ -1517,7 +1517,8 @@ function chkMkt(oRow) {
               break;
           case "5":
               if (GetKeyPressPosition($get("SD_txtSGL" + arrItems[1])) == 5) {
-
+              
+                  $get("SD_txtDayAddSGL".concat(arrItems[1])).value = '0';
                   bRaiseNextDay = true;
                   sHour = $get("SD_txtSGL" + arrItems[1]).value;
                 //  var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
@@ -1574,7 +1575,8 @@ function chkMkt(oRow) {
               }
          }   
      }   
-    function btnDay_click(iDayToAdd){     
+    function btnDay_click(iDayToAdd) {
+        
         $find("pBehvDate").hide();
         var iIndx = $get("SD_hidCurrIndx").value;   
         var arrItems = iIndx.split("|"); 

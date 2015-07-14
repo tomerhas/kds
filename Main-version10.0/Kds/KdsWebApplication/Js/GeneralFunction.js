@@ -177,12 +177,31 @@ function IsShatHatchalaInNextDay(shaa, isSidurGrira) {
     var Time = shaa.split(':');
     var hours = Time[0];
     var minuts = Time[1];
-    if ((Number(hours) > 0 && Number(hours) <= Number(sParam.substr(0,2))) ||
+    if ((Number(hours) > 0 && Number(hours) <= Number(sParam.substr(0, 2)) ) || //&& Number(minuts) <= Number(sParam.substr(3, 2))) ||
          (Number(hours) == 0 && Number(minuts) > 0))
         return true;
     else
         return false;
 }
+
+function CheckShaaInParam(shaa, param) {
+    var sParam;
+    switch (param) {
+        case "276":
+            sParam = document.getElementById("SD_hidParam276").value;
+            break;
+    }
+   
+    var Time = shaa.split(':');
+    var hours = Number(Time[0]);
+    var minuts = Number(Time[1]);
+    if (hours <= Number(sParam.substr(0, 2)) && Number(minuts) <= Number(sParam.substr(3, 2)) )
+        return true;
+    else
+        return false;
+}
+
+
 function GetDateDDMMYYYY(dDate){   
     var dd = dDate.getDate();
     var mm = dDate.getMonth()+1;//January is 0!
