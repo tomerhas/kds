@@ -1116,42 +1116,54 @@ function chkMkt(oRow) {
      }                        
     function ISSHLValid(val,args)
     {
-       args.IsValid = true;
-       var iIndex = String(val.id).substr(String(val.id).length-1,1);
-       var sSidurDate = $get("SD_lblDate".concat(iIndex)).innerHTML;
-       var sSHatchala = $get("SD_txtSH".concat(iIndex)).value;
-       var sSGmar = $get("SD_txtSG".concat(iIndex)).value;
-       var sSHLetashlum = $get("SD_txtSHL".concat(iIndex)).value;
-       var sSGLetashlum = $get("SD_txtSGL".concat(iIndex)).value;       
-       var ShatHatchala = new Date(Number(sSidurDate.substr(6,4)), Number(sSidurDate.substr(3,2))-1,Number(sSidurDate.substr(0,2)),sSHatchala.substr(0,2),sSHatchala.substr(sSHatchala.length-2,2));             
-       var ShatGmar = new Date(Number(sSidurDate.substr(6,4)), Number(sSidurDate.substr(3,2))-1,Number(sSidurDate.substr(0,2)),sSGmar.substr(0,2),sSGmar.substr(sSGmar.length-2,2));             
-       var SHLetashlum = new Date(Number(sSidurDate.substr(6,4)), Number(sSidurDate.substr(3,2))-1,Number(sSidurDate.substr(0,2)),sSHLetashlum.substr(0,2),sSHLetashlum.substr(sSHLetashlum.length-2,2));      
-       var SGLetashlum = new Date(Number(sSidurDate.substr(6,4)), Number(sSidurDate.substr(3,2))-1,Number(sSidurDate.substr(0,2)),sSGLetashlum.substr(0,2),sSGLetashlum.substr(sSGLetashlum.length-2,2));             
-       var dSHatchala = Date.UTC(ShatHatchala.getFullYear(), ShatHatchala.getMonth()+1, ShatHatchala.getDate(),ShatHatchala.getHours(),ShatHatchala.getMinutes(),0);
-       var dShatGmar = Date.UTC(ShatGmar.getFullYear(), ShatGmar.getMonth()+1, ShatGmar.getDate(),ShatGmar.getHours(),ShatGmar.getMinutes(),0);
-       var dSHLetashlum = Date.UTC(SHLetashlum.getFullYear(), SHLetashlum.getMonth()+1, SHLetashlum.getDate(),SHLetashlum.getHours(),SHLetashlum.getMinutes(),0);
-       var dSGLetashlum = Date.UTC(SGLetashlum.getFullYear(), SGLetashlum.getMonth()+1, SGLetashlum.getDate(),SGLetashlum.getHours(),SGLetashlum.getMinutes(),0);
-       if ((dSHLetashlum<dSHatchala) ||(dSHLetashlum>dSHLetashlum))
-       {
-         val.errormessage = "שעת התחלה לתשלום לא תקינה, יש להקליד שעה בטווח " + sSGLetashlum + " - " + sSHatchala;
-         args.IsValid = false;
-       }       
-       if ((dSGLetashlum<dSHLetashlum) ||(dSGLetashlum>dShatGmar))
-       {
-         val.errormessage = "שעת גמר לתשלום לא תקינה, יש להקליד שעה בטווח " + sSGmar + " - " + sSHLetashlum;
-         args.IsValid = false;
-       }       
-       if (dSHLetashlum>dSGLetashlum) 
-       {
-        if (args.IsValid)
-        {
-          val.errormessage = "לא ניתן לעדכן שעת התחלה לתשלום גדולה משעת גמר לתשלום";  
-          args.IsValid = false;
-        }else
-        {
-          val.errormessage =val.errormessage.concat(" לא ניתן לעדכן שעת התחלה לתשלום גדולה משעת גמר לתשלום \r\n");  
-          args.IsValid = false;
-        }}}        
+        args.IsValid = true;
+        var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
+        var sSidurDate = $get("SD_lblDate".concat(iIndex)).innerHTML;
+        var sCardDate = $get("clnDate").value;
+        var sSHatchala = $get("SD_txtSH".concat(iIndex)).value;
+        var sSGmar = $get("SD_txtSG".concat(iIndex)).value;
+        var sSHLetashlum = $get("SD_txtSHL".concat(iIndex)).value;
+        var sSGLetashlum = $get("SD_txtSGL".concat(iIndex)).value;
+
+        var ShatHatchala = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), sSHatchala.substr(0, 2), sSHatchala.substr(sSHatchala.length - 2, 2));
+        var ShatGmar = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), sSGmar.substr(0, 2), sSGmar.substr(sSGmar.length - 2, 2));
+        ShatGmar.setDate(ShatGmar.getDate() + Number($get("SD_txtDayAdd".concat(iIndex)).value));
+        var SHLetashlum = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), sSHLetashlum.substr(0, 2), sSHLetashlum.substr(sSHLetashlum.length - 2, 2));
+        SHLetashlum.setDate(SHLetashlum.getDate() + Number($get("SD_txtDayAddSHL".concat(iIndex)).value));
+        var SGLetashlum = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), sSGLetashlum.substr(0, 2), sSGLetashlum.substr(sSGLetashlum.length - 2, 2));
+        SGLetashlum.setDate(SGLetashlum.getDate() + Number($get("SD_txtDayAddSGL".concat(iIndex)).value));
+
+        var dSHatchala = Date.UTC(ShatHatchala.getFullYear(), ShatHatchala.getMonth() + 1, ShatHatchala.getDate(), ShatHatchala.getHours(), ShatHatchala.getMinutes(), 0);
+        var dShatGmar = Date.UTC(ShatGmar.getFullYear(), ShatGmar.getMonth() + 1, ShatGmar.getDate(), ShatGmar.getHours(), ShatGmar.getMinutes(), 0);
+        var dSHLetashlum = Date.UTC(SHLetashlum.getFullYear(), SHLetashlum.getMonth() + 1, SHLetashlum.getDate(), SHLetashlum.getHours(), SHLetashlum.getMinutes(), 0);
+        var dSGLetashlum = Date.UTC(SGLetashlum.getFullYear(), SGLetashlum.getMonth() + 1, SGLetashlum.getDate(), SGLetashlum.getHours(), SGLetashlum.getMinutes(), 0);
+
+
+        if (String(val.id).indexOf("vldSHL") > -1 && ((dSHLetashlum < dSHatchala) || (dSHLetashlum > dSGLetashlum))) {
+            val.errormessage = "שעת התחלה לתשלום לא תקינה, יש להקליד שעה בטווח " + sSGLetashlum + " - " + sSHatchala;
+            args.IsValid = false;
+        }
+        if (String(val.id).indexOf("vldSGL") > -1 && ( (dSGLetashlum < dSHLetashlum) || (dSGLetashlum > dShatGmar))) {
+            val.errormessage = "שעת גמר לתשלום לא תקינה, יש להקליד שעה בטווח " + sSGmar + " - " + sSHLetashlum;
+            args.IsValid = false;
+        }
+        if (dSHLetashlum > dSGLetashlum) {
+            if (args.IsValid) {
+                if(String(val.id).indexOf("vldSHL")>-1)
+                    val.errormessage = "לא ניתן לעדכן שעת התחלה לתשלום גדולה משעת גמר לתשלום";
+                else val.errormessage = "לא ניתן לעדכן שעת גמר לתשלום קטנה משעת התחלה לתשלום";
+                args.IsValid = false;
+            } else {
+                if (String(val.id).indexOf("vldSHL") > -1)
+                    val.errormessage = val.errormessage.concat(" לא ניתן לעדכן שעת התחלה לתשלום גדולה משעת גמר לתשלום \r\n");
+                else val.errormessage = val.errormessage.concat("לא ניתן לעדכן שעת גמר לתשלום קטנה משעת התחלה לתשלום \r\n");
+                args.IsValid = false;
+            }
+        }   
+    }
+
+   
+
     function SetDate(oDate, sYear, sMonth, sDay, sHour, sMinutes)
     {
         oDate.setFullYear(sYear);
@@ -1626,29 +1638,6 @@ function chkMkt(oRow) {
                 break;
         }
 
-        //if (arrItems[0]=='1'){
-        //    $get("SD_txtDayAdd" + arrItems[1]).value = Number(iDayToAdd);            
-        //    $get("SD_txtSG" + arrItems[1]).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
-        //}
-        //else {
-        //    if (arrItems[0] == '3'){//שעת התחלה סידור
-        //        var _SHNew = $get("SD_txtSH".concat(arrItems[1]));
-        //        sCardDate = $get("clnDate").value;
-        //        var iSidurKey = $get("SD_lblSidur".concat(arrItems[1])).innerHTML;
-        //        if (iSidurKey == '')
-        //            iSidurKey = $get("SD_lblSidur".concat(arrItems[1])).value;
-
-        //        _SHNew.title = "תאריך התחלת הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
-        //        $get("SD_lblDate".concat(arrItems[1])).innerHTML = GetDateDDMMYYYY(dSdDate);
-        //        wsGeneral.UpdateSidurDate(sCardDate, iSidurKey, _SHNew.getAttribute('OrgShatHatchala'), _SHNew.value, Number(iDayToAdd), arrItems[1]);
-        //    }
-        //    else {//2
-        //        $get(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = Number(iDayToAdd);
-        //        $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dSdDate);
-        //        //נשנה גם לכל הכניסות
-        //        ChangeKnisotHour($get(arrItems[1]), iDayToAdd, dSdDate);
-        //    }
-        //}
 
         if ((arrItems[0] == '1') || (arrItems[0] == '3')) {//שעת התחלה וגמר  
             //נחשב את משך הסידור בדקות             
@@ -1666,7 +1655,8 @@ function chkMkt(oRow) {
     }
    function SidurTimeChanged(id)
    { //שעת התחלה השתנתה, נבדוק שוב את התנאים לשדה השלמה
-    var sSidurDate = $get("SD_lblDate".concat(id)).innerHTML; 
+       var sSidurDate = $get("SD_lblDate".concat(id)).innerHTML;
+       var sCardDate = $get("clnDate").value;
     var ddlChariga = $get("SD_ddlException".concat(id));          
     var sYear = Number(sSidurDate.substr(6,4));
     var sMonth = Number(sSidurDate.substr(3,2))-1;
@@ -1692,13 +1682,13 @@ function chkMkt(oRow) {
         var iCharigaType = Number(ddlChariga.getAttribute("ChrigaType"));
         if (iCharigaType != 4) {// 4- חריגה בגלל סיבת לא לתשלום
             SetDate(dSH, Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), Number(oSH.substr(0, 2)), Number(oSH.substr(3, 2)));
-            dSH.setDate(dSH.getDate() + Number(iSDayToAdd));
-            SetDate(dSG, Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), Number(oSG.substr(0, 2)), Number(oSG.substr(3, 2)));
-            dSG.setDate(dSG.getDate() + Number(iSDayToAdd));
-            SetDate(dSHL, Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), Number(oSHL.substr(0, 2)), Number(oSHL.substr(3, 2)));
-            dSHL.setDate(dSHL.getDate() + Number(iSDayToAdd));
-            SetDate(dSGL, Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), Number(oSGL.substr(0, 2)), Number(oSGL.substr(3, 2)));
-            dSGL.setDate(dSGL.getDate() + Number(iSDayToAdd));
+           // dSH.setDate(dSH.getDate() + Number(iSDayToAdd));
+            SetDate(dSG, Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(oSG.substr(0, 2)), Number(oSG.substr(3, 2)));
+            dSG.setDate(dSG.getDate() + Number($get("SD_txtDayAdd".concat(id)).value));
+            SetDate(dSHL, Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(oSHL.substr(0, 2)), Number(oSHL.substr(3, 2)));
+            dSHL.setDate(dSHL.getDate() + Number($get("SD_txtDayAddSHL".concat(id)).value)) ;//Number(iSDayToAdd));
+            SetDate(dSGL, Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(oSGL.substr(0, 2)), Number(oSGL.substr(3, 2)));
+            dSGL.setDate(dSGL.getDate() + Number($get("SD_txtDayAddSGL".concat(id)).value));//Number(iSDayToAdd));
             var dUTCsh = Date.UTC(dSH.getFullYear(), dSH.getMonth() + 1, dSH.getDate(), dSH.getHours(), dSH.getMinutes(), 0);
             var dUTCsg = Date.UTC(dSG.getFullYear(), dSG.getMonth() + 1, dSG.getDate(), dSG.getHours(), dSG.getMinutes(), 0);
             var dUTCshl = Date.UTC(dSHL.getFullYear(), dSHL.getMonth() + 1, dSHL.getDate(), dSHL.getHours(), dSHL.getMinutes(), 0);
@@ -2197,7 +2187,7 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
                 if ((_NextPeilutCarNum!='0') && (_NextPeilutCarNum!='') && (_MustCarNum!='0')){
                     break;
                 }
-            }
+            }tg
            }
             _NextPeilut = _NextPeilut.nextSibling;
         }}}    
