@@ -293,7 +293,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //    }
 
                 //    break;
-                case ReportName.RdlTigburim:
+                case ReportName.RdlTigburimOvdim:
+                case ReportName.RdlTigburimRechev:
                     {
                         if (!Page.IsPostBack)
                         {
