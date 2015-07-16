@@ -195,7 +195,7 @@ function CheckShaaInParam(shaa, param) {
     var Time = shaa.split(':');
     var hours = Number(Time[0]);
     var minuts = Number(Time[1]);
-    if (hours <= Number(sParam.substr(0, 2)) && Number(minuts) <= Number(sParam.substr(3, 2)) )
+    if (hours < Number(sParam.substr(0, 2)) || (hours == Number(sParam.substr(0, 2)) && Number(minuts) <= Number(sParam.substr(3, 2))) )
         return true;
     else
         return false;
