@@ -4621,11 +4621,11 @@ Public Class ClKds
                     File.Delete(InPath & MyFile)
                     oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete Harmony " & MyFile, 0)
 
-                    FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
-                    File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
-                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after copy HarmonyNewMyFile " & MyFile, 0)
-                    File.Delete(InPath & MyFile)
-                    oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete HarmonyNewMyFile " & MyFile, 0)
+                    'FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
+                    'File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
+                    'oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after copy HarmonyNewMyFile " & MyFile, 0)
+                    'File.Delete(InPath & MyFile)
+                    'oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete HarmonyNewMyFile " & MyFile, 0)
 
                     MyFile = Dir()
                 End While
@@ -4645,11 +4645,11 @@ Public Class ClKds
 
         Dim oDal As clDal
         Dim sr As StreamReader
-        Dim sw As StreamWriter
+        'Dim sw As StreamWriter
         Dim ds As DataSet
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Dim InPathNFile As String
-        Dim ErrFileName As String
+        'Dim ErrFileName As String
         Dim line As String
         Dim Status_data As String
         Dim clock_num As String
@@ -4672,18 +4672,28 @@ Public Class ClKds
         Dim LineErrCnt As Integer
         Dim SwBakara As Boolean
         Dim SwOk As Boolean
+        Dim Err_kod As Integer
+        Dim Err_filename As String
+        Dim Err_pref As String
+        Dim Err_line As String
+        Dim Err_suff As String
 
 
 
 
         Try
-            ErrFileName = ConfigurationSettings.AppSettings("KdsFilePath") & "Harmony" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & CStr(Now.Second) & ".err"
+            'ErrFileName = ConfigurationSettings.AppSettings("KdsFilePath") & "Harmony" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & CStr(Now.Second) & ".err"
             InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & InFileName
+            Err_filename = Mid(InFileName, 20, Len(InFileName) - 23)
             oDal = New clDal
             sr = New StreamReader(InPathNFile)
             SwIsOpen = False
             SwBakara = False
             SwOk = False
+            Err_kod = 0
+            Err_pref = ""
+            Err_line = ""
+            Err_suff = ""
             LineErrCnt = 0
             line = sr.ReadLine
             If Trim(line) = "" Then
@@ -4706,44 +4716,96 @@ Public Class ClKds
                     date_data = Mid(line, 9, 6)     'ddmmyy check validity
                     If (status_ans = "Z" Or status_ans = "z") Then
                         'z=not ok, do not check * אם המערכת של סינאל זיהתה זבל וסימנה z בתו השלישי
-                        If SwIsOpen = False Then
-                            sw = New StreamWriter(ErrFileName, False)
-                            SwIsOpen = True
-                        End If
-                        sw.WriteLine("status_ans zevel " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
+                        'If SwIsOpen = False Then
+                        '    sw = New StreamWriter(ErrFileName, False)
+                        '    SwIsOpen = True
+                        'End If
+                        'sw.WriteLine("status_ans zevel " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
+                        oDal.ClearCommand()
+                        Err_kod = 1
+                        Err_pref = Mid(line, 1, 14)
+                        Err_line = Mid(line, 15, 98)
+                        Err_suff = Mid(line, 15 + 118, 23)
+                        oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, Err_kod, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, Err_filename, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, Err_pref, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, Err_line, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, Err_suff, ParameterDir.pdInput)
+                        oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
+                        oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
                     ElseIf clGeneral.IsNumeric(clock_inner_num.ToString) = False Then
                         '* אם המספר הפנימי של השעון והתאריך (תווים 4 – 13) אינם נומרים.
-                        If SwIsOpen = False Then
-                            sw = New StreamWriter(ErrFileName, False)
-                            SwIsOpen = True
-                        End If
-                        sw.WriteLine("clock_inner_num not numeric " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
+                        oDal.ClearCommand()
+                        Err_kod = 2
+                        Err_pref = Mid(line, 1, 14)
+                        Err_line = Mid(line, 15, 98)
+                        Err_suff = Mid(line, 15 + 118, 23)
+                        oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, Err_kod, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, Err_filename, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, Err_pref, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, Err_line, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, Err_suff, ParameterDir.pdInput)
+                        oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
+                        oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
+                        'sw.WriteLine("clock_inner_num not numeric " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
                     ElseIf clGeneral.IsNumeric(date_data.ToString) = False Then
-                        If SwIsOpen = False Then
-                            sw = New StreamWriter(ErrFileName, False)
-                            SwIsOpen = True
-                        End If
-                        sw.WriteLine("date_data not numeric " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
+                        oDal.ClearCommand()
+                        Err_kod = 3
+                        Err_pref = Mid(line, 1, 14)
+                        Err_line = Mid(line, 15, 98)
+                        Err_suff = Mid(line, 15 + 118, 23)
+                        oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, Err_kod, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, Err_filename, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, Err_pref, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, Err_line, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, Err_suff, ParameterDir.pdInput)
+                        oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
+                        oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
+                        'sw.WriteLine("date_data not numeric " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
                         'check date validity:
                     ElseIf CInt(Mid(date_data, 1, 2)) > 31 Then
                             'date not valid
-                            If SwIsOpen = False Then
-                                sw = New StreamWriter(ErrFileName, False)
-                                SwIsOpen = True
-                            End If
-                            sw.WriteLine("dd not valid " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
+                        oDal.ClearCommand()
+                        Err_kod = 4
+                        Err_pref = Mid(line, 1, 14)
+                        Err_line = Mid(line, 15, 98)
+                        Err_suff = Mid(line, 15 + 118, 23)
+                        oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, Err_kod, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, Err_filename, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, Err_pref, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, Err_line, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, Err_suff, ParameterDir.pdInput)
+                        oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
+                        oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
+                        'sw.WriteLine("dd not valid " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
                     ElseIf CInt(Mid(date_data, 3, 2)) > 12 Then
-                        If SwIsOpen = False Then
-                            sw = New StreamWriter(ErrFileName, False)
-                            SwIsOpen = True
-                        End If
-                        sw.WriteLine("mm not valid " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
+                        oDal.ClearCommand()
+                        Err_kod = 5
+                        Err_pref = Mid(line, 1, 14)
+                        Err_line = Mid(line, 15, 98)
+                        Err_suff = Mid(line, 15 + 118, 23)
+                        oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, Err_kod, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, Err_filename, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, Err_pref, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, Err_line, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, Err_suff, ParameterDir.pdInput)
+                        oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
+                        oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
+                        'sw.WriteLine("mm not valid " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
                     ElseIf CInt(date_data) < 10115 Then
-                        If SwIsOpen = False Then
-                            sw = New StreamWriter(ErrFileName, False)
-                            SwIsOpen = True
-                        End If
-                        sw.WriteLine("date not valid " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
+                        oDal.ClearCommand()
+                        Err_kod = 6
+                        Err_pref = Mid(line, 1, 14)
+                        Err_line = Mid(line, 15, 98)
+                        Err_suff = Mid(line, 15 + 118, 23)
+                        oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, Err_kod, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, Err_filename, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, Err_pref, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, Err_line, ParameterDir.pdInput)
+                        oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, Err_suff, ParameterDir.pdInput)
+                        oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
+                        oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
+                        'sw.WriteLine("date not valid " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
 
                         'todo: check line 184 for empty line (almost)
                     Else
@@ -4766,11 +4828,19 @@ Public Class ClKds
                                 If CInt(SRV_D_ISHI) < 0 Then
                                     'mispar_ishi not valid
                                     SwOk = True
-                                    If SwIsOpen = False Then
-                                        sw = New StreamWriter(ErrFileName, False)
-                                        SwIsOpen = True
-                                    End If
-                                    sw.WriteLine("mispar_ishi not valid " & SRV_D_ISHI & " LineErrCnt=" & LineErrCnt & " ," & line)
+                                    oDal.ClearCommand()
+                                    Err_kod = 7
+                                    Err_pref = Mid(line, 1, 14)
+                                    Err_line = Mid(line, 15, 98)
+                                    Err_suff = Mid(line, 15 + 118, 23)
+                                    oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, Err_kod, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, Err_filename, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, Err_pref, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, Err_line, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, Err_suff, ParameterDir.pdInput)
+                                    oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
+                                    oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
+                                    'sw.WriteLine("mispar_ishi not valid " & SRV_D_ISHI & " LineErrCnt=" & LineErrCnt & " ," & line)
                                 End If
                                 SRV_D_ISHI_chk = Mid(Restline, 10, 1) ' bikoret
                                 If SRV_D_ISHI_chk = "-" Then
@@ -4781,19 +4851,35 @@ Public Class ClKds
                                 If CInt(Mid(SRV_D_time, 1, 2)) > 23 Then
                                     'time not valid
                                     SwOk = True
-                                    If SwIsOpen = False Then
-                                        sw = New StreamWriter(ErrFileName, False)
-                                        SwIsOpen = True
-                                    End If
-                                    sw.WriteLine("hh not valid " & SRV_D_time & " LineErrCnt=" & LineErrCnt & " ," & line)
+                                    oDal.ClearCommand()
+                                    Err_kod = 8
+                                    Err_pref = Mid(line, 1, 14)
+                                    Err_line = Mid(line, 15, 98)
+                                    Err_suff = Mid(line, 15 + 118, 23)
+                                    oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, Err_kod, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, Err_filename, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, Err_pref, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, Err_line, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, Err_suff, ParameterDir.pdInput)
+                                    oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
+                                    oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
+                                    'sw.WriteLine("hh not valid " & SRV_D_time & " LineErrCnt=" & LineErrCnt & " ," & line)
                                 ElseIf CInt(Mid(SRV_D_time, 3, 2)) > 59 Then
                                     'time not valid
                                     SwOk = True
-                                    If SwIsOpen = False Then
-                                        sw = New StreamWriter(ErrFileName, False)
-                                        SwIsOpen = True
-                                    End If
-                                    sw.WriteLine("mm not valid " & SRV_D_time & " LineErrCnt=" & LineErrCnt & " ," & line)
+                                    oDal.ClearCommand()
+                                    Err_kod = 9
+                                    Err_pref = Mid(line, 1, 14)
+                                    Err_line = Mid(line, 15, 98)
+                                    Err_suff = Mid(line, 15 + 118, 23)
+                                    oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, Err_kod, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, Err_filename, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, Err_pref, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, Err_line, ParameterDir.pdInput)
+                                    oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, Err_suff, ParameterDir.pdInput)
+                                    oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
+                                    oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
+                                    'sw.WriteLine("mm not valid " & SRV_D_time & " LineErrCnt=" & LineErrCnt & " ," & line)
                                 End If
 
                                 If SwOk = False And SwBakara = False Then
@@ -4822,11 +4908,19 @@ Public Class ClKds
                         Catch ex As Exception
                             'oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Harmony aborted line " & LineErrCnt.ToString & ex.Message, 3)
                             'Throw ex
-                            If SwIsOpen = False Then
-                                sw = New StreamWriter(ErrFileName, False)
-                                SwIsOpen = True
-                            End If
-                            sw.WriteLine("Restline not valid LineErrCnt=" & LineErrCnt & " ,Restline=" & Restline)
+                            oDal.ClearCommand()
+                            Err_kod = 10
+                            Err_pref = Mid(line, 1, 14)
+                            Err_line = Mid(line, 15, 98)
+                            Err_suff = Mid(line, 15 + 118, 23)
+                            oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, Err_kod, ParameterDir.pdInput)
+                            oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, Err_filename, ParameterDir.pdInput)
+                            oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, Err_pref, ParameterDir.pdInput)
+                            oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, Err_line, ParameterDir.pdInput)
+                            oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, Err_suff, ParameterDir.pdInput)
+                            oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
+                            oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
+                            'sw.WriteLine("Restline not valid LineErrCnt=" & LineErrCnt & " ,Restline=" & Restline)
                         End Try
 
                     End If
@@ -4843,11 +4937,11 @@ Public Class ClKds
             Throw ex
         Finally
             sr.Close()
-            If SwIsOpen = True Then
-                oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.Faild, "Harmony " & Mid(InFileName, 19, Len(InFileName) - 4) & " " & ErrFileName, 3)
-                sw.Close()
-                Throw New Exception("Failure Harmony :" & InFileName)
-            End If
+            'If SwIsOpen = True Then
+            '    oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.Faild, "Harmony " & Mid(InFileName, 19, Len(InFileName) - 4) & " " & ErrFileName, 3)
+            '    sw.Close()
+            '    Throw New Exception("Failure Harmony :" & InFileName)
+            'End If
         End Try
 
     End Sub
