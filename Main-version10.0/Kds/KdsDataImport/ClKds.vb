@@ -4590,7 +4590,7 @@ Public Class ClKds
         'in web.config & app.config key="KdsInputFileNameHarmony" default value="A01sn_buffer*.TXT"
         Dim FileName As String = ConfigurationSettings.AppSettings("KdsInputFileNameHarmony")
         If Trim(FileName) = "" Then
-            FileName = "A01SN_BUFFER_CLOCK_224_150715_141137.DAT"
+            FileName = "A01SN_BUFFER_CLOCK_*.DAT"
         End If
         Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePath") '"\\KDSTEST\Files"
         Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPath") '"inkds_old\"
