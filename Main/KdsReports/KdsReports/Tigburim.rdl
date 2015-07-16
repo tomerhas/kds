@@ -1066,6 +1066,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1970,21 +1971,18 @@
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>a9c62023-9547-477b-a7e2-76b79be57d14</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="DataSource1">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>09b57d01-f440-4bdf-b001-adc57895ee22</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="Tigburim">
       <Query>
         <DataSourceName>Ds</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="P_STARTDATE">
-            <Value>=Parameters!P_STARTDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_ENDDATE">
-            <Value>=Parameters!P_ENDDATE.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_TIGBURIM_DETAILS</CommandText>
+        <CommandText>PKG_REPORTS.PRO_GET_TIGBURIM</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
