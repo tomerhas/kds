@@ -65,7 +65,6 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  Work_Card.Wait_For_Element_Visibile(driver,60, "btnRefreshOvedDetails");
 	  Work_Card.Btn_Show(driver).click();
 	  //Work_Card.Wait_For_Element_Visibile(driver, 60, "SD_imgCancel0");
-	  
 	  Assert.assertEquals(Work_Card.Sidur_Num(driver).getText(), "58011");
 	  Work_Card.Cancel_Sidur(driver).click();
 	  Work_Card.Btn_Update(driver).click();
