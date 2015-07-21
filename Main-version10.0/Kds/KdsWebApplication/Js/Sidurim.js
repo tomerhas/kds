@@ -2187,7 +2187,7 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
                 if ((_NextPeilutCarNum!='0') && (_NextPeilutCarNum!='') && (_MustCarNum!='0')){
                     break;
                 }
-            }tg
+            }
            }
             _NextPeilut = _NextPeilut.nextSibling;
         }}}    
