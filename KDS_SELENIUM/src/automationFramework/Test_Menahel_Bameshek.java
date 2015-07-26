@@ -14,6 +14,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
+
 import JDBC.DB_DML;
 import pageObjects.Employee_Card;
 import pageObjects.LogIn_Page;
@@ -93,12 +94,20 @@ public class Test_Menahel_Bameshek    extends Base {
 	  
 	  Work_Card.Wait_For_Element_Stalenes(driver,"clnDate");
 	  Work_Card.Date(driver).click();
-	  Work_Card.Date(driver).sendKeys("10062015");
+	  Work_Card.Date(driver).sendKeys("18072015");
 	  Work_Card.Btn_Show(driver).click();
 	  Work_Card.Wait_For_Element_Stalenes(driver,"btnAddMyuchad");
 	  Work_Card.Btn_Add_Special(driver).click();
       Work_Card.Lbl_Special_No(driver).sendKeys("99300");
 	  Work_Card.Lbl_Special_No(driver).sendKeys(Keys.TAB);
+	  
+	  //Work_Card.Btn_Update(driver).click();
+	  //WebDriverWait wait1 = new WebDriverWait(driver, 30);
+	  //wait1.until(ExpectedConditions.alertIsPresent());
+	  //Alert alert1=driver.switchTo().alert();
+	  //System.out.println(alert1.getText());
+	  //Assert.assertEquals("מספר סידור  אינו תקין",alert1.getText());
+	  //alert1.accept();
 	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה");
 	  Work_Card.Btn_Close(driver).click();
 	  JavascriptExecutor js = (JavascriptExecutor)driver; 
