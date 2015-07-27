@@ -1564,6 +1564,7 @@ function chkMkt(oRow) {
                               $get(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = "0";
                           }
                       }
+                      break;
                   case "4": //שעת התחלה לתשלום
                       $get("SD_btnShowMessage").click();
                       break;
