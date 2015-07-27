@@ -4594,6 +4594,7 @@ Public Class ClKds
         End If
         Dim InPath As String = ConfigurationSettings.AppSettings("KdsFilePath") '"\\KDSTEST\Files"
         Dim SubFolder As String = ConfigurationSettings.AppSettings("KdsFileSubPath") '"inkds_old\"
+        Dim oDal As clDal
         Dim FileNameOld As String
         Dim MyFile As String
         Dim ShaonimNumber As Integer
@@ -4620,6 +4621,11 @@ Public Class ClKds
                     oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after copy Harmony " & MyFile, 0)
                     File.Delete(InPath & MyFile)
                     oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, " after delete Harmony " & MyFile, 0)
+
+                    oDal = New clDal
+                    oDal.ClearCommand()
+                    oDal.AddParameter("pfilename", ParameterType.ntOracleVarchar, Left(MyFile, Len(MyFile) - 4), ParameterDir.pdInput)
+                    oDal.ExecuteSP("Pkg_Attendance.Ins_TahalichHarmony")
 
                     'FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
                     'File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
