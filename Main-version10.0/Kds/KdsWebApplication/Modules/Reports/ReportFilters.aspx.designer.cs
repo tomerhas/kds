@@ -93,6 +93,15 @@ public partial class Modules_Reports_ReportFilters {
     protected global::System.Web.UI.HtmlControls.HtmlInputHidden Param280;
     
     /// <summary>
+    /// FromParam control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.HtmlControls.HtmlInputHidden FromParam;
+    
+    /// <summary>
     /// MisRashamot control.
     /// </summary>
     /// <remarks>

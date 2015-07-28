@@ -109,6 +109,7 @@
             </table>
             <input type="hidden" id="Param100" name="Param100" runat="server" />
             <input type="hidden" id="Param280" name="Param280" runat="server" />
+            <input type="hidden" id="FromParam" name="FromParam" runat="server" />
             <input type="hidden" id="MisRashamot" name="MisRashamot" runat="server" />
         </ContentTemplate>
    <%--  <Triggers><asp:PostBackTrigger ControlID="btnDisplay"  /></Triggers>--%>
@@ -297,8 +298,8 @@
             var FromDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1] - 1), Number(chodesh_me[0]), '00', '00', '00');
             var today = new Date();
             // var mis = document.getElementById("ctl00_KdsContent_P_MIS_RASHEMET").value;
-            var Param100 = document.getElementById("ctl00_KdsContent_Param100").value;
-            today.setMonth(today.getMonth() - Param100);
+            var FromParam = document.getElementById("ctl00_KdsContent_FromParam").value;
+            today.setMonth(today.getMonth() - FromParam);
             today.setHours(0);
             today.setMinutes(0);
             today.setSeconds(0);

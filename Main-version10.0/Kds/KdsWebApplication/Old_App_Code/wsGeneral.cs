@@ -2470,12 +2470,12 @@ public class wsGeneral : System.Web.Services.WebService
                 }
                 else{
                     dtMeafyenim = (DataTable)Session["MeafyeneySidur"];
-                    dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=53 or kod_meafyen=27)");
+                    dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=53 or kod_meafyen=27) and Convert('" + DateTime.Parse(sSidurDate).ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + DateTime.Parse(sSidurDate).ToShortDateString() + "', 'System.DateTime') <= AD_TAARICH");
                     if (dr.Length > 0)
                         sReturnCode = "1|יש לדווח במסך הוסף דיווח היעדרות";
                     else
                     {
-                        dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber);
+                        dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber +" and Convert('" + DateTime.Parse(sSidurDate).ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + DateTime.Parse(sSidurDate).ToShortDateString() + "', 'System.DateTime') <= AD_TAARICH");
                         if (dr.Length == 0)
                         {
                             flag = false;
@@ -2486,19 +2486,19 @@ public class wsGeneral : System.Web.Services.WebService
                             && (clDefinitions.GetDiffDays(DateTime.Parse(sSidurDate), DateTime.Now) + 1 <= _parameters.iValidDays))
                         {   //אם כרטיס ללא התייחסות נבדוק שלא הקלידו סידור ללא מאפיין 99 עם ערך 1
                             //אבל רק במידה והכרטיס הוא בטוו 45 יום (פרמטר 252)
-                            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=99 and erech='1'");
+                            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=99 and erech='1' and Convert('" + DateTime.Parse(sSidurDate).ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + DateTime.Parse(sSidurDate).ToShortDateString() + "', 'System.DateTime') <= AD_TAARICH");
                             if (dr.Length == 0)
                                 sReturnCode = "1| כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
                             else if((bool)Session["ProfileMenahelBankShaot"])
                             {
-                                dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=104 and erech='1'");
+                                dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=104 and erech='1' and Convert('" + DateTime.Parse(sSidurDate).ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + DateTime.Parse(sSidurDate).ToShortDateString() + "', 'System.DateTime') <= AD_TAARICH");
                                 if (dr.Length == 0)
                                     sReturnCode = "1| אינך רשאי לדווח סידור עבודה זה ";
                             }
                         }
                         else if (flag && (bool)Session["ProfileMenahelBankShaot"])
                         {
-                            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=104 and erech='1'");
+                            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=104 and erech='1' and Convert('" + DateTime.Parse(sSidurDate).ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + DateTime.Parse(sSidurDate).ToShortDateString() + "', 'System.DateTime') <= AD_TAARICH");
                             if (dr.Length == 0)
                                 sReturnCode = "1| אינך רשאי לדווח סידור עבודה זה ";
                         }

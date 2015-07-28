@@ -33,8 +33,6 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     private string _sProfilUser="0";
     protected void Page_Load(object sender, EventArgs e)
     {
-        DataTable dtParametrim = new DataTable();
-        clUtils oUtils = new clUtils();
         UserId.Text =LoginUser.UserInfo.EmployeeNumber;
         try
         {
@@ -43,9 +41,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
                 LoadKdsDynamicReport();
-                dtParametrim = oUtils.getErechParamByKod("100,280", DateTime.Now.ToShortDateString());
-                Param100.Value = dtParametrim.Select("KOD_PARAM=100")[0]["ERECH_PARAM"].ToString();
-                Param280.Value = dtParametrim.Select("KOD_PARAM=280")[0]["ERECH_PARAM"].ToString();
+                InilizeParams();
+              
             }
             SetProfilUser();
             FillFilterToForm();
@@ -58,6 +55,35 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         catch (Exception ex)
         {
             KdsLibrary.clGeneral.BuildError(Page, ex.Message, true);
+        }
+    }
+    private void InilizeParams()
+    {
+        DataTable dtParametrim = new DataTable();
+        clUtils oUtils = new clUtils();
+        try
+        {
+            dtParametrim = oUtils.getErechParamByKod("100,280,300", DateTime.Now.ToShortDateString());
+            Param100.Value = dtParametrim.Select("KOD_PARAM=100")[0]["ERECH_PARAM"].ToString();
+            Param280.Value = dtParametrim.Select("KOD_PARAM=280")[0]["ERECH_PARAM"].ToString();
+            switch (Report.NameReport)
+            {
+
+                case ReportName.RdlTigburimOvdim:
+                case ReportName.RdlTigburimRechev:
+                case ReportName.ProfitOfLinesDetailed:
+                case ReportName.ProfitOfLinesGroup:
+                    FromParam.Value = dtParametrim.Select("KOD_PARAM=300")[0]["ERECH_PARAM"].ToString();
+                    break;
+                default:
+                    FromParam.Value = dtParametrim.Select("KOD_PARAM=100")[0]["ERECH_PARAM"].ToString();
+                    break;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
         }
     }
     private void SetProfilUser()
