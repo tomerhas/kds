@@ -1711,17 +1711,19 @@ public class wsGeneral : System.Web.Services.WebService
     {
         clUtils oUtils = new clUtils();
         DataTable dt = new DataTable();
+        DateTime taarich;
         clGeneral.enMeasherOMistayeg _MeasherOMistayeg;
         try
         {
             //AutoComplete for new sidur
             string[] Params = contextKey.Split(';');
-            _MeasherOMistayeg = (clGeneral.enMeasherOMistayeg)int.Parse(Params[2]);
+            taarich = DateTime.Parse(Params[0]);
+            _MeasherOMistayeg = (clGeneral.enMeasherOMistayeg)int.Parse(Params[3]);
             if (_MeasherOMistayeg == clGeneral.enMeasherOMistayeg.ValueNull)
-                dt = oUtils.getKodElement(prefixText, Params[0], Params[1]);
+                dt = oUtils.getKodElement(taarich,prefixText, Params[1], Params[2]);
             else
             {
-                dt = oUtils.getkodSidurimWhithOutList(prefixText, Params[0], Params[1], Params[3]);
+                dt = oUtils.getkodSidurimWhithOutList(taarich,prefixText, Params[1], Params[2], Params[4]);
             }
 
             return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);        

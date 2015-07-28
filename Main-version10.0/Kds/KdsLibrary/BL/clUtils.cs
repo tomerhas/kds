@@ -702,13 +702,13 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
-        public DataTable getKodElement(string sPrefix,string sKodElementList, string sValue)
+        public DataTable getKodElement(DateTime taarich,string sPrefix,string sKodElementList, string sValue)
         {
             DataTable dt = new DataTable();
             try
             {
                 clDal dal = new clDal();
-
+                dal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
                 dal.AddParameter("p_prefix", ParameterType.ntOracleVarchar, sPrefix, ParameterDir.pdInput);
                 if (string.IsNullOrEmpty(sKodElementList))
                     dal.AddParameter("p_kod_element", ParameterType.ntOracleVarchar, null, ParameterDir.pdInput);
@@ -723,13 +723,13 @@ namespace KdsLibrary.BL
             }
             return dt;
         }
-        public DataTable getkodSidurimWhithOutList(string preFix, string kodMeafyenList, string misSidurList, string sKodElementList)
+        public DataTable getkodSidurimWhithOutList(DateTime taarich,string preFix, string kodMeafyenList, string misSidurList, string sKodElementList)
         {
             DataTable dt = new DataTable();
             try
             {
                 clDal dal = new clDal();
-
+                dal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
                 dal.AddParameter("p_preFix", ParameterType.ntOracleVarchar, preFix, ParameterDir.pdInput);
                 dal.AddParameter("whithOutList", ParameterType.ntOracleVarchar, kodMeafyenList, ParameterDir.pdInput);
                 dal.AddParameter("whithOutListMisSidur", ParameterType.ntOracleVarchar, misSidurList, ParameterDir.pdInput);

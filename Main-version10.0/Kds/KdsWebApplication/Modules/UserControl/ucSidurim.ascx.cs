@@ -2401,17 +2401,17 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 if (sMeafyenim == "")
                     sMeafyenim = MEAFYEN_CARD_NULL.ToString();
-                oAutoComplete.ContextKey = sMeafyenim +  ";1;" + MeasherOMistayeg.GetHashCode();
+                oAutoComplete.ContextKey =CardDate.ToShortDateString() +";" + sMeafyenim +  ";1;" + MeasherOMistayeg.GetHashCode();
             }
             else
             {
                 if (sMeafyenim != "")
-                    oAutoComplete.ContextKey = sMeafyenim + ";1;" + MeasherOMistayeg.GetHashCode();
-                else oAutoComplete.ContextKey = sMeafyenim + ";;" + MeasherOMistayeg.GetHashCode();
+                    oAutoComplete.ContextKey = CardDate.ToShortDateString() + ";" + sMeafyenim + ";1;" + MeasherOMistayeg.GetHashCode();
+                else oAutoComplete.ContextKey = CardDate.ToShortDateString() + ";" + sMeafyenim + ";;" + MeasherOMistayeg.GetHashCode();
             }
         }
         else
-            oAutoComplete.ContextKey = MEAFYEN_SIDUR_HADRUT1 + "," + MEAFYEN_SIDUR_HADRUT2 + ";" + SIDUR_HITYAZVUT1 + "," + SIDUR_HITYAZVUT2 + ";" + MeasherOMistayeg.GetHashCode() + ";" + sMeafyenim; 
+            oAutoComplete.ContextKey = CardDate.ToShortDateString() + ";" + MEAFYEN_SIDUR_HADRUT1 + "," + MEAFYEN_SIDUR_HADRUT2 + ";" + SIDUR_HITYAZVUT1 + "," + SIDUR_HITYAZVUT2 + ";" + MeasherOMistayeg.GetHashCode() + ";" + sMeafyenim; 
 
         hCell.Controls.Add(oAutoComplete);
 
