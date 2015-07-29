@@ -88,6 +88,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
         DataTable dtParametrim = new DataTable();
         clUtils oUtils = new clUtils();
         MasterPage mp = (MasterPage)Page.Master;
+        bool disabledflag = false;
         try
         {
             
@@ -101,8 +102,8 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 txtId.Attributes.Add("onfocus", "document.getElementById('" + txtId.ClientID + "').select();");
                 txtName.Attributes.Add("onfocus", "document.getElementById('" + txtName.ClientID + "').select();");
                 txtPageIndex.Value = "0";             
-                dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
-                clGeneral.LoadDateCombo(ddlMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
+                dtParametrim = oUtils.getErechParamByKod("100,310", DateTime.Now.ToShortDateString());
+                clGeneral.LoadDateCombo(ddlMonth, int.Parse(dtParametrim.Select("KOD_PARAM=100")[0]["ERECH_PARAM"].ToString()));
                
                 SetDefault();
                 hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1").ToString();
@@ -153,17 +154,55 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                     {
                         ddlMonth.SelectedValue = Request.QueryString["WCardDate"].ToString().Substring(3, 7);
                     }
-                    btnExecute_Click(this, new EventArgs());
+                    var shaa = dtParametrim.Select("KOD_PARAM=310")[0]["ERECH_PARAM"].ToString();
+                    HidOpenWC.Value = PossibleOpenWC(shaa).ToString();
+                    if (HidOpenWC.Value == "1")
+                    {
+                        ScriptManager.RegisterStartupScript(btnExecute, this.GetType(), "err", "alert(' הנתונים יהיו מוכנים בשעה " + shaa + "');", true);
+                        disabledflag = true;
+                    }
+                    else if (HidOpenWC.Value == "2")
+                    {
+                        ScriptManager.RegisterStartupScript(btnExecute, this.GetType(), "err", "alert('הנתונים לא מוכנים, נא לחזור במועד מאוחר יותר');", true);
+                        disabledflag = true;
+                    }
+                    else
+                        btnExecute_Click(this, new EventArgs());
                 }
+                
             }
+         
             checkHaveHarshaa();
+            if(disabledflag)
+                DisabledExecute();
         }
         catch(Exception ex)
         {
             clGeneral.BuildError(Page, ex.Message);
         }
     }
-
+    private void DisabledExecute()
+    {
+        btnExecute.ControlStyle.CssClass = "ImgButtonSearchDisable";
+        btnExecute.Enabled = false;
+        ddlMonth.Enabled = false;
+    }
+    private string PossibleOpenWC(string shaa)
+    {
+        DateTime dNow = DateTime.Now;
+        if (dNow < DateTime.Parse(dNow.ToShortDateString() + " " +shaa +":00"))
+            return "1";
+        else
+        {
+            var objRequest = new clRequest();
+            DataTable dtRequest;
+            dtRequest = objRequest.GetMaakavBakashot(5, 2, -1, string.Format("{0:MM/yyyy}", dNow) );
+            if(dtRequest.Rows.Count>0 && DateTime.Parse( dtRequest.Rows[0]["ZMAN_HATCHALA"].ToString())>dNow.Date)
+                return "0";
+            else return "1";
+        }
+       
+    }
     private bool checkHaveHarshaa()
     {
         bool flag = true;

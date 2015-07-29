@@ -182,6 +182,7 @@
             </td>
         </tr>
      </table>
+       <input type="hidden" runat="server" id="HidOpenWC" name="HidOpenWC" />
        <input type="hidden" runat="server" id="hidFromEmda" name="hidFromEmda" />
        <input type="hidden" runat="server" id="HidLoginUse" name="HidLoginUse" />
        <input type="hidden" runat="server" id="HiddenEmployeeCardsPage" value="Employee Cards Page Loaded Ok" name="HiddenEmployeeCardsPage" />  
@@ -352,24 +353,28 @@
 
            function OpenEmpWorkCard(RowDate) {
                // debugger;
+              // var canOpen = document.getElementById("ctl00_KdsContent_HidOpenWC").value;
                var EmpId = document.getElementById("ctl00_KdsContent_txtId").value;
                var WCardDate = RowDate;
                var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
-               document.getElementById("divHourglass").style.display = 'block';
-            var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
-             // var ReturnWin = window.open('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
-           
-            if (ReturnWin == '' || ReturnWin == 'undefined' || ReturnWin == undefined)
-                   ReturnWin = false;
-               //else {
-               //    var DatailsSplit = ReturnWin.split('|');                 
-               //    var userLogin = document.getElementById("ctl00_KdsContent_HidLoginUse").value;            
-               //    if (ReturnWin == userLogin);
-               //    wsGeneral.FreeWC(DatailsSplit[0], DatailsSplit[1], DatailsSplit[2]);
-               //}
-               document.getElementById("divHourglass").style.display = 'none';
-               document.getElementById("ctl00_KdsContent_btnExecute").click();
-               return ReturnWin;
+
+              
+                document.getElementById("divHourglass").style.display = 'block';
+                var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
+                // var ReturnWin = window.open('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
+
+                if (ReturnWin == '' || ReturnWin == 'undefined' || ReturnWin == undefined)
+                    ReturnWin = false;
+                //else {
+                //    var DatailsSplit = ReturnWin.split('|');                 
+                //    var userLogin = document.getElementById("ctl00_KdsContent_HidLoginUse").value;            
+                //    if (ReturnWin == userLogin);
+                //    wsGeneral.FreeWC(DatailsSplit[0], DatailsSplit[1], DatailsSplit[2]);
+                //}
+                document.getElementById("divHourglass").style.display = 'none';
+                document.getElementById("ctl00_KdsContent_btnExecute").click();
+                return ReturnWin;
+             
            }
 
            function continue_click() {
@@ -378,8 +383,8 @@
               // var name = document.getElementById("ctl00_KdsContent_txtName").value
                wsGeneral.GetOvedSnifAndUnit(Number(iMisparIshi), GetOvedSnifAndUnitSucceeded);
                document.getElementById("ctl00_KdsContent_ddlMonth").focus();
-
-           }  
+           }
+     
    </script>
 </asp:Content>
 

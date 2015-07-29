@@ -201,6 +201,15 @@ public partial class Modules_Ovdim_EmployeeCards {
     protected global::System.Web.UI.HtmlControls.HtmlInputHidden txtPageIndex;
     
     /// <summary>
+    /// HidOpenWC control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.HtmlControls.HtmlInputHidden HidOpenWC;
+    
+    /// <summary>
     /// hidFromEmda control.
     /// </summary>
     /// <remarks>
