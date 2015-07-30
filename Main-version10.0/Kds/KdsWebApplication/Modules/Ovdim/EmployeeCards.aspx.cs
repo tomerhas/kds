@@ -199,7 +199,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
             dtRequest = objRequest.GetMaakavBakashot(5, 2, -1, string.Format("{0:MM/yyyy}", dNow) );
             if(dtRequest.Rows.Count>0 && DateTime.Parse( dtRequest.Rows[0]["ZMAN_HATCHALA"].ToString())>dNow.Date)
                 return "0";
-            else return "1";
+            else return "2";
         }
        
     }

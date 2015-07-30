@@ -3,6 +3,7 @@
   <siteMapNode url="~/Modules/Main.aspx" title="מסך פתיחה"  description="" roles="*">
     <siteMapNode url="" title="צפיה/עדכון כ. עבודה"  description="" roles="*" >
       <siteMapNode url="~/Modules/Ovdim/EmployeeCards.aspx" title="כרטיסי עבודה לעובד"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Ovdim/IdkunMeasherMistayeg.aspx" title="עדכון מאשר/מסתייג"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Ovdim/NochechutMerukezet.aspx" title="נוכחות מרוכזת"  description="" roles="*"/>
       <!--<siteMapNode url="~/Modules/Ovdim/WorkCard.aspx" title="עדכון/צפיה בכ'ע" description="" roles="*"/>-->
       <siteMapNode url="~/Modules/Test.aspx" title="דף בדיקות"  description="" roles="*"/>      
