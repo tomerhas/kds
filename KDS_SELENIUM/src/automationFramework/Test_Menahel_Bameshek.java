@@ -91,7 +91,6 @@ public class Test_Menahel_Bameshek    extends Base {
       Select droplist2 = new Select(Work_Card.List_Reason_Out(driver));
       droplist2.selectByVisibleText("שעון לא מדויק/לא תקין");
       Work_Card.Btn_Update(driver).click();      
-	  
 	  Work_Card.Wait_For_Element_Stalenes(driver,"clnDate");
 	  Work_Card.Date(driver).click();
 	  Work_Card.Date(driver).sendKeys("18072015");
