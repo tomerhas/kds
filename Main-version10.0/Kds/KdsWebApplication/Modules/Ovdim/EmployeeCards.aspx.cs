@@ -163,7 +163,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                     }
                     else if (HidOpenWC.Value == "2")
                     {
-                        ScriptManager.RegisterStartupScript(btnExecute, this.GetType(), "err", "alert('הנתונים לא מוכנים, נא לחזור במועד מאוחר יותר');", true);
+                        ScriptManager.RegisterStartupScript(btnExecute, this.GetType(), "err", "alert('הנתונים לא מוכנים, נא לנסות במועד מאוחר יותר');", true);
                         disabledflag = true;
                     }
                     else

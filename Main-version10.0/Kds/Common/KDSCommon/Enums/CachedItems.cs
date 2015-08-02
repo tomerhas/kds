@@ -14,6 +14,7 @@ namespace KDSCommon.Enums
         Mutamut,
         SibotLedivuchYadani,
         ErrorTable,
-        Elementim
+        Elementim,
+        StatusWC
     }
 }

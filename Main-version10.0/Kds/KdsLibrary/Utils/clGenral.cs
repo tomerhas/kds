@@ -238,6 +238,8 @@ namespace KdsLibrary
         public const string GetCountWCLoLetashlumWithMeafyenim = "pkg_ovdim.fun_count_lo_letashlum_meafyen";
         public const string cProGetWorkCardNoShaotLetahlum = "pkg_ovdim.pro_get_workcad_no_val_letash";
         public const string cProGetNochechutMerukezet = "pkg_ovdim.pro_get_nochechut_merukezet";
+        public const string cProGetStatusKartis = "pkg_ovdim.pro_get_status_for_idkun";
+        public const string cProUpdStatusByRashemet = "pkg_ovdim.pro_upd_status_by_rashemet";
         
 #endregion
 

@@ -118,7 +118,7 @@
                               <td  class="bold">סטטוס:</td>
                               <td  >
                                   <br />
-                                  <asp:DropDownList ID="ddlstatus" runat="server" Width="150px"></asp:DropDownList>
+                                  <asp:DropDownList ID="ddlstatus" runat="server" Enabled="false" Width="150px"></asp:DropDownList>
                                   <br />
                                   <br />
                               </td>
@@ -131,20 +131,25 @@
                               </td>
                                <td >
                                    <br />
-                                   <asp:TextBox ID="txtSiba" runat="server" Width="300px"  ></asp:TextBox>
+                                   <asp:TextBox ID="txtSiba" runat="server" Enabled="false" Width="300px"  ></asp:TextBox>
                                    <br />
                               </td>
                           </tr>
               
-                      </table>   
-                  
-                     <br />
-                     <br />
-                     <br />
-                          <asp:Button Text="עדכן" ID="Button1" runat="server" TabIndex="5" 
-                                        CssClass ="ImgButtonSearch" autopostback="true" 
+                          <tr align="left" dir="ltr" >
+                              <td  colspan="2" align="left" dir="ltr" >
+                                   
+                                 <br />
+                                 <br />
+                                 <br />
+                                    <asp:Button Text="עדכן" ID="btnUpdate" runat="server" TabIndex="5"  Enabled="false"
+                                        CssClass ="ImgButtonSearch" autopostback="true"  OnClientClick="return CheckNetunimNOtEmpty();" OnClick="btnUpdate_Click"  
                                         Width="62px" onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />      
-                     
+                              </td>
+                          </tr>
+                      </table>   
+                 
+
            </fieldset>       
                 <input type="hidden" id="Params" name="Params"  runat="server" />
             </ContentTemplate>
@@ -157,6 +162,13 @@
        function CheckNetunimExist(){
            if (document.getElementById("ctl00_KdsContent_txtId").value == "" ||  document.getElementById('ctl00_KdsContent_clnTaarich').value =="")
                return false;
+           else return true;
+       }
+       function CheckNetunimNOtEmpty() {
+           if (document.getElementById("ctl00_KdsContent_txtSiba").value == "") {
+               alert("חובה להקליד סיבה");
+               return false;
+           }
            else return true;
        }
        function SetTextBox() {

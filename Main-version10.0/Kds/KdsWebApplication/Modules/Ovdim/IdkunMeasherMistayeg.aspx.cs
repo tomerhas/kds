@@ -17,6 +17,10 @@ using KdsLibrary.Security;
 using KdsLibrary.Utils.Reports;
 using System.Collections.Generic;
 using KdsLibrary.UI.SystemManager;
+using KDSCommon.Interfaces;
+using Microsoft.Practices.ServiceLocation;
+using KDSCommon.Enums;
+using KDSCommon.Interfaces.Managers;
 
 namespace KdsWebApplication.Modules.Ovdim
 {
@@ -65,17 +69,80 @@ namespace KdsWebApplication.Modules.Ovdim
 
         protected void btnExecute_Click(object sender, EventArgs e)
         {
-            DataView dv;
+            DataTable dt = new DataTable();
+            DataTable dtCtb = new DataTable();
+            clOvdim oOvdim = new clOvdim();
+            DataView dv = new DataView();
+            string status;
+            int misIshi;
             try
             {
+                var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+
                 lblMis.Text = txtId.Text;
                 lblTaarich.Text = clnTaarich.Text;
+
+                dtCtb = cache.GetCacheItem<DataTable>(CachedItems.StatusWC).Copy();
+                ddlstatus.DataTextField = "teur_measher_o_mistayeg";
+                ddlstatus.DataValueField = "kod_measher_o_mistayeg";
+                ddlstatus.DataSource = dtCtb;
+                ddlstatus.DataBind();
+
+                misIshi = int.Parse(lblMis.Text);
+                dt = oOvdim.GetStatusKartis(misIshi, DateTime.Parse(lblTaarich.Text), int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber));
+                if (dt.Rows.Count > 0)
+                {
+                  
+                    status = dt.Rows[0]["MEASHER_O_MISTAYEG"].ToString();
+                    if (status == "1")
+                    {
+                        ddlstatus.SelectedValue = "1";
+                        EnableUpdate(false);
+                    }
+                    else
+                    {
+                        dtCtb.Rows.RemoveAt(1);
+                        ddlstatus.DataSource = dtCtb;
+                        ddlstatus.DataBind();
+
+                        if (string.IsNullOrEmpty(status))
+                            ddlstatus.SelectedValue = "2";
+                        else ddlstatus.SelectedValue = status;
+                        txtSiba.Text = dt.Rows[0]["RESON"].ToString();
+
+                        var shinuyManager = ServiceLocator.Current.GetInstance<IShinuyimManager>();
+                        dt = shinuyManager.GetIdkuneyRashemet(misIshi, DateTime.Parse(lblTaarich.Text));
+                        if ((string.IsNullOrEmpty(status) || status == "0") && (dt.Rows.Count == 0 || dt.Select("pakad_id in(46,47) and GOREM_MEADKEN=" + misIshi).Length == 0))
+                            EnableUpdate(true);
+                        else EnableUpdate(false);
+                    }
+                }
+                
                 fsPratim.Style["display"] = "block";
-              //  divPratim.Style["display"] = "block";
+
             }
             catch (Exception ex)
             {
-                clGeneral.BuildError(Page, ex.Message);
+                throw ex;
+            }
+        }
+
+        private void EnableUpdate(bool enable)
+        {
+            btnUpdate.Enabled = enable;
+            ddlstatus.Enabled = enable;
+            txtSiba.Enabled = enable;
+        }
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            clOvdim oOvdim = new clOvdim();
+            try
+            {
+                oOvdim.UpdateStatusByRashemet(int.Parse(lblMis.Text), DateTime.Parse(lblTaarich.Text), int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber),int.Parse(ddlstatus.SelectedValue),txtSiba.Text);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
    

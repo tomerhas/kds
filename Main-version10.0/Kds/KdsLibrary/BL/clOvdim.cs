@@ -1925,6 +1925,48 @@ namespace KdsLibrary.BL
                throw ex;
            }
        }
+
+       public DataTable GetStatusKartis(int mispar_ishi,  DateTime taarich, int gorem_meadken)
+       {
+           clDal oDal = new clDal();
+           DataTable dt = new DataTable();
+           try
+           {
+               oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, mispar_ishi, ParameterDir.pdInput);
+               oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
+               oDal.AddParameter("p_meadken", ParameterType.ntOracleInteger, gorem_meadken, ParameterDir.pdInput);
+               oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+
+
+               oDal.ExecuteSP(clGeneral.cProGetStatusKartis, ref dt);
+
+               return dt;
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
+
+       public void UpdateStatusByRashemet(int mispar_ishi, DateTime taarich, int gorem_meadken,int status, string reson)
+       {
+           clDal oDal = new clDal();
+           DataTable dt = new DataTable();
+           try
+           {
+               oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, mispar_ishi, ParameterDir.pdInput);
+               oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
+               oDal.AddParameter("p_meadken", ParameterType.ntOracleInteger, gorem_meadken, ParameterDir.pdInput);
+               oDal.AddParameter("p_status", ParameterType.ntOracleInteger, status, ParameterDir.pdInput);
+               oDal.AddParameter("p_reson", ParameterType.ntOracleVarchar, reson, ParameterDir.pdInput);
+               oDal.ExecuteSP(clGeneral.cProUpdStatusByRashemet, ref dt);
+
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
     }
 }
 

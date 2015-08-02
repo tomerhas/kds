@@ -22,6 +22,7 @@ namespace KDSCache.Implement
         public const string cProGetSibotLedivuchYadani = "pkg_utils.pro_get_sibot_ledivuch_yadani";
         public const string cProGetShgiotNoActive = "pkg_errors.pro_get_shgiot_no_active";
         public const string cProGetCtbElementim = "PKG_UTILS.pro_get_ctb_elementim";
+        public const string cProGetStatusKartis = "PKG_UTILS.pro_get_status_kartis_ctb";
 
         private IKDSCacheManager _kdsCacheManager;
 
@@ -40,6 +41,7 @@ namespace KDSCache.Implement
              _kdsCacheManager.AddItem(CachedItems.SibotLedivuchYadani, GetCtbSibotLedivuchYadani());
              _kdsCacheManager.AddItem(CachedItems.ErrorTable, GetErrorTable());
              _kdsCacheManager.AddItem(CachedItems.Elementim, GetElementim());
+             _kdsCacheManager.AddItem(CachedItems.StatusWC, GetStatusKartis());
         }
 
         private DataTable GetYamimMeyuchadim()
@@ -128,6 +130,16 @@ namespace KDSCache.Implement
 
             oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
             oDal.ExecuteSP(cProGetCtbElementim, ref dt);
+            return dt;
+        }
+
+        private DataTable GetStatusKartis()
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+            oDal.ExecuteSP(cProGetStatusKartis, ref dt);
             return dt;
         }
     }
