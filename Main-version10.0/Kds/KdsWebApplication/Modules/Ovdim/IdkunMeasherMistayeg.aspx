@@ -18,6 +18,7 @@
     </style>
 </asp:Content>
 
+
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server"> 
    <script type="text/javascript" language="javascript">
        var oTxtId = "<%=txtId.ClientID%>";
@@ -25,7 +26,9 @@
        var flag = false;
        var userId = iUserId;
    </script>     
-
+    <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:1000;width:150px" >
+        <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
+</div>  
 <div id="divSinun" runat="server"  onkeydown="if (event.keyCode==107) {event.keyCode=9; return event.keyCode }">
        <asp:UpdatePanel ID="upRdoId" runat="server" RenderMode="Inline" UpdateMode="Always">
                         <ContentTemplate> 
@@ -90,7 +93,7 @@
     <br />
     <br />
 
-    <fieldset id="fsPratim" runat="server" style="width:400px;height:310px; display:none">   
+    <fieldset id="fsPratim" runat="server" style="width:400px;height:400px; display:none">   
          <legend>פרטי סטטוס כרטיס</legend>  
           <br />
         
@@ -109,7 +112,9 @@
                               <td  class="bold">תאריך:</td>
                                <td >
                                    <br />
-                                   <asp:Label ID="lblTaarich" runat="server"></asp:Label>
+                                    <a id="lnkTaarich" href="#" runat="server"  onclick="OpenEmpWorkCard()"></a>
+                                
+                                 <%--  <asp:Label ID="lblTaarich" runat="server"></asp:Label>--%>
                                    <br />
                                    <br />
                               </td>
@@ -145,6 +150,19 @@
                                     <asp:Button Text="עדכן" ID="btnUpdate" runat="server" TabIndex="5"  Enabled="false"
                                         CssClass ="ImgButtonSearch" autopostback="true"  OnClientClick="return CheckNetunimNOtEmpty();" OnClick="btnUpdate_Click"  
                                         Width="62px" onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />      
+                              </td>
+                          </tr>
+                           <tr align="right"  >
+                              <td  colspan="2" align="right" dir="ltr" >
+                                   
+                                 <br />
+                                    <label style="font-weight:bold"><bold>
+                                        בסיום עדכון:<br />
+                                        1. חובה לפתוח את כרטיס העבודה לבדיקת תקינות הכרטיס. <br />
+                                        2. אם תאריך הוא לחודש מוקדם משני חודשי רטרו, חובה  <br />
+                                           &nbsp; &nbsp;  .("לפתוח את הכרטיס" (לבצע בו עדכון  
+                                        </bold>
+                                    </label> 
                               </td>
                           </tr>
                       </table>   
@@ -212,6 +230,23 @@
 
                // SetTextBox();
            }
+
+           function OpenEmpWorkCard() {
+              
+
+                var EmpId = $('#<%=lblMis.ClientID %>').html();
+               var WCardDate = $('#<%=lnkTaarich.ClientID %>').html();
+               var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
+               document.getElementById("divHourglass").style.display = 'block';
+               var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
+
+               document.getElementById("divHourglass").style.display = 'none';
+               if (ReturnWin == '' || ReturnWin == 'undefined' || ReturnWin == undefined)
+                   ReturnWin = false;
+
+             
+            return ReturnWin;
+        }
    </script>
 </asp:Content>
 

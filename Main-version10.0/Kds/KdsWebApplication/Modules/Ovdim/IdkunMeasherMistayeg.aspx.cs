@@ -79,8 +79,9 @@ namespace KdsWebApplication.Modules.Ovdim
             {
                 var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
 
+               // lnkTaarich.InnerText = txtId.Text;
                 lblMis.Text = txtId.Text;
-                lblTaarich.Text = clnTaarich.Text;
+                lnkTaarich.InnerText = clnTaarich.Text;
 
                 dtCtb = cache.GetCacheItem<DataTable>(CachedItems.StatusWC).Copy();
                 ddlstatus.DataTextField = "teur_measher_o_mistayeg";
@@ -89,7 +90,7 @@ namespace KdsWebApplication.Modules.Ovdim
                 ddlstatus.DataBind();
 
                 misIshi = int.Parse(lblMis.Text);
-                dt = oOvdim.GetStatusKartis(misIshi, DateTime.Parse(lblTaarich.Text), int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber));
+                dt = oOvdim.GetStatusKartis(misIshi, DateTime.Parse(clnTaarich.Text), int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber));
                 if (dt.Rows.Count > 0)
                 {
                   
@@ -111,7 +112,7 @@ namespace KdsWebApplication.Modules.Ovdim
                         txtSiba.Text = dt.Rows[0]["RESON"].ToString();
 
                         var shinuyManager = ServiceLocator.Current.GetInstance<IShinuyimManager>();
-                        dt = shinuyManager.GetIdkuneyRashemet(misIshi, DateTime.Parse(lblTaarich.Text));
+                        dt = shinuyManager.GetIdkuneyRashemet(misIshi, DateTime.Parse(clnTaarich.Text));
                         if ((string.IsNullOrEmpty(status) || status == "0") && (dt.Rows.Count == 0 || dt.Select("pakad_id in(46,47) and GOREM_MEADKEN=" + misIshi).Length == 0))
                             EnableUpdate(true);
                         else EnableUpdate(false);
@@ -138,7 +139,7 @@ namespace KdsWebApplication.Modules.Ovdim
             clOvdim oOvdim = new clOvdim();
             try
             {
-                oOvdim.UpdateStatusByRashemet(int.Parse(lblMis.Text), DateTime.Parse(lblTaarich.Text), int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber),int.Parse(ddlstatus.SelectedValue),txtSiba.Text);
+                oOvdim.UpdateStatusByRashemet(int.Parse(lblMis.Text), DateTime.Parse(clnTaarich.Text), int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber),int.Parse(ddlstatus.SelectedValue),txtSiba.Text);
             }
             catch (Exception ex)
             {
