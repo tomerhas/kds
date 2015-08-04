@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master"  AutoEventWireup="true" CodeBehind="IdkunMeasherMistayeg.aspx.cs"  Title="Untitled Page" Inherits="KdsWebApplication.Modules.Ovdim.IdkunMeasherMistayeg"  %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master"  AutoEventWireup="true" CodeBehind="IdkunStatusKartis.aspx.cs"  Title="Untitled Page" Inherits="KdsWebApplication.Modules.Ovdim.IdkunStatusKartis"  %>
  
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Register Assembly="KdsLibrary" Namespace="KdsLibrary.Controls" TagPrefix="KdsCalendar"%>

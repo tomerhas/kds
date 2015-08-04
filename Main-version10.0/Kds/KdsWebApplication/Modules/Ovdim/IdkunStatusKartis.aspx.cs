@@ -24,7 +24,7 @@ using KDSCommon.Interfaces.Managers;
 
 namespace KdsWebApplication.Modules.Ovdim
 {
-    public partial class IdkunMeasherMistayeg : KdsPage
+    public partial class IdkunStatusKartis : KdsPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

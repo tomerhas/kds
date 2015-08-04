@@ -10,7 +10,7 @@
 namespace KdsWebApplication.Modules.Ovdim {
     
     
-    public partial class IdkunMeasherMistayeg {
+    public partial class IdkunStatusKartis {
         
         /// <summary>
         /// Image2 control.

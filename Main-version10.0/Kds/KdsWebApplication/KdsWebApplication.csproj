@@ -337,7 +337,7 @@
     <Content Include="Modules\Ovdim\HosafatPeilut.aspx" />
     <Content Include="Modules\Ovdim\HosafatPeiluyot.aspx" />
     <Content Include="Modules\Ovdim\HosafatSidur.aspx" />
-    <Content Include="Modules\Ovdim\IdkunMeasherMistayeg.aspx" />
+    <Content Include="Modules\Ovdim\IdkunStatusKartis.aspx" />
     <Content Include="Modules\Ovdim\MadknAcharon.aspx" />
     <Content Include="Modules\Ovdim\MonthlyQuotaAgafit.aspx" />
     <Content Include="Modules\Ovdim\MonthlyQuotaVaadatPnim.aspx" />
@@ -616,12 +616,12 @@
     <Compile Include="Modules\Ovdim\HosafatSidur.aspx.designer.cs">
       <DependentUpon>HosafatSidur.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Ovdim\IdkunMeasherMistayeg.aspx.cs">
-      <DependentUpon>IdkunMeasherMistayeg.aspx</DependentUpon>
+    <Compile Include="Modules\Ovdim\IdkunStatusKartis.aspx.cs">
+      <DependentUpon>IdkunStatusKartis.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Modules\Ovdim\IdkunMeasherMistayeg.aspx.designer.cs">
-      <DependentUpon>IdkunMeasherMistayeg.aspx</DependentUpon>
+    <Compile Include="Modules\Ovdim\IdkunStatusKartis.aspx.designer.cs">
+      <DependentUpon>IdkunStatusKartis.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\Ovdim\MadknAcharon.aspx.cs">
       <DependentUpon>MadknAcharon.aspx</DependentUpon>
