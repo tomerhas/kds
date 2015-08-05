@@ -133,6 +133,7 @@ namespace KdsBatch
             sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.DakotPremiaShabat.GetHashCode()),4,0));
             fErech = GetErechRechiv(clGeneral.enRechivim.DakotPremiaYomit.GetHashCode());
             fErech += GetErechRechiv(clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode());
+            fErech += GetErechRechiv(clGeneral.enRechivim.PremyatNehigaYadani.GetHashCode());
             sErua417.Append(FormatNumber(fErech, 5, 0));
 
               if (!IsEmptyErua(sErua417.ToString()))

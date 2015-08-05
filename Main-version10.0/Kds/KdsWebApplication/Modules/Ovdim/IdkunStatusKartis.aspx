@@ -93,7 +93,7 @@
     <br />
     <br />
 
-    <fieldset id="fsPratim" runat="server" style="width:400px;height:400px; display:none">   
+    <fieldset id="fsPratim" runat="server" style="width:400px;height:500px; display:none">   
          <legend>פרטי סטטוס כרטיס</legend>  
           <br />
         
@@ -136,7 +136,10 @@
                               </td>
                                <td >
                                    <br />
-                                   <asp:TextBox ID="txtSiba" runat="server" Enabled="false" Width="300px"  ></asp:TextBox>
+                                
+                 <%--   <asp:RequiredFieldValidator ID="vldDescription" Display="Dynamic" CssClass="ErrorMessage"  runat="server"     ErrorMessage="חובה להגדיר תיאור לריצה!" ControlToValidate="txtDescription"></asp:RequiredFieldValidator><br />--%>
+                                
+                                   <asp:TextBox ID="txtSiba" runat="server" Enabled="false" MaxLength="200"  TextMode="MultiLine" Width="300" Height="100px" ></asp:TextBox>
                                    <br />
                               </td>
                           </tr>

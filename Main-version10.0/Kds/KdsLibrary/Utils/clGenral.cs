@@ -863,6 +863,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             YemeyNochechut =293,
             NesiaBerechevMuganET = 295,
             ZmanElementZarNahagut = 296,
+            PremyatNehigaYadani = 297,
             NosafotBeNeemanut=281,
             HalbashaTchilatYom=931,
             HalbashaSofYom=932,
@@ -1009,7 +1010,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             MeshekYadani = 115,
             SadranYadani = 116,
             PakachYadani = 117,
-            RakazYadani = 118
+            RakazYadani = 118,
+            NehigaYadani = 119,
         }
 
         public enum enHachtamatShaon

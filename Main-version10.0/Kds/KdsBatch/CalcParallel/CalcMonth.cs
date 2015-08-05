@@ -1421,6 +1421,9 @@ namespace KdsBatch
 
                 //פרמית רכז ידני (רכיב 288) :
                 CalcRechiv288();
+                
+                //פרמית נהיגה ידני (רכיב 297) :
+                CalcRechiv297();
 
                 //נוכחות לפרמיית מפעל ייצור (רכיב 233
                 CalcRechiv233();
@@ -2787,7 +2790,21 @@ namespace KdsBatch
             }
         }
 
-
+        private void CalcRechiv297()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                fSumDakotRechiv = oCalcBL.GetPremiaYadanit(objOved.dtPremyotYadaniyot, clGeneral.enSugPremia.NehigaYadani.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.PremyatNehigaYadani.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremyatNehigaYadani.GetHashCode(), objOved.Taarich, "", ex);
+                throw (exec);
+            }
+        }
+        
         private void CalcRechiv289()
         {
             float fSumDakotRechiv;
