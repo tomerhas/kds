@@ -20,7 +20,7 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server"> 
-   <script type="text/javascript" language="javascript">
+    <script type="text/javascript" language="javascript">
        var oTxtId = "<%=txtId.ClientID%>";
        var oTxtName = "<%=txtName.ClientID%>";
        var flag = false;
@@ -155,6 +155,7 @@
                                         Width="62px" onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />      
                               </td>
                           </tr>
+                         
                            <tr align="right"  >
                               <td  colspan="2" align="right" dir="ltr" >
                                    

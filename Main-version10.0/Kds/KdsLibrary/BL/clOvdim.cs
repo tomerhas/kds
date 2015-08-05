@@ -1948,10 +1948,11 @@ namespace KdsLibrary.BL
            }
        }
 
-       public void UpdateStatusByRashemet(int mispar_ishi, DateTime taarich, int gorem_meadken,int status, string reson)
+       public int UpdateStatusByRashemet(int mispar_ishi, DateTime taarich, int gorem_meadken,int status, string reson)
        {
            clDal oDal = new clDal();
            DataTable dt = new DataTable();
+           int code;
            try
            {
                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, mispar_ishi, ParameterDir.pdInput);
@@ -1959,11 +1960,15 @@ namespace KdsLibrary.BL
                oDal.AddParameter("p_meadken", ParameterType.ntOracleInteger, gorem_meadken, ParameterDir.pdInput);
                oDal.AddParameter("p_status", ParameterType.ntOracleInteger, status, ParameterDir.pdInput);
                oDal.AddParameter("p_reson", ParameterType.ntOracleVarchar, reson, ParameterDir.pdInput);
+               oDal.AddParameter("p_code", ParameterType.ntOracleInteger, null, ParameterDir.pdOutput);
                oDal.ExecuteSP(clGeneral.cProUpdStatusByRashemet, ref dt);
 
+               code=  Int32.Parse(oDal.GetValParam("p_code"));
+               return code;
            }
            catch (Exception ex)
            {
+               return 1;
                throw ex;
            }
        }

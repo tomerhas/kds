@@ -137,9 +137,15 @@ namespace KdsWebApplication.Modules.Ovdim
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
             clOvdim oOvdim = new clOvdim();
+            int res;
             try
             {
-                oOvdim.UpdateStatusByRashemet(int.Parse(lblMis.Text), DateTime.Parse(clnTaarich.Text), int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber),int.Parse(ddlstatus.SelectedValue),txtSiba.Text);
+                res=oOvdim.UpdateStatusByRashemet(int.Parse(lblMis.Text), DateTime.Parse(clnTaarich.Text), int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber),int.Parse(ddlstatus.SelectedValue),txtSiba.Text);
+                if (res == 0)
+                      ScriptManager.RegisterStartupScript(btnUpdate, this.GetType(), "err", "alert('נתוני הכרטיס עודכנו בהצלחה');", true);
+                else  ScriptManager.RegisterStartupScript(btnUpdate, this.GetType(), "err", "alert('נתוני הכרטיס לא התעדכנו');", true);
+               
+
             }
             catch (Exception ex)
             {
