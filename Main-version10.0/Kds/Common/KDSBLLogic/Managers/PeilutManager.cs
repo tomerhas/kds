@@ -150,7 +150,7 @@ namespace KdsLibrary.KDSLogic.Managers
 
             try
             {
-                cls.dtElementim = GetDTElementim();
+                cls.dtElementim = GetDTElementim(dDateCard);
                 cls.lMakatNesia = lMakatNesiaNew;
                 cls.dCardDate = dDateCard;
                 cls.iOldKisuyTor = cls.iKisuyTor;
@@ -230,7 +230,7 @@ namespace KdsLibrary.KDSLogic.Managers
             try
             {
 
-                cls.dtElementim = GetDTElementim();
+                cls.dtElementim = GetDTElementim(dDateCard);
      
                 cls.lMakatNesia = oObjPeilutOvdimIns.MAKAT_NESIA;
                 cls.lOldMakatNesia = cls.lMakatNesia;
@@ -304,7 +304,7 @@ namespace KdsLibrary.KDSLogic.Managers
         {
             //נתוני פעילויות       
             PeilutDM cls = new PeilutDM();
-            cls.dtElementim =GetDTElementim();
+            cls.dtElementim = GetDTElementim(CardDate);
             cls.dCardDate = CardDate;
             cls.iPeilutMisparSidur = (System.Convert.IsDBNull(dr["peilut_mispar_sidur"]) ? 0 : int.Parse(dr["peilut_mispar_sidur"].ToString()));
             cls.iKisuyTor = (System.Convert.IsDBNull(dr["Kisuy_Tor"]) ? 0 : int.Parse(dr["Kisuy_Tor"].ToString()));
@@ -377,7 +377,7 @@ namespace KdsLibrary.KDSLogic.Managers
                     cls.sSugShirutName = COL_TRIP_KNISA;
                 }
             }
-            cls.dtElementim= GetDTElementim();
+            cls.dtElementim = GetDTElementim(CardDate);
 
             return cls;
         }
@@ -672,11 +672,11 @@ namespace KdsLibrary.KDSLogic.Managers
             }
         }
 
-        private DataTable GetDTElementim()
+        private DataTable GetDTElementim(DateTime dTaarich)
         {
-            DataTable dtElementim = new DataTable();
-            var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
-            dtElementim = kavimDal.GetMeafyeneyElementByKod(0, DateTime.Parse("01/08/2014"));
+            //DataTable dtElementim = new DataTable();
+            //var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+            //dtElementim = kavimDal.GetMeafyeneyElementByKod(0, dTaarich);
             //return dtElementim;
 
             var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
