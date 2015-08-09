@@ -43,10 +43,10 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  Hosafat_Sidur.Btn_Show_Mapa(driver).click();
 	  Assert.assertEquals(Hosafat_Sidur.Validate_Popup(driver).getText(),"יש להזין מספר סידורי שאינו מתחיל בספרות 99");
 	  Hosafat_Sidur.Txt_Sidur_Mapa(driver).clear();
-	  Hosafat_Sidur.Txt_Sidur_Mapa(driver).sendKeys("33011");
-	  Hosafat_Sidur.Btn_Show_Mapa(driver).click();
-	  Assert.assertEquals(Hosafat_Sidur.Validate_Popup(driver).getText(),"כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה");
-	  Hosafat_Sidur.Txt_Sidur_Mapa(driver).clear();
+	  //Hosafat_Sidur.Txt_Sidur_Mapa(driver).sendKeys("33011");
+	  //Hosafat_Sidur.Btn_Show_Mapa(driver).click();
+	  //Assert.assertEquals(Hosafat_Sidur.Validate_Popup(driver).getText(),"כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה");
+	  //Hosafat_Sidur.Txt_Sidur_Mapa(driver).clear();
 	  Hosafat_Sidur.Txt_Sidur_Mapa(driver).sendKeys("58011");
 	  Hosafat_Sidur.Btn_Show_Mapa(driver).click();
 	  Hosafat_Sidur.Btn_Cheak_ALL(driver).click();
