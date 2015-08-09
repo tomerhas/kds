@@ -16,6 +16,7 @@ using KDSCommon.Interfaces.Managers;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Managers.BankShaot;
 using System.Data;
+using System.Xml;
 //using Lesnikowski.Barcode; 
 
 public partial class Modules_Test2 : System.Web.UI.Page
@@ -44,6 +45,7 @@ public partial class Modules_Test2 : System.Web.UI.Page
         //});
        //btnHeadrut.Attributes.Add("onClick", "OpenDivuachHeadrut()");
     }
+
 
     protected void Page_PreRender(object sender, EventArgs e)
     { 

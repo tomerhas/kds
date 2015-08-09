@@ -32,6 +32,7 @@ using KDSCommon.Interfaces.DAL;
 using KDSCommon.Enums;
 using KDSCommon.Interfaces.Logs;
 using KDSCommon.DataModels.Exceptions;
+using System.Xml;
 
 
 public partial class Modules_Test :Page
@@ -108,72 +109,36 @@ public partial class Modules_Test :Page
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        //long dateNumber = 1297380023295;
-        //long beginTicks = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks;
-
-        //_timer = new System.Timers.Timer(5000);
-        //_timer.Interval = 5000;
-        //_timer.Tick += OnTimerAwake;
-        //_timer.Enabled = true;
-        //_timer.Elapsed += OnTimerAwake;
-        //SleepUntillProccessEnd(1);
-        //_sug_bakasha = 1;
-        //_timer.Start();
-    //    OnTimerAwake(sender, e);
-      //  SleepUntillProccessEnd(1);
-       
-        //txtId.Attributes.Add("onfocus", "alert('')");
-        //DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse("26/08/2011"), DateTimeKind.Utc); 
-        //var kind = convertedDate.Kind; // will equal DateTimeKind.Utc Now, once the system knows its in UTC time, you can just call ToLocalTime:
-
-        //DateTime dt = convertedDate.ToLocalTime(); 
-
-        //DateTime d1 = new DateTime(1970, 1, 1);
-        //long d2 = DateTime.UtcNow.Ticks;
-        
-        //TimeSpan ts = new TimeSpan(d2 - d1.Ticks); 
-
-       // //DataTable dtTest = new DataTable();
-       // //clUtils oUtils = new clUtils();
-       // clBatchManager oBatchManager;
-       // //dtTest = oUtils.GetSnifAv(1);
-       // //SD.dtSnifim = dtTest;
-       // DataTable dtLicenseNumbers = new DataTable();
-       // dDateCard = DateTime.Parse("03/08/2009");
-       // //ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
-
-       // oBatchManager = new clBatchManager(74220, DateTime.Parse("03/08/2009"));
-       // if (!oBatchManager.IsExecuteErrors)
-       // {
-       //     oBatchManager.InitGeneralData();
-       // }
-       // SD.Param1 = oBatchManager.oParam.dSidurStartLimitHourParam1;
-       // SD.Param93 = oBatchManager.oParam.dSidurLimitShatGmar;
-       // SD.Param80 = oBatchManager.oParam.dNahagutLimitShatGmar;
-       // SD.Param3 = oBatchManager.oParam.dSidurEndLimitHourParam3;
-       // SD.Param29 = oBatchManager.oParam.dStartHourForPeilut;
-       // SD.Param30 = oBatchManager.oParam.dEndHourForPeilut;
-       // SD.SugeySidur = oBatchManager.dtSugSidur;
-       // SD.MeafyenyOved = oBatchManager.oMeafyeneyOved;
-       // SD.KdsParameters = oBatchManager.oParam;
-       // SD.OvedYomAvoda = oBatchManager.oOvedYomAvodaDetails;
-       // SD.MeafyeneyElementim = GetMeafyeneyElementim();
-       // ////SetSecurityLevel();
-       // //SetLookUpSidurim();
-       // SD.DataSource = oBatchManager.htEmployeeDetails;
-       // dtLicenseNumbers = GetMasharData(oBatchManager.htEmployeeDetails);
-       
-       // SD.Mashar = dtLicenseNumbers;
-       // //oBatchManager.MainInputData(iMisparIshi, dDateCard);
-       // //if (!Page.IsPostBack)
-       // //{
-          //  BuildPage();
-       // //}
-
-       ////////// oTxt.Text = "vered";
-       //////////// oTableCell.Controls.Add(oTxt);
-       ////////// Page.Controls.Add(oTxt);
+        //KdsWebApplication.syInterfaceWS.MalalClient wsSy = new  KdsWebApplication.syInterfaceWS.MalalClient();
+        //var xmlE = wsSy.SQLRecordSetToXML("Select * From Emp");
+        //XmlDocument doc = new XmlDocument();
+        //doc.LoadXml(xmlE);
+        //DataSet DS = ConvertXMLToDataSet(xmlE);
     }
+    public DataSet ConvertXMLToDataSet(string xmlData)
+    {
+        StringReader stream = null;
+        XmlTextReader reader = null;
+        try
+        {
+            DataSet xmlDS = new DataSet();
+            stream = new StringReader(xmlData);
+            // Load the XmlTextReader from the stream
+            reader = new XmlTextReader(stream);
+            xmlDS.ReadXml(reader);
+            return xmlDS;
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+            if (reader != null) reader.Close();
+        }
+    }// Use this function to get XML string from a dataset
+
+
     private string GetMasharCarNumbers(OrderedDictionary htEmployeeDetails)
     {
         string sCarNumbers = "";
