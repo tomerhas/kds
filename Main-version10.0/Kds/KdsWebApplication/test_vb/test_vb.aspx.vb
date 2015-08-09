@@ -6,7 +6,7 @@ Imports System.IO
 Imports DalOraInfra.DAL
 
 
-Partial Class test_vb_test_vb
+Partial Public Class test_vb
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -55,7 +55,10 @@ Partial Class test_vb_test_vb
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
 
-            oKDs.TryKdsFile()
+            'oKDs.TryKdsFile()
+            oKDs.TryKdsFileHarmony()
+            Return
+
 
             p_date_str = "20100426"
             'p_status = oKDs.ChkStatusSdrn(p_date_str)
