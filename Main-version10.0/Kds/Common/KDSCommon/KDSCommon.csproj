@@ -96,6 +96,7 @@
     <Compile Include="DataModels\PeilutDM.cs" />
     <Compile Include="DataModels\Shinuyim\FlowShinuyResult.cs" />
     <Compile Include="Enums\enKodGil.cs" />
+    <Compile Include="Interfaces\Clocks\IClocks.cs" />
     <Compile Include="Interfaces\Managers\BankShaot\IBankShaotManager.cs" />
     <Compile Include="Interfaces\Shinuyim\IShinuyLogCollection.cs" />
     <Compile Include="DataModels\Shinuyim\ShinuyInputData.cs" />

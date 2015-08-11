@@ -93,7 +93,7 @@ namespace KdsWebApplication.Modules.Ovdim
                 dt = oOvdim.GetStatusKartis(misIshi, DateTime.Parse(clnTaarich.Text), int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber));
                 if (dt.Rows.Count > 0)
                 {
-                  
+
                     status = dt.Rows[0]["MEASHER_O_MISTAYEG"].ToString();
                     if (status == "1")
                     {
@@ -117,9 +117,15 @@ namespace KdsWebApplication.Modules.Ovdim
                             EnableUpdate(true);
                         else EnableUpdate(false);
                     }
+                    fsPratim.Style["display"] = "block";
+                }
+                else
+                {
+                    fsPratim.Style["display"] = "none";
+                    ScriptManager.RegisterStartupScript(btnUpdate, this.GetType(), "err", "alert('לא נמצא כרטיס לתאריך זה');", true);
                 }
                 
-                fsPratim.Style["display"] = "block";
+             
 
             }
             catch (Exception ex)
@@ -133,6 +139,10 @@ namespace KdsWebApplication.Modules.Ovdim
             btnUpdate.Enabled = enable;
             ddlstatus.Enabled = enable;
             txtSiba.Enabled = enable;
+            if (enable)
+                btnUpdate.ControlStyle.CssClass = "ImgButtonSearch";
+            else
+                btnUpdate.ControlStyle.CssClass = "ImgButtonSearchDisable";      
         }
         protected void btnUpdate_Click(object sender, EventArgs e)
         {

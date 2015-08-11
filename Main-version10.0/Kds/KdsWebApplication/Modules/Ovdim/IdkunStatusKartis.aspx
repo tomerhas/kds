@@ -123,7 +123,7 @@
                               <td  class="bold">סטטוס:</td>
                               <td  >
                                   <br />
-                                  <asp:DropDownList ID="ddlstatus" runat="server" Enabled="false" Width="150px"></asp:DropDownList>
+                                  <asp:DropDownList ID="ddlstatus" runat="server" Enabled="false" onchange="ClearFields();" Width="150px"></asp:DropDownList>
                                   <br />
                                   <br />
                               </td>
@@ -206,6 +206,9 @@
            }
        }
 
+       function ClearFields() {
+           $('#<%=txtSiba.ClientID %>').val('');
+       }
            function onChange_FromDate() {
                //  debugger;
                var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes["Param100"].value;//($('[id$=Params]')[0]).attributes["Param100"].value;// document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;

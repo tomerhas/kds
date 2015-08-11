@@ -1,4 +1,7 @@
-﻿using System;
+﻿using KDSCommon.Interfaces.Logs;
+using KdsLibrary;
+using Microsoft.Practices.ServiceLocation;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -12,34 +15,28 @@ namespace KdsClocks
     {
         static void Main(string[] args)
         {
-
-           syInterfaceWS.MalalClient wsSy = new syInterfaceWS.MalalClient();
-            var xmlE = wsSy.SQLRecordSetToXML("Select * From Emp");
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xmlE);
-         //   DataSet DS = ConvertXMLToDataSet(xmlE);
-        }
-
-        public DataSet ConvertXMLToDataSet(string xmlData)
-        {
-            StringReader stream = null;
-            XmlTextReader reader = null;
+            Clock oClock= new Clock();
+            long lRequestNum=0;
+            int iStatus;
             try
             {
-                DataSet xmlDS = new DataSet();
-                stream = new StringReader(xmlData);
-                reader = new XmlTextReader(stream);
-                xmlDS.ReadXml(reader);
-                return xmlDS;
+                lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocksHarmony", -12);
+                var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
+                logManager.InsertLog(lRequestNum, "I", 0, "start clock , time=" + DateTime.Now.ToString());
+
+                oClock.InsertMovemetRecords();
+                oClock.InsertMovemetErrRecords();
+
+               // iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+                logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
             }
-            catch
+            catch (Exception ex)
             {
-                return null;
-            }
-            finally
-            {
-                if (reader != null) reader.Close();
+               // iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunClocksHarmony Faild: " + ex.Message);
             }
         }
+
+      
     }
 }
