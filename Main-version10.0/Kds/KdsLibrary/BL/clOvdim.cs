@@ -1948,6 +1948,52 @@ namespace KdsLibrary.BL
            }
        }
 
+       public string GetSibaForKartis(int mispar_ishi, DateTime taarich, int gorem_meadken, int status)
+       {
+           clDal oDal = new clDal();
+           string siba="";
+           try
+           {
+               oDal.AddParameter("p_siba", ParameterType.ntOracleVarchar, null, ParameterDir.pdReturnValue, 200);
+
+               oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, mispar_ishi, ParameterDir.pdInput);
+               oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
+               oDal.AddParameter("p_meadken", ParameterType.ntOracleInteger, gorem_meadken, ParameterDir.pdInput);
+               oDal.AddParameter("p_status", ParameterType.ntOracleInteger, status, ParameterDir.pdInput);
+              
+               oDal.ExecuteSP(clGeneral.cProGetSibaLeidkun);
+
+               siba = oDal.GetValParam("p_siba").Replace("null","");
+
+               return siba;
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+
+           //clDal oDal = new clDal();
+           //string sSugYechida;
+           //try
+           //{
+           //    oDal.AddParameter("p_sug_yechida", ParameterType.ntOracleVarchar, null, ParameterDir.pdReturnValue, 60);
+
+           //    oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+           //    oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
+           //    oDal.ExecuteSP(clGeneral.cProGetSugYechidaOved);
+
+           //    sSugYechida = oDal.GetValParam("p_sug_yechida");
+
+           //    return sSugYechida;
+           //}
+           //catch (Exception ex)
+           //{
+           //    throw ex;
+           //}
+
+       }
+        
+
        public int UpdateStatusByRashemet(int mispar_ishi, DateTime taarich, int gorem_meadken,int status, string reson)
        {
            clDal oDal = new clDal();

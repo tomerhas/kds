@@ -239,6 +239,7 @@ namespace KdsLibrary
         public const string cProGetWorkCardNoShaotLetahlum = "pkg_ovdim.pro_get_workcad_no_val_letash";
         public const string cProGetNochechutMerukezet = "pkg_ovdim.pro_get_nochechut_merukezet";
         public const string cProGetStatusKartis = "pkg_ovdim.pro_get_status_for_idkun";
+        public const string cProGetSibaLeidkun = "pkg_ovdim.pro_get_siba_leidkun";
         public const string cProUpdStatusByRashemet = "pkg_ovdim.pro_upd_status_by_rashemet";
         
 #endregion

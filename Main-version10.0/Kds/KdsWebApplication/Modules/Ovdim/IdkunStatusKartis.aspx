@@ -123,7 +123,7 @@
                               <td  class="bold">סטטוס:</td>
                               <td  >
                                   <br />
-                                  <asp:DropDownList ID="ddlstatus" runat="server" Enabled="false" onchange="ClearFields();" Width="150px"></asp:DropDownList>
+                                  <asp:DropDownList ID="ddlstatus" runat="server" Enabled="false" AutoPostBack="true" OnTextChanged="ddlstatus_TextChanged"   Width="150px"></asp:DropDownList>
                                   <br />
                                   <br />
                               </td>
@@ -164,7 +164,7 @@
                                         בסיום עדכון:<br />
                                         1. חובה לפתוח את כרטיס העבודה לבדיקת תקינות הכרטיס. <br />
                                         2. אם תאריך הוא לחודש מוקדם משני חודשי רטרו, חובה  <br />
-                                           &nbsp; &nbsp;  .("לפתוח את הכרטיס" (לבצע בו עדכון  
+                                           "לפתוח את הכרטיס" - לבצע בו עדכון 
                                         </bold>
                                     </label> 
                               </td>
@@ -206,9 +206,9 @@
            }
        }
 
-       function ClearFields() {
-           $('#<%=txtSiba.ClientID %>').val('');
-       }
+    //   function ClearFields() {
+     //      $('#<%=txtSiba.ClientID %>').val('');
+     //  }
            function onChange_FromDate() {
                //  debugger;
                var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes["Param100"].value;//($('[id$=Params]')[0]).attributes["Param100"].value;// document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;

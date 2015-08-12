@@ -134,6 +134,21 @@ namespace KdsWebApplication.Modules.Ovdim
             }
         }
 
+        protected void ddlstatus_TextChanged(object sender, EventArgs e)
+        {
+            string siba;
+            clOvdim oOvdim = new clOvdim();
+            try
+            {
+                siba = oOvdim.GetSibaForKartis(int.Parse(lblMis.Text), DateTime.Parse(clnTaarich.Text), int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber), int.Parse( ddlstatus.SelectedValue ));
+                txtSiba.Text = siba;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         private void EnableUpdate(bool enable)
         {
             btnUpdate.Enabled = enable;
