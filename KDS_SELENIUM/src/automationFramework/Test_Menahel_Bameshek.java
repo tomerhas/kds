@@ -42,6 +42,7 @@ public class Test_Menahel_Bameshek    extends Base {
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  DB_DML.deleteRecordFromTable("46194","to_date('11/06/2015','dd/mm/yyyy')","99001");
+	  driver.manage().window().maximize();
 	  LogIn_Page.Txt_Change_User(driver).sendKeys("igalr");
 	  LogIn_Page.Btn_Change_User(driver).click();
 	  Work_Card.Wait_For_Element_Stalenes(driver,"ctl00_KdsContent_btnUpdWorkCard");
