@@ -34,7 +34,7 @@ namespace KdsWebApplication.Modules.Ovdim
             if (!Page.IsPostBack)
             {
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
-                PageHeader = "רשימת כרטיסי עבודה לעובד";
+                PageHeader = "עדכון מסתייג ";
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
 
                 rdoId.Attributes.Add("onclick", "SetTextBox();");

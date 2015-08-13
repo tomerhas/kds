@@ -33,7 +33,7 @@
        <asp:UpdatePanel ID="upRdoId" runat="server" RenderMode="Inline" UpdateMode="Always">
                         <ContentTemplate> 
       <fieldset class="FilterFieldSet" style="width:950px;height:80px">
-        <legend>רשימת כרטיסי עבודה עבור</legend> 
+        <legend>בחירת נתונים להצגה</legend> 
         <table cellpadding="2" cellspacing="0" border="0" style="margin-top:4px"  >
             <tr>
                 <td>
