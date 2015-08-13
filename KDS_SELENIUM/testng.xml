@@ -14,7 +14,7 @@
             <class name="automationFramework.Test_Add_Activity" />  
             <class name="automationFramework.Test_Add_Special_Schedule" />  
             <class name="automationFramework.Test_Menahel_Bameshek" />
-            <class name="automationFramework.Test_Add_Schedule_Mapa" />
+            <!-- <class name="automationFramework.Test_Add_Schedule_Mapa" />!--
             
             
 		</classes>
