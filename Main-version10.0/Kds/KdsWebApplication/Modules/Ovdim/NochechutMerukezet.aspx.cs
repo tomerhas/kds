@@ -64,7 +64,7 @@ namespace KdsWebApplication.Modules.Ovdim
             {
 
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
-
+                PageHeader = "נוכחות מרוכזת";
                 KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
                 if (iSecurity == KdsSecurityLevel.ViewAll) //|| iSecurity == KdsSecurityLevel.ViewOnlyEmployeeData)
                 {
