@@ -10,7 +10,7 @@ using System.Collections.Specialized;
 
 namespace KdsClocks
 {
-    public class Clock// : IClocks
+    public class Clock 
     {
         public void InsertMovemetRecords()
         {
@@ -69,3 +69,4 @@ namespace KdsClocks
         }
     }
 }
+
