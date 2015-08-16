@@ -175,6 +175,7 @@
     <Compile Include="UDT\Coll_Chishuv_Chodesh.cs" />
     <Compile Include="UDT\Coll_Chishuv_Sidur.cs" />
     <Compile Include="UDT\Coll_Chishuv_Yomi.cs" />
+    <Compile Include="UDT\Coll_Harmony_Movment_Err_Mov.cs" />
     <Compile Include="UDT\Coll_Idkun_Rashemet.cs" />
     <Compile Include="UDT\Coll_Log_Day_Kelet.cs" />
     <Compile Include="UDT\Coll_Log_Peilut_Kelet.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="UDT\Obj_Chishuv_Chodesh.cs" />
     <Compile Include="UDT\Obj_Chishuv_Sidur.cs" />
     <Compile Include="UDT\Obj_Chishuv_Yomi.cs" />
+    <Compile Include="UDT\OBJ_Harmony_movment_Err_Mov.cs" />
     <Compile Include="UDT\Obj_Idkun_Rashemet.cs" />
     <Compile Include="UDT\Obj_Kavim.cs" />
     <Compile Include="UDT\Obj_Logtaskmsg.cs" />
