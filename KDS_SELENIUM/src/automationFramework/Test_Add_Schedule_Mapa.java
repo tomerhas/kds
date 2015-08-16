@@ -89,7 +89,8 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  //c.waitForWindow("WorkCard",driver);
 	  //Work_Card.Wait_For_Element_Visibile(driver,60, "btnRefreshOvedDetails");
 	  //Work_Card.Wait_For_Element_Visibile(driver, 80, "SD_imgCancel2");
-	  Work_Card.Wait_For_Element_Stalenes(driver, "btnRefreshOvedDetails");
+	  //Work_Card.Wait_For_Element_Stalenes(driver, "btnRefreshOvedDetails");
+	  Work_Card.Btn_Show(driver).click();
 	  Work_Card.Cancel_Schedule_02(driver).click();
 	  Work_Card.Wait_For_Element_Visibile(driver, 60, "btnUpdateCard");
 	  //Work_Card.Wait_For_Element_Stalenes(driver, "btnUpdateCard");
