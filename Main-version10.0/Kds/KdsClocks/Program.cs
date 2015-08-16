@@ -15,6 +15,9 @@ namespace KdsClocks
     {
         static void Main(string[] args)
         {
+            Bootstrapper b = new Bootstrapper();
+            b.Init();
+
             Clock oClock= new Clock();
             long lRequestNum=0;
             int iStatus;

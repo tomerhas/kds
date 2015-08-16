@@ -266,6 +266,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_HOUR = value;
+                this.m_HOURIsNull = false;  
             }
         }
         
@@ -274,7 +275,7 @@ namespace KDSCommon.UDT
                 return this.m_HOURIsNull;
             }
             set {
-                this.m_HOURIsNull = value;
+                this.m_HOURIsNull = value;  
             }
         }
         
@@ -285,6 +286,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_CHANG_REC = value;
+                this.m_CHANG_RECIsNull = false;  
             }
         }
         
@@ -303,7 +305,7 @@ namespace KDSCommon.UDT
                 return this.m_MARKED;
             }
             set {
-                this.m_MARKED = value;
+                this.m_MARKED = value;         
             }
         }
         
@@ -324,6 +326,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_SHIFT = value;
+                this.m_SHIFTIsNull = false;
             }
         }
         
@@ -343,6 +346,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_TAARICH_MEADKEN_ACHARON = value;
+                this.m_TAARICH_MEADKEN_ACHARONIsNull = false;
             }
         }
         
@@ -372,6 +376,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_MEADKEN_ACHARON = value;
+                this.m_MEADKEN_ACHARONIsNull = false;
             }
         }
         
@@ -391,6 +396,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_ABSTIME = value;
+                this.m_ABSTIMEIsNull = false;
             }
         }
         
@@ -410,6 +416,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_NUMERATOR = value;
+                this.m_NUMERATORIsNull = false;
             }
         }
         
@@ -439,6 +446,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_DUP_REC = value;
+                this.m_DUP_RECIsNull = false;
             }
         }
         
@@ -508,6 +516,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_CODE_ERR = value;
+                this.m_CODE_ERRIsNull = false;
             }
         }
         
@@ -527,6 +536,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_DATETRANSF = value;
+                this.m_DATETRANSFIsNull = false;
             }
         }
         
@@ -546,6 +556,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_REC_ENTER = value;
+                this.m_REC_ENTERIsNull = false;
             }
         }
         
@@ -565,6 +576,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_ZIGNORE = value;
+                this.m_ZIGNOREIsNull = false;
             }
         }
         
@@ -604,6 +616,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_BED = value;
+                this.m_BEDIsNull = false;
             }
         }
         
@@ -623,6 +636,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_L_PRESENT = value;
+                this.m_L_PRESENTIsNull = false;
             }
         }
         
@@ -652,6 +666,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_EMP_NO = value;
+                this.m_EMP_NOIsNull = false;
             }
         }
         
@@ -681,6 +696,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_ERR_MOVID = value;
+                this.m_ERR_MOVIDIsNull = false;
             }
         }
         
@@ -700,6 +716,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_NO_TMP_ACTIVITY = value;
+                this.m_NO_TMP_ACTIVITYIsNull = false;
             }
         }
         
@@ -739,6 +756,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_CLOCKID = value;
+                this.m_CLOCKIDIsNull = false;
             }
         }
         
@@ -758,6 +776,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_MEAL_SUPP = value;
+                this.m_MEAL_SUPPIsNull = false;
             }
         }
         
@@ -787,6 +806,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_AUTHORIZED = value;
+                this.m_AUTHORIZEDIsNull = false;
             }
         }
         
@@ -826,6 +846,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_TAARICH = value;
+                this.m_TAARICHIsNull = false;
             }
         }
         
@@ -855,6 +876,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_GOOD = value;
+                this.m_GOODIsNull = false;
             }
         }
         
@@ -884,6 +906,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_MEAL_QUANT = value;
+                this.m_MEAL_QUANTIsNull = false;
             }
         }
         
@@ -933,6 +956,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_LEVELORG = value;
+                this.m_LEVELORGIsNull = false;
             }
         }
         
@@ -952,6 +976,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_FROM_DLL = value;
+                this.m_FROM_DLLIsNull = false;
             }
         }
         
@@ -981,6 +1006,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_GOOD_REC = value;
+                this.m_GOOD_RECIsNull = false;
             }
         }
         
@@ -1030,6 +1056,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_BADGE_TYPE = value;
+                this.m_BADGE_TYPEIsNull = false;
             }
         }
         
@@ -1069,6 +1096,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_HAND = value;
+                this.m_HANDIsNull = false;
             }
         }
         
@@ -1098,6 +1126,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_EXPORT_P = value;
+                this.m_EXPORT_PIsNull = false;
             }
         }
         
@@ -1137,6 +1166,7 @@ namespace KDSCommon.UDT
             }
             set {
                 this.m_NO_ACTIVITY = value;
+                this.m_NO_ACTIVITYIsNull = false;
             }
         }
         

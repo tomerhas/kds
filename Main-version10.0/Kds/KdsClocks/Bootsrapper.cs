@@ -8,33 +8,32 @@ using Microsoft.Practices.ServiceLocation;
 using CacheInfra.Interfaces;
 using CacheInfra.Implement;
 using KDSCommon.Enums;
-using KDSCache.Implement;
+//using KDSCache.Implement;
 using KDSCommon.Interfaces;
 using KdsLibrary;
 using KDSCommon.Interfaces.Managers;
-using KdsBatch;
+//using KdsBatch;
 using KDSCommon.Interfaces.DAL;
 using KdsLibrary.KDSLogic.DAL;
 using KDSCommon.Interfaces.Managers.FlowManagers;
-using KdsErrors;
+//using KdsErrors;
 using KdsLibrary.KDSLogic.Managers;
 using KDSCommon.Interfaces.Errors;
-using KdsErrors.FlowManagers;
-using KdsErrors.FlowManagers.Factories;
 using KDSCommon.Interfaces.Logs;
 using KDSBLLogic.Logs;
 using KDSCommon.Interfaces.Shinuyim;
 using KDSBLLogic.DAL;
 using KDSBLLogic.Managers;
 using KdsShinuyim;
-using KdsShinuyim.FlowManager;
+//using KdsShinuyim.FlowManager;
+using KDSCache.Implement;
 
 
 /// <summary>
 /// Summary description for Bootstrapper
 /// </summary>
 /// 
-namespace KdsCalcul
+namespace KdsClocks
 {
 
     public class Bootstrapper
@@ -55,8 +54,8 @@ namespace KdsCalcul
             var manager = new KDSAgedQueueParameters();
             manager.Init(20);
 
-            container.RegisterInstance<IKDSAgedQueueParameters>(manager);
-            container.RegisterInstance<IMailManager>(container.Resolve<MailManager>());
+          //  container.RegisterInstance<IKDSAgedQueueParameters>(manager);
+           // container.RegisterInstance<IMailManager>(container.Resolve<MailManager>());
             //container.RegisterInstance<ICacheBuilder>(container.Resolve<CacheBuilder>());
 
             //Managers
@@ -65,23 +64,23 @@ namespace KdsCalcul
             container.RegisterType<ISidurManager, SidurManager>();
             container.RegisterType<IPeilutManager, PeilutManager>();
             container.RegisterType<IKavimManager, KavimManager>();
-            container.RegisterType<IErrorFlowManager, ErrorFlowManager>();
-            container.RegisterType<ISubErrorFlowFactory, SubErrorFlowFactory>();
+          //  container.RegisterType<IErrorFlowManager, ErrorFlowManager>();
+          //  container.RegisterType<ISubErrorFlowFactory, SubErrorFlowFactory>();
             container.RegisterType<ILogger, Logger>();
             container.RegisterType<IShinuyimManager, ShinuyimManager>();
-            container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
+          //  container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
             container.RegisterType<ILogBakashot, LogBakashot>();
             container.RegisterType<IClockManager, ClockManager>();
             //Containers
 
             //DAL
-            container.RegisterType<IOvedDAL, OvedDAL>();
-            container.RegisterType<IKavimDAL, KavimDAL>();
-            container.RegisterType<ISidurDAL, SidurDAL>();
-            container.RegisterType<IPeilutDAL, PeilutDAL>();
-            container.RegisterType<IPeilutDAL, PeilutDAL>();
-            container.RegisterType<IShinuyimDAL, ShinuyimDAL>();
-            container.RegisterType<IParametersDAL, ParametersDAL>();
+            //container.RegisterType<IOvedDAL, OvedDAL>();
+            //container.RegisterType<IKavimDAL, KavimDAL>();
+            //container.RegisterType<ISidurDAL, SidurDAL>();
+            //container.RegisterType<IPeilutDAL, PeilutDAL>();
+            //container.RegisterType<IPeilutDAL, PeilutDAL>();
+            //container.RegisterType<IShinuyimDAL, ShinuyimDAL>();
+            //container.RegisterType<IParametersDAL, ParametersDAL>();
             container.RegisterType<ILogDAL, LogDAL>();
             container.RegisterType<IClockDAL, ClockDAL>();
 
@@ -91,9 +90,9 @@ namespace KdsCalcul
             InitCacheItems(container);
 
             //Init card error
-            ICardErrorContainer cardErrorContainer = container.Resolve<CardErrorContainer>();
-            container.RegisterInstance<ICardErrorContainer>(cardErrorContainer);
-            cardErrorContainer.Init();
+            //ICardErrorContainer cardErrorContainer = container.Resolve<CardErrorContainer>();
+            //container.RegisterInstance<ICardErrorContainer>(cardErrorContainer);
+            //cardErrorContainer.Init();
 
         }
 

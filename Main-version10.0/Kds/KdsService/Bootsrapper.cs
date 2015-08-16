@@ -75,6 +75,7 @@ namespace KdsService
             container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
             container.RegisterType<ILogBakashot, LogBakashot>();
             container.RegisterType<IBankShaotManager, BankShaotManager>();
+            container.RegisterType<IClockManager, ClockManager>();
           //  container.RegisterType<IBankShaotManager, BankShaotManager>();
             
             //Containers
@@ -88,6 +89,8 @@ namespace KdsService
             container.RegisterType<IShinuyimDAL, ShinuyimDAL>();
             container.RegisterType<IParametersDAL, ParametersDAL>();
             container.RegisterType<ILogDAL, LogDAL>();
+            container.RegisterType<IClockDAL, ClockDAL>();
+            
 
             container.RegisterInstance<ICalcExecuter>(container.Resolve<CalculExecuter>());
 

@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Bsm\Main\Bsm\SharedLib\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SharedLib\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -55,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootsrapper.cs" />
     <Compile Include="Clock.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,6 +98,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\KDSBLLogic\KDSBLLogic.csproj">
+      <Project>{ba5c4914-3d29-4b2b-83af-d43389dfed17}</Project>
+      <Name>KDSBLLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\KDSCache\KDSCache.csproj">
+      <Project>{f2f12cc6-7b61-4b62-a364-cf1e132d2bf9}</Project>
+      <Name>KDSCache</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\KDSCommon\KDSCommon.csproj">
       <Project>{1cf6ed40-3036-4b17-ab5a-35f5c265c28c}</Project>
       <Name>KDSCommon</Name>

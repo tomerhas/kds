@@ -53,6 +53,7 @@ namespace KDSBatchTester
             container.RegisterType<IShinuyimManager, ShinuyimManager>();
             container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
             container.RegisterType<ILogBakashot, LogBakashot>();
+            container.RegisterType<IClockManager, ClockManager>();
 
             //Containers
 
@@ -65,6 +66,7 @@ namespace KDSBatchTester
             container.RegisterType<IShinuyimDAL, ShinuyimDAL>();
             container.RegisterType<IParametersDAL, ParametersDAL>();
             container.RegisterType<ILogDAL, LogDAL>();
+            container.RegisterType<IClockDAL, ClockDAL>();
 
             //var manager = container.Resolve<ISimpleCacheManager<int>>();
             //var item = container.Resolve<ISimpleCacheManager<string>>();

@@ -71,6 +71,7 @@ namespace KdsWebApplication
             container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
             container.RegisterType<ILogBakashot, LogBakashot>();
             container.RegisterType<IBankShaotManager, BankShaotManager>();
+            container.RegisterType<IClockManager, ClockManager>();
           //  container.RegisterType<IShinuyLogCollection, ShinuyLogCollection>();
 
             //Containers
@@ -84,6 +85,7 @@ namespace KdsWebApplication
             container.RegisterType<IShinuyimDAL, ShinuyimDAL>();
             container.RegisterType<IParametersDAL, ParametersDAL>();
             container.RegisterType<ILogDAL, LogDAL>();
+            container.RegisterType<IClockDAL, ClockDAL>();
 
             //var manager = container.Resolve<ISimpleCacheManager<int>>();
             //var item = container.Resolve<ISimpleCacheManager<string>>();

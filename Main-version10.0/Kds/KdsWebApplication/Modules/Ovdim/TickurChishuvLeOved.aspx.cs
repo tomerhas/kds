@@ -612,7 +612,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
             MainCalc objMainCalc = new MainCalc();
             objMainCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 2, ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10, ref  dtRikuz11To20, ref dtRikuz21To31, ref dtAllRikuz, ref dsRikuz);
             Session.Add("dsRikuz", dsRikuz);
-            //   dsRikuz.WriteXmlSchema("C:\\Temp\\RikuzChodshi.xml");
+            dsRikuz.WriteXmlSchema("C:\\Temp\\RikuzChodshi.xml");
             grdHeadrut.DataSource = dtHeadrut;
             grdHeadrut.DataBind();
             /*  dtHeadrut.TableName = "Headruyot";

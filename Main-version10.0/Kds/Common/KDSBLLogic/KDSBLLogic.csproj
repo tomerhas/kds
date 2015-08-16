@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\ClockDAL.cs" />
     <Compile Include="DAL\KavimDAL.cs" />
     <Compile Include="DAL\LogDAL.cs" />
     <Compile Include="DAL\OvedDAL.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="DAL\SidurDAL.cs" />
     <Compile Include="Logs\LogBakashot.cs" />
     <Compile Include="Logs\Logger.cs" />
+    <Compile Include="Managers\ClockManager.cs" />
     <Compile Include="Managers\MailManager.cs" />
     <Compile Include="Managers\ShinuyimManager.cs" />
     <Compile Include="Managers\KavimManager.cs" />
