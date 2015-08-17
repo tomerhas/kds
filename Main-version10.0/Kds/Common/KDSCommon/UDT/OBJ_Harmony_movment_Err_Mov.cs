@@ -50,11 +50,7 @@ namespace KDSCommon.UDT
         private System.DateTime m_ABSTIME;
         
         private bool m_ABSTIMEIsNull;
-        
-        private float m_NUMERATOR;
-        
-        private bool m_NUMERATORIsNull;
-        
+             
         private string m_CODEORG;
         
         private float m_DUP_REC;
@@ -215,7 +211,6 @@ namespace KDSCommon.UDT
             this.m_TAARICH_MEADKEN_ACHARONIsNull = true;
             this.m_MEADKEN_ACHARONIsNull = true;
             this.m_ABSTIMEIsNull = true;
-            this.m_NUMERATORIsNull = true;
             this.m_DUP_RECIsNull = true;
             this.m_CODE_ERRIsNull = true;
             this.m_DATETRANSFIsNull = true;
@@ -409,25 +404,7 @@ namespace KDSCommon.UDT
             }
         }
         
-        [OracleObjectMappingAttribute("NUMERATOR")]
-        public float NUMERATOR {
-            get {
-                return this.m_NUMERATOR;
-            }
-            set {
-                this.m_NUMERATOR = value;
-                this.m_NUMERATORIsNull = false;
-            }
-        }
-        
-        public bool NUMERATORIsNull {
-            get {
-                return this.m_NUMERATORIsNull;
-            }
-            set {
-                this.m_NUMERATORIsNull = value;
-            }
-        }
+     
         
         [OracleObjectMappingAttribute("CODEORG")]
         public string CODEORG {
@@ -1211,9 +1188,7 @@ namespace KDSCommon.UDT
             if ((ABSTIMEIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "ABSTIME", this.ABSTIME);
             }
-            if ((NUMERATORIsNull == false)) {
-                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "NUMERATOR", this.NUMERATOR);
-            }
+           
             Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "CODEORG", this.CODEORG);
             if ((DUP_RECIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "DUP_REC", this.DUP_REC);
@@ -1343,10 +1318,7 @@ namespace KDSCommon.UDT
             if ((ABSTIMEIsNull == false)) {
                 this.ABSTIME = ((System.DateTime)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "ABSTIME")));
             }
-            this.NUMERATORIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "NUMERATOR");
-            if ((NUMERATORIsNull == false)) {
-                this.NUMERATOR = ((float)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "NUMERATOR")));
-            }
+          
             this.CODEORG = ((string)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "CODEORG")));
             this.DUP_RECIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "DUP_REC");
             if ((DUP_RECIsNull == false)) {

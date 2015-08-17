@@ -13,7 +13,7 @@
     <siteMapNode url="~/Modules/Errors/EmployeErrors.aspx" title="כ. עבודה לטיפול"  description="כ. עובד לטיפול" roles="*"/>
 
     <siteMapNode  title="חישוב לעובד"  description="" roles="*">
-      <siteMapNode url="~/Modules/Ovdim/TickurChishuvLeOved.aspx" title="חישוב לעובד"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Ovdim/TickurChishuvLeOved.aspx" title="חישוב לעובד מקוון"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Rikuzim/RikuzeyAvodaLeOved.aspx" title="ריכוזי עבודה"  description="" roles="*"/>
       <!--<siteMapNode url="~/Modules/Rikuzim/ViewRikuzim.aspx" title=" רשימת ריכוזי עבודה"  description="" roles="*"/>-->
     </siteMapNode>

@@ -21,5 +21,10 @@ namespace KDSCommon.Helpers
             return int.TryParse(val, out temp);
         }
 
+        public static bool IsLongNumber(string val)
+        {
+            long temp = 0;
+            return long.TryParse(val, out temp);
+        }
     }
 }
