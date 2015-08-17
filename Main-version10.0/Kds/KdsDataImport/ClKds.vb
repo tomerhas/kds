@@ -4952,7 +4952,41 @@ Public Class ClKds
 
     End Sub
 
+    Public Sub MatchAttendHarmony()
 
+        Dim oDal As clDal
+        Dim ds As DataSet
+        Dim SRV_D_TAARICH As String
+        Dim ISTATUS As Integer
+        Dim Iteur As String
+
+
+        Try
+            oDal = New clDal
+            ds = New DataSet
+
+            SRV_D_TAARICH = Now.Date.ToString
+            ISTATUS = 0
+            Iteur = "test now"
+
+            oDal.ClearCommand()
+            oDal.AddParameter("pTAARICH", ParameterType.ntOracleVarchar, SRV_D_TAARICH, ParameterDir.pdInput)
+            oDal.AddParameter("pSTATUS", ParameterType.ntOracleVarchar, ISTATUS, ParameterDir.pdInput)
+            oDal.AddParameter("pteur", ParameterType.ntOracleVarchar, Iteur, ParameterDir.pdInput)
+            oDal.ExecuteSP("Pkg_Attendance.pro_new_control_Attend")
+
+
+
+            oDal.ClearCommand()
+            oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
+            'todo: oDal.ExecuteSP("Pkg_Attendance.pro_fetch_AttendHarmony", ds)
+
+        Catch ex As Exception
+            Throw ex
+            'Finally
+        End Try
+
+    End Sub
 
 #End Region
 
