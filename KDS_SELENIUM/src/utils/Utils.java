@@ -5,10 +5,15 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+
 import pageObjects.Employee_Card;
 import pageObjects.LogIn_Page;
 
@@ -178,6 +183,26 @@ public static int GetNumWindows(WebDriver driver)
 
 
 
+public void  Click_Sub_Menu  (String  menu ,  String sub_menu , WebDriver driver)   {
+
+
+	 WebElement element = driver.findElement(By.linkText(menu));
+
+     Actions action = new Actions(driver);
+
+     action.moveToElement(element).build().perform();
+     
+
+     WebElement subElement = driver.findElement(By.linkText(sub_menu));
+     
+     subElement.click();
+
+     
+	
+
+
+
+}
 
 }
 
