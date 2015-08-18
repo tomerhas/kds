@@ -56,10 +56,10 @@ Partial Public Class test_vb
         Try
 
 
-            Dim p_date_str_now As String
-            Dim oKDs As ClKds
-            oKDs = New ClKds
-            p_date_str_now = oKDs.getFullDateString(Now)
+            'Dim p_date_str_now As String
+            'Dim oKDs As ClKds
+            'oKDs = New ClKds
+            'p_date_str_now = oKDs.getFullDateString(Now)
 
 
             'oKDs.TryKdsFile()
