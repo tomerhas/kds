@@ -190,8 +190,12 @@
       <FullPath>RdlReportMushalimDetails.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>RdlTigburim.rdl</Name>
-      <FullPath>RdlTigburim.rdl</FullPath>
+      <Name>RdlTigburimOvdim.rdl</Name>
+      <FullPath>RdlTigburimOvdim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RdlTigburimRechev.rdl</Name>
+      <FullPath>RdlTigburimRechev.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Report2.rdl</Name>
@@ -240,10 +244,6 @@
     <ProjectItem>
       <Name>TestGalit.rdl</Name>
       <FullPath>TestGalit.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Tigburim.rdl</Name>
-      <FullPath>Tigburim.rdl</FullPath>
     </ProjectItem>
     <ResourceProjectItem>
       <Name>Tiuta.bmp</Name>
