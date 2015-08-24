@@ -45,7 +45,7 @@ public class Test_Menahel_Bameshek    extends Base {
 	  driver.manage().window().maximize();
 	  LogIn_Page.Txt_Change_User(driver).sendKeys("igalr");
 	  LogIn_Page.Btn_Change_User(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver,"ctl00_KdsContent_btnUpdWorkCard");
+	  Work_Card.Wait_For_Element_Stalenes(driver,"ctl00_KdsContent_btnUpdWorkCard",null);
 	  LogIn_Page.lnk_EmployeeCards(driver).click();
 	  Employee_Card.Txt_Id(driver).clear();
 	  Employee_Card.Txt_Id(driver).sendKeys("87903");
@@ -92,11 +92,11 @@ public class Test_Menahel_Bameshek    extends Base {
       Select droplist2 = new Select(Work_Card.List_Reason_Out(driver));
       droplist2.selectByVisibleText("שעון לא מדויק/לא תקין");
       Work_Card.Btn_Update(driver).click();      
-	  Work_Card.Wait_For_Element_Stalenes(driver,"clnDate");
+	  Work_Card.Wait_For_Element_Stalenes(driver,"clnDate",null);
 	  Work_Card.Date(driver).click();
 	  Work_Card.Date(driver).sendKeys("18072015");
 	  Work_Card.Btn_Show(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver,"btnAddMyuchad");
+	  Work_Card.Wait_For_Element_Stalenes(driver,"btnAddMyuchad",null);
 	  Work_Card.Btn_Add_Special(driver).click();
       Work_Card.Lbl_Special_No(driver).sendKeys("99300");
 	  Work_Card.Lbl_Special_No(driver).sendKeys(Keys.TAB);

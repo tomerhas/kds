@@ -624,18 +624,37 @@ public class Work_Card {
 		 
 			
 
+		 
+		 
+		 
+
 
 		 
-		 public static WebElement Wait_For_Element_Stalenes( WebDriver driver,String snameId) {
+		 public static WebElement Wait_For_Element_Stalenes( WebDriver driver,String snameId ,String  sclassname  ) {
 			   
-			  
+			            if  (snameId!=null) 
+			            		{		
 			        	WebDriverWait wait = new WebDriverWait(driver,60);
-			        	wait.until(ExpectedConditions.stalenessOf((driver.findElement(By.id(snameId)))));
+			        	wait.until(ExpectedConditions.stalenessOf((driver.findElement(By.id(snameId)))));} 
 			        	
+			            else 
+			            	
+			            {
+			            	WebDriverWait wait1 = new WebDriverWait(driver,60);
+			        	wait1.until(ExpectedConditions.stalenessOf((driver.findElement(By.className(sclassname)))));}
+			            	
 			        	
 			            return element;
 			        }
 			  
+		 
+		 
+		 
+	
+		 
+		 
+		 
+		 
 		 
 		 
 			}

@@ -79,7 +79,7 @@ public void Update_Day_WorkCard   (String sTachograph,String sLina ) throws Inte
 	  Work_Card.Date(driver).sendKeys("03032015");
 	  Work_Card.Btn_Show(driver).click();
 	  //Thread.sleep(3000);
-	  Work_Card.Wait_For_Element_Stalenes(driver, "btnPlus2");
+	  Work_Card.Wait_For_Element_Stalenes(driver, "btnPlus2",null);
 	  Work_Card.Day_Plus(driver).click();
 	  Select droplist = new Select(Work_Card.Tachograph(driver));
       droplist.selectByVisibleText(sTachograph); 
@@ -91,7 +91,7 @@ public void Update_Day_WorkCard   (String sTachograph,String sLina ) throws Inte
       Assert.assertFalse(Work_Card.HashlamaReason(driver).isEnabled(),"The Checkbox HashlamaReason is Enabled");
       Work_Card.Btn_Update(driver).click();
       //Thread.sleep(3000);
-      Work_Card.Wait_For_Element_Stalenes(driver, "btnCloseCard");
+      Work_Card.Wait_For_Element_Stalenes(driver, "btnCloseCard",null);
       Work_Card.Btn_Close(driver).click();
      // driver.close();
 }

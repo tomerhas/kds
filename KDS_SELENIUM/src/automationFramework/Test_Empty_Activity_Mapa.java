@@ -48,7 +48,7 @@ public class Test_Empty_Activity_Mapa   extends Base {
 	  Work_Card.Btn_Show(driver).click();
 	  Work_Card.AddRekaUp_mapa(driver).click();
 	  //Thread.sleep(2000);
-	  Work_Card.Wait_For_Element_Stalenes(driver,"SD_000_ctl03_SD_000_ctl03MakatNumber");
+	  Work_Card.Wait_For_Element_Stalenes(driver,"SD_000_ctl03_SD_000_ctl03MakatNumber",null);
 	  System.out.println(Work_Card.Makat_Num_Reka_Mapa(driver).getAttribute("value"));
 	  Assert.assertEquals("60375800",Work_Card.Makat_Num_Reka_Mapa(driver).getAttribute("value"));
 	  Work_Card.AddRekadw_mapa(driver).click();
@@ -61,7 +61,7 @@ public class Test_Empty_Activity_Mapa   extends Base {
 	  Work_Card.Cancel_Empty_Activity_Mapa(driver).click();
 	  Work_Card.Btn_Update(driver).click();
 	  //Thread.sleep(3000);
-	  Work_Card.Wait_For_Element_Stalenes(driver, "btnCloseCard");
+	  Work_Card.Wait_For_Element_Stalenes(driver, "btnCloseCard",null);
 	  Work_Card.Btn_Close(driver).click();
 	  
 	 

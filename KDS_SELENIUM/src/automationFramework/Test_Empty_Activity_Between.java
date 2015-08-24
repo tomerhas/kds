@@ -57,7 +57,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  Work_Card.Cancel__Empty_Activity_Between(driver).click();
 	  Work_Card.Btn_Update(driver).click();
 	  //Thread.sleep(3000);
-	  Work_Card.Wait_For_Element_Stalenes(driver, "btnCloseCard");
+	  Work_Card.Wait_For_Element_Stalenes(driver, "btnCloseCard",null);
 	  Work_Card.Btn_Close(driver).click();
 	  
 	  

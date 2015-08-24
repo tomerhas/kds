@@ -35,7 +35,7 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  Work_Card.Date(driver).click();
 	  Work_Card.Date(driver).sendKeys("24062015");
 	  Work_Card.Btn_Show(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver, "btnFindSidur");
+	  Work_Card.Wait_For_Element_Stalenes(driver, "btnFindSidur",null);
 	  Work_Card.Btn_Add_Mapa(driver).click();
 	  Utils b= new Utils();
 	  b.waitForWindow("HosafatSidur",driver);
@@ -68,11 +68,11 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  Assert.assertEquals(Work_Card.Sidur_Num(driver).getText(), "58011");
 	  Work_Card.Cancel_Sidur(driver).click();
 	  Work_Card.Btn_Update(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver, "clnDate");
+	  Work_Card.Wait_For_Element_Stalenes(driver, "clnDate",null);
 	  Work_Card.Date(driver).click();
 	  Work_Card.Date(driver).sendKeys("23062015");
 	  Work_Card.Btn_Show(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver, "btnFindSidur");
+	  Work_Card.Wait_For_Element_Stalenes(driver, "btnFindSidur",null);
 	  Work_Card.Btn_Add_Mapa(driver).click();
 	  Utils d= new Utils();
 	  d.waitForWindow("HosafatSidur",driver);
@@ -95,7 +95,7 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  Work_Card.Wait_For_Element_Visibile(driver, 60, "btnUpdateCard");
 	  //Work_Card.Wait_For_Element_Stalenes(driver, "btnUpdateCard");
 	  Work_Card.Btn_Update(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard");
+	  Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard",null);
 	  Work_Card.Btn_Close(driver).click();
 	  
 	  

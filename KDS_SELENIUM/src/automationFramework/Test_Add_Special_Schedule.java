@@ -40,7 +40,7 @@ public class Test_Add_Special_Schedule  extends Base {
 	  Work_Card.Date(driver).click();
 	  Work_Card.Date(driver).sendKeys("20052015");
 	  Work_Card.Btn_Show(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver, "btnAddMyuchad");
+	  Work_Card.Wait_For_Element_Stalenes(driver, "btnAddMyuchad",null);
 	  Work_Card.Btn_Add_Special(driver).click();
 	  Assert.assertFalse(Work_Card.Start_Time_Special(driver).isEnabled(),"Start_Time_Special is Enabled ");
 	  Assert.assertFalse(Work_Card.End_Time_Special(driver).isEnabled(),"End_Time_Special is Enabled ");
@@ -64,10 +64,10 @@ public class Test_Add_Special_Schedule  extends Base {
 	  Work_Card.Start_Time_Special(driver).sendKeys(Keys.TAB);
 	  Work_Card.End_Time_Special(driver).sendKeys("2345");
 	  Work_Card.Btn_Update(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver, "SD_imgCancel2");
+	  Work_Card.Wait_For_Element_Stalenes(driver, "SD_imgCancel2",null);
 	  Work_Card.Cancel_Schedule_02(driver).click();
 	  Work_Card.Btn_Update(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard");
+	  Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard",null);
 	  Work_Card.Btn_Close(driver).click();
 	  
 	  

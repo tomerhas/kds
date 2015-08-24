@@ -116,7 +116,7 @@ public class Test_Update_Car_No  extends Base {
 	      //Thread.sleep(3000);
 	      
 	      //Work_Card.Btn_Close(driver).click();
-	      Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard");
+	      Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard",null);
 	      Work_Card.Btn_Close(driver).click();
 	      }
 	      

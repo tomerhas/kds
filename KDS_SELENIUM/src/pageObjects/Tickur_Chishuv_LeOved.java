@@ -36,7 +36,35 @@ public class Tickur_Chishuv_LeOved {
 	 
 	 
 	 
+
+	 public static WebElement Grd_Calc_Detalils(WebDriver driver){
+		 
+		    element = driver.findElement(By.id("ctl00_KdsContent_pnlTotalMonthly"));
+		 
+		    return element;
+		 
+		    }
 	 
+	 
+	 
+
+	 public static WebElement List_Month(WebDriver driver){
+		 
+		    element = driver.findElement(By.id("ctl00_KdsContent_ddlMonth"));
+		 
+		    return element;
+		 
+		    }
+	 
+	 
+	 
+	 public static WebElement Btn_Print(WebDriver driver){
+		 
+		    element = driver.findElement(By.id("ctl00_ImagePrint"));
+		 
+		    return element;
+		 
+		    }
 	 
 
 }

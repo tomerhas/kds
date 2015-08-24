@@ -52,10 +52,10 @@ public class Test_Add_Activity   extends Base {
 	  System.out.println(Work_Card.Assert_Activity_Car_No(driver).getAttribute("value"));
 	  Assert.assertEquals(Work_Card.Assert_Activity_Car_No(driver).getAttribute("value"),"62505");
 	  Work_Card.Btn_Update(driver).click();
-      Work_Card.Wait_For_Element_Stalenes(driver,"SD_000_ctl08_SD_000_ctl08CancelPeilut");
+      Work_Card.Wait_For_Element_Stalenes(driver,"SD_000_ctl08_SD_000_ctl08CancelPeilut",null);
 	  Work_Card.Cancel_Sidur_Add_Activity(driver).click();
 	  Work_Card.Btn_Update(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard");
+	  Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard",null);
 	  Work_Card.Btn_Close(driver).click();
 	  
 	  
