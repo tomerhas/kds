@@ -1,4 +1,10 @@
-﻿var oGridRowId;
+﻿/**
+* The sidurim js class is used in the workcard process
+*
+* @class Sidurim
+*/
+
+var oGridRowId;
 var MKT_VISUT = 4;
 var MKT_VISA = 6;
 var MKT_SHERUT = 1;
@@ -6,6 +12,12 @@ var MKT_EMPTY = 2;
 var MKT_NAMAK = 3;
 var MKT_ELEMENT = 5;
 var SIDUR_GRIRA = 99220;
+/**
+recieves an index of a row. Itenraction with UI (txtId, clndate). Does logic according to the makat number . Complexity - Medium
+ This logic can be copied to the server using ajax
+
+ @method chkMkt
+*/
 function chkMkt(oRow) {
        var iMisparIshi = $get("txtId").value;
        var dCardDate = $get("clnDate").value;    
@@ -51,7 +63,13 @@ function chkMkt(oRow) {
                        }
                   }
             }         
-        }
+}
+/**
+recieves an xml parses it and returns the makat number. 
+Additional data is taken from the users input placed inside ui elements. Complexity - High
+Need to replace with controller. Need to understand logic
+* @method callBackMkt
+*/
     function callBackMkt(result,sArrPrm)
 {
         if (result == "-1") {
@@ -226,6 +244,10 @@ function chkMkt(oRow) {
            $get("hidErrChg").value = "";
         }
     }
+/**
+works with XML. updates UI. Interacts with wsGeneral service. Complexity - Medium
+@method SetNewSidurCtls
+*/
     function SetNewSidurCtls(iSidurNum, result){
         //אחרי שמזינים מספר סידור חדש, נאפשר את שאר השדות לפי מאפייני הסידור
         if (result == '-1')
@@ -323,7 +345,11 @@ function chkMkt(oRow) {
             if ($get("SD_txtSH" + iSidurNum).disabled == false)
                 ($get("SD_txtSH" + iSidurNum)).focus();
         }
-     }
+    }
+/**
+updates global variable _Sidur. Complexity - Low
+@method ClearSidurTitle
+*/
      function ClearSidurTitle(iSidurIndex){
          _Sidur = $get("SD_lblSidur" + iSidurIndex);
          if (_Sidur != null)
@@ -331,6 +357,10 @@ function chkMkt(oRow) {
                  _Sidur.title = '';                
              }
      }
+/**
+gets value from ui and validates. Complexity - Low
+@method PeilutVisaExists
+*/
      function PeilutVisaExists(iSidurNum){
          var bExist=false;
          var _Peilut = $get("SD_" + padLeft(iSidurNum,'0',3));
@@ -344,6 +374,10 @@ function chkMkt(oRow) {
          }
          return bExist;
      }
+/**
+gets value from ui and validates. Complexity - Low
+@method CheckIfFirstPeilutWithCarNum
+*/
      function CheckIfFirstPeilutWithCarNum(_Peilut, iCurrPeilutIndex) {
          var bFound = false;
          var sMustOtoNum;
@@ -354,6 +388,10 @@ function chkMkt(oRow) {
           }
           return bFound;
      }
+/**
+gets value from ui and validates. Complexity - Medium
+@method FindCarNumInAllSidurim
+*/
      function FindCarNumInAllSidurim(){
          var bMultiCarNum = false;
          var iCurrSidurNumber = 0;
@@ -382,6 +420,10 @@ function chkMkt(oRow) {
          }
          return bMultiCarNum + "|" + lCarNumber + "|" + lCarLicence;
      }
+/**
+recieves params. gets UI values. Updates ui values and attributes. Complexity - Low
+@method SetCarNumber
+*/
      function SetCarNumber(iSidurIndex, oRId, iPeilutIndex) {
          var lCarNumber = 0;
          var lCurrCarNumber = 0;
@@ -421,7 +463,11 @@ function chkMkt(oRow) {
                   $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("OldV", lCarNumber);
                   $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].title = lCurrCarLicence;         
               }
-    }                                        
+     }
+/**
+recieves params. gets UI values. Updates ui values and attributes. Complexity - Low
+@method chkHashlama
+*/
     function chkHashlama(val,args){
         var id = val.getAttribute("index");
         var oTxt1 = $get("SD_txtSH".concat(id)).value;
@@ -438,6 +484,10 @@ function chkMkt(oRow) {
         SidurTime = GetSidurTime(dStartHour,dEndHour);  
         args.IsValid = ((Number(oDDL.value) > SidurTime) ||  (Number(oDDL.value<=0)));
     }
+/**
+recieves params. gets UI values. Updates ui values and attributes. Uses wsGeneral service. Complexity - Low
+@method SetKnisaActualMin
+*/
     function SetKnisaActualMin(oRow){
         arrKnisa = $get(oRow.id).cells[_COL_KNISA].childNodes[0].nodeValue.split(',');
         if ((Number(arrKnisa[0]) > 0) && ($get(oRow.id).cells[_COL_CANCEL].childNodes[0].className == 'ImgKnisaS')) {//אם כניסה לפי צורך
@@ -450,6 +500,10 @@ function chkMkt(oRow) {
             }
         }
     }
+/**
+recieves params. gets UI values. raises alert. Complexity - Low
+@method callBackKnisa
+*/
     function callBackKnisa(result, oRow) {
         if (result != "0") {
             $get(oRow.id).cells[_COL_ACTUAL_MINUTES].childNodes[0].value = result;
@@ -461,6 +515,10 @@ function chkMkt(oRow) {
     }
 
     function Test(val, args) { }
+/**
+recieves params. does validations. uses wsGeneral service. Complexity - Low
+@method ChkOto
+*/
     function ChkOto(oRow) {
         var KeyID = event.keyCode;
         if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105))) {
@@ -472,6 +530,10 @@ function chkMkt(oRow) {
             }
         }           
     }
+/**
+recieves params. does validations. updates ui. . Complexity - Low
+@method callBackOto
+*/
     function callBackOto(result, oRow) {
         var oId = String(oRow.id).substr(0, oRow.id.length - 6);
         if (result == '0') {
@@ -488,6 +550,10 @@ function chkMkt(oRow) {
             CopyOtoNum(oRow);
         }     
     }
+/**
+recieves params. does validations. updates ui. calls several internal methods. . Complexity - High
+@method ChangeStatusPeilut
+*/
     function ChangeStatusPeilut(Row, FirstMkt, OrgMktType, SubMkt, PeilutAv)
     {   SetBtnChanges();
          var oColCancel, oColPeilutCancel;
@@ -554,7 +620,11 @@ function chkMkt(oRow) {
             }
         }
         return false;
-    }    
+    }
+/**
+recieves params.  updates ui. calls SetSidurStatus internal method. . Complexity - Low
+@method ChangeStatusSidur
+*/
     function ChangeStatusSidur(id){      
      var iIndex = String(id).substr(String(id).length-1,1);
      SetBtnChanges(); SetLvlChg(2, iIndex);
@@ -573,6 +643,10 @@ function chkMkt(oRow) {
    
      return false;
     }
+/**
+recieves params.  updates ui. calls SetSidurStatus internal method. . Complexity - High
+@method SetPeilutStatus
+*/
     function SetPeilutStatus(RowId, bFlag, iSidur, iSidurIndex, PeilutAv)
     {   SetBtnChanges();//SetLvlChg(3);
         var oRow=$get(RowId);
@@ -685,6 +759,10 @@ function chkMkt(oRow) {
             }                       
         }       
     }
+/**
+recieves params.  returns value according to input. Complexity - Low
+@method KnisaLefiZorech
+*/
     function KnisaLefiZorech(sText, iKnisa) {
         if (sText == null)
             return 0;
@@ -698,6 +776,10 @@ function chkMkt(oRow) {
         if (($get(sCtl.concat(iIndex)).getAttribute("OrgEnabled"))=="1"){     
            $get(sCtl.concat(iIndex)).disabled=bFlag;} 
     }
+/**
+recieves params.  sets UI color, enables fields, updates UI. Complexity - Medium
+@method SetSidurStatus
+*/
     function SetSidurStatus(iIndex, bFlag) {
         var _Sidur;
      MovePanel(iIndex);  
@@ -755,6 +837,11 @@ function chkMkt(oRow) {
       } 
      } 
     }
+/**
+recieves params.  hides ui elements. Complexity - Low
+@method MovePanel
+*/
+
     function MovePanel(iIndex) {          
         if ($find("cPanel".concat(iIndex)) != null) {
             if ($find("cPanel".concat(iIndex))._collapsed == false)            
@@ -763,15 +850,27 @@ function chkMkt(oRow) {
                 $find("cPanel".concat(iIndex))._collapsed = false;                
         }             
     }
+/**
+recieves params.  hides ui elements. Complexity - Low
+@method closePanel
+*/
     function closePanel(iIndex){  
         if ($find("cPanel".concat(iIndex))!=null){                           
         $find("cPanel".concat(iIndex))._collapsed = false;
         $find("cPanel".concat(iIndex))._doOpen();}              
     }
+/**
+recieves params.  shows ui elements.Complexity - Low
+@method openPanel
+*/
     function openPanel(iIndex){  
         if ($find("cPanel".concat(iIndex))){
         $find("cPanel".concat(iIndex))._doOpen();}
-    }    
+    }   
+/**
+recieves params. gets ui values. Update ui. long logic. dates monipulation. Complexity - High
+@method ChkExitHour
+*/
     function ChkExitHour(val,args)
     {   SetBtnChanges();//SetLvlChg(3);
         if ($get("clnDate").value!='')
@@ -859,7 +958,12 @@ function chkMkt(oRow) {
               args.IsValid = false;
             }
          }
-       }
+    }
+    /**
+    recieves many params. gets ui values. Update ui. Complexity - Medium
+    @method ChangeKnisotHour
+    */
+    func
        function ChangeKnisotHour(oCurrPeilut, iDayToAdd, dSdDate) {
            var NextRow, lMkt, sHour, lKnisaMkt, sknisaHour, arrKnisot, MktType;
 
@@ -883,7 +987,11 @@ function chkMkt(oRow) {
                    }
                }
            }
-       }       
+       }
+/**
+recieves params. does validations. Complexity - Low
+@method IsAMinValid
+*/
     function IsAMinValid(val,args){
          SetBtnChanges();//SetLvlChg(3);
          var sGridRowID = val.getAttribute("index");   
@@ -906,6 +1014,10 @@ function chkMkt(oRow) {
             _ActMIn.select();
          }
     }
+/**
+recieves params. update ui. works with dates. Complexity - Medium
+@method ChkKisyT
+*/
     function ChkKisyT(val,args)    
     {  SetBtnChanges();//SetLvlChg(3);
        var sGridRowID = val.getAttribute("index");
@@ -939,6 +1051,10 @@ function chkMkt(oRow) {
        else      
          args.IsValid = true;       
     }
+/**
+recieves params. update ui. works with dates. Complexity - Low
+@method ChkShatYetizaKisuyT
+*/
     function ChkShatYetizaKisuyT(iIndx)    
     {
         var sMapKisuyTor = $get(iIndx).cells[_COL_KISUY_TOR_MAP].childNodes[0].nodeValue; 
@@ -958,7 +1074,11 @@ function chkMkt(oRow) {
                 $get(iIndx).cells[_COL_KISUY_TOR].childNodes[0].value = dOrgMapKisuyTor.toLocaleTimeString().substr(0, 5);
             }
         }   
-  }
+    }
+/**
+recieves params. update ui. works with dates. Complexity - Low
+@method changeStartHour
+*/
   function changeStartHour(iIndex){
       $get("SD_hidCurrIndx").value = "3|" + iIndex;
       var _ShatHatchala = $get("SD_txtSH".concat(iIndex));
@@ -980,6 +1100,10 @@ function chkMkt(oRow) {
         if (sNewSH.indexOf('_')==-1)
             wsGeneral.SidurStartHourChanged(sCardDate, iSidur, sNewSH, sOrgSH,iIndex, callBackStartHour, null, iIndex);
   }
+/**
+recieves params. update ui. works with dates. Complexity - Medium
+@method changeStartHour
+*/
   function callBackStartHour(result, iIndex) {
       var dSidurSHDate = new Date();
       var sCardDate = $get("clnDate").value;
@@ -1017,6 +1141,10 @@ function chkMkt(oRow) {
              $get("SD_ddlException" + iIndex).disabled = (result[3] == '0');
         }
   }
+/**
+recieves params. update ui with message.  Complexity - Low
+@method ChkStartHour
+*/
   function ChkStartHour(val, args){      
         var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
         $get("SD_hidCurrIndx").value = "3|" + iIndex;
@@ -1046,7 +1174,12 @@ function chkMkt(oRow) {
             args.IsValid = false;
             val.errormessage = "שעה לא חוקית";
         }
-    }
+  }
+/**
+recieves params. update ui .  Complexity - Low
+@method SetHashlama
+*/
+
     function SetHashlama(iSidurIndex) {
         var sCardDate = $get("clnDate").value;        
         var sShatGmar = $get("SD_txtSG".concat(iSidurIndex)).value;
@@ -1058,6 +1191,10 @@ function chkMkt(oRow) {
                 wsGeneral.UpdateShatGmar(iSidurIndex, sCardDate, sShatGmar, iAddDay, callBackHashlama, null, iSidurIndex);
         }
     }
+/**
+recieves params. update ui .  Complexity - Low
+@method callBackHashlama
+*/
     function callBackHashlama(result, iSidurIndex) {
         result = result.split(",");
         if (($get("SD_ddlHashlama" + iSidurIndex))!=null){
@@ -1069,7 +1206,10 @@ function chkMkt(oRow) {
             $get("SD_ddlException" + iSidurIndex).disabled = ((result[1] == '0') || (result[1])==undefined);           
         }
     }
-
+/**
+recieves params. validateions .  Complexity - Medium
+@method ISSGValid
+*/
     function ISSGValid(val, args){
          SetBtnChanges();
          //נבדוק אם שעת ההתחלה נמצאת בין פרמטרים כללים או פרמטרים של סידור         
@@ -1113,7 +1253,11 @@ function chkMkt(oRow) {
             //נבדוק אם לאפשר השלמה   
              SetHashlama(iIndex);
 
-     }                        
+    }
+    /**
+    recieves params. validateions.  dates. Complexity - Medium
+    @method ISSHLValid
+    */
     function ISSHLValid(val,args)
     {
         args.IsValid = true;
@@ -1162,8 +1306,10 @@ function chkMkt(oRow) {
         }   
     }
 
-   
-
+/**
+recieves params. global date mehod. Complexity - Low
+@method SetDate
+*/
     function SetDate(oDate, sYear, sMonth, sDay, sHour, sMinutes)
     {
         oDate.setFullYear(sYear);
@@ -1174,6 +1320,10 @@ function chkMkt(oRow) {
         oDate.setMonth(sMonth);
         return oDate;
     }
+/**
+recieves params. validations. Complexity - Medium
+@method IsSHBigSG
+*/
     function IsSHBigSG(val,args)
     {//נבדוק אם שעת ההתחלה קטנה משעת הגמר  
        var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
@@ -1218,6 +1368,10 @@ function chkMkt(oRow) {
            return (dShatHatchala < dShatGmar);
        }
     }
+/**
+recieves params. validations. Complexity - Medium
+@method IsSHGreaterPrvSG
+*/
     function IsSHGreaterPrvSG(val,args){
         //SetBtnChanges();
         var bNewSidur=false;
@@ -1264,6 +1418,10 @@ function chkMkt(oRow) {
            }
            else{ return true;}          
     }
+/**
+recieves params. validations. Complexity - Medium
+@method IsEHourBigSHour
+*/
     function IsEHourBigSHour(val,args)
     {//נבדוק ששעת הגמר קטנה משעת ההתחלה של הסידור הבא   
        SetBtnChanges();
