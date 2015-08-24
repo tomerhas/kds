@@ -4685,8 +4685,6 @@ Public Class ClKds
         Dim Err_suff As String
 
 
-
-
         Try
             'ErrFileName = ConfigurationSettings.AppSettings("KdsFilePath") & "Harmony" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & CStr(Now.Second) & ".err"
             InPathNFile = ConfigurationSettings.AppSettings("KdsFilePath") & InFileName
@@ -4830,8 +4828,8 @@ Public Class ClKds
                                 SwOk = False
                                 action_kod = Mid(Restline, 1, 1)
                                 tbl_num = Mid(Restline, 2, 3)
-                                SRV_D_ISHI = Mid(Restline, 5, 5)
-                                If CInt(SRV_D_ISHI) < 0 Then
+
+                                If clGeneral.IsNumeric(Mid(Restline, 5, 5)) = False Then
                                     'mispar_ishi not valid
                                     SwOk = True
                                     oDal.ClearCommand()
@@ -4847,6 +4845,8 @@ Public Class ClKds
                                     oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
                                     oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
                                     'sw.WriteLine("mispar_ishi not valid " & SRV_D_ISHI & " LineErrCnt=" & LineErrCnt & " ," & line)
+                                Else
+                                    SRV_D_ISHI = Mid(Restline, 5, 5)
                                 End If
                                 SRV_D_ISHI_chk = Mid(Restline, 10, 1) ' bikoret
                                 If SRV_D_ISHI_chk = "-" Then
@@ -4910,7 +4910,6 @@ Public Class ClKds
                                 i = i + 1
                                 Restline = Mid(line, 15 + 14 * i, 14)
                             End While
-
                         Catch ex As Exception
                             'oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Faild, "Harmony aborted line " & LineErrCnt.ToString & ex.Message, 3)
                             'Throw ex
@@ -4927,7 +4926,7 @@ Public Class ClKds
                             oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
                             oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
                             'sw.WriteLine("Restline not valid LineErrCnt=" & LineErrCnt & " ,Restline=" & Restline)
-                        End Try
+        End Try
 
                     End If
                 End If
@@ -4981,6 +4980,7 @@ Public Class ClKds
         Dim istm As String
         Dim efes As String
         Dim pmispar_sidur As String
+        Dim iclock_num_in_site As String
 
         Try
             oDal = New clDal
@@ -5041,7 +5041,11 @@ Public Class ClKds
                     inaction_kod = ds.Tables(0).Rows(i).Item("action_kod").ToString
                     intbl_num = ds.Tables(0).Rows(i).Item("tbl_num").ToString
 
-                    isite_kod = ds.Tables(0).Rows(i).Item("site_kod").ToString
+                    iclock_num_in_site = Trim(ds.Tables(0).Rows(i).Item("clock_num_in_site").ToString)
+                    If Len(iclock_num_in_site) < 2 Then
+                        iclock_num_in_site = Left(efes, (2 - Len(iclock_num_in_site))) & iclock_num_in_site
+                    End If
+                    isite_kod = ds.Tables(0).Rows(i).Item("site_kod").ToString & iclock_num_in_site
                     istm = ds.Tables(0).Rows(i).Item("rec_time_stmp").ToString
 
 
@@ -5070,7 +5074,6 @@ Public Class ClKds
                             oDal.AddParameter("pShaa", ParameterType.ntOracleVarchar, inShaa, ParameterDir.pdInput)
                             oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
                             oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
-                            'oDal.ExecuteSP("Pkg_Attendance.pro_check_Hityazvut", ds_h)
                             oDal.ExecuteSP("Pkg_Attendance.pro_check_In", ds_h)
                             If ds_h.Tables(0).Rows(0).Item(0).ToString = "0" Then
                                 'ins hityazvut
@@ -5081,7 +5084,6 @@ Public Class ClKds
                                 oDal.AddParameter("pMikum", ParameterType.ntOracleVarchar, isite_kod, ParameterDir.pdInput)
                                 oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
                                 oDal.AddParameter("pStm", ParameterType.ntOracleVarchar, istm, ParameterDir.pdInput)
-                                'oDal.ExecuteSP("Pkg_Attendance.pro_ins_Hityazvut")
                                 oDal.ExecuteSP("Pkg_Attendance.pro_ins_In")
                                 'Else  already exists, exit
                             End If
@@ -5092,7 +5094,6 @@ Public Class ClKds
                             oDal.AddParameter("pShaa", ParameterType.ntOracleVarchar, inShaa, ParameterDir.pdInput)
                             oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
                             oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
-                            'oDal.ExecuteSP("Pkg_Attendance.pro_check_Knisa", ds_k)
                             oDal.ExecuteSP("Pkg_Attendance.pro_check_In", ds_k)
                             If ds_k.Tables(0).Rows(0).Item(0).ToString = "0" Then
                                 'ins or upd knisa 
@@ -5132,7 +5133,6 @@ Public Class ClKds
                                     oDal.AddParameter("pMikum", ParameterType.ntOracleVarchar, isite_kod, ParameterDir.pdInput)
                                     oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
                                     oDal.AddParameter("pStm", ParameterType.ntOracleVarchar, istm, ParameterDir.pdInput)
-                                    'oDal.ExecuteSP("Pkg_Attendance.pro_ins_Knisa")
                                     oDal.ExecuteSP("Pkg_Attendance.pro_ins_In")
                                 End If
                                 'Else  already exists, exit 
@@ -5194,7 +5194,6 @@ Public Class ClKds
                             oDal.AddParameter("pShaa", ParameterType.ntOracleVarchar, inShaa, ParameterDir.pdInput)
                             oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
                             oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
-                            'oDal.ExecuteSP("Pkg_Attendance.pro_check_InGrr", ds_kg)
                             oDal.ExecuteSP("Pkg_Attendance.pro_check_In", ds_kg)
                             If ds_kg.Tables(0).Rows(0).Item(0).ToString = "0" Then
                                 'todo: ins or upd inGrr
@@ -5205,7 +5204,6 @@ Public Class ClKds
                                 oDal.AddParameter("pKnisaMM", ParameterType.ntOracleInteger, CInt(Mid(inShaa, 3, 2)), ParameterDir.pdInput)
                                 oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
                                 oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
-                                'oDal.ExecuteSP("Pkg_Attendance.pro_GetOutNullGrr", ds4)
                                 oDal.ExecuteSP("Pkg_Attendance.pro_GetOutNull", ds4)
                                 If ds4.Tables(0).Rows.Count > 0 Then
                                     If Len(ds4.Tables(0).Rows(0).Item("gmar").ToString) = 12 Then
@@ -5235,7 +5233,6 @@ Public Class ClKds
                                     oDal.AddParameter("pMikum", ParameterType.ntOracleVarchar, isite_kod, ParameterDir.pdInput)
                                     oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
                                     oDal.AddParameter("pStm", ParameterType.ntOracleVarchar, istm, ParameterDir.pdInput)
-                                    'oDal.ExecuteSP("Pkg_Attendance.pro_ins_KnisaGrr")
                                     oDal.ExecuteSP("Pkg_Attendance.pro_ins_In")
                                     'Else  already exists, exit 
                                 End If
@@ -5247,7 +5244,6 @@ Public Class ClKds
                             oDal.AddParameter("pShaa", ParameterType.ntOracleVarchar, inShaa, ParameterDir.pdInput)
                             oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
                             oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
-                            'oDal.ExecuteSP("Pkg_Attendance.pro_check_OutGrr", ds_yg)
                             oDal.ExecuteSP("Pkg_Attendance.pro_check_Yetzia", ds_yg)
                             If ds_yg.Tables(0).Rows(0).Item(0).ToString = "0" Then
                                 'todo: ins or upd OutGrr
@@ -5258,7 +5254,6 @@ Public Class ClKds
                                 oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(inShaa, 3, 2)), ParameterDir.pdInput)
                                 oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
                                 oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
-                                'oDal.ExecuteSP("Pkg_Attendance.pro_GetInNullGrr", ds5)
                                 oDal.ExecuteSP("Pkg_Attendance.pro_GetInNull", ds5)
                                 If ds5.Tables(0).Rows.Count > 0 Then
                                     If Len(ds5.Tables(0).Rows(0).Item("knisa").ToString) = 12 Then
@@ -5278,7 +5273,6 @@ Public Class ClKds
                                     oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(inShaa, 3, 2)), ParameterDir.pdInput)
                                     oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
                                     oDal.AddParameter("pStm", ParameterType.ntOracleVarchar, istm, ParameterDir.pdInput)
-                                    'oDal.ExecuteSP("Pkg_Attendance.pro_UpdYetziaGrr")
                                     oDal.ExecuteSP("Pkg_Attendance.pro_UpdYetzia")
                                 Else
                                     'ins yetziaGrr
@@ -5289,7 +5283,6 @@ Public Class ClKds
                                     oDal.AddParameter("pMikum", ParameterType.ntOracleVarchar, isite_kod, ParameterDir.pdInput)
                                     oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
                                     oDal.AddParameter("pStm", ParameterType.ntOracleVarchar, istm, ParameterDir.pdInput)
-                                    'oDal.ExecuteSP("Pkg_Attendance.pro_ins_YetziaGrr")
                                     oDal.ExecuteSP("Pkg_Attendance.pro_ins_Yetzia")
 
                                     'Else  already exists, exit 
