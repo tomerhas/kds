@@ -22,6 +22,7 @@
 		<call target="CopyCalculBin" />
 		<call target="CopyServiceBin" />
 		<call target="CopyKdsTaskManagerBin" />
+		<call target="CopyKdsClockBin" />
 	</target>
 	
 	
@@ -62,6 +63,15 @@
 		<mkdir dir="../Deploy/${build.type}/KdsTaskManager" />
 		<copy todir="../Deploy/${build.type}/KdsTaskManager">
 		<fileset basedir="KdsTaskManager\bin\${build.type}">
+			<include name="**/*" />
+		</fileset>
+		</copy>
+	</target>
+	
+	<target name="CopyKdsClockBin">
+		<mkdir dir="../Deploy/${build.type}/KdsClocks" />
+		<copy todir="../Deploy/${build.type}/KdsClocks">
+		<fileset basedir="KdsClocks\bin\${build.type}">
 			<include name="**/*" />
 		</fileset>
 		</copy>
