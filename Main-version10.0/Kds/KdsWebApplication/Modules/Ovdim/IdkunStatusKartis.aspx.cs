@@ -109,7 +109,7 @@ namespace KdsWebApplication.Modules.Ovdim
                         if (string.IsNullOrEmpty(status))
                             ddlstatus.SelectedValue = "2";
                         else ddlstatus.SelectedValue = status;
-                        txtSiba.Text = dt.Rows[0]["RESON"].ToString();
+                        txtSiba.Text = dt.Rows[0]["REASON"].ToString();
 
                         var shinuyManager = ServiceLocator.Current.GetInstance<IShinuyimManager>();
                         dt = shinuyManager.GetIdkuneyRashemet(misIshi, DateTime.Parse(clnTaarich.Text));

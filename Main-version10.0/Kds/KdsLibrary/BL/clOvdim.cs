@@ -1971,30 +1971,10 @@ namespace KdsLibrary.BL
            {
                throw ex;
            }
-
-           //clDal oDal = new clDal();
-           //string sSugYechida;
-           //try
-           //{
-           //    oDal.AddParameter("p_sug_yechida", ParameterType.ntOracleVarchar, null, ParameterDir.pdReturnValue, 60);
-
-           //    oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
-           //    oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
-           //    oDal.ExecuteSP(clGeneral.cProGetSugYechidaOved);
-
-           //    sSugYechida = oDal.GetValParam("p_sug_yechida");
-
-           //    return sSugYechida;
-           //}
-           //catch (Exception ex)
-           //{
-           //    throw ex;
-           //}
-
        }
         
 
-       public int UpdateStatusByRashemet(int mispar_ishi, DateTime taarich, int gorem_meadken,int status, string reson)
+       public int UpdateStatusByRashemet(int mispar_ishi, DateTime taarich, int gorem_meadken,int status, string reason)
        {
            clDal oDal = new clDal();
            DataTable dt = new DataTable();
@@ -2005,7 +1985,7 @@ namespace KdsLibrary.BL
                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
                oDal.AddParameter("p_meadken", ParameterType.ntOracleInteger, gorem_meadken, ParameterDir.pdInput);
                oDal.AddParameter("p_status", ParameterType.ntOracleInteger, status, ParameterDir.pdInput);
-               oDal.AddParameter("p_reson", ParameterType.ntOracleVarchar, reson, ParameterDir.pdInput);
+               oDal.AddParameter("p_reason", ParameterType.ntOracleVarchar, reason, ParameterDir.pdInput);
                oDal.AddParameter("p_code", ParameterType.ntOracleInteger, null, ParameterDir.pdOutput);
                oDal.ExecuteSP(clGeneral.cProUpdStatusByRashemet, ref dt);
 
