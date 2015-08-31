@@ -46,8 +46,6 @@ public class Test_Open_Rikuz_Online extends Base {
       droplist.selectByVisibleText("07/2015");
       Tickur_Chishuv_LeOved.List_Month(driver).sendKeys(Keys.ENTER);
       Tickur_Chishuv_LeOved.Btn_Show(driver).click();
-      //Work_Card.Wait_For_Element_Visibile(driver, 60,"ctl00_KdsContent_pnlTotalMonthly");
-	  //Work_Card.Wait_For_Element_Visibile1(driver, 60, "ItemRow");
 	  Work_Card.Wait_For_Element_Stalenes(driver,null, "ItemRow");
 	  Tickur_Chishuv_LeOved.Btn_Print(driver).click();
 	  Utils b= new Utils();

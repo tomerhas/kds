@@ -50,5 +50,6 @@
 	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc6dms.jar"/>
 	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc6dms_g.jar"/>
 	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/simplefan.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
