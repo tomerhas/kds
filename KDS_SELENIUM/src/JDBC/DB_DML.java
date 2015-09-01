@@ -15,8 +15,11 @@ public static void deleteRecordFromTable( String sishi, String staarich , String
 	 
 	Connection dbConnection = null;
 	Statement statement = null;
-
-	String deleteTableSQL = "DELETE from TB_SIDURIM_OVDIM where mispar_ishi="+sishi+" and taarich = "+staarich+" and mispar_sidur= "+smispar_sidur+"";
+	
+	
+	
+	String deleteTableSQL1 = "DELETE from TB_PEILUT_OVDIM where mispar_ishi="+sishi+" and taarich = "+staarich+" and mispar_sidur= "+smispar_sidur+"";
+	String deleteTableSQL2 = "DELETE from TB_SIDURIM_OVDIM where mispar_ishi="+sishi+" and taarich = "+staarich+" and mispar_sidur= "+smispar_sidur+"";
 			
 
 	try {
@@ -26,7 +29,8 @@ public static void deleteRecordFromTable( String sishi, String staarich , String
 		//System.out.println(deleteTableSQL);
 
 		// execute delete SQL statement
-		statement.execute(deleteTableSQL);
+		statement.execute(deleteTableSQL1);
+		statement.execute(deleteTableSQL2);
 
 		System.out.println("Record is deleted from DBUSER table!");
 
@@ -47,6 +51,13 @@ public static void deleteRecordFromTable( String sishi, String staarich , String
 	}
 
 }
+
+
+
+
+
+
+
 
 private static Connection getDBConnection() {
 

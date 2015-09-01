@@ -1,5 +1,7 @@
 package automationFramework;
 
+import java.sql.SQLException;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -7,6 +9,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 
+import JDBC.DB_DML;
 import pageObjects.Hosafat_Sidur;
 import pageObjects.Work_Card;
 import utils.Base;
@@ -27,7 +30,7 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	
 	
   @Test
-  public void Add_Schedule_Mapa () {
+  public void Add_Schedule_Mapa () throws SQLException {
 	  
 	  Utils a= new Utils();
 	  a.waitForWindow("WorkCard",driver);
@@ -65,7 +68,7 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  Work_Card.Wait_For_Element_Visibile(driver,60, "btnRefreshOvedDetails");
 	  Work_Card.Btn_Show(driver).click();
 	  //Work_Card.Wait_For_Element_Visibile(driver, 60, "SD_imgCancel0");
-	  Assert.assertEquals(Work_Card.Sidur_Num(driver).getText(), "58011");
+	  Assert.assertEquals(Work_Card.Lbl_Sidur_Num_0(driver).getText(), "58011");
 	  Work_Card.Cancel_Sidur(driver).click();
 	  Work_Card.Btn_Update(driver).click();
 	  Work_Card.Wait_For_Element_Stalenes(driver, "clnDate",null);
@@ -90,12 +93,14 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  //Work_Card.Wait_For_Element_Visibile(driver,60, "btnRefreshOvedDetails");
 	  //Work_Card.Wait_For_Element_Visibile(driver, 80, "SD_imgCancel2");
 	  //Work_Card.Wait_For_Element_Stalenes(driver, "btnRefreshOvedDetails");
-	  Work_Card.Btn_Show(driver).click();
-	  Work_Card.Cancel_Schedule_02(driver).click();
-	  Work_Card.Wait_For_Element_Visibile(driver, 60, "btnUpdateCard");
+	  //Work_Card.Btn_Show(driver).click();
+	  Assert.assertEquals(Work_Card.Lbl_Sidur_No_2(driver).getText(), "58011");
+	  DB_DML.deleteRecordFromTable("77104", "to_date('23/06/2015','dd/mm/yyyy')", "33011");
+	  //Work_Card.Cancel_Schedule_02(driver).click();
+	  //Work_Card.Wait_For_Element_Visibile(driver, 60, "btnUpdateCard");
 	  //Work_Card.Wait_For_Element_Stalenes(driver, "btnUpdateCard");
-	  Work_Card.Btn_Update(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard",null);
+	  //Work_Card.Btn_Update(driver).click();
+	  //Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard",null);
 	  Work_Card.Btn_Close(driver).click();
 	  
 	  

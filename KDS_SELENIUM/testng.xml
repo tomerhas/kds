@@ -1,4 +1,4 @@
-<suite name="Suite">
+<suite name="KDS">
 
     <test name="Work_Card">
     
@@ -27,14 +27,14 @@
     </test>
     
     
-     <test name="EmployeeCards">
+     <test name="Kds_Pages">
     
 	
 
 		<classes>
 
 		   <class name="automationFramework.Test_EmployeeCards" /> 
-		    
+		    <class name="automationFramework.Test_Open_Rikuz_Online" /> 
 
 		</classes>
 		

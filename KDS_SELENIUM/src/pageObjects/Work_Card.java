@@ -389,7 +389,7 @@ public class Work_Card {
 		
 		 
 		 
-		 public static WebElement  Sidur_Num (WebDriver driver){
+		 public static WebElement  Lbl_Sidur_Num_0 (WebDriver driver){
 			 
 			  element = driver.findElement(By.id("SD_lblSidur0"));
 			    
@@ -477,7 +477,7 @@ public class Work_Card {
 		 
 		 
 		 
-		 public static WebElement  Lbl_Special_No (WebDriver driver){
+		 public static WebElement  Lbl_Sidur_No_2 (WebDriver driver){
 			 
 			  element = driver.findElement(By.id("SD_lblSidur2"));
 			    
