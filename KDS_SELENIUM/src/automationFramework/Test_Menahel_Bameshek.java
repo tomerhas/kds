@@ -72,17 +72,17 @@ public class Test_Menahel_Bameshek    extends Base {
       System.out.println(Work_Card.Assert_Sidur_disabled(driver).getAttribute("readonly"));
       Assert.assertTrue(true,Work_Card.Assert_Sidur_disabled(driver).getAttribute("readonly"));
       Work_Card.Btn_Add_Special(driver).click();
-      Work_Card.Lbl_Sidur_Num_0(driver).sendKeys("99002");
-	  Work_Card.Lbl_Sidur_Num_0(driver).sendKeys(Keys.TAB);
+      Work_Card.Lbl_Sidur_No_2(driver).sendKeys("99002");
+	  Work_Card.Lbl_Sidur_No_2(driver).sendKeys(Keys.TAB);
 	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"אינך רשאי לדווח סידור עבודה זה");
-	  Work_Card.Lbl_Sidur_Num_0(driver).sendKeys("99850");
-	  Work_Card.Lbl_Sidur_Num_0(driver).sendKeys(Keys.TAB);
+	  Work_Card.Lbl_Sidur_No_2(driver).sendKeys("99850");
+	  Work_Card.Lbl_Sidur_No_2(driver).sendKeys(Keys.TAB);
 	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"יש לדווח במסך הוסף דיווח היעדרות");
-	  Work_Card.Lbl_Sidur_Num_0(driver).sendKeys("11111");
-	  Work_Card.Lbl_Sidur_Num_0(driver).sendKeys(Keys.TAB);
+	  Work_Card.Lbl_Sidur_No_2(driver).sendKeys("11111");
+	  Work_Card.Lbl_Sidur_No_2(driver).sendKeys(Keys.TAB);
 	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(), "מספר סידור שגוי");
-	  Work_Card.Lbl_Sidur_Num_0(driver).sendKeys("99001");
-	  Work_Card.Lbl_Sidur_Num_0(driver).sendKeys(Keys.TAB);
+	  Work_Card.Lbl_Sidur_No_2(driver).sendKeys("99001");
+	  Work_Card.Lbl_Sidur_No_2(driver).sendKeys(Keys.TAB);
 	  Work_Card.Start_Time_Special(driver).sendKeys("1200");
 	  Work_Card.Start_Time_Special(driver).sendKeys(Keys.TAB);
 	  Work_Card.End_Time_Special(driver).sendKeys("1400");
@@ -98,8 +98,8 @@ public class Test_Menahel_Bameshek    extends Base {
 	  Work_Card.Btn_Show(driver).click();
 	  Work_Card.Wait_For_Element_Stalenes(driver,"btnAddMyuchad",null);
 	  Work_Card.Btn_Add_Special(driver).click();
-      Work_Card.Lbl_Sidur_Num_0(driver).sendKeys("99300");
-	  Work_Card.Lbl_Sidur_Num_0(driver).sendKeys(Keys.TAB);
+      Work_Card.Lbl_Sidur_No_2(driver).sendKeys("99300");
+	  Work_Card.Lbl_Sidur_No_2(driver).sendKeys(Keys.TAB);
 	  
 	  //Work_Card.Btn_Update(driver).click();
 	  //WebDriverWait wait1 = new WebDriverWait(driver, 30);
@@ -108,7 +108,7 @@ public class Test_Menahel_Bameshek    extends Base {
 	  //System.out.println(alert1.getText());
 	  //Assert.assertEquals("מספר סידור  אינו תקין",alert1.getText());
 	  //alert1.accept();
-	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה");
+	  Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"אינך רשאי לדווח סידור עבודה זה");
 	  Work_Card.Btn_Close(driver).click();
 	  JavascriptExecutor js = (JavascriptExecutor)driver; 
       js.executeScript("arguments[0].click();", Work_Card.Btn_Cancel_Update(driver)); 

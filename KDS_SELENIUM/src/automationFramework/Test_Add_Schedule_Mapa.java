@@ -31,7 +31,7 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	
   @Test
   public void Add_Schedule_Mapa () throws SQLException {
-	  
+	  DB_DML.deleteRecordFromTable("77104", "to_date('23/06/2015','dd/mm/yyyy')", "33011");
 	  Utils a= new Utils();
 	  a.waitForWindow("WorkCard",driver);
 	  Work_Card.TxtId(driver).sendKeys("77104");
@@ -94,8 +94,8 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	  //Work_Card.Wait_For_Element_Visibile(driver, 80, "SD_imgCancel2");
 	  //Work_Card.Wait_For_Element_Stalenes(driver, "btnRefreshOvedDetails");
 	  //Work_Card.Btn_Show(driver).click();
-	  Assert.assertEquals(Work_Card.Lbl_Sidur_No_2(driver).getText(), "58011");
-	  DB_DML.deleteRecordFromTable("77104", "to_date('23/06/2015','dd/mm/yyyy')", "33011");
+	  Assert.assertEquals(Work_Card.Lbl_Sidur_No_2(driver).getText(), "33011");
+	  //DB_DML.deleteRecordFromTable("77104", "to_date('23/06/2015','dd/mm/yyyy')", "33011");
 	  //Work_Card.Cancel_Schedule_02(driver).click();
 	  //Work_Card.Wait_For_Element_Visibile(driver, 60, "btnUpdateCard");
 	  //Work_Card.Wait_For_Element_Stalenes(driver, "btnUpdateCard");
