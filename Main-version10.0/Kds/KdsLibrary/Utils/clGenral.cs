@@ -865,6 +865,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             NesiaBerechevMuganET = 295,
             ZmanElementZarNahagut = 296,
             PremyatNehigaYadani = 297,
+            NesiaBerechevMuganEvenET = 298,
             NosafotBeNeemanut=281,
             HalbashaTchilatYom=931,
             HalbashaSofYom=932,

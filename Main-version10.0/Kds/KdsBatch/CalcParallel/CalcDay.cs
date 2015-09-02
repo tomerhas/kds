@@ -633,6 +633,10 @@ namespace KdsBatch
                 //ימים עם נסיעה ברכב ממוגן ירי - אגד תעבורה (רכיב 295) 
                 CalcRechiv295();
 
+                //ימים עם נסיעה ברכב ממוגן אבן - אגד תעבורה (רכיב 298) 
+              //  CalcRechiv298();
+
+             
             //}
             //catch (Exception ex)
             //{
@@ -8069,6 +8073,29 @@ namespace KdsBatch
                 throw (exec);
             }
         }
+
+        private void CalcRechiv298()
+        {
+            float fErechRechiv,ferech295;
+            try
+            {
+                if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30 && objOved.Taarich >= objOved.objParameters.dParam314)
+                {
+                    oSidur.CalcRechiv298();
+                    fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NesiaBerechevMuganEvenET.GetHashCode(), objOved.Taarich);
+
+                    ferech295 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), objOved.Taarich);
+                    if (fErechRechiv > 0 && ferech295 ==0)
+                        addRowToTable(clGeneral.enRechivim.NesiaBerechevMuganEvenET.GetHashCode(), 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NesiaBerechevMuganEvenET.GetHashCode(), objOved.Taarich, "", ex);
+                throw (exec);
+            }
+        }
+
         private void CalcRechiv271()
         {
             float fSumDakotRechiv;
