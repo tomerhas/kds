@@ -29,15 +29,15 @@ namespace KdsClocks
             int iStatus;
             try
             {
-                lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocksHarmony", -12);
-                var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
-                logManager.InsertLog(lRequestNum, "I", 0, "start clock , time=" + DateTime.Now.ToString());
+           //     lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocksHarmony", -12);
+          //      var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
+           //     logManager.InsertLog(lRequestNum, "I", 0, "start clock , time=" + DateTime.Now.ToString());
 
                 InsertMovemetRecords();
                 InsertMovemetErrRecords();
              
                // iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
-                logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
+   //             logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace KdsClocks
                 var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
 
                 syInterfaceWS.MalalClient wsSy = new syInterfaceWS.MalalClient();
-                var xmlE = wsSy.SQLRecordSetToXML(ConfigurationManager.AppSettings["MOVMENTSQL"]);
+                var xmlE = wsSy.SQLRecordSetToXML("select * from movment");//ConfigurationManager.AppSettings["MOVMENTSQL"]);
                 DataSet DsMovement = StaticBL.ConvertXMLToDataSet(xmlE);
 
                 clockManager.InsertToCollMovment(collHarmony, DsMovement.Tables[int.Parse(ConfigurationManager.AppSettings["NUMTABLEMOVMENT"])]);

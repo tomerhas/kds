@@ -118,10 +118,8 @@ namespace KDSCommon.UDT
         private float m_CLOCKID;
         
         private bool m_CLOCKIDIsNull;
-        
-        private float m_MEAL_SUPP;
-        
-        private bool m_MEAL_SUPPIsNull;
+
+        private string m_MEAL_SUPP;
         
         private string m_MAKOR;
         
@@ -144,11 +142,9 @@ namespace KDSCommon.UDT
         private bool m_GOODIsNull;
         
         private string m_PARAM2;
-        
-        private float m_MEAL_QUANT;
-        
-        private bool m_MEAL_QUANTIsNull;
-        
+
+        private string m_MEAL_QUANT;
+         
         private string m_OPER;
         
         private string m_TRAILER_NO;
@@ -222,11 +218,9 @@ namespace KDSCommon.UDT
             this.m_ERR_MOVIDIsNull = true;
             this.m_NO_TMP_ACTIVITYIsNull = true;
             this.m_CLOCKIDIsNull = true;
-            this.m_MEAL_SUPPIsNull = true;
             this.m_AUTHORIZEDIsNull = true;
             this.m_TAARICHIsNull = true;
             this.m_GOODIsNull = true;
-            this.m_MEAL_QUANTIsNull = true;
             this.m_LEVELORGIsNull = true;
             this.m_FROM_DLLIsNull = true;
             this.m_GOOD_RECIsNull = true;
@@ -747,24 +741,16 @@ namespace KDSCommon.UDT
         }
         
         [OracleObjectMappingAttribute("MEAL_SUPP")]
-        public float MEAL_SUPP {
+        public string MEAL_SUPP {
             get {
                 return this.m_MEAL_SUPP;
             }
             set {
                 this.m_MEAL_SUPP = value;
-                this.m_MEAL_SUPPIsNull = false;
             }
         }
         
-        public bool MEAL_SUPPIsNull {
-            get {
-                return this.m_MEAL_SUPPIsNull;
-            }
-            set {
-                this.m_MEAL_SUPPIsNull = value;
-            }
-        }
+   
         
         [OracleObjectMappingAttribute("MAKOR")]
         public string MAKOR {
@@ -877,24 +863,16 @@ namespace KDSCommon.UDT
         }
         
         [OracleObjectMappingAttribute("MEAL_QUANT")]
-        public float MEAL_QUANT {
+        public string MEAL_QUANT {
             get {
                 return this.m_MEAL_QUANT;
             }
             set {
                 this.m_MEAL_QUANT = value;
-                this.m_MEAL_QUANTIsNull = false;
             }
         }
         
-        public bool MEAL_QUANTIsNull {
-            get {
-                return this.m_MEAL_QUANTIsNull;
-            }
-            set {
-                this.m_MEAL_QUANTIsNull = value;
-            }
-        }
+     
         
         [OracleObjectMappingAttribute("OPER")]
         public string OPER {
@@ -1234,9 +1212,9 @@ namespace KDSCommon.UDT
             if ((CLOCKIDIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "CLOCKID", this.CLOCKID);
             }
-            if ((MEAL_SUPPIsNull == false)) {
-                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MEAL_SUPP", this.MEAL_SUPP);
-            }
+            
+            Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MEAL_SUPP", this.MEAL_SUPP);
+             
             Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MAKOR", this.MAKOR);
             if ((AUTHORIZEDIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "AUTHORIZED", this.AUTHORIZED);
@@ -1251,9 +1229,9 @@ namespace KDSCommon.UDT
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "GOOD", this.GOOD);
             }
             Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "PARAM2", this.PARAM2);
-            if ((MEAL_QUANTIsNull == false)) {
-                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MEAL_QUANT", this.MEAL_QUANT);
-            }
+           
+            Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MEAL_QUANT", this.MEAL_QUANT);
+           
             Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "OPER", this.OPER);
             Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "TRAILER_NO", this.TRAILER_NO);
             Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "XLEVEL", this.XLEVEL);
@@ -1375,10 +1353,8 @@ namespace KDSCommon.UDT
             if ((CLOCKIDIsNull == false)) {
                 this.CLOCKID = ((float)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "CLOCKID")));
             }
-            this.MEAL_SUPPIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "MEAL_SUPP");
-            if ((MEAL_SUPPIsNull == false)) {
-                this.MEAL_SUPP = ((float)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MEAL_SUPP")));
-            }
+            this.MEAL_SUPP = ((string)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MEAL_SUPP")));
+           
             this.MAKOR = ((string)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MAKOR")));
             this.AUTHORIZEDIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "AUTHORIZED");
             if ((AUTHORIZEDIsNull == false)) {
@@ -1396,10 +1372,9 @@ namespace KDSCommon.UDT
                 this.GOOD = ((float)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "GOOD")));
             }
             this.PARAM2 = ((string)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "PARAM2")));
-            this.MEAL_QUANTIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "MEAL_QUANT");
-            if ((MEAL_QUANTIsNull == false)) {
-                this.MEAL_QUANT = ((float)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MEAL_QUANT")));
-            }
+
+            this.MEAL_QUANT = ((string)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MEAL_QUANT")));
+         
             this.OPER = ((string)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "OPER")));
             this.TRAILER_NO = ((string)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "TRAILER_NO")));
             this.XLEVEL = ((string)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "XLEVEL")));

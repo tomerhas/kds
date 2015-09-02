@@ -1480,7 +1480,12 @@ recieves params. validations. Complexity - Medium
         if (String(sMisparSidur).length > 1)
             return (sMisparSidur.substr(0, 2) == "99");
         else{ return false;}        
-    } 
+    }
+
+/**
+recieves params. open ModalDialog  . Complexity - Low
+@method AddHosafatKnisot
+*/
     function AddHosafatKnisot(iSidurIndx, iPeilutIndx) {
         _bScreenChanged = bScreenChanged;
         if ($get(iPeilutIndx.id).cells[13].childNodes[0].className == 'ImgCheckedPeilut') {
@@ -1528,6 +1533,10 @@ recieves params. validations. Complexity - Medium
             return res;    
         }           
     }
+/**
+recieves params.  validations .__doPostBack. Complexity - Low
+@method AddSadotLsidur
+*/
     function AddSadotLsidur(iIndex) {
         _bScreenChanged = bScreenChanged; //bScreenChanged משתנה גלובלי שמתעדכן ב- chkCardVld
         if (bScreenChanged){
@@ -1542,7 +1551,13 @@ recieves params. validations. Complexity - Medium
         } else {
             res = ExecSadotLsidur(iIndex, _bScreenChanged);
             return res;
-        }}            
+        }
+    }
+
+/**
+recieves params.  open ModalDialog .__doPostBack. Complexity - Medium
+@method ExecSadotLsidur
+*/
     function ExecSadotLsidur(iIndex, bScreenWasChg) {
         var dSidurSGDate = new Date();
         var id = $get("txtId").value;
@@ -1576,6 +1591,10 @@ recieves params. validations. Complexity - Medium
         }
         return res;
     }
+/**
+recieves params.  open ModalDialog . Complexity - Low
+@method FixSidurHeadrut
+*/
     function FixSidurHeadrut(iIndex){         
         var sQueryString;
         sQueryString = "?dt=" + Date();
@@ -1586,6 +1605,10 @@ recieves params. validations. Complexity - Medium
         sQueryString = sQueryString + "&TimeEnd=" + $get("SD_txtSG".concat(iIndex)).value;  
         window.showModalDialog('DivuachHeadrut.aspx?' + sQueryString, '', 'dialogwidth:555px;dialogheight:390px;dialogtop:150px;dialogleft:480px;status:no;resizable:yes;');
     }
+/**
+recieves params.updates UI. Complexity - Low
+@method ChgImg
+*/
     function ChgImg(iInx){
         var img = $get("SD_cImgS".concat(iInx));
         if ((String(img.nameProp).indexOf("closeArrow.png")) > -1) {
@@ -1617,6 +1640,10 @@ recieves params. validations. Complexity - Medium
          return;
        }       
     }
+/**
+recieves params. Complexity - Low
+@method SetDayToAdd
+*/
     function SetDayToAdd(iInx)
     {
       var _Add = $get("SD_txtDayAdd".concat(iInx));
@@ -1627,7 +1654,11 @@ recieves params. validations. Complexity - Medium
             _Add.value = "1";       
           else      
             _Add.value = "0";
-      }
+    }
+/**
+recieves params.updates UI. Complexity - High
+@method SetDay
+*/
     function SetDay(iInx) {
     
       $find("pBehvDate").hide();
@@ -1745,7 +1776,12 @@ recieves params. validations. Complexity - Medium
                   $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dItemDate);
               }
          }   
-     }   
+    }
+
+/**
+recieves params.validations. updates UI. Complexity - High
+@method btnDay_click
+*/
     function btnDay_click(iDayToAdd) {
         
         $find("pBehvDate").hide();
@@ -1812,6 +1848,10 @@ recieves params. validations. Complexity - Medium
             ValidatorEnable($get('SD_vldSHatchala'.concat(arrItems[1])), true);
         }        
     }
+/**
+recieves params. updates UI. Complexity - Medium
+@method SidurTimeChanged
+*/
    function SidurTimeChanged(id)
    { //שעת התחלה השתנתה, נבדוק שוב את התנאים לשדה השלמה
        var sSidurDate = $get("SD_lblDate".concat(id)).innerHTML;
@@ -1889,7 +1929,11 @@ recieves params. validations. Complexity - Medium
             $get("SD_lblSidur".concat(id)).title = "  משך הסידור: " + GetTimeInMinuts(dStartHour, dEndHour) + " דקות";
         } 
     } 
-}    
+   }
+/**
+ Complexity - Low
+@method GetSidurTime
+*/
    function GetSidurTime(dStartHour,dEndHour)
    {
      var diff= new Date();     
@@ -1899,6 +1943,10 @@ recieves params. validations. Complexity - Medium
      timediff = diff.getTime();     
      return (Math.floor(timediff / (1000 * 60 * 60)));     
    }
+/**
+ Complexity - Low
+@method SortSidurim
+*/
    function SortSidurim(){
      var i=0,sSH,sPrvSH;
      sSH=$get("SD_txtSH".concat(i));        
@@ -1915,6 +1963,10 @@ recieves params. validations. Complexity - Medium
         sSH=$get("SD_txtSH".concat(i));       
      }    
    }
+/**
+ Complexity - Low
+@method chkPartHour
+*/
    function chkPartHour(val,args)
    {
    var sTime = args.Value;
@@ -1926,6 +1978,10 @@ recieves params. validations. Complexity - Medium
            args.IsValid=false;
   
    }
+/**
+ Complexity - Medium
+@method chkPartHour
+*/
    function HasSidurHashlama() {     
      var _HashlamaDLL, _Sidur;   
      var i=0;
@@ -1961,6 +2017,12 @@ recieves params. validations. Complexity - Medium
         }
      }
    }
+
+/**
+ updates UI.Complexity - Low
+@method SetSidurimCollapseImg
+*/
+
    function SetSidurimCollapseImg(){
      var _Sidur, _Img, _Peilut, stat;
      var i=0;
@@ -1994,7 +2056,13 @@ recieves params. validations. Complexity - Medium
         }       
         i=++i;
         _Sidur = $get("SD_lblSidur" + i);
-    }}        
+     }
+   }
+
+/**
+recieves params. updates UI. Complexity - High
+@method EnabledSidurimListBtn
+*/
    function EnabledSidurimListBtn(bDisabled, bCloseAllBtn) {
      var _Sidur, _ImgPeilut,_imgCancel,_imgCancelPeilut;
      var i=0;
@@ -2109,7 +2177,8 @@ recieves params. validations. Complexity - Medium
         i=++i;
         _Sidur = $get("SD_lblSidur" + i);
        
-    }   
+     }
+
     //נאפשר הוספת ריקה ממפה במקרים הבאים 
     //סידור אחרון בפעילות האחרונה שיש חץ למטה
     //במידה והגענו מעמדת נהג(גם אם הכרטיס הוא ללא התייחסות), או
@@ -2140,7 +2209,13 @@ recieves params. validations. Complexity - Medium
         $get('hidNextErrCard').value = '0';
         alert('לא קיים כרטיס שגוי הבא');
     }
-}
+   }
+
+
+/**
+recieves params. updates UI. Complexity - Low
+@method SwitchHourGmarHatchala
+*/
 function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
     var _Sidur = $get("SD_lblSidur".concat(iIndex));
     var sSH = $get("SD_txtSH".concat(iIndex));
@@ -2162,7 +2237,11 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
             $get("btnResonOutIn").click();
         }
      }
-   }
+}
+/**
+recieves params. alert. Complexity - Low
+@method chkPitzulHafsaka
+*/
    function chkPitzulHafsaka(iIndex, bUpdateCard){
      var iPitzulHafsaka = $get("SD_ddlPHfsaka".concat(iIndex)).value;
      var iSidur = $get("SD_lblSidur".concat(iIndex)).innerHTML;
@@ -2196,7 +2275,14 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
             }
             else{
               return sMsg;
-            }}}}       
+            }
+        }
+     }
+   }
+/**
+recieves params. alert. Complexity - Low
+@method ChkCharigaVal
+*/
    function ChkCharigaVal(id)
    {
      var ddlChariga = $get("SD_ddlException".concat(id));  
@@ -2207,6 +2293,10 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
          alert('אין חריגה משעת התחלה או משעת גמר ');
      }
    }
+/**
+recieves params. play another button click. Complexity - Medium
+@method CopyOtoNum
+*/
    function CopyOtoNum(oRow) {
        oId = String(oRow.id).substr(0,oRow.id.length-6);
        var _CarNum = $get(oId).cells[_COL_CAR_NUMBER].childNodes[0];                
@@ -2242,6 +2332,10 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
     function SetFocus(id, col) {
         $get(id).cells[col].childNodes[0].select();
     }
+/**
+recieves params.  Complexity - Low
+@method GetMakatType
+*/
     function GetMakatType(lMakat) {
             var iMakatType = 0;
             var lTmpMakat = 0;
@@ -2264,6 +2358,11 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
     function isElementMechona(lMakat){          
       return ((Number(String(lMakat).substr(0,3))==711) || (Number(String(lMakat).substr(0,3))==712) || (Number(String(lMakat).substr(0,3))==701));
     }
+
+/**
+recieves params.  Uses wsGeneral service. Complexity - Low
+@method chkNewSidur
+*/
     function chkNewSidur(iSidurNum) {
         if ($find("SD_ACSidur" + iSidurNum)._flyoutHasFocus == false) {
             _Sidur = $get("SD_lblSidur" + iSidurNum);
@@ -2275,6 +2374,11 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
                 }
         }
     }
+
+/**
+recieves params.  Uses wsGeneral service.Update UI. Complexity - Low
+@method chkNewSidur
+*/
     function callBackSidurVld(result, iSidurNum) {
         var Res = result.split("|");
         if (Res[0] == "1") {//error
@@ -2318,6 +2422,10 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
         $get("hidExecInputChg").value = '0';
         return SetChgFlag();
     }
+/**
+recieves params.  Update UI. Complexity - Low
+@method btnCopyOtoNum
+*/
     function btnCopyOtoNum(iAction)
     {
      $find("pBehvCopy").hide();

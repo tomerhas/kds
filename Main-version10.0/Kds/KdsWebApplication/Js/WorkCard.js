@@ -1,4 +1,14 @@
-﻿var bScreenChanged = false;
+﻿/**
+* The WorkCard js class is used in the workcard process
+*
+* @class WorkCard
+*/
+var bScreenChanged = false;
+
+/**
+recieves params.  update ui. Complexity - Low
+@method OpenDiv
+*/
     function OpenDiv(DivId, btnId){
         var oDiv = $get(DivId.toString());
         if (oDiv.style.display=='none'){        
@@ -74,7 +84,11 @@
     }
     function onClientHiddenHandler_getID(sender, eventArgs){           
         GetOvedALLDetails($get("txtId").value);
-    }  
+    }
+/**
+recieves params.  update ui.  Complexity - Low
+@method GetOvedNameSucceeded
+*/
     function GetOvedNameSucceeded(result){    
        if ((result=='') || (result=='null')){
             alert('מספר אישי לא קיים');                        
@@ -87,6 +101,11 @@
             SetRefreshBtn(false);       
         }     
     }
+
+/**
+recieves params.  update ui.  Complexity - Low
+@method GetOvedDetailsSucceeded
+*/
     function GetOvedDetailsSucceeded(result){            
         var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
         xmlDoc.async="false";
@@ -130,7 +149,11 @@
             SetRefreshBtn(false); 
           }               
         }                
-    }    
+    }
+/**
+recieves params.  update ui. Complexity - Low
+@method EnabledAllFrames
+*/
     function EnabledAllFrames(bEnable)
     {
         $get("tbEmpDetails").disabled = (!bEnable);     
@@ -169,6 +192,11 @@
       $get("btnNextErrCard").disabled = (!bEnable);      
       EnabledSidurimListBtn(!bEnable,true);   
     }
+
+/**
+recieves params.  update ui.Uses wsGeneral service. Complexity - Low
+@method GetOvedALLDetails
+*/
     function GetOvedALLDetails(iKodOved){
        var sCardDate;
        if ($get("clnDate").value != '') {
@@ -184,13 +212,22 @@
                EnabledAllFrames(false);      
            }
        }
-    }    
+    }
+/**
+Update ui.  Complexity - Low
+@method GetOvedMisparIshiByName
+*/
     function GetOvedMisparIshiByName(){
       var sName = $get("txtName").value;
       if (sName.indexOf(")")==-1){                  
         $get("txtName").click();                          
       }                      
-    }          
+    }
+
+/**
+recieves params.  update ui.  Complexity - Low
+@method onClientHiddenHandler_getName
+*/
     function onClientHiddenHandler_getName(sender, eventArgs){    
      var iMisparIshi, iPos;
      var sOvedName=$get("txtName").value;     
@@ -211,6 +248,10 @@
         GetOvedALLDetails($get("txtId").value);
        } SetBtnChanges();       
     }
+/**
+ Open ModalDialog.  Complexity - Low
+@method ShowRecivimCalculation
+*/
     function ShowRecivimCalculation(){
         var id = $get("txtId").value;
         var date = $get("clnDate").value;
@@ -221,6 +262,10 @@
         if(ReturnWin=='' || ReturnWin=='undefined') ReturnWin=false;
         return ReturnWin;
     }
+/**
+ Open ModalDialog.  Complexity - Low
+@method ShowLastUpdateUser
+*/
     function ShowLastUpdateUser(){
         var id = $get("txtId").value;
         var date = $get("clnDate").value;
@@ -229,6 +274,10 @@
         if(ReturnWin=='' || ReturnWin=='undefined') ReturnWin=false;
         return ReturnWin;   
     }
+/**
+ Open ModalDialog.  Complexity - Low
+@method ShowEmployeeDetails
+*/
     function ShowEmployeeDetails(){    
         var id = $get("txtId").value;
         var date = String($get("clnDate").value).substr(3);
@@ -236,7 +285,11 @@
         var ReturnWin=window.showModalDialog('NetuneyOvedModal.aspx' + sQuryString , window , "dialogwidth:970px;dialogheight:600px;dialogtop:130px;dialogleft:25px;status:no;resizable:yes;scroll:0;");                          
         if(ReturnWin=='' || ReturnWin=='undefined') ReturnWin=false;
         return ReturnWin;   
-    }     
+    }
+/**
+recieves params.  update ui.  Complexity - Low
+@method CheckButton
+*/
     function CheckButton(btnId,HidId){    
         if (HidId.value=="0"){        
          HidId.value="1";                         
@@ -247,6 +300,10 @@
             btnId.style.cssText = "BACKGROUND-IMAGE: url(../../Images/allscreens-checkbox-empty.jpg)";
         }SetBtnChanges();          
     }
+/**
+ update ui.  Complexity - Low
+@method CheckButton
+*/
     function SetBtnChanges() {
         var KeyID = event.keyCode;
         if ((KeyID != 45) && (KeyID != 107)) {
@@ -267,6 +324,11 @@
             $get("hidErrChg").Value = "0";
         }        
     }
+
+/**
+recieves params. update ui.  Complexity - Low
+@method CheckButton
+*/
     function SetLvlChg(iLvl, iSidurIndex) {
         var KeyID = event.keyCode;
         if ((KeyID != 45) && (KeyID != 107)) {
@@ -276,7 +338,12 @@
             else
                 $get(id).value = String($get(id).value).concat(iSidurIndex + ",");
         }                    
-    }    
+    }
+
+/**
+ play another button click.  Complexity - Low
+@method CheckChanges
+*/
     function CheckChanges(){    
       if (bScreenChanged) {        
         $get("btnHidClose").click();
@@ -286,6 +353,11 @@
           ///FreeWC();
         CloseWindow();return false;}      
     }
+
+/**
+ play another button click.  Complexity - Low
+@method CheckChangesBeforePrint
+*/
     function CheckChangesBeforePrint(){    
       if (bScreenChanged) {
         $get("btnHidPrint").click();
@@ -323,6 +395,10 @@
         bScreenChanged = false;return true;
     }
     
+/**
+Uses wsGeneral service.  Complexity - Low
+@method CheckIfCardExists
+*/
     function CheckIfCardExists(){
       var sDay = $get("clnDate").value.substr(0,2);
       var sMonth =  $get("clnDate").value.substr(3,2);
@@ -334,6 +410,10 @@
           EnabledAllFrames(false);
       }      
     }
+/**
+recieves params. update ui. Complexity - Low
+@method callBackCheckCardExists
+*/
     function callBackCheckCardExists(result)
     {   var arrReturnValue = result.split("|"); 
         if (arrReturnValue[0]=="0")
@@ -350,14 +430,22 @@
            $get("txtDay").value = arrReturnValue[1];                    
         }
          $get("txtDay").title = arrReturnValue[1];
-     }
+    }
+/**
+recieves params. update ui. Complexity - Low
+@method SetRefreshBtn
+*/
      function SetRefreshBtn(bDisabled) {
          $get("btnRefreshOvedDetails").disabled = bDisabled;
          if (bDisabled)
              $get("btnRefreshOvedDetails").className = "ImgButtonShowDis";
             else
                 $get("btnRefreshOvedDetails").className = "ImgButtonShow";
-     }     
+     }
+/**
+recieves params. update ui.Uses wsGeneral service. Complexity - Medium
+@method GetErrorMessage
+*/
     function GetErrorMessage(id, level, pKey){   
         oId=id.id;       
     var oObj = $get(oId);
@@ -415,6 +503,10 @@
         $get("tbErr").innerHTML = result;
         $get("btnErrors").click(); 
     }
+/**
+recieves params.  Uses wsGeneral service. Complexity - Low
+@method ShowRemark
+*/
     function ShowRemark(id)
     {
       var iMisparIshi = $get("txtId").value;
@@ -428,6 +520,10 @@
         $get("tblRmk").innerHTML = result;
         $get("btnRemark").click();          
     }
+/**
+recieves params. play another button click . Complexity - Low
+@method GetAppMsg
+*/
      function GetAppMsg(id){       
         if (id!=undefined){                                       
                  var olbl = $get("lblApp");
@@ -435,6 +531,10 @@
                  $get("btnApp").click();                 
         }     
      }
+/**
+recieves params.  Uses wsGeneral service. Complexity - Low
+@method GetAppMsg
+*/
      function CancelError(id){
         $find("bMpeErr").hide();          
         iMisparIshi = $get("txtId").value;
@@ -443,6 +543,10 @@
         sMeasher =  $get("hidGoremMeasher").value;    
         wsGeneral.CancelError(iMisparIshi, dCardDate, sErrorId,sMeasher,callBackCancelError);      
      }
+/**
+recieves params. update ui. Complexity - Low
+@method callBackCancelError
+*/
      function callBackCancelError(result){     
         if (result==1){SetBtnChanges();     
             var oObj = $get($get("hErrKey").value);         
@@ -465,7 +569,11 @@
               }
             }            
         }     
-    }        
+     }
+/**
+recieves params.  Uses wsGeneral service. Complexity - Low
+@method ApproveError
+*/
     function ApproveError(id){
         $find("bMpeErr").hide();    
         iMisparIshi = $get("txtId").value;
@@ -475,6 +583,10 @@
         wsGeneral.ApproveError(iMisparIshi, dCardDate, sErrorId,sMeasher);
         return false;
     }
+/**
+open ModalDialog.  __doPostBack. Complexity - Low
+@method AddSidurHeadrut
+*/
     function AddSidurHeadrut() {
         _bScreenChanged = bScreenChanged;
         if (_bScreenChanged) {
@@ -504,6 +616,10 @@
         
         return false;
     }
+/**
+open ModalDialog.  __doPostBack. Complexity - Low
+@method AddSidur
+*/
     function AddSidur() {
         _bScreenChanged = bScreenChanged;
         if (_bScreenChanged) {
@@ -530,6 +646,10 @@
         }
         return false;
     }
+/**
+open ModalDialog.  Complexity - Low
+@method ShowDrvErr
+*/
    function ShowDrvErr(){
        var iLaoved;
        if ($get("hidRashemet").value == "1" || $get("hidMenahelBank").value == "1")
@@ -550,6 +670,10 @@
         return true;
         }
    }
+/**
+recieves params.open ModalDialog.  Complexity - Low
+@method ShowDrvErr
+*/
    function OpenZmaneiNessiot(id,date, type, value){ 
         var sQueryString;
         sQueryString = "?id="+ id + "&date=" + date + "&type=" + type + "&value=" + value + "&dt=" + Date(); 
@@ -559,6 +683,11 @@
     $get("hidChanges").value=bScreenChanged;
     return true;
    }
+
+/**
+alert. validations. Complexity - Low
+@method ChkCardVld
+*/
    function ChkCardVld(){   
      var sXML,sSidurDate,dStartHour,dEndHour,SidurTime;   
      var bValid=true;var sMsg='';var sCallBack='';
@@ -655,6 +784,12 @@
    }
    if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded();
 
+
+/**
+recieves params. Complexity - Low
+@method ChkIfPeiluyotValid
+*/
+
    function ChkIfPeiluyotValid(iSidurInx){
        var sActualShatYetiza;
        _Peilut = $get("SD_" + padLeft(iSidurInx, '0', 3));
@@ -668,6 +803,11 @@
        }
        return true;
    }
+
+/**
+recieves params.used wsGeneral service.Complexity - Medium
+@method GetErrorMessageSadotNosafim
+*/
    function GetErrorMessageSadotNosafim(id, level, pKey){    
        oId = id.id;
        var oObj = $get(oId);
@@ -694,13 +834,22 @@
                 wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
             }
         }
-    }   
+   }
+/**
+recieves params.used wsGeneral service.Complexity - Low
+@method SetMeasher
+*/
 function SetMeasher(iStatus)
 {
     var iMisparIshi=$get("txtId").value;
     var dDate = $get("clnDate").value;
     wsGeneral.SetMeasherOMistayeg(Number(iMisparIshi), dDate, Number(iStatus), onMeasherSuccuss,null,iStatus);
 }
+
+/**
+recieves params. update ui. alert.  play another button click.Complexity - Low
+@method onMeasherSuccuss
+*/
 function onMeasherSuccuss(result,iStatus)
 {
     if (result=='0')   
@@ -728,6 +877,10 @@ function onMeasherSuccuss(result,iStatus)
         }  
     }
 }
+/**
+Complexity - Low
+@method CloseWindow
+*/
 function CloseWindow()
 {
   var EmpId = $get("txtId").value;
@@ -745,7 +898,13 @@ function CloseWindow()
         window.close();
         break;        
  } 
-} 
+}
+
+
+/**
+Update Ui.alert.Complexity - Low
+@method chkTravelTime
+*/
 function chkTravelTime(){
      var _TravelTime = $get("ddlTravleTime");        
      var iMeafyenVal = _TravelTime.getAttribute("MeafyenVal");
@@ -761,12 +920,21 @@ function chkTravelTime(){
    }
    SetLvlChg(1,0);
 }
+
+/**
+ used wsGeneral service.Complexity - Low
+@method isUserIdValid
+*/
 function isUserIdValid(){
     SetRefreshBtn(true);
     var EmpId = $get("txtId").value;
     var iAdmin=$get("hidGoremMeasher").value;
     wsGeneral.GetAdminEmployeeById(EmpId,0,iAdmin,onUsrValidSuccess);
 }
+/**
+used wsGeneral service.Complexity - Low
+@method isUserNameValid
+*/
 function isUserNameValid(){
     SetRefreshBtn(true); 
     var EmpName = $get("txtName").value; 
@@ -777,6 +945,10 @@ function isUserNameValid(){
     var iAdmin=$get("hidGoremMeasher").value;
     wsGeneral.GetAdminEmployeeByName(EmpName,0,iAdmin, onUsrValidSuccess);
 }
+/**
+Update UI.Complexity - Low
+@method SetNewDate
+*/
 function SetNewDate(_Add){
     var sCardDate = $get("clnDate").value;
     var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
@@ -785,7 +957,10 @@ function SetNewDate(_Add){
     $get("clnDate").value = GetDateDDMMYYYY(dCardDate);
     $get("txtDay").value = GetHebrewDay(dCardDate.getDay());
 }
-
+/**
+Update UI.alert.Complexity - Low
+@method onUsrValidSuccess
+*/
 function onUsrValidSuccess(result){
     if (result.length==0){
         alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');

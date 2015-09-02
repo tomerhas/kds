@@ -18,6 +18,9 @@ using KdsLibrary.Utils.Reports;
 using System.Collections.Generic;
 using KdsLibrary.UI.SystemManager;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class Modules_Ovdim_EmployeeCards :KdsPage
 {
     private const int Coll_lelo_divuach = 2;

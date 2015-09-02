@@ -250,6 +250,7 @@ namespace KdsErrors
         private bool IsOvedMutaamForEmptyPeilut(ErrorInputData input)
         {
             int makat;
+            enMakatType type;
             //. עובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה (יודעים שעובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה לפי ערכים 6, 7 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים) במקרה זה יש לבדוק אם הסידור מכיל רק נסיעות ריקות, מפעילים את הרוטינה לזיהוי מקט
             if (((input.OvedDetails.sMutamut == enMutaam.enMutaam6.GetHashCode().ToString() ||
                    input.OvedDetails.sMutamut == enMutaam.enMutaam7.GetHashCode().ToString())
@@ -257,8 +258,11 @@ namespace KdsErrors
             {
                 foreach (PeilutDM peilut in input.curSidur.htPeilut.Values.Cast<PeilutDM>().ToList())
                 {
+                    
                     makat = int.Parse(peilut.lMakatNesia.ToString().Substring(0, 3));
-                    if (makat != 701 && makat != 702 && makat != 711 && (enMakatType)peilut.iMakatType != enMakatType.mEmpty)
+                    type= (enMakatType)peilut.iMakatType;
+                    if (makat != 701 && makat != 702 && makat != 711 && type != enMakatType.mEmpty &&
+                        !(type == enMakatType.mElement && peilut.sElementNesiaReka != "") && !(type == enMakatType.mElement && !peilut.bBusNumberMustExists))
                         return true;
                 }
                 //return true;
