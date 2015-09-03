@@ -922,6 +922,14 @@ namespace KdsLibrary
                 sTmp = GetOneParam(309, dCardDate);
                 cls.dParam309 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
+                //312
+                sTmp = GetOneParam(312, dCardDate);
+                cls.dParam312 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
+                //313
+                sTmp = GetOneParam(313, dCardDate);
+                cls.iParam313 = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
                 //314
                 sTmp = GetOneParam(314, dCardDate);
                 cls.dParam314 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);

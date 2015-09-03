@@ -1528,7 +1528,7 @@ namespace KdsBatch
                 CalcRechiv295();
 
                 //ימים עם נסיעה ברכב ממוגן אבן - אגד תעבורה (רכיב 298) 
-              //  CalcRechiv298();
+                CalcRechiv298();
 
                 //טיפול בחופש ע"ח שעות נוספות 
                 ChangingChofeshFromShaotNosafot();

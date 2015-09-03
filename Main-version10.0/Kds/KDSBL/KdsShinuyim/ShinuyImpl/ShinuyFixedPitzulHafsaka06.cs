@@ -84,7 +84,7 @@ namespace KdsShinuyim.ShinuyImpl
 
         private void FixedPitzulHafsaka06(SidurDM oSidurFirst, int iNextSidur, ShinuyInputData inputData)
         {
-            int iCountPitzul, iMinPaar;
+            int iCountPitzul, iMinPaar=0;
             SidurDM oNextSidur = null;
             double dMinutsPitzul;
             OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
@@ -127,7 +127,12 @@ namespace KdsShinuyim.ShinuyImpl
                                     return;
                                 }
 
-                                iMinPaar = GetMinPaar(oSidurFirst, oNextSidur, inputData);
+                                if (inputData.OvedDetails.iKodHevra != enEmployeeType.enEggedTaavora.GetHashCode() ||
+                                    (inputData.OvedDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode() && inputData.CardDate < inputData.oParam.dParam312))
+                                    iMinPaar = GetMinPaar(oSidurFirst, oNextSidur, inputData);
+                                else if (inputData.OvedDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode() && inputData.CardDate >= inputData.oParam.dParam312)
+                                    iMinPaar = inputData.oParam.iParam313;
+                                
                                 if(iMinPaar==0)
                                     return;
 

@@ -963,7 +963,7 @@ recieves params. gets ui values. Update ui. long logic. dates monipulation. Comp
     recieves many params. gets ui values. Update ui. Complexity - Medium
     @method ChangeKnisotHour
     */
-    func
+  
        function ChangeKnisotHour(oCurrPeilut, iDayToAdd, dSdDate) {
            var NextRow, lMkt, sHour, lKnisaMkt, sknisaHour, arrKnisot, MktType;
 
