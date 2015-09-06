@@ -9,8 +9,12 @@ namespace KDSCommon.Interfaces.Managers
 {
     public interface IClockManager
     {
-        void SaveShaonimMovment(COLL_HARMONY_MOVMENT_ERR_MOV collHarmonyMovment);
+        void InsertControlClockRecord(DateTime taarich, int status, string teur);
+        void UpdateControlClockRecord(DateTime taarich, int status, string teur);
+        string GetLastHourClock();
+        void SaveShaonimMovment(long BakashaId,COLL_HARMONY_MOVMENT_ERR_MOV collHarmonyMovment);
         void InsertToCollMovment(COLL_HARMONY_MOVMENT_ERR_MOV collHarmony, DataTable dt);
         void InsertToCollErrMovment(COLL_HARMONY_MOVMENT_ERR_MOV collHarmony, DataTable dt);
+
     }
 }

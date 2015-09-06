@@ -2456,7 +2456,7 @@ namespace KdsBatch
                     {
                         fSumDakotRechiv = fSumDakotRechiv * objOved.objParameters.fFactorLetashlumPizulimTaavuraElad;
                     }
-                    else
+                    else if(objOved.Taarich<=objOved.objParameters.dParam315)
                     {
                         fSumDakotRechiv = fSumDakotRechiv * objOved.objParameters.fFactorLetashlumPizulimTaavura;
                     }

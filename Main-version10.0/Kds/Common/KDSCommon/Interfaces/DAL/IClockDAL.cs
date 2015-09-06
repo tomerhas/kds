@@ -8,6 +8,9 @@ namespace KDSCommon.Interfaces.DAL
 {
     public interface IClockDAL
     {
-        void SaveHarmonyMovment(COLL_HARMONY_MOVMENT_ERR_MOV collHarmonyMovment);
+        void SaveHarmonyMovment(long BakashaId,COLL_HARMONY_MOVMENT_ERR_MOV collHarmonyMovment);
+        void InsertControlClockRecord(DateTime  taarich, int status , string teur);
+        void UpdateControlClockRecord(DateTime taarich, int status, string teur);
+        string GetLastHourClock();
     }
 }

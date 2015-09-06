@@ -211,9 +211,11 @@ namespace KDSCommon.DataModels
         public int iParam307;//307
         public int iParam308;//308
         public DateTime dParam309; // -309
+        public DateTime dParam311;//311
         public DateTime dParam312; // -312 אגד תעבורה - תאריך התחלה חישוב פיצול מעל שעה
         public int iParam313;//313 אגד תעבורה - מינימום הפרש בין סידורים לפיצול
         public DateTime dParam314; // -314
+        public DateTime dParam315; // -315
         public int iMaxNochehutVisaPnim; //228 - ויזה פנים -יום ראשון - מקסימום נוכחות
         public int iMinNochehutVisaPnim; //229 - ויזה פנים -יום ראשון - מינימום נוכחות
         public int iNochehutVisaPnimNoShabaton; //230 - ויזה פנים נוכחות - לא שבתון

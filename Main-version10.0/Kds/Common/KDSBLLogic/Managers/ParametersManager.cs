@@ -922,6 +922,10 @@ namespace KdsLibrary
                 sTmp = GetOneParam(309, dCardDate);
                 cls.dParam309 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
+                //311
+                sTmp = GetOneParam(311, dCardDate);
+                cls.dParam311 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
                 //312
                 sTmp = GetOneParam(312, dCardDate);
                 cls.dParam312 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
@@ -934,6 +938,9 @@ namespace KdsLibrary
                 sTmp = GetOneParam(314, dCardDate);
                 cls.dParam314 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
+                //315
+                sTmp = GetOneParam(315, dCardDate);
+                cls.dParam315 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);

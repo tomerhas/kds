@@ -3777,13 +3777,17 @@ namespace KdsBatch
                                         else fErechSidur = 0;
                                     }
 
-                                    if ((fTempX + fErech) < objOved.objParameters.iMaxRetzifutChodshitLetashlum)
+                                    if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30) || objOved.Taarich < objOved.objParameters.dParam311)
                                     {
-                                        if ((fErech + fErechSidur + fTempX) > objOved.objParameters.iMaxRetzifutChodshitImGlisha)
-                                            fErech += objOved.objParameters.iMaxRetzifutChodshitLetashlum - (fTempX + fErech);
-                                        else fErech += fErechSidur;
+                                        if ((fTempX + fErech) < objOved.objParameters.iMaxRetzifutChodshitLetashlum)
+                                        {
+                                            if ((fErech + fErechSidur + fTempX) > objOved.objParameters.iMaxRetzifutChodshitImGlisha)
+                                                fErech += objOved.objParameters.iMaxRetzifutChodshitLetashlum - (fTempX + fErech);
+                                            else fErech += fErechSidur;
+                                        }
+                                        else fErechSidur = 0;
                                     }
-                                    else fErechSidur = 0;
+                                 
                                     // fErech += fErechSidur;
 
                                     //רציפות לילה  

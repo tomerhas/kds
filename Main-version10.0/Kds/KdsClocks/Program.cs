@@ -26,27 +26,40 @@ namespace KdsClocks
             
           //  Clock oClock= new Clock();
             long lRequestNum=0;
-            int iStatus;
+            DateTime StartClock = DateTime.Now;
+            string LastHour;
+            int status=0;
             try
             {
-           //     lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocksHarmony", -12);
-          //      var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
-           //     logManager.InsertLog(lRequestNum, "I", 0, "start clock , time=" + DateTime.Now.ToString());
+                lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocksHarmony", -12);
+                var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
+                logManager.InsertLog(lRequestNum, "I", 0, "start clock , time=" + DateTime.Now.ToString());
 
-                InsertMovemetRecords();
-                InsertMovemetErrRecords();
-             
-               // iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
-   //             logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
+                StartClock = DateTime.Now;
+                var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
+                status = clGeneral.enStatusRequest.InProcess.GetHashCode();
+                clockManager.InsertControlClockRecord(StartClock, status, "Start");
+                LastHour = clockManager.GetLastHourClock();
+
+                InsertMovemetRecords(lRequestNum, LastHour);
+             //   InsertMovemetErrRecords(lRequestNum,LastHour);
+
+                clockManager.UpdateControlClockRecord(StartClock, clGeneral.enStatusRequest.ToBeEnded.GetHashCode(), "End");
+                status = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+                logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
             }
             catch (Exception ex)
             {
-               // iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                status = clGeneral.enStatusRequest.Failure.GetHashCode();
                 ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunClocksHarmony Faild: " + ex.Message);
+            }
+            finally
+            {
+                ServiceLocator.Current.GetInstance<IClockManager>().UpdateControlClockRecord(StartClock, status, "Faild");
             }
         }
 
-        private static void InsertMovemetRecords()
+        private static void InsertMovemetRecords(long lRequestNum,string LastHour)
         {
             COLL_HARMONY_MOVMENT_ERR_MOV collHarmony = new COLL_HARMONY_MOVMENT_ERR_MOV();
             try
@@ -54,11 +67,11 @@ namespace KdsClocks
                 var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
 
                 syInterfaceWS.MalalClient wsSy = new syInterfaceWS.MalalClient();
-                var xmlE = wsSy.SQLRecordSetToXML("select * from movment");//ConfigurationManager.AppSettings["MOVMENTSQL"]);
+                var xmlE = wsSy.SQLRecordSetToXML("select * from movment where Rec_Enter >='" + LastHour.Trim() + "'");//ConfigurationManager.AppSettings["MOVMENTSQL"]);
                 DataSet DsMovement = StaticBL.ConvertXMLToDataSet(xmlE);
 
                 clockManager.InsertToCollMovment(collHarmony, DsMovement.Tables[int.Parse(ConfigurationManager.AppSettings["NUMTABLEMOVMENT"])]);
-                clockManager.SaveShaonimMovment(collHarmony);
+                clockManager.SaveShaonimMovment(lRequestNum,collHarmony);
 
             }
             catch (Exception ex)
@@ -67,7 +80,7 @@ namespace KdsClocks
             }
         }
 
-        private static void InsertMovemetErrRecords()
+        private static void InsertMovemetErrRecords(long lRequestNum, string LastHour)
         {
             COLL_HARMONY_MOVMENT_ERR_MOV collHarmony = new COLL_HARMONY_MOVMENT_ERR_MOV();
             try
@@ -75,11 +88,11 @@ namespace KdsClocks
                 var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
 
                 syInterfaceWS.MalalClient wsSy = new syInterfaceWS.MalalClient();
-                var xmlE = wsSy.SQLRecordSetToXML(ConfigurationManager.AppSettings["ERRMOVESQL"]);
+                var xmlE = wsSy.SQLRecordSetToXML("select * from Err_mov where Rec_Enter >='" + LastHour.Trim() + "'");//ConfigurationManager.AppSettings["MOVMENTSQL"]);
                 DataSet DsMovementErr = StaticBL.ConvertXMLToDataSet(xmlE);
 
                 clockManager.InsertToCollErrMovment(collHarmony, DsMovementErr.Tables[int.Parse(ConfigurationManager.AppSettings["NUMTABLEERRMOVE"])]);
-                clockManager.SaveShaonimMovment(collHarmony);
+                clockManager.SaveShaonimMovment(lRequestNum,collHarmony);
 
             }
             catch (Exception ex)

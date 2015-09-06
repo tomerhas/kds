@@ -19,11 +19,25 @@ namespace KDSBLLogic.Managers
             _container = container;
         }
 
-        public void SaveShaonimMovment(COLL_HARMONY_MOVMENT_ERR_MOV collHarmonyMovment)
+        public void InsertControlClockRecord(DateTime taarich, int status, string teur)
         {
-             _container.Resolve<IClockDAL>().SaveHarmonyMovment(collHarmonyMovment);
+            _container.Resolve<IClockDAL>().InsertControlClockRecord(taarich, status, teur);
         }
 
+        public void UpdateControlClockRecord(DateTime taarich, int status, string teur)
+        {
+            _container.Resolve<IClockDAL>().UpdateControlClockRecord(taarich, status, teur);
+        }
+
+        public string GetLastHourClock()
+        {
+            return _container.Resolve<IClockDAL>().GetLastHourClock();
+        }
+
+        public void SaveShaonimMovment(long BakashaId,COLL_HARMONY_MOVMENT_ERR_MOV collHarmonyMovment)
+        {
+            _container.Resolve<IClockDAL>().SaveHarmonyMovment(BakashaId,collHarmonyMovment);
+        }
 
         public void InsertToCollMovment(COLL_HARMONY_MOVMENT_ERR_MOV collHarmony, DataTable dt)
         {
