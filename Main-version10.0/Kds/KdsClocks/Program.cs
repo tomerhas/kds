@@ -1,4 +1,5 @@
-﻿using KDSCommon.Helpers;
+﻿using KdsBatch;
+using KDSCommon.Helpers;
 using KDSCommon.Interfaces.Logs;
 using KDSCommon.Interfaces.Managers;
 using KDSCommon.UDT;
@@ -55,7 +56,8 @@ namespace KdsClocks
             }
             finally
             {
-                ServiceLocator.Current.GetInstance<IClockManager>().UpdateControlClockRecord(StartClock, status, "Faild");
+                clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, status);
+                ServiceLocator.Current.GetInstance<IClockManager>().UpdateControlClockRecord(StartClock, status, "End");
             }
         }
 
