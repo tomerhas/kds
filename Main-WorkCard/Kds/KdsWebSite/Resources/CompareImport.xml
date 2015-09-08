@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Imports>
+  <EggedImport TargetTable="Sys_Egged" SourceFile="Sys.txt">
+      <FixedLengthParser ID="*" >
+        <Column Name="Kod_Erua" From="1" To="3"></Column>
+        <Column Name="Mifal" From="4" To="7"></Column>
+        <Column Name="Maamad" From="8" To="9"></Column>
+        <Column Name="Mispar_Ishi" From="11" To="15"></Column>
+        <Column Name="Sifrat_Bikuret" From="16" To="16"></Column>
+        <Column Name="Chodesh_Ibud" From="122" To="123"></Column>
+        <Column Name="Erech1" From="49" To="52"></Column>
+        <Column Name="Erech2" From="53" To="56"></Column>
+        <Column Name="Erech3" From="57" To="60"></Column>
+        <Column Name="Erech4" From="61" To="64"></Column>
+        <Column Name="Erech5" From="65" To="68"></Column>
+        <Column Name="Erech6" From="69" To="72"></Column>
+        <Column Name="Erech7" From="73" To="76"></Column>
+        <Column Name="Erech8" From="77" To="80"></Column>
+        <Column Name="Erech9" From="81" To="84"></Column>
+        <Column Name="Erech10" From="85" To="88"></Column>
+        <Column Name="Erech11" From="89" To="92"></Column>
+        <Column Name="Erech12" From="93" To="96"></Column>
+        <Column Name="Erech13" From="97" To="100"></Column>
+        <Column Name="Erech14" From="101" To="104"></Column>
+        <Column Name="Erech15" From="105" To="108"></Column>
+        <Column Name="Erech16" From="109" To="112"></Column>
+        <Column Name="Erech17" From="113" To="116"></Column>
+        <Column Name="Erech18" From="117" To="121"></Column>
+      </FixedLengthParser>
+      <FixedLengthParser ID="413" >
+        <Column Name="Kod_Erua" From="1" To="3"></Column>
+        <Column Name="Mifal" From="4" To="7"></Column>
+        <Column Name="Maamad" From="8" To="9"></Column>
+        <Column Name="Mispar_Ishi" From="11" To="15"></Column>
+        <Column Name="Sifrat_Bikuret" From="16" To="16"></Column>
+        <Column Name="Chodesh_Ibud" From="86" To="87"></Column>
+        <Column Name="Shnat_Ibud" From="88" To="91"></Column>
+        <Column Name="Seif" From="46" To="49"></Column>
+        <Column Name="Erech413" From="67" To="73"></Column>
+      </FixedLengthParser>
+      <FixedLengthParser ID="589" >
+        <Column Name="Kod_Erua" From="1" To="3"></Column>
+        <Column Name="Mifal" From="4" To="7"></Column>
+        <Column Name="Maamad" From="8" To="9"></Column>
+        <Column Name="Mispar_Ishi" From="11" To="15"></Column>
+        <Column Name="Sifrat_Bikuret" From="16" To="16"></Column>
+        <Column Name="Chodesh_Ibud" From="110" To="111"></Column>
+        <Column Name="Yom1" From="46" To="46"></Column>
+        <Column Name="Yom2" From="47" To="47"></Column>
+        <Column Name="Yom3" From="48" To="48"></Column>
+        <Column Name="Yom4" From="49" To="49"></Column>
+        <Column Name="Yom5" From="50" To="50"></Column>
+        <Column Name="Yom6" From="51" To="51"></Column>
+        <Column Name="Yom7" From="52" To="52"></Column>
+        <Column Name="Yom8" From="53" To="53"></Column>
+        <Column Name="Yom9" From="54" To="54"></Column>
+        <Column Name="Yom10" From="55" To="55"></Column>
+        <Column Name="Yom11" From="56" To="56"></Column>
+        <Column Name="Yom12" From="57" To="57"></Column>
+        <Column Name="Yom13" From="58" To="58"></Column>
+        <Column Name="Yom14" From="59" To="59"></Column>
+        <Column Name="Yom15" From="60" To="60"></Column>
+        <Column Name="Yom16" From="61" To="61"></Column>
+        <Column Name="Yom17" From="62" To="62"></Column>
+        <Column Name="Yom18" From="63" To="63"></Column>
+        <Column Name="Yom19" From="64" To="64"></Column>
+        <Column Name="Yom20" From="65" To="65"></Column>
+        <Column Name="Yom21" From="66" To="66"></Column>
+        <Column Name="Yom22" From="67" To="67"></Column>
+        <Column Name="Yom23" From="68" To="68"></Column>
+        <Column Name="Yom24" From="69" To="69"></Column>
+        <Column Name="Yom25" From="70" To="70"></Column>
+        <Column Name="Yom26" From="71" To="71"></Column>
+        <Column Name="Yom27" From="72" To="72"></Column>
+        <Column Name="Yom28" From="73" To="73"></Column>
+        <Column Name="Yom29" From="74" To="74"></Column>
+        <Column Name="Yom30" From="75" To="75"></Column>
+        <Column Name="Yom31" From="76" To="76"></Column>
+      </FixedLengthParser>
+      <Column Name="Kod_Erua" Type="Number" ></Column>
+      <Column Name="Mifal"></Column>
+      <Column Name="Maamad"></Column>
+      <Column Name="Mispar_Ishi"></Column>
+      <Column Name="Sifrat_Bikuret" Type="Number"></Column>
+      <Column Name="Chodesh_Ibud"></Column>
+      <Column Name="Shnat_Ibud"></Column>
+      <Column Name="Seif"></Column>
+      <Column Name="Erech1"></Column>
+      <Column Name="Erech2"></Column>
+      <Column Name="Erech3"></Column>
+      <Column Name="Erech4"></Column>
+      <Column Name="Erech5"></Column>
+      <Column Name="Erech6"></Column>
+      <Column Name="Erech7"></Column>
+      <Column Name="Erech8"></Column>
+      <Column Name="Erech9"></Column>
+      <Column Name="Erech10"></Column>
+      <Column Name="Erech11"></Column>
+      <Column Name="Erech12"></Column>
+      <Column Name="Erech13"></Column>
+      <Column Name="Erech14"></Column>
+      <Column Name="Erech15"></Column>
+      <Column Name="Erech16"></Column>
+      <Column Name="Erech17"></Column>
+      <Column Name="Erech18"></Column>
+      <Column Name="Erech413"></Column>
+      <Column Name="Yom1"></Column>
+      <Column Name="Yom2"></Column>
+      <Column Name="Yom3"></Column>
+      <Column Name="Yom4"></Column>
+      <Column Name="Yom5"></Column>
+      <Column Name="Yom6"></Column>
+      <Column Name="Yom7"></Column>
+      <Column Name="Yom8"></Column>
+      <Column Name="Yom9"></Column>
+      <Column Name="Yom10"></Column>
+      <Column Name="Yom11"></Column>
+      <Column Name="Yom12"></Column>
+      <Column Name="Yom13"></Column>
+      <Column Name="Yom14"></Column>
+      <Column Name="Yom15"></Column>
+      <Column Name="Yom16"></Column>
+      <Column Name="Yom17"></Column>
+      <Column Name="Yom18"></Column>
+      <Column Name="Yom19"></Column>
+      <Column Name="Yom20"></Column>
+      <Column Name="Yom21"></Column>
+      <Column Name="Yom22"></Column>
+      <Column Name="Yom23"></Column>
+      <Column Name="Yom24"></Column>
+      <Column Name="Yom25"></Column>
+      <Column Name="Yom26"></Column>
+      <Column Name="Yom27"></Column>
+      <Column Name="Yom28"></Column>
+      <Column Name="Yom29"></Column>
+      <Column Name="Yom30"></Column>
+      <Column Name="Yom31"></Column>
+  </EggedImport>
+  <TaavoraCalcImport TargetTable="Taavura_calc" SourceFile="Taavura_calc.txt">
+      <FixedLengthParser ID="*" >
+        <Column Name="Mis_Hevra" From="1" To="3"></Column>
+        <Column Name="Tkufat_Chishuv" From="4" To="7"></Column>
+        <Column Name="Mispar_Ishi" From="8" To="16"></Column>
+        <Column Name="Zeut" From="17" To="25"></Column>
+        <Column Name="Semel" From="28" To="30"></Column>
+        <Column Name="Kanut" From="31" To="40"></Column>
+        <Column Name="Siman_Kamut" From="41" To="41"></Column>
+        <Column Name="Mechir" From="42" To="51"></Column>
+        <Column Name="Siman_Mechir" From="52" To="52"></Column>
+      </FixedLengthParser>
+      <Column Name="Mis_Hevra" ></Column>
+      <Column Name="Tkufat_Chishuv" ></Column>
+      <Column Name="Mispar_Ishi"></Column>
+      <Column Name="Zeut" ></Column>
+      <Column Name="Semel" ></Column>
+      <Column Name="Kanut" ></Column>
+      <Column Name="Siman_Kamut"></Column>
+      <Column Name="Mechir" ></Column>
+      <Column Name="Siman_Mechir"></Column>
+  </TaavoraCalcImport>
+  <TaavoraBakaraImport TargetTable="Taavura_Bakara" SourceFile="Taavura_Bakara.txt">
+      <SeparatedValuesParser ID="*" Separator=";"></SeparatedValuesParser>
+      <Column Name="Mis_Hevra" ></Column>
+      <Column Name="Tkufat_Chishuv" ></Column>
+      <Column Name="Mispar_Ishi" ></Column>
+      <Column Name="Zeut" ></Column>
+      <Column Name="Nochechut"></Column>
+      <Column Name="Shaot_100" ></Column>
+      <Column Name="Shaot_125" ></Column>
+      <Column Name="Shaot_150" ></Column>
+      <Column Name="Shaot_200" ></Column>
+      <Column Name="Machala" ></Column>
+      <Column Name="Miluim"></Column>
+      <Column Name="Chufsha" ></Column>
+      <Column Name="Evel" ></Column>
+      <Column Name="Premia"></Column>
+      <Column Name="Nesia" ></Column>
+      <Column Name="Pitzul" ></Column>
+      <Column Name="Lila" ></Column>
+      <Column Name="Eshel" ></Column>
+  </TaavoraBakaraImport>
+</Imports>
+
