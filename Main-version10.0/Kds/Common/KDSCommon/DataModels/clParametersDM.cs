@@ -216,6 +216,7 @@ namespace KDSCommon.DataModels
         public int iParam313;//313 אגד תעבורה - מינימום הפרש בין סידורים לפיצול
         public DateTime dParam314; // -314
         public DateTime dParam315; // -315
+        public DateTime dParam316; // -316
         public int iMaxNochehutVisaPnim; //228 - ויזה פנים -יום ראשון - מקסימום נוכחות
         public int iMinNochehutVisaPnim; //229 - ויזה פנים -יום ראשון - מינימום נוכחות
         public int iNochehutVisaPnimNoShabaton; //230 - ויזה פנים נוכחות - לא שבתון

@@ -4173,7 +4173,8 @@ namespace KdsBatch
                 if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30  && objOved.Month >= objOved.objParameters.dParam301)
                 {
                     fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode());
-                    fErechRechiv = Math.Min(fErechRechiv, objOved.objParameters.iMaxYamimGmulYeriET);
+                    if(objOved.Month < objOved.objParameters.dParam316)
+                        fErechRechiv = Math.Min(fErechRechiv, objOved.objParameters.iMaxYamimGmulYeriET);
                     addRowToTable(clGeneral.enRechivim.NesiaBerechevMuganET.GetHashCode(), fErechRechiv);
                 }
             }
@@ -4193,7 +4194,7 @@ namespace KdsBatch
                 if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30 && objOved.Month >= objOved.objParameters.dParam314)
                 {
                     fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.NesiaBerechevMuganEvenET.GetHashCode());
-                    fErechRechiv = Math.Min(fErechRechiv, objOved.objParameters.iMaxYamimGmulYeriET);
+                   // fErechRechiv = Math.Min(fErechRechiv, objOved.objParameters.iMaxYamimGmulYeriET);
                     addRowToTable(clGeneral.enRechivim.NesiaBerechevMuganEvenET.GetHashCode(), fErechRechiv);
                 }
             }
