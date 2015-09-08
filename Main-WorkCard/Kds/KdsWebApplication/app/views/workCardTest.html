@@ -1,0 +1,15 @@
+﻿<html ng-app="workCard">
+  <head>
+    <script src="../../../Scripts/angular.js"></script>
+    <script src="../../../Scripts/angular-route.js"></script>
+    <script src="../app.js"></script>
+    <script src="../config.js"></script>
+    <script src="../controllers/workCardTestController.js"></script>
+    <script src="../services/apiProvider.js"></script>
+  </head>
+  <body>
+      <div ng-view></div> <!--This tells angular to use the route to define which view to place internaly 
+          it will also use the route to map the controller to the partial view. It is also possible to use ng-include-->
+    
+  </body>
+</html>
