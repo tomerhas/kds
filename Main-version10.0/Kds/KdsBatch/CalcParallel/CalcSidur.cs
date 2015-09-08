@@ -3787,8 +3787,7 @@ namespace KdsBatch
                                         }
                                         else fErechSidur = 0;
                                     }
-                                 
-                                    // fErech += fErechSidur;
+                                    else fErech += fErechSidur;
 
                                     //רציפות לילה  
                                     if (fSachDakotTafkid >= objOved.objParameters.iMinYomAvodaForHalbasha)
