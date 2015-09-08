@@ -36,6 +36,7 @@ public class Test_Open_Rikuz_Online extends Base {
       
       Utils a= new Utils();
       a.Click_Sub_Menu("חישוב לעובד", "חישוב לעובד מקוון",driver);
+      driver.manage().window().maximize();
       System.out.println(driver.getCurrentUrl());
       System.out.println(driver.getWindowHandles());
       Tickur_Chishuv_LeOved.Mispar_Ishi(driver).click();
