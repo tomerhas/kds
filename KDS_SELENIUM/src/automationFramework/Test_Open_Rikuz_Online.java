@@ -1,11 +1,14 @@
 package automationFramework;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
@@ -31,13 +34,13 @@ public class Test_Open_Rikuz_Online extends Base {
   public void Open_Rikuz_Online() {
 	  
 	  
-	
+	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  
       
       Utils a= new Utils();
       a.Click_Sub_Menu("חישוב לעובד", "חישוב לעובד מקוון",driver);
       driver.manage().window().maximize();
-      System.out.println(driver.getCurrentUrl());
+      
       System.out.println(driver.getWindowHandles());
       Tickur_Chishuv_LeOved.Mispar_Ishi(driver).click();
       Tickur_Chishuv_LeOved.Mispar_Ishi(driver).sendKeys("31777");
@@ -51,6 +54,8 @@ public class Test_Open_Rikuz_Online extends Base {
 	  Tickur_Chishuv_LeOved.Btn_Print(driver).click();
 	  Utils b= new Utils();
 	  b.waitForWindow("ModalShowPrint",driver);
+	  System.out.println(driver.getCurrentUrl());
+	  Assert.assertEquals(driver.getCurrentUrl(), "http://kdstest/ModalShowPrint.aspx", "window doesn't exist" );
 	  driver .close();
       
       
