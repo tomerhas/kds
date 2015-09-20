@@ -4981,6 +4981,8 @@ Public Class ClKds
         Dim efes As String
         Dim pmispar_sidur As String
         Dim iclock_num_in_site As String
+        Dim sw_yesterday As Boolean
+        Dim p24 As Integer
 
         Try
             oDal = New clDal
@@ -5030,6 +5032,8 @@ Public Class ClKds
                     ds5 = New DataSet
                     SugRec = 0
                     pmispar_sidur = 99200
+                    sw_yesterday = False
+                    p24 = 0
 
 
                     inMISPAR_ISHI = ds.Tables(0).Rows(i).Item("MISPAR_ISHI").ToString
@@ -5138,13 +5142,17 @@ Public Class ClKds
                                 'Else  already exists, exit 
                             End If
                         Case 3 'yetzia.
+                            p24 = 0
                             oDal.ClearCommand()
                             oDal.AddParameter("pMISPAR_ISHI", ParameterType.ntOracleVarchar, inMISPAR_ISHI, ParameterDir.pdInput)
                             oDal.AddParameter("pTAARICH", ParameterType.ntOracleVarchar, inTAARICH, ParameterDir.pdInput)
                             oDal.AddParameter("pShaa", ParameterType.ntOracleVarchar, inShaa, ParameterDir.pdInput)
                             oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
+                            oDal.AddParameter("p24", ParameterType.ntOracleVarchar, p24, ParameterDir.pdInput)
                             oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                             oDal.ExecuteSP("Pkg_Attendance.pro_check_Yetzia", ds_y)
+                            'todo: yetzia today after 24:00 before 04:00,  taarich should be yesterday
+
                             If ds_y.Tables(0).Rows(0).Item(0).ToString = "0" Then
                                 'todo: ins or upd yetzia
                                 oDal.ClearCommand()
@@ -5153,6 +5161,7 @@ Public Class ClKds
                                 oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(inShaa, 1, 2)), ParameterDir.pdInput)
                                 oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(inShaa, 3, 2)), ParameterDir.pdInput)
                                 oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
+                                oDal.AddParameter("p24", ParameterType.ntOracleVarchar, p24, ParameterDir.pdInput)
                                 oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                 oDal.ExecuteSP("Pkg_Attendance.pro_GetInNull", ds3)
                                 If ds3.Tables(0).Rows.Count > 0 Then
@@ -5172,6 +5181,7 @@ Public Class ClKds
                                     oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(inShaa, 1, 2)), ParameterDir.pdInput)
                                     oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(inShaa, 3, 2)), ParameterDir.pdInput)
                                     oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
+                                    oDal.AddParameter("p24", ParameterType.ntOracleVarchar, p24, ParameterDir.pdInput)
                                     oDal.AddParameter("pStm", ParameterType.ntOracleVarchar, istm, ParameterDir.pdInput)
                                     oDal.ExecuteSP("Pkg_Attendance.pro_UpdYetzia")
                                 Else
@@ -5182,6 +5192,7 @@ Public Class ClKds
                                     oDal.AddParameter("pShaa", ParameterType.ntOracleVarchar, inShaa, ParameterDir.pdInput)
                                     oDal.AddParameter("pMikum", ParameterType.ntOracleVarchar, isite_kod, ParameterDir.pdInput)
                                     oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
+                                    oDal.AddParameter("p24", ParameterType.ntOracleVarchar, p24, ParameterDir.pdInput)
                                     oDal.AddParameter("pStm", ParameterType.ntOracleVarchar, istm, ParameterDir.pdInput)
                                     oDal.ExecuteSP("Pkg_Attendance.pro_ins_Yetzia")
                                 End If
@@ -5238,11 +5249,18 @@ Public Class ClKds
                                 End If
                             End If
                         Case 5 'outGrr.
+                            'todo: outGrr today after 24:00 before 04:00,  taarich should be yesterday
+                            '31/08/2015:
+                            If CInt(inShaa) < 400 Then
+                                sw_yesterday = True
+                                p24 = 1
+                            End If
                             oDal.ClearCommand()
                             oDal.AddParameter("pMISPAR_ISHI", ParameterType.ntOracleVarchar, inMISPAR_ISHI, ParameterDir.pdInput)
                             oDal.AddParameter("pTAARICH", ParameterType.ntOracleVarchar, inTAARICH, ParameterDir.pdInput)
                             oDal.AddParameter("pShaa", ParameterType.ntOracleVarchar, inShaa, ParameterDir.pdInput)
                             oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
+                            oDal.AddParameter("p24", ParameterType.ntOracleVarchar, p24, ParameterDir.pdInput)
                             oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                             oDal.ExecuteSP("Pkg_Attendance.pro_check_Yetzia", ds_yg)
                             If ds_yg.Tables(0).Rows(0).Item(0).ToString = "0" Then
@@ -5253,6 +5271,7 @@ Public Class ClKds
                                 oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(inShaa, 1, 2)), ParameterDir.pdInput)
                                 oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(inShaa, 3, 2)), ParameterDir.pdInput)
                                 oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
+                                oDal.AddParameter("p24", ParameterType.ntOracleVarchar, p24, ParameterDir.pdInput)
                                 oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, Nothing, ParameterDir.pdOutput)
                                 oDal.ExecuteSP("Pkg_Attendance.pro_GetInNull", ds5)
                                 If ds5.Tables(0).Rows.Count > 0 Then
@@ -5262,7 +5281,7 @@ Public Class ClKds
                                         SRV_D_knisA = Left(ds5.Tables(0).Rows(0).Item("knisa").ToString, 4)
                                         'todo: ??
                                     End If
-                                    'tocheck: update yetziaGrr where yetzia is null 
+                                    'update yetziaGrr where yetzia is null 
                                     oDal.ClearCommand()
                                     oDal.AddParameter("pMISPAR_ISHI", ParameterType.ntOracleVarchar, inMISPAR_ISHI, ParameterDir.pdInput)
                                     oDal.AddParameter("pTAARICH", ParameterType.ntOracleVarchar, inTAARICH, ParameterDir.pdInput)
@@ -5272,6 +5291,7 @@ Public Class ClKds
                                     oDal.AddParameter("pYetziaHH", ParameterType.ntOracleInteger, CInt(Mid(inShaa, 1, 2)), ParameterDir.pdInput)
                                     oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, CInt(Mid(inShaa, 3, 2)), ParameterDir.pdInput)
                                     oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
+                                    oDal.AddParameter("p24", ParameterType.ntOracleVarchar, p24, ParameterDir.pdInput)
                                     oDal.AddParameter("pStm", ParameterType.ntOracleVarchar, istm, ParameterDir.pdInput)
                                     oDal.ExecuteSP("Pkg_Attendance.pro_UpdYetzia")
                                 Else
@@ -5282,6 +5302,7 @@ Public Class ClKds
                                     oDal.AddParameter("pShaa", ParameterType.ntOracleVarchar, inShaa, ParameterDir.pdInput)
                                     oDal.AddParameter("pMikum", ParameterType.ntOracleVarchar, isite_kod, ParameterDir.pdInput)
                                     oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleVarchar, pmispar_sidur, ParameterDir.pdInput)
+                                    oDal.AddParameter("p24", ParameterType.ntOracleVarchar, p24, ParameterDir.pdInput)
                                     oDal.AddParameter("pStm", ParameterType.ntOracleVarchar, istm, ParameterDir.pdInput)
                                     oDal.ExecuteSP("Pkg_Attendance.pro_ins_Yetzia")
 
