@@ -1,0 +1,19 @@
+﻿<div>
+<!--<div ng-controller="ovedDailyDetailsController">-->
+    <!--<div>name of general controller: {{name}}</div>
+    <input type="button" ng-click="replaceTab()" value="Replace Tab" />
+    <div>value: {{tabDisplayed}}</div>-->
+    <div ng-include="'partials/ovedDailyWorkDetailsView.html'" />
+    <div ng-include="'partials/ovedHityazvutDetailsView.html'" />
+    
+    <!--<div ng-switch on="tabDisplayed">
+        <div ng-switch-when="1">
+            <div>One</div>
+            <div ng-include src="'partials/ovedHityazvutDetailsView.html'" />
+        </div>
+        <div ng-switch-when="2">
+            <div>Two</div>
+            <div ng-include src="'partials/ovedHityazvutDetailsView.html'" />
+        </div>
+    </div>-->
+</div>

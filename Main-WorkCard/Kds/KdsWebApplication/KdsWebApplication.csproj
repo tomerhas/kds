@@ -87,9 +87,18 @@
     <Content Include="app\app.js" />
     <Content Include="app\config.js" />
     <Content Include="app\controllers\workCardTestController.js" />
+    <Content Include="app\controllers\WorkCard\ovedDailyWorkDetailsController.js" />
+    <Content Include="app\controllers\WorkCard\mainWorkCardController.js" />
+    <Content Include="app\controllers\WorkCard\ovedDailyDetailsController.js" />
+    <Content Include="app\controllers\WorkCard\ovedGeneralDetailsController.js" />
     <Content Include="app\services\apiProvider.js" />
     <Content Include="app\views\partials\snif-by-userid.html" />
     <Content Include="app\views\workCardTest.html" />
+    <Content Include="app\views\workCard\MainWorkCard.html" />
+    <Content Include="app\views\workCard\partials\ovedDailyDetailsView.html" />
+    <Content Include="app\views\workCard\partials\ovedDailyWorkDetailsView.html" />
+    <Content Include="app\views\workCard\partials\ovedGeneralDetailsView.html" />
+    <Content Include="app\views\workCard\partials\ovedHityazvutDetailsView.html" />
     <Content Include="cleardot[1].gif" />
     <Content Include="Css\basic.css" />
     <Content Include="Css\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
@@ -1219,6 +1228,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\controllers\WorkCard\ovedHityazvutDetailsController.js" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -1737,6 +1747,9 @@
     <Compile Include="Old_App_Code\wsGeneral.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Old_App_Code\wsWorkCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1937,7 +1950,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>12747</DevelopmentServerPort>
+          <DevelopmentServerPort>22398</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:40505/</IISUrl>
           <NTLMAuthentication>True</NTLMAuthentication>

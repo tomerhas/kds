@@ -1,5 +1,6 @@
 ﻿<html ng-app="workCard">
   <head>
+     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     <script src="../../../Scripts/angular.js"></script>
     <script src="../../../Scripts/angular-route.js"></script>
     <script src="../app.js"></script>
@@ -8,7 +9,8 @@
     <script src="../services/apiProvider.js"></script>
   </head>
   <body>
-      <div ng-view></div> <!--This tells angular to use the route to define which view to place internaly 
+     <!--  <div  ng-include="'partials/snif-by-userid.html'"></div>-->
+      <div  ng-view></div> <!--This tells angular to use the route to define which view to place internaly 
           it will also use the route to map the controller to the partial view. It is also possible to use ng-include-->
     
   </body>

@@ -1576,6 +1576,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      //   // oBatchManager.InitGeneralData();
         
      //}
+
+    /// <summary>
+    /// Fill in the imisparIshi into field txtId
+    /// </summary>
      private void SetEmployeeCardData()
      {
          try
@@ -2226,6 +2230,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         }
     }
 
+    /// <summary>
+    /// Fill in the Autocomplete + save iSecurity (KdsSecurityLevel) into session
+    /// </summary>
     protected void SetSecurityLevel()
     {
         try
