@@ -5310,7 +5310,15 @@ Public Class ClKds
                                 End If
                             End If
                         Case Else
-                            'todo: send error code
+                            'todo: send (mail?) error code
+                            oDal.ClearCommand()
+                            oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, 77, ParameterDir.pdInput)
+                            oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, inMISPAR_ISHI, ParameterDir.pdInput)
+                            oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, inaction_kod & " " & intbl_num, ParameterDir.pdInput)
+                            oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, inTAARICH & " " & inShaa & " " & iclock_num_in_site & " " & isite_kod, ParameterDir.pdInput)
+                            oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, istm, ParameterDir.pdInput)
+                            oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, 77, ParameterDir.pdInput)
+                            oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
                     End Select
                 Next
                 'finish: update control
