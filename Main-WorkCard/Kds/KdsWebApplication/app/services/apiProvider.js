@@ -1,5 +1,6 @@
 ﻿app.factory("apiProvider",
-    function ($http) {
+    function ($http,$location) {
+        var root = $location.host()+":" + $location.port();
         var getSnifOved = function (misparIshi) {
             return $http.post("../../Modules/WebServices/wsGeneral.asmx/GetOvedSnifAndUnit",
                                 { iMisparIshi: misparIshi });
@@ -11,13 +12,19 @@
         }
 
         var getOvedDetails = function (misparIshi,cardDate) {
-            return $http.post("../../Modules/WebServices/wsWorkCard.asmx/GetOvedDetails",
-                                 { iMisparIshi: misparIshi, dCardDate: cardDate });
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetOvedDetails",
+                                 { misparIshi: misparIshi, cardDate: cardDate });
+        }
+
+        var getEmployeePeiluyot = function (misparIshi,cardDate) {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetEmployeePeiluyot",
+                                 { misparIshi: misparIshi, cardDate: cardDate });
         }
 
         return {
             getSnifOved: getSnifOved,
             getMisparIshi: getMisparIshi,
-            getOvedDetails: getOvedDetails
+            getOvedDetails: getOvedDetails,
+            getEmployeePeiluyot: getEmployeePeiluyot
         }
     });

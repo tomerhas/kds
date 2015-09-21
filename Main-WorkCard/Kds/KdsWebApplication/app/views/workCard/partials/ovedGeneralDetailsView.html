@@ -1,4 +1,16 @@
-﻿
-<div ng-controller="ovedGeneralDetailsController">
-    <div>name of general controller: {{name}}</div>
+﻿<div ng-controller="ovedGeneralDetailsController">
+    <div>
+        <label>Misparishi: </label>
+        <input type="text" ng-model="misparIshi" />
+    </div>
+    <div>
+        <label>Date: </label>
+        <input type="date" ng-model="cardDate" />
+    </div>
+    <div>
+        <input type="button" ng-click="getOvedDetails()" value="Get Oved Details"/>
+    </div>
+    <div>
+        {{result}}        
+    </div>
 </div>

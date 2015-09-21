@@ -86,19 +86,20 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\config.js" />
-    <Content Include="app\controllers\workCardTestController.js" />
-    <Content Include="app\controllers\WorkCard\ovedDailyWorkDetailsController.js" />
+    <Content Include="app\controllers\WorkCard\ovedDailyWork\ovedDailyWorkDetailsController.js" />
     <Content Include="app\controllers\WorkCard\mainWorkCardController.js" />
     <Content Include="app\controllers\WorkCard\ovedDailyDetailsController.js" />
     <Content Include="app\controllers\WorkCard\ovedGeneralDetailsController.js" />
+    <Content Include="app\controllers\WorkCard\ovedPeiluyotController.js" />
     <Content Include="app\services\apiProvider.js" />
+    <Content Include="app\services\workCardStateService.js" />
     <Content Include="app\views\partials\snif-by-userid.html" />
-    <Content Include="app\views\workCardTest.html" />
     <Content Include="app\views\workCard\MainWorkCard.html" />
     <Content Include="app\views\workCard\partials\ovedDailyDetailsView.html" />
-    <Content Include="app\views\workCard\partials\ovedDailyWorkDetailsView.html" />
+    <Content Include="app\views\workCard\partials\ovedDailyWork\ovedDailyWorkDetailsView.html" />
+    <Content Include="app\views\workCard\partials\ovedPeiluyotView.html" />
     <Content Include="app\views\workCard\partials\ovedGeneralDetailsView.html" />
-    <Content Include="app\views\workCard\partials\ovedHityazvutDetailsView.html" />
+    <Content Include="app\views\workCard\partials\ovedDailyWork\ovedHityazvutDetailsView.html" />
     <Content Include="cleardot[1].gif" />
     <Content Include="Css\basic.css" />
     <Content Include="Css\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
@@ -400,6 +401,7 @@
     <Content Include="Modules\WebServices\wsBatch.asmx" />
     <Content Include="Modules\WebServices\wsDynamicForms.asmx" />
     <Content Include="Modules\WebServices\wsGeneral.asmx" />
+    <Content Include="Modules\WebServices\wsWorkCard.asmx" />
     <Content Include="Modules\Xslt\XSLErrors.xslt" />
     <Content Include="NotAuthorizedLogin.aspx" />
     <Content Include="Resources\ApprovalMail.xsl" />
@@ -1228,7 +1230,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\controllers\WorkCard\ovedHityazvutDetailsController.js" />
+    <Content Include="app\controllers\WorkCard\ovedDailyWork\ovedHityazvutDetailsController.js" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

@@ -5,20 +5,22 @@
     <script src="../../../../Scripts/angular-route.js"></script>
     <script src="../../app.js"></script>
     <script src="../../config.js"></script>
-    <script src="../../controllers/workCard/ovedDailyWorkDetailsController.js"></script>
-    <script src="../../controllers/workCard/ovedHityazvutDetailsController.js"></script>
+    <script src="../../controllers/workCard/ovedDailyWork/ovedDailyWorkDetailsController.js"></script>
+    <script src="../../controllers/workCard/ovedDailyWork/ovedHityazvutDetailsController.js"></script>
     <script src="../../controllers/workCard/ovedDailyDetailsController.js"></script>
     <script src="../../controllers/workCard/mainWorkCardController.js"></script>
     <script src="../../controllers/workCard/ovedGeneralDetailsController.js"></script>
+    <script src="../../controllers/workCard/ovedPeiluyotController.js"></script>
     
 
     <script src="../../services/apiProvider.js"></script>
+    <script src="../../services/workCardStateService.js"></script>
 </head>
 <body>
     <div ng-controller="mainWorkCardController">
-        <div>name of main controller: {{name}}</div>
         <div ng-include="'partials/ovedGeneralDetailsView.html'"></div>
         <div ng-include="'partials/ovedDailyDetailsView.html'"></div>
+        <div ng-include="'partials/ovedPeiluyotView.html'"></div>
     </div>
 </body>
 </html>

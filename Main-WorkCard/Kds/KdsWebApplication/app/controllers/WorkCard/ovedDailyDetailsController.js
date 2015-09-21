@@ -7,7 +7,7 @@
         $scope.replaceTab = function ()
         {
             $scope.tabDisplayed++;
-            if ($scope.tabDisplayed > 3)
+            if ($scope.tabDisplayed > 2)
                 $scope.tabDisplayed = 1;
         }
     });
