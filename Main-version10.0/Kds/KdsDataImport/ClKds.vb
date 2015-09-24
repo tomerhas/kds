@@ -4981,14 +4981,17 @@ Public Class ClKds
         Dim efes As String
         Dim pmispar_sidur As String
         Dim iclock_num_in_site As String
-        Dim sw_yesterday As Boolean
+        Dim sw_ok As Boolean
         Dim p24 As Integer
+        'Dim Err_kod As Integer
 
         Try
             oDal = New clDal
             ds = New DataSet
             NumLInDS = 0
             efes = "0000"
+            sw_ok = True
+            'Err_kod = 0
 
             SRV_D_TAARICH = getFullDateString(Now) & "0000"
             ISTATUS = 0
@@ -5032,12 +5035,21 @@ Public Class ClKds
                     ds5 = New DataSet
                     SugRec = 0
                     pmispar_sidur = 99200
-                    sw_yesterday = False
+                    sw_ok = True
                     p24 = 0
+                    'Err_kod = 0
 
 
                     inMISPAR_ISHI = ds.Tables(0).Rows(i).Item("MISPAR_ISHI").ToString
+                    'If CInt(inMISPAR_ISHI) = 0 Then
+                    '    sw_ok = False
+                    '    Err_kod = 78
+                    'End If
                     inTAARICH = ds.Tables(0).Rows(i).Item("TAARICH").ToString 'dd/mm/yyyy
+                    'If CInt(Mid(inTAARICH, 7, 4)) > Now.Year Then
+                    '    sw_ok = False
+                    '    Err_kod = 79
+                    'End If
                     inShaa = ds.Tables(0).Rows(i).Item("Shaa").ToString
                     If Len(inShaa) < 4 Then
                         inShaa = Left(efes, (4 - Len(inShaa))) & inShaa
@@ -5051,6 +5063,18 @@ Public Class ClKds
                     End If
                     isite_kod = ds.Tables(0).Rows(i).Item("site_kod").ToString & iclock_num_in_site
                     istm = ds.Tables(0).Rows(i).Item("rec_time_stmp").ToString
+
+                    'If sw_ok = False Then
+                    '    'todo: send (mail?) error code
+                    '    oDal.ClearCommand()
+                    '    oDal.AddParameter("pErr_kod", ParameterType.ntOracleInteger, Err_kod, ParameterDir.pdInput)
+                    '    oDal.AddParameter("pErr_filename", ParameterType.ntOracleVarchar, inMISPAR_ISHI, ParameterDir.pdInput)
+                    '    oDal.AddParameter("pErr_pref", ParameterType.ntOracleVarchar, inaction_kod & " " & intbl_num, ParameterDir.pdInput)
+                    '    oDal.AddParameter("pErr_line", ParameterType.ntOracleVarchar, inTAARICH & " " & inShaa & " " & iclock_num_in_site & " " & isite_kod, ParameterDir.pdInput)
+                    '    oDal.AddParameter("pErr_suff", ParameterType.ntOracleVarchar, istm, ParameterDir.pdInput)
+                    '    oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, 77, ParameterDir.pdInput)
+                    '    oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
+                    'End If
 
 
                     If ((inaction_kod = "D" And Not intbl_num = "460" And Not intbl_num = "440") Or inaction_kod = "G") Then 'hityazvut.
@@ -5252,7 +5276,6 @@ Public Class ClKds
                             'todo: outGrr today after 24:00 before 04:00,  taarich should be yesterday
                             '31/08/2015:
                             If CInt(inShaa) < 400 Then
-                                sw_yesterday = True
                                 p24 = 1
                             End If
                             oDal.ClearCommand()
