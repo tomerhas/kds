@@ -42,12 +42,15 @@ namespace KdsClocks
                 clockManager.InsertControlClockRecord(StartClock, status, "Start");
                 LastHour = clockManager.GetLastHourClock();
 
-                InsertMovemetRecords(lRequestNum, LastHour);
+                InsertMovemetRecords(lRequestNum, LastHour);            
              //   InsertMovemetErrRecords(lRequestNum,LastHour);
-
                 clockManager.UpdateControlClockRecord(StartClock, clGeneral.enStatusRequest.ToBeEnded.GetHashCode(), "End");
                 status = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
                 logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
+                /***************************************/
+
+                RunAttandHarmony();
+                
             }
             catch (Exception ex)
             {
@@ -58,6 +61,32 @@ namespace KdsClocks
             {
                 clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, status);
                 ServiceLocator.Current.GetInstance<IClockManager>().UpdateControlClockRecord(StartClock, status, "End");
+            }
+        }
+        private static void RunAttandHarmony()
+        {
+            long lRequestNum = 0;
+            int status = 0;
+            try
+            {
+                lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Attend, "RunAttendHarmony", -12);
+                var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
+                logManager.InsertLog(lRequestNum, "I", 0, "start Attend , time=" + DateTime.Now.ToString());
+                status = clGeneral.enStatusRequest.InProcess.GetHashCode();
+
+                MatchAttendHarmony(lRequestNum);
+
+                status = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+                logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
+            }   
+            catch (Exception ex)
+            {
+                status = clGeneral.enStatusRequest.Failure.GetHashCode();
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunAttandHarmony Faild: " + ex.Message);
+            }
+            finally
+            {
+                clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, status);
             }
         }
 
@@ -102,5 +131,165 @@ namespace KdsClocks
                 throw ex;
             }
         }
+
+        private static void MatchAttendHarmony(long lRequestNum)
+      {
+        DataSet dsNetunim = new DataSet();
+        DataSet ds;
+        DateTime taarich;
+        int  SugRec=0 ,status = 0,mispar_ishi,isite_kod,pmispar_sidur=0,p24;
+        string inaction_kod, intbl_num, istm, inShaa, outShaa, iclock_num_in_site,knisaH, teur = "AttendHarmony now";
+        try{
+
+            var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
+            
+            dsNetunim= clockManager.GetNetunimToAttend();
+            if(dsNetunim.Tables.Count>0 && dsNetunim.Tables[0].Rows.Count>0)
+            {
+                taarich = DateTime.Now;
+                clockManager.InsertControlAttendRecord(taarich,status,teur);
+
+                foreach (DataRow dr in  dsNetunim.Tables[0].Rows)
+                {
+                    mispar_ishi = int.Parse(dr["MISPAR_ISHI"].ToString());
+                    taarich = DateTime.Parse( dr["TAARICH"].ToString());
+                    inShaa = dr["Shaa"].ToString();
+                    if (inShaa.Length < 4)
+                        inShaa = inShaa.PadLeft(4, (char)48);
+
+                    inaction_kod = dr["action_kod"].ToString();
+                    intbl_num = dr["tbl_num"].ToString();
+
+                    iclock_num_in_site =dr["clock_num_in_site"].ToString().Trim();
+                    if (iclock_num_in_site.ToString().Length < 2)
+                        iclock_num_in_site =iclock_num_in_site.ToString().PadLeft(2, (char)48);
+
+                    isite_kod = int.Parse(dr["site_kod"].ToString() + iclock_num_in_site);
+                    istm = dr["rec_time_stmp"].ToString();
+
+
+                    if ((inaction_kod == "D" && intbl_num != "460" && intbl_num != "440") || inaction_kod == "G")
+                    {
+                        SugRec = 1;
+                        pmispar_sidur = 99200;
+                    }
+                    else if (inaction_kod == "A"){
+                            SugRec = 2;
+                            pmispar_sidur = 99001;
+                         }
+                         else if (inaction_kod == "B"){
+                                SugRec = 3;
+                                pmispar_sidur = 99001;
+                               }
+                               else if ((inaction_kod == "E" || inaction_kod == "C" || inaction_kod == "D") && intbl_num == "440")
+                                       {
+                                           SugRec = 4;
+                                           pmispar_sidur = 99220;
+                                       }
+                                      else if ((inaction_kod == "F" || inaction_kod == "E" || inaction_kod == "D") && intbl_num == "460")
+                                            {
+                                                SugRec = 5;
+                                                pmispar_sidur = 99220;
+                                            }
+
+                    switch (SugRec)
+                    {
+                        case 1: ds = clockManager.GetKnisaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur);
+                                 if(ds.Tables.Count>0 && ds.Tables[0].Rows.Count>0 &&  ds.Tables[0].Rows[0][0].ToString() == "0" )
+                                     clockManager.InsertKnisatShaon(mispar_ishi, taarich, inShaa,isite_kod, pmispar_sidur,istm);
+                            break;
+                        case 2:
+                            ds = clockManager.GetKnisaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur);
+                            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() == "0")
+                            {
+                                ds=clockManager.GetYetziaNull(mispar_ishi, taarich, inShaa, pmispar_sidur);
+                                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                {
+                                    if (ds.Tables[0].Rows[0]["gmar"].ToString().Length == 12)
+                                        outShaa = ds.Tables[0].Rows[0]["gmar"].ToString().Substring(8, 4);
+                                    else
+                                        outShaa = ds.Tables[0].Rows[0]["gmar"].ToString().Substring(0, 4);
+
+                                    clockManager.UpdateKnisaRecord(mispar_ishi, taarich, inShaa,outShaa,isite_kod, pmispar_sidur,istm);
+                                }
+                                else
+                                    clockManager.InsertKnisatShaon(mispar_ishi, taarich, inShaa, isite_kod, pmispar_sidur, istm);
+                            }
+                          
+                            break;
+                        case 3:
+                            p24 = 0;
+                            ds = clockManager.GetYetziaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur,p24);
+                            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() == "0")
+                            {
+                                 ds=clockManager.GetKnisaNull(mispar_ishi, taarich, inShaa, pmispar_sidur,p24);
+                                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                 {
+                                     if (ds.Tables[0].Rows[0]["knisa"].ToString().Length == 12)
+                                         knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(8, 4);
+                                     else
+                                         knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(0, 4);
+    
+                                     clockManager.UpdateYeziaRecord(mispar_ishi, taarich, knisaH,inShaa, isite_kod, pmispar_sidur, istm,p24);
+                                 }
+                                 else                            
+                                     clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, isite_kod, pmispar_sidur,istm, p24);
+                            }
+                            break;
+                        case 4:
+                            ds = clockManager.GetKnisaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur);
+                            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() == "0")
+                            {
+                                ds = clockManager.GetYetziaNull(mispar_ishi, taarich, inShaa, pmispar_sidur);
+                                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                {
+                                    if (ds.Tables[0].Rows[0]["gmar"].ToString().Length == 12)
+                                        outShaa = ds.Tables[0].Rows[0]["gmar"].ToString().Substring(8, 4);
+                                    else
+                                        outShaa = ds.Tables[0].Rows[0]["gmar"].ToString().Substring(0, 4);
+
+                                    clockManager.UpdateKnisaRecord(mispar_ishi, taarich, inShaa, outShaa, isite_kod, pmispar_sidur, istm);
+                                }
+                                else
+                                    clockManager.InsertKnisatShaon(mispar_ishi, taarich, inShaa, isite_kod, pmispar_sidur, istm);
+                            }
+                            break;
+                        case 5:
+                            if (int.Parse(inShaa) <400) 
+                                p24=1;
+                            else p24 = 0;
+                            
+                            ds = clockManager.GetYetziaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur,p24);
+                            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() == "0")
+                            {
+                                 ds=clockManager.GetKnisaNull(mispar_ishi, taarich, inShaa, pmispar_sidur,p24);
+                                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                 {
+                                     if (ds.Tables[0].Rows[0]["knisa"].ToString().Length == 12)
+                                         knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(8, 4);
+                                     else
+                                         knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(0, 4);
+    
+                                     clockManager.UpdateYeziaRecord(mispar_ishi, taarich, knisaH,inShaa, isite_kod, pmispar_sidur, istm,p24);
+                                 }
+                                 else                            
+                                     clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, isite_kod, pmispar_sidur,istm, p24);
+                            }
+
+                            break;
+                    }
+                }
+                teur = "AttendHarmony finished";
+                clockManager.UpdateControlAttendRecord(taarich, status, teur);
+            }
+        }
+
+        catch (Exception ex)
+        {
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "MatchAttendHarmony Faild: " + ex.Message);
+        }
+
+      }
+
     }
 }
