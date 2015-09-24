@@ -295,5 +295,60 @@ namespace KDSBLLogic.Managers
             }
         }
 
+
+        public DataSet GetNetunimToAttend()
+        {
+            return _container.Resolve<IClockDAL>().GetNetunimToAttend();
+        }
+
+        public void InsertControlAttendRecord(DateTime taarich, int status, string teur)
+        {
+            _container.Resolve<IClockDAL>().InsertControlAttendRecord(taarich, status, teur);
+        }
+
+        public void UpdateControlAttendRecord(DateTime taarich, int status, string teur)
+        {
+            _container.Resolve<IClockDAL>().UpdateControlAttendRecord(taarich, status, teur);
+        }
+
+        public DataSet GetKnisaIfExists(int iMisparIshi, DateTime taarich, string inShaa, int mispar_sidur)
+        {
+            return _container.Resolve<IClockDAL>().GetKnisaIfExists(iMisparIshi,  taarich,  inShaa,  mispar_sidur);
+        }
+
+        public void InsertKnisatShaon(int mispar_ishi, DateTime taarich, string shaa, int site_kod, int mispar_sidur, string iStm)
+        {
+            _container.Resolve<IClockDAL>().InsertKnisatShaon( mispar_ishi,  taarich,  shaa,  site_kod,  mispar_sidur,  iStm);
+        }
+
+        public DataSet GetYetziaNull(int mispar_ishi, DateTime taarich, string shaa, int mispar_sidur)
+        {
+            return _container.Resolve<IClockDAL>().GetYetziaNull(mispar_ishi, taarich, shaa, mispar_sidur);
+        }
+
+        public void UpdateKnisaRecord(int mispar_ishi, DateTime taarich, string shaaK, string shaaY, int site_kod, int mispar_sidur, string iStm)
+        {
+            _container.Resolve<IClockDAL>().UpdateKnisaRecord(mispar_ishi, taarich, shaaK, shaaY, site_kod, mispar_sidur, iStm);
+        }
+
+        public DataSet GetYetziaIfExists(int mispar_ishi, DateTime taarich, string shaa, int mispar_sidur, int p24)
+        {
+            return _container.Resolve<IClockDAL>().GetYetziaIfExists(mispar_ishi, taarich, shaa, mispar_sidur, p24);
+        }
+
+        public DataSet GetKnisaNull(int mispar_ishi, DateTime taarich, string shaa, int mispar_sidur, int p24)
+        {
+            return _container.Resolve<IClockDAL>().GetKnisaNull(mispar_ishi, taarich, shaa, mispar_sidur, p24);
+        }
+
+        public void UpdateYeziaRecord(int mispar_ishi, DateTime taarich, string shaaK, string shaaY, int site_kod, int mispar_sidur, string iStm, int p24)
+        {
+            _container.Resolve<IClockDAL>().UpdateYeziaRecord(mispar_ishi, taarich, shaaK, shaaY, site_kod, mispar_sidur, iStm, p24);
+        }
+
+        public void InsertYeziatShaon(int mispar_ishi, DateTime taarich, string shaa, int site_kod, int mispar_sidur, string iStm, int p24)
+        {
+            _container.Resolve<IClockDAL>().InsertYeziatShaon(mispar_ishi, taarich, shaa, site_kod, mispar_sidur, iStm, p24);
+        }
     }
 }
