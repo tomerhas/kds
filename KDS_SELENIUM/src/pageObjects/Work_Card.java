@@ -634,13 +634,13 @@ public class Work_Card {
 			   
 			            if  (snameId!=null) 
 			            		{		
-			        	WebDriverWait wait = new WebDriverWait(driver,60);
+			        	WebDriverWait wait = new WebDriverWait(driver,120);
 			        	wait.until(ExpectedConditions.stalenessOf((driver.findElement(By.id(snameId)))));} 
 			        	
 			            else 
 			            	
 			            {
-			            	WebDriverWait wait1 = new WebDriverWait(driver,60);
+			            	WebDriverWait wait1 = new WebDriverWait(driver,120);
 			        	wait1.until(ExpectedConditions.stalenessOf((driver.findElement(By.className(sclassname)))));}
 			            	
 			        	
