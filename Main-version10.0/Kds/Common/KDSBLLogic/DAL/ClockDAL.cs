@@ -105,7 +105,7 @@ namespace KDSBLLogic.DAL
             DataSet ds = new DataSet();
             try
             {
-                oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(cProGetNetunimToAttend, ref ds);
 
                 return ds;

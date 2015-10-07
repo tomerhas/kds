@@ -32,21 +32,21 @@ namespace KdsClocks
             int status=0;
             try
             {
-                lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocksHarmony", -12);
-                var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
-                logManager.InsertLog(lRequestNum, "I", 0, "start clock , time=" + DateTime.Now.ToString());
+             ////   lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocksHarmony", -12);
+             ////   var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
+             ////   logManager.InsertLog(lRequestNum, "I", 0, "start clock , time=" + DateTime.Now.ToString());
 
-                StartClock = DateTime.Now;
-                var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
-                status = clGeneral.enStatusRequest.InProcess.GetHashCode();
-                clockManager.InsertControlClockRecord(StartClock, status, "Start");
-                LastHour = clockManager.GetLastHourClock();
+             ////   StartClock = DateTime.Now;
+             ////   var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
+             ////   status = clGeneral.enStatusRequest.InProcess.GetHashCode();
+             ////   clockManager.InsertControlClockRecord(StartClock, status, "Start");
+             ////   LastHour = clockManager.GetLastHourClock();
 
-                InsertMovemetRecords(lRequestNum, LastHour);            
-             //   InsertMovemetErrRecords(lRequestNum,LastHour);
-                clockManager.UpdateControlClockRecord(StartClock, clGeneral.enStatusRequest.ToBeEnded.GetHashCode(), "End");
-                status = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
-                logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
+             ////   InsertMovemetRecords(lRequestNum, LastHour);            
+             //////   InsertMovemetErrRecords(lRequestNum,LastHour);
+             ////   clockManager.UpdateControlClockRecord(StartClock, clGeneral.enStatusRequest.ToBeEnded.GetHashCode(), "End");
+             ////   status = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+             ////   logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
                 /***************************************/
 
                 RunAttandHarmony();
@@ -137,7 +137,7 @@ namespace KdsClocks
         DataSet dsNetunim = new DataSet();
         DataSet ds;
         DateTime taarich;
-        int  SugRec=0 ,status = 0,mispar_ishi,isite_kod,pmispar_sidur=0,p24;
+        int  SugRec=0 ,status = 0,mispar_ishi,isite_kod=0,pmispar_sidur=0,p24,isuk;
         string inaction_kod, intbl_num, istm, inShaa, outShaa, iclock_num_in_site,knisaH, teur = "AttendHarmony now";
         try{
 
@@ -147,50 +147,54 @@ namespace KdsClocks
             if(dsNetunim.Tables.Count>0 && dsNetunim.Tables[0].Rows.Count>0)
             {
                 taarich = DateTime.Now;
-                clockManager.InsertControlAttendRecord(taarich,status,teur);
+               // clockManager.InsertControlAttendRecord(taarich,status,teur);
 
                 foreach (DataRow dr in  dsNetunim.Tables[0].Rows)
                 {
                     mispar_ishi = int.Parse(dr["MISPAR_ISHI"].ToString());
                     taarich = DateTime.Parse( dr["TAARICH"].ToString());
-                    inShaa = dr["Shaa"].ToString();
-                    if (inShaa.Length < 4)
-                        inShaa = inShaa.PadLeft(4, (char)48);
+                    inShaa = dr["Shaa"].ToString().Split(' ')[1].Substring(0, 5).Replace(":","");
+                    pmispar_sidur = int.Parse(dr["MISPAR_SIDUR"].ToString());
+                    isuk = int.Parse(dr["ISUK"].ToString());
+                    if (isuk == 420 && pmispar_sidur == 99001)
+                        pmispar_sidur = 99224;
+                    if (isuk == 422 && pmispar_sidur == 99001)
+                        pmispar_sidur = 99225;
+                    //inaction_kod = dr["action_kod"].ToString();
+                    //intbl_num = dr["tbl_num"].ToString();
 
-                    inaction_kod = dr["action_kod"].ToString();
-                    intbl_num = dr["tbl_num"].ToString();
+                    //iclock_num_in_site = dr["clock_num_in_site"].ToString().Trim();
+                    //if (iclock_num_in_site.ToString().Length < 2)
+                    //    iclock_num_in_site = iclock_num_in_site.ToString().PadLeft(2, (char)48);
 
-                    iclock_num_in_site =dr["clock_num_in_site"].ToString().Trim();
-                    if (iclock_num_in_site.ToString().Length < 2)
-                        iclock_num_in_site =iclock_num_in_site.ToString().PadLeft(2, (char)48);
+                    //isite_kod = int.Parse(dr["site_kod"].ToString() + iclock_num_in_site);
+                    //istm = dr["rec_time_stmp"].ToString();
+                    istm = null;
 
-                    isite_kod = int.Parse(dr["site_kod"].ToString() + iclock_num_in_site);
-                    istm = dr["rec_time_stmp"].ToString();
-
-
-                    if ((inaction_kod == "D" && intbl_num != "460" && intbl_num != "440") || inaction_kod == "G")
-                    {
-                        SugRec = 1;
-                        pmispar_sidur = 99200;
-                    }
-                    else if (inaction_kod == "A"){
-                            SugRec = 2;
-                            pmispar_sidur = 99001;
-                         }
-                         else if (inaction_kod == "B"){
-                                SugRec = 3;
-                                pmispar_sidur = 99001;
-                               }
-                               else if ((inaction_kod == "E" || inaction_kod == "C" || inaction_kod == "D") && intbl_num == "440")
-                                       {
-                                           SugRec = 4;
-                                           pmispar_sidur = 99220;
-                                       }
-                                      else if ((inaction_kod == "F" || inaction_kod == "E" || inaction_kod == "D") && intbl_num == "460")
-                                            {
-                                                SugRec = 5;
-                                                pmispar_sidur = 99220;
-                                            }
+                    SugRec = int.Parse(dr["SugRec"].ToString());
+                    //if ((inaction_kod == "D" && intbl_num != "460" && intbl_num != "440") || inaction_kod == "G")
+                    //{
+                    //    SugRec = 1;
+                    //    pmispar_sidur = 99200;
+                    //}
+                    //else if (inaction_kod == "A"){
+                    //        SugRec = 2;
+                    //        pmispar_sidur = 99001;
+                    //     }
+                    //     else if (inaction_kod == "B"){
+                    //            SugRec = 3;
+                    //            pmispar_sidur = 99001;
+                    //           }
+                    //           else if ((inaction_kod == "E" || inaction_kod == "C" || inaction_kod == "D") && intbl_num == "440")
+                    //                   {
+                    //                       SugRec = 4;
+                    //                       pmispar_sidur = 99220;
+                    //                   }
+                    //                  else if ((inaction_kod == "F" || inaction_kod == "E" || inaction_kod == "D") && intbl_num == "460")
+                    //                        {
+                    //                            SugRec = 5;
+                    //                            pmispar_sidur = 99220;
+                    //                        }
 
                     switch (SugRec)
                     {
