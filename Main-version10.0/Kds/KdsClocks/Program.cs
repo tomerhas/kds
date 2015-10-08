@@ -137,19 +137,21 @@ namespace KdsClocks
         DataSet dsNetunim = new DataSet();
         DataSet ds;
         DateTime taarich;
+        IClockManager clockManager; 
         int  SugRec=0 ,status = 0,mispar_ishi=0,isite_kod=0,pmispar_sidur=0,p24,isuk;
         string inaction_kod, intbl_num, istm, inShaa, outShaa, iclock_num_in_site,knisaH, teur = "AttendHarmony now";
-        try{
+        try
+        {
 
-            var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
-            
-            dsNetunim= clockManager.GetNetunimToAttend();
-            if(dsNetunim.Tables.Count>0 && dsNetunim.Tables[0].Rows.Count>0)
+            clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
+
+            dsNetunim = clockManager.GetNetunimToAttend();
+            if (dsNetunim.Tables.Count > 0 && dsNetunim.Tables[0].Rows.Count > 0)
             {
                 taarich = DateTime.Now;
-               // clockManager.InsertControlAttendRecord(taarich,status,teur);
+                clockManager.InsertControlAttendRecord(taarich, status, teur);
 
-                foreach (DataRow dr in  dsNetunim.Tables[0].Rows)
+                foreach (DataRow dr in dsNetunim.Tables[0].Rows)
                 {
                     try
                     {
@@ -175,7 +177,7 @@ namespace KdsClocks
 
                         SugRec = int.Parse(dr["SugRec"].ToString());
 
-                        if(taarich.Year> DateTime.Now.Year)
+                        if (taarich.Year > DateTime.Now.Year)
                             ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "שנה לא תקינה", mispar_ishi, taarich);
 
                         switch (SugRec)
@@ -270,18 +272,20 @@ namespace KdsClocks
                     }
                     catch (Exception ex)
                     {
-                        ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, " בעיה בקליטת רשומה ", mispar_ishi, taarich,ex);     
+                        ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, " בעיה בקליטת רשומה ", mispar_ishi, taarich, ex);
                     }
                 }
                 teur = "AttendHarmony finished";
-                clockManager.UpdateControlAttendRecord(taarich, status, teur);
+                clockManager.UpdateControlAttendRecord(taarich, 2, teur);
             }
         }
 
         catch (Exception ex)
         {
+            status = 3;
             ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "MatchAttendHarmony Faild: " + ex.Message);
         }
+       
 
       }
 
