@@ -1,6 +1,6 @@
 ﻿
 workCardApp.controller('ovedHityazvutDetailsController',
-    function firstController($scope, apiProvider) {
+    function($scope, apiProvider) {
 
         $scope.name = "hitya "
     });

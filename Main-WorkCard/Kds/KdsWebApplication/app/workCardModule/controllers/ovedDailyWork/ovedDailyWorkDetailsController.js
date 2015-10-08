@@ -1,5 +1,5 @@
 ﻿workCardApp.controller('ovedDailyWorkDetailsController',
-    function firstController($scope, apiProvider,workCardStateService) {
+    function($scope, apiProvider,workCardStateService) {
 
         $scope.name = "daily work"
         $scope.updateRes = "";

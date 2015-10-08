@@ -1,5 +1,5 @@
-﻿workCardApp.controller('ovedDailyDetailsController',
-    function firstController($scope, apiProvider) {
+﻿workCardApp.controller('ovedDailyDetailsController',['$scope', 'apiProvider',
+    function($scope, apiProvider) {
 
         $scope.name = "daily details"
         $scope.tabDisplayed = 1;
@@ -10,4 +10,4 @@
             if ($scope.tabDisplayed > 2)
                 $scope.tabDisplayed = 1;
         }
-    });
+    }]);

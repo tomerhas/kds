@@ -18,11 +18,12 @@ public class wsWorkCard : System.Web.Services.WebService
     [WebMethod]
     public OvedYomAvodaDetailsDM GetOvedDetails(int misparIshi, DateTime cardDate)
     {
+        cardDate = DateTime.Parse(cardDate.ToShortDateString());
         IOvedManager ovedManager = ServiceLocator.Current.GetInstance<IOvedManager>();
         OvedYomAvodaDetailsDM ovedDetails = new OvedYomAvodaDetailsDM();
         ovedDetails.iMisparIshi = misparIshi;
         ovedDetails.sHalbasha = "Cloth";
-        //OvedYomAvodaDetailsDM ovedDetails = ovedManager.CreateOvedDetails(iMisparIshi, dCardDate);
+        OvedYomAvodaDetailsDM ovedDetails2 = ovedManager.CreateOvedDetails(misparIshi, cardDate);
         return ovedDetails;
     }
 

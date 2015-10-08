@@ -1,5 +1,5 @@
 ﻿workCardApp.controller('mainWorkCardController',
-    function firstController($scope, apiProvider) {
+    function($scope, apiProvider) {
 
         $scope.name = "main"
 

@@ -1,5 +1,5 @@
 ﻿workCardApp.controller('ovedPeiluyotController',
-    function firstController($scope, apiProvider, workCardStateService) {
+    function($scope, apiProvider, workCardStateService) {
         $scope.name = "peiluyot"
         $scope.updateRes = "";
 

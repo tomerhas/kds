@@ -1,5 +1,9 @@
-﻿<html ng-app="workCard">
+﻿<html ng-app="workCard" dir="rtl">
 <head>
+    <script src="../../../Js/jquery-1.11.1.min.js"></script>
+    <link href="../../../Content/css/bootstrap-rtl.css" rel="stylesheet" />
+    <link href="../../../Content/css/ng-modal.css" rel="stylesheet" />
+    <script src="../../../Scripts/bootstrap-rtl.js"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     <script src="../../../Scripts/angular.js"></script>
     <script src="../../../Scripts/angular-route.js"></script>
@@ -10,8 +14,8 @@
     <script src="../../workCardModule/controllers/ovedDailyDetailsController.js"></script>
     <script src="../../workCardModule/controllers/mainWorkCardController.js"></script>
     <script src="../../workCardModule/controllers/ovedGeneralDetailsController.js"></script>
-    <script src="../../workCardModule/controllers/ovedPeiluyotController.js"></script>
-    
+    <script src="../controllers/ovedPeiluyotController.js"></script>
+    <script src="../directives/ngModalDirective.js"></script>
     <script src="../../workCardModule/services/apiProvider.js"></script>
     <script src="../../workCardModule/services/workCardStateService.js"></script>
 </head>

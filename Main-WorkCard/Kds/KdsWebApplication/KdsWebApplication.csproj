@@ -94,6 +94,7 @@
     <Content Include="app\workCardModule\controllers\ovedDailyDetailsController.js" />
     <Content Include="app\workCardModule\controllers\ovedGeneralDetailsController.js" />
     <Content Include="app\workCardModule\controllers\ovedPeiluyotController.js" />
+    <Content Include="app\workCardModule\directives\ngModalDirective.js" />
     <Content Include="app\workCardModule\services\apiProvider.js" />
     <Content Include="app\workCardModule\services\workCardStateService.js" />
     <Content Include="app\workCardModule\views\MainWorkCard.html" />
@@ -103,6 +104,9 @@
     <Content Include="app\workCardModule\views\workCardDetails\ovedGeneralDetailsView.html" />
     <Content Include="app\workCardModule\views\workCardDetails\ovedDailyWork\ovedHityazvutDetailsView.html" />
     <Content Include="cleardot[1].gif" />
+    <Content Include="Content\css\bootstrap-rtl.css" />
+    <Content Include="Content\css\ng-modal.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Css\basic.css" />
     <Content Include="Css\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="Css\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
@@ -410,6 +414,8 @@
     <Content Include="Resources\CompareImport.xml" />
     <Content Include="Resources\head.jpg" />
     <Content Include="Resources\InvalidHrMail.xsl" />
+    <Content Include="Scripts\affix.js" />
+    <Content Include="Scripts\alert.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -435,6 +441,11 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\bootstrap-rtl.js" />
+    <Content Include="Scripts\button.js" />
+    <Content Include="Scripts\carousel-rtl.js" />
+    <Content Include="Scripts\collapse.js" />
+    <Content Include="Scripts\dropdown.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
@@ -1179,6 +1190,19 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
+    <Content Include="packages.config" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modal.js" />
+    <Content Include="Scripts\popover.js" />
+    <Content Include="Scripts\scrollspy.js" />
+    <Content Include="Scripts\tab.js" />
+    <Content Include="Scripts\tooltip.js" />
+    <Content Include="Scripts\transition.js" />
     <Content Include="ShowPrint.aspx" />
     <Content Include="StyleSheet.css" />
     <Content Include="SystemManager\DataEntryEdit.aspx" />
@@ -1221,6 +1245,7 @@
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\i18n\ngLocale\_._" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Web.KdsProd01.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

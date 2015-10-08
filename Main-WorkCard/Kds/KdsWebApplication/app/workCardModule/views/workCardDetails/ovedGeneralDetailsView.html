@@ -1,6 +1,24 @@
-﻿<div ng-controller="ovedGeneralDetailsController">
+﻿<div ng-controller="ovedGeneralDetailsController" dir="rtl">
+    <div clas="row">
+        <div class="col-md-4">כרטיס עבודה</div>
+        <div class="col-md-4" align="center">
+            <span>מעדכן אחרון:</span>
+            <a href ng-click="showLasModifierPopup()">{{lastModifier}}</a>
+        </div>
+        <div class="col-md-4" align="left">
+            <span>תאריך עידכון אחרון:</span>
+            <span>{{lastModifyDate}}</span>
+        </div>
+    </div>
+
+
+    <modal-dialog show='modalShown' width='400px' height='60%'>
+          <p>some content</p>
+     </modal-dialog>
+
+
     <div>
-        <label>Misparishi: </label>
+        <span class="label label-primary">Misparishi: </span>
         <input type="text" ng-model="misparIshi" />
     </div>
     <div>
@@ -8,9 +26,18 @@
         <input type="date" ng-model="cardDate" />
     </div>
     <div>
-        <input type="button" ng-click="getOvedDetails()" value="Get Oved Details"/>
+        <input type="button" ng-click="getOvedDetails()" value="Get Oved Details" />
     </div>
     <div>
         {{result}}        
     </div>
+
+
+    <div>
+        <modal-dialog show='modalShown2' width='400px' height='60%'>
+          some content asdfsd fsdf sdf sdf sdf
+        </modal-dialog>
+    </div>
+
+
 </div>
