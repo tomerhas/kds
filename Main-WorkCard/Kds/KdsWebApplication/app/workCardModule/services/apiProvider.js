@@ -1,4 +1,4 @@
-﻿app.factory("apiProvider",
+﻿workCardApp.factory("apiProvider",
     function ($http,$location) {
         var root = $location.host()+":" + $location.port();
         var getSnifOved = function (misparIshi) {

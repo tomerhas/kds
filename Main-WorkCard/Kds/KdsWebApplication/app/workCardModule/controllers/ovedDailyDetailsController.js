@@ -1,4 +1,4 @@
-﻿app.controller('ovedDailyDetailsController',
+﻿workCardApp.controller('ovedDailyDetailsController',
     function firstController($scope, apiProvider) {
 
         $scope.name = "daily details"

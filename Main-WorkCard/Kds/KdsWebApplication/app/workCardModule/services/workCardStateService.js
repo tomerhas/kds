@@ -1,4 +1,4 @@
-﻿app.factory("workCardStateService",
+﻿workCardApp.factory("workCardStateService",
     function () {
         var cardGlobalData = { ovedDetails: {}, ovedPeiluyot: {}};
 

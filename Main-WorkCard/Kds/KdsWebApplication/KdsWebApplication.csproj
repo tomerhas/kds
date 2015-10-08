@@ -60,6 +60,9 @@
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ReportViewer.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\SharedLib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.DataAccess, Version=4.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\SharedLib\Oracle.DataAccess.dll</HintPath>
@@ -85,21 +88,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
-    <Content Include="app\config.js" />
-    <Content Include="app\controllers\WorkCard\ovedDailyWork\ovedDailyWorkDetailsController.js" />
-    <Content Include="app\controllers\WorkCard\mainWorkCardController.js" />
-    <Content Include="app\controllers\WorkCard\ovedDailyDetailsController.js" />
-    <Content Include="app\controllers\WorkCard\ovedGeneralDetailsController.js" />
-    <Content Include="app\controllers\WorkCard\ovedPeiluyotController.js" />
-    <Content Include="app\services\apiProvider.js" />
-    <Content Include="app\services\workCardStateService.js" />
-    <Content Include="app\views\partials\snif-by-userid.html" />
-    <Content Include="app\views\workCard\MainWorkCard.html" />
-    <Content Include="app\views\workCard\partials\ovedDailyDetailsView.html" />
-    <Content Include="app\views\workCard\partials\ovedDailyWork\ovedDailyWorkDetailsView.html" />
-    <Content Include="app\views\workCard\partials\ovedPeiluyotView.html" />
-    <Content Include="app\views\workCard\partials\ovedGeneralDetailsView.html" />
-    <Content Include="app\views\workCard\partials\ovedDailyWork\ovedHityazvutDetailsView.html" />
+    <Content Include="app\workCardModule\config.js" />
+    <Content Include="app\workCardModule\controllers\ovedDailyWork\ovedDailyWorkDetailsController.js" />
+    <Content Include="app\workCardModule\controllers\mainWorkCardController.js" />
+    <Content Include="app\workCardModule\controllers\ovedDailyDetailsController.js" />
+    <Content Include="app\workCardModule\controllers\ovedGeneralDetailsController.js" />
+    <Content Include="app\workCardModule\controllers\ovedPeiluyotController.js" />
+    <Content Include="app\workCardModule\services\apiProvider.js" />
+    <Content Include="app\workCardModule\services\workCardStateService.js" />
+    <Content Include="app\workCardModule\views\MainWorkCard.html" />
+    <Content Include="app\workCardModule\views\workCardDetails\ovedDailyDetailsView.html" />
+    <Content Include="app\workCardModule\views\workCardDetails\ovedDailyWork\ovedDailyWorkDetailsView.html" />
+    <Content Include="app\workCardModule\views\workCardDetails\ovedPeiluyotView.html" />
+    <Content Include="app\workCardModule\views\workCardDetails\ovedGeneralDetailsView.html" />
+    <Content Include="app\workCardModule\views\workCardDetails\ovedDailyWork\ovedHityazvutDetailsView.html" />
     <Content Include="cleardot[1].gif" />
     <Content Include="Css\basic.css" />
     <Content Include="Css\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
@@ -1230,7 +1232,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\controllers\WorkCard\ovedDailyWork\ovedHityazvutDetailsController.js" />
+    <Content Include="app\workCardModule\controllers\ovedDailyWork\ovedHityazvutDetailsController.js" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

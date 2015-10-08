@@ -1,4 +1,4 @@
-﻿app.controller('ovedDailyWorkDetailsController',
+﻿workCardApp.controller('ovedDailyWorkDetailsController',
     function firstController($scope, apiProvider,workCardStateService) {
 
         $scope.name = "daily work"
@@ -10,6 +10,6 @@
         },true);
 
         var updateProps = function () {
-            $scope.updateRes = workCardStateService.cardGlobalData.ovedDetails;
+            //$scope.updateRes = workCardStateService.cardGlobalData.ovedPeiluyot;
         }
     });

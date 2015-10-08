@@ -185,6 +185,8 @@ namespace KDSCommon.DataModels
 
         public OrderedDictionary htPeilut = new OrderedDictionary();
 
+        public List<PeilutContainer> PeilutList { get; set; }
+
         public bool IsLongEilatTrip(out PeilutDM oPeilutEilat, float fPaar)
         {
             PeilutDM peilutEilat = htPeilut.Values.Cast<PeilutDM>().ToList().FirstOrDefault(peilut => peilut.bPeilutEilat && peilut.fKm > fPaar);
@@ -198,5 +200,11 @@ namespace KDSCommon.DataModels
             return false;
         }
 
+    }
+
+    public class PeilutContainer
+    {
+        public string PeilutKey { get; set; }
+        public PeilutDM Peilut { get; set; }
     }
 }

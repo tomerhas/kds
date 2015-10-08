@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using System.Collections.Specialized;
+using Newtonsoft.Json;
 
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -26,19 +27,39 @@ public class wsWorkCard : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public OrderedDictionary GetEmployeePeiluyot(int misparIshi, DateTime cardDate)
+    public string GetEmployeePeiluyot(int misparIshi, DateTime cardDate)
     {
+        cardDate = DateTime.Parse(cardDate.ToShortDateString());
         var ovedManager = ServiceLocator.Current.GetInstance<IOvedManager>();
         var ovedDetails = ovedManager.GetOvedDetails(misparIshi, cardDate);
         int emptyInt = 0;
         var htSpecialEmployeeDetails = new OrderedDictionary();
         var htFullEmployeeDetails = new OrderedDictionary();
-        //OrderedDictionary res = ovedManager.GetEmployeeDetails(false, ovedDetails, cardDate, misparIshi, out emptyInt, out htSpecialEmployeeDetails, out htFullEmployeeDetails);
-        OrderedDictionary res = new OrderedDictionary();
-        var sidur = new SidurDM() { sVisa = "visa 1" };
-        sidur.htPeilut.Add("1",new PeilutDM() { sSnifTnua = "snif 1" });
-        sidur.htPeilut.Add("2", new PeilutDM() { sSnifTnua = "snif 2" });
-        res.Add("1", sidur);
-        return res;
+        OrderedDictionary serviceRes = ovedManager.GetEmployeeDetails(false, ovedDetails, cardDate, misparIshi, out emptyInt, out htSpecialEmployeeDetails, out htFullEmployeeDetails);
+        //In order to use the serialized json on the client side - need to replace the OrderedDictionalry with a wel formed object. Using SidurContainer
+        List<SidurContainer> sidurContainerList = new List<SidurContainer>();
+        foreach (var key in serviceRes.Keys)
+        {
+            //In order to use the serialized json on the client side - need to replace the OrderedDictionalry with a wel formed object. Using PeilutContainer
+            var sidur = serviceRes[key] as SidurDM;
+            sidur.PeilutList = new List<PeilutContainer>();
+            foreach (var peilutKey in sidur.htPeilut.Keys)
+            {
+                sidur.PeilutList.Add(new PeilutContainer() { PeilutKey = peilutKey.ToString(), Peilut = sidur.htPeilut[peilutKey] as PeilutDM});
+            }
+            sidur.htPeilut = null;
+            sidurContainerList.Add(new SidurContainer() { SidurKey = key.ToString(), Sidur = serviceRes[key] as SidurDM });
+        }
+
+        //Use the newton serializer since .net serializer cannot serialize this object
+        string json = JsonConvert.SerializeObject(sidurContainerList);
+        return json;
+
     }
+}
+
+public class SidurContainer
+{
+    public string SidurKey { get; set; }
+    public SidurDM Sidur { get; set; }
 }

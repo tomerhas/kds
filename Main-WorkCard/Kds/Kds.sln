@@ -25,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedLib", "SharedLib", "{
 		..\SharedLib\Microsoft.Practices.Unity.dll = ..\SharedLib\Microsoft.Practices.Unity.dll
 		..\SharedLib\Microsoft.ReportViewer.Common.dll = ..\SharedLib\Microsoft.ReportViewer.Common.dll
 		..\SharedLib\Microsoft.ReportViewer.WebForms.dll = ..\SharedLib\Microsoft.ReportViewer.WebForms.dll
+		..\SharedLib\Newtonsoft.Json.dll = ..\SharedLib\Newtonsoft.Json.dll
 		..\SharedLib\Oracle.DataAccess.dll = ..\SharedLib\Oracle.DataAccess.dll
 		..\SharedLib\Topshelf.dll = ..\SharedLib\Topshelf.dll
 	EndProjectSection
