@@ -136,7 +136,7 @@ namespace KdsClocks
       {
         DataSet dsNetunim = new DataSet();
         DataSet ds;
-        DateTime taarich;
+        DateTime taarich, taarichCtl;
         IClockManager clockManager; 
         int  SugRec=0 ,status = 0,mispar_ishi=0,isite_kod=0,pmispar_sidur=0,p24,isuk;
         string inaction_kod, intbl_num, istm, inShaa, outShaa, iclock_num_in_site,knisaH, teur = "AttendHarmony now";
@@ -150,8 +150,8 @@ namespace KdsClocks
                 dsNetunim = clockManager.GetNetunimToAttend();
                 if (dsNetunim.Tables.Count > 0 && dsNetunim.Tables[0].Rows.Count > 0)
                 {
-                    taarich = DateTime.Now;
-                    clockManager.InsertControlAttendRecord(taarich, status, teur);
+                    taarichCtl = DateTime.Now;
+                    clockManager.InsertControlAttendRecord(taarichCtl, status, teur);
 
                     foreach (DataRow dr in dsNetunim.Tables[0].Rows)
                     {
@@ -281,11 +281,11 @@ namespace KdsClocks
                         }
                         catch (Exception ex)
                         {
-                            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, " בעיה בקליטת רשומה ", mispar_ishi, taarich, ex);
+                            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, " בעיה בקליטת רשומה ", ex);
                         }
                     }
                     teur = "AttendHarmony finished";
-                    clockManager.UpdateControlAttendRecord(taarich, 2, teur);
+                    clockManager.UpdateControlAttendRecord(taarichCtl, 2, teur);
                 }
             }
             else
