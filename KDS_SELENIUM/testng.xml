@@ -34,7 +34,7 @@
 		<classes>
 
 		   <class name="automationFramework.Test_EmployeeCards" /> 
-		    <class name="automationFramework.Test_Open_Rikuz_Online" /> 
+		     <!--  <class name="automationFramework.Test_Open_Rikuz_Online" /> -->
 
 		</classes>
 		
