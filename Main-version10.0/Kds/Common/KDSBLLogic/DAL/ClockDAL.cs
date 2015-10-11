@@ -19,6 +19,7 @@ namespace KDSBLLogic.DAL
         public const string cProGetNetunimToAttend = "Pkg_Attendance.pro_fetch_AttendHarmony";
         public const string cProNewCntrlAttend = "Pkg_Attendance.pro_new_control_Attend";
         public const string cProUpdateCntrlAttend = "Pkg_Attendance.pro_Upd_control_Attend";
+        public const string cFunGetLastAttendCntrl = "Pkg_Attendance.pro_get_last_attend_cntl";
         public const string cProCheckKnisaExists = "Pkg_Attendance.pro_check_In";
         public const string cProInsertKnisa = "Pkg_Attendance.pro_ins_In";
         public const string cProCheckYeziaNull = "Pkg_Attendance.pro_GetOutNull";
@@ -132,13 +133,35 @@ namespace KDSBLLogic.DAL
             }
         }
 
+        
+        public int getLastCntrlAttend()
+        {
+            clDal oDal = new clDal();
+            int status;
+            try
+            {
+                oDal.AddParameter("p_status", ParameterType.ntOracleVarchar, null, ParameterDir.pdReturnValue, 50);
+                oDal.ExecuteSP(cFunGetLastAttendCntrl);
+
+
+                status = int.Parse(oDal.GetValParam("p_status"));
+                return status;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                throw ex;
+            }
+        }
+
+
         public void UpdateControlAttendRecord(DateTime taarich, int status, string teur)
         {
             clDal oDal = new clDal();
             try
             {
                 oDal.AddParameter("pTAARICH", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
-                oDal.AddParameter("pSTATUS", ParameterType.ntOracleInteger, 2, ParameterDir.pdInput);
+                oDal.AddParameter("pSTATUS", ParameterType.ntOracleInteger, status, ParameterDir.pdInput);
                 oDal.AddParameter("pteur", ParameterType.ntOracleVarchar, teur, ParameterDir.pdInput);
 
                 oDal.ExecuteSP(cProUpdateCntrlAttend);
@@ -148,7 +171,7 @@ namespace KDSBLLogic.DAL
                 throw ex;
             }
         }
-        public DataSet GetKnisaIfExists(int iMisparIshi, DateTime taarich, string inShaa, int mispar_sidur)
+        public DataSet GetKnisaIfExists(int iMisparIshi, DateTime taarich, string inShaa, int mispar_sidur, int p24)
         {
             clDal oDal = new clDal();
             DataSet ds = new DataSet();
@@ -158,6 +181,7 @@ namespace KDSBLLogic.DAL
                 oDal.AddParameter("pTAARICH", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
                 oDal.AddParameter("pShaa", ParameterType.ntOracleVarchar, inShaa, ParameterDir.pdInput);
                 oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleInteger, mispar_sidur, ParameterDir.pdInput);
+                oDal.AddParameter("p24", ParameterType.ntOracleInteger, p24, ParameterDir.pdInput);
                 oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(cProCheckKnisaExists, ref ds);
 
@@ -169,7 +193,7 @@ namespace KDSBLLogic.DAL
             }
         }
 
-        public void InsertKnisatShaon(int mispar_ishi, DateTime taarich, string shaa, int site_kod, int mispar_sidur, string iStm)
+        public void InsertKnisatShaon(int mispar_ishi, DateTime taarich, string shaa, int site_kod, int mispar_sidur, string iStm, int p24)
         {
             clDal oDal = new clDal();
             try
@@ -180,6 +204,7 @@ namespace KDSBLLogic.DAL
                 oDal.AddParameter("pMikum", ParameterType.ntOracleInteger, site_kod, ParameterDir.pdInput);
                 oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleInteger, mispar_sidur, ParameterDir.pdInput);
                 oDal.AddParameter("pStm", ParameterType.ntOracleVarchar, iStm, ParameterDir.pdInput);
+                oDal.AddParameter("p24", ParameterType.ntOracleInteger, p24, ParameterDir.pdInput);
 
                 oDal.ExecuteSP(cProInsertKnisa);
             }
@@ -189,7 +214,7 @@ namespace KDSBLLogic.DAL
             }
         }
 
-        public DataSet GetYetziaNull(int mispar_ishi, DateTime taarich, string shaa, int mispar_sidur)
+        public DataSet GetYetziaNull(int mispar_ishi, DateTime taarich, string shaa, int mispar_sidur, int p24)
         {
             clDal oDal = new clDal();
             DataSet ds = new DataSet();
@@ -200,6 +225,7 @@ namespace KDSBLLogic.DAL
                 oDal.AddParameter("pKnisaHH", ParameterType.ntOracleInteger, int.Parse(shaa.Substring(0, 2)), ParameterDir.pdInput);
                 oDal.AddParameter("pKnisaMM", ParameterType.ntOracleInteger, int.Parse(shaa.Substring(2, 2)), ParameterDir.pdInput);
                 oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleInteger, mispar_sidur, ParameterDir.pdInput);
+                oDal.AddParameter("p24", ParameterType.ntOracleInteger, p24, ParameterDir.pdInput);
                 oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
 
                 oDal.ExecuteSP(cProCheckYeziaNull, ref ds);
@@ -212,7 +238,7 @@ namespace KDSBLLogic.DAL
             }
         }
 
-        public void UpdateKnisaRecord(int mispar_ishi, DateTime taarich, string shaaK, string shaaY, int site_kod, int mispar_sidur, string iStm)
+        public void UpdateKnisaRecord(int mispar_ishi, DateTime taarich, string shaaK, string shaaY, int site_kod, int mispar_sidur, string iStm, int p24)
         {
             clDal oDal = new clDal();
             try
@@ -226,6 +252,7 @@ namespace KDSBLLogic.DAL
                 oDal.AddParameter("pYetziaMM", ParameterType.ntOracleInteger, int.Parse(shaaY.Substring(2, 2)), ParameterDir.pdInput);
                 oDal.AddParameter("pmispar_sidur", ParameterType.ntOracleInteger, mispar_sidur, ParameterDir.pdInput);
                 oDal.AddParameter("pStm", ParameterType.ntOracleVarchar, iStm, ParameterDir.pdInput);
+                oDal.AddParameter("p24", ParameterType.ntOracleInteger, p24, ParameterDir.pdInput);
 
                 oDal.ExecuteSP(cProUpdateKnisaRecord);
             }
