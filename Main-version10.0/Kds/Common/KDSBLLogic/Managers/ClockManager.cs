@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.IO;
+using KDSCommon.Interfaces.Logs;
+using Microsoft.Practices.ServiceLocation;
 
 namespace KDSBLLogic.Managers
 {
@@ -38,6 +41,7 @@ namespace KDSBLLogic.Managers
         {
             _container.Resolve<IClockDAL>().SaveHarmonyMovment(BakashaId,collHarmonyMovment);
         }
+
 
         public void InsertToCollMovment(COLL_HARMONY_MOVMENT_ERR_MOV collHarmony, DataTable dt)
         {
@@ -295,7 +299,10 @@ namespace KDSBLLogic.Managers
             }
         }
 
-
+        public void InsertTnuotShaon()
+        {
+            _container.Resolve<IClockDAL>().InsertTnuotShaon();
+        }
         public DataSet GetNetunimToAttend()
         {
             return _container.Resolve<IClockDAL>().GetNetunimToAttend();
@@ -355,5 +362,115 @@ namespace KDSBLLogic.Managers
         {
             _container.Resolve<IClockDAL>().InsertYeziatShaon(mispar_ishi, taarich, shaa, site_kod, mispar_sidur, iStm, p24);
         }
+
+        /*********************** AGTN *************************/
+
+        public void LoadKdsFileAgtan(string InFileName, long lRequestNum)
+        {
+            StreamReader srFile=null;
+            DataSet ds;
+            string line,sug,mikum,outShaa,knisaH,istm=null,inShaa;
+            int mispar_ishi,kod_mikum,p24,pmispar_sidur;
+            DateTime taarich;//,shatKnisa,shatYetzia;
+             IClockManager clockManager;
+             try
+             {
+                 pmispar_sidur = 99001;
+                 clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
+                 srFile = new StreamReader(InFileName, Encoding.Default);
+                 line = srFile.ReadLine();
+                 while (string.IsNullOrEmpty(line) && !srFile.EndOfStream)
+                     line = srFile.ReadLine();
+                 while (!string.IsNullOrEmpty(line) && !srFile.EndOfStream)
+                 {
+                     try
+                     {
+                         taarich = DateTime.Parse(line.Substring(0, 2) + "/" + line.Substring(2, 2) + "/" + line.Substring(4, 4));  // line.Substring(5, 4) & Mid(line, 3, 2) & Mid(line, 1, 2) 'convert from format=ddmmyyyy 
+                         sug = line.Substring(8, 3);// כניסה או יציאה 'A10=in, B20=out
+                         mispar_ishi = int.Parse(line.Substring(11, 5));
+                         mikum = line.Substring(21, 2);// 'M0=19501, P0=20101
+
+                         if (mikum == "M0")
+                             kod_mikum = 19501;
+                         else if (mikum == "P0")
+                             kod_mikum = 20101;
+                         else kod_mikum = 0;
+
+                         //if (sug== "A10")
+                         //    shatKnisa=DateTime.Parse(taarich.ToShortDateString() + " " +  line.Substring(17, 2) + ":" + line.Substring(19, 2));
+                         //else  shatYetzia=DateTime.Parse(taarich.ToShortDateString() + " " +  line.Substring(17, 2) + ":" + line.Substring(19, 2));
+
+                         switch (sug)
+                         {
+                             case "A10":
+                                 inShaa = line.Substring(16, 4);
+                                 p24 = 0;
+                                 ds = clockManager.GetKnisaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
+                                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() == "0")
+                                 {
+                                     ds = clockManager.GetYetziaNull(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
+                                     if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                     {
+                                         if (ds.Tables[0].Rows[0]["gmar"].ToString().Length == 12)
+                                             outShaa = ds.Tables[0].Rows[0]["gmar"].ToString().Substring(8, 4);
+                                         else
+                                             outShaa = ds.Tables[0].Rows[0]["gmar"].ToString().Substring(0, 4);
+
+                                         clockManager.UpdateKnisaRecord(mispar_ishi, taarich, inShaa, outShaa, kod_mikum, pmispar_sidur, istm, p24);
+                                     }
+                                     else
+                                         clockManager.InsertKnisatShaon(mispar_ishi, taarich, inShaa, kod_mikum, pmispar_sidur, istm, p24);
+                                 }
+
+                                 break;
+                             case "B20":
+                                 inShaa = line.Substring(16, 4);
+                                 p24 = 0;
+                                 ds = clockManager.GetYetziaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
+                                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() == "0")
+                                 {
+                                     ds = clockManager.GetKnisaNull(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
+                                     if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                     {
+                                         if (ds.Tables[0].Rows[0]["knisa"].ToString().Length == 12)
+                                             knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(8, 4);
+                                         else
+                                             knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(0, 4);
+
+                                         clockManager.UpdateYeziaRecord(mispar_ishi, taarich, knisaH, inShaa, kod_mikum, pmispar_sidur, istm, p24);
+                                     }
+                                     else
+                                         clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, kod_mikum, pmispar_sidur, istm, p24);
+                                 }
+                                 break;
+                             default:
+                                 ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "לא קיים קוד תנועת שעון", mispar_ishi, taarich);
+                                 break;
+                         }
+
+                         line = srFile.ReadLine();
+                         while (string.IsNullOrEmpty(line) && !srFile.EndOfStream)
+                             line = srFile.ReadLine();
+                     }
+                     catch (Exception ex)
+                     {
+                         ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, " בעיה בקליטת רשומה ", ex);
+                     }
+                 }
+             }
+             catch (Exception ex)
+             {
+                 ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "LoadKdsFileAgtan Faild, file name " + InFileName+ ". Err:" + ex.Message);
+             }
+             finally
+             {
+                 if(srFile !=null)
+                    srFile.Close();
+             }
+
+        }
+
+
+        /*******************************************************/
     }
 }

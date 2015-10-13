@@ -15,6 +15,7 @@ using System.Threading;
 using KDSCommon.Enums;
 using KDSCommon.Proxies;
 using KDSCommon.Interfaces.Managers.BankShaot;
+using KDSCommon.Interfaces.Managers;
 
 
 
@@ -704,5 +705,62 @@ namespace KdsBatch.TaskManager
              }
 
          }
+
+         public void KlitatTnuotAgtan()
+         {
+             string FileName,InPath,SubFolder,FileNameOld;
+             string[] _files,splitName;
+             long lRequestNum=0;
+             ILogBakashot logManager=null;
+              IClockManager clockManager; 
+                 
+             try{
+
+
+                 lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocks", -12);
+                 logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
+                 logManager.InsertLog(lRequestNum, "I", 0, "Start Klitat Agtan");
+
+                FileName =  ConfigurationSettings.AppSettings["KdsInputFileNameAgtan"];
+                if(FileName.Trim()=="")
+                    FileName = "A01SN_AGTAN.DAT";
+                 
+                 InPath  = ConfigurationSettings.AppSettings["KdsFilePath"];
+                 SubFolder = ConfigurationSettings.AppSettings["KdsFileSubPath"];
+
+                  clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
+                 _files = Directory.GetFiles(InPath , FileName , SearchOption.TopDirectoryOnly);
+                  for (int i = 0; i < _files.Length; i++)
+                  {
+                      try{
+                          logManager.InsertLog(lRequestNum, "I", 0, "START LoadKdsFileAgtan: " + _files[i]);
+                          clockManager.LoadKdsFileAgtan(_files[i], lRequestNum);
+                          logManager.InsertLog(lRequestNum, "I", 0, "END LoadKdsFileAgtan: " + _files[i]);
+                          splitName = _files[i].Split("\\".ToCharArray());
+                          FileName = splitName[splitName.Length - 1];
+                          FileNameOld = FileName.Substring(0, FileName.Length - 4) + ".old";
+                          File.Copy(_files[i], InPath+ SubFolder + FileNameOld, true);
+                          
+                          logManager.InsertLog(lRequestNum,"I",0, "after copy Agtan " + _files[i]);
+                          File.Delete(_files[i]);
+                          logManager.InsertLog(lRequestNum, "I", 0, "after delete Agtan " + _files[i]);
+
+                      }
+                      catch(Exception ex)
+                      {
+                          logManager.InsertLog(lRequestNum, "E", 0, "KlitatTnuotAgtan Fail, File Name: "+ _files[i] + " Err: " +ex.Message);
+                      }
+                  }
+                   logManager.InsertLog(lRequestNum, "I", 0, "End Klitat Agtan");
+             }
+             catch(Exception ex)
+             {
+                 logManager.InsertLog(lRequestNum, "E", 0, "KlitatTnuotAgtan Fail: " +ex.Message);
+             }
+         }
+
+
+
+      
 	}
 }

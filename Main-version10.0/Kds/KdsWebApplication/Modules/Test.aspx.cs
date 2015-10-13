@@ -1033,6 +1033,7 @@ public partial class Modules_Test :Page
             KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
             //++ clUtils.RunBakaratSDRN();
             //++ clUtils.RunRetroSpectSDRN();
+           // clUtils.KlitatTnuotAgtan();
             clUtils.ChishuvBankShaotMeshek();
             //clTkinutMakatim objMakat = new clTkinutMakatim();
             // objMakat.(DateTime.Parse(clnFromDate.Text));

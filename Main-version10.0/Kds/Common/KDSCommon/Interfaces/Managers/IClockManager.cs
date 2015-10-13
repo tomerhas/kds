@@ -15,6 +15,7 @@ namespace KDSCommon.Interfaces.Managers
         void SaveShaonimMovment(long BakashaId,COLL_HARMONY_MOVMENT_ERR_MOV collHarmonyMovment);
         void InsertToCollMovment(COLL_HARMONY_MOVMENT_ERR_MOV collHarmony, DataTable dt);
         void InsertToCollErrMovment(COLL_HARMONY_MOVMENT_ERR_MOV collHarmony, DataTable dt);
+        void InsertTnuotShaon();
         DataSet GetNetunimToAttend();
         void InsertControlAttendRecord(DateTime taarich, int status, string teur);
         int getLastCntrlAttend();
@@ -27,6 +28,8 @@ namespace KDSCommon.Interfaces.Managers
         DataSet GetKnisaNull(int mispar_ishi, DateTime taarich, string shaa, int mispar_sidur, int p24);
         void UpdateYeziaRecord(int mispar_ishi, DateTime taarich, string shaaK, string shaaY, int site_kod, int mispar_sidur, string iStm, int p24);
         void InsertYeziatShaon(int mispar_ishi, DateTime taarich, string shaa, int site_kod, int mispar_sidur, string iStm, int p24);
+
+       void LoadKdsFileAgtan(string InFileName, long lRequestNum);
 
     }
 }

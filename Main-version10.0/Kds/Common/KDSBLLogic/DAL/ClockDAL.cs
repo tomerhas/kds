@@ -16,6 +16,7 @@ namespace KDSBLLogic.DAL
         public const string cProUpdControlClock = "Pkg_Attendance.pro_upd_control_clock";
         public const string cFunGetLastHourClock = "Pkg_Attendance.pro_get_last_hour_clock";
         //**  Attend **//
+        public const string cProInsertTnuotShaon = "Pkg_Attendance.pro_Insert_Tnuot_Shaon";
         public const string cProGetNetunimToAttend = "Pkg_Attendance.pro_fetch_AttendHarmony";
         public const string cProNewCntrlAttend = "Pkg_Attendance.pro_new_control_Attend";
         public const string cProUpdateCntrlAttend = "Pkg_Attendance.pro_Upd_control_Attend";
@@ -133,7 +134,18 @@ namespace KDSBLLogic.DAL
             }
         }
 
-        
+        public void InsertTnuotShaon()
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.ExecuteSP(cProInsertTnuotShaon);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public int getLastCntrlAttend()
         {
             clDal oDal = new clDal();

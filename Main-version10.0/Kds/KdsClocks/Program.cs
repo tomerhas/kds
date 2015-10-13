@@ -32,25 +32,28 @@ namespace KdsClocks
             int status=0;
             try
             {
-                   lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocksHarmony", -12);
+                   lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocks", -12);
                    var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
                    logManager.InsertLog(lRequestNum, "I", 0, "start clock , time=" + DateTime.Now.ToString());
 
-                   StartClock = DateTime.Now;
                    var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
-                   status = clGeneral.enStatusRequest.InProcess.GetHashCode();
-                   clockManager.InsertControlClockRecord(StartClock, status, "Start");
-                   LastHour = clockManager.GetLastHourClock();
+                   logManager.InsertLog(lRequestNum, "I", 0, "before select to tb_harmony_movment");
+                   clockManager.InsertTnuotShaon();
+                   logManager.InsertLog(lRequestNum, "I", 0, "after select to tb_harmony_movment, before attend");
+                   RunAttendShaonim(lRequestNum);
+                   logManager.InsertLog(lRequestNum, "I", 0, "after  attend");
+                ////   StartClock = DateTime.Now;
+                ////   var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
+                ////   status = clGeneral.enStatusRequest.InProcess.GetHashCode();
+                ////   clockManager.InsertControlClockRecord(StartClock, status, "Start");
+                ////   LastHour = clockManager.GetLastHourClock();
 
-                   InsertMovemetRecords(lRequestNum, LastHour);            
-                //   InsertMovemetErrRecords(lRequestNum,LastHour);
-                   clockManager.UpdateControlClockRecord(StartClock, clGeneral.enStatusRequest.ToBeEnded.GetHashCode(), "End");
+                ////   InsertMovemetRecords(lRequestNum, LastHour);            
+                //////   InsertMovemetErrRecords(lRequestNum,LastHour);
+                ////   clockManager.UpdateControlClockRecord(StartClock, clGeneral.enStatusRequest.ToBeEnded.GetHashCode(), "End");
                    status = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
                    logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
-                /***************************************/
-
-                RunAttandHarmony();
-                
+                /***************************************/ 
             }
             catch (Exception ex)
             {
@@ -63,76 +66,76 @@ namespace KdsClocks
                 ServiceLocator.Current.GetInstance<IClockManager>().UpdateControlClockRecord(StartClock, status, "End");
             }
         }
-        private static void RunAttandHarmony()
-        {
-            long lRequestNum = 0;
-            int status = 0;
-            try
-            {
-                lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Attend, "RunAttendHarmony", -12);
-                var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
-                logManager.InsertLog(lRequestNum, "I", 0, "start Attend , time=" + DateTime.Now.ToString());
-                status = clGeneral.enStatusRequest.InProcess.GetHashCode();
+        //private static void RunAttandHarmony()
+        //{
+        //    long lRequestNum = 0;
+        //    int status = 0;
+        //    try
+        //    {
+        //        lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Attend, "RunAttendHarmony", -12);
+        //        var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
+        //        logManager.InsertLog(lRequestNum, "I", 0, "start Attend , time=" + DateTime.Now.ToString());
+        //        status = clGeneral.enStatusRequest.InProcess.GetHashCode();
 
-                MatchAttendHarmony(lRequestNum);
+        //        MatchAttendHarmony(lRequestNum);
 
-                status = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
-                logManager.InsertLog(lRequestNum, "I", 0, "end Attend , time=" + DateTime.Now.ToString());
-            }   
-            catch (Exception ex)
-            {
-                status = clGeneral.enStatusRequest.Failure.GetHashCode();
-                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunAttandHarmony Faild: " + ex.Message);
-            }
-            finally
-            {
-                clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, status);
-            }
-        }
+        //        status = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+        //        logManager.InsertLog(lRequestNum, "I", 0, "end Attend , time=" + DateTime.Now.ToString());
+        //    }   
+        //    catch (Exception ex)
+        //    {
+        //        status = clGeneral.enStatusRequest.Failure.GetHashCode();
+        //        ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunAttandHarmony Faild: " + ex.Message);
+        //    }
+        //    finally
+        //    {
+        //        clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, status);
+        //    }
+        //}
 
-        private static void InsertMovemetRecords(long lRequestNum,string LastHour)
-        {
-            COLL_HARMONY_MOVMENT_ERR_MOV collHarmony = new COLL_HARMONY_MOVMENT_ERR_MOV();
-            try
-            {
-                var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
+        //private static void InsertMovemetRecords(long lRequestNum,string LastHour)
+        //{
+        //    COLL_HARMONY_MOVMENT_ERR_MOV collHarmony = new COLL_HARMONY_MOVMENT_ERR_MOV();
+        //    try
+        //    {
+        //        var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
 
-                syInterfaceWS.MalalClient wsSy = new syInterfaceWS.MalalClient();
-                var xmlE = wsSy.SQLRecordSetToXML("select * from movment where Rec_Enter >='" + LastHour.Trim() + "'");//ConfigurationManager.AppSettings["MOVMENTSQL"]);
-                DataSet DsMovement = StaticBL.ConvertXMLToDataSet(xmlE);
+        //        syInterfaceWS.MalalClient wsSy = new syInterfaceWS.MalalClient();
+        //        var xmlE = wsSy.SQLRecordSetToXML("select * from movment where Rec_Enter >='" + LastHour.Trim() + "'");//ConfigurationManager.AppSettings["MOVMENTSQL"]);
+        //        DataSet DsMovement = StaticBL.ConvertXMLToDataSet(xmlE);
 
-                clockManager.InsertToCollMovment(collHarmony, DsMovement.Tables[int.Parse(ConfigurationManager.AppSettings["NUMTABLEMOVMENT"])]);
-                clockManager.SaveShaonimMovment(lRequestNum,collHarmony);
+        //        clockManager.InsertToCollMovment(collHarmony, DsMovement.Tables[int.Parse(ConfigurationManager.AppSettings["NUMTABLEMOVMENT"])]);
+        //        clockManager.SaveShaonimMovment(lRequestNum,collHarmony);
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
-        private static void InsertMovemetErrRecords(long lRequestNum, string LastHour)
-        {
-            COLL_HARMONY_MOVMENT_ERR_MOV collHarmony = new COLL_HARMONY_MOVMENT_ERR_MOV();
-            try
-            {
-                var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
+        //private static void InsertMovemetErrRecords(long lRequestNum, string LastHour)
+        //{
+        //    COLL_HARMONY_MOVMENT_ERR_MOV collHarmony = new COLL_HARMONY_MOVMENT_ERR_MOV();
+        //    try
+        //    {
+        //        var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
 
-                syInterfaceWS.MalalClient wsSy = new syInterfaceWS.MalalClient();
-                var xmlE = wsSy.SQLRecordSetToXML("select * from Err_mov where Rec_Enter >='" + LastHour.Trim() + "'");//ConfigurationManager.AppSettings["MOVMENTSQL"]);
-                DataSet DsMovementErr = StaticBL.ConvertXMLToDataSet(xmlE);
+        //        syInterfaceWS.MalalClient wsSy = new syInterfaceWS.MalalClient();
+        //        var xmlE = wsSy.SQLRecordSetToXML("select * from Err_mov where Rec_Enter >='" + LastHour.Trim() + "'");//ConfigurationManager.AppSettings["MOVMENTSQL"]);
+        //        DataSet DsMovementErr = StaticBL.ConvertXMLToDataSet(xmlE);
 
-                clockManager.InsertToCollErrMovment(collHarmony, DsMovementErr.Tables[int.Parse(ConfigurationManager.AppSettings["NUMTABLEERRMOVE"])]);
-                clockManager.SaveShaonimMovment(lRequestNum,collHarmony);
+        //        clockManager.InsertToCollErrMovment(collHarmony, DsMovementErr.Tables[int.Parse(ConfigurationManager.AppSettings["NUMTABLEERRMOVE"])]);
+        //        clockManager.SaveShaonimMovment(lRequestNum,collHarmony);
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
-        private static void MatchAttendHarmony(long lRequestNum)
+        private static void RunAttendShaonim(long lRequestNum)
       {
         DataSet dsNetunim = new DataSet();
         DataSet ds;
@@ -298,7 +301,7 @@ namespace KdsClocks
         catch (Exception ex)
         {
             status = 3;
-            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "MatchAttendHarmony Faild: " + ex.Message);
+            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunAttandShaonim Faild: " + ex.Message);
         }
        
 
