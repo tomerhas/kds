@@ -299,9 +299,9 @@ namespace KDSBLLogic.Managers
             }
         }
 
-        public void InsertTnuotShaon()
+        public void InsertTnuotShaon(long lRequestNum)
         {
-            _container.Resolve<IClockDAL>().InsertTnuotShaon();
+            _container.Resolve<IClockDAL>().InsertTnuotShaon(lRequestNum);
         }
         public DataSet GetNetunimToAttend()
         {

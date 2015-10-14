@@ -1079,7 +1079,9 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             IdkunMachalotOvdim=25,
             BdikatYemeyMachala=26,
             ChishuvBankShaotMeshek=27,
-            Clocks=28
+            Clocks=28,
+            KlitatNochechutAgtan=29
+
            
         }
         public enum enBechishuvSachar

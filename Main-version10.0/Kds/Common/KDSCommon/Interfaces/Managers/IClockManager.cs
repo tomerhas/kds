@@ -15,7 +15,7 @@ namespace KDSCommon.Interfaces.Managers
         void SaveShaonimMovment(long BakashaId,COLL_HARMONY_MOVMENT_ERR_MOV collHarmonyMovment);
         void InsertToCollMovment(COLL_HARMONY_MOVMENT_ERR_MOV collHarmony, DataTable dt);
         void InsertToCollErrMovment(COLL_HARMONY_MOVMENT_ERR_MOV collHarmony, DataTable dt);
-        void InsertTnuotShaon();
+        void InsertTnuotShaon(long lRequestNum);
         DataSet GetNetunimToAttend();
         void InsertControlAttendRecord(DateTime taarich, int status, string teur);
         int getLastCntrlAttend();

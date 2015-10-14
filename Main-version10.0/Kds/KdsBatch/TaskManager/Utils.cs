@@ -711,13 +711,14 @@ namespace KdsBatch.TaskManager
              string FileName,InPath,SubFolder,FileNameOld;
              string[] _files,splitName;
              long lRequestNum=0;
+             int status = 0;
              ILogBakashot logManager=null;
               IClockManager clockManager; 
                  
              try{
 
 
-                 lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocks", -12);
+                 lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.KlitatNochechutAgtan, "KlitatTnuotAgtan", -12);
                  logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
                  logManager.InsertLog(lRequestNum, "I", 0, "Start Klitat Agtan");
 
@@ -751,11 +752,18 @@ namespace KdsBatch.TaskManager
                           logManager.InsertLog(lRequestNum, "E", 0, "KlitatTnuotAgtan Fail, File Name: "+ _files[i] + " Err: " +ex.Message);
                       }
                   }
-                   logManager.InsertLog(lRequestNum, "I", 0, "End Klitat Agtan");
+                 
+                   status = 2;
              }
              catch(Exception ex)
              {
+                 status = 3;
                  logManager.InsertLog(lRequestNum, "E", 0, "KlitatTnuotAgtan Fail: " +ex.Message);
+             }
+             finally
+             {
+                 clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, status);
+                 logManager.InsertLog(lRequestNum, "I", 0, "End KlitatTnuotAgtan");
              }
          }
 

@@ -38,7 +38,7 @@ namespace KdsClocks
 
                    var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
                    logManager.InsertLog(lRequestNum, "I", 0, "before select to tb_harmony_movment");
-                   clockManager.InsertTnuotShaon();
+                   clockManager.InsertTnuotShaon(lRequestNum);
                    logManager.InsertLog(lRequestNum, "I", 0, "after select to tb_harmony_movment, before attend");
                    RunAttendShaonim(lRequestNum);
                    logManager.InsertLog(lRequestNum, "I", 0, "after  attend");
@@ -139,7 +139,7 @@ namespace KdsClocks
       {
         DataSet dsNetunim = new DataSet();
         DataSet ds;
-        DateTime taarich, taarichCtl;
+        DateTime taarich=new DateTime(), taarichCtl;
         IClockManager clockManager; 
         int  SugRec=0 ,status = 0,mispar_ishi=0,isite_kod=0,pmispar_sidur=0,p24,isuk;
         string inaction_kod, intbl_num, istm, inShaa, outShaa, iclock_num_in_site,knisaH, teur = "AttendHarmony now";
@@ -153,6 +153,7 @@ namespace KdsClocks
                 dsNetunim = clockManager.GetNetunimToAttend();
                 if (dsNetunim.Tables.Count > 0 && dsNetunim.Tables[0].Rows.Count > 0)
                 {
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "כמות רשומות להצמדה: " + dsNetunim.Tables[0].Rows.Count);
                     taarichCtl = DateTime.Now;
                     clockManager.InsertControlAttendRecord(taarichCtl, status, teur);
 
@@ -284,11 +285,15 @@ namespace KdsClocks
                         }
                         catch (Exception ex)
                         {
-                            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, " בעיה בקליטת רשומה ", ex);
+                            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, " בעיה בקליטת רשומה ", mispar_ishi, taarich,ex);
                         }
                     }
                     teur = "AttendHarmony finished";
                     clockManager.UpdateControlAttendRecord(taarichCtl, 2, teur);
+                }
+                else
+                {
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "לא קיימים נתונים להצמדות");
                 }
             }
             else

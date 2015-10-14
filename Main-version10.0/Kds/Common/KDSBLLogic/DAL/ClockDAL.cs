@@ -134,11 +134,12 @@ namespace KDSBLLogic.DAL
             }
         }
 
-        public void InsertTnuotShaon()
+        public void InsertTnuotShaon(long lRequestNum)
         {
             clDal oDal = new clDal();
             try
             {
+                oDal.AddParameter("p_bakasha", ParameterType.ntOracleInteger, lRequestNum, ParameterDir.pdInput);
                 oDal.ExecuteSP(cProInsertTnuotShaon);
             }
             catch (Exception ex)
