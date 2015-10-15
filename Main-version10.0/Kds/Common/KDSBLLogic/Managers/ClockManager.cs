@@ -363,6 +363,10 @@ namespace KDSBLLogic.Managers
             _container.Resolve<IClockDAL>().InsertYeziatShaon(mispar_ishi, taarich, shaa, site_kod, mispar_sidur, iStm, p24);
         }
 
+        public void InsertHityazvutPundak(int mispar_ishi, DateTime taarich, DateTime shaa, int site_kod)
+        {
+            _container.Resolve<IClockDAL>().InsertHityazvutPundak(mispar_ishi, taarich, shaa, site_kod);
+        }
         /*********************** AGTN *************************/
 
         public void LoadKdsFileAgtan(string InFileName, long lRequestNum)

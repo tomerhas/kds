@@ -48,15 +48,15 @@ namespace KdsClocks
             IUnityContainer container = new UnityContainer();
             //Register interfaces
 
-            //container.RegisterInstance<ISimpleCacheManager<CachedItems>>(new SimpleCacheManager<CachedItems>());//the object will be singelton
+            container.RegisterInstance<ISimpleCacheManager<CachedItems>>(new SimpleCacheManager<CachedItems>());//the object will be singelton
 
-          //  container.RegisterInstance<IKDSCacheManager>(container.Resolve<KDSCacheManager>());
+            container.RegisterInstance<IKDSCacheManager>(container.Resolve<KDSCacheManager>());
           //  var manager = new KDSAgedQueueParameters();
           //  manager.Init(20);
 
           ////  container.RegisterInstance<IKDSAgedQueueParameters>(manager);
           // // container.RegisterInstance<IMailManager>(container.Resolve<MailManager>());
-          //  //container.RegisterInstance<ICacheBuilder>(container.Resolve<CacheBuilder>());
+         //   container.RegisterInstance<ICacheBuilder>(container.Resolve<CacheBuilder>());
 
           //  //Managers
           //  container.RegisterType<IParametersManager, ParametersManager>();
@@ -87,7 +87,7 @@ namespace KdsClocks
           //  //var manager = container.Resolve<ISimpleCacheManager<int>>();
           //  //var item = container.Resolve<ISimpleCacheManager<string>>();
             InitServiceLocator(container);
-          //  InitCacheItems(container);
+          InitCacheItems(container);
 
             //Init card error
             //ICardErrorContainer cardErrorContainer = container.Resolve<CardErrorContainer>();
@@ -96,11 +96,11 @@ namespace KdsClocks
 
         }
 
-        //private void InitCacheItems(IUnityContainer container)
-        //{
-        //    var builder = container.Resolve<CacheBuilder>();
-        //    builder.Init();
-        //}
+        private void InitCacheItems(IUnityContainer container)
+        {
+            var builder = container.Resolve<CacheBuilder>();
+            builder.Init();
+        }
 
         private void InitServiceLocator(IUnityContainer container)
         {

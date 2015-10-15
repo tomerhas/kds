@@ -29,6 +29,7 @@ namespace KDSBLLogic.DAL
         public const string cProCheckKnisaNull = "Pkg_Attendance.pro_GetInNull";
         public const string cProUpdateYeziaRecord = "Pkg_Attendance.pro_UpdYetzia";
         public const string cProInsertYetzia = "Pkg_Attendance.pro_ins_Yetzia";
+        public const string cProInsertHityazvutPundakim = "Pkg_Attendance.pro_ins_hityazvut_pundakim";
 
         //**//
 
@@ -368,7 +369,23 @@ namespace KDSBLLogic.DAL
                 throw ex;
             }
         }
-                                
+          public void InsertHityazvutPundak(int mispar_ishi, DateTime taarich, DateTime shaa, int site_kod)
+          {
+              clDal oDal = new clDal();
+              try
+              {
+                  oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, mispar_ishi, ParameterDir.pdInput); ;
+                  oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
+                  oDal.AddParameter("p_shaa", ParameterType.ntOracleDate, shaa, ParameterDir.pdInput);
+                  oDal.AddParameter("p_mikum", ParameterType.ntOracleInteger, site_kod, ParameterDir.pdInput);
+
+                  oDal.ExecuteSP(cProInsertHityazvutPundakim);
+              }
+              catch (Exception ex)
+              {
+                  throw ex;
+              }
+          }
     }
       
 }

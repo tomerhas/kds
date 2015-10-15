@@ -23,6 +23,7 @@ namespace KDSCache.Implement
         public const string cProGetShgiotNoActive = "pkg_errors.pro_get_shgiot_no_active";
         public const string cProGetCtbElementim = "PKG_UTILS.pro_get_ctb_elementim";
         public const string cProGetStatusKartis = "PKG_UTILS.pro_get_status_kartis_ctb";
+        public const string cProGetPundakimTb = "PKG_UTILS.pro_get_pundakim_tb";
 
         private IKDSCacheManager _kdsCacheManager;
 
@@ -42,6 +43,7 @@ namespace KDSCache.Implement
              _kdsCacheManager.AddItem(CachedItems.ErrorTable, GetErrorTable());
              _kdsCacheManager.AddItem(CachedItems.Elementim, GetElementim());
              _kdsCacheManager.AddItem(CachedItems.StatusWC, GetStatusKartis());
+             _kdsCacheManager.AddItem(CachedItems.Pundakim, GetPundakimVisutim()); 
         }
 
         private DataTable GetYamimMeyuchadim()
@@ -142,5 +144,17 @@ namespace KDSCache.Implement
             oDal.ExecuteSP(cProGetStatusKartis, ref dt);
             return dt;
         }
+
+        private DataTable GetPundakimVisutim()
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+            oDal.ExecuteSP(cProGetPundakimTb, ref dt);
+            return dt;
+        }
+
+        
     }
 }
