@@ -1453,7 +1453,12 @@ Public Class ClKds
             oDal.AddParameter("SRV_D_KOD_HALBASHA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HALBASHA_X), ParameterDir.pdInput)
             oDal.AddParameter("SRV_D_KOD_HAZMANA_X", ParameterType.ntOracleVarchar, Trim(SRV_D_KOD_HAZMANA_X), ParameterDir.pdInput)
             If Trim(TAARICH_knisa_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
+                '20151015 to correct bug if in tow the in is also after midnight and before 04:00
+                If calc_D_new_sidur = 99220 And CInt(SRV_D_KNISA_X) > 0 And CInt(SRV_D_KNISA_X) < 400 Then
+                    oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
+                Else
+                    oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 0, ParameterDir.pdInput)
+                End If
             Else
                 oDal.AddParameter("TAARICH_knisa_p24", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput)
             End If
