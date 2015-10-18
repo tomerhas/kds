@@ -385,7 +385,7 @@ namespace KDSBLLogic.Managers
                  line = srFile.ReadLine();
                  while (string.IsNullOrEmpty(line) && !srFile.EndOfStream)
                      line = srFile.ReadLine();
-                 while (!string.IsNullOrEmpty(line) && !srFile.EndOfStream)
+                 while (!string.IsNullOrEmpty(line))
                  {
                      try
                      {
@@ -452,9 +452,13 @@ namespace KDSBLLogic.Managers
                                  break;
                          }
 
-                         line = srFile.ReadLine();
-                         while (string.IsNullOrEmpty(line) && !srFile.EndOfStream)
+                         if (!srFile.EndOfStream)
+                         {
                              line = srFile.ReadLine();
+                             while (string.IsNullOrEmpty(line) && !srFile.EndOfStream)
+                                 line = srFile.ReadLine();
+                         }
+                         else line = "";
                      }
                      catch (Exception ex)
                      {
