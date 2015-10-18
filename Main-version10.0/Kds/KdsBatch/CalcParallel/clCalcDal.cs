@@ -597,7 +597,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                return 0;
+            
                 throw (ex);
             }
         }
