@@ -13,6 +13,8 @@
         $scope.result = "";
         $scope.error = "";
 
+
+        
         //Method for returning the list of modiifcatinos by the user
         $scope.showLasModifierPopup = function () {
             var promise = apiProvider.getWCLastUpdatsDetails($scope.misparIshi, $scope.cardDate);

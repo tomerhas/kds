@@ -1,5 +1,24 @@
-﻿
-<div ng-controller="ovedPeiluyotController">
+﻿<div ng-controller="ovedPeiluyotController">
     <div>name of peilut work controller: {{name}}</div>
     <div>update res : {{updateRes}}</div>
-</div>  
+    <<div class="padded-row">
+
+        <div angucomplete-alt id="auto"
+            placeholder="Search countries"
+            maxlength="50"
+            pause="100"
+            selected-object="selectedCountry"
+            local-data="countries"
+            search-fields="name"
+            title-field="name"
+            minlength="1"
+            input-changed="inputChanged"
+            input-class="form-control form-control-small"
+            match-class="highlight">
+        </div>
+    </div>
+    <div>
+        <input type="button" ng-click="addMoreItems()" value="Add items" />
+    </div>
+
+</div>

@@ -1,5 +1,5 @@
 ﻿var mainApp = angular.module('mainApp', []);
-var workCardApp = angular.module('workCard', ['ngRoute','mainApp']);
+var workCardApp = angular.module('workCard', ['ngRoute','mainApp','angucomplete-alt']);
 
 
 //app.directive('ngAutocomplete', function ($parse) {

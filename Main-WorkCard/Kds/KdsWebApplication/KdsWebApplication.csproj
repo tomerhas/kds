@@ -104,8 +104,10 @@
     <Content Include="app\workCardModule\views\workCardDetails\ovedGeneralDetailsView.html" />
     <Content Include="app\workCardModule\views\workCardDetails\ovedDailyWork\ovedHityazvutDetailsView.html" />
     <Content Include="cleardot[1].gif" />
+    <Content Include="Content\css\angucomplete-alt.css" />
     <Content Include="Content\css\bootstrap-rtl.css" />
     <Content Include="Content\css\ng-modal.css" />
+    <Content Include="Content\css\structure.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Css\basic.css" />
     <Content Include="Css\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
@@ -416,6 +418,7 @@
     <Content Include="Resources\InvalidHrMail.xsl" />
     <Content Include="Scripts\affix.js" />
     <Content Include="Scripts\alert.js" />
+    <Content Include="Scripts\angucomplete-alt.min.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
