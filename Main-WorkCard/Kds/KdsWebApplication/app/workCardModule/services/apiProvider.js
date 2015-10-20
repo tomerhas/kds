@@ -21,10 +21,16 @@
                                  { misparIshi: misparIshi, cardDate: cardDate });
         }
 
+        var getWCLastUpdatsDetails = function (misparIshi, cardDate) {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetLastUpdate",
+                                 { misparIshi: misparIshi, cardDate: cardDate });
+        }
+
         return {
             getSnifOved: getSnifOved,
             getMisparIshi: getMisparIshi,
             getOvedDetails: getOvedDetails,
-            getEmployeePeiluyot: getEmployeePeiluyot
+            getEmployeePeiluyot: getEmployeePeiluyot,
+            getWCLastUpdatsDetails: getWCLastUpdatsDetails
         }
     });

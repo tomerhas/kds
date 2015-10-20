@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Services;
 using System.Collections.Specialized;
 using Newtonsoft.Json;
+using KdsWebApplication.ViewModels.WorkCard;
+using KdsLibrary.BL;
+using System.Data;
 
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -57,10 +60,39 @@ public class wsWorkCard : System.Web.Services.WebService
         return json;
 
     }
-}
 
-public class SidurContainer
-{
-    public string SidurKey { get; set; }
-    public SidurDM Sidur { get; set; }
+    [WebMethod]
+    public List<UserWCUpdateInfo> GetLastUpdate(int misparIshi, DateTime cardDate)
+    {
+         clOvdim oOvdim = new clOvdim();
+         DataTable dtUpdtes = oOvdim.GetLastUpdator(misparIshi, cardDate);
+         List<UserWCUpdateInfo> updates = new List<UserWCUpdateInfo>();
+        // UserWCUpdateInfo rowUpdate;
+         foreach (DataRow row in dtUpdtes.Rows)
+         {
+             var userUpdate = new UserWCUpdateInfo();
+             userUpdate.UpdateDate = ParseStringToDate(row[0].ToString());
+             userUpdate.MisparIshi = ParseStringToInt(row[1].ToString());
+             userUpdate.NameUpdater = row[2].ToString();
+
+             updates.Add(userUpdate);
+         }
+         return updates;
+    }
+
+    private DateTime ParseStringToDate(string sDate)
+    {
+        DateTime d = DateTime.Now;
+        DateTime.TryParse(sDate, out d);
+
+        return d;
+    }
+
+    private int ParseStringToInt(string sNumber)
+    {
+        int i=0;
+        int.TryParse(sNumber, out i);
+
+        return i;
+    }
 }

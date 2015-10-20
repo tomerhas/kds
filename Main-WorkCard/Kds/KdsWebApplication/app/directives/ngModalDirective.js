@@ -21,7 +21,7 @@
 //});
 
 
-workCardApp.provider("ngModalDefaults", function () {
+mainApp.provider("ngModalDefaults", function () {
     return {
         options: {
             closeButtonHtml: "<span class='ng-modal-close-x'>X</span>"
@@ -45,7 +45,7 @@ workCardApp.provider("ngModalDefaults", function () {
     };
 });
 
-workCardApp.directive('modalDialog', [
+mainApp.directive('modalDialog', [
     'ngModalDefaults', '$sce', function (ngModalDefaults, $sce) {
         return {
             restrict: 'E',

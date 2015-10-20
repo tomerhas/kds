@@ -1,4 +1,5 @@
 ﻿<div ng-controller="ovedGeneralDetailsController" dir="rtl">
+    <!--Header row of card. Including time and name-->
     <div clas="row">
         <div class="col-md-4">כרטיס עבודה</div>
         <div class="col-md-4" align="center">
@@ -10,12 +11,8 @@
             <span>{{lastModifyDate}}</span>
         </div>
     </div>
-
-
-    <modal-dialog show='modalShown' width='400px' height='60%'>
-          <p>some content</p>
-     </modal-dialog>
-
+   
+   
 
     <div>
         <span class="label label-primary">Misparishi: </span>
@@ -39,5 +36,28 @@
         </modal-dialog>
     </div>
 
+    <!--Pop ups-->
+     <modal-dialog show='modalLastUpdateShown' width='400px' height='60%'>
+          <p></p>
+           <table>
+               <tr>
+                   <th>Date</th>
+                   <th>Name</th>
+                   <th>Mispar</th>
+               </tr>
+               <tr ng-repeat="update in LastUpdateWCList">
+                   <td>{{update.UpdateDate}}</td>
+                   <td>{{update.NameUpdater}}</td>   
+                   <td>{{update.MisparIshi}}</td>   
+               </tr>
+               
+           </table> 
+     </modal-dialog>
+
+    <modal-dialog show='modalErrorsShown' width='400px' height='60%'>
+           <p></p>
+        <p>ארעה שגיאה</p>
+        <p>{{error}}</p>
+    </modal-dialog>
 
 </div>
