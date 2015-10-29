@@ -22,7 +22,7 @@ public  class Utils {
 //	public  WebDriver driver;
 	
 	 int attempts =0;
-	 int MAX_ATTEMPTS =70;
+	 int MAX_ATTEMPTS =20;
 	
 	
 	public static WebDriver Initialize_browser( ) {

@@ -65,10 +65,10 @@ public class Test_Menahel_Bameshek    extends Base {
 	  a.waitForWindow("WorkCard",driver);
       Assert.assertFalse(Work_Card.Btn_Add_Absence(driver).isEnabled(),"Btn_Add_Absence is Enabled ");
       Assert.assertFalse(Work_Card.Btn_Add_Mapa(driver).isEnabled(),"Btn_Add_Mapa is Enabled ");
-      Assert.assertFalse(Work_Card.Btn_Calc_Items(driver).isEnabled(),"Btn_Calc_Items is Enabled ");
+      Assert.assertFalse(Work_Card.BtnCalcItems(driver).isEnabled(),"Btn_Calc_Items is Enabled ");
       Assert.assertTrue(Work_Card.Btn_Add_Special(driver).isEnabled(),"Btn_Add_Special is Disabled ");	
       Assert.assertTrue(Work_Card.Btn_Clocks(driver).isEnabled(),"Btn_Clocks is Disabled ");			
-      Assert.assertTrue(Work_Card.Btn_Driver_Errors(driver).isEnabled(),"Btn_Driver_Errors is Disabled ");
+      Assert.assertTrue(Work_Card.BtnDriverErrors(driver).isEnabled(),"Btn_Driver_Errors is Disabled ");
       System.out.println(Work_Card.Assert_Sidur_disabled(driver).getAttribute("readonly"));
       Assert.assertTrue(true,Work_Card.Assert_Sidur_disabled(driver).getAttribute("readonly"));
       Work_Card.Btn_Add_Special(driver).click();

@@ -572,7 +572,7 @@ public class Work_Card {
 		 
 		 
 		 
-		 public static WebElement  Btn_Calc_Items (WebDriver driver){
+		 public static WebElement  BtnCalcItems (WebDriver driver){
 			 
 			  element = driver.findElement(By.id("btnCalcItem"));
 			    
@@ -582,7 +582,7 @@ public class Work_Card {
 		 
 		
 		 
-		 public static WebElement  Btn_Driver_Errors (WebDriver driver){
+		 public static WebElement  BtnDriverErrors (WebDriver driver){
 			 
 			  element = driver.findElement(By.id("btnDrvErrors"));
 			    
@@ -598,6 +598,19 @@ public class Work_Card {
 			    
 			 
 			   return element;  }
+		 
+		 
+		 
+		 
+		 
+		 
+		 public static WebElement  BtnCloseErrors (WebDriver driver){
+			 
+			  element = driver.findElement(By.className("btnWorkCardCloseWin"));
+			    
+			 
+			   return element;  }
+		 
 		 
 		 
 		 
