@@ -34,6 +34,7 @@ public class Test_open_Rechivim_Errors extends Base {
 		//JavascriptExecutor executor = (JavascriptExecutor) driver;
 		//executor.executeScript("arguments[0].click();",
 				//Work_Card.BtnCloseErrors(driver));
+		driver.close();
 		Utils c = new Utils();
 		c.waitForWindow("WorkCard", driver);
 		Work_Card.Btn_Close(driver).click();
