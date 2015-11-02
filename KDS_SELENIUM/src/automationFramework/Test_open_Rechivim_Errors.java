@@ -38,7 +38,7 @@ public class Test_open_Rechivim_Errors extends Base {
 		Utils c = new Utils();
 		c.waitForWindow("WorkCard", driver);
 		Work_Card.Btn_Close(driver).click();
-	  
+	    
 	  
 	  
 	  }
