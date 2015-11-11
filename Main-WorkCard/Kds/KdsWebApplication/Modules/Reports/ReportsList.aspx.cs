@@ -10,6 +10,7 @@ using KdsLibrary.BL;
 using System.Data;
 using KdsLibrary.Security;
 using KdsLibrary.Utils.Reports;
+using KDSCommon.DataModels.Security;
 
 public partial class Modules_Reports_ReportsList : KdsPage
 {
@@ -29,7 +30,7 @@ public partial class Modules_Reports_ReportsList : KdsPage
 
                 MasterPage mp = (MasterPage)Page.Master;
                 SetFixedHeaderGrid(pnlgrdReports.ClientID, mp.HeadPage);
-                foreach (UserProfile Profile in LoginUser.UserProfiles) {
+                foreach (UserProfile Profile in LoginUser.UserInfo.UserProfiles) {
                     Strprofil = Strprofil + "," + Profile.Role.ToString();
                 }
                 if (Strprofil != "") 

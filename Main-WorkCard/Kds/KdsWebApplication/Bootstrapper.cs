@@ -30,6 +30,9 @@ using KdsShinuyim.FlowManager;
 using KDSCommon.DataModels.Shinuyim;
 using KDSCommon.Interfaces.Managers.BankShaot;
 using KdsBankShaot.FlowManager;
+using KdsWorkCard.Managers;
+using KDSCommon.Interfaces.Managers.Security;
+using KdsLibrary.Security;
 
 namespace KdsWebApplication
 {
@@ -56,6 +59,8 @@ namespace KdsWebApplication
 
             container.RegisterInstance<IKDSAgedQueueParameters>(manager);
             container.RegisterInstance<IMailManager>(container.Resolve<MailManager>());
+            container.RegisterInstance<ILoginUserManager>(container.Resolve<LoginUserManager>());
+            
             //container.RegisterInstance<ICacheBuilder>(container.Resolve<CacheBuilder>());
 
             //Managers
@@ -72,6 +77,8 @@ namespace KdsWebApplication
             container.RegisterType<ILogBakashot, LogBakashot>();
             container.RegisterType<IBankShaotManager, BankShaotManager>();
             container.RegisterType<IClockManager, ClockManager>();
+            container.RegisterType<IWorkCardSidurManager, WorkCardSidurManager>();
+            
           //  container.RegisterType<IShinuyLogCollection, ShinuyLogCollection>();
 
             //Containers

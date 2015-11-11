@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KDSCommon.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,10 @@ namespace KdsLibrary.Utils
     /// Defines value of Type String to be matched 
     /// in List<> by MatchNameList object 
     /// </summary>
-    public interface IMatchName
-    {
-        string Name { get; }
-    }
+    //public interface IMatchName
+    //{
+    //    string Name { get; }
+    //}
     
     /// <summary>
     /// Extends Generics List<> providing match by key or name using indexer

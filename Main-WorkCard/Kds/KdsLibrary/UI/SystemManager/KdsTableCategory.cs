@@ -5,6 +5,7 @@ using System.Text;
 using KdsLibrary.Utils;
 using System.Data;
 using DalOraInfra.DAL;
+using KDSCommon.Interfaces;
 
 namespace KdsLibrary.UI.SystemManager
 {

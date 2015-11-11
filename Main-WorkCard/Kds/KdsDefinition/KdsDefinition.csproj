@@ -187,6 +187,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\KDSCommon\KDSCommon.csproj">
+      <Project>{1cf6ed40-3036-4b17-ab5a-35f5c265c28c}</Project>
+      <Name>KDSCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
       <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
       <Name>KdsLibrary</Name>

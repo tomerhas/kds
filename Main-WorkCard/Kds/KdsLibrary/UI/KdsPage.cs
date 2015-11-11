@@ -14,6 +14,7 @@ using KdsLibrary.BL;
 using KdsLibrary.Utils.Reports;
 using System.Collections.Generic;
 using System.Diagnostics;
+using KDSCommon.DataModels.Security;
 
 namespace KdsLibrary.UI
 {
@@ -147,7 +148,7 @@ namespace KdsLibrary.UI
                 DataTable dtAllMessages = new DataTable();
                 dtAllMessages.Columns.Add("Melel_Hodaa", typeof(System.String));
                 dtAllMessages.Columns.Add("Kod_Hodaa", typeof(System.Int32));
-                foreach (UserProfile profile in LoginUser.UserProfiles)
+                foreach (UserProfile profile in LoginUser.UserInfo.UserProfiles.ToArray())
                 {
                     DataTable dtMessages = objUtils.GetHodaotToProfil(profile.Role, PageModule.ModuleID);
                     foreach (DataRow dr in dtMessages.Rows)

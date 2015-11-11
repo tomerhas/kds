@@ -11,6 +11,9 @@ using Newtonsoft.Json;
 using KdsWebApplication.ViewModels.WorkCard;
 using KdsLibrary.BL;
 using System.Data;
+using KDSCommon.DataModels.WorkCard;
+using KDSCommon.Enums;
+using KDSCommon.Interfaces;
 
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -30,33 +33,20 @@ public class wsWorkCard : System.Web.Services.WebService
         return ovedDetails;
     }
 
-    [WebMethod]
+    /// <summary>
+    /// The enable session param is set to true so that when trying to save the loged in user - the session class will not be null
+    /// </summary>
+    /// <param name="misparIshi"></param>
+    /// <param name="cardDate"></param>
+    /// <returns></returns>
+    [WebMethod(EnableSession = true)]
     public string GetEmployeePeiluyot(int misparIshi, DateTime cardDate)
     {
         cardDate = DateTime.Parse(cardDate.ToShortDateString());
-        var ovedManager = ServiceLocator.Current.GetInstance<IOvedManager>();
-        var ovedDetails = ovedManager.GetOvedDetails(misparIshi, cardDate);
-        int emptyInt = 0;
-        var htSpecialEmployeeDetails = new OrderedDictionary();
-        var htFullEmployeeDetails = new OrderedDictionary();
-        OrderedDictionary serviceRes = ovedManager.GetEmployeeDetails(false, ovedDetails, cardDate, misparIshi, out emptyInt, out htSpecialEmployeeDetails, out htFullEmployeeDetails);
-        //In order to use the serialized json on the client side - need to replace the OrderedDictionalry with a wel formed object. Using SidurContainer
-        List<SidurContainer> sidurContainerList = new List<SidurContainer>();
-        foreach (var key in serviceRes.Keys)
-        {
-            //In order to use the serialized json on the client side - need to replace the OrderedDictionalry with a wel formed object. Using PeilutContainer
-            var sidur = serviceRes[key] as SidurDM;
-            sidur.PeilutList = new List<PeilutContainer>();
-            foreach (var peilutKey in sidur.htPeilut.Keys)
-            {
-                sidur.PeilutList.Add(new PeilutContainer() { PeilutKey = peilutKey.ToString(), Peilut = sidur.htPeilut[peilutKey] as PeilutDM});
-            }
-            sidur.htPeilut = null;
-            sidurContainerList.Add(new SidurContainer() { SidurKey = key.ToString(), Sidur = serviceRes[key] as SidurDM });
-        }
-
-        //Use the newton serializer since .net serializer cannot serialize this object
-        string json = JsonConvert.SerializeObject(sidurContainerList);
+        IWorkCardSidurManager ovedWCManager = ServiceLocator.Current.GetInstance<IWorkCardSidurManager>();
+        var sidurim=ovedWCManager.GetSidurim(misparIshi, cardDate);
+        //return sidurim;
+        string json = JsonConvert.SerializeObject(sidurim);
         return json;
 
     }
@@ -78,6 +68,161 @@ public class wsWorkCard : System.Web.Services.WebService
              updates.Add(userUpdate);
          }
          return updates;
+    }
+
+    [WebMethod]
+    public List<EmployeeIdContainer> GetOvdimToUser(string inputstring, string userId)
+    {   //מביא את כל המספרים האישיים  של העובדים הכפופים
+        
+        clOvdim oOvdim = new clOvdim();
+        List<EmployeeIdContainer> ids = new List<EmployeeIdContainer>();
+        try
+        {
+            DataTable dt = oOvdim.GetOvdimMisparIshi(inputstring +"%",null);
+
+              foreach (DataRow dr in dt.Rows)
+              {
+                
+                  ids.Add(new EmployeeIdContainer(){MisparIshi = dr["mispar_ishi"].ToString()});
+                  
+              }
+              return ids;
+            //List<string> items = new List<string>(count);
+            //if ((inputstring.Length > 0) && (inputstring.Substring(0, 1) != "|"))
+            //{
+            //    prefixText = string.Concat(prefixText, "%");
+            //    if (userId.Length > 0)
+            //    {
+            //        dt = oOvdim.GetOvdimToUser(inputstring, int.Parse(userId));
+            //    }
+            //    else
+            //    {
+            //        dt = oOvdim.GetOvdimMisparIshi(inputstring, userId);
+            //    }
+
+
+
+            //    int i = 0;
+            //    foreach (DataRow dr in dt.Rows)
+            //    {
+            //        if (i > count) { break; }
+            //        items.Add(dr["mispar_ishi"].ToString());
+            //        i++;
+            //    }
+            //}
+            //return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public EmployeeBasicDetails GetEmpoyeeById(int iMisparIshi, string sCardDate)
+    {
+        String sXMLResult = "";
+        clOvdim oOvdim = new clOvdim();
+        DataTable dt;
+        DateTime dCardDate = DateTime.Parse(sCardDate);
+        EmployeeBasicDetails res = new EmployeeBasicDetails();
+    
+        if (iMisparIshi > 0)
+        {
+                    
+            dt = oOvdim.GetOvedDetails(iMisparIshi, dCardDate);
+            if (dt.Rows.Count > 0)
+            {
+                res.Id = iMisparIshi;// ParseStringToInt(dt.Rows[0]["FULL_NAME"].ToString());
+                res.Name = dt.Rows[0]["FULL_NAME"].ToString();
+                res.UnitName = dt.Rows[0]["TEUR_SNIF_AV"].ToString();
+                return res;
+            }
+        }
+        return null;
+    }
+
+    [WebMethod]
+    public List<ReasonMissingSignature> GetSibotLedivuach()
+    {
+        List<ReasonMissingSignature> sibot = new List<ReasonMissingSignature>();
+        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+        DataTable dvSibotLedivuch = cache.GetCacheItem<DataTable>(CachedItems.SibotLedivuchYadani);
+
+        foreach (DataRow dr in dvSibotLedivuch.Rows)
+        {
+
+            var siba = new ReasonMissingSignature();
+            siba.Value = ParseStringToInt(dr["KOD_SIBA"].ToString());
+            siba.Description = dr["TEUR_SIBA"].ToString();
+            sibot.Add(siba);
+
+        }
+        //string json = JsonConvert.SerializeObject(sibot);
+     //   return json;
+        return sibot;
+        
+    }
+
+    [WebMethod]
+    public List<Hariga> GetHariga()
+    {
+        List<Hariga> Harigot = new List<Hariga>();
+        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+        DataRow[] dtHariga = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_divuch_hariga_meshaot'"));
+
+        foreach (DataRow dr in dtHariga)
+        {
+
+            var oHariga = new Hariga();
+            oHariga.Value = ParseStringToInt(dr["KOD"].ToString());
+            oHariga.Description = dr["TEUR"].ToString();
+            Harigot.Add(oHariga);
+
+        }
+        return Harigot;
+        
+    }
+
+    [WebMethod]
+    public List<Pizul> GetPizul()
+    {
+        List<Pizul> Pizulim = new List<Pizul>();
+        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+        DataRow[] dtPizul = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_pitzul_hafsaka'"));
+
+        foreach (DataRow dr in dtPizul)
+        {
+
+            var oPizul = new Pizul();
+            oPizul.Value = ParseStringToInt(dr["KOD"].ToString());
+            oPizul.Description = dr["TEUR"].ToString();
+            Pizulim.Add(oPizul);
+
+        }
+        return Pizulim;
+
+    }
+
+    
+    [WebMethod]
+    public List<Hashlama> GetHashlama()
+    {
+        List<Hashlama> Hashlamot = new List<Hashlama>();
+        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+        DataRow[] dtHashlama = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_sibot_hashlama_leyom'"));
+
+        foreach (DataRow dr in dtHashlama)
+        {
+
+            var oHashlama = new Hashlama();
+            oHashlama.Value = ParseStringToInt(dr["KOD"].ToString());
+            oHashlama.Description = dr["TEUR"].ToString();
+            Hashlamot.Add(oHashlama);
+
+        }
+        return Hashlamot;
+
     }
 
     private DateTime ParseStringToDate(string sDate)

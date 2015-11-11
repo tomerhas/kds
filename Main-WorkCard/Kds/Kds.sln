@@ -72,9 +72,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsBankShaot", "KdsBankShao
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsClocks", "KdsClocks\KdsClocks.csproj", "{92605332-6DAB-4B0A-B29C-0F45F31F9252}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsWorkCard", "KdsWorkCard\KdsWorkCard.csproj", "{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KDSWorkCardTester", "Tests\KDSWorkCardTester\KDSWorkCardTester.csproj", "{F6FE3D3C-7C28-4857-86B0-19685C46D501}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 25
+		SccNumberOfProjects = 27
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
 		SccLocalPath0 = .
@@ -163,6 +167,13 @@ Global
 		SccProjectUniqueName24 = KdsClocks\\KdsClocks.csproj
 		SccProjectName24 = KdsClocks
 		SccLocalPath24 = KdsClocks
+		SccProjectUniqueName25 = KdsWorkCard\\KdsWorkCard.csproj
+		SccProjectName25 = KdsWorkCard
+		SccLocalPath25 = KdsWorkCard
+		SccProjectUniqueName26 = Tests\\KDSWorkCardTester\\KDSWorkCardTester.csproj
+		SccProjectTopLevelParentUniqueName26 = Kds.sln
+		SccProjectName26 = Tests/KDSWorkCardTester
+		SccLocalPath26 = Tests\\KDSWorkCardTester
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -1199,6 +1210,78 @@ Global
 		{92605332-6DAB-4B0A-B29C-0F45F31F9252}.Test|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{92605332-6DAB-4B0A-B29C-0F45F31F9252}.Test|Mixed Platforms.Build.0 = Release|Any CPU
 		{92605332-6DAB-4B0A-B29C-0F45F31F9252}.Test|x86.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd01|.NET.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd01|Any CPU.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd01|Any CPU.Build.0 = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd01|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd01|Mixed Platforms.Build.0 = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd01|x86.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd02|.NET.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd02|Any CPU.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd02|Any CPU.Build.0 = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd02|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd02|Mixed Platforms.Build.0 = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsProd02|x86.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsTest|.NET.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsTest|Any CPU.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsTest|Any CPU.Build.0 = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsTest|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsTest|Mixed Platforms.Build.0 = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.KdsTest|x86.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Release|.NET.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Release|x86.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Test|.NET.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Test|Any CPU.Build.0 = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Test|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Test|Mixed Platforms.Build.0 = Release|Any CPU
+		{26D6AC27-3EC2-4667-A2B1-04BF9BF0B812}.Test|x86.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd01|.NET.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd01|Any CPU.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd01|Any CPU.Build.0 = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd01|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd01|Mixed Platforms.Build.0 = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd01|x86.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd02|.NET.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd02|Any CPU.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd02|Any CPU.Build.0 = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd02|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd02|Mixed Platforms.Build.0 = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsProd02|x86.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsTest|.NET.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsTest|Any CPU.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsTest|Any CPU.Build.0 = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsTest|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsTest|Mixed Platforms.Build.0 = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.KdsTest|x86.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Release|.NET.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Release|x86.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Test|.NET.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Test|Any CPU.Build.0 = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Test|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Test|Mixed Platforms.Build.0 = Release|Any CPU
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501}.Test|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1217,5 +1300,6 @@ Global
 		{ECF904B0-35DE-4570-86BA-7676D617F07B} = {6F053E40-5E3D-4B67-B748-8B51AF74C5D5}
 		{7B74C39D-09A2-4820-BDB1-A43186F127EE} = {6F053E40-5E3D-4B67-B748-8B51AF74C5D5}
 		{F685A3F0-4A35-4714-BD73-4FFC12829143} = {6F053E40-5E3D-4B67-B748-8B51AF74C5D5}
+		{F6FE3D3C-7C28-4857-86B0-19685C46D501} = {6F053E40-5E3D-4B67-B748-8B51AF74C5D5}
 	EndGlobalSection
 EndGlobal

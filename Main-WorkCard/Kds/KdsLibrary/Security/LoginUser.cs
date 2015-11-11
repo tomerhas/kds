@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using KdsLibrary.Utils;
+using KDSCommon.DataModels.Security;
 
 namespace KdsLibrary.Security
 {
@@ -15,7 +16,6 @@ namespace KdsLibrary.Security
     {
         #region Fields
         private UserInfo _userInfo;
-        private List<UserProfile> _profiles;
         private Exchange.ExchangeInfoServiceSoapClient _exchangeSrv;
         private MatchNameList<KdsModule> _modules;
         private bool _isLimitedUser;
@@ -26,17 +26,14 @@ namespace KdsLibrary.Security
         {
             get { return _userInfo; }
         }
-        public UserProfile[] UserProfiles
-        {
-            get { return _profiles.ToArray(); }
-        }
+     
         internal MatchNameList<KdsModule> KdsModules
         {
             get { return _modules; }
         }
         internal bool IsProfileExists
         {
-            get { return _profiles.Count > 0; }
+            get { return UserInfo.UserProfiles.Count > 0; }
         }
         internal bool IsModulesListExists
         {
@@ -62,7 +59,6 @@ namespace KdsLibrary.Security
         private LoginUser()
         {
             _exchangeSrv = new Exchange.ExchangeInfoServiceSoapClient();
-            _profiles = new List<UserProfile>();
             CreateUserInfo();
         }
 
@@ -86,7 +82,7 @@ namespace KdsLibrary.Security
 
         internal void AddProfileToUser(UserProfile profile)
         {
-            _profiles.Add(profile);
+            UserInfo.UserProfiles.Add(profile);
         }
         internal void SetModulesList(MatchNameList<KdsModule> modules)
         {
@@ -94,7 +90,11 @@ namespace KdsLibrary.Security
         }
         public static LoginUser GetLoginUser()
         {
-            LoginUser user = (LoginUser)HttpContext.Current.Session["LoginUser"];
+            LoginUser user = null;
+            if (HttpContext.Current != null)
+            {
+                user = (LoginUser)HttpContext.Current.Session["LoginUser"];
+            }
             if (user == null)
             {
                 user = new LoginUser();
@@ -120,11 +120,11 @@ namespace KdsLibrary.Security
             bool bRashemet = false;
             try
             {
-                for (int i = 0; i < oLoginUser.UserProfiles.Length; i++)
+                for (int i = 0; i < oLoginUser.UserInfo.UserProfiles.Count; i++)
                 {
-                    if ((oLoginUser.UserProfiles[i].Role == clGeneral.enProfile.enRashemet.GetHashCode())
-                         || (oLoginUser.UserProfiles[i].Role == clGeneral.enProfile.enRashemetAll.GetHashCode())
-                         || (oLoginUser.UserProfiles[i].Role == clGeneral.enProfile.enSystemAdmin.GetHashCode()
+                    if ((oLoginUser.UserInfo.UserProfiles[i].Role == clGeneral.enProfile.enRashemet.GetHashCode())
+                         || (oLoginUser.UserInfo.UserProfiles[i].Role == clGeneral.enProfile.enRashemetAll.GetHashCode())
+                         || (oLoginUser.UserInfo.UserProfiles[i].Role == clGeneral.enProfile.enSystemAdmin.GetHashCode()
 
                          ))
                     {
@@ -145,9 +145,9 @@ namespace KdsLibrary.Security
             bool bMenahelBankShaot = false;
             try
             {
-                for (int i = 0; i < oLoginUser.UserProfiles.Length; i++)
+                for (int i = 0; i < oLoginUser.UserInfo.UserProfiles.Count; i++)
                 {
-                    if (oLoginUser.UserProfiles[i].Role == clGeneral.enProfile.enMenahelBankMeshek.GetHashCode())
+                    if (oLoginUser.UserInfo.UserProfiles[i].Role == clGeneral.enProfile.enMenahelBankMeshek.GetHashCode())
                     {
                         bMenahelBankShaot = true;
                         break;

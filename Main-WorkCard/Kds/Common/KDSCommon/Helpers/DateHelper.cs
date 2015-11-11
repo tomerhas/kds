@@ -307,6 +307,14 @@ namespace KDSCommon.Helpers
             }
             else return dCardDate;
         }
+
+        public static int GetDiffDays(DateTime dFromDate, DateTime dToDate)
+        {
+            //הפרש בימים בין תאריכים
+            TimeSpan ts = dToDate - dFromDate;
+            int iDays = ts.Days;
+            return iDays;
+        }
       
     }
  

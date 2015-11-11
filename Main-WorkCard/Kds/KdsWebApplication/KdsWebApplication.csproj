@@ -442,6 +442,10 @@
     <Content Include="Scripts\angular-scenario.js" />
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
+    <Content Include="Scripts\angular-ui\ui-utils-ieshiv.js" />
+    <Content Include="Scripts\angular-ui\ui-utils-ieshiv.min.js" />
+    <Content Include="Scripts\angular-ui\ui-utils.js" />
+    <Content Include="Scripts\angular-ui\ui-utils.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap-rtl.js" />
@@ -1823,6 +1827,12 @@
     <Compile Include="UserControls\GridViewPager.ascx.designer.cs">
       <DependentUpon>GridViewPager.ascx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\WorkCard\EmployeeBasicDetails.cs" />
+    <Compile Include="ViewModels\WorkCard\EmployeeIdContainer.cs" />
+    <Compile Include="ViewModels\WorkCard\Hariga.cs" />
+    <Compile Include="ViewModels\WorkCard\Hashlama.cs" />
+    <Compile Include="ViewModels\WorkCard\Pizul.cs" />
+    <Compile Include="ViewModels\WorkCard\ReasonMissingSignature .cs" />
     <Compile Include="ViewModels\WorkCard\SidurContainer.cs" />
     <Compile Include="ViewModels\WorkCard\UserWCUpdateInfo.cs" />
     <Compile Include="Web References\DriverStation\Reference.cs">
@@ -1903,6 +1913,10 @@
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
       <Project>{b3e759ec-2a7b-4c38-9013-730c3a628aa8}</Project>
       <Name>KdsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsWorkCard\KdsWorkCard.csproj">
+      <Project>{26d6ac27-3ec2-4667-a2b1-04bf9bf0b812}</Project>
+      <Name>KdsWorkCard</Name>
     </ProjectReference>
     <ProjectReference Include="..\KdsWorkFlow\KdsWorkFlow.csproj">
       <Project>{8979010c-fe5c-4652-8027-fff2378353e3}</Project>

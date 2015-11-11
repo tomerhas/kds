@@ -1,45 +1,80 @@
 ﻿workCardApp.controller('ovedPeiluyotController',
     function($scope, apiProvider, workCardStateService) {
-        $scope.name = "peiluyot"
-        $scope.updateRes = "";
 
-        $scope.selectedCountry = {};
-        $scope.countries = [];
-            //[{ name: 'Afghanistan', code: 'AF' },
-            //                 { name: 'Aland Islands', code: 'AX' },
-            //                 { name: 'Albania', code: 'AL' },
-            //                 { name: 'Algeria', code: 'DZ' },
-            //                 { name: 'American Samoa', code: 'AS' }];
+        var vm = this;
+        vm.Sidurim = {};
+        vm.NumSidurim = 0;
+        vm.ChangeCollapeImg = ChangeCollapeImg;
+        vm.SibotDivuachDLL = {};
+        vm.HarigaDLL = {};
+        vm.PizulDLL = {};
+        vm.HshlamaDLL = {};
 
+        activate();
 
-        $scope.addMoreItems = function () {
-            $scope.countries.push({ name: 'Bitem', code: 'Bcode' });
+        function activate() {
+            InilizeSibot();
+            InilizeHariga();
+            InilizePizul();
+            InilizeHashlama();
         }
 
-        $scope.inputChanged = function (str) {
-            //$scope.$broadcast('angucomplete-alt:clearInput');
-            var promise = apiProvider.getWCLastUpdatsDetails("75757", "2015-10-10");
+        function InilizeSibot() {
+            var promise = apiProvider.getSibotLedivuach();
             promise.then(function (payload) {
-                if (str === "7") {
-                    $scope.countries.push({ name: '710', code: 'Bcode' });
-                    $scope.countries.push({ name: '711', code: 'Bcode' });
-                    $scope.countries.push({ name: '712', code: 'Bcode' });
-                }
+                var res = payload.data.d;
+                vm.SibotDivuachDLL = res;
+
             }, function (errorPayload) {
-               
+
             });
         }
 
-        $scope.$on("ovedPeiluyot-changed", function (event, args) {
-            
-            updateProps();
-        });
-        //$scope.$watch(function () { return workCardStateService.cardGlobalData }, function (newVal, oldVal) {
-        //    updateProps();
-        //}, true);
+        function InilizeHariga() {
+            var promise = apiProvider.getHariga();
+            promise.then(function (payload) {
+                var res = payload.data.d;
+                vm.HarigaDLL = res;
+            }, function (errorPayload) {
 
-        var updateProps = function () {
-            $scope.updateRes = workCardStateService.cardGlobalData.ovedPeiluyot;
+            });
         }
 
+        function InilizePizul() {
+            var promise = apiProvider.getPizul();
+            promise.then(function (payload) {
+                var res = payload.data.d;
+                vm.PizulDLL = res;
+            }, function (errorPayload) {
+
+            });
+        }
+
+        function InilizeHashlama() {
+            var promise = apiProvider.getHashlama();
+            promise.then(function (payload) {
+                var res = payload.data.d;
+                vm.HashlamaDLL = res;
+            }, function (errorPayload) {
+
+            });
+        }
+
+        $scope.$on('ovedPeiluyot-changed', function (event, args) {
+            vm.Sidurim = workCardStateService.cardGlobalData.ovedPeiluyot.SidurimList;
+            vm.NumSidurim = vm.Sidurim.length;
+        });
+
+
+
+
+
+        function ChangeCollapeImg(index) {
+            if (vm.Sidurim[index].CollapseSrc.Value.indexOf("openArrow") > -1) {
+                vm.Sidurim[index].CollapseSrc.Value = "../../../../Images/closeArrow.png";
+            }
+            else vm.Sidurim[index].CollapseSrc.Value = "../../../../Images/openArrow.png";
+        }
+
+        
     });

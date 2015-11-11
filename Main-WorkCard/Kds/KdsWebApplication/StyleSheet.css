@@ -1199,6 +1199,18 @@ a
 	font-weight:bold;
 	border-color:Black;
 }
+
+.OvedDetailsHeaderNew
+{
+	width:95%;
+	height:35;
+	background-color:Gray;
+	color:White;
+	text-align:right;
+	font-weight:bold;
+	border-color:Black;
+}
+
 .OvedDetailsRow
 {
 	width:940;
@@ -1391,6 +1403,21 @@ a
 	border-left-style:solid;
 	border-left-width:0.5px;
 }
+
+.CellListViewNew
+{
+	font-family:Arial;
+	font-size:12px;	
+	text-align:center;	
+	font-weight:bold;
+	background-color:#627c98;	
+	direction:rtl;	
+	color: White;	
+	border-left-color:White;
+	border-left-style:solid;
+        
+}
+
 
 .CollapseContent
 {
@@ -2233,6 +2260,8 @@ a
 	font-weight:bold;
 	text-align:right;
 }
+
+
 
 .ddlCB
 {

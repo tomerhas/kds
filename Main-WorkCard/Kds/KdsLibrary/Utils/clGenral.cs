@@ -16,6 +16,7 @@ using DalOraInfra.DAL;
 using KDSCommon.Helpers;
 using KDSCommon.Enums;
 using Saplin.Controls;
+using KDSCommon.DataModels.Security;
 
 namespace KdsLibrary
 {
@@ -1630,7 +1631,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             string Result = string.Empty;
 
             if (System.Web.HttpContext.Current != null)
-                foreach (UserProfile Profile in LoginUser.GetLoginUser().UserProfiles)
+                foreach (UserProfile Profile in LoginUser.GetLoginUser().UserInfo.UserProfiles)
                         Result += Profile.ProfileGroup + ",";
             return (Result == string.Empty) ? string.Empty : Result.Substring(0, Result.Length - 1);
         }
@@ -1640,7 +1641,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             string Result = string.Empty;
 
             if (System.Web.HttpContext.Current != null)
-                foreach (UserProfile Profile in LoginUser.GetLoginUser().UserProfiles)
+                foreach (UserProfile Profile in LoginUser.GetLoginUser().UserInfo.UserProfiles)
                     if (Profile.ProfileGroup.IndexOf(cKds_Premia) == 0)
                         Result += Profile.ProfileGroup.Substring(cKds_Premia.Length) + ",";
             return (Result == string.Empty) ? string.Empty : Result.Substring(0, Result.Length - 1);

@@ -26,11 +26,43 @@
                                  { misparIshi: misparIshi, cardDate: cardDate });
         }
 
+        var getOvdimToUser = function (inputstring, userId) {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetOvdimToUser",
+                                 { inputstring: inputstring, userId: userId });
+        }
+
+        var getEmployeeBasicDetails = function (misparIshi, cardDate) {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetEmpoyeeById",
+                                 { iMisparIshi: misparIshi, sCardDate: cardDate });
+        }
+
+        var getSibotLedivuach = function () {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetSibotLedivuach", {});
+        }
+
+        var getHariga = function () {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetHariga", {});
+        }
+
+        var getPizul = function () {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetPizul", {});
+        }
+
+        var getHashlama = function () {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetHashlama", {});
+        }
+
         return {
             getSnifOved: getSnifOved,
             getMisparIshi: getMisparIshi,
             getOvedDetails: getOvedDetails,
             getEmployeePeiluyot: getEmployeePeiluyot,
-            getWCLastUpdatsDetails: getWCLastUpdatsDetails
+            getWCLastUpdatsDetails: getWCLastUpdatsDetails,
+            getOvdimToUser: getOvdimToUser,
+            getEmployeeBasicDetails: getEmployeeBasicDetails,
+            getSibotLedivuach: getSibotLedivuach,
+            getHariga: getHariga,
+            getPizul: getPizul,
+            getHashlama: getHashlama
         }
     });

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using KdsLibrary.Utils;
+using KDSCommon.Interfaces;
 
 namespace KdsLibrary.UI.SystemManager
 {

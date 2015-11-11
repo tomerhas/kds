@@ -11,6 +11,7 @@ using KdsLibrary.Controls;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DalOraInfra.DAL;
+using KDSCommon.Interfaces;
 
 namespace KdsLibrary.UI.SystemManager
 {

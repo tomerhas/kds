@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Web.UI;
 using DalOraInfra.DAL;
+using KDSCommon.Interfaces;
 
 namespace KdsLibrary.UI.SystemManager
 {

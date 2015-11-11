@@ -13,6 +13,7 @@ using System.Collections;
 using System.DirectoryServices;
 using System.Web.UI.HtmlControls;
 using DalOraInfra.DAL;
+using KDSCommon.DataModels.Security;
 
 namespace KdsLibrary.Security
 {
@@ -180,7 +181,7 @@ namespace KdsLibrary.Security
         private void CreateModulesList()
         {
             var modules = new MatchNameList<KdsModule>(
-                SecurityManager.GetProfileModules(_loginUser.UserProfiles));
+                SecurityManager.GetProfileModules(_loginUser.UserInfo.UserProfiles.ToArray()));
             _loginUser.SetModulesList(modules);
         }
         private void NonAuthorizedRedirect()
@@ -256,7 +257,7 @@ namespace KdsLibrary.Security
             string foundRole = Array.Find<string>(rolesArray, delegate(string role)
             {
                 bool found = false;
-                foreach (UserProfile profile in _loginUser.UserProfiles)
+                foreach (UserProfile profile in _loginUser.UserInfo.UserProfiles)
                 {
                     if (role.ToLower().Equals(profile.ProfileGroup)) found = true;
                 }

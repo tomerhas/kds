@@ -1,20 +1,59 @@
-﻿<div ng-controller="ovedGeneralDetailsController" dir="rtl">
+﻿<div ng-controller="ovedGeneralDetailsController as ovedController" dir="rtl">
     <!--Header row of card. Including time and name-->
-    <div clas="row">
-        <div class="col-md-4">כרטיס עבודה</div>
-        <div class="col-md-4" align="center">
+    <div class="row WorkCardTable1 WorkCardTable1Label">
+        <div class="col-md-4 ">כרטיס עבודה</div>
+        <div class="col-md-4 " align="center">
             <span>מעדכן אחרון:</span>
-            <a href ng-click="showLasModifierPopup()">{{lastModifier}}</a>
+            <a href ng-click="ovedController.showLasModifierPopup()">{{ovedController.lastModifier}}</a>
         </div>
-        <div class="col-md-4" align="left">
+        <div class="col-md-4 " align="left">
             <span>תאריך עידכון אחרון:</span>
-            <span>{{lastModifyDate}}</span>
+            <span>{{ovedController.lastModifyDate}}</span>
         </div>
     </div>
-   
-   
 
-    <div>
+
+    <div class="row WorkCardTable1Label" style="height:40px">
+        <div class="col-md-1" style="padding-right:70px;padding-left:0">מספר אישי:</div>
+        <div class="col-md-1" style="margin-right:0;padding-right:0">
+            <div angucomplete-alt id="auto"
+                placeholder=""
+                maxlength="10"
+                pause="500"
+                selected-object="ovedController.SelectedEmployeeId"
+                local-data="ovedController.EmployeeIds"
+                search-fields="MisparIshi"
+                title-field="MisparIshi"
+                minlength="1"
+                input-changed="ovedController.userIdinputChanged"
+                input-class="form-control-small"
+                match-class="highlight">
+            </div>
+        </div>
+      
+        <div class="col-md-1" style="padding-right:100px;padding-left:0;" >שם:</div>
+      
+        <input class="col-md-1" type="text" ng-model="ovedController.EmployeeName" />
+
+        <span class="col-md-1">מעמד</span>
+        <span class="col-md-1">
+            <label>{{ovedController.EmployeeMaamad}}</label>
+        </span>
+
+        <span class="col-md-1">תאריך</span>
+        <input class="col-md-1" type="date" ng-model="ovedController.cardDate" />
+
+        <span class="col-md-1">יום</span>
+        <input class="col-md-1" type="text" ng-model="ovedController.txtDay" />
+
+         <input class="col-md-1" type="button" ng-click="ovedController.getPeiluyot()" value="הצג" />
+
+        <span class="col-md-1 text-left">
+            <label ng-model="ovedController.status">תקין</label></span>
+    </div>
+
+
+    <!-- <div>
         <span class="label label-primary">Misparishi: </span>
         <input type="text" ng-model="misparIshi" />
     </div>
@@ -34,10 +73,10 @@
         <modal-dialog show='modalShown2' width='400px' height='60%'>
           some content asdfsd fsdf sdf sdf sdf
         </modal-dialog>
-    </div>
+    </div>-->
 
     <!--Pop ups-->
-     <modal-dialog show='modalLastUpdateShown' width='400px' height='60%'>
+    <modal-dialog show='ovedController.modalLastUpdateShown' width='400px' height='60%'>
           <p></p>
            <table>
                <tr>
@@ -45,7 +84,7 @@
                    <th>Name</th>
                    <th>Mispar</th>
                </tr>
-               <tr ng-repeat="update in LastUpdateWCList">
+               <tr ng-repeat="update in ovedController.LastUpdateWCList">
                    <td>{{update.UpdateDate}}</td>
                    <td>{{update.NameUpdater}}</td>   
                    <td>{{update.MisparIshi}}</td>   
@@ -54,10 +93,10 @@
            </table> 
      </modal-dialog>
 
-    <modal-dialog show='modalErrorsShown' width='400px' height='60%'>
+    <modal-dialog show='ovedController.modalErrorsShown' width='400px' height='60%'>
            <p></p>
         <p>ארעה שגיאה</p>
-        <p>{{error}}</p>
+        <p>{{ovedController.error}}</p>
     </modal-dialog>
 
 </div>
