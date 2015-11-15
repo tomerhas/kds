@@ -51,8 +51,8 @@ namespace KdsWorkCard.Converters
                 sidur.SibatHachtamaOut.Value = sidurDm.iKodSibaLedivuchYadaniOut;
                 sidur.FullShatHatchalaLetashlum.Value = sidurDm.dFullShatHatchalaLetashlum;
                 sidur.FullShatGmarLetashlum.Value = sidurDm.dFullShatGmarLetashlum;
-                sidur.Hariga.Value = sidurDm.sChariga;
-                sidur.Pizul.Value = sidurDm.sPitzulHafsaka;
+                sidur.Hariga.Value = int.Parse(sidurDm.sChariga);
+                sidur.Pizul.Value = int.Parse(sidurDm.sPitzulHafsaka);
                 sidur.Hashlama.Value = sidurDm.sHashlama;
                 sidur.Hamara.Value = sidurDm.sHashlamaKod;
                 sidur.OutMichsa.Value = sidurDm.sOutMichsa;

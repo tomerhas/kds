@@ -15,8 +15,8 @@ namespace KDSCommon.DataModels.WorkCard
         public SinglePropertyData<int> SibatHachtamaOut { get; set; }
         public SinglePropertyData<DateTime> FullShatHatchalaLetashlum { get; set; }
         public SinglePropertyData<DateTime> FullShatGmarLetashlum { get; set; }
-        public SinglePropertyData<string> Hariga { get; set; }
-        public SinglePropertyData<string> Pizul { get; set; }
+        public SinglePropertyData<int> Hariga { get; set; }
+        public SinglePropertyData<int> Pizul { get; set; }
         public SinglePropertyData<string> Hashlama { get; set; }
         public SinglePropertyData<string> Hamara { get; set; }
         public SinglePropertyData<string> OutMichsa { get; set; }
@@ -34,8 +34,8 @@ namespace KDSCommon.DataModels.WorkCard
             SibatHachtamaOut = new SinglePropertyData<int>();
             FullShatHatchalaLetashlum = new SinglePropertyData<DateTime>();
             FullShatGmarLetashlum = new SinglePropertyData<DateTime>();
-            Hariga = new SinglePropertyData<string>();
-            Pizul = new SinglePropertyData<string>();
+            Hariga = new SinglePropertyData<int>();
+            Pizul = new SinglePropertyData<int>();
             Hashlama = new SinglePropertyData<string>();
             Hamara = new SinglePropertyData<string>();
             OutMichsa = new SinglePropertyData<string>();

@@ -210,17 +210,34 @@ public class wsWorkCard : System.Web.Services.WebService
     {
         List<Hashlama> Hashlamot = new List<Hashlama>();
         var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-        DataRow[] dtHashlama = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_sibot_hashlama_leyom'"));
 
-        foreach (DataRow dr in dtHashlama)
+        for (int i = 0; i < 3; i++)
         {
-
             var oHashlama = new Hashlama();
-            oHashlama.Value = ParseStringToInt(dr["KOD"].ToString());
-            oHashlama.Description = dr["TEUR"].ToString();
-            Hashlamot.Add(oHashlama);
+            oHashlama.Value = i;
+            switch (i) 
+            {
+                case 0: oHashlama.Description =  "אין השלמה";
+                    break;
+                case 1: oHashlama.Description =  "השלמה לשעה";
+                    break;
+                case 2: oHashlama.Description =  "השלמה לשעתיים";
+                    break;
+            }
 
+            Hashlamot.Add(oHashlama);
         }
+        //DataRow[] dtHashlama = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_sibot_hashlama_leyom'"));
+
+        //foreach (DataRow dr in dtHashlama)
+        //{
+
+        //    var oHashlama = new Hashlama();
+        //    oHashlama.Value = ParseStringToInt(dr["KOD"].ToString());
+        //    oHashlama.Description = dr["TEUR"].ToString();
+        //    Hashlamot.Add(oHashlama);
+
+        //}
         return Hashlamot;
 
     }
