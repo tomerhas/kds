@@ -380,6 +380,8 @@ public partial class Modules_Test :Page
         //oInputData.MainInputData(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
         //oErr.MainOvedErrors(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
 
+   //     Response.Redirect("~/Modules/Ovdim/NochechutMerukezet.aspx?mispar_ishi=31777&chodesh=01/11/2015", false);
+    //   Response.Redirect("~/Main.aspx", false);
         MainCalc objMainCalc = new MainCalc();
         objMainCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
              
