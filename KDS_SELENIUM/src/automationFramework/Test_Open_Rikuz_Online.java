@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -64,13 +65,13 @@ public class Test_Open_Rikuz_Online extends Base {
       
       droplist.selectByVisibleText("07/2015");
       Tickur_Chishuv_LeOved.List_Month(driver).sendKeys(Keys.ENTER);
-      /*Tickur_Chishuv_LeOved.Btn_Show(driver).click();
+      Tickur_Chishuv_LeOved.Btn_Show(driver).click();
 	  Work_Card.Wait_For_Element_Stalenes(driver,null, "ItemRow");
 	  Tickur_Chishuv_LeOved.Btn_Print(driver).click();
 	  Utils b= new Utils();
 	  b.waitForWindow("ModalShowPrint",driver);
 	  System.out.println(driver.getCurrentUrl());
-	  Assert.assertEquals(driver.getCurrentUrl(), "http://kdstest/ModalShowPrint.aspx", "window doesn't exist" );*/
+	  Assert.assertEquals(driver.getCurrentUrl(), "http://kdstest/ModalShowPrint.aspx", "window doesn't exist" );
 	  driver .close();
       
       
