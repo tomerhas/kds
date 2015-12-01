@@ -59,6 +59,7 @@ namespace KdsWebApplication.Modules.Ovdim
         {
             DataTable dtParametrim = new DataTable();
             clUtils oUtils = new clUtils();
+            DateTime date;
             bool flag = false;
             if (!Page.IsPostBack)
             {
@@ -96,12 +97,24 @@ namespace KdsWebApplication.Modules.Ovdim
                     rdoAll.Checked = true;
                     txtId.Enabled = false;
                 }
-                clnFromDate.Text = DateTime.Now.AddDays(-1).ToShortDateString();
-                clnToDate.Text = DateTime.Now.AddDays(-1).ToShortDateString();
-                
+               
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
                 for (int i = 0; i < dtParametrim.Rows.Count; i++)
                     Params.Attributes.Add("Param" + dtParametrim.Rows[i]["KOD_PARAM"].ToString(), dtParametrim.Rows[i]["ERECH_PARAM"].ToString());
+
+                if (Request.QueryString["mispar_ishi"] != null)
+                {
+                    txtId.Text = Request.QueryString["mispar_ishi"].ToString();
+                    date = DateTime.Parse(Request.QueryString["chodesh"].ToString());
+                    clnFromDate.Text =Request.QueryString["chodesh"].ToString();
+                    clnToDate.Text = DateTime.Now.AddDays(-1) < date.AddMonths(1).AddDays(-1) ? DateTime.Now.AddDays(-1).ToShortDateString() : date.AddMonths(1).AddDays(-1).ToShortDateString();
+                    btnShow_Click(sender,e);
+                }
+                else
+                {
+                    clnFromDate.Text = DateTime.Now.AddDays(-1).ToShortDateString();
+                    clnToDate.Text = DateTime.Now.AddDays(-1).ToShortDateString();
+                }
             }
 
         }

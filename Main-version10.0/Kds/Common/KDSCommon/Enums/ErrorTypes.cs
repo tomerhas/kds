@@ -135,6 +135,8 @@ namespace KDSCommon.Enums
         errMichsatMachalaYeledImMugbalut = 210,
         errRechevMushbat=211,
         errMachalaMisradHaBitachonLoYachid = 212,
-        errElementNehigaForMatalaLoNahagut213 = 213
+        errElementNehigaForMatalaLoNahagut213 = 213,
+        errMachalatYeledMugbal214 =214,
+        errOvedLoMushalWithTaavura215=215
     }
 }

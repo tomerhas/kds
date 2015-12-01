@@ -16,6 +16,7 @@ namespace KDSCommon.Enums
         ErrorTable,
         Elementim,
         StatusWC,
-        Pundakim
+        Pundakim,
+        SnifAv
     }
 }

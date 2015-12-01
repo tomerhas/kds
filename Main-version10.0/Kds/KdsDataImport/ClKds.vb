@@ -4773,7 +4773,7 @@ Public Class ClKds
                         'sw.WriteLine("date_data not numeric " & date_data & " LineErrCnt=" & LineErrCnt & " ," & line)
                         'check date validity:
                     ElseIf CInt(Mid(date_data, 1, 2)) > 31 Then
-                            'date not valid
+                        'date not valid
                         oDal.ClearCommand()
                         Err_kod = 4
                         Err_pref = Mid(line, 1, 14)
@@ -4931,7 +4931,7 @@ Public Class ClKds
                             oDal.AddParameter("pLineErrCnt", ParameterType.ntOracleInteger, LineErrCnt, ParameterDir.pdInput)
                             oDal.ExecuteSP("Pkg_Attendance.pro_new_recHarmony_err")
                             'sw.WriteLine("Restline not valid LineErrCnt=" & LineErrCnt & " ,Restline=" & Restline)
-        End Try
+                        End Try
 
                     End If
                 End If
@@ -5371,7 +5371,7 @@ Public Class ClKds
         Dim p_stam As String
 
         p_date_str_now = getFullDateString(Now) & "0000"
-  
+
     End Sub
 
 #End Region

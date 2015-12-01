@@ -373,6 +373,11 @@ namespace KDSBLLogic.Managers
             _container.Resolve<IOvedDAL>().UpdateCardStatus(iMisparIshi, dCardDate, oCardStatus,iUserId);
         }
 
+        public float GetSumHouersMachala(int iMisparIshi, int iMisparSidur, DateTime dTaarichMe, DateTime dTaarichAd)
+        {
+           return  _container.Resolve<IOvedDAL>().GetSumHouersMachala(iMisparIshi, iMisparSidur, dTaarichMe, dTaarichAd);
+        }
+
         public bool IsOvedMatzavExists(string sKodMatzav, DataTable dtMatzavOved)
         {
             DataRow[] dr;

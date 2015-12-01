@@ -24,6 +24,7 @@ namespace KDSCache.Implement
         public const string cProGetCtbElementim = "PKG_UTILS.pro_get_ctb_elementim";
         public const string cProGetStatusKartis = "PKG_UTILS.pro_get_status_kartis_ctb";
         public const string cProGetPundakimTb = "PKG_UTILS.pro_get_pundakim_tb";
+        public const string cProGetCtbSnif = "PKG_UTILS.pro_get_snif_av_ctb";
 
         private IKDSCacheManager _kdsCacheManager;
 
@@ -43,7 +44,8 @@ namespace KDSCache.Implement
              _kdsCacheManager.AddItem(CachedItems.ErrorTable, GetErrorTable());
              _kdsCacheManager.AddItem(CachedItems.Elementim, GetElementim());
              _kdsCacheManager.AddItem(CachedItems.StatusWC, GetStatusKartis());
-             _kdsCacheManager.AddItem(CachedItems.Pundakim, GetPundakimVisutim()); 
+             _kdsCacheManager.AddItem(CachedItems.Pundakim, GetPundakimVisutim());
+             _kdsCacheManager.AddItem(CachedItems.SnifAv, GetSnifAvCtb()); 
         }
 
         private DataTable GetYamimMeyuchadim()
@@ -155,6 +157,15 @@ namespace KDSCache.Implement
             return dt;
         }
 
+        private DataTable GetSnifAvCtb()
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+            oDal.ExecuteSP(cProGetCtbSnif, ref dt);
+            return dt;
+        }
         
     }
 }

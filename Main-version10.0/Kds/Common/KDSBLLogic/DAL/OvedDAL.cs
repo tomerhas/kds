@@ -18,6 +18,7 @@ namespace KdsLibrary.KDSLogic.DAL
         public const string cProUpdCardStatus = "pkg_errors.pro_upd_card_status";
         public const string cProGetZmanNesia = "PKG_UTILS.pro_get_zman_nesia";
         public const string cProGetMeafyeneyBituaLeoved = "pkg_ovdim.pro_get_meafyeney_oved";
+        public const string cFunGetSumHouersMachala = "pkg_ovdim.fun_get_sum_houers_machala";
        
         public DataTable GetOvedDetails(int iMisparIshi, DateTime dCardDate)
 
@@ -136,6 +137,29 @@ namespace KdsLibrary.KDSLogic.DAL
 
                 oDal.ExecuteSP(cProUpdCardStatus);
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public float GetSumHouersMachala(int iMisparIshi, int iMisparSidur, DateTime dTaarichMe, DateTime dTaarichAd)
+        {
+            float sum = 0;
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_sum", ParameterType.ntOracleDecimal, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_mispar_sidur", ParameterType.ntOracleInteger, iMisparSidur, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTaarichMe, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTaarichAd, ParameterDir.pdInput);
+                oDal.ExecuteSP(cFunGetSumHouersMachala);
+
+                sum = float.Parse(oDal.GetValParam("p_sum").ToString());
+
+                return sum;
             }
             catch (Exception ex)
             {

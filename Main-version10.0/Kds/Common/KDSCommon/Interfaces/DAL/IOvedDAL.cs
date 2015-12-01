@@ -16,6 +16,7 @@ namespace KDSCommon.Interfaces.DAL
         int GetZmanNesia(int iMerkazErua, int iMikumYaad, DateTime dDate);
         DataTable GetOvedMatzav(int iMisparIshi, DateTime dDate);
         void UpdateCardStatus(int iMisparIshi, DateTime dCardDate, CardStatus oCardStatus, int iUserId);
+        float GetSumHouersMachala(int iMisparIshi, int iMisparSidur, DateTime dTaarichMe, DateTime dTaarichAd);
 
     }
 }

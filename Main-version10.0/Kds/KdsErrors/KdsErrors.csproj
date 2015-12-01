@@ -130,8 +130,10 @@
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsZakaiLina31.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorKisuyTorLifneyHatchalatSidur189.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorMachalaMisradHaBitachonLoYachid212.cs" />
+    <Compile Include="ErrosrImpl\SidurErrors\SidurErrorMachalatYeledMugbal214.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorMichsatMachalaYeledImMugbalut210.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorMushalETWithSidurNotAllowET208.cs" />
+    <Compile Include="ErrosrImpl\SidurErrors\SidurErrorOvedLoMushalWithTaavura215.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorShatHatchalaBiggerShatYetzia207.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidirErrorPitzulSidurInShabatValid24.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorAvodaByemeyEvel200.cs" />
