@@ -217,6 +217,7 @@ namespace KDSCommon.DataModels
         public DateTime dParam314; // -314
         public DateTime dParam315; // -315
         public DateTime dParam316; // -316
+        public DateTime dParam317; // -317
         public int iMaxNochehutVisaPnim; //228 - ויזה פנים -יום ראשון - מקסימום נוכחות
         public int iMinNochehutVisaPnim; //229 - ויזה פנים -יום ראשון - מינימום נוכחות
         public int iNochehutVisaPnimNoShabaton; //230 - ויזה פנים נוכחות - לא שבתון

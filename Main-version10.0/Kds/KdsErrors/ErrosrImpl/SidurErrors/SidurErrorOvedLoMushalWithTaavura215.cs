@@ -25,30 +25,34 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             var berror = false;
             DataRow[] dr;
             int snif_tnua,snif_av;
-            if (input.OvedDetails.iKodHevra == enEmployeeType.enEgged.GetHashCode() && input.OvedDetails.iKodHevraHashala != enEmployeeType.enEggedTaavora.GetHashCode())
+            if (input.CardDate >= input.oParameters.dParam317)
             {
-                if (input.curSidur.bSidurMyuhad)
+                if (input.OvedDetails.iKodHevra == enEmployeeType.enEgged.GetHashCode() && input.OvedDetails.iKodHevraHashala != enEmployeeType.enEggedTaavora.GetHashCode())
                 {
-                    if (input.curSidur.iMisparSidur >= 99901 && input.curSidur.iMisparSidur <= 99904)
-                        berror = true;
+                    if (input.curSidur.bSidurMyuhad)
+                    {
+                        if (input.curSidur.iMisparSidur >= 99901 && input.curSidur.iMisparSidur <= 99904)
+                            berror = true;
+                    }
+                    else
+                    {
+                        var cacheManager = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+                        var SnifAvtb = cacheManager.GetCacheItem<DataTable>(CachedItems.SnifAv);
+                        snif_tnua = int.Parse(input.curSidur.iMisparSidur.ToString().PadLeft(5, '0').Substring(0, 2));
+                        dr = SnifAvtb.Select("snif_tnua=" + snif_tnua + "and KOD_HEVRA=4895");
+                        if (dr.Length > 0)
+                            berror = true;
+                    }
                 }
-                else
-                {
-                   var cacheManager =  ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-                   var SnifAvtb = cacheManager.GetCacheItem<DataTable>(CachedItems.SnifAv);
-                   snif_tnua = int.Parse(input.curSidur.iMisparSidur.ToString().PadLeft(5, '0').Substring(0,2));
-                   dr = SnifAvtb.Select("snif_tnua=" + snif_tnua +"and KOD_HEVRA=4895");
-                   if (dr.Length > 0)
-                       berror = true;
-                }
-            }
 
-            if (berror)
-            {
-                AddNewError(input);
-                return false;
+                if (berror)
+                {
+                    AddNewError(input);
+                    return false;
+                }
+                else return true;
             }
-            else return true;
+            return true;
         }
 
         public override ErrorTypes CardErrorType
