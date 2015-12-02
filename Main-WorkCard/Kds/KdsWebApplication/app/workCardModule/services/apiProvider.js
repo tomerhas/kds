@@ -52,6 +52,30 @@
             return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetHashlama", {});
         }
 
+        var getOvedAllDetails = function (misparIshi, cardDate) {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetOvedAllDetails",
+                                 { iMisparIshi: misparIshi, sCardDate: cardDate });
+        }
+       
+        var getZmaneyNesioth = function () {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetZmanNesia", {});
+        }
+        
+        
+        var getTachograf = function () {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetTachograf", {});
+        }
+
+        var getLina = function () {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetLina", {});
+        }
+        var getHalbasha = function () {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetHalbasha", {});
+        }
+        var getHashlameLeYom = function () {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetHashlameLeYom", {});
+        }
+
         return {
             getSnifOved: getSnifOved,
             getMisparIshi: getMisparIshi,
@@ -63,6 +87,12 @@
             getSibotLedivuach: getSibotLedivuach,
             getHariga: getHariga,
             getPizul: getPizul,
-            getHashlama: getHashlama
+            getHashlama: getHashlama,
+            getOvedAllDetails: getOvedAllDetails,
+            getZmaneyNesioth: getZmaneyNesioth,
+            getTachograf: getTachograf,
+            getLina: getLina,
+            getHalbasha: getHalbasha,
+            getHashlameLeYom: getHashlameLeYom
         }
     });

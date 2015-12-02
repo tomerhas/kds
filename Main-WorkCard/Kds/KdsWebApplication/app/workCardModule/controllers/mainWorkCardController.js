@@ -3,7 +3,7 @@
 
         $scope.name = "main"
 
-
+        $scope.date = new Date();
 
        
     });

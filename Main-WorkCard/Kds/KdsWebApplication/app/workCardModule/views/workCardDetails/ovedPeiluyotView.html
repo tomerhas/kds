@@ -69,45 +69,53 @@
                                 </a>
                                 {{sidur.MisparSidur.Value}}</td>
                             <td style="width: 7%">
-                             <!--   <input type="time" name="time"  value="{{sidur.FullShatHatchala.Value | date:'hh:mm'}}" />-->
-                                 <!--<input time-Mask name="date" ng-model="sidur.FullShatHatchala.Value"   required autocomplete='off' ui-mask="99:99"/>-->
-                                   <input type="text" class="timepicker" placeholder="h:mm PM"  data-default-time="true" >
-                               <input class="bfh-timepicker" data-time="08:00"/>
-                            <!--    <input ui-mask="99:99" style="width: 100px" type="text" value="{{sidur.FullShatGmar.Value | date:'hh:mm'}}"  ng-model="sidur.FullShatGmar.Value"></input>
-                             --> 
+                                <!--<input type="text" ng-model="sidur.FullShatHatchala.Value" time>-->
+                                <!--ng-model="str"  -->
+                                <!--k-ng-model="sidur.FullShatHatchala.Value" -->
+                                <!--<input kendo-time-picker k-ng-model="sidur.MyFullDate" k-format="'HH:mm'"  k-options="sidurimController.datePickerOption"/>-->
+                                <input egged-date-time ng-model="sidur.FullShatHatchala.Value"></input>
+                                
+                                <!--  <input type="time" name="time"  value="{{sidur.FullShatHatchala.Value | date:'hh:mm'}}" />-->
+                                <!--<input time-Mask name="date" ng-model="sidur.FullShatHatchala.Value"   required autocomplete='off' ui-mask="99:99"/>-->
+                                <!--  <input type="text" class="timepicker" placeholder="h:mm PM"  data-default-time="true" >-->
+
+                                <!-- <input type="text" name="start_time" class="timepicker" placeholder="h:mm PM" data-default-time="false">-->
+
+                                <!--   <input class="bfh-timepicker" data-time="08:00"/>-->
+                                <!--    <input ui-mask="99:99" style="width: 100px" type="text" value="{{sidur.FullShatGmar.Value | date:'hh:mm'}}"  ng-model="sidur.FullShatGmar.Value"></input>
+                             -->
                                 <!--<input ng-model="sidur.FullShatGmar.Value" datetime-picker date-format="HH:mm" close-on-select="false" /> -->
-                               <!-- <input ui-mask="99:99" style="width: 100px" type="text" value="{{sidur.FullShatHatchala.Value}}" ng-bind="{{sidur.FullShatGmar.Value | date:'hh:mm'}}"></input>-->
+                              <!--  <input ui-mask="99:99" style="width: 100px" type="text" ng-model="sidur.FullShatGmar.Value"></input>-->
                             </td>
-                            <td style="width: 7%">
-                                   <input type="time" name="time"  value="{{sidur.FullShatGmar.Value | date:'hh:mm'}}" />
-                             </td>
+                            <td style="width: 7%">{{sidur.FullShatGmar.Value | date:'hh:mm' }}
+                                <!--   <input type="time" name="time"  value="{{sidur.FullShatGmar.Value | date:'hh:mm'}}" />-->
+                            </td>
                             <td style="width: 12%">
-                                <select ng-model="sidur.SibatHachtamaIn.Value" ng-options="i.Value as i.Description for i in sidurimController.SibotDivuachDLL">
+                                <select ng-model="sidur.SibatHachtamaIn.Value" ng-options="i.Value as i.Description for i in sidurimController.SibotDivuachList">
                                     <option></option>
                                 </select>
                             </td>
                             <td style="width: 12%">
-                                <select ng-model="sidur.SibatHachtamaOut.Value" ng-options="i.Value as i.Description for i in sidurimController.SibotDivuachDLL">
+                                <select ng-model="sidur.SibatHachtamaOut.Value" ng-options="i.Value as i.Description for i in sidurimController.SibotDivuachList">
                                     <option></option>
                                 </select>
                             </td>
                             <td style="width: 11%">{{sidur.FullShatHatchalaLetashlum.Value | date:'hh:mm' }}</td>
                             <td style="width: 11%">{{sidur.FullShatGmarLetashlum.Value | date:'hh:mm' }}</td>
                             <td style="width: 5%">
-                               <select ng-model="sidur.Hariga.Value" ng-options="i.Value as i.Description for i in sidurimController.HarigaDLL">
-                                 
+                                <select ng-model="sidur.Hariga.Value" ng-options="i.Value as i.Description for i in sidurimController.HarigaList">
                                 </select>
                             </td>
                             <td style="width: 5%">
 
-                                 <select ng-model="sidur.Pizul.Value" ng-options="i.Value as i.Description for i in sidurimController.PizulDLL">
+                                <select ng-model="sidur.Pizul.Value" ng-options="i.Value as i.Description for i in sidurimController.PizulList">
                                     <option></option>
-                                </select>            
+                                </select>
                             </td>
                             <!--   <td  style="width: 5%">{{sidur.Hamara.Value}}</td>-->
                             <td style="width: 5%">
                                 <select name="SelectHashlama" id="SelectHashlama" style="width: 80px">
-                                    <option ng-repeat="h in sidurimController.HashlamaDLL" value="{{h.Value}}">{{h.Description}}</option>
+                                    <option ng-repeat="h in sidurimController.HashlamaList" value="{{h.Value}}">{{h.Description}}</option>
                                 </select>
                                 <!--  {{sidur.Hashlama.Value}}-->
                             </td>

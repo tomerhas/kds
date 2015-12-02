@@ -1,60 +1,69 @@
 ﻿var mainApp = angular.module('mainApp', []);
-var workCardApp = angular.module('workCard', ['ngRoute', 'mainApp', 'angucomplete-alt', 'ui.mask']);
+var workCardApp = angular.module('workCard', ['ngRoute', 'mainApp', 'angucomplete-alt', 'kendo.directives']);
+
+String.prototype.padZero = function (len, c) {
+    var s = '', c = c || '0', len = (len || 2) - this.length;
+    while (s.length < len) s += c;
+    return s + this;
+}
+Number.prototype.padZero = function (len, c) {
+    return String(this).padZero(len, c);
+}
 
 
-workCardApp.directive('uiMask', function () {
-    return {
-        require: 'ngModel',
-        scope: {
-            uiMask: 'evaluate'
-        },
-        link: function ($scope, element, attrs, controller) {
-            controller.$render = function () {
-                var _ref;
-                element.val((_ref = controller.$viewValue) != null ? _ref : '');
-                return $(element).mask($scope.uiMask);
-            };
-            controller.$parsers.push(function (value) {
-                var isValid;
-                isValid = element.data('mask-isvalid');
-                controller.$setValidity('mask', isValid);
-                if (isValid) {
-                    return element.mask();
-                } else {
-                    return null;
-                }
-            });
-            return element.bind('blur', function () {
-                return $scope.$apply(function () {
-                    return controller.$setViewValue($(element).mask());
-                });
-            });
-        }
-    };
-});
+//workCardApp.directive('uiMask', function () {
+//    return {
+//        require: 'ngModel',
+//        scope: {
+//            uiMask: 'evaluate'
+//        },
+//        link: function ($scope, element, attrs, controller) {
+//            controller.$render = function () {
+//                var _ref;
+//                element.val((_ref = controller.$viewValue) != null ? _ref : '');
+//                return $(element).mask($scope.uiMask);
+//            };
+//            controller.$parsers.push(function (value) {
+//                var isValid;
+//                isValid = element.data('mask-isvalid');
+//                controller.$setValidity('mask', isValid);
+//                if (isValid) {
+//                    return element.mask();
+//                } else {
+//                    return null;
+//                }
+//            });
+//            return element.bind('blur', function () {
+//                return $scope.$apply(function () {
+//                    return controller.$setViewValue($(element).mask());
+//                });
+//            });
+//        }
+//    };
+//});
 
-workCardApp.directive('timeMask', function () {
-    return {
-        restrict: 'E',
-        replace: true,
-        require: 'ngModel',
-        scope: {
-            'time': '@'
-        },
-        template: [
-          '<input ng-model="sidur.FullShatHatchala.Value" ui-mask="99:99" placeholder="hh:mm" class="pointer input-small" />'
-        ].join(''),
-        link: function (scope, element, attrs, ngModelController) {
-          //  console.log(scope.time);
+//workCardApp.directive('timeMask', function () {
+//    return {
+//        restrict: 'E',
+//        replace: true,
+//        require: 'ngModel',
+//        scope: {
+//            'time': '@'
+//        },
+//        template: [
+//          '<input ng-model="sidur.FullShatHatchala.Value" ui-mask="99:99" placeholder="hh:mm" class="pointer input-small" />'
+//        ].join(''),
+//        link: function (scope, element, attrs, ngModelController) {
+//          //  console.log(scope.time);
 
-            ngModelController.$formatters.push(function (data) {
-                console.log(moment(data, moment.ISO_8601).format('HH:mm'));
-                //convert data from model format to view format   
-                return moment(data, moment.ISO_8601).format('HH:mm'); //converted
-            });
-        }
-    };
-});
+//            ngModelController.$formatters.push(function (data) {
+//                console.log(moment(data, moment.ISO_8601).format('HH:mm'));
+//                //convert data from model format to view format   
+//                return moment(data, moment.ISO_8601).format('HH:mm'); //converted
+//            });
+//        }
+//    };
+//});
 
 //app.directive('ngAutocomplete', function ($parse) {
 //      return {

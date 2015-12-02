@@ -1,4 +1,20 @@
 ﻿
-<div ng-controller="ovedHityazvutDetailsController">
-    <div>name of hitta controller: {{name}}</div>
-</div>
+    <div  ng-controller="ovedHityazvutDetailsController as h" class="row WorkCardTable1Label" style="height:40px">
+       <div class="col-md-1">התייצבות 1:</div>
+       <div class="col-md-1"><input type="text" style="width:150px" /></div>
+       <div class="col-md-1">סיבת אי התייצבות:</div>
+       <div class="col-md-1">  <select ng-model="h.val" ng-options="i.Value as i.Description for i in h.SibotDivuachList">
+                                    <option value="0" selected></option>
+                                </select>
+
+       </div>
+       <div class="col-md-1">התייצבות 2:</div>
+       <div class="col-md-1"><input type="text"  style="width:150px"  /></div>
+       <div class="col-md-1">סיבת אי התייצבות:</div>
+       <div class="col-md-1">  <select  ng-model="h.val" ng-options="i.Value as i.Description for i in h.SibotDivuachList">
+                                    <option value="0" selected></option>
+                                </select>
+
+       </div>
+    </div>
+

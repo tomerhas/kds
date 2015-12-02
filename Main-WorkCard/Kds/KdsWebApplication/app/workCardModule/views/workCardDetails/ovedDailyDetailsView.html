@@ -1,15 +1,43 @@
-﻿<div ng-controller="ovedDailyDetailsController">
-    <div>name of general controller: {{name}}</div>
-    <input type="button" ng-click="replaceTab()" value="Replace Tab" />
-    <div>value: {{tabDisplayed}}</div>
+﻿<div ng-controller="ovedDailyDetailsController as ovedDetails">
+    <div class="row WorkCardTable1Label" style="height:40px">
+         <div class="col-md-1">זמן נסיעות</div>
+         <div class="col-md-1"><select ng-model="ovedDetails.val"  ng-options="i.Value as i.Description for i in ovedDetails.ZmanNesiaList"> </select></div>
 
+         <div class="col-md-1 WorkCardTabs ImgButtonShowPlus"  ng-click="ovedDetails.replaceTab(1)" >התייצבות</div>
+         <div class="col-md-1 WorkCardTabs ImgButtonShowPlus"  ng-click="ovedDetails.replaceTab(2)" >נתונים ליום עבודה</div>
+         <div class="col-md-1 WorkCardTabs ImgButtonShowPlus"  ng-click="ovedDetails.replaceTab(3)" >פרטי העובד</div>
+    </div>
 
-    <div ng-switch on="tabDisplayed">
+    <!--<div hbo-tabs id="tabs">
+        <ul>
+            <li><a href="#tabs-1">Tab 1</a></li> 
+            <li><a href="#tabs-2">Tab 2</a></li>
+            <li><a href="#tabs-3">Tab 3</a></li>
+        </ul>
+     </div>
+
+     <div id="tabs-1">
+        <p>Content for Tab 1</p>
+    </div>
+    <div id="tabs-2">
+        <p>Content for Tab 2</p>
+    </div>
+    <div id="tabs-3">
+        <p>Content for Tab 3</p>
+    </div>
+</div>-->
+
+    <div ng-switch on="ovedDetails.tabDisplayed">
         <div ng-switch-when="1">
             <div ng-include="'workCardDetails/ovedDailyWork/ovedHityazvutDetailsView.html'"></div>
         </div>
         <div ng-switch-when="2">
             <div ng-include="'workCardDetails/ovedDailyWork/ovedDailyWorkDetailsView.html'"></div>
         </div>
+          <div ng-switch-when="3">
+            <div ng-include="'workCardDetails/ovedDailyWork/pirteyOvedDetails.html'"></div>
+        </div>
     </div>
+
+  
 </div>

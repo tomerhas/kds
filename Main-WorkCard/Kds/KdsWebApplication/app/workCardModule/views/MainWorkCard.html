@@ -1,36 +1,63 @@
 ﻿<html ng-app="workCard" dir="rtl">
 <head>
+
     <script src="../../../Js/jquery-1.11.1.min.js"></script>
+
+
     <link href="../../../Content/css/bootstrap-rtl.css" rel="stylesheet" />
     <link href="../../../Content/css/ng-modal.css" rel="stylesheet" />
     <link href="../../../StyleSheet.css"  rel="stylesheet" /> 
     <link href="../../../Content/css/angucomplete-alt.css" rel="stylesheet" />
+    <link href="../../../Css/bootstrap-timepicker.min.css" rel="stylesheet" />
+    <link href="../../../Content/kendo/2015.3.1111/kendo.default.min.css" rel="stylesheet" />
+    <link href="../../../Content/kendo/2015.3.1111/kendo.common.min.css" rel="stylesheet" />
+    <link href="../../../Content/kendo/2015.3.1111/kendo.bootstrap.min.css" rel="stylesheet" />
+
     <!--<link href="../../../Content/css/structure.css" rel="stylesheet" />-->
 
     <script src="../../../Scripts/bootstrap-rtl.js"></script> 
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     <script src="../../../Scripts/angular.js"></script>
     <script src="../../../Scripts/angular-route.js"></script>
+    
+    
+    <script src="../../../Scripts/kendo/2015.3.1111/kendo.core.min.js"></script>
+    <script src="../../../Scripts/kendo/2015.3.1111/kendo.popup.min.js"></script>
+    <script src="../../../Scripts/kendo/2015.3.1111/kendo.validator.min.js"></script>
+    <script src="../../../Scripts/kendo/2015.3.1111/kendo.timepicker.min.js"></script>
+    <script src="../../../Scripts/kendo/2015.3.1111/kendo.maskedtextbox.min.js"></script>
+    <script src="../../../Scripts/angular-kendo.js"></script>
+
     <script src="../../app.js" ></script>
     <script src="../../workCardModule/config.js"></script>
     <script src="../../workCardModule/controllers/ovedDailyWork/ovedDailyWorkDetailsController.js"></script>
     <script src="../../workCardModule/controllers/ovedDailyWork/ovedHityazvutDetailsController.js"></script>
+     <script src="../../workCardModule/controllers/ovedDailyWork/pirteyOvedDetailsController.js"></script>
     <script src="../../workCardModule/controllers/ovedDailyDetailsController.js"></script>
     <script src="../../workCardModule/controllers/mainWorkCardController.js"></script>
     <script src="../../workCardModule/controllers/ovedGeneralDetailsController.js"></script>
     <script src="../controllers/ovedPeiluyotController.js"></script>
+     <script src="../directives/WKDirectives.js"></script>
+    <script src="../../directives/eggedDateTimeDirective.js"></script>
     <script src="../../directives/ngModalDirective.js"></script>
     <script src="../../workCardModule/services/apiProvider.js"></script>
     <script src="../../workCardModule/services/workCardStateService.js"></script>
     <script src="../../../Scripts/angucomplete-alt.min.js"></script>
     <script src="../../../Scripts/angular-ui/ui-utils.js"></script>
-  
+    <script src="../../../Js/bootstrap.min.js"></script>
+    <script src="../../../Js/bootstrap-timepicker.min.js"></script>
+
 </head>
 <body>
     <div ng-controller="mainWorkCardController">
         <div ng-include="'workCardDetails/ovedGeneralDetailsView.html'"></div>
-       <!-- <div ng-include="'workCardDetails/ovedDailyDetailsView.html'"></div>-->
+        <div ng-include="'workCardDetails/ovedDailyDetailsView.html'"></div>
         <div ng-include="'workCardDetails/ovedPeiluyotView.html'"></div>
+
+         <input type="text"  ng-model="date"   time>
+        {{date}}
+    <!--    <input id='ui-mask' name="date2" ng-model="date" required autocomplete='off' ui-mask='"99:99"' >-->
     </div>
+   
 </body>
 </html>

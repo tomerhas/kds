@@ -143,16 +143,16 @@ public class wsWorkCard : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public List<ReasonMissingSignature> GetSibotLedivuach()
+    public List<SelectItem> GetSibotLedivuach()
     {
-        List<ReasonMissingSignature> sibot = new List<ReasonMissingSignature>();
+        List<SelectItem> sibot = new List<SelectItem>();
         var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
         DataTable dvSibotLedivuch = cache.GetCacheItem<DataTable>(CachedItems.SibotLedivuchYadani);
 
         foreach (DataRow dr in dvSibotLedivuch.Rows)
         {
 
-            var siba = new ReasonMissingSignature();
+            var siba = new SelectItem();
             siba.Value = ParseStringToInt(dr["KOD_SIBA"].ToString());
             siba.Description = dr["TEUR_SIBA"].ToString();
             sibot.Add(siba);
@@ -165,16 +165,16 @@ public class wsWorkCard : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public List<Hariga> GetHariga()
+    public List<SelectItem> GetHariga()
     {
-        List<Hariga> Harigot = new List<Hariga>();
+        List<SelectItem> Harigot = new List<SelectItem>();
         var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
         DataRow[] dtHariga = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_divuch_hariga_meshaot'"));
 
         foreach (DataRow dr in dtHariga)
         {
 
-            var oHariga = new Hariga();
+            var oHariga = new SelectItem();
             oHariga.Value = ParseStringToInt(dr["KOD"].ToString());
             oHariga.Description = dr["TEUR"].ToString();
             Harigot.Add(oHariga);
@@ -185,16 +185,16 @@ public class wsWorkCard : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public List<Pizul> GetPizul()
+    public List<SelectItem> GetPizul()
     {
-        List<Pizul> Pizulim = new List<Pizul>();
+        List<SelectItem> Pizulim = new List<SelectItem>();
         var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
         DataRow[] dtPizul = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_pitzul_hafsaka'"));
 
         foreach (DataRow dr in dtPizul)
         {
 
-            var oPizul = new Pizul();
+            var oPizul = new SelectItem();
             oPizul.Value = ParseStringToInt(dr["KOD"].ToString());
             oPizul.Description = dr["TEUR"].ToString();
             Pizulim.Add(oPizul);
@@ -204,16 +204,37 @@ public class wsWorkCard : System.Web.Services.WebService
 
     }
 
-    
-    [WebMethod]
-    public List<Hashlama> GetHashlama()
+     [WebMethod]
+    public List<SelectItem> GetZmanNesia()
     {
-        List<Hashlama> Hashlamot = new List<Hashlama>();
+        List<SelectItem> Zmanim = new List<SelectItem>();
+        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+        DataRow[] dtZmanNesia = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_zmaney_nesiaa'"));
+
+        foreach (DataRow dr in dtZmanNesia)
+        {
+
+            var oZman = new SelectItem();
+            oZman.Value = ParseStringToInt(dr["KOD"].ToString());
+            oZman.Description = dr["TEUR"].ToString();
+            Zmanim.Add(oZman);
+
+        }
+        return Zmanim;
+
+    }
+
+    
+
+    [WebMethod]
+     public List<SelectItem> GetHashlama()
+    {
+        List<SelectItem> Hashlamot = new List<SelectItem>();
         var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
 
         for (int i = 0; i < 3; i++)
         {
-            var oHashlama = new Hashlama();
+            var oHashlama = new SelectItem();
             oHashlama.Value = i;
             switch (i) 
             {
@@ -227,19 +248,129 @@ public class wsWorkCard : System.Web.Services.WebService
 
             Hashlamot.Add(oHashlama);
         }
-        //DataRow[] dtHashlama = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_sibot_hashlama_leyom'"));
+        return Hashlamot;
+    }
 
-        //foreach (DataRow dr in dtHashlama)
-        //{
+    [WebMethod]
+    public List<SelectItem> GetTachograf()
+    {
+        List<SelectItem> Tachgrafs = new List<SelectItem>();
+        
+        for (int i = 0; i < 3; i++)
+        {
+            var oTachgraf = new SelectItem();
+            oTachgraf.Value = i;
+            switch (i) 
+            {
+                case 0: oTachgraf.Description = "אין צורך בטכוגרף";
+                    break;
+                case 1: oTachgraf.Description = "חסר טכוגרף";
+                    break;
+                case 2: oTachgraf.Description = "צירף טכוגרף";
+                    break;
+            }
 
-        //    var oHashlama = new Hashlama();
-        //    oHashlama.Value = ParseStringToInt(dr["KOD"].ToString());
-        //    oHashlama.Description = dr["TEUR"].ToString();
-        //    Hashlamot.Add(oHashlama);
+            Tachgrafs.Add(oTachgraf);
+        }
+        return Tachgrafs;
+    }
 
-        //}
+    [WebMethod]
+    public List<SelectItem> GetLina()
+    {
+        List<SelectItem> Linot = new List<SelectItem>();
+        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+        DataRow[] dtLina = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_lina'"));
+
+        foreach (DataRow dr in dtLina)
+        {
+
+            var oLina = new SelectItem();
+            oLina.Value = ParseStringToInt(dr["KOD"].ToString());
+            oLina.Description = dr["TEUR"].ToString();
+            Linot.Add(oLina);
+
+        }
+        return Linot;
+
+    }
+
+    [WebMethod]
+    public List<SelectItem> GetHalbasha()
+    {
+        List<SelectItem> Halbashot = new List<SelectItem>();
+        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+        DataRow[] dtHalbasha = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_zmaney_halbasha'"));
+
+        foreach (DataRow dr in dtHalbasha)
+        {
+
+            var oHalbasha = new SelectItem();
+            oHalbasha.Value = ParseStringToInt(dr["KOD"].ToString());
+            oHalbasha.Description = dr["TEUR"].ToString();
+            Halbashot.Add(oHalbasha);
+
+        }
+        return Halbashot;
+
+    }
+
+    [WebMethod]
+    public List<SelectItem> GetHashlameLeYom()
+    {
+        List<SelectItem> Hashlamot = new List<SelectItem>();
+        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+        DataRow[] dtHashlama = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_sibot_hashlama_leyom'"));
+
+        foreach (DataRow dr in dtHashlama)
+        {
+
+            var oHashlameLeYom = new SelectItem();
+            oHashlameLeYom.Value = ParseStringToInt(dr["KOD"].ToString());
+            oHashlameLeYom.Description = dr["TEUR"].ToString();
+            Hashlamot.Add(oHashlameLeYom);
+
+        }
         return Hashlamot;
 
+    }
+    
+    [WebMethod]
+    public EmplyeeDetails GetOvedAllDetails(int iMisparIshi, string sCardDate)
+    {
+       
+        clOvdim oOvdim = new clOvdim();
+        DataTable dt;
+        DateTime dCardDate = DateTime.Parse(sCardDate);
+        EmplyeeDetails oEmployee = new EmplyeeDetails();
+        try
+        {
+            if (iMisparIshi > 0)
+            {
+                        
+                dt = oOvdim.GetOvedDetails(iMisparIshi, dCardDate);
+                if (dt.Rows.Count > 0)
+                {
+                    DataRow dr = dt.Rows[0];
+                    oEmployee.FullName = dr["FULL_NAME"].ToString();
+                    oEmployee.KodMaama = int.Parse( dr["KOD_MAAMAD_HR"].ToString());
+                    oEmployee.TeurMaama = dr["TEUR_MAAMAD_HR"].ToString();
+                    oEmployee.KodSnif = int.Parse(dr["KOD_SNIF_AV"].ToString());
+                    oEmployee.TeurSnif = dr["TEUR_SNIF_AV"].ToString();
+                    oEmployee.KodEzor = int.Parse(dr["KOD_EZOR"].ToString());
+                    oEmployee.TeurEzor = dr["TEUR_EZOR"].ToString();
+                    oEmployee.TeurIsuk = dr["TEUR_ISUK"].ToString(); 
+                    oEmployee.TeurHevra = dr["TEUR_HEVRA"].ToString();   
+                }
+                
+
+            }
+            return oEmployee;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     private DateTime ParseStringToDate(string sDate)

@@ -1,13 +1,31 @@
 ﻿workCardApp.controller('ovedDailyDetailsController',['$scope', 'apiProvider',
     function($scope, apiProvider) {
+        var vm = this;
+        vm.tabDisplayed = 0;
+        vm.replaceTab = replaceTab;
+        vm.val = 1;
+        vm.ZmanNesiaList = {};
 
-        $scope.name = "daily details"
-        $scope.tabDisplayed = 1;
+        activate();
 
-        $scope.replaceTab = function ()
+        function activate() {
+            InilizeZmanNesia(); 
+        }
+
+        function InilizeZmanNesia() {
+            var promise = apiProvider.getZmaneyNesioth();
+            promise.then(function (payload) {
+                var res = payload.data.d;
+                vm.ZmanNesiaList = res;
+
+            }, function (errorPayload) {
+
+            });
+        }
+
+
+        function replaceTab(num)
         {
-            $scope.tabDisplayed++;
-            if ($scope.tabDisplayed > 2)
-                $scope.tabDisplayed = 1;
+            vm.tabDisplayed = num;
         }
     }]);

@@ -22,6 +22,7 @@
         vm.userIdinputChanged = userIdinputChanged;
         vm.GetEmpoyeeData = GetEmpoyeeData;
         vm.getPeiluyot = getPeiluyot;
+        vm.GetDailyDetails = GetDailyDetails;
 
         activate();
 
@@ -45,6 +46,19 @@
                 var er = errorPayload;
                 vm.error = er.data.Message;
                 vm.modalErrorsShown = true;
+            });
+        };
+
+        function GetDailyDetails() {
+
+            var promise = apiProvider.getOvedAllDetails(vm.misparIshi, vm.cardDate);
+            promise.then(function (payload) {
+                var res = payload.data.d;
+                var jsonObj = angular.fromJson(res);
+                workCardStateService.cardGlobalData.ovedDetails = jsonObj;
+                $rootScope.$broadcast("ovedDetails-changed");
+            }, function (errorPayload) {
+                var er = errorPayload;
             });
         };
 
@@ -115,6 +129,7 @@
             
             
             GetEmpoyeeData(vm.misparIshi);
+            GetDailyDetails();
         }, true);
 
        function GetEmpoyeeData(selectedEmployeeId) {

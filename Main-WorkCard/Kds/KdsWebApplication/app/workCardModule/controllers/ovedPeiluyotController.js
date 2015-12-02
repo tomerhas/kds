@@ -5,10 +5,12 @@
         vm.Sidurim = {};
         vm.NumSidurim = 0;
         vm.ChangeCollapeImg = ChangeCollapeImg;
-        vm.SibotDivuachDLL = {};
-        vm.HarigaDLL = {};
-        vm.PizulDLL = {};
-        vm.HshlamaDLL = {};
+        vm.SibotDivuachList = {};
+        vm.HarigaList = {};
+        vm.PizulList = {};
+        vm.HshlamaList = {};
+        
+        vm.datePickerOption = {};
 
         activate();
 
@@ -17,24 +19,53 @@
             InilizeHariga();
             InilizePizul();
             InilizeHashlama();
+            SetDateOptions();
+          //  $('.timepicker').timepicker();
         }
+
+        function SetDateOptions() {
+            vm.datePickerOption = {
+                change: function (a,b,c)
+                {
+                    var curVal = this.value();
+                    if (curVal == null)
+                    {
+                        this.value(new Date());
+                    }
+                }
+            }
+        };
 
         function InilizeSibot() {
             var promise = apiProvider.getSibotLedivuach();
             promise.then(function (payload) {
                 var res = payload.data.d;
-                vm.SibotDivuachDLL = res;
+                vm.SibotDivuachList = res;
 
             }, function (errorPayload) {
 
             });
         }
 
+    //    $(".timepicker")[0].click(function () {
+    //        var x = $(".timepicker")[0].value;
+    //        if (x == "") return;
+    //        alert(x)
+    //})
+        //$('#timepicker2').timepicker({
+        //                minuteStep: 1,
+        //                template: 'modal',
+        //                appendWidgetTo: 'body',
+        //                showSeconds: false,
+        //                showMeridian: false,
+        //                defaultTime: false
+        // });
+
         function InilizeHariga() {
             var promise = apiProvider.getHariga();
             promise.then(function (payload) {
                 var res = payload.data.d;
-                vm.HarigaDLL = res;
+                vm.HarigaList = res;
             }, function (errorPayload) {
 
             });
@@ -44,7 +75,7 @@
             var promise = apiProvider.getPizul();
             promise.then(function (payload) {
                 var res = payload.data.d;
-                vm.PizulDLL = res;
+                vm.PizulList = res;
             }, function (errorPayload) {
 
             });
@@ -54,7 +85,7 @@
             var promise = apiProvider.getHashlama();
             promise.then(function (payload) {
                 var res = payload.data.d;
-                vm.HashlamaDLL = res;
+                vm.HashlamaList = res;
             }, function (errorPayload) {
 
             });
@@ -62,6 +93,9 @@
 
         $scope.$on('ovedPeiluyot-changed', function (event, args) {
             vm.Sidurim = workCardStateService.cardGlobalData.ovedPeiluyot.SidurimList;
+            vm.Sidurim.forEach(function (sidur) {
+                sidur.MyFullDate = new Date(sidur.FullShatHatchala.Value);
+            });
             vm.NumSidurim = vm.Sidurim.length;
         });
 

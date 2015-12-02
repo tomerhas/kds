@@ -1,5 +1,29 @@
 ﻿
-<div ng-controller="ovedDailyWorkDetailsController">
-    <div>name of daily work controller: {{name}}</div>
-    <div>update res : {{updateRes}}</div>
+<div ng-controller="ovedDailyWorkDetailsController as h" class="row WorkCardTable1Label" style="height:40px">
+       <div class="col-md-1">טכוגרף:</div>
+       <div class="col-md-1"> <select ng-model="h.val" ng-options="i.Value as i.Description for i in h.TachgrafList">
+                                    <option value="0" selected></option>
+                                </select>
+        </div>
+       <div class="col-md-1">לינה:</div>
+       <div class="col-md-1"> <select ng-model="h.val" ng-options="i.Value as i.Description for i in h.LinaList">
+                                    <option value="0" selected></option>
+                                </select>
+       </div>
+       <div class="col-md-1">המרה:</div>
+       <div class="col-md-1"><input type="checkbox"   /></div>
+       <div class="col-md-1">הלבשה:</div>
+       <div class="col-md-1"> <select ng-model="h.val" ng-options="i.Value as i.Description for i in h.HalbashaList">
+                                    <option value="0" selected></option>
+                                </select>
+       </div>
+    <div class="col-md-1">השלמה ליום:</div>
+    <div class="col-md-1"><input type="checkbox"   /></div>
+    <div class="col-md-1">סיבה להשלמה:</div>
+    <div class="col-md-1"><select ng-model="h.val" ng-options="i.Value as i.Description for i in h.HashlamaList">
+                                    <option value="0" selected></option>
+                                </select>
+
+    </div>
+  
 </div>  
