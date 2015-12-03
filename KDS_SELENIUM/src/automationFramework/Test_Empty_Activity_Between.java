@@ -38,7 +38,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  Work_Card.Date(driver).sendKeys("01042015");
 	  Work_Card.Btn_Show(driver).click();
 	  Work_Card.Assert_Reka_Between_Not_Able(driver).click();
-	  WebDriverWait wait = new WebDriverWait(driver, 30);
+	  WebDriverWait wait = new WebDriverWait(driver, 40);
 	  wait.until(ExpectedConditions.alertIsPresent());
 	  Alert alert=driver.switchTo().alert();
 	  System.out.println(alert.getText());
