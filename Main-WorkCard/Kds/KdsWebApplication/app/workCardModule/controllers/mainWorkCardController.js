@@ -1,9 +1,22 @@
 ﻿workCardApp.controller('mainWorkCardController',
-    function($scope, apiProvider) {
 
-        $scope.name = "main"
+    function ($rootScope, apiProvider, workCardStateService) {
 
-        $scope.date = new Date();
+        var vm = this;
 
+        vm.SetLookupsInCache = SetLookupsInCache;
+        activate();
+
+        function activate() {
+            SetLookupsInCache();
+        }
+
+        function SetLookupsInCache() {
+         
+                apiProvider.getLookupsContainer().then(function (result) {
+                    workCardStateService.lookupsContainer = result;
+                    $rootScope.$broadcast("workcardLookups-changed");
+                }); 
+        }
        
     });

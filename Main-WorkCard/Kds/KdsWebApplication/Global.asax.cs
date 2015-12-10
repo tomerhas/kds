@@ -7,6 +7,7 @@ using System.Web.SessionState;
 using KdsLibrary;
 using KdsLibrary.Utils;
 
+
 namespace KdsWebApplication
 {
     public class Global : System.Web.HttpApplication

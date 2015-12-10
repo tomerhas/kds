@@ -1,6 +1,6 @@
 ﻿
 workCardApp.controller('ovedHityazvutDetailsController',
-    function($scope, apiProvider) {
+    function ($scope, workCardStateService) {
         var vm = this;
         vm.SibotDivuachList = {};
         vm.val = 1;
@@ -8,17 +8,15 @@ workCardApp.controller('ovedHityazvutDetailsController',
         activate();
 
         function activate() {
-            InilizeSibot();
+            UpdateLists();
         }
 
-        function InilizeSibot() {
-            var promise = apiProvider.getSibotLedivuach();
-            promise.then(function (payload) {
-                var res = payload.data.d;
-                vm.SibotDivuachList = res;
-
-            }, function (errorPayload) {
-
-            });
+        function UpdateLists()
+        {
+            if (workCardStateService.lookupsContainer.container) {
+                vm.SibotDivuachList = workCardStateService.lookupsContainer.container.SibotLedivuachList;
+            }
         }
+
+        
     });

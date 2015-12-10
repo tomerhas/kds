@@ -1,64 +1,28 @@
 ﻿workCardApp.controller('ovedDailyWorkDetailsController',
-    function ($scope, apiProvider) {
+    function ($scope, workCardStateService) {
         var vm = this;
         vm.TachgrafList = {};
         vm.LinaList = {};
         vm.HalbashaList = {};
-        vm.HashlamaList = {};
+        vm.HashlameLeYomList = {};
         vm.val = 1;
 
         activate();
 
         function activate() {
-            InilizeTachgraf();
-            InilizeLina();
-            InilizeHalbasha();
-            InilizeHashlama();
+            UpdateLists();
         }
 
-        function InilizeTachgraf() {
-            var promise = apiProvider.getTachograf();
-            promise.then(function (payload) {
-                var res = payload.data.d;
-                vm.TachgrafList = res;
-
-            }, function (errorPayload) {
-
-            });
+        function UpdateLists() {
+            if (workCardStateService.lookupsContainer.container) {
+                vm.TachgrafList = workCardStateService.lookupsContainer.container.TachografList;
+                vm.LinaList = workCardStateService.lookupsContainer.container.LinaList;
+                vm.HalbashaList = workCardStateService.lookupsContainer.container.HalbashaList;
+                vm.HashlameLeYomList = workCardStateService.lookupsContainer.container.HashlameLeYomList;
+            }
         }
 
-        function InilizeLina() {
-            var promise = apiProvider.getLina();
-            promise.then(function (payload) {
-                var res = payload.data.d;
-                vm.LinaList = res;
-
-            }, function (errorPayload) {
-
-            });
-        }
-
-        function InilizeHalbasha() {
-            var promise = apiProvider.getHalbasha();
-            promise.then(function (payload) {
-                var res = payload.data.d;
-                vm.HalbashaList = res;
-
-            }, function (errorPayload) {
-
-            });
-        }
-
-        function InilizeHashlama() {
-            var promise = apiProvider.getHashlameLeYom();
-            promise.then(function (payload) {
-                var res = payload.data.d;
-                vm.HashlamaList = res;
-
-            }, function (errorPayload) {
-
-            });
-        }
+       
         
     });
 /*

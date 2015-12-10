@@ -15,6 +15,9 @@ using KDSCommon.DataModels.WorkCard;
 using KDSCommon.Enums;
 using KDSCommon.Interfaces;
 
+/// <summary>
+/// This is the new service required for the new angular workcard screen
+/// </summary>
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
@@ -40,13 +43,13 @@ public class wsWorkCard : System.Web.Services.WebService
     /// <param name="cardDate"></param>
     /// <returns></returns>
     [WebMethod(EnableSession = true)]
-    public string GetEmployeePeiluyot(int misparIshi, DateTime cardDate)
+    public string GetUserWorkCard(int misparIshi, DateTime cardDate) //GetEmployeePeiluyot
     {
         cardDate = DateTime.Parse(cardDate.ToShortDateString());
         IWorkCardSidurManager ovedWCManager = ServiceLocator.Current.GetInstance<IWorkCardSidurManager>();
-        var sidurim=ovedWCManager.GetSidurim(misparIshi, cardDate);
+        var container=ovedWCManager.GetUserWorkCard(misparIshi, cardDate);
         //return sidurim;
-        string json = JsonConvert.SerializeObject(sidurim);
+        string json = JsonConvert.SerializeObject(container);
         return json;
 
     }
@@ -142,198 +145,6 @@ public class wsWorkCard : System.Web.Services.WebService
         return null;
     }
 
-    [WebMethod]
-    public List<SelectItem> GetSibotLedivuach()
-    {
-        List<SelectItem> sibot = new List<SelectItem>();
-        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-        DataTable dvSibotLedivuch = cache.GetCacheItem<DataTable>(CachedItems.SibotLedivuchYadani);
-
-        foreach (DataRow dr in dvSibotLedivuch.Rows)
-        {
-
-            var siba = new SelectItem();
-            siba.Value = ParseStringToInt(dr["KOD_SIBA"].ToString());
-            siba.Description = dr["TEUR_SIBA"].ToString();
-            sibot.Add(siba);
-
-        }
-        //string json = JsonConvert.SerializeObject(sibot);
-     //   return json;
-        return sibot;
-        
-    }
-
-    [WebMethod]
-    public List<SelectItem> GetHariga()
-    {
-        List<SelectItem> Harigot = new List<SelectItem>();
-        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-        DataRow[] dtHariga = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_divuch_hariga_meshaot'"));
-
-        foreach (DataRow dr in dtHariga)
-        {
-
-            var oHariga = new SelectItem();
-            oHariga.Value = ParseStringToInt(dr["KOD"].ToString());
-            oHariga.Description = dr["TEUR"].ToString();
-            Harigot.Add(oHariga);
-
-        }
-        return Harigot;
-        
-    }
-
-    [WebMethod]
-    public List<SelectItem> GetPizul()
-    {
-        List<SelectItem> Pizulim = new List<SelectItem>();
-        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-        DataRow[] dtPizul = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_pitzul_hafsaka'"));
-
-        foreach (DataRow dr in dtPizul)
-        {
-
-            var oPizul = new SelectItem();
-            oPizul.Value = ParseStringToInt(dr["KOD"].ToString());
-            oPizul.Description = dr["TEUR"].ToString();
-            Pizulim.Add(oPizul);
-
-        }
-        return Pizulim;
-
-    }
-
-     [WebMethod]
-    public List<SelectItem> GetZmanNesia()
-    {
-        List<SelectItem> Zmanim = new List<SelectItem>();
-        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-        DataRow[] dtZmanNesia = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_zmaney_nesiaa'"));
-
-        foreach (DataRow dr in dtZmanNesia)
-        {
-
-            var oZman = new SelectItem();
-            oZman.Value = ParseStringToInt(dr["KOD"].ToString());
-            oZman.Description = dr["TEUR"].ToString();
-            Zmanim.Add(oZman);
-
-        }
-        return Zmanim;
-
-    }
-
-    
-
-    [WebMethod]
-     public List<SelectItem> GetHashlama()
-    {
-        List<SelectItem> Hashlamot = new List<SelectItem>();
-        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-
-        for (int i = 0; i < 3; i++)
-        {
-            var oHashlama = new SelectItem();
-            oHashlama.Value = i;
-            switch (i) 
-            {
-                case 0: oHashlama.Description =  "אין השלמה";
-                    break;
-                case 1: oHashlama.Description =  "השלמה לשעה";
-                    break;
-                case 2: oHashlama.Description =  "השלמה לשעתיים";
-                    break;
-            }
-
-            Hashlamot.Add(oHashlama);
-        }
-        return Hashlamot;
-    }
-
-    [WebMethod]
-    public List<SelectItem> GetTachograf()
-    {
-        List<SelectItem> Tachgrafs = new List<SelectItem>();
-        
-        for (int i = 0; i < 3; i++)
-        {
-            var oTachgraf = new SelectItem();
-            oTachgraf.Value = i;
-            switch (i) 
-            {
-                case 0: oTachgraf.Description = "אין צורך בטכוגרף";
-                    break;
-                case 1: oTachgraf.Description = "חסר טכוגרף";
-                    break;
-                case 2: oTachgraf.Description = "צירף טכוגרף";
-                    break;
-            }
-
-            Tachgrafs.Add(oTachgraf);
-        }
-        return Tachgrafs;
-    }
-
-    [WebMethod]
-    public List<SelectItem> GetLina()
-    {
-        List<SelectItem> Linot = new List<SelectItem>();
-        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-        DataRow[] dtLina = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_lina'"));
-
-        foreach (DataRow dr in dtLina)
-        {
-
-            var oLina = new SelectItem();
-            oLina.Value = ParseStringToInt(dr["KOD"].ToString());
-            oLina.Description = dr["TEUR"].ToString();
-            Linot.Add(oLina);
-
-        }
-        return Linot;
-
-    }
-
-    [WebMethod]
-    public List<SelectItem> GetHalbasha()
-    {
-        List<SelectItem> Halbashot = new List<SelectItem>();
-        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-        DataRow[] dtHalbasha = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_zmaney_halbasha'"));
-
-        foreach (DataRow dr in dtHalbasha)
-        {
-
-            var oHalbasha = new SelectItem();
-            oHalbasha.Value = ParseStringToInt(dr["KOD"].ToString());
-            oHalbasha.Description = dr["TEUR"].ToString();
-            Halbashot.Add(oHalbasha);
-
-        }
-        return Halbashot;
-
-    }
-
-    [WebMethod]
-    public List<SelectItem> GetHashlameLeYom()
-    {
-        List<SelectItem> Hashlamot = new List<SelectItem>();
-        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-        DataRow[] dtHashlama = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables).Select(string.Concat("table_name='ctb_sibot_hashlama_leyom'"));
-
-        foreach (DataRow dr in dtHashlama)
-        {
-
-            var oHashlameLeYom = new SelectItem();
-            oHashlameLeYom.Value = ParseStringToInt(dr["KOD"].ToString());
-            oHashlameLeYom.Description = dr["TEUR"].ToString();
-            Hashlamot.Add(oHashlameLeYom);
-
-        }
-        return Hashlamot;
-
-    }
     
     [WebMethod]
     public EmplyeeDetails GetOvedAllDetails(int iMisparIshi, string sCardDate)
@@ -371,6 +182,15 @@ public class wsWorkCard : System.Web.Services.WebService
         {
             throw ex;
         }
+    }
+
+    [WebMethod]
+    public WorkCardLookupsContainer GetWorkCardLookups()
+    {
+        IWorkCardSidurManager ovedWCManager = ServiceLocator.Current.GetInstance<IWorkCardSidurManager>();
+        var res= ovedWCManager.GetWorkCardLookups();
+        string json = JsonConvert.SerializeObject(res);
+        return res;
     }
 
     private DateTime ParseStringToDate(string sDate)

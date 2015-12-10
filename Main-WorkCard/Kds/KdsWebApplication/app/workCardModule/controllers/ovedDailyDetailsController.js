@@ -1,5 +1,5 @@
-﻿workCardApp.controller('ovedDailyDetailsController',['$scope', 'apiProvider',
-    function($scope, apiProvider) {
+﻿workCardApp.controller('ovedDailyDetailsController', ['$scope', 'workCardStateService','$log',
+    function ($scope, workCardStateService,$log) {
         var vm = this;
         vm.tabDisplayed = 0;
         vm.replaceTab = replaceTab;
@@ -9,20 +9,26 @@
         activate();
 
         function activate() {
-            InilizeZmanNesia(); 
+            RegisterToLokupChanges();
+            UpdateLists();
         }
 
-        function InilizeZmanNesia() {
-            var promise = apiProvider.getZmaneyNesioth();
-            promise.then(function (payload) {
-                var res = payload.data.d;
-                vm.ZmanNesiaList = res;
-
-            }, function (errorPayload) {
-
+        function RegisterToLokupChanges() {
+            $scope.$on('workcardLookups-changed', function (event, args) {
+                $log.debug("ovedDailyDetailsController - updating lookups after event changed recieved");
+                UpdateLists();
             });
         }
 
+        function UpdateLists() {
+            if (workCardStateService.lookupsContainer.container) {
+                $log.debug("ovedDailyDetailsController - updating lookups from cache");
+                vm.ZmanNesiaList = workCardStateService.lookupsContainer.container.ZmanNesiaList;
+            }
+            else {
+                $log.debug("ovedDailyDetailsController - when trying to fill in ZmanNesiaList - the cache data was empty");
+            }
+        }
 
         function replaceTab(num)
         {

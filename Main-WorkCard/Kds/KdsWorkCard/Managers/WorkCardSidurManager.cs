@@ -23,6 +23,9 @@ using System.Text;
 
 namespace KdsWorkCard.Managers
 {
+    /// <summary>
+    /// This is the manager used by the web methods for retriving the data related to work card (angular version)
+    /// </summary>
     public class WorkCardSidurManager : IWorkCardSidurManager
     {
         private IUnityContainer _container;
@@ -32,9 +35,9 @@ namespace KdsWorkCard.Managers
             _container = container;
         }
 
-        public SidurimWC GetSidurim(int misparIshi,DateTime cardDate,int userId=-2,int batchRequest =0,bool isFromEmda=false)
+        public WorkCardResultContainer GetUserWorkCard(int misparIshi, DateTime cardDate, int userId = -2, int batchRequest = 0, bool isFromEmda = false)
         {
-            SidurimWC result = new SidurimWC();
+            WorkCardResultContainer result = new WorkCardResultContainer();
             //SetSecurityLevel();
             //PerUserSecurity
 
@@ -55,11 +58,12 @@ namespace KdsWorkCard.Managers
 
             WorkCardResultToSidurmWC converter = new WorkCardResultToSidurmWC();
             var profiles = _container.Resolve<ILoginUserManager>().GetLoggedUser().UserProfiles;
-            result = converter.Convert(wcResult,userId,profiles);
+            result.Sidurim = converter.Convert(wcResult,userId,profiles);
 
             return result;
         }
-        
+
+        #region Helper methods for filling in sidurim
         private WorkCardResult GetWorkCardResult(int misparIshi, DateTime cardDate)
         {
             WorkCardResult wcResult = new WorkCardResult();
@@ -126,6 +130,26 @@ namespace KdsWorkCard.Managers
                 var oParam = paramManager.CreateClsParametrs(dCardDate, iSugYom);
                 cacheAge.Add(oParam, dCardDate);
             }
+
+        }
+        #endregion
+
+        public WorkCardLookupsContainer GetWorkCardLookups()
+        {
+            WorkCardLookupsContainer wcLookups = new WorkCardLookupsContainer();
+            WorkCardLookupsHelper lookupHelper = _container.Resolve<WorkCardLookupsHelper>();
+
+            wcLookups.HalbashaList = lookupHelper.GetHalbashaList();
+            wcLookups.HarigaList = lookupHelper.GetHarigaList();
+            wcLookups.HashlamaList = lookupHelper.GetHashlamaList();
+            wcLookups.HashlameLeYomList = lookupHelper.GetHashlameLeYomList();
+            wcLookups.LinaList = lookupHelper.GetLinaList();
+            wcLookups.PizulList = lookupHelper.GetPizulList();
+            wcLookups.SibotLedivuachList = lookupHelper.GetSibotLedivuachList();
+            wcLookups.TachografList = lookupHelper.GetTachografList();
+            wcLookups.ZmanNesiaList = lookupHelper.GetZmanNesiaList();
+
+            return wcLookups;
 
         }
     }

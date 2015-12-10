@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\WorkCardResultToSidurmWC.cs" />
+    <Compile Include="Managers\WorkCardLookupsHelper.cs" />
     <Compile Include="Managers\WorkCardSidurManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

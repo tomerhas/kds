@@ -1,10 +1,8 @@
 ﻿//Service for holding applicative state
-workCardApp.factory("workCardStateService",
+workCardApp.service("workCardStateService",
     function () {
-        var cardGlobalData = { ovedDetails: {}, ovedPeiluyot: {} };
-        
+        this.cardGlobalData = { ovedDetails: {}, workCardResult: {} };
 
-        return {
-            cardGlobalData: cardGlobalData
-        }
+        this.lookupsContainer = {};
+    
     });

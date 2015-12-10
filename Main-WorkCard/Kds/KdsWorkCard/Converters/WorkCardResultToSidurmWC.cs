@@ -13,9 +13,19 @@ using System.Text;
 
 namespace KdsWorkCard.Converters
 {
+    /// <summary>
+    /// The converter class recieves objects from the original system that may or may not be possible to serialize into json
+    /// This class converts the data required for a specific call into a serializable object that can be used by the UI (Angular)
+    /// </summary>
     public class WorkCardResultToSidurmWC
     {
-
+        /// <summary>
+        /// Recieves a workcard result and extracts from it the Sidurim serializable object (SidurimWC)
+        /// </summary>
+        /// <param name="wcResult"></param>
+        /// <param name="userId"></param>
+        /// <param name="profiles"></param>
+        /// <returns></returns>
         public SidurimWC Convert(WorkCardResult wcResult,int userId,List<UserProfile> profiles)
         {
             SidurimWC sidurimResult = new SidurimWC();
@@ -29,6 +39,7 @@ namespace KdsWorkCard.Converters
             }
             return sidurimResult;
         }
+
 
         private SidurWC BuildSidurAndPeiluyot(WorkCardResult wcResult, int userId, int sidurIndex, List<UserProfile> profiles)
         {

@@ -5,6 +5,11 @@ using System.Text;
 
 namespace KDSCommon.DataModels.WorkCard
 {
+    /// <summary>
+    /// This is a list of the users sidurim
+    /// This is a view model requested by the new workcard display (angular) 
+    /// and contains only the data related to the display
+    /// </summary>
     public class SidurimWC
     {
         public SidurimWC()

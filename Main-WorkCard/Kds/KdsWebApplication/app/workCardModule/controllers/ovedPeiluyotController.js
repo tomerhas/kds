@@ -1,5 +1,5 @@
 ﻿workCardApp.controller('ovedPeiluyotController',
-    function($scope, apiProvider, workCardStateService) {
+    function($scope, apiProvider, workCardStateService,$log) {
 
         var vm = this;
         vm.Sidurim = {};
@@ -15,12 +15,18 @@
         activate();
 
         function activate() {
-            InilizeSibot();
-            InilizeHariga();
-            InilizePizul();
-            InilizeHashlama();
-            SetDateOptions();
+            RegisterToOvedPeiluyotChanged();
+            UpdateLists();
           //  $('.timepicker').timepicker();
+        }
+
+        function UpdateLists() {
+            if (workCardStateService.lookupsContainer.container) {
+                vm.SibotDivuachList = workCardStateService.lookupsContainer.container.SibotLedivuachList;
+                vm.HarigaList = workCardStateService.lookupsContainer.container.HarigaList;
+                vm.PizulList = workCardStateService.lookupsContainer.container.PizulList;
+                vm.HshlamaList = workCardStateService.lookupsContainer.container.HashlamaList;
+            }
         }
 
         function SetDateOptions() {
@@ -36,68 +42,20 @@
             }
         };
 
-        function InilizeSibot() {
-            var promise = apiProvider.getSibotLedivuach();
-            promise.then(function (payload) {
-                var res = payload.data.d;
-                vm.SibotDivuachList = res;
-
-            }, function (errorPayload) {
-
+        function RegisterToOvedPeiluyotChanged()
+        {
+            $scope.$on('ovedPeiluyot-changed', function (event, args) {
+                $log.debug("ovedPeiluyotController recieved broadcast ovedPeiluyot-changed event");
+                vm.Sidurim = workCardStateService.cardGlobalData.workCardResult.Sidurim.SidurimList;
+                vm.Sidurim.forEach(function (sidur) {
+                    sidur.MyFullDate = new Date(sidur.FullShatHatchala.Value);
+                });
+                vm.NumSidurim = vm.Sidurim.length;
+                UpdateLists();
             });
         }
 
-    //    $(".timepicker")[0].click(function () {
-    //        var x = $(".timepicker")[0].value;
-    //        if (x == "") return;
-    //        alert(x)
-    //})
-        //$('#timepicker2').timepicker({
-        //                minuteStep: 1,
-        //                template: 'modal',
-        //                appendWidgetTo: 'body',
-        //                showSeconds: false,
-        //                showMeridian: false,
-        //                defaultTime: false
-        // });
-
-        function InilizeHariga() {
-            var promise = apiProvider.getHariga();
-            promise.then(function (payload) {
-                var res = payload.data.d;
-                vm.HarigaList = res;
-            }, function (errorPayload) {
-
-            });
-        }
-
-        function InilizePizul() {
-            var promise = apiProvider.getPizul();
-            promise.then(function (payload) {
-                var res = payload.data.d;
-                vm.PizulList = res;
-            }, function (errorPayload) {
-
-            });
-        }
-
-        function InilizeHashlama() {
-            var promise = apiProvider.getHashlama();
-            promise.then(function (payload) {
-                var res = payload.data.d;
-                vm.HashlamaList = res;
-            }, function (errorPayload) {
-
-            });
-        }
-
-        $scope.$on('ovedPeiluyot-changed', function (event, args) {
-            vm.Sidurim = workCardStateService.cardGlobalData.ovedPeiluyot.SidurimList;
-            vm.Sidurim.forEach(function (sidur) {
-                sidur.MyFullDate = new Date(sidur.FullShatHatchala.Value);
-            });
-            vm.NumSidurim = vm.Sidurim.length;
-        });
+        
 
 
 

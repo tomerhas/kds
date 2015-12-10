@@ -20,13 +20,16 @@
         vm.showLasModifierPopup = showLasModifierPopup;
       //  vm.getOvedDetails = getOvedDetails;
         vm.userIdinputChanged = userIdinputChanged;
+        //Get informatiion for the 3 employee detail tabs
         vm.GetEmpoyeeData = GetEmpoyeeData;
         vm.getPeiluyot = getPeiluyot;
         vm.GetDailyDetails = GetDailyDetails;
 
+        vm.RegisterToSelectedEmployee = RegisterToSelectedEmployee;
         activate();
 
-        function activate(){
+        function activate() {
+            RegisterToSelectedEmployee();
             if (dateStr)
             {
                 vm.cardDate = new Date(dateStr);    
@@ -63,15 +66,12 @@
         };
 
         function getPeiluyot() {
-
-            var promise = apiProvider.getEmployeePeiluyot(vm.misparIshi, vm.cardDate);
-                promise.then(function (payload) {
-                    var res = payload.data.d;
-                    var jsonObj = angular.fromJson(res);
-                    workCardStateService.cardGlobalData.ovedPeiluyot = jsonObj;
+            apiProvider.getUserWorkCard(vm.misparIshi, vm.cardDate)
+                .then(function (res) {
+                    $log.debug("ovedGeenralDetailsController.getPeiluyot - recieved work card result");
+                    workCardStateService.cardGlobalData.workCardResult = res;
+                    $log.debug("ovedGeenralDetailsController.getPeiluyot broadcasting ovedPeiluyot-changed event");
                     $rootScope.$broadcast("ovedPeiluyot-changed");
-                }, function (errorPayload) {
-                    var er = errorPayload;
                 });
         };
 
@@ -108,29 +108,30 @@
             });
         }
 
-        //Listen on selected employee changed. The intention to to get the data once an employee id is selected
-        $scope.$watch(function () { return vm.SelectedEmployeeId }, function (newVal, oldVal) {
-            
-            //When users selectes an item from the list - the item will be contained in the newVal.description
-            //When using the keyboard to insert new characters before selecting the item from the list, the newVal will contain the item directly (e.g. newVal.MisparIshi)
-            if (newVal && newVal.description)
-            {
-                vm.misparIshi = newVal.description.MisparIshi;
-            }
-            //We do not want to fetch data whenever there is a change on the data only when user selects an item
-            //else if (newVal.MisparIshi) {
-            //    employeeId = newVal.MisparIshi;
-            //}
-            else {
-                return;
-            }
-            
-            $log.debug("$watch: SelectedEmployeeId- :" + vm.misparIshi);
-            
-            
-            GetEmpoyeeData(vm.misparIshi);
-            GetDailyDetails();
-        }, true);
+        function RegisterToSelectedEmployee()  {
+            //Listen on selected employee changed. The intention to to get the data once an employee id is selected
+            $scope.$watch(function () { return vm.SelectedEmployeeId }, function (newVal, oldVal) {
+
+                //When users selectes an item from the list - the item will be contained in the newVal.description
+                //When using the keyboard to insert new characters before selecting the item from the list, the newVal will contain the item directly (e.g. newVal.MisparIshi)
+                if (newVal && newVal.description) {
+                    vm.misparIshi = newVal.description.MisparIshi;
+                }
+                    //We do not want to fetch data whenever there is a change on the data only when user selects an item
+                    //else if (newVal.MisparIshi) {
+                    //    employeeId = newVal.MisparIshi;
+                    //}
+                else {
+                    return;
+                }
+
+                $log.debug("$watch: SelectedEmployeeId- :" + vm.misparIshi);
+
+
+                GetEmpoyeeData(vm.misparIshi);
+                GetDailyDetails();
+            }, true);
+        }
 
        function GetEmpoyeeData(selectedEmployeeId) {
             $log.debug("empoyee idea selected- " + selectedEmployeeId);

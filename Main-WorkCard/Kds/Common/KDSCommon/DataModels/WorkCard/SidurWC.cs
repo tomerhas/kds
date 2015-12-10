@@ -5,6 +5,11 @@ using System.Text;
 
 namespace KDSCommon.DataModels.WorkCard
 {
+    /// <summary>
+    /// Contains the data of a users single sidur
+    /// This is a view model requested by the new workcard display (angular) 
+    /// and contains only the data related to the display
+    /// </summary>
     public class SidurWC
     {
         public SinglePropertyData<string> CollapseSrc { get; set; }

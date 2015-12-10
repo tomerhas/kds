@@ -8,6 +8,10 @@ using System.Text;
 
 namespace KDSCommon.DataModels.WorkCard
 {
+    /// <summary>
+    /// Contains data of a users work card for a misparishi and date
+    /// This is the original WorkCardResult as defined in the system prior to angular version
+    /// </summary>
     public class WorkCardResult
     {
         public WorkCardResult()
