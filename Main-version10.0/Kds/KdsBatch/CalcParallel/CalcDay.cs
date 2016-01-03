@@ -2913,7 +2913,7 @@ namespace KdsBatch
                    (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7) )
                 {
 
-                    if (objOved.objPirteyOved.iIshurKeren == 0 && fErechRechiv != 1 && fMichsaYomit > 0)
+                    if (objOved.objPirteyOved.iIshurKeren == 0 && fErechRechiv != 1  && fMichsaYomit > 0)
                     {
                         fErechRechiv = (fMichsaYomit - objOved.objPirteyOved.iZmanMutamut) / fMichsaYomit;
                         fErechRechiv = float.Parse(Math.Round(fErechRechiv, 2, MidpointRounding.AwayFromZero).ToString());
@@ -3183,7 +3183,9 @@ namespace KdsBatch
                                 if (objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7) &&
                                     (objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && objOved.objPirteyOved.iIshurKeren ==0 )
                                 {
-                                    if (fMichsaYomit > 0 && fDakotNochehut == 0 && !HaveRechivimInDay(objOved.Taarich, "61,71,70,69,68,280,65,67,64,56,62,266,292") && objOved.objMatzavOved.iKod_Headrut == 0)
+                                     fErech60 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMachla.GetHashCode(), objOved.Taarich);
+
+                                     if (fMichsaYomit > 0 && fDakotNochehut == 0 && objOved.objMatzavOved.iKod_Headrut == 0 && (!HaveRechivimInDay(objOved.Taarich, "60,61,71,70,69,68,280,65,67,64,56,62,266,292") || (fErech60 > 0 && fErech60 < 1)))
                                     {
                                         fErechRechiv = objOved.objPirteyOved.iZmanMutamut / fMichsaYomit;
                                         bMutaam = true;
