@@ -3296,7 +3296,7 @@ namespace KdsBatch
 
         private void CalcRechiv67()
         {
-            float fErechRechiv, fMichsaYomit, fMiluimBoded, fDakotNochehut, fMichsatMutamBitachon, fDakotNochehutLeloKizuz, fKizuzMeheadrut;
+            float fErechRechiv, fMichsaYomit, fMiluimBoded, fDakotNochehut, fMichsatMutamBitachon, fDakotNochehutLeloKizuz, fKizuzMeheadrut,fErech60;
             DataRow[] rowSidur ;
             string sRechivim;
             bool flag = false;
@@ -3346,7 +3346,7 @@ namespace KdsBatch
                              //        objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8) && fMichsaYomit > 0) ||
                              //         (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iMutamBitachon == 6)) && objOved.objPirteyOved.iZmanMutamut > 0)
                              if ((objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8 || objOved.objPirteyOved.iMutamut == 1 ||
-                                     objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8)
+                                     objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22 || objOved.objPirteyOved.iSibotMutamut == 4 || objOved.objPirteyOved.iSibotMutamut == 5 || objOved.objPirteyOved.iSibotMutamut == 6 || objOved.objPirteyOved.iSibotMutamut == 8)
                                      && fMichsaYomit > 0 && (objOved.objPirteyOved.iZmanMutamut > 0 && (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)) ) //&& !objOved.bMeafyen85YomMeyuchad)
                              {
                                  if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode() &&
@@ -3388,6 +3388,13 @@ namespace KdsBatch
                                  // 5. עובד היה בעבודה, עבד חלק מהמכסה
                                  if (fMichsaYomit > 0 && fDakotNochehut > 0 &&  fDakotNochehut < objOved.objPirteyOved.iZmanMutamut && !HaveRechivimInDay(objOved.Taarich, "60,61,71,70,69,65,280") )
                                      fErechRechiv = (objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit;
+                                 //6.עובד מותאם מחלה ללא אישור קרן 
+                                 if ((objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && fDakotNochehut == 0  && objOved.objPirteyOved.iIshurKeren == 0)
+                                 {
+                                    fErech60 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMachla.GetHashCode(), objOved.Taarich);
+                                    if ((fErech60 > 0 && fErech60 < 1))
+                                        fErechRechiv = objOved.objPirteyOved.iZmanMutamut / fMichsaYomit;
+                                 }
 
                              }
                              else
