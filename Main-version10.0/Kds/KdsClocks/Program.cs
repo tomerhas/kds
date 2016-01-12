@@ -144,7 +144,7 @@ namespace KdsClocks
         DateTime taarich=new DateTime(), taarichCtl;
         IClockManager clockManager; 
         ILogBakashot log;
-        int  SugRec=0 ,status = 1,mispar_ishi=0,clockId=0,pmispar_sidur=0,p24,isuk;
+        int  SugRec=0 ,status = 1,mispar_ishi=0,clockId=0,pmispar_sidur=0,p24,isuk,meafyen43;
         string  istm, inShaa, outShaa,knisaH, teur = "AttendHarmony now";
         bool IsPundak;
         try
@@ -173,6 +173,7 @@ namespace KdsClocks
                             taarich = DateTime.Parse(dr["TAARICH"].ToString());
                             inShaa = dr["Shaa"].ToString().Split(' ')[1].Substring(0, 5).Replace(":", "");
                             pmispar_sidur = int.Parse(dr["MISPAR_SIDUR"].ToString());
+                            meafyen43 = int.Parse(dr["meafyen43"].ToString());
                             if(dr["ISUK"].ToString().Trim() != "")
                             {
                                 isuk = int.Parse(dr["ISUK"].ToString());
@@ -232,6 +233,8 @@ namespace KdsClocks
                                                 break;
                                             case 3:
                                                 p24 = 0;
+                                                var val= int.Parse(inShaa);
+                                             
                                                 ds = clockManager.GetYetziaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
                                                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() == "0")
                                                 {
@@ -246,8 +249,31 @@ namespace KdsClocks
                                                         clockManager.UpdateYeziaRecord(mispar_ishi, taarich, knisaH, inShaa, clockId, pmispar_sidur, istm, p24);
                                                     }
                                                     else
-                                                        clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, clockId, pmispar_sidur, istm, p24);
+                                                    {
+                                                        if (val < 401 || (val <801 && meafyen43==1))
+                                                        {
+                                                            p24 = 1;
+                                                            ds = clockManager.GetKnisaNull(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
+                                                            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                                            {
+                                                                if (ds.Tables[0].Rows[0]["knisa"].ToString().Length == 12)
+                                                                    knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(8, 4);
+                                                                else
+                                                                    knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(0, 4);
+
+                                                                clockManager.UpdateYeziaRecord(mispar_ishi, taarich, knisaH, inShaa, clockId, pmispar_sidur, istm, p24);
+                                                            }
+                                                            else
+                                                            {
+                                                                p24 = 0;
+                                                                clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, clockId, pmispar_sidur, istm, p24);
+                                                            }
+                                                        }
+                                                        else clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, clockId, pmispar_sidur, istm, p24);
+                                                    }
+                                                    
                                                 }
+                                             
                                                 break;
                                             case 4:
                                                 if (int.Parse(inShaa) < 400)
