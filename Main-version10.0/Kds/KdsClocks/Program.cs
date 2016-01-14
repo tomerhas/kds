@@ -186,7 +186,7 @@ namespace KdsClocks
                                 {
                                     clockId = int.Parse(dr["code_shaon"].ToString());
                                     var shaon=clockId.ToString().PadLeft(5,'0').Substring(0,3);
-                                    var p = pundakim.Select("mis_visut=" + shaon + " and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH");
+                                    var p = pundakim.Select("MIKUM_PUNDAK=" + shaon + " and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH");
                                     if (p.Length > 0)
                                         IsPundak = true;
                                 }
@@ -253,21 +253,25 @@ namespace KdsClocks
                                                         if (val < 401 || (val <801 && meafyen43==1))
                                                         {
                                                             p24 = 1;
-                                                            ds = clockManager.GetKnisaNull(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
-                                                            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                                                            {
-                                                                if (ds.Tables[0].Rows[0]["knisa"].ToString().Length == 12)
-                                                                    knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(8, 4);
-                                                                else
-                                                                    knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(0, 4);
+                                                             ds = clockManager.GetYetziaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
+                                                             if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() == "0")
+                                                             {
+                                                                 ds = clockManager.GetKnisaNull(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
+                                                                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                                                 {
+                                                                     if (ds.Tables[0].Rows[0]["knisa"].ToString().Length == 12)
+                                                                         knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(8, 4);
+                                                                     else
+                                                                         knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(0, 4);
 
-                                                                clockManager.UpdateYeziaRecord(mispar_ishi, taarich, knisaH, inShaa, clockId, pmispar_sidur, istm, p24);
-                                                            }
-                                                            else
-                                                            {
-                                                                p24 = 0;
-                                                                clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, clockId, pmispar_sidur, istm, p24);
-                                                            }
+                                                                     clockManager.UpdateYeziaRecord(mispar_ishi, taarich, knisaH, inShaa, clockId, pmispar_sidur, istm, p24);
+                                                                 }
+                                                                 else
+                                                                 {
+                                                                     p24 = 0;
+                                                                     clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, clockId, pmispar_sidur, istm, p24);
+                                                                 }
+                                                             }
                                                         }
                                                         else clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, clockId, pmispar_sidur, istm, p24);
                                                     }
