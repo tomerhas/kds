@@ -25,6 +25,8 @@ namespace KDSCache.Implement
         public const string cProGetStatusKartis = "PKG_UTILS.pro_get_status_kartis_ctb";
         public const string cProGetPundakimTb = "PKG_UTILS.pro_get_pundakim_tb";
         public const string cProGetCtbSnif = "PKG_UTILS.pro_get_snif_av_ctb";
+        public const string cProGetGetBreakTb = "PKG_UTILS.pro_get_breaks_details";
+        public const string cProYechidaMusachMachsan = "PKG_UTILS.pro_yechida_musach_machsan_ctb";
 
         private IKDSCacheManager _kdsCacheManager;
 
@@ -45,7 +47,9 @@ namespace KDSCache.Implement
              _kdsCacheManager.AddItem(CachedItems.Elementim, GetElementim());
              _kdsCacheManager.AddItem(CachedItems.StatusWC, GetStatusKartis());
              _kdsCacheManager.AddItem(CachedItems.Pundakim, GetPundakimVisutim());
-             _kdsCacheManager.AddItem(CachedItems.SnifAv, GetSnifAvCtb()); 
+             _kdsCacheManager.AddItem(CachedItems.SnifAv, GetSnifAvCtb());
+             _kdsCacheManager.AddItem(CachedItems.Break, GetBreakTb()); 
+             _kdsCacheManager.AddItem(CachedItems.YechidaMusachMachsan, GetYechidaMusachMachsan());  
         }
 
         private DataTable GetYamimMeyuchadim()
@@ -164,6 +168,26 @@ namespace KDSCache.Implement
 
             oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
             oDal.ExecuteSP(cProGetCtbSnif, ref dt);
+            return dt;
+        }
+
+        
+        private DataTable GetBreakTb()
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+            oDal.ExecuteSP(cProGetGetBreakTb, ref dt);
+            return dt;
+        }
+        private DataTable GetYechidaMusachMachsan()
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+            oDal.ExecuteSP(cProYechidaMusachMachsan, ref dt);
             return dt;
         }
         

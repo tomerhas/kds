@@ -17,6 +17,8 @@ namespace KDSCommon.Enums
         Elementim,
         StatusWC,
         Pundakim,
-        SnifAv
+        SnifAv,
+        Break,
+        YechidaMusachMachsan
     }
 }

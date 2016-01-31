@@ -850,6 +850,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ETPaarBetweenMichsaRegilaAndMuktenet = 278,
             ETMichsaMekoritBeforeHafchata = 279,
             YomMachalatYeledHadHori=280,
+            NosafotBeNeemanut = 281,
             PremyatGriraYadanit=282,
             PremyatMachsanimYadanit = 283,
             PremyatManasYadani = 284,
@@ -866,11 +867,17 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ZmanElementZarNahagut = 296,
             PremyatNehigaYadani = 297,
             NesiaBerechevMuganEvenET = 298,
-            NosafotBeNeemanut=281,
+            Shaot125LetashlumNahagut=299,
+            Shaot150LetashlumNahagut = 300,
+            Shaot200LetashlumNahagut = 301,
+            Shaot100Nahagut=302,
+            DakotNehigaHashlamaLeyomAvoda=303,
             HalbashaTchilatYom=931,
             HalbashaSofYom=932,
             TosefetGririoTchilatSidur=1281,
-            TosefetGrirotSofSidur=1282
+            TosefetGrirotSofSidur=1282,
+            NochehutPremiaMeshekMusachim2 = 2112,
+            NochehutPremiaMeshekAchsana2 = 2122,
         }
         public enum TypeCalc
         { Batch = 1, OnLine = 2, Test = 3, Premiya = 4 }

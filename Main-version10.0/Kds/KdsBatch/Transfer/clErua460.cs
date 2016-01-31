@@ -87,7 +87,33 @@ namespace KdsBatch
               //sErua460.Append(GetBlank(4));//פוזיציה 8
               sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode()), 4, 2));
 
-              sErua460.Append(GetBlank(37));
+
+              if (_iDirug != 11 && _iDirug != 63)
+              {
+                  sErua460.Append(GetBlank(4));
+
+                  fErech = GetErechRechiv(clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode()) / 60;
+                  sErua460.Append(FormatNumber(fErech, 4, 2));
+
+
+                  fErech = GetErechRechiv(clGeneral.enRechivim.Shaot150LetashlumNahagut.GetHashCode()) / 60;
+                  sErua460.Append(FormatNumber(fErech, 4, 2));
+
+
+                  fErech = GetErechRechiv(clGeneral.enRechivim.Shaot200LetashlumNahagut.GetHashCode()) / 60;
+                  sErua460.Append(FormatNumber(fErech, 4, 2));
+
+
+                  fErech = GetErechRechiv(clGeneral.enRechivim.Shaot100Nahagut.GetHashCode()) / 60;
+                  sErua460.Append(FormatNumber(fErech, 4, 2));
+
+                  fErech = GetErechRechiv(clGeneral.enRechivim.DakotNehigaHashlamaLeyomAvoda.GetHashCode());
+                  sErua460.Append(FormatNumber(fErech, 4, 2));
+
+                  sErua460.Append(GetBlank(13));
+              } 
+              else 
+                sErua460.Append(GetBlank(37));
               if (!IsEmptyErua(sErua460.ToString()))
               {
                   ListErua.Add(sErua460.ToString());

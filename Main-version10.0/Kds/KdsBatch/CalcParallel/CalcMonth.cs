@@ -1332,6 +1332,12 @@ namespace KdsBatch
                 //נוכחות לפרמיה – משק אחסנה (רכיב 212)
                 CalcRechiv212();
 
+                //נוכחות לפרמיה – משק מוסכים (רכיב 211) -2
+             //   CalcRechiv211_2();
+
+                //נוכחות לפרמיה – משק אחסנה (רכיב 212) -2
+               // CalcRechiv212_2();
+
                 //נוכחות לפרמיה – משק גרירה (276)
                 CalcRechiv276();
 
@@ -1530,6 +1536,20 @@ namespace KdsBatch
                 //ימים עם נסיעה ברכב ממוגן אבן - אגד תעבורה (רכיב 298) 
                 CalcRechiv298();
 
+                //שעות 125 לתשלום נהגות  (רכיב 299) 
+                CalcRechiv299();
+
+                //שעות 150 לתשלום נהגות  (רכיב 300) 
+                CalcRechiv300();
+
+                //שעות 200 לתשלום נהגות  (רכיב 301) 
+                CalcRechiv301();
+
+                // שעות 100 נהגות(רכיב 302) 
+                CalcRechiv302();
+
+                //   דקות נהיגה השלמה ליום עבודה(רכיב 303) 
+                CalcRechiv303();
                 //טיפול בחופש ע"ח שעות נוספות 
                 ChangingChofeshFromShaotNosafot();
 
@@ -5793,6 +5813,37 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiv211_2()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                //ערך הרכיב = סכימת ערך הרכיב לכל הימים בחודש  
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.NochehutPremiaMeshekMusachim2.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.NochehutPremiaMeshekMusachim2.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutPremiaMeshekMusachim2.GetHashCode(), _dTaarichChishuv, "", ex);
+                throw (exec);
+            }
+        }
+
+        private void CalcRechiv212_2()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                //ערך הרכיב = סכימת ערך הרכיב לכל הימים בחודש  
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.NochehutPremiaMeshekAchsana2.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.NochehutPremiaMeshekAchsana2.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochehutPremiaMeshekAchsana2.GetHashCode(), _dTaarichChishuv, "", ex);
+                throw (exec);
+            }
+        }
 
         private void CalcRechiv276()
         {
@@ -6896,6 +6947,87 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode(), _dTaarichChishuv, "",ex);
+                throw (exec);
+            }
+        }
+
+
+        private void CalcRechiv299()
+        {
+            float fErech, fRechiv119;
+            try
+            {
+                fRechiv119 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Kizuz125.GetHashCode(), objOved.Taarich);
+                fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode(), objOved.Taarich) - (fRechiv119*60);
+                addRowToTable(clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode(), fErech);
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode(), objOved.Taarich, "", ex);
+                throw (exec);
+            }
+        }
+
+        private void CalcRechiv300()
+        {
+            float fErech, fRechiv120;
+            try
+            {
+                fRechiv120 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Kizuz150.GetHashCode(), objOved.Taarich);
+                fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot150LetashlumNahagut.GetHashCode(), objOved.Taarich) - (fRechiv120 * 60);
+                addRowToTable(clGeneral.enRechivim.Shaot150LetashlumNahagut.GetHashCode(), fErech);
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot150LetashlumNahagut.GetHashCode(), objOved.Taarich, "", ex);
+                throw (exec);
+            }
+        }
+
+        private void CalcRechiv301()
+        {
+            float fErech, fRechiv121;
+            try
+            {
+                fRechiv121 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Kizuz200.GetHashCode(), objOved.Taarich);
+                fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot200LetashlumNahagut.GetHashCode(), objOved.Taarich) - fRechiv121;
+                addRowToTable(clGeneral.enRechivim.Shaot200LetashlumNahagut.GetHashCode(), fErech);
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot200LetashlumNahagut.GetHashCode(), objOved.Taarich, "", ex);
+                throw (exec);
+            }
+        }
+
+        private void CalcRechiv302()
+        {
+            float fErech;
+            try
+            {
+
+                fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot100Nahagut.GetHashCode(), objOved.Taarich);
+                addRowToTable(clGeneral.enRechivim.Shaot100Nahagut.GetHashCode(), fErech);
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot100Nahagut.GetHashCode(), objOved.Taarich, "", ex);
+                throw (exec);
+            }
+        }
+
+        private void CalcRechiv303()
+        {
+            float fErech;
+            try
+            {
+
+                fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaHashlamaLeyomAvoda.GetHashCode(), objOved.Taarich);
+                addRowToTable(clGeneral.enRechivim.DakotNehigaHashlamaLeyomAvoda.GetHashCode(), fErech);
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNehigaHashlamaLeyomAvoda.GetHashCode(), objOved.Taarich, "", ex);
                 throw (exec);
             }
         }
