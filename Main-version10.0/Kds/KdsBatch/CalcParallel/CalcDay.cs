@@ -8210,17 +8210,23 @@ namespace KdsBatch
 
         private void CalcRechiv299()
         {
-            float ferech, fRechiv2,fRechiv76;
+            float ferech=0, fRechiv2, fRechiv76, fRechiv189;
             try
             {
                 fRechiv2 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Taarich);
+                fRechiv76 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Nosafot125.GetHashCode(), objOved.Taarich);
+                fRechiv189 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachDakotNehigaShishi.GetHashCode(), objOved.Taarich);
+                
                 if (fRechiv2 > 0 && !clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
-                {
-                    fRechiv76=  oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Nosafot125.GetHashCode(), objOved.Taarich);
+                {  
                     ferech = Math.Min(fRechiv76, fRechiv2);
-
-                    addRowToTable(clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode(), ferech);
                 }
+
+                if (fRechiv189 > 0)
+                {
+                    ferech = Math.Min(fRechiv76, fRechiv189);
+                }
+                addRowToTable(clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode(), ferech);
             }
             catch (Exception ex)
             {
@@ -8232,20 +8238,27 @@ namespace KdsBatch
 
         private void CalcRechiv300()
         {
-            float ferech, fRechiv2, fRechiv76, fRechiv77, fRechiv299;
+            float ferech=0, fRechiv2, fRechiv76, fRechiv77, fRechiv299, fRechiv189;
             try
             {
                 fRechiv2 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Taarich);
                 fRechiv299 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode(), objOved.Taarich);
+                fRechiv76 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Nosafot125.GetHashCode(), objOved.Taarich);
+                fRechiv77 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Nosafot150.GetHashCode(), objOved.Taarich);
+                fRechiv189 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachDakotNehigaShishi.GetHashCode(), objOved.Taarich);
+
                 if (fRechiv2 > 0 && !clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich) &&
                     fRechiv299 > 0 && fRechiv2 > fRechiv299)
                 {
-                    fRechiv76 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Nosafot125.GetHashCode(), objOved.Taarich);
-                    fRechiv77 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Nosafot150.GetHashCode(), objOved.Taarich);
-                    ferech = Math.Min(fRechiv2 - fRechiv76, fRechiv77);
-
-                    addRowToTable(clGeneral.enRechivim.Shaot150LetashlumNahagut.GetHashCode(), ferech);
+                    ferech = Math.Min(fRechiv2 - fRechiv76, fRechiv77); 
                 }
+
+                if (fRechiv189 > 0 && fRechiv299 > 0 && fRechiv189 > fRechiv299)
+                {
+                    ferech = Math.Min(fRechiv189 - fRechiv76, fRechiv77);
+                }
+
+                addRowToTable(clGeneral.enRechivim.Shaot150LetashlumNahagut.GetHashCode(), ferech);
             }
             catch (Exception ex)
             {
