@@ -8326,12 +8326,12 @@ namespace KdsBatch
                     fRechiv300 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot150LetashlumNahagut.GetHashCode(), objOved.Taarich);
                     ferech =  fRechiv2 - fRechiv299-fRechiv300;
 
-                    addRowToTable(clGeneral.enRechivim.Shaot100Nahagut.GetHashCode(), ferech);
+                    addRowToTable(clGeneral.enRechivim.DakotNehigaHashlamaLeyomAvoda.GetHashCode(), ferech);
                 }
             }
             catch (Exception ex)
             {
-                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot100Nahagut.GetHashCode(), objOved.Taarich, "", ex);
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNehigaHashlamaLeyomAvoda.GetHashCode(), objOved.Taarich, "", ex);
                 throw (exec);
             }
         }
