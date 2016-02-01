@@ -804,7 +804,7 @@ public partial class Modules_Test :Page
         
         clTransferToHilan objTran = new clTransferToHilan();
 
-        objTran.Transfer(0, int.Parse(txtId.Text));
+        objTran.Transfer(0, 27591);
      }
 
 

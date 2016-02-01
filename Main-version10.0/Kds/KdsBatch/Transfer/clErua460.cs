@@ -90,7 +90,8 @@ namespace KdsBatch
 
               if (_iDirug != 11 && _iDirug != 63)
               {
-                  sErua460.Append(GetBlank(4));
+                  fErech = GetErechRechiv(clGeneral.enRechivim.Shaot100LetashlumNahagut.GetHashCode()) / 60;
+                  sErua460.Append(FormatNumber(fErech, 4, 1));
 
                   fErech = GetErechRechiv(clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode()) / 60;
                   sErua460.Append(FormatNumber(fErech, 4, 1));
