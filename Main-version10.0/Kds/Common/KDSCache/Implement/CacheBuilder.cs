@@ -48,8 +48,8 @@ namespace KDSCache.Implement
              _kdsCacheManager.AddItem(CachedItems.StatusWC, GetStatusKartis());
              _kdsCacheManager.AddItem(CachedItems.Pundakim, GetPundakimVisutim());
              _kdsCacheManager.AddItem(CachedItems.SnifAv, GetSnifAvCtb());
-             _kdsCacheManager.AddItem(CachedItems.Break, GetBreakTb()); 
-             _kdsCacheManager.AddItem(CachedItems.YechidaMusachMachsan, GetYechidaMusachMachsan());  
+           //  _kdsCacheManager.AddItem(CachedItems.Break, GetBreakTb()); 
+           //  _kdsCacheManager.AddItem(CachedItems.YechidaMusachMachsan, GetYechidaMusachMachsan());  
         }
 
         private DataTable GetYamimMeyuchadim()
