@@ -146,7 +146,6 @@ namespace KdsClocks
         ILogBakashot log;
         int  SugRec=0 ,status = 1,mispar_ishi=0,clockId=0,pmispar_sidur=0,p24,isuk,meafyen43;
         string  istm, inShaa, outShaa,knisaH, teur = "AttendHarmony now";
-        bool IsPundak;
         try
         {
 
@@ -161,14 +160,13 @@ namespace KdsClocks
                     taarichCtl = DateTime.Now;
                     clockManager.InsertControlAttendRecord(taarichCtl, status, teur);
 
-                    var cacheManager = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-                    var pundakim = cacheManager.GetCacheItem<DataTable>(CachedItems.Pundakim);
+               //     var cacheManager = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+               //     var pundakim = cacheManager.GetCacheItem<DataTable>(CachedItems.Pundakim);
 
                     foreach (DataRow dr in dsNetunim.Tables[0].Rows)
                     {
                         try
                         {
-                            IsPundak = false;
                             mispar_ishi = int.Parse(dr["MISPAR_ISHI"].ToString());
                             taarich = DateTime.Parse(dr["TAARICH"].ToString());
                             inShaa = dr["Shaa"].ToString().Split(' ')[1].Substring(0, 5).Replace(":", "");
@@ -186,9 +184,9 @@ namespace KdsClocks
                                 {
                                     clockId = int.Parse(dr["code_shaon"].ToString());
                                     var shaon=clockId.ToString().PadLeft(5,'0').Substring(0,3);
-                                    var p = pundakim.Select("MIKUM_PUNDAK=" + shaon + " and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH");
-                                    if (p.Length > 0)
-                                        IsPundak = true;
+                                //    var p = pundakim.Select("MIKUM_PUNDAK=" + shaon + " and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH");
+                                 //   if (p.Length > 0)
+                                  //      IsPundak = true;
                                 }
                                 istm = null;
 
@@ -197,12 +195,6 @@ namespace KdsClocks
                                     log.InsertLog(lRequestNum, "E", 0, "שנה לא תקינה", mispar_ishi, taarich);
                                 else
                                 {
-                                    if (IsPundak)
-                                    {
-                                        clockManager.InsertHityazvutPundak(mispar_ishi, taarich, DateTime.Parse(dr["Shaa"].ToString()), clockId);
-                                    }
-                                    else
-                                    {
                                         switch (SugRec)
                                         {
                                             case 1:
@@ -324,11 +316,13 @@ namespace KdsClocks
                                                 }
 
                                                 break;
+                                            case 6:
+                                                clockManager.InsertHityazvutPundak(mispar_ishi, taarich, DateTime.Parse(dr["Shaa"].ToString()), clockId);
+                                                break;
                                             default:
                                                 log.InsertLog(lRequestNum, "E", 0, "לא קיים קוד תנועת שעון", mispar_ishi, taarich);
                                                 break;
                                         }
-                                    }
                                 }
                             }
                             else log.InsertLog(lRequestNum, "E", 0, " לא קיים עיסוק ", mispar_ishi, taarich);
