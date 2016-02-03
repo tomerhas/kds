@@ -6957,7 +6957,7 @@ namespace KdsBatch
             float fErech, fRechiv119;
             try
             {
-                fRechiv119 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Kizuz125.GetHashCode());
+                fRechiv119 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Kizuz125.GetHashCode());
                 fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode()) - (fRechiv119*60);
                 addRowToTable(clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode(), fErech);
             }
@@ -6973,7 +6973,7 @@ namespace KdsBatch
             float fErech, fRechiv120;
             try
             {
-                fRechiv120 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Kizuz150.GetHashCode());
+                fRechiv120 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Kizuz150.GetHashCode());
                 fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot150LetashlumNahagut.GetHashCode()) - (fRechiv120 * 60);
                 addRowToTable(clGeneral.enRechivim.Shaot150LetashlumNahagut.GetHashCode(), fErech);
             }
@@ -6989,7 +6989,7 @@ namespace KdsBatch
             float fErech, fRechiv121;
             try
             {
-                fRechiv121 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Kizuz200.GetHashCode());
+                fRechiv121 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Kizuz200.GetHashCode());
                 fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot200LetashlumNahagut.GetHashCode()) - fRechiv121;
                 addRowToTable(clGeneral.enRechivim.Shaot200LetashlumNahagut.GetHashCode(), fErech);
             }
