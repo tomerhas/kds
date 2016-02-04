@@ -65,7 +65,7 @@ namespace KdsClocks
             finally
             {
                 clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, status);
-                ServiceLocator.Current.GetInstance<IClockManager>().UpdateControlClockRecord(StartClock, status, "End");
+               // ServiceLocator.Current.GetInstance<IClockManager>().UpdateControlClockRecord(StartClock, status, "End");
             }
         }
         //private static void RunAttandHarmony()
