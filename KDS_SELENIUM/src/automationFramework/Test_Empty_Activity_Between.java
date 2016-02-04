@@ -28,7 +28,7 @@ public class Test_Empty_Activity_Between extends Base {
   public void Empty_Activity_Between() throws InterruptedException {
 	  
 	  
-driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 	  
 	  
 	  Utils a= new Utils();
