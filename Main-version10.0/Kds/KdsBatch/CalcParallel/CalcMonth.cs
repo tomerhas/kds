@@ -5669,16 +5669,16 @@ namespace KdsBatch
             int iMutaam;
             try
             {
-              /*  var rasham = objOved.PirteyOved.SingleOrDefault(p => p.iIsuk == (int)clGeneral.enIsukOved.Rasham);
-                var sgan = objOved.PirteyOved.SingleOrDefault(p => p.iIsuk == (int)clGeneral.enIsukOved.SganMenahel);
-                var menahel = objOved.PirteyOved.SingleOrDefault(p => p.iIsuk == (int)clGeneral.enIsukOved.MenahelMachlaka);*/
-                if (objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.Rasham.GetHashCode() || objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.SganMenahel.GetHashCode() || objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.MenahelMachlaka.GetHashCode())
-             //   if(rasham!=null || sgan!=null ||menahel!= null)
+                var rasham = objOved.PirteyOved.FirstOrDefault(p => p.iIsuk == (int)clGeneral.enIsukOved.Rasham);
+                var sgan = objOved.PirteyOved.FirstOrDefault(p => p.iIsuk == (int)clGeneral.enIsukOved.SganMenahel);
+                var menahel = objOved.PirteyOved.FirstOrDefault(p => p.iIsuk == (int)clGeneral.enIsukOved.MenahelMachlaka);
+              //  if (objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.Rasham.GetHashCode() || objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.SganMenahel.GetHashCode() || objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.MenahelMachlaka.GetHashCode())
+               if(rasham!=null || sgan!=null ||menahel!= null)
                 {
-                    if (objOved.objPirteyOved.iYechidaIrgunit == clGeneral.enYechidaIrgunit.RishumZafonHaifa.GetHashCode() || objOved.objPirteyOved.iYechidaIrgunit == clGeneral.enYechidaIrgunit.RishumArtzi.GetHashCode() || objOved.objPirteyOved.iYechidaIrgunit == clGeneral.enYechidaIrgunit.RishumBameshek.GetHashCode())
-                  /*  if((objOved.PirteyOved.SingleOrDefault(p => p.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumZafonHaifa) != null) ||
-                        (objOved.PirteyOved.SingleOrDefault(p => p.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumArtzi) != null) ||
-                        (objOved.PirteyOved.SingleOrDefault(p => p.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumBameshek) != null))*/
+              //      if (objOved.objPirteyOved.iYechidaIrgunit == clGeneral.enYechidaIrgunit.RishumZafonHaifa.GetHashCode() || objOved.objPirteyOved.iYechidaIrgunit == clGeneral.enYechidaIrgunit.RishumArtzi.GetHashCode() || objOved.objPirteyOved.iYechidaIrgunit == clGeneral.enYechidaIrgunit.RishumBameshek.GetHashCode())
+                    if ((objOved.PirteyOved.FirstOrDefault(p => p.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumZafonHaifa) != null) ||
+                        (objOved.PirteyOved.FirstOrDefault(p => p.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumArtzi) != null) ||
+                        (objOved.PirteyOved.FirstOrDefault(p => p.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumBameshek) != null))
                     {
                         iMutaam = objOved.objPirteyOved.iMutamut;
                         if (iMutaam != clGeneral.enMutaam.enMutaam1.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam3.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam5.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam7.GetHashCode())
