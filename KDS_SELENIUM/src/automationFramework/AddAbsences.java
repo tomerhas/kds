@@ -22,14 +22,14 @@ import utils.Base;
 
 
 @Listeners ({Listener.TestListener.class})
-public class Test_Add_Absences    extends Base {
+public class AddAbsences    extends Base {
 	
 	public  WebDriver driver;
 	
 	
 	
   @Test
-  public void Add_Absences() throws InterruptedException {
+  public void addAbsences() throws InterruptedException {
 	  
 	  
 	  
