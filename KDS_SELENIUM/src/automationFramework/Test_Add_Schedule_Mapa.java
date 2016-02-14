@@ -2,6 +2,8 @@ package automationFramework;
 
 import java.sql.SQLException;
 
+import JDBC.DB_DML;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -9,7 +11,6 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 
-import JDBC.DB_DML;
 import pageObjects.Hosafat_Sidur;
 import pageObjects.Work_Card;
 import utils.Base;

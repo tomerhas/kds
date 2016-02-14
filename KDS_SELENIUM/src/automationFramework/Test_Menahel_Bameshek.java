@@ -2,6 +2,8 @@ package automationFramework;
 
 import java.util.concurrent.TimeUnit;
 
+import JDBC.DB_DML;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -15,7 +17,6 @@ import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
-import JDBC.DB_DML;
 import pageObjects.Employee_Card;
 import pageObjects.LogIn_Page;
 import pageObjects.Work_Card;
