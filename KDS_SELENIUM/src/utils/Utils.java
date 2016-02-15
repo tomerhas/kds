@@ -14,8 +14,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
-import pageObjects.Employee_Card;
-import pageObjects.LogIn_Page;
+import pageObjects.EmployeeCard;
+import pageObjects.LogInPage;
 
 public  class Utils {
 
@@ -56,14 +56,14 @@ public  class Utils {
  public static  void  Enter_Workcard(WebDriver driver) {
 	   
 
-	  LogIn_Page.lnk_EmployeeCards(driver).click();
+	  LogInPage.lnk_EmployeeCards(driver).click();
       String innerTitle = driver.getTitle();
       System.out.println(innerTitle);
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	  Select droplist = new Select(Employee_Card.List_Month(driver));
+	  Select droplist = new Select(EmployeeCard.List_Month(driver));
       droplist.selectByVisibleText("03/2015"); 
-      Employee_Card.Btn_Execute(driver).click();
-      Employee_Card.Link_Date(driver).click();
+      EmployeeCard.Btn_Execute(driver).click();
+      EmployeeCard.Link_Date(driver).click();
 	   
 	  
 		 	

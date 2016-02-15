@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class Employee_Card {
+public class EmployeeCard {
 	
 	private static WebElement element ;
 	

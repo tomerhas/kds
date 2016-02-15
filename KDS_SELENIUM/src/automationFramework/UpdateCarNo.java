@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
-import pageObjects.Work_Card;
+import pageObjects.WorkCard;
 import utils.Base;
 import utils.Utils;
 
@@ -75,49 +75,49 @@ public class UpdateCarNo  extends Base {
 		  a.waitForWindow("WorkCard",driver);
 		  
 		  //Work_Card.findElement(driver, By.id("txtId"),60).sendKeys("77104");
-		  Work_Card.TxtId(driver).sendKeys("77104");
-		  Work_Card.Date(driver).sendKeys("03/03/2015");
-		  Work_Card.Btn_Show(driver).click();
+		  WorkCard.TxtId(driver).sendKeys("77104");
+		  WorkCard.Date(driver).sendKeys("03/03/2015");
+		  WorkCard.Btn_Show(driver).click();
 		  //Thread.sleep(3000);	
-		  Work_Card.Wait_For_Element_Visibile(driver, 60, "SD_000_ctl03_SD_000_ctl03CarNumber");
-		  Work_Card.Car_Num(driver).click();
-	      Work_Card.Car_Num(driver).sendKeys(sCar_No);
+		  WorkCard.Wait_For_Element_Visibile(driver, 60, "SD_000_ctl03_SD_000_ctl03CarNumber");
+		  WorkCard.Car_Num(driver).click();
+	      WorkCard.Car_Num(driver).sendKeys(sCar_No);
 	      if (sCar_No=="11111") {
-	      Assert.assertEquals(Work_Card.Validate_Popup(driver).getText(),"מספר רכב שגוי");
+	      Assert.assertEquals(WorkCard.Validate_Popup(driver).getText(),"מספר רכב שגוי");
 	      
-	      Work_Card.Btn_Close(driver).click();
+	      WorkCard.Btn_Close(driver).click();
 	      
 	      //wait.until(ExpectedConditions.elementToBeClickable(Work_Card.Btn_Cancel_Update(driver)));
 	      //WebElement element = driver.findElement(By.id("btnCancel"));
 	      JavascriptExecutor js = (JavascriptExecutor)driver; 
-	      js.executeScript("arguments[0].click();", Work_Card.Btn_Cancel_Update(driver)); 
+	      js.executeScript("arguments[0].click();", WorkCard.Btn_Cancel_Update(driver)); 
 	      //Work_Card.Btn_Cancel_Update(driver).click();
 	      }
 	      
 	      else {
-	      Work_Card.Btn_No_Copy_Car_Num(driver).click();
-	      System.out.println(Work_Card.Assert_Car_Num(driver).getAttribute("value"));
+	      WorkCard.Btn_No_Copy_Car_Num(driver).click();
+	      System.out.println(WorkCard.Assert_Car_Num(driver).getAttribute("value"));
 	      if (sCar_No=="34918"){
-	      Assert.assertEquals(Work_Card.Assert_Car_Num(driver).getAttribute("value"),"22228");
+	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"22228");
 	      }
 	      else {
-	      Assert.assertEquals(Work_Card.Assert_Car_Num(driver).getAttribute("value"),"34918");	
+	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"34918");	
 	      }
-	      Work_Card.Car_Num(driver).click();
-	      Work_Card.Car_Num(driver).sendKeys(sCar_No);
-	      Work_Card.Btn_Yes_Copy_Car_Num(driver).click();
-	      System.out.println(Work_Card.Assert_Car_Num(driver).getAttribute("value"));
+	      WorkCard.Car_Num(driver).click();
+	      WorkCard.Car_Num(driver).sendKeys(sCar_No);
+	      WorkCard.Btn_Yes_Copy_Car_Num(driver).click();
+	      System.out.println(WorkCard.Assert_Car_Num(driver).getAttribute("value"));
 	      if (sCar_No=="34918")
-	      Assert.assertEquals(Work_Card.Assert_Car_Num(driver).getAttribute("value"),"34918");
+	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"34918");
 	      else {
-	      Assert.assertEquals(Work_Card.Assert_Car_Num(driver).getAttribute("value"),"22228");
+	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"22228");
           }
-	      Work_Card.Btn_Update(driver).click();
+	      WorkCard.Btn_Update(driver).click();
 	      //Thread.sleep(3000);
 	      
 	      //Work_Card.Btn_Close(driver).click();
-	      Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard",null);
-	      Work_Card.Btn_Close(driver).click();
+	      WorkCard.Wait_For_Element_Stalenes(driver,"btnCloseCard",null);
+	      WorkCard.Btn_Close(driver).click();
 	      }
 	      
 	      

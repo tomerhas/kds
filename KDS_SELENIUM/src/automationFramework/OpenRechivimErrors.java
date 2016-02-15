@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
-import pageObjects.Work_Card;
+import pageObjects.WorkCard;
 import utils.Base;
 import utils.Utils;
 
@@ -21,11 +21,11 @@ public class OpenRechivimErrors extends Base {
 	  
 		Utils a = new Utils();
 		a.waitForWindow("WorkCard", driver);
-		Work_Card.TxtId(driver).sendKeys(Keys.TAB);
-		Work_Card.Date(driver).sendKeys("27102015");
-		Work_Card.Btn_Show(driver).click();
-		Work_Card.Wait_For_Element_Stalenes(driver, "btnCalcItem", null);
-		Work_Card.BtnCalcItems(driver).click();
+		WorkCard.TxtId(driver).sendKeys(Keys.TAB);
+		WorkCard.Date(driver).sendKeys("27102015");
+		WorkCard.Btn_Show(driver).click();
+		WorkCard.Wait_For_Element_Stalenes(driver, "btnCalcItem", null);
+		WorkCard.BtnCalcItems(driver).click();
 		Utils b = new Utils();
 		b.waitForWindow("Rechivim", driver);
 		System.out.println(driver.getCurrentUrl());
@@ -37,7 +37,7 @@ public class OpenRechivimErrors extends Base {
 		driver.close();
 		Utils c = new Utils();
 		c.waitForWindow("WorkCard", driver);
-		Work_Card.Btn_Close(driver).click();
+		WorkCard.Btn_Close(driver).click();
 	    
 	  
 	  
@@ -49,11 +49,11 @@ public class OpenRechivimErrors extends Base {
 
 		Utils a = new Utils();
 		a.waitForWindow("WorkCard", driver);
-		Work_Card.TxtId(driver).sendKeys(Keys.TAB);
-		Work_Card.Date(driver).sendKeys("27102015");
-		Work_Card.Btn_Show(driver).click();
-		Work_Card.Wait_For_Element_Stalenes(driver, "btnDrvErrors", null);
-		Work_Card.BtnDriverErrors(driver).click();
+		WorkCard.TxtId(driver).sendKeys(Keys.TAB);
+		WorkCard.Date(driver).sendKeys("27102015");
+		WorkCard.Btn_Show(driver).click();
+		WorkCard.Wait_For_Element_Stalenes(driver, "btnDrvErrors", null);
+		WorkCard.BtnDriverErrors(driver).click();
 		Utils b = new Utils();
 		b.waitForWindow("Errors", driver);
 		String result = driver.getCurrentUrl().substring(0,
@@ -65,10 +65,10 @@ public class OpenRechivimErrors extends Base {
 
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();",
-				Work_Card.BtnCloseErrors(driver));
+				WorkCard.BtnCloseErrors(driver));
 		Utils c = new Utils();
 		c.waitForWindow("WorkCard", driver);
-		Work_Card.Btn_Close(driver).click();
+		WorkCard.Btn_Close(driver).click();
 
 	}
 

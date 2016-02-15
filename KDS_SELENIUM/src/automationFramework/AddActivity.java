@@ -17,7 +17,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
-import pageObjects.Work_Card;
+import pageObjects.WorkCard;
 import utils.Base;
 import utils.Utils;
 
@@ -39,24 +39,24 @@ public class AddActivity   extends Base {
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  Utils a =new Utils();
 	  a.waitForWindow("WorkCard",driver);
-	  Work_Card.TxtId(driver).sendKeys("77104");
-	  Work_Card.Date(driver).click();
-	  Work_Card.Date(driver).sendKeys("17052015");
-	  Work_Card.Btn_Show(driver).click();
-	  Work_Card.Wait_For_Element_Visibile(driver,60,"SD_imgAddPeilut0").click();
-	  Work_Card.Wait_For_Element_Visibile(driver,60,"SD_000_ctl08_SD_000_ctl08ShatYetiza").clear();
-	  Work_Card.Entry_Time_Add_Activity(driver).sendKeys("1514");
-	  Work_Card.Makat_Num_Add_Activity(driver).click();
-	  Work_Card.Makat_Num_Add_Activity(driver).sendKeys("79100500");
-	  Work_Card.Makat_Num_Add_Activity(driver).sendKeys(Keys.TAB);
-	  System.out.println(Work_Card.Assert_Activity_Car_No(driver).getAttribute("value"));
-	  Assert.assertEquals(Work_Card.Assert_Activity_Car_No(driver).getAttribute("value"),"62505");
-	  Work_Card.Btn_Update(driver).click();
-      Work_Card.Wait_For_Element_Stalenes(driver,"SD_000_ctl08_SD_000_ctl08CancelPeilut",null);
-	  Work_Card.Cancel_Sidur_Add_Activity(driver).click();
-	  Work_Card.Btn_Update(driver).click();
-	  Work_Card.Wait_For_Element_Stalenes(driver,"btnCloseCard",null);
-	  Work_Card.Btn_Close(driver).click();
+	  WorkCard.TxtId(driver).sendKeys("77104");
+	  WorkCard.Date(driver).click();
+	  WorkCard.Date(driver).sendKeys("17052015");
+	  WorkCard.Btn_Show(driver).click();
+	  WorkCard.Wait_For_Element_Visibile(driver,60,"SD_imgAddPeilut0").click();
+	  WorkCard.Wait_For_Element_Visibile(driver,60,"SD_000_ctl08_SD_000_ctl08ShatYetiza").clear();
+	  WorkCard.Entry_Time_Add_Activity(driver).sendKeys("1514");
+	  WorkCard.Makat_Num_Add_Activity(driver).click();
+	  WorkCard.Makat_Num_Add_Activity(driver).sendKeys("79100500");
+	  WorkCard.Makat_Num_Add_Activity(driver).sendKeys(Keys.TAB);
+	  System.out.println(WorkCard.Assert_Activity_Car_No(driver).getAttribute("value"));
+	  Assert.assertEquals(WorkCard.Assert_Activity_Car_No(driver).getAttribute("value"),"62505");
+	  WorkCard.Btn_Update(driver).click();
+      WorkCard.Wait_For_Element_Stalenes(driver,"SD_000_ctl08_SD_000_ctl08CancelPeilut",null);
+	  WorkCard.Cancel_Sidur_Add_Activity(driver).click();
+	  WorkCard.Btn_Update(driver).click();
+	  WorkCard.Wait_For_Element_Stalenes(driver,"btnCloseCard",null);
+	  WorkCard.Btn_Close(driver).click();
 	  
 	  
 	  

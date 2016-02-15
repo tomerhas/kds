@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 
 
 
-public class Tickur_Chishuv_LeOved {
+public class TickurChishuvLeOved {
 	
 	
 	

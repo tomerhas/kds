@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class LogIn_Page {
+public class LogInPage {
 
 	 private static WebElement element;
 	 

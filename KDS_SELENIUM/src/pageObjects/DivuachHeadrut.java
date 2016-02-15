@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class Divuach_Headrut {
+public class DivuachHeadrut {
 
 	 private static WebElement element;
 

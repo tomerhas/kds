@@ -16,8 +16,8 @@ import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
-import pageObjects.Employee_Card;
-import pageObjects.LogIn_Page;
+import pageObjects.EmployeeCard;
+import pageObjects.LogInPage;
 import utils.Base;
 import utils.Utils;
 
@@ -56,13 +56,13 @@ public class EmployeeCards  extends Base {
   public void  chkEmployeeCards (String sMispar_ishi ,String sdate, String sName  ) {
 	
 	 
-      LogIn_Page.lnk_EmployeeCards(driver).click();
+      LogInPage.lnk_EmployeeCards(driver).click();
       driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-      Assert.assertTrue("The radio button Rdo_Id is not selected ",Employee_Card.Rdo_Id(driver).isSelected());
+      Assert.assertTrue("The radio button Rdo_Id is not selected ",EmployeeCard.Rdo_Id(driver).isSelected());
       if (sMispar_ishi!=null) 
       {
-    	  Employee_Card.Txt_Id(driver).sendKeys(sMispar_ishi);
-    	  Employee_Card.Txt_Id(driver).sendKeys(Keys.ENTER);
+    	  EmployeeCard.Txt_Id(driver).sendKeys(sMispar_ishi);
+    	  EmployeeCard.Txt_Id(driver).sendKeys(Keys.ENTER);
   
       } 
     	  
@@ -77,21 +77,21 @@ public class EmployeeCards  extends Base {
           System.out.println(alert.getText());
           alert.accept();
       }
-      Assert.assertTrue("The radio button Rdo_Month is not selected ",Employee_Card.Rdo_Month(driver).isSelected());
-      Select droplist = new Select(Employee_Card.List_Month(driver));
+      Assert.assertTrue("The radio button Rdo_Month is not selected ",EmployeeCard.Rdo_Month(driver).isSelected());
+      Select droplist = new Select(EmployeeCard.List_Month(driver));
       droplist.selectByVisibleText(sdate); 
 	  
 	  if (sName!=null)
 	  {	      
-	        Employee_Card.Rdo_Name(driver).click();
-	        Assert.assertFalse("The radio button Rdo_Id is selected ",Employee_Card.Rdo_Id(driver).isSelected());
+	        EmployeeCard.Rdo_Name(driver).click();
+	        Assert.assertFalse("The radio button Rdo_Id is selected ",EmployeeCard.Rdo_Id(driver).isSelected());
 	  }
 	  if (sName!=null )
 	  {
-		  Employee_Card.Txt_name(driver).click();
-	      Employee_Card.Txt_name(driver).sendKeys(sName);
-	      Employee_Card.List_Month(driver).sendKeys(Keys.ARROW_DOWN);
-	      Employee_Card.List_Month(driver).sendKeys(Keys.ENTER);
+		  EmployeeCard.Txt_name(driver).click();
+	      EmployeeCard.Txt_name(driver).sendKeys(sName);
+	      EmployeeCard.List_Month(driver).sendKeys(Keys.ARROW_DOWN);
+	      EmployeeCard.List_Month(driver).sendKeys(Keys.ENTER);
 	  }
 	  
 	 
@@ -99,10 +99,10 @@ public class EmployeeCards  extends Base {
      
       
       
-      Employee_Card.Btn_Execute(driver).click();
+      EmployeeCard.Btn_Execute(driver).click();
      
     if ((sMispar_ishi!="74013"))
-      Assert.assertTrue("The grid Grd_Employee is not displayed", Employee_Card.Grd_Employee(driver).isDisplayed());
+      Assert.assertTrue("The grid Grd_Employee is not displayed", EmployeeCard.Grd_Employee(driver).isDisplayed());
        
   }
   

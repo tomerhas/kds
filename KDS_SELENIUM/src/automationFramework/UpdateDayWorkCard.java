@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
-import pageObjects.Work_Card;
+import pageObjects.WorkCard;
 import utils.Base;
 import utils.Utils;
 
@@ -60,25 +60,25 @@ public void updateDayWorkCard   (String sTachograph,String sLina ) throws Interr
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  Utils a=new Utils();
 	  a.waitForWindow("WorkCard",driver);
-	  Work_Card.TxtId(driver).sendKeys("77104");
-	  Work_Card.Date(driver).click();
-	  Work_Card.Date(driver).sendKeys("03032015");
-	  Work_Card.Btn_Show(driver).click();
+	  WorkCard.TxtId(driver).sendKeys("77104");
+	  WorkCard.Date(driver).click();
+	  WorkCard.Date(driver).sendKeys("03032015");
+	  WorkCard.Btn_Show(driver).click();
 	  //Thread.sleep(3000);
-	  Work_Card.Wait_For_Element_Stalenes(driver, "btnPlus2",null);
-	  Work_Card.Day_Plus(driver).click();
-	  Select droplist = new Select(Work_Card.Tachograph(driver));
+	  WorkCard.Wait_For_Element_Stalenes(driver, "btnPlus2",null);
+	  WorkCard.Day_Plus(driver).click();
+	  Select droplist = new Select(WorkCard.Tachograph(driver));
       droplist.selectByVisibleText(sTachograph); 
-      Select droplist1 = new Select(Work_Card.Lina(driver));
+      Select droplist1 = new Select(WorkCard.Lina(driver));
       droplist1.selectByVisibleText(sLina); 
-      Assert.assertFalse(Work_Card.Hamara(driver).isEnabled(),"The Checkbox Hamara is Enabled");
-      Assert.assertFalse(Work_Card.Halbasha(driver).isEnabled(),"The Checkbox Halbasha is Enabled");
-      Assert.assertFalse(Work_Card.HashlamaForDay(driver).isEnabled(),"The Checkbox HashlamaForDay is Enabled");
-      Assert.assertFalse(Work_Card.HashlamaReason(driver).isEnabled(),"The Checkbox HashlamaReason is Enabled");
-      Work_Card.Btn_Update(driver).click();
+      Assert.assertFalse(WorkCard.Hamara(driver).isEnabled(),"The Checkbox Hamara is Enabled");
+      Assert.assertFalse(WorkCard.Halbasha(driver).isEnabled(),"The Checkbox Halbasha is Enabled");
+      Assert.assertFalse(WorkCard.HashlamaForDay(driver).isEnabled(),"The Checkbox HashlamaForDay is Enabled");
+      Assert.assertFalse(WorkCard.HashlamaReason(driver).isEnabled(),"The Checkbox HashlamaReason is Enabled");
+      WorkCard.Btn_Update(driver).click();
       //Thread.sleep(3000);
-      Work_Card.Wait_For_Element_Stalenes(driver, "btnCloseCard",null);
-      Work_Card.Btn_Close(driver).click();
+      WorkCard.Wait_For_Element_Stalenes(driver, "btnCloseCard",null);
+      WorkCard.Btn_Close(driver).click();
      // driver.close();
 }
 

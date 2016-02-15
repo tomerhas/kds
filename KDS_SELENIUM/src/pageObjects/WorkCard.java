@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.base.Function;
 
-public class Work_Card {
+public class WorkCard {
 	
 	
 	
