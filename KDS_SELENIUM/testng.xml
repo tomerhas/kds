@@ -6,16 +6,16 @@
 
 		<classes>
 
-	        <class name="automationFramework.Test_Update_Car_No" />
-		    <class name="automationFramework.Test_Update_Day_WorkCard" />
-            <class name="automationFramework.Test_Empty_Activity_Mapa" />
-            <class name="automationFramework.Test_Empty_Activity_Between" />
+	        <class name="automationFramework.UpdateCarNo" />
+		    <class name="automationFramework.UpdateDayWorkCard" />
+            <class name="automationFramework.EmptyActivityMapa" />
+            <class name="automationFramework.EmptyActivityBetween" />
             <class name="automationFramework.AddAbsences" />
-            <class name="automationFramework.Test_Add_Activity" />  
-            <class name="automationFramework.Test_Add_Special_Schedule" />  
-            <class name="automationFramework.Test_Menahel_Bameshek" />
-            <class name="automationFramework.Test_Add_Schedule_Mapa" /> 
-            <class name="automationFramework.Test_open_Rechivim_Errors" /> 
+            <class name="automationFramework.AddActivity" />  
+            <class name="automationFramework.AddSpecialSchedule" />  
+            <class name="automationFramework.MenahelBameshek" />
+            <class name="automationFramework.AddScheduleMapa" /> 
+            <class name="automationFramework.OpenRechivimErrors" /> 
             
 		</classes>
 
@@ -33,8 +33,8 @@
 
 		<classes>
 
-		   <class name="automationFramework.Test_EmployeeCards" /> 
-		     <!--  <class name="automationFramework.Test_Open_Rikuz_Online" /> -->
+		   <class name="automationFramework.EmployeeCards" /> 
+		     <!--  <class name="automationFramework.OpenRikuzOnline" /> -->
 
 		</classes>
 		

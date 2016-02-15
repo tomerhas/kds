@@ -24,7 +24,7 @@ import utils.Utils;
 import utils.Base;
 
 @Listeners ({Listener.TestListener.class})
-public class Test_Menahel_Bameshek    extends Base {
+public class MenahelBameshek    extends Base {
 	  public WebDriver driver;
 	  
 	  
@@ -37,7 +37,7 @@ public class Test_Menahel_Bameshek    extends Base {
 	
 	
   @Test
-  public void  Menahel_Bameshek() throws Exception      {
+  public void  chkMenahelBameshek() throws Exception      {
 	  driver=getDriver();
 	
 	  

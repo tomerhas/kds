@@ -12,12 +12,12 @@ import pageObjects.Work_Card;
 import utils.Base;
 import utils.Utils;
 
-public class Test_open_Rechivim_Errors extends Base {
+public class OpenRechivimErrors extends Base {
 
 	public WebDriver driver;
 
 	
-	  @Test (priority=0) public void open_Rechivim() {
+	  @Test (priority=0) public void openRechivim() {
 	  
 		Utils a = new Utils();
 		a.waitForWindow("WorkCard", driver);
@@ -45,7 +45,7 @@ public class Test_open_Rechivim_Errors extends Base {
 	 
 
 	@Test  (priority=1)
-	public void open_Errors() {
+	public void openErrors() {
 
 		Utils a = new Utils();
 		a.waitForWindow("WorkCard", driver);

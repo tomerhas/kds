@@ -25,13 +25,13 @@ import utils.Utils;
 
 
 @Listeners ({Listener.TestListener.class})
-public class Test_Add_Special_Schedule  extends Base {
+public class AddSpecialSchedule  extends Base {
 	
 	public  WebDriver driver;
 	
 	
   @Test
-  public void Test_Add_Special_Schedule () {
+  public void addSpecialSchedule () {
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  Utils a =new Utils();

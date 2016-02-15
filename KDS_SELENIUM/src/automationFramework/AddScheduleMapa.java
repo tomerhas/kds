@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import JDBC.DB_DML;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
@@ -19,7 +18,7 @@ import utils.Utils;
 
 
 @Listeners ({Listener.TestListener.class})
-public class Test_Add_Schedule_Mapa    extends Base  {
+public class AddScheduleMapa    extends Base  {
 	
 	
 	public WebDriver driver ;
@@ -30,7 +29,7 @@ public class Test_Add_Schedule_Mapa    extends Base  {
 	
 	
   @Test
-  public void Add_Schedule_Mapa () throws SQLException {
+  public void addScheduleMapa () throws SQLException {
 	  DB_DML.deleteRecordFromTable("77104", "to_date('23/06/2015','dd/mm/yyyy')", "33011");
 	  Utils a= new Utils();
 	  a.waitForWindow("WorkCard",driver);

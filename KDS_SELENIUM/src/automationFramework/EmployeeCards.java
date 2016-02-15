@@ -29,7 +29,7 @@ import utils.Utils;
 
 
 @Listeners ({Listener.TestListener.class})
-public class Test_EmployeeCards  extends Base {
+public class EmployeeCards  extends Base {
 	public WebDriver driver;
 	
 	 @DataProvider(name = "Param_Id")
@@ -53,7 +53,7 @@ public class Test_EmployeeCards  extends Base {
 
  
   
-  public void  EmployeeCards (String sMispar_ishi ,String sdate, String sName  ) {
+  public void  chkEmployeeCards (String sMispar_ishi ,String sdate, String sName  ) {
 	
 	 
       LogIn_Page.lnk_EmployeeCards(driver).click();

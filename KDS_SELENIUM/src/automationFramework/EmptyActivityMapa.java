@@ -18,17 +18,26 @@ import utils.Utils;
 
 
 
+
+
+
 @Listeners ({Listener.TestListener.class})
-public class Test_Empty_Activity_Between extends Base {
+public class EmptyActivityMapa   extends Base {
 	
-	public WebDriver driver;
+	public WebDriver driver;	
 	
 	
-  @Test
-  public void Empty_Activity_Between() throws InterruptedException {
+	
+
+	
+	
+	
+	
+	
+  @Test  
+  public void chkEmptyActivityMapa() throws InterruptedException {
 	  
-	  
-driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  
 	  
 	  Utils a= new Utils();
@@ -37,32 +46,32 @@ driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 	  Work_Card.Date(driver).click();
 	  Work_Card.Date(driver).sendKeys("01042015");
 	  Work_Card.Btn_Show(driver).click();
-	  Work_Card.Assert_Reka_Between_Not_Able(driver).click();
-	  WebDriverWait wait = new WebDriverWait(driver, 40);
+	  Work_Card.AddRekaUp_mapa(driver).click();
+	  //Thread.sleep(2000);
+	  Work_Card.Wait_For_Element_Stalenes(driver,"SD_000_ctl03_SD_000_ctl03MakatNumber",null);
+	  System.out.println(Work_Card.Makat_Num_Reka_Mapa(driver).getAttribute("value"));
+	  Assert.assertEquals("60375800",Work_Card.Makat_Num_Reka_Mapa(driver).getAttribute("value"));
+	  Work_Card.AddRekadw_mapa(driver).click();
+	  WebDriverWait wait = new WebDriverWait(driver, 30);
 	  wait.until(ExpectedConditions.alertIsPresent());
 	  Alert alert=driver.switchTo().alert();
 	  System.out.println(alert.getText());
-	  Assert.assertEquals("לא ניתן להשלים נסיעה ריקה",alert.getText());
+	  Assert.assertEquals("לא נמצאה נסיעה ריקה שתוכננה במפה",alert.getText());
 	  alert.accept();
-	  Work_Card.Assert_Reka_Between_Not_Found(driver).click();
-	  wait.until(ExpectedConditions.alertIsPresent());
-	  Alert alert1=driver.switchTo().alert();
-	  System.out.println(alert.getText());
-	  Assert.assertEquals("לא נמצאה ריקה מתאימה",alert1.getText());
-	  alert.accept();
-	  Work_Card.Add_Reka_Between(driver).click();
-	  //Thread.sleep(2000);
-	  Work_Card.Wait_For_Element_Visibile(driver, 60, "SD_002_ctl05_SD_002_ctl05MakatNumber");
-	  Assert.assertEquals("61589900",Work_Card.Makat_Num_Reka_Between(driver).getAttribute("value"));
-	  Work_Card.Cancel__Empty_Activity_Between(driver).click();
+	  Work_Card.Cancel_Empty_Activity_Mapa(driver).click();
 	  Work_Card.Btn_Update(driver).click();
 	  //Thread.sleep(3000);
 	  Work_Card.Wait_For_Element_Stalenes(driver, "btnCloseCard",null);
 	  Work_Card.Btn_Close(driver).click();
 	  
+	 
+	  
+	  
+	  
 	  
   }
   
+ 
   
   
   
@@ -74,13 +83,17 @@ driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 	  driver=getDriver();
 	  Utils.Enter_Workcard(driver);
 	  
+	  
+	  
+	  
   }
 
   
   
+ 
   
-	  
-	  
   
+  
+
 
 }

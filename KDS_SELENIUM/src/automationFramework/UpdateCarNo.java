@@ -20,7 +20,7 @@ import utils.Utils;
 
 
 @Listeners ({Listener.TestListener.class})
-public class Test_Update_Car_No  extends Base {
+public class UpdateCarNo  extends Base {
 	
 	public WebDriver driver;	
 	 
@@ -41,7 +41,7 @@ public class Test_Update_Car_No  extends Base {
 	
   @Test (dataProvider="Param_Car")
   
-  public void Update_Car_No ( String sCar_No  )   throws InterruptedException {
+  public void updateCarNo ( String sCar_No  )   throws InterruptedException {
 	  
          
 	   /*  waitForNumberofWindowsToEqual(2);

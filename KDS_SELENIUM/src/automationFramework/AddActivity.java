@@ -25,7 +25,7 @@ import utils.Utils;
 
 
 @Listeners ({Listener.TestListener.class})
-public class Test_Add_Activity   extends Base {
+public class AddActivity   extends Base {
 	
 	public  WebDriver driver;
 	
@@ -33,7 +33,7 @@ public class Test_Add_Activity   extends Base {
 	
 	
   @Test
-  public void Add_Activity() {
+  public void addActivity() {
 	  
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

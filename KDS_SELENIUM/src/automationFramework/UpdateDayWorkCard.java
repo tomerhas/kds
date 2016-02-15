@@ -24,7 +24,7 @@ import java.lang.Thread;
 
 
 @Listeners ({Listener.TestListener.class})
-public class Test_Update_Day_WorkCard  extends Base  {
+public class UpdateDayWorkCard  extends Base  {
 
 	public WebDriver driver;
 	public WebElement element;
@@ -54,24 +54,10 @@ public class Test_Update_Day_WorkCard  extends Base  {
 
 
 
-public void Update_Day_WorkCard   (String sTachograph,String sLina ) throws InterruptedException, IOException {
+public void updateDayWorkCard   (String sTachograph,String sLina ) throws InterruptedException, IOException {
 
-	
-	
 
-   
- 
-	
-      
-      
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	     
-	 
-	  
-	
-	  
-	  
-	
 	  Utils a=new Utils();
 	  a.waitForWindow("WorkCard",driver);
 	  Work_Card.TxtId(driver).sendKeys("77104");

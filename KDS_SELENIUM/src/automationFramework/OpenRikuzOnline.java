@@ -23,14 +23,14 @@ import utils.Utils;
 
 
 @Listeners ({Listener.TestListener.class})
-public class Test_Open_Rikuz_Online extends Base {
+public class OpenRikuzOnline extends Base {
 	
 	public  WebDriver driver;
 	
 	
 	
   @Test
-  public void Open_Rikuz_Online() {
+  public void openRikuzOnline() {
 	  
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
