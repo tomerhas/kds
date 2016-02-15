@@ -15,7 +15,7 @@ import org.testng.annotations.AfterMethod;
 
 import pageObjects.DivuachHeadrut;
 import pageObjects.WorkCard;
-import utils.Utils;
+import utils.Utilsfn;
 import utils.Base;
 
 
@@ -37,7 +37,7 @@ public class AddAbsences    extends Base {
 driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  
 	  
-	  Utils a= new Utils();
+	  Utilsfn a= new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("85400");
 	  WorkCard.Date(driver).click();
@@ -47,7 +47,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  //Work_Card.Wait_For_Element_Visibile(driver,60,"btnAddHeadrut");
 	  WorkCard.Wait_For_Element_Stalenes(driver, "btnAddHeadrut",null);
 	  WorkCard.Btn_Add_Absence(driver).click();
-	  Utils b= new Utils();
+	  Utilsfn b= new Utilsfn();
 	  b.waitForWindow("DivuachHeadrut",driver);
 	  Select droplist = new Select(DivuachHeadrut.List_Absences(driver));
       droplist.selectByVisibleText("היעדרות - תשלום יום עבודה"); 
@@ -55,7 +55,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
       DivuachHeadrut.End_Time_Absences(driver).click();
       DivuachHeadrut.End_Time_Absences(driver).sendKeys("2300");
       DivuachHeadrut.Btn_Update_Absence(driver).click();
-      Utils c= new Utils();
+      Utilsfn c= new Utilsfn();
 	  c.waitForWindow("WorkCard",driver);
 	  System.out.println(driver.getCurrentUrl());
       Assert.assertEquals(WorkCard.Lbl_Sidur_Num_0(driver).getText(),"99801");
@@ -63,14 +63,14 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
       WorkCard.Btn_Update(driver).click();
       WorkCard.Wait_For_Element_Stalenes(driver, "btnAddHeadrut",null);
       WorkCard.Btn_Add_Absence(driver).click();
-      Utils d= new Utils();
+      Utilsfn d= new Utilsfn();
 	  d.waitForWindow("DivuachHeadrut",driver);
 	  Select droplist1 = new Select(DivuachHeadrut.List_Absences(driver));
       droplist1.selectByVisibleText("מילואים"); 
       DivuachHeadrut.End_Date_Absences(driver).click();
       DivuachHeadrut.End_Date_Absences(driver).sendKeys("27042015");
       DivuachHeadrut.Btn_Update_Absence(driver).click();
-      Utils e= new Utils();
+      Utilsfn e= new Utilsfn();
 	  e.waitForWindow("WorkCard",driver);
       Assert.assertEquals(WorkCard.Lbl_Sidur_Num_0(driver).getText(),"99830");
       WorkCard.Date(driver).click();
@@ -98,7 +98,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  WorkCard.Date(driver).sendKeys("28042015");
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.Btn_Add_Absence(driver).click();
-	  Utils f= new Utils();
+	  Utilsfn f= new Utilsfn();
 	  f.waitForWindow("DivuachHeadrut",driver);
 	  Select droplist2 = new Select(DivuachHeadrut.List_Absences(driver));
       droplist2.selectByVisibleText("היעדרות - תשלום יום עבודה"); 
@@ -110,7 +110,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  Assert.assertEquals("סידור ההיעדרות חופף בשעות עם סידור קיים",alert.getText());
 	  alert.accept();
 	  DivuachHeadrut.Close_Add_Absences(driver).click();
-	  Utils g= new Utils();
+	  Utilsfn g= new Utilsfn();
 	  g.waitForWindow("WorkCard",driver);
       WorkCard.Btn_Close(driver).click();
       
@@ -142,7 +142,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	driver=getDriver();
 	//  driver=Base.Initialize_browser();
 	//  Base.Initialize_Webpage(driver);
-	Utils.Enter_Workcard(driver);
+	Utilsfn.Enter_Workcard(driver);
 	  
 	  
 	  

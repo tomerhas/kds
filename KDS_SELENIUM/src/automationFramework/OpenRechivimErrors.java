@@ -10,7 +10,7 @@ import org.testng.annotations.AfterMethod;
 
 import pageObjects.WorkCard;
 import utils.Base;
-import utils.Utils;
+import utils.Utilsfn;
 
 public class OpenRechivimErrors extends Base {
 
@@ -19,14 +19,14 @@ public class OpenRechivimErrors extends Base {
 	
 	  @Test (priority=0) public void openRechivim() {
 	  
-		Utils a = new Utils();
+		Utilsfn a = new Utilsfn();
 		a.waitForWindow("WorkCard", driver);
 		WorkCard.TxtId(driver).sendKeys(Keys.TAB);
 		WorkCard.Date(driver).sendKeys("27102015");
 		WorkCard.Btn_Show(driver).click();
 		WorkCard.Wait_For_Element_Stalenes(driver, "btnCalcItem", null);
 		WorkCard.BtnCalcItems(driver).click();
-		Utils b = new Utils();
+		Utilsfn b = new Utilsfn();
 		b.waitForWindow("Rechivim", driver);
 		System.out.println(driver.getCurrentUrl());
 		Assert.assertEquals(driver.getCurrentUrl(),
@@ -35,7 +35,7 @@ public class OpenRechivimErrors extends Base {
 		//executor.executeScript("arguments[0].click();",
 				//Work_Card.BtnCloseErrors(driver));
 		driver.close();
-		Utils c = new Utils();
+		Utilsfn c = new Utilsfn();
 		c.waitForWindow("WorkCard", driver);
 		WorkCard.Btn_Close(driver).click();
 	    
@@ -47,14 +47,14 @@ public class OpenRechivimErrors extends Base {
 	@Test  (priority=1)
 	public void openErrors() {
 
-		Utils a = new Utils();
+		Utilsfn a = new Utilsfn();
 		a.waitForWindow("WorkCard", driver);
 		WorkCard.TxtId(driver).sendKeys(Keys.TAB);
 		WorkCard.Date(driver).sendKeys("27102015");
 		WorkCard.Btn_Show(driver).click();
 		WorkCard.Wait_For_Element_Stalenes(driver, "btnDrvErrors", null);
 		WorkCard.BtnDriverErrors(driver).click();
-		Utils b = new Utils();
+		Utilsfn b = new Utilsfn();
 		b.waitForWindow("Errors", driver);
 		String result = driver.getCurrentUrl().substring(0,
 				driver.getCurrentUrl().length() - 68);
@@ -66,7 +66,7 @@ public class OpenRechivimErrors extends Base {
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();",
 				WorkCard.BtnCloseErrors(driver));
-		Utils c = new Utils();
+		Utilsfn c = new Utilsfn();
 		c.waitForWindow("WorkCard", driver);
 		WorkCard.Btn_Close(driver).click();
 
@@ -76,7 +76,7 @@ public class OpenRechivimErrors extends Base {
 	public void beforeMethod() {
 
 		driver = getDriver();
-		Utils.Enter_Workcard(driver);
+		Utilsfn.Enter_Workcard(driver);
 
 	}
 

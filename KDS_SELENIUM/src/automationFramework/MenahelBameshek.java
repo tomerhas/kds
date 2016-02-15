@@ -20,7 +20,7 @@ import org.testng.annotations.AfterMethod;
 import pageObjects.EmployeeCard;
 import pageObjects.LogInPage;
 import pageObjects.WorkCard;
-import utils.Utils;
+import utils.Utilsfn;
 import utils.Base;
 
 @Listeners ({Listener.TestListener.class})
@@ -62,7 +62,7 @@ public class MenahelBameshek    extends Base {
       droplist.selectByVisibleText("06/2015"); 
       EmployeeCard.Btn_Execute(driver).click();
       EmployeeCard.Link_Date_Menahel_Bameshek(driver).click();
-      Utils a =new Utils();
+      Utilsfn a =new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
       Assert.assertFalse(WorkCard.Btn_Add_Absence(driver).isEnabled(),"Btn_Add_Absence is Enabled ");
       Assert.assertFalse(WorkCard.Btn_Add_Mapa(driver).isEnabled(),"Btn_Add_Mapa is Enabled ");

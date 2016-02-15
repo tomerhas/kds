@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import pageObjects.HosafatSidur;
 import pageObjects.WorkCard;
 import utils.Base;
-import utils.Utils;
+import utils.Utilsfn;
 
 
 
@@ -31,7 +31,7 @@ public class AddScheduleMapa    extends Base  {
   @Test
   public void addScheduleMapa () throws SQLException {
 	  DB_DML.deleteRecordFromTable("77104", "to_date('23/06/2015','dd/mm/yyyy')", "33011");
-	  Utils a= new Utils();
+	  Utilsfn a= new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
 	  WorkCard.Date(driver).click();
@@ -39,7 +39,7 @@ public class AddScheduleMapa    extends Base  {
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver, "btnFindSidur",null);
 	  WorkCard.Btn_Add_Mapa(driver).click();
-	  Utils b= new Utils();
+	  Utilsfn b= new Utilsfn();
 	  b.waitForWindow("HosafatSidur",driver);
 	  HosafatSidur.Txt_Sidur_Mapa(driver).sendKeys("99999");
 	  HosafatSidur.Btn_Show_Mapa(driver).click();
@@ -62,7 +62,7 @@ public class AddScheduleMapa    extends Base  {
 	  HosafatSidur.Car_No_Mapa_2(driver).click();
 	  HosafatSidur.Car_No_Mapa_2(driver).sendKeys("34918");
 	  HosafatSidur.Btn_Update_Mapa(driver).click();
-	  Utils c= new Utils();
+	  Utilsfn c= new Utilsfn();
 	  c.waitForWindow("WorkCard",driver);
 	  WorkCard.Wait_For_Element_Visibile(driver,60, "btnRefreshOvedDetails");
 	  WorkCard.Btn_Show(driver).click();
@@ -76,7 +76,7 @@ public class AddScheduleMapa    extends Base  {
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver, "btnFindSidur",null);
 	  WorkCard.Btn_Add_Mapa(driver).click();
-	  Utils d= new Utils();
+	  Utilsfn d= new Utilsfn();
 	  d.waitForWindow("HosafatSidur",driver);
 	  HosafatSidur.Txt_Sidur_Mapa(driver).sendKeys("33011");
 	  HosafatSidur.Btn_Show_Mapa(driver).click();
@@ -86,7 +86,7 @@ public class AddScheduleMapa    extends Base  {
 	  HosafatSidur.Btn_Update_Mapa(driver).click();
 	  WorkCard.Btn_Yes_Copy_Car_Num(driver).click();
 	  HosafatSidur.Btn_Update_Mapa(driver).click();
-	  Utils e= new Utils();
+	  Utilsfn e= new Utilsfn();
 	  e.waitForWindow("WorkCard",driver);
 	  //c.waitForWindow("WorkCard",driver);
 	  //Work_Card.Wait_For_Element_Visibile(driver,60, "btnRefreshOvedDetails");
@@ -122,7 +122,7 @@ public class AddScheduleMapa    extends Base  {
 	  driver=getDriver();
 		//  driver=Base.Initialize_browser();
 		//  Base.Initialize_Webpage(driver);
-		Utils.Enter_Workcard(driver);
+		Utilsfn.Enter_Workcard(driver);
 	  
 	  
 	  

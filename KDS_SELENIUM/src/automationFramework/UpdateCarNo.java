@@ -14,7 +14,7 @@ import org.testng.annotations.AfterMethod;
 
 import pageObjects.WorkCard;
 import utils.Base;
-import utils.Utils;
+import utils.Utilsfn;
 
 
 
@@ -71,7 +71,7 @@ public class UpdateCarNo  extends Base {
 		  
 		 
 
-		  Utils a=new Utils();
+		  Utilsfn a=new Utilsfn();
 		  a.waitForWindow("WorkCard",driver);
 		  
 		  //Work_Card.findElement(driver, By.id("txtId"),60).sendKeys("77104");
@@ -134,7 +134,7 @@ public class UpdateCarNo  extends Base {
 	  
 	  
 	  driver=getDriver();
-	  Utils.Enter_Workcard(driver);
+	  Utilsfn.Enter_Workcard(driver);
 	  
 	  
   }

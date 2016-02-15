@@ -14,7 +14,7 @@ import org.testng.annotations.AfterMethod;
 
 import pageObjects.WorkCard;
 import utils.Base;
-import utils.Utils;
+import utils.Utilsfn;
 
 
 
@@ -31,7 +31,7 @@ public class EmptyActivityBetween extends Base {
 driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 	  
 	  
-	  Utils a= new Utils();
+	  Utilsfn a= new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
 	  WorkCard.Date(driver).click();
@@ -72,7 +72,7 @@ driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
   public void beforeMethod() {
 	  
 	  driver=getDriver();
-	  Utils.Enter_Workcard(driver);
+	  Utilsfn.Enter_Workcard(driver);
 	  
   }
 

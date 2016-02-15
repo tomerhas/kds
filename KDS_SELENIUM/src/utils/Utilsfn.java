@@ -17,7 +17,7 @@ import org.openqa.selenium.support.ui.Select;
 import pageObjects.EmployeeCard;
 import pageObjects.LogInPage;
 
-public  class Utils {
+public  class Utilsfn {
 
 //	public  WebDriver driver;
 	

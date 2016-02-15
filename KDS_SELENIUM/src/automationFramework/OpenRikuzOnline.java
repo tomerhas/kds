@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
 import pageObjects.TickurChishuvLeOved;
 import pageObjects.WorkCard;
 import utils.Base;
-import utils.Utils;
+import utils.Utilsfn;
 
 
 
@@ -36,7 +36,7 @@ public class OpenRikuzOnline extends Base {
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  
       
-      Utils a= new Utils();
+      Utilsfn a= new Utilsfn();
       a.Click_Sub_Menu("חישוב לעובד", "חישוב לעובד מקוון",driver);
       driver.manage().window().maximize();
       
@@ -68,7 +68,7 @@ public class OpenRikuzOnline extends Base {
       TickurChishuvLeOved.Btn_Show(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver,null, "ItemRow");
 	  TickurChishuvLeOved.Btn_Print(driver).click();
-	  Utils b= new Utils();
+	  Utilsfn b= new Utilsfn();
 	  b.waitForWindow("ModalShowPrint",driver);
 	  System.out.println(driver.getCurrentUrl());
 	  Assert.assertEquals(driver.getCurrentUrl(), "http://kdstest/ModalShowPrint.aspx", "window doesn't exist" );

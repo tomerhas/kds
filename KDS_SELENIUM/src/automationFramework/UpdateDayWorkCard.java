@@ -15,7 +15,7 @@ import org.testng.annotations.AfterMethod;
 
 import pageObjects.WorkCard;
 import utils.Base;
-import utils.Utils;
+import utils.Utilsfn;
 
 import java.io.IOException;
 import java.lang.Thread;
@@ -58,7 +58,7 @@ public void updateDayWorkCard   (String sTachograph,String sLina ) throws Interr
 
 
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	  Utils a=new Utils();
+	  Utilsfn a=new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
 	  WorkCard.Date(driver).click();
@@ -102,7 +102,7 @@ public void updateDayWorkCard   (String sTachograph,String sLina ) throws Interr
 
       
 	  driver=getDriver();
-	  Utils.Enter_Workcard(driver);
+	  Utilsfn.Enter_Workcard(driver);
 	  
       
       

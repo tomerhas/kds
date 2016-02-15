@@ -19,7 +19,7 @@ import org.testng.annotations.AfterMethod;
 import pageObjects.EmployeeCard;
 import pageObjects.LogInPage;
 import utils.Base;
-import utils.Utils;
+import utils.Utilsfn;
 
 
 
@@ -114,7 +114,7 @@ public class EmployeeCards  extends Base {
   public void beforeMethod()  {
 	  
 	  driver=getDriver();
-	  Utils.Initialize_Webpage(driver);
+	  Utilsfn.Initialize_Webpage(driver);
 	  
 	  
 	  
