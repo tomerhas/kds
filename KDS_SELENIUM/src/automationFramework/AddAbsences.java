@@ -144,8 +144,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	//  Base.Initialize_Webpage(driver);
 	Utilsfn.Enter_Workcard(driver);
 	  
-	  
-	  
+	  	  
   }
 
   
