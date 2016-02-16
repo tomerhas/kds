@@ -8213,8 +8213,8 @@ namespace KdsBatch
             float ferech=0, fRechiv2, fRechiv76, fRechiv189;
             try
             {
-                if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() &&  objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
-                {
+                //if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() &&  objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                //{
                     fRechiv2 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Taarich);
                     fRechiv76 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Nosafot125.GetHashCode(), objOved.Taarich);
                     fRechiv189 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachDakotNehigaShishi.GetHashCode(), objOved.Taarich);
@@ -8229,7 +8229,7 @@ namespace KdsBatch
                         ferech = Math.Min(fRechiv76, fRechiv189);
                     }
                     addRowToTable(clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode(), ferech);
-                }
+               // }
             }
             catch (Exception ex)
             {
@@ -8244,8 +8244,8 @@ namespace KdsBatch
             float ferech=0, fRechiv2, fRechiv76, fRechiv77, fRechiv299, fRechiv189;
             try
             {
-                if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
-                {
+                //if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                //{
                     fRechiv2 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Taarich);
                     fRechiv299 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot125LetashlumNahagut.GetHashCode(), objOved.Taarich);
                     fRechiv76 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Nosafot125.GetHashCode(), objOved.Taarich);
@@ -8264,7 +8264,7 @@ namespace KdsBatch
                     }
 
                     addRowToTable(clGeneral.enRechivim.Shaot150LetashlumNahagut.GetHashCode(), ferech);
-                }
+               // }
             }
             catch (Exception ex)
             {
@@ -8279,8 +8279,8 @@ namespace KdsBatch
             float ferech, fRechiv35, fRechiv78;
             try
             {
-                if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
-                {
+                //if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                //{
                     fRechiv35 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaShabat.GetHashCode(), objOved.Taarich);
 
                     if (fRechiv35 > 0)
@@ -8290,7 +8290,7 @@ namespace KdsBatch
 
                         addRowToTable(clGeneral.enRechivim.Shaot200LetashlumNahagut.GetHashCode(), ferech);
                     }
-                }
+               // }
             }
             catch (Exception ex)
             {
@@ -8305,8 +8305,8 @@ namespace KdsBatch
             float ferech, fRechiv2, fRechiv131;
             try
             {
-                if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
-                {
+                //if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                //{
                     fRechiv2 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Taarich);
 
                     if (fRechiv2 > 0 && clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
@@ -8316,7 +8316,7 @@ namespace KdsBatch
 
                         addRowToTable(clGeneral.enRechivim.Shaot100Nahagut.GetHashCode(), ferech);
                     }
-                }
+              //  }
             }
             catch (Exception ex)
             {
@@ -8330,8 +8330,8 @@ namespace KdsBatch
             float ferech, fRechiv2, fRechiv126, fRechiv299, fRechiv300;
             try
             {
-                if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
-                {
+                //if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode() && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                //{
                     fRechiv2 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Taarich);
                     fRechiv126 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
                     if (fRechiv2 > 0 && fRechiv126 > 0)
@@ -8342,7 +8342,7 @@ namespace KdsBatch
 
                         addRowToTable(clGeneral.enRechivim.DakotNehigaHashlamaLeyomAvoda.GetHashCode(), ferech);
                     }
-                }
+                //}
             }
             catch (Exception ex)
             {

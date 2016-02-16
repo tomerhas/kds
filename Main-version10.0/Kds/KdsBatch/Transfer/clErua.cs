@@ -23,6 +23,7 @@ namespace KdsBatch
         protected int _iMaamadRashi;
         protected int _iMushhe;
         protected int _iDirug;
+        protected int _iDarga;
         protected int _iGil;
         protected string _sHeader;
         protected string _sFooter;
@@ -53,6 +54,7 @@ namespace KdsBatch
              _iMaamadRashi = int.Parse(drPirteyOved["maamad_rashi"].ToString());
              _iMushhe = int.Parse(drPirteyOved["mushhe"].ToString());
              _iDirug = int.Parse(drPirteyOved["dirug"].ToString());
+             _iDarga = int.Parse(drPirteyOved["darga"].ToString());
              if (drPirteyOved["gil"].ToString() != "")
                  _iGil = int.Parse(drPirteyOved["gil"].ToString());
              else _iGil = -1;

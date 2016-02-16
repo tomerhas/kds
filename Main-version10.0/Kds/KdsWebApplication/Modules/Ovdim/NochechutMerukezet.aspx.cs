@@ -108,6 +108,7 @@ namespace KdsWebApplication.Modules.Ovdim
                     date = DateTime.Parse(Request.QueryString["chodesh"].ToString());
                     clnFromDate.Text =Request.QueryString["chodesh"].ToString();
                     clnToDate.Text = DateTime.Now.AddDays(-1) < date.AddMonths(1).AddDays(-1) ? DateTime.Now.AddDays(-1).ToShortDateString() : date.AddMonths(1).AddDays(-1).ToShortDateString();
+                    rdoMi.Checked = true;
                     btnShow_Click(sender,e);
                 }
                 else

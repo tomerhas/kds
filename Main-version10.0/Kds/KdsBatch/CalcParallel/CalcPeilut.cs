@@ -536,7 +536,7 @@ namespace KdsBatch
                                      dsSidurim = kavimDal.GetSidurDetailsFromTnua(iMisparSidur, objOved.Taarich, out iResult);
                                      if (dsSidurim.Rows.Count > 0)
                                      {
-                                         if (dsSidurim.Rows[0]["bus_type"].ToString() == "4" || dsSidurim.Rows[0]["bus_type"].ToString() == "5")
+                                         if (dsSidurim.Rows[0]["bus_type"].ToString() == "2" || dsSidurim.Rows[0]["bus_type"].ToString() == "4" || dsSidurim.Rows[0]["bus_type"].ToString() == "5")
                                              SidurMifraki = true;
                                      }
                                  }

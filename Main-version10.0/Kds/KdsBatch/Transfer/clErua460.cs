@@ -88,7 +88,9 @@ namespace KdsBatch
               sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode()), 4, 2));
 
 
-              if (_iDirug != 11 && _iDirug != 63)
+              if (_iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode() && 
+                  _iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() && 
+                  _iDirug != 11 && _iDirug != 63 && !(_iDirug == 92 && _iDarga == 2))
               {
                   fErech = GetErechRechiv(clGeneral.enRechivim.Shaot100LetashlumNahagut.GetHashCode()) / 60;
                   sErua460.Append(FormatNumber(fErech, 4, 1));
