@@ -183,10 +183,14 @@ namespace KdsClocks
                                 if (dr["code_shaon"].ToString().Trim() != "")
                                 {
                                     clockId = int.Parse(dr["code_shaon"].ToString());
-                                    var shaon=clockId.ToString().PadLeft(5,'0').Substring(0,3);
-                                //    var p = pundakim.Select("MIKUM_PUNDAK=" + shaon + " and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH");
-                                 //   if (p.Length > 0)
-                                  //      IsPundak = true;
+                                    var shaon = clockId.ToString().PadLeft(5, '0').Substring(0, 3);
+                                    //    var p = pundakim.Select("MIKUM_PUNDAK=" + shaon + " and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH");
+                                    //   if (p.Length > 0)
+                                    //      IsPundak = true;
+                                }
+                                else
+                                {
+                                    clockId = 0;
                                 }
                                 istm = null;
 
