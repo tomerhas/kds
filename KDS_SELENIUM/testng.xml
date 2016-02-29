@@ -6,7 +6,8 @@
 
 		<classes>
 
-	        <class name="automationFramework.UpdateCarNo" />
+	       <!--    <class name="automationFramework.UpdateCarNo" />
+            
 		    <class name="automationFramework.UpdateDayWorkCard" />
             <class name="automationFramework.EmptyActivityMapa" />
             <class name="automationFramework.EmptyActivityBetween" />
@@ -15,8 +16,7 @@
             <class name="automationFramework.AddSpecialSchedule" />  
             <class name="automationFramework.MenahelBameshek" />
             <class name="automationFramework.AddScheduleMapa" /> 
-            <class name="automationFramework.OpenRechivimErrors" /> 
-            
+            <class name="automationFramework.OpenRechivimErrors" /> -->
 		</classes>
 
 
