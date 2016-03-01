@@ -32,8 +32,12 @@
                 date.setMinutes(shaa[1]);
 
                 return date.toJSON();
+                //ngModel.$modelValue = date;
+                //ngModel.$render();
+                //ngModel.$setViewValue(fullTime.split(":")[0] + ":" + fullTime.split(":")[1]);
+                //ngModel.$render();
             }
-            return viewValue;
+           return viewValue;
         });
 
         ngModel.$formatters.push(function (mv) {
@@ -41,6 +45,8 @@
             var res = "";
             if (typeof mv == 'string') {
                 mv = new Date(mv)
+                ngModel.$modelValue = mv;
+                ngModel.$render();
                 res = getFormattedTime(mv);
             }
             return res;

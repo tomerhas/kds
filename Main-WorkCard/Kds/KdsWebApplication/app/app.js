@@ -1,6 +1,23 @@
 ﻿var mainApp = angular.module('mainApp', []);
 var workCardApp = angular.module('workCard', ['ngRoute', 'mainApp', 'angucomplete-alt', 'kendo.directives']);
+//.config(function ($routeProvider, $locationProvider) {
+//    $locationProvider.html5Mode({
+//        enabled: true,
+//        requireBase: false
+//    });
 
+//    $routeProvider.
+//      when("/",
+//       {
+//           template:"jj"
+//       })
+//        .otherwise({
+
+//           redirectTo: '/'
+
+//       });
+  
+//});
 String.prototype.padZero = function (len, c) {
     var s = '', c = c || '0', len = (len || 2) - this.length;
     while (s.length < len) s += c;
@@ -9,6 +26,10 @@ String.prototype.padZero = function (len, c) {
 Number.prototype.padZero = function (len, c) {
     return String(this).padZero(len, c);
 }
+
+//function focusTextById(id) {
+//    $("#" + id).select();
+//}
 
 
 //workCardApp.directive('uiMask', function () {

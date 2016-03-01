@@ -2,25 +2,31 @@
 <head>
 
     <script src="../../../Js/jquery-1.11.1.min.js"></script>
-
+    <script src="../../../Js/jquery-ui.min.js"></script>
+    <script src="../../../Scripts/datepicker-he.js"></script>
+    <script src="../../../Scripts/jquery.maskedinput.js"></script>
 
     <link href="../../../Content/css/bootstrap-rtl.css" rel="stylesheet" />
     <link href="../../../Content/css/ng-modal.css" rel="stylesheet" />
     <link href="../../../StyleSheet.css"  rel="stylesheet" /> 
     <link href="../../../Content/css/angucomplete-alt.css" rel="stylesheet" />
     <link href="../../../Css/bootstrap-timepicker.min.css" rel="stylesheet" />
+    <link href="../../../Css/jquery-ui.css" rel="stylesheet" />
     <link href="../../../Content/kendo/2015.3.1111/kendo.default.min.css" rel="stylesheet" />
     <link href="../../../Content/kendo/2015.3.1111/kendo.common.min.css" rel="stylesheet" />
     <link href="../../../Content/kendo/2015.3.1111/kendo.bootstrap.min.css" rel="stylesheet" />
-
+    <link href="../../../Content/kendo/2015.3.1111/kendo.material.min.css" rel="stylesheet" />
     <!--<link href="../../../Content/css/structure.css" rel="stylesheet" />-->
+    <link href="../../../Content/kendo/2015.3.1111/kendo.common-material.min.css" rel="stylesheet" />
 
     <script src="../../../Scripts/bootstrap-rtl.js"></script> 
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+    <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>-->
     <script src="../../../Scripts/angular.js"></script>
     <script src="../../../Scripts/angular-route.js"></script>
+   
+    <script src="../../../Scripts/kendo.all.min.js"></script>
     
-    
+   <!--  <script src="../../../Scripts/kendo/2015.3.1111/kendo.all.min.js"></script>-->
     <script src="../../../Scripts/kendo/2015.3.1111/kendo.core.min.js"></script>
     <script src="../../../Scripts/kendo/2015.3.1111/kendo.popup.min.js"></script>
     <script src="../../../Scripts/kendo/2015.3.1111/kendo.validator.min.js"></script>
@@ -46,16 +52,18 @@
     <script src="../../../Scripts/angular-ui/ui-utils.js"></script>
     <script src="../../../Js/bootstrap.min.js"></script>
     <script src="../../../Js/bootstrap-timepicker.min.js"></script>
+    <script src="../appTS.js"></script>
 
 </head>
 <body>
-    <div ng-controller="mainWorkCardController">
-        <div ng-include="'workCardDetails/ovedGeneralDetailsView.html'"></div>
-        <div ng-include="'workCardDetails/ovedDailyDetailsView.html'"></div>
-        <div ng-include="'workCardDetails/ovedPeiluyotView.html'"></div>
-
+    <div ng-controller="mainWorkCardController as vm">
+         <fieldset> <!--ng-disabled="vm.disabledFrame"-->
+                <div ng-include="'workCardDetails/ovedGeneralDetailsView.html'"></div>
+                <div ng-include="'workCardDetails/ovedDailyDetailsView.html'"></div>
+                <div ng-include="'workCardDetails/ovedPeiluyotView.html'"></div>
+             </fieldset>
     <!--    <input id='ui-mask' name="date2" ng-model="date" required autocomplete='off' ui-mask='"99:99"' >-->
     </div>
-   
 </body>
+
 </html>

@@ -14,6 +14,9 @@ using System.Data;
 using KDSCommon.DataModels.WorkCard;
 using KDSCommon.Enums;
 using KDSCommon.Interfaces;
+using KdsLibrary.Security;
+using KDSCommon.Helpers;
+using KDSCommon.Interfaces.DAL;
 
 /// <summary>
 /// This is the new service required for the new angular workcard screen
@@ -24,6 +27,8 @@ using KDSCommon.Interfaces;
 [System.Web.Script.Services.ScriptService]
 public class wsWorkCard : System.Web.Services.WebService
 {
+    public static string[] arrDays = new string[] { "א", "ב", "ג", "ד", "ה", "ו", "ש" };
+
     [WebMethod]
     public OvedYomAvodaDetailsDM GetOvedDetails(int misparIshi, DateTime cardDate)
     {
@@ -81,6 +86,7 @@ public class wsWorkCard : System.Web.Services.WebService
         List<EmployeeIdContainer> ids = new List<EmployeeIdContainer>();
         try
         {
+           
             DataTable dt = oOvdim.GetOvdimMisparIshi(inputstring +"%",null);
 
               foreach (DataRow dr in dt.Rows)
@@ -121,10 +127,60 @@ public class wsWorkCard : System.Web.Services.WebService
         }
     }
 
+   [WebMethod]
+    public List<EmployeeNameContainer> GetOvdimToUserByName(string inputstring, string userId)
+    {   //מביא את כל המספרים האישיים  של העובדים הכפופים
+
+        clOvdim oOvdim = new clOvdim();
+        List<EmployeeNameContainer> names = new List<EmployeeNameContainer>();
+        try
+        {
+
+            DataTable dt = oOvdim.GetOvdimByName(inputstring + "%", null);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+
+                names.Add(new EmployeeNameContainer() { EmployeeName = dr["Oved_Name"].ToString() });
+
+            }
+            return names;
+
+
+        }
+        //try
+        //{
+        //    prefixText = string.Concat(prefixText, "%");
+        //    if (contextKey.Length > 0)
+        //    {
+        //        dt = oOvdim.GetOvdimToUserByName(prefixText, int.Parse(contextKey));
+        //    }
+        //    else
+        //    {
+        //        dt = oOvdim.GetOvdimByName(prefixText, contextKey);
+        //    }
+        //    List<string> items = new List<string>(count);
+
+        //    int i = 0;
+        //    foreach (DataRow dr in dt.Rows)
+        //    {
+        //        if (i > count) { break; }
+        //        items.Add(dr["Oved_Name"].ToString());
+        //        i++;
+
+        //    }
+        //    return items.ToArray();
+        //}
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    
+
     [WebMethod]
     public EmployeeBasicDetails GetEmpoyeeById(int iMisparIshi, string sCardDate)
     {
-        String sXMLResult = "";
         clOvdim oOvdim = new clOvdim();
         DataTable dt;
         DateTime dCardDate = DateTime.Parse(sCardDate);
@@ -145,7 +201,7 @@ public class wsWorkCard : System.Web.Services.WebService
         return null;
     }
 
-    
+ 
     [WebMethod]
     public EmplyeeDetails GetOvedAllDetails(int iMisparIshi, string sCardDate)
     {
@@ -163,12 +219,14 @@ public class wsWorkCard : System.Web.Services.WebService
                 if (dt.Rows.Count > 0)
                 {
                     DataRow dr = dt.Rows[0];
+                    oEmployee.MisparIshi = iMisparIshi;
+                    oEmployee.DetailsDate = dCardDate.ToShortDateString();
                     oEmployee.FullName = dr["FULL_NAME"].ToString();
-                    oEmployee.KodMaama = int.Parse( dr["KOD_MAAMAD_HR"].ToString());
-                    oEmployee.TeurMaama = dr["TEUR_MAAMAD_HR"].ToString();
-                    oEmployee.KodSnif = int.Parse(dr["KOD_SNIF_AV"].ToString());
+                    oEmployee.KodMaamad = !string.IsNullOrEmpty(dr["KOD_MAAMAD_HR"].ToString()) ? int.Parse( dr["KOD_MAAMAD_HR"].ToString()):0;
+                    oEmployee.TeurMaamad = dr["TEUR_MAAMAD_HR"].ToString();
+                    oEmployee.KodSnif = !string.IsNullOrEmpty(dr["KOD_SNIF_AV"].ToString()) ? int.Parse(dr["KOD_SNIF_AV"].ToString()) : 0; 
                     oEmployee.TeurSnif = dr["TEUR_SNIF_AV"].ToString();
-                    oEmployee.KodEzor = int.Parse(dr["KOD_EZOR"].ToString());
+                    oEmployee.KodEzor = !string.IsNullOrEmpty(dr["KOD_EZOR"].ToString()) ? int.Parse(dr["KOD_EZOR"].ToString()) : 0; 
                     oEmployee.TeurEzor = dr["TEUR_EZOR"].ToString();
                     oEmployee.TeurIsuk = dr["TEUR_ISUK"].ToString(); 
                     oEmployee.TeurHevra = dr["TEUR_HEVRA"].ToString();   
@@ -184,6 +242,46 @@ public class wsWorkCard : System.Web.Services.WebService
         }
     }
 
+    [WebMethod(EnableSession = true)]
+    public string IsCardExists(int iMisparIshi, DateTime dWorkCard)
+    {
+        clWorkCard _WorkCard = new clWorkCard();
+     //   DateTime dWorkCard;
+        int iCardCount;
+        //נבדוק שני דברים:
+        //1. אם החודש שנבחר נמצא בטווח של פרמטר 100
+        //2. במידה ואחד מתקיים נבדוק אם קיים כרטיס לתאריך זה
+        //dWorkCard = DateTime.Parse(sWorkCard);
+        var oParams = getObjectParams(dWorkCard);
+        int iMaxMonthToDisplay = oParams.iMaxMonthToDisplay;
+
+        if ((Math.Abs((DateTime.Now.Month - dWorkCard.Month) + 12 * ((DateTime.Now.Year - dWorkCard.Year))) + 1 <= iMaxMonthToDisplay))
+        {
+            iCardCount = _WorkCard.GetIsCardExistsInYemeyAvodaOvdim(iMisparIshi, dWorkCard);
+            return iCardCount.ToString() + "|" + arrDays[dWorkCard.DayOfWeek.GetHashCode()];
+        }
+        else
+            return "0|0";
+    }
+
+    private clParametersDM getObjectParams(DateTime dCardDate)
+    {
+        var cacheAge = ServiceLocator.Current.GetInstance<IKDSAgedQueueParameters>();
+        var oParam = cacheAge.GetItem(dCardDate);
+        if (oParam == null)
+        {
+            var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+            var dtYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.YamimMeyuhadim);
+            var dtSugeyYamimMeyuchadim = cache.GetCacheItem<DataTable>(CachedItems.SugeyYamimMeyuchadim);
+            var iSugYom = DateHelper.GetSugYom(dtYamimMeyuchadim, dCardDate, dtSugeyYamimMeyuchadim);//, _oMeafyeneyOved.GetMeafyen(56).IntValue);
+
+            IParametersManager paramManager = ServiceLocator.Current.GetInstance<IParametersManager>();
+            oParam = paramManager.CreateClsParametrs(dCardDate, iSugYom);
+            cacheAge.Add(oParam, dCardDate);
+        }
+        return oParam;
+
+    }
     [WebMethod]
     public WorkCardLookupsContainer GetWorkCardLookups()
     {
@@ -191,6 +289,48 @@ public class wsWorkCard : System.Web.Services.WebService
         var res= ovedWCManager.GetWorkCardLookups();
         string json = JsonConvert.SerializeObject(res);
         return res;
+    }
+    [WebMethod]
+    public string GetNextErrorCardDate(int iMisparIshi, DateTime dWorkCard)
+    {
+
+        clWorkCard _WorkCard = new clWorkCard();
+        return clWorkCard.GetNextErrorCard(iMisparIshi, dWorkCard).ToShortDateString();
+
+    }
+
+    [WebMethod]
+    public string CheckOtoNo(long lOtoNo)
+    {
+        long lLicenseNumber = 0;
+
+        try
+        {
+            if (lOtoNo > 0)
+            {
+                //בודק אם מספר רכב קיים בתנועה ואם כן מחזיר מספר רישוי
+                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                kavimDal.GetBusLicenseNumber(lOtoNo, ref lLicenseNumber);
+            }
+            return lLicenseNumber.ToString();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string GetKnisaActualMin(long lMakat, string sSidurDate, int iMisaprKnisa)
+    {
+        DataSet dsMakat;
+        int iResult;
+        var kavimdDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+        dsMakat = kavimdDal.GetKavimDetailsFromTnuaDS(lMakat, DateTime.Parse(sSidurDate), out iResult, 1);
+        if (dsMakat.Tables[1].Rows.Count > 0)
+            return dsMakat.Tables[1].Rows[iMisaprKnisa - 1]["mazan"].ToString();
+        else
+            return "0";
     }
 
     private DateTime ParseStringToDate(string sDate)

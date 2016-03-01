@@ -1,11 +1,13 @@
 ﻿workCardApp.controller('pirteyOvedDetailsController',
-    function ($scope, apiProvider, workCardStateService) {
+    function ($rootScope,$scope, apiProvider, workCardStateService) {
         var vm = this;
         vm.OvedDetails;
         activate();
 
         function activate() {
             vm.OvedDetails = workCardStateService.cardGlobalData.ovedDetails;
+            if ($rootScope.DisablePage)
+                $rootScope.EnablePage('disabled');
         }
 
         $scope.$on('ovedDetails-changed', function (event, args) {

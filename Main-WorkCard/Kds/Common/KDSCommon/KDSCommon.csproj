@@ -97,12 +97,15 @@
     <Compile Include="DataModels\Security\UserInfo.cs" />
     <Compile Include="DataModels\Security\UserProfile.cs" />
     <Compile Include="DataModels\Shinuyim\FlowShinuyResult.cs" />
+    <Compile Include="DataModels\WorkCard\AttributeField.cs" />
     <Compile Include="DataModels\WorkCard\HityazvutInfo.cs" />
+    <Compile Include="DataModels\WorkCard\NetuneyYomAvoda.cs" />
     <Compile Include="DataModels\WorkCard\PeilutWC.cs" />
     <Compile Include="DataModels\WorkCard\SelectItem.cs" />
     <Compile Include="DataModels\WorkCard\SidurimWC.cs" />
     <Compile Include="DataModels\WorkCard\SidurWC.cs" />
     <Compile Include="DataModels\WorkCard\SinglePropertyData.cs" />
+    <Compile Include="DataModels\WorkCard\StatusCard.cs" />
     <Compile Include="DataModels\WorkCard\WorkCardLookupsContainer.cs" />
     <Compile Include="DataModels\WorkCard\WorkCardResult.cs" />
     <Compile Include="DataModels\WorkCard\WorkCardResultContainer.cs" />

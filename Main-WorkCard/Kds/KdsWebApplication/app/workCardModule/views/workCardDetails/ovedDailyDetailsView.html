@@ -1,11 +1,17 @@
-﻿<div ng-controller="ovedDailyDetailsController as ovedDetails">
+﻿<div id="tabsDiv" ng-controller="ovedDailyDetailsController as ovedDetails">
     <div class="row WorkCardTable1Label" style="height:40px">
          <div class="col-md-1">זמן נסיעות</div>
-         <div class="col-md-1"><select ng-model="ovedDetails.val"  ng-options="i.Value as i.Description for i in ovedDetails.ZmanNesiaList"> </select></div>
+         <div class="col-md-1"><select ng-model="ovedDetails.DayDetails.ZmanNesiot.Value"  ng-options="i.Value as i.Description for i in ovedDetails.ZmanNesiaList"> </select></div>
 
          <div class="col-md-1 WorkCardTabs ImgButtonShowPlus"  ng-click="ovedDetails.replaceTab(1)" >התייצבות</div>
          <div class="col-md-1 WorkCardTabs ImgButtonShowPlus"  ng-click="ovedDetails.replaceTab(2)" >נתונים ליום עבודה</div>
          <div class="col-md-1 WorkCardTabs ImgButtonShowPlus"  ng-click="ovedDetails.replaceTab(3)" >פרטי העובד</div>
+
+        <div class="col-md-2"> 
+                 <input class="btnPrevDay" type="button" ng-click="ovedDetails.PrevDay_Click();"  />
+                 <input class="btnNextDay" type="button" ng-click="ovedDetails.NextDay_Click();"/>
+                 <input class="btnNextError" type="button" value="שגוי הבא"  ng-click="ovedDetails.NextWrongDay_Click();" />
+        </div>
     </div>
 
     <!--<div hbo-tabs id="tabs">
@@ -27,7 +33,7 @@
     </div>
 </div>-->
 
-    <div ng-switch on="ovedDetails.tabDisplayed">
+    <div  ng-switch on="ovedDetails.tabDisplayed">
         <div ng-switch-when="1">
             <div ng-include="'workCardDetails/ovedDailyWork/ovedHityazvutDetailsView.html'"></div>
         </div>

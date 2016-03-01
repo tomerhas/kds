@@ -14,10 +14,12 @@ namespace KDSCommon.DataModels.WorkCard
     {
         public bool IsEnabled { get; set; }
         public T Value { get; set; }
+        public List<AttributeField> Attributes { get; set; } 
 
         public SinglePropertyData()
         {
             IsEnabled = true;
+            Attributes = new List<AttributeField>();
         }
     }
 }

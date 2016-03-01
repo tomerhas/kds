@@ -1,17 +1,17 @@
 ﻿
     <div  ng-controller="ovedHityazvutDetailsController as h" class="row WorkCardTable1Label" style="height:40px">
        <div class="col-md-1">התייצבות 1:</div>
-       <div class="col-md-1"><input type="text" style="width:150px" /></div>
+       <div class="col-md-1"><input type="text" style="width:150px" ng-model="h.FirstHityazvut.Value"  ng-readonly="h.FirstHityazvut.ValuReadOnly"   /></div>
        <div class="col-md-1">סיבת אי התייצבות:</div>
-       <div class="col-md-1">  <select ng-model="h.val" ng-options="i.Value as i.Description for i in h.SibotDivuachList">
+       <div class="col-md-1">  <select ng-model="h.FirstHityazvut.KodSiba" ng-options="i.Value as i.Description for i in h.SibotDivuachList"  ng-disabled="!h.FirstHityazvut.KodSibaEnabled" ng-change="DisabledControls()">
                                     <option value="0" selected></option>
                                 </select>
 
        </div>
-       <div class="col-md-1">התייצבות 2:</div>
-       <div class="col-md-1"><input type="text"  style="width:150px"  /></div>
+       <div class="col-md-1" style="margin-right:20px;">התייצבות 2:</div>
+       <div class="col-md-1"><input type="text"  style="width:150px" ng-model="h.SecondHityazvut.Value"   ng-readonly="h.SecondHityazvut.ValuReadOnly" ng-change="DisabledControls()"  /></div>
        <div class="col-md-1">סיבת אי התייצבות:</div>
-       <div class="col-md-1">  <select  ng-model="h.val" ng-options="i.Value as i.Description for i in h.SibotDivuachList">
+       <div class="col-md-1">  <select  ng-model="h.SecondHityazvut.KodSiba" ng-options="i.Value as i.Description for i in h.SibotDivuachList"   ng-disabled="!h.SecondHityazvut.KodSibaEnabled" ng-change="DisabledControls()">
                                     <option value="0" selected></option>
                                 </select>
 

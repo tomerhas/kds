@@ -8,9 +8,10 @@ namespace KdsWebApplication.ViewModels.WorkCard
     public class EmplyeeDetails
     {
         public int MisparIshi { get; set; }
+        public string DetailsDate { get; set; }
         public string FullName { get; set; }
-        public int KodMaama { get; set; }
-        public string TeurMaama { get; set; }
+        public int KodMaamad { get; set; }
+        public string TeurMaamad { get; set; }
         public int KodSnif { get; set; }
         public string TeurSnif { get; set; }
         public int KodEzor { get; set; }

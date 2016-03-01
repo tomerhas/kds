@@ -56,6 +56,11 @@
                                  { inputstring: inputstring, userId: userId });
         }
 
+        this.getOvdimToUserByName = function (inputstring, userId) {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetOvdimToUserByName",
+                                 { inputstring: inputstring, userId: userId });
+        }
+
         this.getEmployeeBasicDetails = function (misparIshi, cardDate) {
             return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetEmpoyeeById",
                                  { iMisparIshi: misparIshi, sCardDate: cardDate });
@@ -66,5 +71,25 @@
                                  { iMisparIshi: misparIshi, sCardDate: cardDate });
         }
 
+        this.isCardExists = function (misparIshi, cardDate) {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/IsCardExists",
+                                 { iMisparIshi: misparIshi, dWorkCard: cardDate });
+        }
+
+        
+        this.getNextErrorCardDate = function (misparIshi, cardDate) {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetNextErrorCardDate",
+                                 { iMisparIshi: misparIshi, dWorkCard: cardDate });
+        }
+        
+        this.checkOtoNo = function (OtoNo) {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/CheckOtoNo",
+                                 { lOtoNo: OtoNo });
+        }
+
+        this.getKnisaActualMin = function (makat,taarich,knisa) {
+            return $http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetKnisaActualMin",
+                                 { lMakat: makat, sSidurDate:taarich, iMisaprKnisa:knisa});  
+        }
         
     });

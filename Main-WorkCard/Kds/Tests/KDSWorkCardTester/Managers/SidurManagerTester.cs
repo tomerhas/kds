@@ -79,15 +79,15 @@ namespace KDSWorkCardTester.Managers
             builder.Init();
         }
 
-        [TestMethod]
-        public void GetWorkCardSidurimTester()
-        { 
-            int misparIshi = 65929;
-            DateTime cardDate = new DateTime(2014,6,5);
-            var sidurim = container.Resolve<IWorkCardSidurManager>().GetSidurim(misparIshi, cardDate);
-            string json = JsonConvert.SerializeObject(sidurim);
-            string res = json;
-        }
+        //[TestMethod]
+        //public void GetWorkCardSidurimTester()
+        //{ 
+        //    int misparIshi = 65929;
+        //    DateTime cardDate = new DateTime(2014,6,5);
+        //    var sidurim = container.Resolve<IWorkCardSidurManager>().GetSidurim(misparIshi, cardDate);
+        //    string json = JsonConvert.SerializeObject(sidurim);
+        //    string res = json;
+        //}
 
         
 

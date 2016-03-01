@@ -27,7 +27,7 @@ namespace KdsLibrary.Security
             get { return _userInfo; }
         }
      
-        internal MatchNameList<KdsModule> KdsModules
+        public MatchNameList<KdsModule> KdsModules
         {
             get { return _modules; }
         }

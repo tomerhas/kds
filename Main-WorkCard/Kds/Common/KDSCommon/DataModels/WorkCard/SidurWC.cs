@@ -26,6 +26,7 @@ namespace KDSCommon.DataModels.WorkCard
         public SinglePropertyData<string> Hamara { get; set; }
         public SinglePropertyData<string> OutMichsa { get; set; }
         public SinglePropertyData<int> LoLetashlum { get; set; }
+        public SinglePropertyData<bool> SidurActive { get; set; }
 
         public List<PeilutWC> PeilutList { get; set; }
 
@@ -45,6 +46,7 @@ namespace KDSCommon.DataModels.WorkCard
             Hamara = new SinglePropertyData<string>();
             OutMichsa = new SinglePropertyData<string>();
             LoLetashlum = new SinglePropertyData<int>();
+            SidurActive = new SinglePropertyData<bool>();
 
             PeilutList = new List<PeilutWC>();
         }

@@ -50,6 +50,8 @@ namespace KdsWorkCard.Converters
             bool isSidurNihul = IsSidurNihul(sidurDm, drSugSidur);
             bool isAtLeastOneSidurInShabat = IsAtLeastOneSidurInShabat(wcResult, sidurDm, sidurDm.bSidurNahagut, isSidurNihul);
             bool isSidurActive = IsSidurActive(sidurDm);
+            bool RekaUpSign;
+            AttributeField oVal;
 
             if (sidurDm != null)
             {
@@ -69,7 +71,10 @@ namespace KdsWorkCard.Converters
                 sidur.OutMichsa.Value = sidurDm.sOutMichsa;
                 sidur.LoLetashlum.Value = sidurDm.iLoLetashlum;
 
+                var iBitulOHosafa = sidurDm.iBitulOHosafa;
+                sidur.SidurActive.Value = ((iBitulOHosafa != clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) && (iBitulOHosafa != clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()));
 
+                RekaUpSign = false;
                 for (int peilutIndex = 0; peilutIndex < sidurDm.htPeilut.Count; peilutIndex++)
                 {
                     PeilutDM peilutDM = sidurDm.htPeilut[peilutIndex] as PeilutDM;
@@ -80,13 +85,41 @@ namespace KdsWorkCard.Converters
                     peilut.Teur.Value = peilutDM.sMakatDescription;
                     peilut.Kav.Value = peilutDM.sShilut;
                     peilut.Sug.Value = peilutDM.sSugShirutName;
+                    
                     peilut.Makat.Value = peilutDM.lMakatNesia;
+                    peilut.Makat.Attributes.Add(new AttributeField("OldVal", peilutDM.lMakatNesia.ToString()));
+                    
+
                     peilut.DakotTichnun.Value = peilutDM.iMazanTichnun;
                     peilut.DakotBafoal.Value = peilutDM.iDakotBafoal == -1 ? "" : peilutDM.iDakotBafoal.ToString();
+
                     peilut.NumOto.Value =peilutDM.lOtoNo;
+                    peilut.NumOto.Attributes.Add(new AttributeField("OldVal", peilut.NumOto.Value.ToString()));
+                    peilut.NumOto.Attributes.Add(new AttributeField("MustOtoNum", (IsPeilutMustOtoNumber(peilut.Makat.Value, peilutDM.bBusNumberMustExists) ? "1" : "0") )); 
+
+
                     peilut.Nezer.Value = peilutDM.bImutNetzer ? "כן" : "לא";
 
-          
+                    peilut.RekaDown.Value = AllowedInsertReka(peilutDM);
+                    peilut.MisparKnisa.Value = peilutDM.iMisparKnisa;
+                    peilut.MakatType.Value = peilutDM.iMakatType;
+                   // peilut.CancelPeilut.Value = 0;
+                    if (peilutIndex < 2)
+                    {
+                        if(peilutIndex == 0 && !IsElementHachanatMechona((enMakatType)peilutDM.iMakatType,peilutDM.lMakatNesia))
+                        {
+                             peilut.RekaUp.Value = AllowedInsertReka(peilutDM);
+                             RekaUpSign = true;
+                        }
+                        else if (peilutIndex == 1 && !RekaUpSign)
+                            peilut.RekaUp.Value = AllowedInsertReka(peilutDM);
+                        else peilut.RekaUp.Value = false;
+                        
+                    }
+                    else peilut.RekaUp.Value = false;
+
+                    iBitulOHosafa = peilutDM.iBitulOHosafa;
+                    peilut.PeilutActive.Value = ((iBitulOHosafa != clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) && (iBitulOHosafa != clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()));
 
                     sidur.PeilutList.Add(peilut);
                         
@@ -96,6 +129,37 @@ namespace KdsWorkCard.Converters
             return null;
 
 
+        }
+
+        protected bool IsPeilutMustOtoNumber(long lMakat, bool bBusMustOtoNumber)
+        {
+            enMakatType _MakatType;
+            _MakatType = ((enMakatType)StaticBL.GetMakatType(lMakat));
+            //ויזה,פעילויות שדורשות רכב: קו שירות, נמ"ק, ריקה ואלמנט עם מאפיין 11 
+            return ((_MakatType == enMakatType.mVisa) || (_MakatType == enMakatType.mKavShirut) || (_MakatType == enMakatType.mNamak) || (_MakatType == enMakatType.mEmpty) || (_MakatType == enMakatType.mVisut) || ((_MakatType == enMakatType.mElement) && (bBusMustOtoNumber)));
+
+        }
+        private bool AllowedInsertReka(PeilutDM peilutDM)
+        {
+            enMakatType oMakatType= (enMakatType)peilutDM.iMakatType;
+            if (((oMakatType == enMakatType.mEmpty)) || (oMakatType == enMakatType.mNamak) || ((oMakatType == enMakatType.mKavShirut) && (peilutDM.iMisparKnisa == 0)))
+                return true;
+            else
+                return false;
+        }
+     
+        protected bool IsElementHachanatMechona(enMakatType _MakatType, long lMakat)
+        {
+            string sElementPrefix = "";
+            bool bFound = false;
+            //מחזיר אמת אם אלמנט מסוג הכנת מכונה
+            if (_MakatType == enMakatType.mElement)
+            {
+                sElementPrefix = lMakat.ToString().Substring(0, 3);
+                if ((sElementPrefix == enElementHachanatMechona.Element701.GetHashCode().ToString()) || (sElementPrefix == enElementHachanatMechona.Element711.GetHashCode().ToString()) || (sElementPrefix == enElementHachanatMechona.Element712.GetHashCode().ToString()))
+                    bFound = true;
+            }
+            return bFound;
         }
 
         private bool IsSidurActive(SidurDM sidurDm)

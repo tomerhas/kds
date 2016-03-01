@@ -32,6 +32,7 @@
             </tr>
         </tbody>
     </table>-->
+   
     <br />
     <table ng-show="sidurimController.Sidurim.length > 0">
         <thead>
@@ -157,27 +158,28 @@
                         <tr ng-repeat="peilut in sidur.PeilutList">
                             <td></td>
                             <td>
-                                <input style="margin-left: 15px" type="image" src="../../../../Images/down.png" />
-                                <input type="image" src="../../../../Images/up.png" />
+                                <input ng-show="peilut.RekaDown.Value" style="margin-left: 15px" type="image" src="../../../../Images/down.png" />
+                                <input ng-show="peilut.RekaUp.Value" type="image" src="../../../../Images/up.png" />
                             </td>
                             <td>{{peilut.KisuyTor.Value}}</td>
-                            <td>{{peilut.ShatYezia.Value | date:'hh:mm'}}</td>
+                            <td>
+                           <!--     <input ui-mask="99:99"  type="text" time ng-model="peilut.ShatYezia.Value" /> -->
+                                <input type="text" ng-model="peilut.ShatYezia.Value" timeegged />
+                                {{peilut.ShatYezia.Value}}</td>
                             <td>{{peilut.Teur.Value}}</td>
                             <td>{{peilut.Kav.Value}}</td>
                             <td>{{peilut.Sug.Value}}</td>
                             <td>
-                                <input type="text" value="{{peilut.Makat.Value}}" style="width: 100px" /></td>
-                            <td>
-                                <input type="text" value="{{peilut.NumOto.Value}}" style="width: 60px" /></td>
+                                <input type="text"  maxlength="8" input-max-length-number  ng-model="peilut.Makat.Value" value="{{peilut.Makat.Value}}" style="width: 100px" ng-blur="sidurimController.CheckMakat(peilut);"  ng-change="DisabledControls();"  onfocus="FocusText(this);" /></td>
                             <td>{{peilut.DakotTichnun.Value}}</td>
-                            <td>
-                                <input type="text" value="{{peilut.DakotBafoal.Value}}" style="width: 60px" /></td>
+                            <td><input type="number" id="{{ 'db' +$parent.$index+ $index }}"  value="{{peilut.DakotBafoal.Value}}" maxlength="4" ng-model="peilut.DakotBafoal.Value" ng-blur="sidurimController.CheckValidMinutes(peilut);" onfocus="FocusText(this);" ng-change="DisabledControls()"  input-max-length-number style="width: 60px" /></td>
+                             <td> <input type="number"  maxlength="5" input-max-length-number value="{{peilut.NumOto.Value}}" ng-blur="sidurimController.ChkOto($parent.$index, $index);"  style="width: 60px" ng-model="peilut.NumOto.Value"  onfocus="FocusText(this);" /></td>
                             <td>{{peilut.Nezer.Value}}</td>
                             <td>
-                                <input type="image" src="../../../../Images/activeV.png" />
+                                <input type="button"  ng-class="peilut.CancelPeilut.Value" ng-click="sidurimController.SetKnisaActualMin(peilut,this);" />
                             </td>
 
-
+                            <!--onchange="CheckValidMinutes(this);  src="../../../../Images/activeV.png" "--> 
                         </tr>
 
                     </table>
