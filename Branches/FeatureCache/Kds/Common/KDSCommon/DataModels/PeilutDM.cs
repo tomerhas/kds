@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using KDSCommon.DataModels.Nezer;
 
 namespace KDSCommon.DataModels
 {
@@ -92,6 +93,12 @@ namespace KDSCommon.DataModels
         public enPeilutStatus oPeilutStatus;
         public string sHamtanaEilat;
 
+        public NezerContainer NezerContainer { get; set; }
+
+        public PeilutDM()
+        {
+            NezerContainer = new NezerContainer();
+        }
         public enum enPeilutStatus
         {
             enUpdate,

@@ -11,6 +11,7 @@ namespace KDSCommon.Interfaces.DAL
     public interface IOvedDAL
     {
         DataTable GetOvedDetails(int iMisparIshi, DateTime dCardDate);
+        DataTable GetNetuneyNezerLeOved(int iMisparIshi, DateTime dCardDate);
         DataTable GetOvedYomAvodaDetails(int iMisparIshi, DateTime dCardDate);
         DataTable GetMeafyeneyBitzuaLeOved(int iMisparIshi, DateTime dTaarich);
         int GetZmanNesia(int iMerkazErua, int iMikumYaad, DateTime dDate);

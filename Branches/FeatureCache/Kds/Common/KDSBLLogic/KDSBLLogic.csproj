@@ -97,6 +97,7 @@
     <Compile Include="Logs\LogBakashot.cs" />
     <Compile Include="Logs\Logger.cs" />
     <Compile Include="Managers\MailManager.cs" />
+    <Compile Include="Managers\NezerMergeManager.cs" />
     <Compile Include="Managers\ShinuyimManager.cs" />
     <Compile Include="Managers\KavimManager.cs" />
     <Compile Include="Managers\OvedManager.cs" />

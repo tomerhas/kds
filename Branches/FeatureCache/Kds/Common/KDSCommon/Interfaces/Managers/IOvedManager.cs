@@ -8,6 +8,7 @@ namespace KDSCommon.Interfaces.Managers
     public interface IOvedManager
     {
         OvedYomAvodaDetailsDM CreateOvedDetails(int iMisparIshi, DateTime dDate);
+        DataTable GetNetuneyNezerLeOved(int iMisparIshi, DateTime dDate);
         DataTable GetOvedDetails(int iMisparIshi, DateTime dCardDate);
         MeafyenimDM CreateMeafyenyOved(int iMisparIshi, DateTime dDate);
         MeafyenimDM CreateMeafyenyOved(int iMisparIshi, DateTime dDate, DataTable meafyenim);

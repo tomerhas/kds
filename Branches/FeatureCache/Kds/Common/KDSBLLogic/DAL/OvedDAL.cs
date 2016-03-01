@@ -14,6 +14,7 @@ namespace KdsLibrary.KDSLogic.DAL
         private const string cProUpdYameyAvodaOvdim = "pkg_errors.pro_upd_yamey_avoda_ovdim";
         private const string cProGetOvedYomAvodaDetails = "pkg_errors.pro_get_oved_yom_avoda_details";
         public const string cProGetOvedDetails = "pkg_errors.pro_get_oved_sidurim_peilut";
+        public const string cProGetNetuneyNezer = "pkg_errors.Pro_Get_Netuney_Nezer";
         public const string cProGetOvedMatzav = "pkg_errors.pro_get_oved_matzav";
         public const string cProUpdCardStatus = "pkg_errors.pro_upd_card_status";
         public const string cProGetZmanNesia = "PKG_UTILS.pro_get_zman_nesia";
@@ -39,6 +40,27 @@ namespace KdsLibrary.KDSLogic.DAL
                 throw ex;
             }
         }
+        public DataTable GetNetuneyNezerLeOved(int iMisparIshi, DateTime dCardDate)
+        {
+            
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+
+            try
+            {//מחזיר נתוני עובד: 
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(cProGetNetuneyNezer, ref dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+       
 
         public DataTable GetOvedYomAvodaDetails(int iMisparIshi, DateTime dCardDate)
         {

@@ -21,6 +21,7 @@ using KDSCommon.Enums;
 using KDSCommon.Helpers;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.DAL;
+using KDSCommon.Interfaces.Managers;
 public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//, System.Web.UI.ICallbackEventHandler
 {
     
@@ -34,7 +35,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private DataView _dvSibotLedivuch;
     private DataView _dvHashlama;
     private DataView _dvPitzulHafsaka;
-    private DataTable _Mashar;   
+    private DataTable _Mashar;
     private DateTime _Param1;//מגבלת התחלת שעת התחלה
    // private DateTime _Param4;//מגבלת סיום שעת גמר - מפעילים
     private DateTime _Param93;//מגבלת סיום שעת התחלה
@@ -413,6 +414,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 htFullEmployeeDetails = (OrderedDictionary)Session["Sidurim"];
                 FirstParticipate = null;
                 SecondParticipate = null;
+
+
+                ServiceLocator.Current.GetInstance<INezerMergeManager>().Merge(dtNezer, htFullEmployeeDetails);
+
                 for (int iIndex = 0; iIndex < htFullEmployeeDetails.Count; iIndex++)
                 {
                     BuildSidurAndPeiluyot(ref htFullEmployeeDetails, iIndex);
@@ -6821,6 +6826,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             return _DataSource;
         }
     }
+    public DataTable dtNezer { get; set; }
     public OrderedDictionary CancledSidurim
     {
         set

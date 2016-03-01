@@ -34,6 +34,11 @@ namespace KDSBLLogic.Managers
             return new OvedYomAvodaDetailsDM();
         }
 
+        public DataTable GetNetuneyNezerLeOved(int iMisparIshi, DateTime dDate)
+        {
+            return  _container.Resolve<IOvedDAL>().GetNetuneyNezerLeOved(iMisparIshi, dDate);
+           
+        }
         private void SetMeafyneyOved(OvedYomAvodaDetailsDM ovedYomAvodaDatails, DataTable dtOvedCardDetails)
         {
             try
