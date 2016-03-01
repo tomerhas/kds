@@ -17,193 +17,165 @@ import org.openqa.selenium.support.ui.Select;
 import pageObjects.EmployeeCard;
 import pageObjects.LogInPage;
 
-public  class Utilsfn {
+public class Utilsfn {
 
-//	public  WebDriver driver;
-	
-	 int attempts =0;
-	 int MAX_ATTEMPTS =20;
-	
-	
-	public static WebDriver Initialize_browser( ) {
-		
-		
+	// public WebDriver driver;
+
+	int attempts = 0;
+	int MAX_ATTEMPTS = 20;
+
+	public static WebDriver Initialize_browser() {
+
 		File file = new File("C:/Selenium/IEDriverServer.exe");
 		System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
-		return  new InternetExplorerDriver();
-		 
-		 	
+		return new InternetExplorerDriver();
+
 	}
-	
-    
-   public static  void  Initialize_Webpage(WebDriver driver) {
-	   
-	   
-	   
-		
-	//   Runtime.getRuntime().exec("C:\\selenium\\workspace\\autotest.exe");
-	   
-	   driver.navigate().to("http://kdstest");
-	   //driver.get("http://igalr:DD2468@kdstest");
-	   
-	
-	  
-		 	
+
+	public static void Initialize_Webpage(WebDriver driver) {
+
+		// Runtime.getRuntime().exec("C:\\selenium\\workspace\\autotest.exe");
+
+		driver.navigate().to("http://kdstest");
+		// driver.get("http://igalr:DD2468@kdstest");
+
 	}
-	  
 
-   
- public static  void  Enter_Workcard(WebDriver driver) {
-	   
+	public static void Enter_Workcard(WebDriver driver) {
 
-	  LogInPage.lnk_EmployeeCards(driver).click();
-      String innerTitle = driver.getTitle();
-      System.out.println(innerTitle);
-	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	  Select droplist = new Select(EmployeeCard.List_Month(driver));
-      droplist.selectByVisibleText("03/2015"); 
-      EmployeeCard.Btn_Execute(driver).click();
-      EmployeeCard.Link_Date(driver).click();
-	   
-	  
-		 	
+		LogInPage.lnk_EmployeeCards(driver).click();
+		String innerTitle = driver.getTitle();
+		System.out.println(innerTitle);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		Select droplist = new Select(EmployeeCard.List_Month(driver));
+		droplist.selectByVisibleText("03/2015");
+		EmployeeCard.Btn_Execute(driver).click();
+		EmployeeCard.Link_Date(driver).click();
+
 	}
-   
 
- public  void waitForWindow(String regex,WebDriver driver) {
-	
-	 try{
-		 Set<String> windows = driver.getWindowHandles();
-		 System.out.println(windows);
-	
-	
-	for (String window : windows) {
-         try {
-             driver.switchTo().window(window);
+	public void waitForWindow(String regex, WebDriver driver) {
 
-             Pattern p = Pattern.compile(regex);
-             Matcher m = p.matcher(driver.getCurrentUrl());
+		try {
+			Set<String> windows = driver.getWindowHandles();
+			System.out.println(windows);
 
-             if (m.find()) {
-                 attempts = 0;
-                 switchToWindow(regex,driver);
-                 return;
-             }
-             else {
-                 // try for title
-                 m = p.matcher(driver.getTitle());
-                
-                // if (driver.getCurrentUrl().indexOf("WorkCard")>-1){
-                 if (m.find()) {
-                     attempts = 0;
-                      switchToWindow(regex,driver);
-                      return;
-                 }
-             }
-         } catch(NoSuchWindowException e) {
-             if (attempts <= MAX_ATTEMPTS) {
-                 attempts++;
+			for (String window : windows) {
+				try {
+					driver.switchTo().window(window);
 
-                 try {Thread.sleep(1);}catch(Exception x) { x.printStackTrace(); }
+					Pattern p = Pattern.compile(regex);
+					Matcher m = p.matcher(driver.getCurrentUrl());
 
-                  waitForWindow(regex,driver);
-                  return;
-             } else {
-                 fail("Window with url|title: " + regex + " did not appear after " + MAX_ATTEMPTS + " tries. Exiting.");
-             }
-         }
-     }
+					if (m.find()) {
+						attempts = 0;
+						switchToWindow(regex, driver);
+						return;
+					} else {
+						// try for title
+						m = p.matcher(driver.getTitle());
 
-	
-	
-     // when we reach this point, that means no window exists with that title..
-     if (attempts == MAX_ATTEMPTS) {
-         fail("Window with title: " + regex + " did not appear after 5 tries. Exiting.");
-         return;
-     } else {
-         System.out.println("#waitForWindow() : Window doesn't exist yet. [" + regex + "] Trying again. " + attempts + "/" + MAX_ATTEMPTS);
-         attempts++;
-       waitForWindow(regex,driver);
-       return ;
-     }
-     
- } catch (NullPointerException  e )
-	 
-	 {
-		 System.out.print("NullPointerException caught");
-	 }
-     
- }
- 
- 
+						// if (driver.getCurrentUrl().indexOf("WorkCard")>-1){
+						if (m.find()) {
+							attempts = 0;
+							switchToWindow(regex, driver);
+							return;
+						}
+					}
+				} catch (NoSuchWindowException e) {
+					if (attempts <= MAX_ATTEMPTS) {
+						attempts++;
 
+						try {
+							Thread.sleep(1);
+						} catch (Exception x) {
+							x.printStackTrace();
+						}
 
- 
- 
- 
- public  void switchToWindow(String regex,WebDriver driver) {
-     Set<String> windows = driver.getWindowHandles();
+						waitForWindow(regex, driver);
+						return;
+					} else {
+						fail("Window with url|title: " + regex
+								+ " did not appear after " + MAX_ATTEMPTS
+								+ " tries. Exiting.");
+					}
+				}
+			}
 
-     for (String window : windows) {
-         driver.switchTo().window(window);
-         System.out.println(String.format("#switchToWindow() : title=%s ; url=%s",
-                 driver.getTitle(),
-                 driver.getCurrentUrl()));
+			// when we reach this point, that means no window exists with that
+			// title..
+			if (attempts == MAX_ATTEMPTS) {
+				fail("Window with title: " + regex
+						+ " did not appear after 5 tries. Exiting.");
+				return;
+			} else {
+				System.out
+						.println("#waitForWindow() : Window doesn't exist yet. ["
+								+ regex
+								+ "] Trying again. "
+								+ attempts
+								+ "/"
+								+ MAX_ATTEMPTS);
+				attempts++;
+				waitForWindow(regex, driver);
+				return;
+			}
 
-         Pattern p = Pattern.compile(regex);
-         Matcher m = p.matcher(driver.getTitle());
+		} catch (NullPointerException e)
 
-         if (m.find()) return ;
-         else {
-             m = p.matcher(driver.getCurrentUrl());
-             if (m.find()) return ;
-         }
-     }
+		{
+			System.out.print("NullPointerException caught");
+		}
 
-     
-     fail("Could not switch to window with title / url: " + regex);
-     return ;
- }
+	}
 
+	public void switchToWindow(String regex, WebDriver driver) {
+		Set<String> windows = driver.getWindowHandles();
 
-private  void fail(String string) {
-	System.out.println(string);
-	
-}
+		for (String window : windows) {
+			driver.switchTo().window(window);
+			System.out.println(String.format(
+					"#switchToWindow() : title=%s ; url=%s", driver.getTitle(),
+					driver.getCurrentUrl()));
 
-public static int GetNumWindows(WebDriver driver)
-{
-	 return driver.getWindowHandles().size();
-	 
-	 
-}
+			Pattern p = Pattern.compile(regex);
+			Matcher m = p.matcher(driver.getTitle());
 
+			if (m.find())
+				return;
+			else {
+				m = p.matcher(driver.getCurrentUrl());
+				if (m.find())
+					return;
+			}
+		}
 
+		fail("Could not switch to window with title / url: " + regex);
+		return;
+	}
 
+	private void fail(String string) {
+		System.out.println(string);
 
+	}
 
+	public static int GetNumWindows(WebDriver driver) {
+		return driver.getWindowHandles().size();
 
-public void  Click_Sub_Menu  (String  menu ,  String sub_menu , WebDriver driver)   {
+	}
 
+	public void Click_Sub_Menu(String menu, String sub_menu, WebDriver driver) {
 
-	 WebElement element = driver.findElement(By.linkText(menu));
+		WebElement element = driver.findElement(By.linkText(menu));
 
-     Actions action = new Actions(driver);
+		Actions action = new Actions(driver);
 
-     action.moveToElement(element).build().perform();
-     
+		action.moveToElement(element).build().perform();
 
-     WebElement subElement = driver.findElement(By.linkText(sub_menu));
-     
-     subElement.click();
+		WebElement subElement = driver.findElement(By.linkText(sub_menu));
 
-     
-	
+		subElement.click();
 
-
+	}
 
 }
-
-}
-
-
