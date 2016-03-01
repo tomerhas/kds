@@ -458,29 +458,9 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>48489</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>משה שלוש</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>מנהל חטיבת משא"נ</Value>
+                <Value>29798
+יצחק זיטלני
+מנהל אגף משאבי אנוש תכנון וטכנולוגיה</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -491,9 +471,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>3.54224cm</Top>
-        <Left>2.54cm</Left>
+        <Left>2.09021cm</Left>
         <Height>1.49958cm</Height>
-        <Width>4.38673cm</Width>
+        <Width>5.5509cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
