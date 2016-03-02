@@ -6006,7 +6006,7 @@ namespace KdsBatch
                     {
                         if (objOved.objPirteyOved.iAchsana == 1 || objOved.objPirteyOved.iAchsana == 2)
                         {
-                            fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaSidur).TotalMinutes.ToString());
+                            fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
                             iKodRechiv = clGeneral.enRechivim.NochehutPremiaMeshekAchsana.GetHashCode();
                         }
                         else
@@ -6022,7 +6022,7 @@ namespace KdsBatch
                     }
                     else if (iMisparSidur == 99221)
                     {
-                        fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaSidur).TotalMinutes.ToString());
+                        fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
                         iKodRechiv = clGeneral.enRechivim.NochehutPremiaMeshekAchsana.GetHashCode();
                     }
 
@@ -6276,7 +6276,7 @@ namespace KdsBatch
                   
                     if (iMisparSidur == 99220)
                     {
-                        dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
+                        dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
                         dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
 
                         fErechRechiv = float.Parse((dShatGmarLetashlum - dShatHatchalaSidur).TotalMinutes.ToString());
@@ -6317,7 +6317,7 @@ namespace KdsBatch
 
                     if (iSugSidur == 69)
                     {
-                        dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
+                        dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
                         dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
 
                         fErechRechiv = float.Parse((dShatGmarLetashlum - dShatHatchalaSidur).TotalMinutes.ToString());
