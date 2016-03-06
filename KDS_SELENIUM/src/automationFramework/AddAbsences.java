@@ -32,7 +32,7 @@ public class AddAbsences    extends Base {
 	  
 	  
 	  
-driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
 	  
 	  
 	  Utilsfn a= new Utilsfn();
