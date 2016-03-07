@@ -683,13 +683,15 @@ namespace KdsBatch.TaskManager
              clBatch objBatch = new clBatch();
              try
              {
+
                  IBankShaotManager BankManager = ServiceLocator.Current.GetInstance<IBankShaotManager>();
               //   lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.ChishuvBankShaotMeshek, "ChishuvBankShaotMeshek", -12);
                  chodesh =  DateTime.Now.Date.Month.ToString().PadLeft(2,'0') +"/"+ DateTime.Now.Date.Year;
                  lRequestNum = objBatch.InsBakashaChishuvBankShaot(clGeneral.enGeneralBatchType.ChishuvBankShaotMeshek, "ChishuvBankShaotMeshek", clGeneral.enStatusRequest.InProcess, -12, chodesh);
-          
+                // ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "before BankManager.ExecBankShaot");
+               //  ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "BankManager obj=" + BankManager);
                  BankManager.ExecBankShaot(lRequestNum,DateTime.Now.Date);
-                
+                 ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "after BankManager.ExecBankShaot");
                  clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
              }
              catch (Exception ex)

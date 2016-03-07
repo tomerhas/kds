@@ -951,6 +951,10 @@ namespace KdsLibrary
                 sTmp = GetOneParam(317, dCardDate);
                 cls.dParam317 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
 
+                //318
+                sTmp = GetOneParam(318, dCardDate);
+                cls.dParam318 = String.IsNullOrEmpty(sTmp) ? DateTime.MinValue : DateTime.Parse(sTmp);
+
                 //503 -אגד תעבורה- מכסת שעות חודשית 
                 sTmp = GetOneParam(503, dCardDate);
                 cls.fMichsatSaotChodshitET = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
