@@ -90,9 +90,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\app.js" />
+    <Content Include="app\app.old.js" />
     <Content Include="app\directives\eggedDateTimeDirective.js" />
     <Content Include="app\directives\ngModalDirective.js" />
+    <Content Include="app\Index.html" />
+    <Content Include="app\modules\workcard\dailyDetails\dailyDetails.tpl.html" />
+    <Content Include="app\modules\workcard\dailyDetails\ovedDailyWork\hityatzvutDetails.tpl.html" />
+    <Content Include="app\modules\workcard\generalDetails\generalDetails.tpl.html" />
+    <Content Include="app\modules\workcard\sidurAvoda\sidurAvoda.tpl.html" />
+    <Content Include="app\modules\workcard\workCardMain.tpl.html" />
     <Content Include="app\workCardModule\config.js" />
     <Content Include="app\workCardModule\controllers\ovedDailyWork\ovedDailyWorkDetailsController.js" />
     <Content Include="app\workCardModule\controllers\mainWorkCardController.js" />
@@ -2899,6 +2905,33 @@
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="app\app.ts" />
+    <TypeScriptCompile Include="app\common\helpers\dateHelper.ts" />
+    <TypeScriptCompile Include="app\common\services\uiHelperService.ts" />
+    <TypeScriptCompile Include="app\common\_module.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\AttributeField.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\clParametersDM.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\EmployeeBasicDetails.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\EmployeeIdContainer.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\EmployeeNameContainer.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\EmplyeeDetails.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\Hityatzvut.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\PeilutWC.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\SelectedItem.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\SidurimWC.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\SidurWC.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\UserWCUpdateInfo.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\WorkCardLookupsContainer.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\contracts\WorkCardResultContainer.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\dailyDetails\dailyDetails.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\dailyDetails\ovedDailyWork\hityatzvutDetails.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\events\generalEvents.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\generalDetails\generalDetails.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\module.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\services\apiProviderService.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\services\workCardStateService.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\sidurAvoda\sidurAvoda.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\workCardMain.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-component-router.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
@@ -2909,10 +2942,26 @@
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\es6-shim\es6-shim.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="ViewModels\WorkCard\EmployeeBasicDetails.cs.d.ts">
+      <DependentUpon>EmployeeBasicDetails.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ViewModels\WorkCard\EmployeeIdContainer.cs.d.ts">
+      <DependentUpon>EmployeeIdContainer.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ViewModels\WorkCard\EmployeeNameContainer.cs.d.ts">
+      <DependentUpon>EmployeeNameContainer.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ViewModels\WorkCard\EmplyeeDetails.cs.d.ts">
+      <DependentUpon>EmplyeeDetails.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ViewModels\WorkCard\UserWCUpdateInfo.cs.d.ts">
+      <DependentUpon>UserWCUpdateInfo.cs</DependentUpon>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

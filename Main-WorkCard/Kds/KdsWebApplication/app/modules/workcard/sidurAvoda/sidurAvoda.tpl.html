@@ -1,0 +1,156 @@
+﻿<div>
+    <table ng-show="vm.Sidurim.length > 0">
+        <thead>
+            <tr class="OvedDetailsHeaderNew" style="height: 40px">
+                <th class="CellListViewNew" style="width: 2%">הוסף</th>
+                <th class="CellListViewNew" style="width: 6%">מס סידור</th>
+                <th class="CellListViewNew" style="width: 7%">שעת התחלה</th>
+                <th class="CellListViewNew" style="width: 7%">שעת סיום</th>
+                <th class="CellListViewNew" style="width: 12%">סיבת אי החתמה כניסה</th>
+                <th class="CellListViewNew" style="width: 12%">סיבת אי החתמה יציאה</th>
+                <th class="CellListViewNew" style="width: 11%">שעת התחלה לתשלום</th>
+                <th class="CellListViewNew" style="width: 11%">שעת גמר לתשלום</th>
+                <th class="CellListViewNew" style="width: 5%">חריגה</th>
+                <th class="CellListViewNew" style="width: 5%">פיצול/ הפסקה</th>
+                <!--<th class="CellListViewNew" style="width: 5%">המרה</th>-->
+                <th class="CellListViewNew" style="width: 5%">השלמה</th>
+                <th class="CellListViewNew" style="width: 5%">מ.ל.</th>
+                <th class="CellListViewNew" style="width: 5%">לא לתש'</th>
+                <th class="CellListViewNew">פעיל</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="sidur in vm.Sidurim" style="height: 40px; width: 100%">
+                <td colspan="15">
+                    <table style="width: 100%">
+                        <tr style="height: 35px" class="WorkCardTable1">
+                            <td style="width: 2%">
+                                <input type="image" src="../../../../Images/Plus.png" />
+                            </td>
+
+
+                            <td style="width: 6%">
+                                <a href="#" style="text-decoration: none">
+                                    <img ng-src="{{sidur.CollapseSrc.Value}}" ng-click="vm.ChangeCollapeImg($index)" data-toggle="collapse" ng-show="sidur.PeilutList.length > 0" data-target="#collapseRow{{$index}}" />
+                                </a>
+                                {{sidur.MisparSidur.Value}}
+                            </td>
+                            <td style="width: 7%">
+                                <!--<input type="text" ng-model="sidur.FullShatHatchala.Value" time>-->
+                                <!--ng-model="str"  -->
+                                <!--k-ng-model="sidur.FullShatHatchala.Value" -->
+                                <!--<input kendo-time-picker k-ng-model="sidur.MyFullDate" k-format="'HH:mm'"  k-options="vm.datePickerOption"/>-->
+                                <!--<input egged-date-time ng-model="sidur.FullShatHatchala.Value"></input>-->
+
+                                  <input type="time" name="time"  value="{{sidur.FullShatHatchala.Value | date:'hh:mm'}}" />
+                                <!--<input time-Mask name="date" ng-model="sidur.FullShatHatchala.Value"   required autocomplete='off' ui-mask="99:99"/>-->
+                                <!--  <input type="text" class="timepicker" placeholder="h:mm PM"  data-default-time="true" >-->
+                                <!-- <input type="text" name="start_time" class="timepicker" placeholder="h:mm PM" data-default-time="false">-->
+                                <!--   <input class="bfh-timepicker" data-time="08:00"/>-->
+                                <!--    <input ui-mask="99:99" style="width: 100px" type="text" value="{{sidur.FullShatGmar.Value | date:'hh:mm'}}"  ng-model="sidur.FullShatGmar.Value"></input>
+                                -->
+                                <!--<input ng-model="sidur.FullShatGmar.Value" datetime-picker date-format="HH:mm" close-on-select="false" /> -->
+                                <!--  <input ui-mask="99:99" style="width: 100px" type="text" ng-model="sidur.FullShatGmar.Value"></input>-->
+                            </td>
+                            <td style="width: 7%">
+                                <!--{{sidur.FullShatGmar.Value | date:'hh:mm' }}-->
+                                   <input type="time" name="time"  value="{{sidur.FullShatGmar.Value | date:'hh:mm'}}" />
+                            </td>
+                            <td style="width: 12%">
+                                <select ng-model="sidur.SibatHachtamaIn.Value" ng-options="i.Value as i.Description for i in vm.SibotDivuachList">
+                                    <option></option>
+                                </select>
+                            </td>
+                            <td style="width: 12%">
+                                <select ng-model="sidur.SibatHachtamaOut.Value" ng-options="i.Value as i.Description for i in vm.SibotDivuachList">
+                                    <option></option>
+                                </select>
+                            </td>
+                            <td style="width: 11%">{{sidur.FullShatHatchalaLetashlum.Value | date:'hh:mm' }}</td>
+                            <td style="width: 11%">{{sidur.FullShatGmarLetashlum.Value | date:'hh:mm' }}</td>
+                            <td style="width: 5%">
+                                <select ng-model="sidur.Hariga.Value" ng-options="i.Value as i.Description for i in vm.HarigaList"></select>
+                            </td>
+                            <td style="width: 5%">
+
+                                <select ng-model="sidur.Pizul.Value" ng-options="i.Value as i.Description for i in vm.PizulList">
+                                    <option></option>
+                                </select>
+                            </td>
+                            <!--   <td  style="width: 5%">{{sidur.Hamara.Value}}</td>-->
+                            <td style="width: 5%">
+                                <select name="SelectHashlama" id="SelectHashlama" style="width: 80px">
+                                    <option ng-repeat="h in vm.HshlamaList" value="{{h.Value}}">{{h.Description}}</option>
+                                </select>
+                                <!--  {{sidur.Hashlama.Value}}-->
+                            </td>
+                            <td style="width: 5%">
+                                <input type="checkbox" />
+                                <!--  {{sidur.OutMichsa.Value}}-->
+
+                            </td>
+                            <td style="width: 5%">
+                                <input type="checkbox" />
+
+                                <!-- {{sidur.LoLetashlum.Value}}-->
+
+                            </td>
+
+                            <td>
+                                <input type="image" src="../../../../Images/Title_activeV.png" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width: 100%" id="collapseRow{{$index}}" class="collapse in" ng-show="sidur.PeilutList.length > 0">
+                        <thead>
+                            <tr class="wcard_header">
+                                <th style="width: 2%"></th>
+                                <th style="width: 10%">ריקה</th>
+                                <th style="width: 10%">כסוי תור</th>
+                                <th style="width: 10%">ש. יציאה</th>
+                                <th style="width: 25%">תאור</th>
+                                <th style="width: 5%">קו</th>
+                                <th style="width: 5%">סוג</th>
+                                <th style="width: 10%">מק"ט</th>
+                                <th style="width: 5%">ד. תכנון</th>
+                                <th style="width: 5%">ד. בפועל</th>
+                                <th style="width: 10%">מספר רכב</th>
+                                <th style="width: 5%">נצ"ר</th>
+                                <th style="width: 10%">פעיל</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="peilut in sidur.PeilutList">
+                            <td></td>
+                            <td>
+                                <input ng-show="peilut.RekaDown.Value" style="margin-left: 15px" type="image" src="../../../../Images/down.png" />
+                                <input ng-show="peilut.RekaUp.Value" type="image" src="../../../../Images/up.png" />
+                            </td>
+                            <td>{{peilut.KisuyTor.Value}}</td>
+                            <td>
+                                <!--     <input ui-mask="99:99"  type="text" time ng-model="peilut.ShatYezia.Value" /> -->
+                                <input type="text" ng-model="peilut.ShatYezia.Value" timeegged />
+                                {{peilut.ShatYezia.Value}}
+                            </td>
+                            <td>{{peilut.Teur.Value}}</td>
+                            <td>{{peilut.Kav.Value}}</td>
+                            <td>{{peilut.Sug.Value}}</td>
+                            <td>
+                                <input type="text" maxlength="8" input-max-length-number ng-model="peilut.Makat.Value" value="{{peilut.Makat.Value}}" style="width: 100px" ng-blur="vm.CheckMakat(peilut);" ng-change="DisabledControls();" onfocus="FocusText(this);" />
+                            </td>
+                            <td>{{peilut.DakotTichnun.Value}}</td>
+                            <td><input type="number" id="{{ 'db' +$parent.$index+ $index }}" value="{{peilut.DakotBafoal.Value}}" maxlength="4" ng-model="peilut.DakotBafoal.Value" ng-blur="vm.CheckValidMinutes(peilut);" onfocus="FocusText(this);" ng-change="DisabledControls()" input-max-length-number style="width: 60px" /></td>
+                            <td> <input type="number" maxlength="5" input-max-length-number value="{{peilut.NumOto.Value}}" ng-blur="vm.ChkOto($parent.$index, $index);" style="width: 60px" ng-model="peilut.NumOto.Value" onfocus="FocusText(this);" /></td>
+                            <td>{{peilut.Nezer.Value}}</td>
+                            <td>
+                                <input type="button" ng-class="peilut.CancelPeilut.Value" ng-click="vm.SetKnisaActualMin(peilut,this);" />
+                            </td>
+
+                            <!--onchange="CheckValidMinutes(this);  src="../../../../Images/activeV.png" "-->
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

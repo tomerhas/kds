@@ -1391,11 +1391,15 @@ declare module angular {
     }
 
     interface IHttpPromiseCallbackArg<T> {
-        data?: T;
+        data?: dataContainer<T>;
         status?: number;
         headers?: IHttpHeadersGetter;
         config?: IRequestConfig;
         statusText?: string;
+    }
+
+    interface dataContainer<T>{
+        d?: T;
     }
 
     interface IHttpPromise<T> extends IPromise<IHttpPromiseCallbackArg<T>> {

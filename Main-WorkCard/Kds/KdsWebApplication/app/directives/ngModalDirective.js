@@ -21,7 +21,7 @@
 //});
 
 
-mainApp.provider("ngModalDefaults", function () {
+angular.module("mainApp").provider("ngModalDefaults", function () {
     return {
         options: {
             closeButtonHtml: "<span class='ng-modal-close-x'>X</span>"
@@ -45,7 +45,7 @@ mainApp.provider("ngModalDefaults", function () {
     };
 });
 
-mainApp.directive('modalDialog', [
+angular.module("mainApp").directive('modalDialog', [
     'ngModalDefaults', '$sce', function (ngModalDefaults, $sce) {
         return {
             restrict: 'E',
