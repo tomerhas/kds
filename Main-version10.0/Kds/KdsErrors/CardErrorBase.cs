@@ -146,7 +146,33 @@ namespace KdsErrors
             return bSidurHeadrut;
         }
 
+        protected bool IsSidurWithPeiluyotOnlyWithHeterEmptyBus(SidurDM oSidur)
+        {
+            PeilutDM oPeilut;
+            int makat;
+            enMakatType type;
+            try
+            {
+                for (int i = 0; i < oSidur.htPeilut.Count; i++)
+                {
+                    oPeilut = (PeilutDM)oSidur.htPeilut[i];
+                    makat = int.Parse(oPeilut.lMakatNesia.ToString().Substring(0, 3));
+                    type = (enMakatType)oPeilut.iMakatType;
 
+                    if (makat != 701 && makat != 702 && makat != 711 && type != enMakatType.mEmpty &&
+                        !(type == enMakatType.mElement && oPeilut.sElementNesiaReka != "") && !(type == enMakatType.mElement && !oPeilut.bBusNumberMustExists))
+                                return false;
+                        
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                //clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 0, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNihulTnua: " + ex.Message, null);
+                //_bSuccsess = false;
+            }
+        }
     
         protected bool IsSidurNihulTnua(DataRow[] drSugSidur, SidurDM oSidur)
         {

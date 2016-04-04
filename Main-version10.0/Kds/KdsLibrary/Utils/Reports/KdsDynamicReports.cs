@@ -557,6 +557,7 @@ namespace KdsLibrary.Utils.Reports
         IshurimLerashemet=900,
         RptIturim = 300,
         Presence=200,
+        PresenceAllSidurim=205,
         DriverWithoutTacograph=500,
       //  DriverWithoutSignature=600,
         RdlHityazvutMissing = 600,

@@ -450,9 +450,9 @@ namespace KdsBatch.TaskManager
             var logger = ServiceLocator.Current.GetInstance<ILogBakashot>();
             try
             {
-               // lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.RetroSpectSDRN, "RunRetroSpectSDRN", -12);
-               // iStatus = clGeneral.enStatusRequest.InProcess.GetHashCode();
-               // clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.RetroSpectSDRN, "RunRetroSpectSDRN", -12);
+                iStatus = clGeneral.enStatusRequest.InProcess.GetHashCode();
+              //  clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
 
                
                 Num = oUtils.GetTbParametrim(252, DateTime.Today);

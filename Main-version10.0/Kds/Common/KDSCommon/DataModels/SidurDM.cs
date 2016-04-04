@@ -176,6 +176,7 @@ namespace KDSCommon.DataModels
         //public int iPremium=0;
         public enSidurStatus oSidurStatus;
         public string sTokefHatchala, sTokefSiyum;
+        public int iKodHeterNehiga;
         public enum enSidurStatus
         {
             enUpdate,

@@ -127,7 +127,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 {
                     ListBoxExtended CurrentControl = (ListBoxExtended)TdFilter.FindControl(Filter.ParameterName);
                     CurrentControl.AddAttributes();
-                    if ((!Page.IsPostBack) && ((Report.NameReport == ReportName.Presence) ||
+                    if ((!Page.IsPostBack) && ((Report.NameReport == ReportName.Presence) || 
+                                               (Report.NameReport == ReportName.PresenceAllSidurim) ||
                                                (Report.NameReport == ReportName.IshurimLerashemet) ))
                         CurrentControl.SetDefaultValue(LoginUser.UserInfo.EmployeeNumber.ToString());
                     if (CurrentControl.ListOfValues != "")
@@ -198,6 +199,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     }
                     break;
                 case ReportName.Presence:
+                case ReportName.PresenceAllSidurim:
                     if (!Page.IsPostBack)
                     {
                         CtrlStartDate = "01/" + DateTime.Now.ToString("MM/yyyy");
@@ -350,6 +352,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             switch (Report.NameReport)
             {
                 case ReportName.Presence:
+                case ReportName.PresenceAllSidurim:
                     foreach (ListItem item in WorkerViewLevel.Items)
                     {
                         if (item.Value == "1")
@@ -622,6 +625,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //    break;
                 case ReportName.Presence:
                 case ReportName.IshurimLerashemet:
+                case ReportName.PresenceAllSidurim:
                     MisparIshi.ContextKey = _sProfilUser + "," + LoginUser.UserInfo.EmployeeNumber + ","
                         + CtrlStartDate + "," + CtrlEndDate;
                     break;
@@ -940,6 +944,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.AverageSnifEzor:
                 case ReportName.Average:
                 case ReportName.Presence:
+                case ReportName.PresenceAllSidurim:
                     //if(rpt.NameReport == ReportName.Average) //להוריד כשמחזירים רכיב
                     //    Params.Add("P_RECHIV", "");
                     //                Params.Add("P_WORKERVIEWLEVEL", ((int)PageModule.SecurityLevel).ToString());
@@ -977,6 +982,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     Params["P_ENDDATE"] = EndMonth.ToShortDateString();
                  break;
                 case ReportName.Presence:
+                case ReportName.PresenceAllSidurim:
                  if (Params["P_MISPAR_ISHI"] != "")
                       Report.ProductionType = ProductionType.Normal;
                  else 

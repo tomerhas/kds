@@ -111,6 +111,26 @@
     </Filter>
 
   </Report>
+
+  <Report  RdlName="PresenceAllSidurim" Roles="kds_administrators" FilterByLine="3" PageHeader="נוכחות" ZoomPercent="100">
+    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  RunAtServer="true" Required="true">
+      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
+      <FilterValidator ValidatorName="ValidPresenceMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
+    </Filter>
+    <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true">
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
+      <!--<FilterValidator ValidatorName="ValidPresenceAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
+    </Filter>
+    <Filter  ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
+    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32" Required="true">
+      <FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי או סניף" ValidationFunction="IsEmptyPresence"/>
+      <DropDownList QueryType="AjaxAutoComplete"  Select="GetOvdimForPresence" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
+    </Filter>
+    <Filter ParameterName="P_SNIF" Caption="סניף אב" BoxeType="ListBox" DataType="System.Int32">
+      <DropDownList QueryType="Select"  Select="select KOD_SNIF_AV,teur_snif_av from ctb_snif_av ORDER BY teur_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" />
+    </Filter>
+
+  </Report>
   <Report  RdlName="DriverWithoutTacograph" Roles="kds_administrators" FilterByLine="3" PageHeader="נהגים שלא צרפו טכוגרף" ProductionType="Heavy">
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />

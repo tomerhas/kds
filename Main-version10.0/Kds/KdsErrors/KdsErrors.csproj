@@ -133,6 +133,7 @@
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorMachalatYeledMugbal214.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorMichsatMachalaYeledImMugbalut210.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorMushalETWithSidurNotAllowET208.cs" />
+    <Compile Include="ErrosrImpl\SidurErrors\SidurErrorOvedLeloHeterEmptyBus216.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorOvedLoMushalWithTaavura215.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorShatHatchalaBiggerShatYetzia207.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidirErrorPitzulSidurInShabatValid24.cs" />

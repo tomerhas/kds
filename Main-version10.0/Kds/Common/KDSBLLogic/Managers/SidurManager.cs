@@ -252,6 +252,7 @@ namespace KdsLibrary.KDSLogic.Managers
             cls.sMenahelBankRashaiLedaveach = dr["ledivuach_menahel_meshek"].ToString();
             cls.bMenahelBankRashaiLedaveach = !(String.IsNullOrEmpty(dr["ledivuach_menahel_meshek"].ToString()));
 
+            cls.iKodHeterNehiga = int.Parse(dr["kod_heter_nehiga"].ToString());
             //sSidurNetzerKod = dr["sidur_netzer_kod"].ToString();
             cls.sSidurNotInShabtonKod = dr["sidur_not_in_shabton_kod"].ToString();
             cls.bSidurNotInShabtonKodExists = !(String.IsNullOrEmpty(dr["sidur_not_in_shabton_kod"].ToString()));
