@@ -78,7 +78,18 @@ namespace KdsBatch
 
               fErech = GetErechRechiv(clGeneral.enRechivim.MachalatYeledImMugbalutMaavid.GetHashCode());
               sErua460.Append(FormatNumber(fErech, 4, 2));
-                  
+
+              if (MaamadDorB())
+              {
+                  fErech = GetErechRechivDorB(clGeneral.enRechivim.MachalatYeledImMugbalutOved.GetHashCode());
+                  sErua460.Append(FormatNumber(fErech, 4, 2));
+              }
+              else
+              {
+                  fErech = GetErechRechiv(clGeneral.enRechivim.MachalatYeledImMugbalutOved.GetHashCode());
+                  sErua460.Append(FormatNumber(fErech, 4, 2));
+              }
+
               fErech = GetErechRechiv(clGeneral.enRechivim.MachalatYeledImMugbalutOved.GetHashCode());
               sErua460.Append(FormatNumber(fErech, 4, 2));
 
