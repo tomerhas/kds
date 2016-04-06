@@ -941,11 +941,12 @@ public partial class Modules_Test :Page
 
     protected void btnMakat_Click(object sender, EventArgs e)
     {
-      //  clTkinutMakatim objMakat = new clTkinutMakatim();
-       // objMakat.CheckTkinutMakatim(DateTime.Parse(clnFromDate.Text));
+        clTkinutMakatim objMakat = new clTkinutMakatim();
+        objMakat.RunRefreshKnisot(DateTime.Parse(clnFromDate.Text));
+        //objMakat.CheckTkinutMakatim(DateTime.Parse(clnFromDate.Text));
 
-        wsBatch oBatch = new wsBatch();
-        oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
+       // wsBatch oBatch = new wsBatch();
+       // oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
     }
 
     //protected void btnRefreshMakatim_Click(object sender, EventArgs e)

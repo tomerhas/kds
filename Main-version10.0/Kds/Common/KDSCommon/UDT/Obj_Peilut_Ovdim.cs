@@ -147,6 +147,10 @@ namespace KDSCommon.UDT
 
         private string m_TEUR_NESIA;
 
+        private int m_LICENSE_NUMBER;
+
+        private bool m_LICENSE_NUMBERIsNull;
+            
         public OBJ_PEILUT_OVDIM()
         {
             // TODO : Add code to initialise the object
@@ -182,6 +186,7 @@ namespace KDSCommon.UDT
             this.m_NEW_MISPAR_SIDURIsNull = true;
             this.m_SNIF_TNUAIsNull = true;
             this.m_KM_VISAIsNull = true;
+            this.m_LICENSE_NUMBERIsNull = true;
 
             //m_IsNull = false;
         }
@@ -1091,6 +1096,33 @@ namespace KDSCommon.UDT
                 this.m_NEW_MISPAR_SIDURIsNull = value;
             }
         }
+
+        [OracleObjectMappingAttribute("LICENSE_NUMBER")]
+        public int LICENSE_NUMBER
+        {
+            get
+            {
+                return this.m_LICENSE_NUMBER;
+            }
+            set
+            {
+                this.m_LICENSE_NUMBER = value;
+                this.m_LICENSE_NUMBERIsNull = false;
+            }
+        }
+
+        public bool LICENSE_NUMBERIsNull
+        {
+            get
+            {
+                return this.m_LICENSE_NUMBERIsNull;
+            }
+            set
+            {
+                this.m_LICENSE_NUMBERIsNull = value;
+            }
+        }
+
         public virtual void FromCustomObject(Oracle.DataAccess.Client.OracleConnection con, System.IntPtr pUdt)
         {
             if ((OTO_NOIsNull == false))
@@ -1224,6 +1256,10 @@ namespace KDSCommon.UDT
             if ((NEW_MISPAR_SIDURIsNull == false))
             {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "NEW_MISPAR_SIDUR", this.NEW_MISPAR_SIDUR);
+            }
+            if ((LICENSE_NUMBERIsNull == false))
+            {
+                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "LICENSE_NUMBER", this.LICENSE_NUMBER);
             }
         }
 
@@ -1394,6 +1430,12 @@ namespace KDSCommon.UDT
             if ((NEW_MISPAR_SIDURIsNull == false))
             {
                 this.NEW_MISPAR_SIDUR = ((int)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "NEW_MISPAR_SIDUR")));
+            }
+
+            this.LICENSE_NUMBERIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "LICENSE_NUMBER");
+            if ((LICENSE_NUMBERIsNull == false))
+            {
+                this.LICENSE_NUMBER = ((int)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "LICENSE_NUMBER")));
             }
         }
 
