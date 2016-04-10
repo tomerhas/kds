@@ -90,8 +90,6 @@ namespace KdsBatch
                   sErua460.Append(FormatNumber(fErech, 4, 2));
               }
 
-              fErech = GetErechRechiv(clGeneral.enRechivim.MachalatYeledImMugbalutOved.GetHashCode());
-              sErua460.Append(FormatNumber(fErech, 4, 2));
 
               fErech = GetErechRechiv(clGeneral.enRechivim.YomMachalaMisradHaBitachon.GetHashCode());
               sErua460.Append(FormatNumber(fErech, 4, 2));
