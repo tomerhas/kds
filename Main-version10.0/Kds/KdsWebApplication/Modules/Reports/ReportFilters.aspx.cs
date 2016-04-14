@@ -975,6 +975,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     Params["P_STARTDATE"] = StartMonth.ToShortDateString();
                     Params["P_ENDDATE"] = EndMonth.ToShortDateString();
                     break;
+                case ReportName.Average:
                 case ReportName.AverageSnifEzor:
                 case ReportName.AverageSnifInEzor:
                 case ReportName.AverageOvdimBeSnif:
