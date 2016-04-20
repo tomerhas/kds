@@ -9568,7 +9568,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
               <Width>1.03137cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95199cm</Width>
+              <Width>1.53407cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -12608,9 +12608,9 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R12.Value</Value>
+                              <Value>מחושב בשכר</Value>
                               <Style>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>7pt</FontSize>
                                 <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
@@ -12878,7 +12878,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <Top>6.38102cm</Top>
         <Left>0.36769cm</Left>
         <Height>1.24282cm</Height>
-        <Width>41.7742cm</Width>
+        <Width>42.35628cm</Width>
         <ZIndex>17</ZIndex>
         <Style>
           <Border>
@@ -12924,7 +12924,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
     <Height>6.34154in</Height>
     <Style />
   </Body>
-  <Width>16.59129in</Width>
+  <Width>16.82046in</Width>
   <Page>
     <PageFooter>
       <Height>0.76729cm</Height>

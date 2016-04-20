@@ -458,7 +458,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>29490</Value>
+                <Value>29798</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -469,7 +469,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>שמעון אור</Value>
+                <Value>יצחק זיטלני</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -480,7 +480,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>מנהל חטיבת משא"נ</Value>
+                <Value>מנהל אגף משאבי אנושתכנון וטכנולוגיה</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -491,9 +491,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>3.54224cm</Top>
-        <Left>2.54cm</Left>
+        <Left>1.61396cm</Left>
         <Height>1.49958cm</Height>
-        <Width>4.38673cm</Width>
+        <Width>5.31277cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
