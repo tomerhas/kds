@@ -556,6 +556,9 @@
                           <Height>0.82175cm</Height>
                           <Width>10.13975cm</Width>
                           <ZIndex>1</ZIndex>
+                          <Visibility>
+                            <Hidden>=iif(Parameters!p_type_rpt.Value =1 ,false,true) ' 1==PDF,0=EXCLE</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -768,6 +771,10 @@
         </Values>
       </DefaultValue>
       <Prompt>P_WORKERID</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="p_type_rpt">
+      <DataType>String</DataType>
+      <Prompt>p_type_rpt</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>

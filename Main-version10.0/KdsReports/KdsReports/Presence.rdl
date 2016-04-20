@@ -2079,16 +2079,16 @@ iif(
           <DataField>TEUR_SIDUR_MEYCHAD</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="MEAFYEN_53">
+          <DataField>MEAFYEN_53</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="LO_LETASHLUM">
           <DataField>LO_LETASHLUM</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="KNISA_TKINA_ERR197">
           <DataField>KNISA_TKINA_ERR197</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MEAFYEN_53">
-          <DataField>MEAFYEN_53</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="YATZIA_TKINA_ERR198">
@@ -2159,20 +2159,6 @@ iif(
       </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
     </ReportParameter>
-    <ReportParameter Name="P_WORKERID">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <Prompt>P WORKERID</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_DT">
-      <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>=Globals!ExecutionTime</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>P_DT</Prompt>
-    </ReportParameter>
     <ReportParameter Name="P_MISPAR_ISHI">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
@@ -2184,6 +2170,17 @@ iif(
       <AllowBlank>true</AllowBlank>
       <Prompt>Mispar_Ishi</Prompt>
     </ReportParameter>
+    <ReportParameter Name="P_SNIF">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_SNIF</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_WORKERID">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Prompt>P WORKERID</Prompt>
+    </ReportParameter>
     <ReportParameter Name="P_WORKERVIEWLEVEL">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
@@ -2194,11 +2191,14 @@ iif(
       </DefaultValue>
       <Prompt>P WORKERVIEWLEVEL</Prompt>
     </ReportParameter>
-    <ReportParameter Name="P_SNIF">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>P_SNIF</Prompt>
+    <ReportParameter Name="P_DT">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Globals!ExecutionTime</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Code>    Public Function GetFormatedTime(ByVal dblSeconds As Double) As String

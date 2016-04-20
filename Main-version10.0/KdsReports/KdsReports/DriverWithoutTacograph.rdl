@@ -1570,7 +1570,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value,"",FormatDateTime(Fields!TAARICH.Value,2))</Value>
+                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value and Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value,"",FormatDateTime(Fields!TAARICH.Value,2))</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>

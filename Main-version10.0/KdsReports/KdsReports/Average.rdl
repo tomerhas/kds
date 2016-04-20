@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>19.62408cm</Width>
+              <Width>19.77939cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -662,6 +662,7 @@
                           </TablixRowHierarchy>
                           <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
                           <Top>0.85703cm</Top>
+                          <Left>0.15532cm</Left>
                           <Height>1.2cm</Height>
                           <Width>19.62407cm</Width>
                           <Style>
@@ -670,29 +671,6 @@
                             </Border>
                           </Style>
                         </Tablix>
-                        <Subreport Name="Subreport3">
-                          <ReportName>AverageRechivim</ReportName>
-                          <Parameters>
-                            <Parameter Name="P_START_DATE">
-                              <Value>=Parameters!P_STARTDATE.Value</Value>
-                            </Parameter>
-                            <Parameter Name="P_END_DATE">
-                              <Value>=Parameters!P_ENDDATE.Value</Value>
-                            </Parameter>
-                            <Parameter Name="P_MISPAR_ISHI">
-                              <Value>=reportitems!mI.Value</Value>
-                            </Parameter>
-                          </Parameters>
-                          <Top>2.26869cm</Top>
-                          <Height>0.77376cm</Height>
-                          <Width>13.36767cm</Width>
-                          <ZIndex>1</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                          </Style>
-                        </Subreport>
                         <Textbox Name="mI">
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -707,10 +685,10 @@
                             </Paragraph>
                           </Paragraphs>
                           <Top>2.26869cm</Top>
-                          <Left>15.04873cm</Left>
+                          <Left>15.20405cm</Left>
                           <Height>0.55877cm</Height>
                           <Width>2.59292cm</Width>
-                          <ZIndex>2</ZIndex>
+                          <ZIndex>1</ZIndex>
                           <Visibility>
                             <Hidden>true</Hidden>
                           </Visibility>
@@ -736,8 +714,36 @@
                               </Value>
                             </Parameter>
                           </Parameters>
+                          <Left>0.15532cm</Left>
                           <Height>0.82175cm</Height>
                           <Width>19.62407cm</Width>
+                          <ZIndex>2</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                        <Subreport Name="Subreport3">
+                          <ReportName>AverageRechivim</ReportName>
+                          <Parameters>
+                            <Parameter Name="P_START_DATE">
+                              <Value>=Parameters!P_STARTDATE.Value</Value>
+                            </Parameter>
+                            <Parameter Name="P_END_DATE">
+                              <Value>=Parameters!P_ENDDATE.Value</Value>
+                            </Parameter>
+                            <Parameter Name="P_MISPAR_ISHI">
+                              <Value>=reportitems!mI.Value</Value>
+                            </Parameter>
+                            <Parameter Name="P_RECHIV">
+                              <Value>=Parameters!P_RECHIV.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Top>2.26869cm</Top>
+                          <Left>0.44636cm</Left>
+                          <Height>0.77376cm</Height>
+                          <Width>13.36767cm</Width>
                           <ZIndex>3</ZIndex>
                           <Style>
                             <Border>
@@ -787,7 +793,7 @@
         <Top>1.48653cm</Top>
         <Left>0.07766cm</Left>
         <Height>3.1571cm</Height>
-        <Width>19.62407cm</Width>
+        <Width>19.77939cm</Width>
         <Visibility>
           <Hidden>=iif(Parameters!p_type_rpt.Value =1 ,false,true) ' 1==PDF,0=EXCLE</Hidden>
         </Visibility>
@@ -941,6 +947,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1762,7 +1769,6 @@
             <TablixMember>
               <Group Name="TAARICH">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!MISPAR_ISHI.Value</GroupExpression>
                   <GroupExpression>=Fields!TAARICH.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
@@ -1805,7 +1811,13 @@
               </Group>
               <SortExpressions>
                 <SortExpression>
+                  <Value>=Fields!MISPAR_ISHI.Value</Value>
+                </SortExpression>
+                <SortExpression>
                   <Value>=Fields!MIYUN_MEMUZAIM.Value</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!TEUR_RECHIV.Value</Value>
                 </SortExpression>
               </SortExpressions>
             </TablixMember>
@@ -1885,6 +1897,10 @@
           </QueryParameter>
           <QueryParameter Name="P_SECTORISUK">
             <Value>=Parameters!P_SECTORISUK.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_RECHIV">
+            <Value>=Parameters!P_RECHIV.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="P_WORKERID">
             <Value>=Parameters!P_WORKERID.Value</Value>
@@ -1974,6 +1990,10 @@
           </QueryParameter>
           <QueryParameter Name="P_SECTORISUK">
             <Value>=Parameters!P_SECTORISUK.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_RECHIV">
+            <Value>=Parameters!P_RECHIV.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="P_WORKERID">
             <Value>=Parameters!P_WORKERID.Value</Value>
@@ -2080,33 +2100,18 @@
     <ReportParameter Name="P_EZOR">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>-1</Value>
-        </Values>
-      </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>P EZOR</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_COMPANYID">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>-1</Value>
-        </Values>
-      </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>P COMPANYID</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_MAMAD">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>-1</Value>
-        </Values>
-      </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>P_MAMAD</Prompt>
     </ReportParameter>
@@ -2137,7 +2142,14 @@
     <ReportParameter Name="P_SECTORISUK">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
       <Prompt>P SECTORISUK</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_RECHIV">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_RECHIV</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_WORKERID">
       <DataType>Integer</DataType>

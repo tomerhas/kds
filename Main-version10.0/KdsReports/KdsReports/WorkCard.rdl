@@ -33,7 +33,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>סניף</Value>
+                                  <Value>סניף אב - גיוס לקו</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -194,9 +194,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SNIF.Value</Value>
+                                  <Value>=iif(Fields!SNIF_GIYUS_KAV.Value &lt;&gt; "" and Fields!SNIF_GIYUS_KAV.Value &lt;&gt; Fields!SNIF.Value  ,Fields!SNIF.Value + " - " +Fields!SNIF_GIYUS_KAV.Value ,Fields!SNIF.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
+                                    <Language>en</Language>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -2690,8 +2691,19 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                               <TextRuns>
                                 <TextRun>
                                   <Value>=iif(Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToString() &amp; 00000000,3)="700",Fields!TEUR_NEKUDAT_TIFUL.Value,
-iif((Fields!MAKAT_NESIA.Value=0 or IsNothing(Fields!MAKAT_NESIA.Value))  and Fields!MISPAR_SIDUR.Value &lt; 1000,Fields!TEUR.Value,
-iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 70000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 80000000), Fields!TEUR_ELEMENT.Value,Fields!TEUR_NESIA.Value)))</Value>
+     iif((Fields!MAKAT_NESIA.Value=0 or IsNothing(Fields!MAKAT_NESIA.Value))  and Fields!MISPAR_SIDUR.Value &lt; 1000,Fields!TEUR.Value,
+        iif ((CInt(Fields!MAKAT_NESIA.Value)&gt;= 80000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 99999999 ) and Len( trim(Fields!MISPAR_MATALA.Value) )= 6  ,("ויזה נמ''ק: " &amp; Fields!TEUR_NESIA.Value),
+           iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 70000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 80000000), Fields!TEUR_ELEMENT.Value,Fields!TEUR_NESIA.Value))))
+'iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 70000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 80000000), Fields!TEUR_ELEMENT.Value,Fields!TEUR_NESIA.Value)))
+
+
+  ' iif (((CInt(Fields!MAKAT_NESIA.Value)&gt;= 80000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 99999999) and Len( Fields!MISPAR_MATALA )= 6 ),"ויזה נמ''ק " &amp; Fields!TEUR.Value,Fields!TEUR.Value),
+'iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 80000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 99999999),"נמ''ק"
+
+
+'=iif(Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToString() &amp; 00000000,3)="700",Fields!TEUR_NEKUDAT_TIFUL.Value,
+'iif((Fields!MAKAT_NESIA.Value=0 or IsNothing(Fields!MAKAT_NESIA.Value))  and Fields!MISPAR_SIDUR.Value &lt; 1000,Fields!TEUR.Value,
+'iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 70000000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 80000000), Fields!TEUR_ELEMENT.Value,Fields!TEUR_NESIA.Value)))</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -3312,13 +3324,15 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                               <TextRuns>
                                 <TextRun>
                                   <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25,Fields!PUBLIC_COMPLAINTS.Value,"")</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontWeight>ExtraBold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <LeftIndent>0cm</LeftIndent>
                               <HangingIndent>0cm</HangingIndent>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -3345,13 +3359,15 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                               <TextRuns>
                                 <TextRun>
                                   <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25 and CStr(Fields!NOT_ON_TIME.Value) &lt;&gt; "" and CStr(Fields!NOT_ON_TIME.Value) &lt;&gt; "0", Fields!NOT_ON_TIME.Value &amp; "%","")</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontWeight>ExtraBold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <LeftIndent>0cm</LeftIndent>
                               <HangingIndent>0cm</HangingIndent>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -3378,7 +3394,9 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                               <TextRuns>
                                 <TextRun>
                                   <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25 and CStr(Fields!F5.Value) &lt;&gt; "" and CStr(Fields!F5.Value) &lt;&gt; "0", Fields!F5.Value &amp; "%","")</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontWeight>ExtraBold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <LeftIndent>0cm</LeftIndent>
@@ -3762,6 +3780,10 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
           <DataField>PUBLIC_COMPLAINTS</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="SNIF_GIYUS_KAV">
+          <DataField>SNIF_GIYUS_KAV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
     <DataSet Name="dsSidurimVePeiluyot">
@@ -3966,7 +3988,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
       <DataType>Integer</DataType>
       <DefaultValue>
         <Values>
-          <Value>65099</Value>
+          <Value>29035</Value>
         </Values>
       </DefaultValue>
       <Prompt>P_MISPAR_ISHI</Prompt>
@@ -3975,7 +3997,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>03/08/2010 00:00:00</Value>
+          <Value>08/29/2013 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P_TAARICH</Prompt>
@@ -3989,6 +4011,15 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
       </DefaultValue>
       <Prompt>P_EMDA</Prompt>
     </ReportParameter>
+    <ReportParameter Name="P_URL_BARCODE">
+      <DataType>String</DataType>
+      <Prompt>P_URL_BARCODE</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_TIKUN">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Prompt>P_TIKUN</Prompt>
+    </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
       <DefaultValue>
@@ -3997,21 +4028,6 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
         </Values>
       </DefaultValue>
       <Prompt>P_DT</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_URL_BARCODE">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>""</Value>
-        </Values>
-      </DefaultValue>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>P_URL_BARCODE</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_TIKUN">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <Prompt>P_TIKUN</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Code>public function Barcode(byval Input As String) as byte()

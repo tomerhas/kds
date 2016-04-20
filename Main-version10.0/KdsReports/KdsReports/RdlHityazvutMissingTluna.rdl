@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>15.7622cm</Width>
+              <Width>18.18978cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -21,25 +21,37 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.63812cm</Width>
+                                <Width>1.65873cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.6004cm</Width>
+                                <Width>1.77697cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.73271cm</Width>
+                                <Width>1.12218cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.70625cm</Width>
+                                <Width>1.77697cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.73271cm</Width>
+                                <Width>1.77697cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.73566cm</Width>
+                                <Width>1.57018cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.76456cm</Width>
+                                <Width>1.12137cm</Width>
+                              </TablixColumn>
+                              <TablixColumn>
+                                <Width>1.77697cm</Width>
+                              </TablixColumn>
+                              <TablixColumn>
+                                <Width>1.77697cm</Width>
+                              </TablixColumn>
+                              <TablixColumn>
+                                <Width>1.46702cm</Width>
+                              </TablixColumn>
+                              <TablixColumn>
+                                <Width>1.86978cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -48,52 +60,17 @@
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox31">
+                                      <Textbox Name="Textbox55">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>משמרת שנייה</Value>
-                                                <Style />
-                                              </TextRun>
-                                            </TextRuns>
-                                            <LeftIndent>0cm</LeftIndent>
-                                            <HangingIndent>0cm</HangingIndent>
-                                            <Style>
-                                              <TextAlign>Center</TextAlign>
-                                            </Style>
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>Textbox31</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Style>Solid</Style>
-                                          </Border>
-                                          <BackgroundColor>LightGrey</BackgroundColor>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                      <ColSpan>3</ColSpan>
-                                    </CellContents>
-                                  </TablixCell>
-                                  <TablixCell />
-                                  <TablixCell />
-                                  <TablixCell>
-                                    <CellContents>
-                                      <Textbox Name="Textbox58">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value>משמרת ראשונה</Value>
-                                                <Style />
+                                                <Value>החתמת התייצבות</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
@@ -101,7 +78,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox58</rd:DefaultName>
+                                        <rd:DefaultName>Textbox55</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -119,15 +96,17 @@
                                   <TablixCell />
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox60">
+                                      <Textbox Name="Textbox49">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value />
-                                                <Style />
+                                                <Value>משמרת שנייה</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
@@ -135,7 +114,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox60</rd:DefaultName>
+                                        <rd:DefaultName>Textbox49</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -147,8 +126,50 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <ColSpan>4</ColSpan>
                                     </CellContents>
                                   </TablixCell>
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="Textbox46">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>משמרת ראשונה</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox46</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <BackgroundColor>LightGrey</BackgroundColor>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                      <ColSpan>4</ColSpan>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell />
                                   <TablixCell>
                                     <CellContents>
                                       <Textbox Name="Textbox9">
@@ -159,7 +180,9 @@
                                             <TextRuns>
                                               <TextRun>
                                                 <Value />
-                                                <Style />
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
@@ -188,6 +211,104 @@
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
+                                      <Textbox Name="Textbox56">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>מיקום החתמה </Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox56</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <BackgroundColor>LightGrey</BackgroundColor>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="Textbox53">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>שעת החתמה </Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox53</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <BackgroundColor>LightGrey</BackgroundColor>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="Textbox50">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>סיבת אי התייצבות</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox50</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <BackgroundColor>LightGrey</BackgroundColor>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
                                       <Textbox Name="Textbox21">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
@@ -196,7 +317,9 @@
                                             <TextRuns>
                                               <TextRun>
                                                 <Value>שעת גמר</Value>
-                                                <Style />
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <LeftIndent>0cm</LeftIndent>
@@ -230,7 +353,9 @@
                                             <TextRuns>
                                               <TextRun>
                                                 <Value>שעת התחלה</Value>
-                                                <Style />
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <LeftIndent>0cm</LeftIndent>
@@ -264,7 +389,9 @@
                                             <TextRuns>
                                               <TextRun>
                                                 <Value>סידור</Value>
-                                                <Style />
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
@@ -288,6 +415,38 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
+                                      <Textbox Name="Textbox47">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>סיבת אי התייצבות</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox47</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <BackgroundColor>LightGrey</BackgroundColor>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
                                       <Textbox Name="Textbox20">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
@@ -296,7 +455,9 @@
                                             <TextRuns>
                                               <TextRun>
                                                 <Value>שעת גמר</Value>
-                                                <Style />
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <LeftIndent>0cm</LeftIndent>
@@ -330,7 +491,9 @@
                                             <TextRuns>
                                               <TextRun>
                                                 <Value>שעת התחלה</Value>
-                                                <Style />
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <LeftIndent>0cm</LeftIndent>
@@ -364,7 +527,9 @@
                                             <TextRuns>
                                               <TextRun>
                                                 <Value>סידור</Value>
-                                                <Style />
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <LeftIndent>0cm</LeftIndent>
@@ -398,7 +563,9 @@
                                             <TextRuns>
                                               <TextRun>
                                                 <Value>תאריך</Value>
-                                                <Style />
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <LeftIndent>0cm</LeftIndent>
@@ -429,6 +596,113 @@
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
+                                      <Textbox Name="TEUR_MIKUM_YECHIDA">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=Fields!TEUR_MIKUM_YECHIDA.Value</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Right</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>TEUR_MIKUM_YECHIDA</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="SHAT_HITYAZVUT">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=iif(FormatDateTime(Fields!SHAT_HITYAZVUT.Value, 4) = "00:00", "", CDate(Fields!SHAT_HITYAZVUT.Value).ToString("dd/MM") &amp;" " &amp;FormatDateTime(Fields!SHAT_HITYAZVUT.Value, 4) )</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Right</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>SHAT_HITYAZVUT</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="KODSIBA2">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value  ,
+ "",iif(Fields!KODSIBA1.Value=0,"",Fields!KODSIBA2.Value))</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Right</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>KODSIBA2</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
                                       <Textbox Name="ENDTIME2">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
@@ -436,8 +710,11 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(FormatDateTime(Fields!ENDTIME2.Value,4)="00:00","",FormatDateTime(Fields!ENDTIME2.Value,4))</Value>
-                                                <Style />
+                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value  ,
+ "",iif(FormatDateTime(Fields!ENDTIME2.Value,4)="00:00","",CDate(Fields!ENDTIME2.Value).ToString("dd/MM") &amp;" " &amp;FormatDateTime(Fields!ENDTIME2.Value, 4)))</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
@@ -450,8 +727,12 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
                                           <PaddingTop>2pt</PaddingTop>
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
@@ -467,8 +748,11 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(FormatDateTime(Fields!STARTTIME2.Value,4) ="00:00","", FormatDateTime(Fields!STARTTIME2.Value,4))</Value>
-                                                <Style />
+                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value  ,
+ "",iif(FormatDateTime(Fields!STARTTIME2.Value,4) ="00:00","",   CDate(Fields!STARTTIME2.Value).ToString("dd/MM") &amp;" " &amp;FormatDateTime(Fields!STARTTIME2.Value, 4)))</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
@@ -481,8 +765,12 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
                                           <PaddingTop>2pt</PaddingTop>
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
@@ -498,8 +786,11 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!MISPAR_SIDUR2.Value</Value>
-                                                <Style />
+                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value  ,
+ "",Fields!MISPAR_SIDUR2.Value)</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
@@ -512,6 +803,46 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="KODSIBA1">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value  ,
+ "",iif(Fields!KODSIBA1.Value=0,"",Fields!KODSIBA1.Value))</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Right</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>KODSIBA1</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -529,8 +860,11 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(FormatDateTime(Fields!ENDTIME1.Value,4) = "00:00" , "", FormatDateTime(Fields!ENDTIME1.Value,4))</Value>
-                                                <Style />
+                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value  ,
+ "",iif(FormatDateTime(Fields!ENDTIME1.Value,4) = "00:00" , "",   CDate(Fields!STARTTIME1.Value).ToString("dd/MM") &amp;" " &amp;FormatDateTime(Fields!ENDTIME1.Value, 4)))</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
@@ -543,8 +877,12 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
                                           <PaddingTop>2pt</PaddingTop>
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
@@ -560,8 +898,11 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(FormatDateTime(Fields!STARTTIME1.Value,4) = "00:00" , "", FormatDateTime(Fields!STARTTIME1.Value,4))</Value>
-                                                <Style />
+                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value  ,
+ "",iif(FormatDateTime(Fields!STARTTIME1.Value,4) = "00:00" , "",  CDate(Fields!STARTTIME1.Value).ToString("dd/MM") &amp;" " &amp;FormatDateTime(Fields!STARTTIME1.Value, 4)))</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
@@ -574,8 +915,12 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
                                           <PaddingTop>2pt</PaddingTop>
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
@@ -591,8 +936,11 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!MISPAR_SIDUR1.Value</Value>
-                                                <Style />
+                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value  ,
+ "",Fields!MISPAR_SIDUR1.Value)</Value>
+                                                <Style>
+                                                  <FontSize>8pt</FontSize>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
@@ -605,6 +953,9 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -622,8 +973,10 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>= FormatDateTime(Fields!TAARICH.Value,2)</Value>
+                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value  ,
+ "",CDate(Fields!TAARICH.Value).ToString("dd/MM/yyyy"))</Value>
                                                 <Style>
+                                                  <FontSize>8pt</FontSize>
                                                   <Language>he-IL</Language>
                                                 </Style>
                                               </TextRun>
@@ -652,6 +1005,10 @@
                           </TablixBody>
                           <TablixColumnHierarchy>
                             <TablixMembers>
+                              <TablixMember />
+                              <TablixMember />
+                              <TablixMember />
+                              <TablixMember />
                               <TablixMember />
                               <TablixMember />
                               <TablixMember />
@@ -695,11 +1052,11 @@
                           </TablixRowHierarchy>
                           <RepeatColumnHeaders>true</RepeatColumnHeaders>
                           <RepeatRowHeaders>true</RepeatRowHeaders>
-                          <DataSetName>DsDriverNotSigned</DataSetName>
-                          <Top>6.96382cm</Top>
-                          <Left>0.87571cm</Left>
+                          <DataSetName>DsOvdim</DataSetName>
+                          <Top>7.21077cm</Top>
+                          <Left>0.10717cm</Left>
                           <Height>2.36325cm</Height>
-                          <Width>12.91041cm</Width>
+                          <Width>17.69411cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -722,7 +1079,7 @@
                           </Paragraphs>
                           <rd:DefaultName>TEUR_EZOR</rd:DefaultName>
                           <Top>2.26225cm</Top>
-                          <Left>11.46734cm</Left>
+                          <Left>12.3991cm</Left>
                           <Height>0.62646cm</Height>
                           <Width>2.31878cm</Width>
                           <ZIndex>1</ZIndex>
@@ -747,7 +1104,10 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>בתאריכים המופיעים מטה לא החתמת שעון נוכחות בהתאם להוראות</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>12pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <LeftIndent>0cm</LeftIndent>
@@ -756,10 +1116,10 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox117</rd:DefaultName>
-                          <Top>6.29327cm</Top>
-                          <Left>0.87571cm</Left>
-                          <Height>0.6cm</Height>
-                          <Width>12.91041cm</Width>
+                          <Top>6.31973cm</Top>
+                          <Left>3.54287cm</Left>
+                          <Height>0.57354cm</Height>
+                          <Width>12.38863cm</Width>
                           <ZIndex>2</ZIndex>
                           <Style>
                             <Border>
@@ -783,6 +1143,7 @@
                                     <TextRun>
                                       <Value>פרטי מבצע העבירה:</Value>
                                       <Style>
+                                        <FontWeight>Bold</FontWeight>
                                         <TextDecoration>Underline</TextDecoration>
                                       </Style>
                                     </TextRun>
@@ -793,8 +1154,8 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox117</rd:DefaultName>
-                              <Top>0.04167in</Top>
-                              <Left>5.88667cm</Left>
+                              <Top>0.02778in</Top>
+                              <Left>10.67037cm</Left>
                               <Height>0.51812cm</Height>
                               <Width>7.02374cm</Width>
                               <Style>
@@ -812,19 +1173,59 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>4.66634cm</Width>
+                                    <Width>4.23549cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.24302cm</Width>
+                                    <Width>3.87633cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.00103cm</Width>
+                                    <Width>3.2335cm</Width>
+                                  </TablixColumn>
+                                  <TablixColumn>
+                                    <Width>3.6553cm</Width>
+                                  </TablixColumn>
+                                  <TablixColumn>
+                                    <Width>2.6935cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
                                   <TablixRow>
                                     <Height>0.6cm</Height>
                                     <TablixCells>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox44">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>סניף גיוס לקו</Value>
+                                                    <Style>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox44</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <BackgroundColor>LightGrey</BackgroundColor>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
                                       <TablixCell>
                                         <CellContents>
                                           <Textbox Name="Textbox29">
@@ -846,6 +1247,40 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox27</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <BackgroundColor>LightGrey</BackgroundColor>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox58">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>סניף תנועה</Value>
+                                                    <Style>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox58</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -934,6 +1369,37 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="SNIF_GIYUS">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!SNIF_GIYUS.Value</Value>
+                                                    <Style />
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>SNIF_GIYUS</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="Textbox30">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -951,6 +1417,37 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox28</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="TEUR_SNIF_TNUAA">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!TEUR_SNIF_TNUAA.Value</Value>
+                                                    <Style />
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>TEUR_SNIF_TNUAA</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -1034,6 +1531,8 @@
                                   <TablixMember />
                                   <TablixMember />
                                   <TablixMember />
+                                  <TablixMember />
+                                  <TablixMember />
                                 </TablixMembers>
                               </TablixColumnHierarchy>
                               <TablixRowHierarchy>
@@ -1042,10 +1541,10 @@
                                   <TablixMember />
                                 </TablixMembers>
                               </TablixRowHierarchy>
-                              <DataSetName>DsDriverNotSigned</DataSetName>
+                              <DataSetName>DsOvdim</DataSetName>
                               <Top>0.69451cm</Top>
                               <Height>1.2cm</Height>
-                              <Width>12.91039cm</Width>
+                              <Width>17.69411cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -1055,10 +1554,10 @@
                             </Tablix>
                           </ReportItems>
                           <KeepTogether>true</KeepTogether>
-                          <Top>3.12952cm</Top>
-                          <Left>0.87571cm</Left>
+                          <Top>3.08348cm</Top>
+                          <Left>0.10717cm</Left>
                           <Height>1.94055cm</Height>
-                          <Width>12.91041cm</Width>
+                          <Width>17.69411cm</Width>
                           <ZIndex>3</ZIndex>
                           <Style>
                             <Border>
@@ -1075,6 +1574,7 @@
                                 <TextRun>
                                   <Value>פרטי העבירה :</Value>
                                   <Style>
+                                    <FontWeight>Bold</FontWeight>
                                     <TextDecoration>Underline</TextDecoration>
                                   </Style>
                                 </TextRun>
@@ -1085,10 +1585,10 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox117</rd:DefaultName>
-                          <Top>5.65799cm</Top>
-                          <Left>0.87571cm</Left>
-                          <Height>0.6cm</Height>
-                          <Width>12.91041cm</Width>
+                          <Top>5.68445cm</Top>
+                          <Left>3.54287cm</Left>
+                          <Height>0.57354cm</Height>
+                          <Width>12.38863cm</Width>
                           <ZIndex>4</ZIndex>
                           <Style>
                             <Border>
@@ -1136,8 +1636,8 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox8</rd:DefaultName>
-                          <Top>1.9771cm</Top>
-                          <Left>3.56746cm</Left>
+                          <Top>1.94182cm</Top>
+                          <Left>2.79892cm</Left>
                           <Height>1.01131cm</Height>
                           <Width>3.157cm</Width>
                           <ZIndex>5</ZIndex>
@@ -1170,8 +1670,8 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox8</rd:DefaultName>
-                          <Top>1.9771cm</Top>
-                          <Left>0.87571cm</Left>
+                          <Top>1.94182cm</Top>
+                          <Left>0.10717cm</Left>
                           <Height>1.01131cm</Height>
                           <Width>2.69175cm</Width>
                           <ZIndex>6</ZIndex>
@@ -1192,13 +1692,13 @@
                               <Value>דו"ח על עבירת משמעת</Value>
                             </Parameter>
                             <Parameter Name="P_RightTitle">
-                              <Value>="אל : מורשה האזורי " + Chr(10) + 
-iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZOR.Value</Value>
+                              <Value>="אגד בע''מ אגף פנים " + Fields!TEUR_EZOR.Value + Chr(10) + "אל: המורשה האזורי" 
+'iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZOR.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <Top>0.07056cm</Top>
+                          <Top>0.03528cm</Top>
                           <Height>1.80071cm</Height>
-                          <Width>15.62888cm</Width>
+                          <Width>17.80128cm</Width>
                           <ZIndex>7</ZIndex>
                           <Style>
                             <Border>
@@ -1215,6 +1715,7 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
                                 <TextRun>
                                   <Value>פרטי מגיש התלונה :</Value>
                                   <Style>
+                                    <FontWeight>Bold</FontWeight>
                                     <TextDecoration>Underline</TextDecoration>
                                   </Style>
                                 </TextRun>
@@ -1225,8 +1726,8 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox117</rd:DefaultName>
-                          <Top>10.01274cm</Top>
-                          <Left>8.84394cm</Left>
+                          <Top>9.94218cm</Top>
+                          <Left>13.39377cm</Left>
                           <Height>0.52944cm</Height>
                           <Width>4.40751cm</Width>
                           <ZIndex>8</ZIndex>
@@ -1245,16 +1746,16 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>3.2322cm</Width>
+                                <Width>4.0291cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>4.30246cm</Width>
+                                <Width>5.21376cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.80888cm</Width>
+                                <Width>4.34661cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.5669cm</Width>
+                                <Width>4.10463cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -1304,7 +1805,7 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>סניף/ מתקן</Value>
+                                                <Value>תפקיד</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -1542,10 +2043,10 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
                               <TablixMember />
                             </TablixMembers>
                           </TablixRowHierarchy>
-                          <Top>10.61274cm</Top>
-                          <Left>0.87571cm</Left>
+                          <Top>10.54218cm</Top>
+                          <Left>0.10717cm</Left>
                           <Height>1.2cm</Height>
-                          <Width>12.91044cm</Width>
+                          <Width>17.69411cm</Width>
                           <ZIndex>9</ZIndex>
                           <Style>
                             <Border>
@@ -1586,7 +2087,10 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
               </Group>
               <SortExpressions>
                 <SortExpression>
-                  <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+                  <Value>=Fields!TEUR_EZOR.Value</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!TEUR_SNIF_TNUAA.Value</Value>
                 </SortExpression>
                 <SortExpression>
                   <Value>=Fields!MISPAR_ISHI.Value</Value>
@@ -1595,7 +2099,7 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DsDriverNotSigned</DataSetName>
+        <DataSetName>DsOvdim</DataSetName>
         <SortExpressions>
           <SortExpression>
             <Value>=Fields!EZOR.Value</Value>
@@ -1604,24 +2108,91 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
             <Value>=Fields!TEUR_SNIF_AV.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Top>0.23405cm</Top>
-        <Left>0.19769cm</Left>
+        <Top>3.05008cm</Top>
         <Height>11.81273cm</Height>
-        <Width>15.7622cm</Width>
+        <Width>18.18978cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Tablix>
+      <Rectangle Name="Rectangle4">
+        <ReportItems>
+          <Subreport Name="SubReportHeader3">
+            <ReportName>GeneralHeader</ReportName>
+            <Parameters>
+              <Parameter Name="P_Title">
+                <Value>=" עובדים ללא החתמת התייצבות " + Trim(Parameters!P_PERIOD.Value) +" (תלונה) "</Value>
+              </Parameter>
+            </Parameters>
+            <Top>0.01436cm</Top>
+            <Height>1.80071cm</Height>
+            <Width>17.80128cm</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Textbox Name="Textbox13">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>                לא נמצאו רשומות לחתך שהתבקש</Value>
+                    <Style>
+                      <FontSize>14pt</FontSize>
+                      <Color>Red</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>1.9209cm</Top>
+            <Left>2.49416cm</Left>
+            <Height>0.6cm</Height>
+            <Width>8.95832cm</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+        </ReportItems>
+        <KeepTogether>true</KeepTogether>
+        <Top>0.12675cm</Top>
+        <Height>2.5209cm</Height>
+        <Width>17.80128cm</Width>
+        <ZIndex>1</ZIndex>
+        <Visibility>
+          <Hidden>=iif(CountRows("DsOvdim")&gt;0 ,true ,false)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Rectangle>
     </ReportItems>
-    <Height>5.04392in</Height>
+    <Height>5.91265in</Height>
     <Style />
   </Body>
-  <Width>6.28342in</Width>
+  <Width>7.16133in</Width>
   <Page>
     <PageHeader>
-      <Height>0.67056cm</Height>
+      <Height>0.635cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1642,7 +2213,7 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox33</rd:DefaultName>
-          <Left>7.36499cm</Left>
+          <Left>7.98051cm</Left>
           <Height>0.44125cm</Height>
           <Width>2.74064cm</Width>
           <Style>
@@ -1660,7 +2231,7 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
     </PageHeader>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
+    <LeftMargin>0cm</LeftMargin>
     <RightMargin>0cm</RightMargin>
     <TopMargin>2cm</TopMargin>
     <BottomMargin>2cm</BottomMargin>
@@ -1669,16 +2240,16 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="DsKds">
+    <DataSource Name="DataSource1">
       <DataSourceReference>KdsCon</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
-      <rd:DataSourceID>0b461b07-96e1-4988-bb18-cdb0c7906233</rd:DataSourceID>
+      <rd:DataSourceID>9f3d6133-895c-46af-bf3f-cf3272918139</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DsDriverNotSigned">
+    <DataSet Name="DsOvdim">
       <Query>
-        <DataSourceName>DsKds</DataSourceName>
+        <DataSourceName>DataSource1</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="P_PERIOD">
             <Value>=Parameters!P_PERIOD.Value</Value>
@@ -1686,38 +2257,41 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
           <QueryParameter Name="P_EZOR">
             <Value>=Parameters!P_EZOR.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="P_SNIF">
+            <Value>=Parameters!P_SNIF.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SNIF_TNUA">
+            <Value>=Parameters!P_SNIF_TNUA.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SIBA">
+            <Value>=Parameters!P_SIBA.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_DRIVERNOTSIGNED</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+        <CommandText>PKG_REPORTS.PRO_GET_OVDIM_NOT_SIGNED</CommandText>
       </Query>
       <Fields>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="MISPAR_ISHI">
           <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_EZOR">
-          <DataField>TEUR_EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MIS_ISHI">
-          <DataField>MIS_ISHI</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TAARICH">
           <DataField>TAARICH</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="SNIF_AV">
+          <DataField>SNIF_AV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="EZOR">
           <DataField>EZOR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HATZAVA_LEKAV">
+          <DataField>HATZAVA_LEKAV</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="MISPAR_SIDUR1">
@@ -1728,13 +2302,21 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
           <DataField>STARTTIME1</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="MISPAR_SIDUR2">
-          <DataField>MISPAR_SIDUR2</DataField>
+        <Field Name="KOD_HEVRA">
+          <DataField>KOD_HEVRA</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ENDTIME1">
           <DataField>ENDTIME1</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="SNIF_TNUA">
+          <DataField>SNIF_TNUA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KODSIBA1">
+          <DataField>KODSIBA1</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="STARTTIME2">
           <DataField>STARTTIME2</DataField>
@@ -1744,11 +2326,55 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
           <DataField>ENDTIME2</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="MISPAR_SIDUR2">
+          <DataField>MISPAR_SIDUR2</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KODSIBA2">
+          <DataField>KODSIBA2</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SNIF_GIYUS">
+          <DataField>SNIF_GIYUS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_HITYAZVUT">
+          <DataField>SHAT_HITYAZVUT</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_MIKUM_YECHIDA">
+          <DataField>TEUR_MIKUM_YECHIDA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_TNUAA">
+          <DataField>TEUR_SNIF_TNUAA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SEQ1">
+          <DataField>SEQ1</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SEQ2">
+          <DataField>SEQ2</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
     <DataSet Name="DsMagishTluna">
       <Query>
-        <DataSourceName>DsKds</DataSourceName>
+        <DataSourceName>DataSource1</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="P_ISUK">
             <Value>23</Value>
@@ -1775,23 +2401,49 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
   <ReportParameters>
     <ReportParameter Name="P_PERIOD">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>12/2010</Value>
+          <Value>01/2015</Value>
         </Values>
       </DefaultValue>
-      <Prompt>P PERIOD</Prompt>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_PERIOD</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_EZOR">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_EZOR</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_SNIF">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_SNIF</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_SNIF_TNUA">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>1</Value>
+          <Value>75</Value>
         </Values>
       </DefaultValue>
       <AllowBlank>true</AllowBlank>
-      <Prompt>P_EZOR</Prompt>
+      <Prompt>P_SNIF_TNUA</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_SIBA">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_SIBA</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_MISPAR_ISHI">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_MISPAR_ISHI</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
@@ -1803,16 +2455,6 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <EmbeddedImages>
-    <EmbeddedImage Name="logo1">
-      <MIMEType>image/jpeg</MIMEType>
-      <ImageData>/9j/4AAQSkZJRgABAQEAYABgAAD/4QAWRXhpZgAASUkqAAgAAAAAAAAAAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABVAFsDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD2vxDcapaaLPc6PFBNdxDeIplLB1HUDBHPp9Md68o/4W/4g/589M/79Sf/ABde114j8S/Cn9j6p/alpHixu2JYKOIpO4+h6j8axrcyV0zmxHOlzRZJ/wALf8Qf8+emf9+pP/i6sWXx
-h1NbhTfadZyQfxCDcjD6EsRXm9Fc/tZ9zj9vU7n09peqWms6bDf2UnmQSjIPQg9wR2Iq5Xhvw38Wf2Fqp0+7kxYXbAZJ4ik6Bvoeh/A9q9yrrpz5lc9CjU9pG4jMFUsxAAGST2ry3Xvi40F48GiWkM0SHHn3G4h/ooI498/hVv4o+LPsVmdCs5P9JuFzcMD9yM/w/Vv5fWvHaxq1WnaJz4iu0+WJ6B/wt/xB/wA+emf9+pP/AIuj/hb/AIg/589M/wC/Un/xdcnaRaC1shvLvUkn/jWG1jZR9CZAT+QqbyfC/wDz/ax/4BRf/Haz559zD2tT+Y9N8CeO9U8Ua5PZXsFnHFHbNKDAjA5DKO7Hj5jXodeXfC5/DyapdQab/aEt80BdprmNEURhlG0BWPOSPyr1Gumk246ndQbcLt3Cqeqabbaxpk9hdpuhmXa3qPQj3B5q5RWhs1fRnzNrmj3Og6xPp10Pnib5WHR17MPqKzq93+IfhMeIdI+1WqZ1G0UtHgcyL3T+o9/rXhHSuGpDldjyq1L2crdAr1jw38SYLXwfOuovv1CyUJCpPM4PC/l39hnrXk9FTGbi7omnUlB3RPe3k+o3s15dSGSeZy7se5NWrHRL7UoDNbi22Btv726iiOfo7A/jWdRS9SL66m1/wimq/wDTj/4Mbf8A+Lo/4RTVf+nH/wAGNv8A/F1i0lPQd49v6+49b+F/h2TTNTur26u7QztAYlt4bhJWC7lJY7SQBwB1716hXjvwfsLn+3Ly/wDJYWotjD5hHBcupwPXhTXsVddH4T0sP/DVkFFFFam4V4r8TfCZ0vUTrFnHizum/eqvSOQ/0PX659q9qrmvHeo2Gn+E7z+0I1mWdTFHCTy7np9Mdc+1Z1Ipx1Ma8FKDufPVFFFcJ5Rd0/V7/SvM+w3DQ+ZjftA5x06j3rqfCd54k8Ta5FZJqUywL888gVfkQde3U9BXE1658IdR0/7Fd6csax6hv81mJ5lToMf7
-vp759a0p6ySub0Pemot6HpAtLcKB5EfHqopfstv/AM8Iv++BUtFd1j1LCKqooVQAB0AFLRRQAUUUUANkkSKNpJHVEQFmZjgADqSa+fPG/id/E2uNLGSLKDKWyn07sfc/ywO1dr8VPFflRf8ACP2cnzuA12w7L1Cfj1Ptj1ryWuWtO/uo4MVVu+RBRRT1hleKSVY2aOPG9gOFz0ye1c5xjKtaZqNzpGpQX9o+yeB9ynsfUH2IyD9aq0UDTsfTGg61ba/o8Go2p+WQfMmclGHVT9P/AK9aVeDfD3xYfDusfZ7lyNOu2CyZ6Rt2f+h9vpXvAORkciu6nPmR6lGr7SN+otFFFaGwVg+LfEcXhnQpbxtrXDfJbxn+Jz/QdT/9etuaaO3heaZ1SKNSzsxwFA6k15vqGoeFvHMOoahNFqbDSrctgkIpBycqM9TjvjtUTlZWW5nUlZWW55Jc3M15dS3NxI0k0rF3dupJ5JqOu4h0rwzdeBrjWLe0vTdWBgW5WSQKsjFlD7cE8HJweO1WPE3hfQND8Of2tALuY35T7FHJlRCCuSW9T1/Trya4+R7nm+yla9/M4KGGW5njghRpJZGCIijJYk4AFe++HfBdnpfhSTSbuNZZLtM3bDux7A/7Pb35rlPhX4Ux/wAVDex+q2isPwL/ANB+PtXqtb0adlzM6sNRsuaXU+avEWhXHh3Wp9PuMkKcxyY4kQ9G/wA981lV79498KL4k0YvAg/tC2BeA/3x3T8e3v8AjXgTKyMVYEMDggjkGsakOVnNWpezl5CV7R8MfFf9p6f/AGNeSZu7Vf3TMeZI/wDFen0x714vVnT7+40vUIL60fZPA4dG/ofY9KUJ8ruKlUdOVz6horL8Pa5b+IdFg1G34DjEiZ5Rx1U/56YrUruTvqeqmmrozdd0aLX9LfT57m5ghkILm3YKzAdiSDx/hWLpXw90rSLW+toLm9eK+jEcwkdDlRnphRjqaKKTim7icIt3aNabw9a3
-FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbwpDCipFGoVEUYCgcACn0UUygrltd+H+g6/ctdTxS29w5y8tswUv8AUEEZ98ZoopNJ6MmUVJWaMj/hUHh//n81P/v7H/8AEUf8Kg8P/wDP5qf/AH9j/wDiKKKn2cOxHsKfY3/DXg+y8KvObG7vZEmA3xzurLkdCMKOe1dDRRVJJKyNIxUVZH//2Q==</ImageData>
-    </EmbeddedImage>
-  </EmbeddedImages>
-  <Language>he-IL</Language>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
-  <rd:ReportID>7df9a1dc-8a03-40f4-b3f3-3224fa4c751f</rd:ReportID>
+  <rd:ReportID>c172f5c2-5131-4d0a-bf5c-e1abbc05864d</rd:ReportID>
 </Report>

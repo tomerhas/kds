@@ -28,6 +28,9 @@
                           <Top>0.03528cm</Top>
                           <Height>0.82175cm</Height>
                           <Width>17.81267cm</Width>
+                          <Visibility>
+                            <Hidden>=iif(Parameters!p_type_rpt.Value =1 ,false,true) ' 1==PDF,0=EXCLE</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1001,6 +1004,9 @@
                           <DataSetName>DsAverage</DataSetName>
                           <SortExpressions>
                             <SortExpression>
+                              <Value>=Fields!MISPAR_ISHI.Value</Value>
+                            </SortExpression>
+                            <SortExpression>
                               <Value>=Fields!MIYUN_MEMUZAIM.Value</Value>
                             </SortExpression>
                           </SortExpressions>
@@ -1194,6 +1200,10 @@
     <ReportParameter Name="P_WORKERVIEWLEVEL">
       <DataType>Integer</DataType>
       <Prompt>P_WORKERVIEWLEVEL</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="p_type_rpt">
+      <DataType>String</DataType>
+      <Prompt>p_type_rpt</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_WORKERID">
       <DataType>String</DataType>
