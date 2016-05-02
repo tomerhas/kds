@@ -1,4 +1,4 @@
 ﻿<div>
-    <input type="text" ng-model="formattedDate" ng-blur="hourChanged()"  mask='99:99'  onfocus="FocusText(this);" />
-    <input type="text" ng-model="dateOrig" style="width:80px" />
+    <!--<input type="text" ng-focus="isFocused=!isFocused"  value="{{formattedDate}}" ng-blur="hourChanged()" title="{{dateOrig}}" mask='99:99'  />-->
+    <input type="text" ng-model="formattedDate" ui-mask="99:99" ui-mask-placeholder ui-mask-placeholder-char="_"  title="{{dateOrig}}" ng-blur="hourChanged()"/>
 </div>

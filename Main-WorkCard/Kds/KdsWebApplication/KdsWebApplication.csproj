@@ -1566,6 +1566,8 @@
     <Content Include="Content\kendo\2015.3.1111\fonts\DejaVu\DejaVuSans-Bold.ttf" />
     <Content Include="Content\kendo\2015.3.1111\fonts\DejaVu\DejaVuSans.ttf" />
     <Content Include="app\modules\workcard\dailyDetails\ovedDailyWork\workDayDetails.tpl.html" />
+    <Content Include="app\common\directives\dateTime\dateTimeFormatedDirective.tpl.html" />
+    <Content Include="app\package.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -2914,6 +2916,7 @@
     <TypeScriptCompile Include="app\app.ts" />
     <TypeScriptCompile Include="app\common\componenets\dateTime\dateTimeDirective.ts" />
     <TypeScriptCompile Include="app\common\directives\dateTime\dateTimeFormatDirective.ts" />
+    <TypeScriptCompile Include="app\common\directives\dateTime\dateTimeFormatedDirective.ts" />
     <TypeScriptCompile Include="app\common\helpers\dateHelper.ts" />
     <TypeScriptCompile Include="app\common\helpers\generalFunctions.ts" />
     <TypeScriptCompile Include="app\common\services\uiHelperService.ts" />
