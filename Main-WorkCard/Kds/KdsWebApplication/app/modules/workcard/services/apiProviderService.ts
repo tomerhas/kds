@@ -48,6 +48,8 @@
                 var strResult = response.data.d.toString();
                 var obj: WorkCardResultContainer = <WorkCardResultContainer>angular.fromJson(strResult)
                 return obj;
+                ////var obj= response.data.d;
+                ////return obj;
                 //return response.data.d;
             }, function (er) {
                 this.logError("getUserWorkCard", er);
@@ -140,7 +142,7 @@
         }
 
         public getNextErrorCardDate = (misparIshi: number, cardDate: Date): ng.IPromise<string> => {
-            return this.$http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetNextErrorCardDate", { iMisparIshi: misparIshi, sCardDate: cardDate })
+            return this.$http.post("../../../Modules/WebServices/wsWorkCard.asmx/GetNextErrorCardDate", { iMisparIshi: misparIshi, dWorkCard: cardDate })
                 .then((response) => {
                     return response.data.d;
                 }, function (er) {

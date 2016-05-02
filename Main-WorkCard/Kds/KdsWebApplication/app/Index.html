@@ -13,7 +13,7 @@
     <script src="../Js/bootstrap.min.js"></script>
     <script src="../Js/bootstrap-timepicker.min.js"></script>
     <script src="../Scripts/bootstrap-rtl.js"></script>
-
+    <script src="../Scripts/ngMask.min.js"></script>
 
     <link href="../Content/css/bootstrap-rtl.css" rel="stylesheet" />
     <link href="../Content/css/ng-modal.css" rel="stylesheet" />
@@ -47,6 +47,7 @@
 
     <!--direcrtives-->
     <script src="directives/ngModalDirective.js"></script>
+    <script src="common/componenets/dateTime/dateTimeDirective.js"></script>
 
     <!--service-->
     <script src="modules/workcard/services/workCardStateService.js"></script>
@@ -60,7 +61,11 @@
     <script src="modules/workcard/generalDetails/generalDetails.js"></script>
     <script src="modules/workcard/dailyDetails/dailyDetails.js"></script>
     <script src="modules/workcard/dailyDetails/ovedDailyWork/hityatzvutDetails.js"></script>
+    <script src="modules/workcard/dailyDetails/ovedDailyWork/pirteyOved.js"></script>
+    <script src="modules/workcard/dailyDetails/ovedDailyWork/workDayDetails.js"></script>
 
+    <!--behaviors-->
+    <script src="modules/workcard/sidurAvoda/peilutBdikotBehavior.js"></script>
     <!--contracts-->
     <script src="modules/workcard/contracts/SelectedItem.js"></script>
     <script src="modules/workcard/contracts/WorkCardLookupsContainer.js"></script>
@@ -77,14 +82,16 @@
     <script src="modules/workcard/contracts/WorkCardResultContainer.js"></script>
     <script src="modules/workcard/contracts/Hityatzvut.js"></script>
 
+    <!--directives-->
+    <script src="common/directives/errorDisplay/errorDisplayDirective.js"></script>
+    <script src="common/directives/dateTime/dateTimeFormatDirective.js"></script>
     <!--events-->
     <script src="modules/workcard/events/generalEvents.js"></script>
 
     <!--helpers-->
     <script src="common/helpers/dateHelper.js"></script>
-
+    <script src="common/helpers/generalFunctions.js"></script>
     
-
 </head>
 <body>
     <work-card-main-directive></work-card-main-directive>

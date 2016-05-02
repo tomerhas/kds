@@ -8,15 +8,20 @@
         HarigaList: SelectItem[];
         PizulList: SelectItem[];
         HshlamaList: SelectItem[];
+        error: string;
+        modalErrorsShown:boolean
 
+        peilutBdikotBehaviorObj: peilutBdikotBehavior;
+              
         constructor(
             private IApiProviderService: modules.workcard.IApiProviderService,
             private IWorkCardStateService: IWorkCardStateService,
             private $scope: ng.IScope,
-            private $log:ng.ILogService) {
+            private $log: ng.ILogService,
+            private IUiHelperService: modules.common.IUiHelperService ) {
 
             this.NumSidurim = 0;
-
+            this.peilutBdikotBehaviorObj = new peilutBdikotBehavior(IApiProviderService, IWorkCardStateService);
             this.RegisterToOvedPeiluyotChanged();
         }
 
@@ -68,6 +73,46 @@
                 });
             });
         }
+
+       ChangeCollapeImg=(index:number)=> {
+            if (this.Sidurim[index].CollapseSrc.Value.indexOf("openArrow") > -1) {
+                this.Sidurim[index].CollapseSrc.Value = "../../../../Images/closeArrow.png";
+            }
+            else this.Sidurim[index].CollapseSrc.Value = "../../../../Images/openArrow.png";
+        }
+        
+       CheckMakat = (peilut: PeilutWC) => {
+           var res = this.peilutBdikotBehaviorObj.CheckMakat(peilut);
+           this.displayErrorFromResult(res);
+       }
+
+       ChkOto = (iSidur: number, iPeilut: number) => {
+           var promise = this.peilutBdikotBehaviorObj.ChkOto(iSidur, iPeilut, this.Sidurim);
+           promise.then(res=> {
+               this.displayErrorFromResult(res);
+           });
+       }
+
+       displayErrorFromResult = (res: ValidationResult) => {
+           if (res.isValid == false) {
+               this.error = res.errorMessage;
+               this.modalErrorsShown = true;
+           }
+       }
+       
+      
+       /************************************* dakot bafoal*********************************************/ 
+
+       CheckValidMinutes = (peilut: PeilutWC) => {
+           var res = this.peilutBdikotBehaviorObj.CheckValidMinutes(peilut);
+           this.displayErrorFromResult(res);
+       }
+    
+
+       SetKnisaActualMin = (peilut: PeilutWC) => {
+           var res = this.peilutBdikotBehaviorObj.SetKnisaActualMin(peilut);
+           this.displayErrorFromResult(res);
+       }
     }
 
     angular.module("modules.workcard").directive("sidorAvodaDirective", function () {

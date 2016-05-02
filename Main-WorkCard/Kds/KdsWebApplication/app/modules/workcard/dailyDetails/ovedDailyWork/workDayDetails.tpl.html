@@ -1,0 +1,33 @@
+﻿
+
+
+
+
+<div class="row WorkCardTable1Label" style="height:40px">
+    <div class="col-md-1">טכוגרף:</div>
+
+    <div class="col-md-1">
+        <select ng-model="vm.DayDetailsObj.DayDetails.Tachograf.Value" ng-options="i.Value as i.Description for i in vm.TachgrafList" ng-change="vm.IUiHelperService.DisabledControls()" title="{{ this.selected}}">
+            <option value="0" selected></option>
+        </select>
+    </div>
+    <div class="col-md-1">לינה:</div>
+    <div class="col-md-1">
+        <select id="ddlLina" ng-model="vm.DayDetailsObj.DayDetails.Lina.Value" class="cntlDis" ng-options="i.Value as i.Description for i in vm.LinaList" ng-change="vm.IUiHelperService.DisabledControls()">   </select>
+    </div>
+
+    <div class="col-md-1">הלבשה:</div>
+    <div class="col-md-1">
+        <select ng-model="vm.DayDetailsObj.DayDetails.Halbasha.Value" ng-options="i.Value as i.Description for i in vm.HalbashaList" ng-change="vm.IUiHelperService.DisabledControls();"></select>
+    </div>
+    <div class="col-md-1">השלמה ליום:</div>
+    <div class="col-md-1"> <input type="button" ng-model="vm.HashlamaCBVal" id="btnHashlamaForDay" name="btnHashlamaForDay" ng-click="vm.HashlamaForDay_Click();" ng-disabled="!vm.DayDetailsObj.DayDetails.HashlamaForDay.IsEnabled" class="ImgButtonCheckBox" ng-style="{'background-image': 'url(' + vm.btnHashlamaForDayImage + ')'}" /></div>
+    <div class="col-md-1">סיבה להשלמה:</div>
+    <div class="col-md-1">
+        <select ng-model="vm.DayDetailsObj.DayDetails.SibatHashlamaLeyom.Value" ng-options="i.Value as i.Description for i in vm.HashlameLeYomList" ng-disabled="!vm.DayDetailsObj.DayDetails.SibatHashlamaLeyom.IsEnabled" ng-change="vm.IUiHelperService.DisabledControls()">
+            <option value="0"></option>
+        </select>
+
+    </div>
+    <div class="col-md-2"> </div>
+</div>  

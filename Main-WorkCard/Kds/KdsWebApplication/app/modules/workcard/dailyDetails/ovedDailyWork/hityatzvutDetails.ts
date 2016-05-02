@@ -8,7 +8,8 @@
 
         constructor(
             private IWorkCardStateService: IWorkCardStateService,
-            private $scope:ng.IScope) {
+            private $scope: ng.IScope,
+            private IUiHelperService: modules.common.IUiHelperService) {
 
             this.RegisterToOvedDeatilsChanged();
             this.SetOvedDetails();

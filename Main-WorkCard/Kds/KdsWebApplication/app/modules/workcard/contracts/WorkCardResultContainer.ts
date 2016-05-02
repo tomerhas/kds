@@ -43,7 +43,7 @@
         };
         BRashemet: boolean;
         BMenahelBankShaot: boolean;
-        OParams: clParametersDM;
+        oParams: any;
     }
 
 }

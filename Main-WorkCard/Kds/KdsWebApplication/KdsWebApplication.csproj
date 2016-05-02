@@ -91,11 +91,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.old.js" />
+    <Content Include="app\common\componenets\dateTime\dateTimeDirective.tpl.html" />
+    <Content Include="app\common\directives\dateTime\dateTimeFormatDirective.tpl.html" />
+    <Content Include="app\common\directives\errorDisplay\errorDisplayDirective.tpl.html" />
     <Content Include="app\directives\eggedDateTimeDirective.js" />
     <Content Include="app\directives\ngModalDirective.js" />
     <Content Include="app\Index.html" />
     <Content Include="app\modules\workcard\dailyDetails\dailyDetails.tpl.html" />
     <Content Include="app\modules\workcard\dailyDetails\ovedDailyWork\hityatzvutDetails.tpl.html" />
+    <Content Include="app\modules\workcard\dailyDetails\ovedDailyWork\pirteyOved.tpl.html" />
     <Content Include="app\modules\workcard\generalDetails\generalDetails.tpl.html" />
     <Content Include="app\modules\workcard\sidurAvoda\sidurAvoda.tpl.html" />
     <Content Include="app\modules\workcard\workCardMain.tpl.html" />
@@ -1561,6 +1565,7 @@
     <Content Include="Content\kendo\2015.3.1111\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
     <Content Include="Content\kendo\2015.3.1111\fonts\DejaVu\DejaVuSans-Bold.ttf" />
     <Content Include="Content\kendo\2015.3.1111\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="app\modules\workcard\dailyDetails\ovedDailyWork\workDayDetails.tpl.html" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -2086,6 +2091,7 @@
     <Content Include="Scripts\kendo\2015.3.1111\messages\kendo.messages.zh-HK.min.js" />
     <Content Include="Scripts\kendo\2015.3.1111\messages\kendo.messages.zh-TW.min.js" />
     <Content Include="Scripts\modal.js" />
+    <Content Include="Scripts\ngMask.min.js" />
     <Content Include="Scripts\popover.js" />
     <Content Include="Scripts\scrollspy.js" />
     <Content Include="Scripts\tab.js" />
@@ -2906,9 +2912,13 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\app.ts" />
+    <TypeScriptCompile Include="app\common\componenets\dateTime\dateTimeDirective.ts" />
+    <TypeScriptCompile Include="app\common\directives\dateTime\dateTimeFormatDirective.ts" />
     <TypeScriptCompile Include="app\common\helpers\dateHelper.ts" />
+    <TypeScriptCompile Include="app\common\helpers\generalFunctions.ts" />
     <TypeScriptCompile Include="app\common\services\uiHelperService.ts" />
     <TypeScriptCompile Include="app\common\_module.ts" />
+    <TypeScriptCompile Include="app\common\directives\errorDisplay\errorDisplayDirective.ts" />
     <TypeScriptCompile Include="app\modules\workcard\contracts\AttributeField.ts" />
     <TypeScriptCompile Include="app\modules\workcard\contracts\clParametersDM.ts" />
     <TypeScriptCompile Include="app\modules\workcard\contracts\EmployeeBasicDetails.ts" />
@@ -2925,11 +2935,14 @@
     <TypeScriptCompile Include="app\modules\workcard\contracts\WorkCardResultContainer.ts" />
     <TypeScriptCompile Include="app\modules\workcard\dailyDetails\dailyDetails.ts" />
     <TypeScriptCompile Include="app\modules\workcard\dailyDetails\ovedDailyWork\hityatzvutDetails.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\dailyDetails\ovedDailyWork\pirteyOved.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\dailyDetails\ovedDailyWork\workDayDetails.ts" />
     <TypeScriptCompile Include="app\modules\workcard\events\generalEvents.ts" />
     <TypeScriptCompile Include="app\modules\workcard\generalDetails\generalDetails.ts" />
     <TypeScriptCompile Include="app\modules\workcard\module.ts" />
     <TypeScriptCompile Include="app\modules\workcard\services\apiProviderService.ts" />
     <TypeScriptCompile Include="app\modules\workcard\services\workCardStateService.ts" />
+    <TypeScriptCompile Include="app\modules\workcard\sidurAvoda\peilutBdikotBehavior.ts" />
     <TypeScriptCompile Include="app\modules\workcard\sidurAvoda\sidurAvoda.ts" />
     <TypeScriptCompile Include="app\modules\workcard\workCardMain.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />

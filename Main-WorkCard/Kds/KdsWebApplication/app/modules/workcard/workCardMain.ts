@@ -1,11 +1,16 @@
 ﻿module modules.workcard {
     class WorkCardMainController {
+        myDate: Date;
+        myDate2: Date;
+
         constructor(private $log: ng.ILogService,
             private IApiProviderService: IApiProviderService,
             private IWorkCardStateService: IWorkCardStateService)
         {
             this.$log.debug("WorkCardMainController controller");
             this.GetLookups();
+            this.myDate = new Date();
+            this.myDate2 = new Date();
         }
 
         GetLookups = () => {

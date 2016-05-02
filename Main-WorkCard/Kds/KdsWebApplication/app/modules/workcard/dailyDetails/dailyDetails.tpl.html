@@ -4,21 +4,25 @@
         <div class="col-md-1">
             {{vm.name}}
         </div>
-        <div class="col-md-1"><select ng-model="vm.DayDetails.ZmanNesiot.Value" ng-options="i.Value as i.Description for i in vm.ZmanNesiaList"> </select></div>
+        <div class="col-md-1"><select ng-model="vm.OvedDetails.DayDetails.ZmanNesiot.Value" ng-options="i.Value as i.Description for i in vm.ZmanNesiaList"> </select></div>
 
+      
         <div class="col-md-1 WorkCardTabs ImgButtonShowPlus" ng-click="vm.replaceTab(1)">התייצבות</div>
         <div class="col-md-1 WorkCardTabs ImgButtonShowPlus" ng-click="vm.replaceTab(2)">נתונים ליום עבודה</div>
         <div class="col-md-1 WorkCardTabs ImgButtonShowPlus" ng-click="vm.replaceTab(3)">פרטי העובד</div>
 
         <div class="col-md-2">
-            <input class="btnPrevDay" type="button" ng-click="vm.PrevDay_Click();" />
-            <input class="btnNextDay" type="button" ng-click="vm.NextDay_Click();" />
-            <input class="btnNextError" type="button" value="שגוי הבא" ng-click="vm.NextWrongDay_Click();" />
+            <input class="btnPrevDay" type="button"  ng-click="vm.PrevDay_Click();" />
+            <input class="btnNextDay" type="button"  ng-click="vm.NextDay_Click();" />
+            <input class="btnNextError" type="button" value="שגוי הבא" ng-click="vm.NextErrorCard_Click();" />
         </div>
     </div>
 
     <hityatzvut-details-directive ng-show="vm.tabDisplayed==1"></hityatzvut-details-directive>
-
+    <work-day-details-directive ng-show="vm.tabDisplayed==2"></work-day-details-directive>
+    <pirtey-oved-directive ng-show="vm.tabDisplayed==3"></pirtey-oved-directive>
+    
+   
     <!--<div hbo-tabs id="tabs">
             <ul>
                 <li><a href="#tabs-1">Tab 1</a></li>

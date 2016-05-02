@@ -6154,7 +6154,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
           else
           {
               if (bPeilutActive)
-                  oCancelButton.CssClass = "ImgCheckedPeilut";
+                  oCancelButton.CssClass = "ImgCancel";// "ImgCheckedPeilut";
               else
                  oCancelButton.CssClass = "ImgCancel";
           }

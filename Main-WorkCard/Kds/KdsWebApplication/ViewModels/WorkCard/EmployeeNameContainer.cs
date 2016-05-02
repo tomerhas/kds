@@ -7,6 +7,6 @@ namespace KdsWebApplication.ViewModels.WorkCard
 {
     public class EmployeeNameContainer
     {
-        public string EmployeeName { get; set; }
+        public string employeeName { get; set; }
     }
 }

@@ -92,7 +92,7 @@ public class wsWorkCard : System.Web.Services.WebService
               foreach (DataRow dr in dt.Rows)
               {
                 
-                  ids.Add(new EmployeeIdContainer(){MisparIshi = dr["mispar_ishi"].ToString()});
+                  ids.Add(new EmployeeIdContainer(){misparIshi = dr["mispar_ishi"].ToString()});
                   
               }
               return ids;
@@ -141,7 +141,7 @@ public class wsWorkCard : System.Web.Services.WebService
             foreach (DataRow dr in dt.Rows)
             {
 
-                names.Add(new EmployeeNameContainer() { EmployeeName = dr["Oved_Name"].ToString() });
+                names.Add(new EmployeeNameContainer() { employeeName = dr["Oved_Name"].ToString() });
 
             }
             return names;

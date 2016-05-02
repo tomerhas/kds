@@ -38,14 +38,17 @@
             this.cardDate = new Date(Date.now());
             this.modalLastUpdateShown = false;
             this.RegisterToSelectedEmployee();
+            this.RegisterToSelectedEmployeeName();
             this.InitDatePicker();
             this.RegisterToDatePickerChange();
             this.RegisterToRequestChangeDate();
+            this.RegisterToRequestGetErrorNextDay();
 
             this.InitCardDate();
 
             this.GetDailyDetails();
             this.getPeiluyot();
+
         }
 
         InitCardDate = () => {
@@ -59,6 +62,7 @@
                 this.misparIshi = 722;
                 $("#mispar_ishi_value").val(this.misparIshi);
             }
+            this.checkCardExists();
         }
 
         InitDatePicker = () => {
@@ -78,7 +82,7 @@
 
 
 
-         getPeiluyot= () =>{
+        getPeiluyot = () => {
                 this.IApiProviderService.getUserWorkCard(this.misparIshi.toString(), this.cardDate)
                     .then(res=> {
                         this.status = res.CardStatus.TeurStatus;
@@ -87,7 +91,7 @@
                         this.IWorkCardStateService.workCardResult = res;
                         this.$log.debug("ovedGeenralDetailsController.getPeiluyot broadcasting ovedPeiluyot-changed event");
                         this.$rootScope.$broadcast(modules.workcard.GeneralEvents.OVED_PEILUT_CHANGED);
-                    });
+                });
         };
 
          RegisterToDatePickerChange = () => {
@@ -108,7 +112,30 @@
              })
          }
 
-        
+         RegisterToRequestGetErrorNextDay = () => {
+             this.$scope.$on(modules.workcard.GeneralEvents.SHOW_NEXT_ERROR_DAY, (event, payload: number) => {
+
+                 this.IApiProviderService.getNextErrorCardDate(this.misparIshi, this.cardDate)
+                     .then(res=> {
+
+                         if (res != this.cardDateStr) {
+                          
+                             this.cardDate = modules.common.DateHelper.convertToDate(res);
+                             this.cardDateStr = res;// modules.common.DateHelper.formatDate(this.cardDate);
+                             this.GetDailyDetails();
+                             this.getPeiluyot();
+                         }
+                         else {
+                             alert('לא קיים כרטיס שגוי הבא');
+                         }
+
+                     }, error=> {
+                         this.error = error.data.Message;
+                         this.modalErrorsShown = true;
+                     }
+                 );
+             });
+         }
 
          checkCardExists = () => {
              this.IApiProviderService.isCardExists(this.misparIshi, this.cardDate)
@@ -136,7 +163,7 @@
                     this.modalErrorsShown = true;
                 });
         }
-
+        ////////////////////////////////////////////////////////////////////////
         userIdinputChanged = (misparIshi: string) => {
             this.SelectedEmployeeId = new EmployeeIdContainer();
             this.SelectedEmployeeId.misparIshi = misparIshi;
@@ -160,16 +187,12 @@
                 //When users selectes an item from the list - the item will be contained in the newVal.description
                 //When using the keyboard to insert new characters before selecting the item from the list, the newVal will contain the item directly (e.g. newVal.MisparIshi)
                 if (newVal && newVal.description) {
-                    this.misparIshi = newVal.description.MisparIshi;
+                    this.misparIshi = newVal.description.misparIshi;
                     //vm.SelectedEmployeeId = { MisparIshi: vm.misparIshi };
                     this.EmployeeIds = [];
                     this.EmployeeNames = [];
-                    this.IUiHelperService.EnablePage('');
+                   this.IUiHelperService.EnablePage(true);
                 }
-                //We do not want to fetch data whenever there is a change on the data only when user selects an item
-                //else if (newVal.MisparIshi) {
-                //    employeeId = newVal.MisparIshi;
-                //}
                 else {
                     return;
                 }
@@ -177,6 +200,167 @@
             this.GetDailyDetails();
             }, true);
         }
+
+        isUserIdValid=()=> {
+            var idText = $("#mispar_ishi_value").val().trim();
+            this.EmployeeIds = [];
+            this.SelectedEmployeeId = new EmployeeIdContainer();
+            this.SelectedEmployeeName = new EmployeeNameContainer();
+
+            if (idText.trim() != "") {
+
+                this.IApiProviderService.getOvdimToUser(idText, 75757)
+                    .then(res=> {
+                        this.EmployeeIds = res;
+                        if (this.EmployeeIds.length == 0) {
+                            alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');
+                             this.IUiHelperService.EnablePage(false);
+                             this.enabledControls();
+                        }
+                        else if (this.EmployeeIds.length > 0) {
+
+                            var isexist = false;
+
+                            this.EmployeeIds.forEach((s: EmployeeIdContainer) => {
+                                if (s.misparIshi == idText) {
+                                    this.misparIshi = idText;
+                                    //   vm.SelectedEmployeeId = { MisparIshi: vm.misparIshi };
+                                    isexist = true;
+                                }
+                            });
+
+                            if (!isexist) {
+                                alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');
+                                this.IUiHelperService.EnablePage(false);
+                                this.enabledControls();
+                                //  disabledFrame = false;
+
+                            }
+                            else {
+                                this.GetDailyDetails();
+                                this.IUiHelperService.EnablePage(true);
+                            }
+                        }
+                    }, error=> {
+                        this.error = error.data.Message;
+                        this.modalErrorsShown = true;
+                    });
+
+                   
+                }
+        }
+    
+         enabledControls() {
+            $("#mispar_ishi_value").prop('disabled', '');
+            $("#employee_name_value").prop('disabled', '');
+        }
+        /////////////////////////////////////////////////////////////
+
+          /********************************* txt name functions ******************************************/
+
+        userNameinputChanged=(str:string)=> {
+        //$scope.$broadcast('angucomplete-alt:clearInput');
+            this.SelectedEmployeeName = new EmployeeNameContainer();
+            this.SelectedEmployeeName.employeeName = str;
+            if (str.length == 1) {
+                this.$log.debug("go to server names- " + str);
+                //   $log.debug("input data changed- " + str);
+
+                this.IApiProviderService.getOvdimToUserByName(str, 75757)
+                    .then(res=> {
+                        this.EmployeeNames = res;
+                    }, error=> {
+                        this.error = error.data.Message;
+                        this.modalErrorsShown = true;
+                    });
+                }
+            }
+
+    RegisterToSelectedEmployeeName = () => {
+
+        this.$scope.$watch(() => { return this.SelectedEmployeeName }, (newVal: any, oldVal: any) => {
+            //When users selectes an item from the list - the item will be contained in the newVal.description
+            //When using the keyboard to insert new characters before selecting the item from the list, the newVal will contain the item directly (e.g. newVal.MisparIshi)
+            if (newVal && newVal.description) {
+                this.misparIshi = newVal.description.misparIshi;
+                //vm.SelectedEmployeeId = { MisparIshi: vm.misparIshi };
+                this.EmployeeIds = [];
+                this.EmployeeNames = [];
+                this.IUiHelperService.EnablePage(true);
+
+                var name = newVal.description.employeeName.split('(');
+                this.EmployeeName = name[0];
+                this.misparIshi = name[1].split(')')[0].trim();
+                $("#mispar_ishi_value").val(this.misparIshi);
+                this.IUiHelperService.EnablePage(true);
+            }
+            //We do not want to fetch data whenever there is a change on the data only when user selects an item
+            //else if (newVal.MisparIshi) {
+            //    employeeId = newVal.MisparIshi;
+            //}
+            else {
+                return;
+            }
+        
+            this.$log.debug("$watch: SelectedEmployeeId- :" + this.EmployeeName);
+            this.GetDailyDetails();
+        }, true);
+    }
+   
+    isUserNameValid=() =>{
+        var nameText = $("#employee_name_value").val();
+        var name;
+        this.EmployeeNames = [];
+        this.SelectedEmployeeId = new EmployeeIdContainer();
+        this.SelectedEmployeeName = new EmployeeNameContainer();
+
+        if (nameText.trim() != "") {
+            if (nameText.indexOf('(') > -1)
+                nameText = nameText.split('(')[0].trim();
+
+            this.IApiProviderService.getOvdimToUserByName(nameText, 75757)
+                .then(res=> {
+                    this.EmployeeNames = res;
+
+                    if (this.EmployeeNames.length == 0) {
+                        alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');
+                        this.IUiHelperService.EnablePage(false);
+                        this.enabledControls();
+                    }
+                    else if (this.EmployeeNames.length > 0) {
+
+                        var isexist = false;
+                        this.EmployeeNames.forEach((s: EmployeeNameContainer) => {
+                            name = s.employeeName;
+                            if (s.employeeName == nameText || nameText == s.employeeName.split('(')[0].trim()) {
+                                this.EmployeeName = s.employeeName.split('(')[0];
+                                this.misparIshi = +(s.employeeName.split('(')[1].split(')')[0].trim());
+
+                                //   vm.SelectedEmployeeId = { MisparIshi: vm.misparIshi };
+                                //   vm.SelectedEmployeeName = { EmployeeName: vm.EmployeeName };
+                                isexist = true;
+                            }
+                        });
+                        if (!isexist) {
+                            alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');
+                            this.IUiHelperService.EnablePage(false);
+                            this.enabledControls();
+                        }
+                        else {
+                            $("#mispar_ishi_value").val(this.misparIshi);
+                            $("#employee_name_value").val(this.EmployeeName);
+                            this.GetDailyDetails();
+                            this.IUiHelperService.EnablePage(true);
+                        }
+                    }  
+                }, error=> {
+                    this.error = error.data.Message;
+                    this.modalErrorsShown = true;
+                });
+        }
+    }
+        /************************************ end - txt name functions ***************************************/
+
 
         GetDailyDetails=() =>{
 
@@ -190,7 +374,7 @@
                     this.SelectedEmployeeId.misparIshi = res.MisparIshi.toString();
                     this.SelectedEmployeeName = new EmployeeNameContainer();
                     this.SelectedEmployeeName.employeeName = res.FullName ;
-                    this.$rootScope.$broadcast("ovedDetails-changed");
+                    this.$rootScope.$broadcast(modules.workcard.GeneralEvents.OVED_DETAILS_CHANGED);
                 }, error=> {
                     this.error = error.data.Message;
                     this.modalErrorsShown = true;

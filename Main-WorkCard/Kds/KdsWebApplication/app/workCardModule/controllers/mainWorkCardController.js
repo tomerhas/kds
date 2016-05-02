@@ -69,12 +69,3 @@
 
        
     });
-
-//////////////////////////**************   general functions ****************/////////////////////
-
-function FocusText(obj) {
-    obj.select();
-}
-function trim(str) {
-    return str.replace(/^[\s]+/, '').replace(/[\s]+$/, '').replace(/[\s]{2,}/, ' ');
-}
