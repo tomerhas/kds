@@ -971,6 +971,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             MoamadA=13,
             GimlayTakzivi=15,
             ChozeMeyuchad = 23,
+            OvedPoreshChadash=20,
             SachirKavua = 22,
             Sachir12 = 21,
             SachirZmani = 24,

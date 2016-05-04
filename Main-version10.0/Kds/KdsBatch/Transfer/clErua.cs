@@ -418,7 +418,7 @@ namespace KdsBatch
                _iMaamad ==  clGeneral.enKodMaamad.Aray.GetHashCode() || _iMaamad ==  clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode() || 
                _iMaamad ==  clGeneral.enKodMaamad.Chanich.GetHashCode() || _iMaamad ==  clGeneral.enKodMaamad.PensyonerBechoze.GetHashCode() || 
                _iMaamad ==  clGeneral.enKodMaamad.GimlayTaktziviBechoze.GetHashCode() || _iMaamad ==  clGeneral.enKodMaamad.PensyonerTakziviBechoze.GetHashCode() ||
-               _iMaamad == clGeneral.enKodMaamad.Shtachim.GetHashCode())
+               _iMaamad == clGeneral.enKodMaamad.Shtachim.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.OvedPoreshChadash.GetHashCode())
                 return true;
             else return false;
         }

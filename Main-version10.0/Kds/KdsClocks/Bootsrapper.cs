@@ -66,7 +66,7 @@ namespace KdsClocks
           //  container.RegisterType<IKavimManager, KavimManager>();
           ////  container.RegisterType<IErrorFlowManager, ErrorFlowManager>();
           ////  container.RegisterType<ISubErrorFlowFactory, SubErrorFlowFactory>();
-          //  container.RegisterType<ILogger, Logger>();
+            container.RegisterType<ILogger, Logger>();
           //  container.RegisterType<IShinuyimManager, ShinuyimManager>();
           ////  container.RegisterType<IShinuyimFlowManager, ShinuyimFlowManager>();
             container.RegisterType<ILogBakashot, LogBakashot>();
