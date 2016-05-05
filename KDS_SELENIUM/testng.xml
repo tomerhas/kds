@@ -15,7 +15,8 @@
             <class name="automationFramework.AddSpecialSchedule" />  
             <class name="automationFramework.MenahelBameshek" />
             <class name="automationFramework.AddScheduleMapa" /> 
-            <class name="automationFramework.OpenRechivimErrors" /> 
+            <class name="automationFramework.OpenRechivimErrors" />  
+            
             
 		</classes>
 
@@ -33,8 +34,8 @@
 
 		<classes>
 
-		   <class name="automationFramework.EmployeeCards" /> 
-		     <!--  <class name="automationFramework.OpenRikuzOnline" /> -->
+	                <class name="automationFramework.EmployeeCards" /> 
+		  	<!--   <  <class name="automationFramework.OpenRikuzOnline" /> -->
 
 		</classes>
 		
