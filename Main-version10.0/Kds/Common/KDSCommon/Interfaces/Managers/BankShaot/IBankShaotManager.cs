@@ -7,6 +7,6 @@ namespace KDSCommon.Interfaces.Managers.BankShaot
 {
     public interface IBankShaotManager
     {
-        void ExecBankShaot(long BakashaId, DateTime Taarich);
+        void ExecBankShaot(long BakashaId);
     }
 }

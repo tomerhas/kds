@@ -24,37 +24,43 @@ namespace KdsBankShaot.FlowManager
             _container = container;
         }
 
-        public void ExecBankShaot(long BakashaId,DateTime Taarich)
+        public void ExecBankShaot(long BakashaId)
         {
             BankShaotDal dal = new BankShaotDal();
             DataTable TbYechidotBank = new DataTable();
+            DataTable Months = new DataTable();
             BudgetData inputData = null;
             COLL_BUDGET oCollBudgets = new COLL_BUDGET();
+            DateTime Taarich;
             try
             {
-               
-                TbYechidotBank = dal.GetYechidotLeChishuv(Taarich);
-
-                for (int i = 0; i < TbYechidotBank.Rows.Count; i++)
+                Months = dal.GetMonthsToCalc();
+                foreach (DataRow dr in Months.Rows) 
                 {
-                    try
+                    Taarich = DateTime.Parse(dr["taarich"].ToString());
+                    TbYechidotBank = dal.GetYechidotLeChishuv(Taarich);
+
+                    for (int i = 0; i < TbYechidotBank.Rows.Count; i++)
                     {
-                        inputData = FillBudgetData(int.Parse(TbYechidotBank.Rows[i][0].ToString()), Taarich, BakashaId);
+                        try
+                        {
+                            inputData = FillBudgetData(int.Parse(TbYechidotBank.Rows[i][0].ToString()), Taarich, BakashaId);
 
-                        CalcBudgetToYechida(inputData);
+                            CalcBudgetToYechida(inputData);
 
-                        oCollBudgets.Add(inputData.objBudget);
+                            oCollBudgets.Add(inputData.objBudget);
 
-                        dal.SaveEmployeesBudget(inputData.kodYechida, Taarich, inputData.RequestId, inputData.UserId);
+                            dal.SaveEmployeesBudget(inputData.kodYechida, Taarich, inputData.RequestId, inputData.UserId);
+                        }
+                        catch (Exception ex)
+                        {
+                            _container.Resolve<ILogBakashot>().InsertLog(inputData.RequestId, "E", 0, "ExecBankShaot: yechida= " + inputData.kodYechida + ",err: " + ex.Message, null);
+                        }
+
                     }
-                    catch (Exception ex)
-                    {
-                        _container.Resolve<ILogBakashot>().InsertLog(inputData.RequestId, "E", 0, "ExecBankShaot: yechida= " +inputData.kodYechida +",err: "+ ex.Message,  null);
-                    }
 
+                    dal.SaveNetuneyBudgets(oCollBudgets);
                 }
-
-                dal.SaveNetuneyBudgets(oCollBudgets);
             }
             catch (Exception ex)
             {

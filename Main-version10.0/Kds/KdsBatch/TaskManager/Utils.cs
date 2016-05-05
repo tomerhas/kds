@@ -690,7 +690,7 @@ namespace KdsBatch.TaskManager
                  lRequestNum = objBatch.InsBakashaChishuvBankShaot(clGeneral.enGeneralBatchType.ChishuvBankShaotMeshek, "ChishuvBankShaotMeshek", clGeneral.enStatusRequest.InProcess, -12, chodesh);
                 // ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "before BankManager.ExecBankShaot");
                //  ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "BankManager obj=" + BankManager);
-                 BankManager.ExecBankShaot(lRequestNum,DateTime.Now.Date);
+                 BankManager.ExecBankShaot(lRequestNum);
                  ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "after BankManager.ExecBankShaot");
                  clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
              }

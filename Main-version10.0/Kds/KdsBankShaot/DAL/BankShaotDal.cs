@@ -18,6 +18,24 @@ namespace KdsBankShaot.DAL
         public const string cProSaveNetuneyBudgets = "PKG_BANK_SHAOT.pro_save_chishuv_budgets";
         public const string cProSaveBudgetEmployees = "PKG_BANK_SHAOT.pro_save_budget_employee";
         public const string cFunGetMatzevetMiztaber = "PKG_BANK_SHAOT.fun_get_matzevet_miztaber";
+        public const string cProGetMonthsToCalc = "PKG_BANK_SHAOT.pro_get_months_to_calc";
+
+        public DataTable GetMonthsToCalc()
+        {
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+            try
+            {               
+                oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(cProGetMonthsToCalc, ref dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public DataTable GetYechidotLeChishuv(DateTime dTaarich)
         {
