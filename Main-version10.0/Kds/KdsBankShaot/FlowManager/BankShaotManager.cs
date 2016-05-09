@@ -30,21 +30,25 @@ namespace KdsBankShaot.FlowManager
             DataTable TbYechidotBank = new DataTable();
             DataTable Months = new DataTable();
             BudgetData inputData = null;
-            COLL_BUDGET oCollBudgets = new COLL_BUDGET();
-            DateTime Taarich;
+            COLL_BUDGET oCollBudgets;
+            DateTime Taarich,Month;
             try
             {
                 Months = dal.GetMonthsToCalc();
                 foreach (DataRow dr in Months.Rows) 
                 {
-                    Taarich = DateTime.Parse(dr["taarich"].ToString());
-                    TbYechidotBank = dal.GetYechidotLeChishuv(Taarich);
+                    oCollBudgets = new COLL_BUDGET();
+                    Month = DateTime.Parse(dr["taarich"].ToString());
+                    if(Month.Month != DateTime.Now.Month)
+                        Taarich=Month.AddMonths(1).AddDays(-1);
+                    else Taarich = DateTime.Now.Date;// DateTime.Parse(dr["taarich"].ToString());
+                    TbYechidotBank = dal.GetYechidotLeChishuv(Taarich); 
 
                     for (int i = 0; i < TbYechidotBank.Rows.Count; i++)
                     {
                         try
                         {
-                            inputData = FillBudgetData(int.Parse(TbYechidotBank.Rows[i][0].ToString()), Taarich, BakashaId);
+                            inputData = FillBudgetData(int.Parse(TbYechidotBank.Rows[i][0].ToString()),Month, Taarich, BakashaId);
 
                             CalcBudgetToYechida(inputData);
 
@@ -69,7 +73,7 @@ namespace KdsBankShaot.FlowManager
             }
         }
 
-        private BudgetData FillBudgetData(int kodYechida, DateTime Taarich, long BakashaId)
+        private BudgetData FillBudgetData(int kodYechida, DateTime Month, DateTime Taarich, long BakashaId)
         {
             BudgetData inputData = new BudgetData();
             BankShaotDal dal = new BankShaotDal();
@@ -78,7 +82,7 @@ namespace KdsBankShaot.FlowManager
             {
                 inputData.kodYechida = kodYechida;
                 inputData.Taarich = Taarich;
-                inputData.Month = DateTime.Parse("01/" + Taarich.Month.ToString() + "/" + Taarich.Year.ToString());
+                inputData.Month = Month;// DateTime.Parse("01/" + Taarich.Month.ToString() + "/" + Taarich.Year.ToString());
                 inputData.oParams = new ParametrimDM(PrepareParametrim(dal.GetParametrim(Taarich)));
                 dsNetunim = dal.GetNetuneyOvdimToYechida(kodYechida, Taarich);
                 inputData.tbNetuneyYechidot = dsNetunim.Tables[0];// dal.GetNetuneyOvdimToYechida(kodYechida, Taarich);
