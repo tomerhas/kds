@@ -19,6 +19,7 @@ namespace KDSCommon.Enums
         Pundakim,
         SnifAv,
         Break,
-        YechidaMusachMachsan
+        YechidaMusachMachsan,
+        MichsaYomit
     }
 }

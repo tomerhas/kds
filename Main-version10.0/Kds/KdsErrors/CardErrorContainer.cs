@@ -53,6 +53,7 @@ namespace KdsErrors
             Add(_container.Resolve<DayErrorTimeMechineNosefetInDayNotValid182>());
             Add(_container.Resolve<DayErrorTimeAllMechineInDayNotValid183>());
             Add(_container.Resolve<DayErrorIsNesiaMeshtanaDefine150>());
+            Add(_container.Resolve<DayErrorMutamNochechutLessMichsa217>());
 
 
             Add(_container.Resolve<SidurErrorSidurNotExists9>());

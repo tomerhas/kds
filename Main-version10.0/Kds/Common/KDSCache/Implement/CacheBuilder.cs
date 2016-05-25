@@ -27,6 +27,7 @@ namespace KDSCache.Implement
         public const string cProGetCtbSnif = "PKG_UTILS.pro_get_snif_av_ctb";
         public const string cProGetGetBreakTb = "PKG_UTILS.pro_get_breaks_details";
         public const string cProYechidaMusachMachsan = "PKG_UTILS.pro_yechida_musach_machsan_ctb";
+        public const string cProGetMichsaYomit = "PKG_UTILS.pro_get_michsa_yomit_tb";
 
         private IKDSCacheManager _kdsCacheManager;
 
@@ -48,6 +49,7 @@ namespace KDSCache.Implement
              _kdsCacheManager.AddItem(CachedItems.StatusWC, GetStatusKartis());
              _kdsCacheManager.AddItem(CachedItems.Pundakim, GetPundakimVisutim());
              _kdsCacheManager.AddItem(CachedItems.SnifAv, GetSnifAvCtb());
+             _kdsCacheManager.AddItem(CachedItems.MichsaYomit, GetMichsaYomitTb());
            //  _kdsCacheManager.AddItem(CachedItems.Break, GetBreakTb()); 
            //  _kdsCacheManager.AddItem(CachedItems.YechidaMusachMachsan, GetYechidaMusachMachsan());  
         }
@@ -171,7 +173,16 @@ namespace KDSCache.Implement
             return dt;
         }
 
-        
+        private DataTable GetMichsaYomitTb()
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+            oDal.ExecuteSP(cProGetMichsaYomit, ref dt);
+            return dt;
+        }
+
         private DataTable GetBreakTb()
         {
             DataTable dt = new DataTable();

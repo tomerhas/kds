@@ -84,6 +84,7 @@ namespace KdsErrors.FlowManagers.SubFlowManagers
                 errorTypeList.Add(ErrorTypes.errTimeMechineNosefetInDayNotValid); //182
                 errorTypeList.Add(ErrorTypes.errTimeAllMechineInDayNotValid);//183
                 errorTypeList.Add(ErrorTypes.errNesiaMeshtanaNotDefine);//150
+                errorTypeList.Add(ErrorTypes.errMutamNahagutNochechutLessMichsa);//217
 
                 ExecuteListOfErrors(errContainer, inputData, errorTypeList, ErrorSubLevel.Yomi);
   

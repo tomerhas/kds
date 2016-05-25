@@ -104,6 +104,7 @@
     <Compile Include="ErrosrImpl\DayErrors\DayErrorIsShbatHashlamaValid47.cs" />
     <Compile Include="ErrosrImpl\DayErrors\DayErrorIsSidurLina30.cs" />
     <Compile Include="ErrosrImpl\DayErrors\DayErrorIsSimunNesiaValid27.cs" />
+    <Compile Include="ErrosrImpl\DayErrors\DayErrorMutamNochechutLessMichsa217.cs" />
     <Compile Include="ErrosrImpl\DayErrors\DayErrorTimeAllMechineInDayNotValid183.cs" />
     <Compile Include="ErrosrImpl\DayErrors\DayErrorTimeMechineNosefetInDayNotValid182.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErorMisparSiduriOtoNotExists139.cs" />

@@ -3262,7 +3262,7 @@ namespace KdsBatch
                                     }
                                 }
 
-                                if (objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() && fErechRechiv > 0)
+                                if (objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() && fErechRechiv > 0 && objOved.objMeafyeneyOved.GetMeafyen(33).ErechIshi == "0")
                                     bChangeTo67 = true;
 
                                 if (bflag && fErechRechiv==float.Parse("0.6") && bMaamadChange)

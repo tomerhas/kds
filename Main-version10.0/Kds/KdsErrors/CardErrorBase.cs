@@ -428,6 +428,57 @@ namespace KdsErrors
             }
             return bHaveIdkun;
         }
-        
+
+        public float GetSachNochechutDay(ErrorInputData input)
+        {
+            try
+            {
+                float nochechut=0;
+                foreach (SidurDM sidur in input.htEmployeeDetails.Values)
+                {
+                    if (sidur.iLoLetashlum == 0 && sidur.dFullShatGmarLetashlum != DateTime.MinValue && sidur.dFullShatHatchalaLetashlum != DateTime.MinValue)
+                        nochechut += float.Parse((sidur.dFullShatGmarLetashlum - sidur.dFullShatHatchalaLetashlum).TotalMinutes.ToString());
+                }
+                return nochechut;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public float GetMichsaYomit(ErrorInputData input)
+        {
+            try
+            {
+                DataRow[] drMichsa;
+                int iShvuaAvoda;
+                if (input.OvedDetails.iZmanMutamut > 0)
+                    return input.OvedDetails.iZmanMutamut;
+
+                var cacheManager = _container.Resolve<IKDSCacheManager>();
+                var TbMichsa =cacheManager.GetCacheItem<DataTable>(CachedItems.MichsaYomit);
+
+                if (input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || input.oMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())
+                     iShvuaAvoda = 6; 
+                 else  iShvuaAvoda = 5; 
+
+                drMichsa = TbMichsa.Select("Kod_Michsa=" + input.oMeafyeneyOved.GetMeafyen(1).IntValue + " and SHAVOA_AVODA=" + iShvuaAvoda + " and sug_yom=" + input.iSugYom + " and me_taarich<=Convert('" + input.CardDate.ToShortDateString() + "', 'System.DateTime')" + " and ad_taarich>=Convert('" + input.CardDate.ToShortDateString() + "', 'System.DateTime')");
+                 
+                if (drMichsa.Length > 0)
+                { 
+                    return int.Parse((float.Parse(drMichsa[0]["michsa"].ToString()) * 60).ToString()); 
+                }
+                else
+                {
+                    return 0;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     } 
 }
