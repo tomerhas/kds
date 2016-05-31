@@ -23,7 +23,7 @@ namespace KdsErrors.ErrosrImpl.DayErrors
             {
                 var nochechut = GetSachNochechutDay(input);
                 var michsa = GetMichsaYomit(input);
-                if (nochechut>0 &&  michsa>0 && nochechut<michsa)
+                if (nochechut > 0 && michsa > 0 && nochechut < michsa && (michsa-nochechut)<30)
                 {
                     AddNewError(input);
                     return false;

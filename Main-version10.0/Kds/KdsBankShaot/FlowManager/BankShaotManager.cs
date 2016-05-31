@@ -156,14 +156,15 @@ namespace KdsBankShaot.FlowManager
               inputData.objBudget.AGE_ADDITION += inputData.tbNetuneyChishuv.Select("budget_calc=1 and gil=" + enKodGil.enKshishon.GetHashCode()).Length * inputData.oParams.GetParam(1).FloatValue;
               inputData.objBudget.HALBASHA_ADDITION = (inputData.tbNetuneyChishuv.Select("budget_calc=1 and meafyen44=1").Length * inputData.oParams.GetParam(3).FloatValue * inputData.cntYemeyChol) / 60;
 
-               rows = inputData.tbNetuneyChishuv.Select("izun_matzevet=1 and meafyen46='0'");
-               //if (rows.Length > 0)
-               //{
-               //    view = new DataView(rows.CopyToDataTable());
-               //    distinctValues = view.ToTable(true, "ISUK", "YECHIDA_IRGUNIT");
-               //}
+        
+              var sumMatzevet = (from c in inputData.tbNetuneyChishuv.AsEnumerable()
+                                 where c.Field<string>("meafyen46").Equals("0")
+                                 && c.Field<Int16>("izun_matzevet").Equals(1)
+                                 && c.Field<decimal>("Teken").Equals(1)
+                                 select c.Field<decimal>("matzevet")).Sum();
 
-               matzevet = float.Parse(Math.Round(((teken - rows.Length) * (inputData.oParams.GetParam(5).FloatValue / inputData.cntYemeyChol)), 2, MidpointRounding.AwayFromZero).ToString());
+
+              matzevet = float.Parse(Math.Round(((teken - float.Parse(sumMatzevet.ToString())) * (inputData.oParams.GetParam(5).FloatValue / inputData.cntYemeyChol)), 2, MidpointRounding.AwayFromZero).ToString());
                inputData.objBudget.IZUN_MATZEVET_LETEKEN = matzevet;
                inputData.objBudget.IZUN_MATZEVET_LETEKEN_MIZTABER = inputData.SumMatzevetLechodesh + matzevet;
                inputData.objBudget.BUDGET = inputData.objBudget.MICHSA_BASIC + inputData.objBudget.AGE_ADDITION + inputData.objBudget.HALBASHA_ADDITION + inputData.objBudget.IZUN_MATZEVET_LETEKEN_MIZTABER;

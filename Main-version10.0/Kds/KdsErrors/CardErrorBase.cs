@@ -225,6 +225,7 @@ namespace KdsErrors
         protected bool CheckConditionsAllowSidur(ErrorInputData input)
         {
             bool bError = false;
+            bool checkHeter = true;
             //א. לעובד אין רישיון נהיגה באוטובוס (יודעים אם לעובד יש רישיון לפי ערכים 6, 10, 11 בקוד נתון 7 (קוד רישיון אוטובוס) בטבלת פרטי עובדים)
             bError = (!IsOvedHasDriverLicence(input));
 
@@ -232,19 +233,28 @@ namespace KdsErrors
             if (!(bError))
             {
                 bError = IsOvedMutaam(input);
+                checkHeter = false;
             }
 
             if (!bError)
             {
                 //ד. עובד הוא בשלילה (יודעים שעובד הוא בשלילה לפי ערך 1 בקוד בנתון 21 (שלילת   רשיון) בטבלת פרטי עובדים) 
                 if (input.CardDate != input.OvedDetails.dTaarichMe)
+                {
                     bError = IsOvedBShlila(input);
+                    checkHeter = false;
+                }
             }
 
             if (!bError)
             {
                 //. עובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה (יודעים שעובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה לפי ערכים 6, 7 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים) במקרה זה יש לבדוק אם הסידור מכיל רק נסיעות ריקות, מפעילים את הרוטינה לזיהוי מקט
                 bError = IsOvedMutaamForEmptyPeilut(input);
+            }
+            if (checkHeter && bError)//ה
+            {
+                if (input.curSidur.iKodHeterNehiga == 80 && input.curSidur.htPeilut.Count > 0 && IsSidurWithPeiluyotOnlyWithHeterEmptyBus(input.curSidur))
+                    bError = false;
             }
             return bError;
         }
