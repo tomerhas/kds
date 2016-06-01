@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>22.1356cm</Width>
+              <Width>20.17644cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>6.6412cm</Height>
+              <Height>6.48496cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -597,7 +597,7 @@
                                                 <TextRuns>
                                                   <TextRun>
                                                     <Value>=iif((Fields!SHAT_HATCHALA.Value = nothing) or (Fields!SHAT_GMAR.Value = nothing) or  Fields!MEAFYEN_53.Value&lt;&gt; nothing or ( Fields!KOD_HEVRA.Value&lt;&gt;6655 and Fields!LO_LETASHLUM.Value ="1") or Year(Fields!SHAT_HATCHALA.Value)=1
-,"",DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60)</Value>
+,"",Code.GetTime(DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <Format>0.00;(0.00)</Format>
@@ -620,6 +620,7 @@
                                               <PaddingBottom>1pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -979,8 +980,8 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Sum(DateDiff("n",iif(Fields!MEAFYEN_53.Value&lt;&gt; nothing or (Fields!KOD_HEVRA.Value &lt;&gt; 6655 and Fields!LO_LETASHLUM.Value="1") or Year(Fields!SHAT_HATCHALA.Value)=1 or Fields!SHAT_GMAR.Value = nothing,CDate("01/01/0001"),Fields!SHAT_HATCHALA.Value),
-			      iif(Fields!MEAFYEN_53.Value&lt;&gt; nothing or (Fields!KOD_HEVRA.Value &lt;&gt; 6655 and Fields!LO_LETASHLUM.Value="1") or Year(Fields!SHAT_HATCHALA.Value)=1 or Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value = nothing,CDate("01/01/0001"),Fields!SHAT_GMAR.Value))/60)</Value>
+                                                    <Value>=Code.GetTime(Sum(DateDiff("n",iif(Fields!MEAFYEN_53.Value&lt;&gt; nothing or (Fields!KOD_HEVRA.Value &lt;&gt; 6655 and Fields!LO_LETASHLUM.Value="1") or Year(Fields!SHAT_HATCHALA.Value)=1 or Fields!SHAT_GMAR.Value = nothing,CDate("01/01/0001"),Fields!SHAT_HATCHALA.Value),
+			      iif(Fields!MEAFYEN_53.Value&lt;&gt; nothing or (Fields!KOD_HEVRA.Value &lt;&gt; 6655 and Fields!LO_LETASHLUM.Value="1") or Year(Fields!SHAT_HATCHALA.Value)=1 or Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value = nothing,CDate("01/01/0001"),Fields!SHAT_GMAR.Value))))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
@@ -1115,7 +1116,7 @@
                                   <Value>=Fields!TAARICH.Value</Value>
                                 </SortExpression>
                               </SortExpressions>
-                              <Top>1.66688cm</Top>
+                              <Top>1.44007cm</Top>
                               <Left>0.04051in</Left>
                               <Height>2.17042cm</Height>
                               <Width>19.53271cm</Width>
@@ -1725,7 +1726,7 @@
                               <KeepTogether>true</KeepTogether>
                               <Left>0.08227cm</Left>
                               <Height>1.36951cm</Height>
-                              <Width>20.09417cm</Width>
+                              <Width>19.74155cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -1807,9 +1808,9 @@
                               </Style>
                             </Textbox>
                           </ReportItems>
-                          <Top>2.02751cm</Top>
+                          <Top>1.87127cm</Top>
                           <Height>4.61369cm</Height>
-                          <Width>22.1356cm</Width>
+                          <Width>19.82382cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1916,9 +1917,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsPresence</DataSetName>
-        <Left>0.20014cm</Left>
-        <Height>6.6412cm</Height>
-        <Width>22.1356cm</Width>
+        <Height>6.48496cm</Height>
+        <Width>20.17644cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1932,7 +1932,7 @@
     <Height>2.61465in</Height>
     <Style />
   </Body>
-  <Width>8.7936in</Width>
+  <Width>7.94348in</Width>
   <Page>
     <PageFooter>
       <Height>0.635cm</Height>
@@ -1959,6 +1959,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox12</rd:DefaultName>
           <Top>0.07056cm</Top>
+          <Left>0.03765cm</Left>
           <Height>0.56444cm</Height>
           <Width>5.6801cm</Width>
           <Style>
@@ -2142,21 +2143,11 @@ iif(
     <ReportParameter Name="P_STARTDATE">
       <DataType>DateTime</DataType>
       <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>=CDate("01/05/2013")</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>P STARTDATE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_ENDDATE">
       <DataType>DateTime</DataType>
       <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>=CDate("31/05/2013")</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_MISPAR_ISHI">
@@ -2217,7 +2208,26 @@ iif(
         Return result
 
     End Function
-</Code>
+
+   Public Function GetTime(ByVal minutes As Double) As String
+        Dim val As Double
+        Dim str As String
+        Dim dakot As Integer
+
+        val = minutes / 60
+
+        If (val.ToString().IndexOf(".")) Then
+            Dim words As String() = val.ToString().Split(New Char() {"."c})
+            str = words(0)
+            dakot = (val - Integer.Parse(str)) * 60
+            str = str &amp; "." &amp; dakot
+        Else
+            str = val
+        End If
+        
+        Return  str
+
+    End Function</Code>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>

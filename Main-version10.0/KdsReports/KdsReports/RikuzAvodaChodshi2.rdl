@@ -12608,7 +12608,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>מחושב בשכר</Value>
+                              <Value>=iif(Fields!R12.Value &lt;&gt; nothing and Fields!R12.Value &lt;&gt; 0,"מחושב בשכר","")</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -12631,6 +12631,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>

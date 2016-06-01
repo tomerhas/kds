@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>22.1356cm</Width>
+              <Width>19.84445cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>6.6412cm</Height>
+              <Height>6.92148cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -597,7 +597,9 @@
                                                 <TextRuns>
                                                   <TextRun>
                                                     <Value>=iif((Fields!SHAT_HATCHALA.Value = nothing) or (Fields!SHAT_GMAR.Value = nothing) or  Fields!MEAFYEN_53.Value&lt;&gt; nothing or ( Fields!KOD_HEVRA.Value&lt;&gt;6655 and Fields!LO_LETASHLUM.Value ="1") or Year(Fields!SHAT_HATCHALA.Value)=1
-,"",DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60)</Value>
+,"",Code.GetTime(DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)))
+
+'DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <Format>0.00;(0.00)</Format>
@@ -979,8 +981,8 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Sum(DateDiff("n",iif(Fields!MEAFYEN_53.Value&lt;&gt; nothing or (Fields!KOD_HEVRA.Value &lt;&gt; 6655 and Fields!LO_LETASHLUM.Value="1") or Year(Fields!SHAT_HATCHALA.Value)=1 or Fields!SHAT_GMAR.Value = nothing,CDate("01/01/0001"),Fields!SHAT_HATCHALA.Value),
-			      iif(Fields!MEAFYEN_53.Value&lt;&gt; nothing or (Fields!KOD_HEVRA.Value &lt;&gt; 6655 and Fields!LO_LETASHLUM.Value="1") or Year(Fields!SHAT_HATCHALA.Value)=1 or Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value = nothing,CDate("01/01/0001"),Fields!SHAT_GMAR.Value))/60)</Value>
+                                                    <Value>=Code.GetTime(Sum(DateDiff("n",iif(Fields!MEAFYEN_53.Value&lt;&gt; nothing or (Fields!KOD_HEVRA.Value &lt;&gt; 6655 and Fields!LO_LETASHLUM.Value="1") or Year(Fields!SHAT_HATCHALA.Value)=1 or Fields!SHAT_GMAR.Value = nothing,CDate("01/01/0001"),Fields!SHAT_HATCHALA.Value),
+			      iif(Fields!MEAFYEN_53.Value&lt;&gt; nothing or (Fields!KOD_HEVRA.Value &lt;&gt; 6655 and Fields!LO_LETASHLUM.Value="1") or Year(Fields!SHAT_HATCHALA.Value)=1 or Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value = nothing,CDate("01/01/0001"),Fields!SHAT_GMAR.Value))))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
@@ -1115,7 +1117,7 @@
                                   <Value>=Fields!TAARICH.Value</Value>
                                 </SortExpression>
                               </SortExpressions>
-                              <Top>1.66688cm</Top>
+                              <Top>2.16105cm</Top>
                               <Left>0.04051in</Left>
                               <Height>2.17042cm</Height>
                               <Width>19.53271cm</Width>
@@ -1723,9 +1725,10 @@
                                 </Tablix>
                               </ReportItems>
                               <KeepTogether>true</KeepTogether>
-                              <Left>0.08227cm</Left>
-                              <Height>1.36951cm</Height>
-                              <Width>20.09417cm</Width>
+                              <Top>0.05764cm</Top>
+                              <Left>0.1029cm</Left>
+                              <Height>1.29013cm</Height>
+                              <Width>19.74155cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -1755,7 +1758,7 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox15</rd:DefaultName>
-                              <Top>3.90786cm</Top>
+                              <Top>4.40202cm</Top>
                               <Left>7.10682cm</Left>
                               <Height>0.6cm</Height>
                               <Width>12.52878cm</Width>
@@ -1788,7 +1791,7 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox16</rd:DefaultName>
-                              <Top>4.01369cm</Top>
+                              <Top>4.40202cm</Top>
                               <Left>4.2946cm</Left>
                               <Height>0.6cm</Height>
                               <Width>2.5cm</Width>
@@ -1806,10 +1809,48 @@
                                 <PaddingBottom>2pt</PaddingBottom>
                               </Style>
                             </Textbox>
+                            <Textbox Name="Textbox17">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>שים לב: הנתונים הקובעים הם אלו המחושבים לשכר*</Value>
+                                      <Style>
+                                        <FontSize>9pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                        <TextDecoration>None</TextDecoration>
+                                        <Color>Red</Color>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox15</rd:DefaultName>
+                              <Top>1.48889cm</Top>
+                              <Left>7.10682cm</Left>
+                              <Height>0.6cm</Height>
+                              <Width>12.52878cm</Width>
+                              <ZIndex>4</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
                           </ReportItems>
-                          <Top>2.02751cm</Top>
-                          <Height>4.61369cm</Height>
-                          <Width>22.1356cm</Width>
+                          <Top>1.91946cm</Top>
+                          <Left>0cm</Left>
+                          <Height>5.00202cm</Height>
+                          <Width>19.84445cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1917,8 +1958,8 @@
         </TablixRowHierarchy>
         <DataSetName>DsPresence</DataSetName>
         <Left>0.20014cm</Left>
-        <Height>6.6412cm</Height>
-        <Width>22.1356cm</Width>
+        <Height>6.92148cm</Height>
+        <Width>19.84445cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1929,10 +1970,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.61465in</Height>
+    <Height>2.72499in</Height>
     <Style />
   </Body>
-  <Width>8.7936in</Width>
+  <Width>7.89157in</Width>
   <Page>
     <PageFooter>
       <Height>0.74083cm</Height>
@@ -2187,7 +2228,26 @@
 
     End Function
 
-</Code>
+
+   Public Function GetTime(ByVal minutes As Double) As String
+        Dim val As Double
+        Dim str As String
+        Dim dakot As Integer
+
+        val = minutes / 60
+
+        If (val.ToString().IndexOf(".")) Then
+            Dim words As String() = val.ToString().Split(New Char() {"."c})
+            str = words(0)
+            dakot = (val - Integer.Parse(str)) * 60
+            str = str &amp; "." &amp; dakot
+        Else
+            str = val
+        End If
+        
+        Return  str
+
+    End Function</Code>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>323a4d6d-048f-4bbd-b872-c72f3e20a890</rd:ReportID>
 </Report>

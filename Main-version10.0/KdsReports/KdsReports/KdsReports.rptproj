@@ -90,16 +90,16 @@
       <FullPath>DriverWithPlaints.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>FindWorkerCard.rdl</Name>
-      <FullPath>FindWorkerCard.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>GeneralHeader.rdl</Name>
       <FullPath>GeneralHeader.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>HashvaatChodsheyRizotChishuv.rdl</Name>
       <FullPath>HashvaatChodsheyRizotChishuv.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>HashvaatRitzotChishuv.rdl</Name>
+      <FullPath>HashvaatRitzotChishuv.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>HashvaatRizotChishuv.rdl</Name>
@@ -137,6 +137,11 @@
       <Name>KamutIdkuneyRashemet.rdl</Name>
       <FullPath>KamutIdkuneyRashemet.rdl</FullPath>
     </ProjectItem>
+    <ResourceProjectItem>
+      <Name>KdsReports.rptproj.user</Name>
+      <FullPath>KdsReports.rptproj.user</FullPath>
+      <MimeType>application/octet-stream</MimeType>
+    </ResourceProjectItem>
     <ProjectItem>
       <Name>Keytanot.rdl</Name>
       <FullPath>Keytanot.rdl</FullPath>
@@ -178,6 +183,18 @@
       <FullPath>RdlCountOvdeyMeshekShabat.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RdlHityazvutMissing.rdl</Name>
+      <FullPath>RdlHityazvutMissing.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RdlHityazvutMissingTluna.rdl</Name>
+      <FullPath>RdlHityazvutMissingTluna.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RdlOvdimPeilim.rdl</Name>
+      <FullPath>RdlOvdimPeilim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RdlPrecenceOvdeyMeshekShishiShabat.rdl</Name>
       <FullPath>RdlPrecenceOvdeyMeshekShishiShabat.rdl</FullPath>
     </ProjectItem>
@@ -186,8 +203,16 @@
       <FullPath>RdlReportMushalimDetails.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Report2.rdl</Name>
-      <FullPath>Report2.rdl</FullPath>
+      <Name>RdlTigburimOvdim.rdl</Name>
+      <FullPath>RdlTigburimOvdim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RdlTigburimRechev.rdl</Name>
+      <FullPath>RdlTigburimRechev.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Report2nesiot.rdl</Name>
+      <FullPath>Report2nesiot.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>ReportNesiotKfulot.rdl</Name>
@@ -210,8 +235,28 @@
       <FullPath>RikuzAvodaChodshiOnLine2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RptIturim.rdl</Name>
+      <FullPath>RptIturim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RptRitzatChishuv.rdl</Name>
+      <FullPath>RptRitzatChishuv.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RptSidureyVaadOvdim.rdl</Name>
+      <FullPath>RptSidureyVaadOvdim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>SpecificAverage.rdl</Name>
       <FullPath>SpecificAverage.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>SubRdlIturim.rdl</Name>
+      <FullPath>SubRdlIturim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>TestGalit.rdl</Name>
+      <FullPath>TestGalit.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Tigburim.rdl</Name>
@@ -239,63 +284,6 @@
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
-    <ProjectItem>
-      <Name>Report2nesiot.rdl</Name>
-      <FullPath>Report2nesiot.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Report4.rdl</Name>
-      <FullPath>Report4.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RptIturim.rdl</Name>
-      <FullPath>RptIturim.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RptRitzatChishuv.rdl</Name>
-      <FullPath>RptRitzatChishuv.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RptSidureyVaadOvdim.rdl</Name>
-      <FullPath>RptSidureyVaadOvdim.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>SubRdlIturim.rdl</Name>
-      <FullPath>SubRdlIturim.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>TestGalit.rdl</Name>
-      <FullPath>TestGalit.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>HashvaatRitzotChishuv.rdl</Name>
-      <FullPath>HashvaatRitzotChishuv.rdl</FullPath>
-    </ProjectItem>
-    <ResourceProjectItem>
-      <Name>KdsReports.rptproj.user</Name>
-      <FullPath>KdsReports.rptproj.user</FullPath>
-      <MimeType>application/octet-stream</MimeType>
-    </ResourceProjectItem>
-    <ProjectItem>
-      <Name>RdlHityazvutMissing.rdl</Name>
-      <FullPath>RdlHityazvutMissing.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RdlHityazvutMissingTluna.rdl</Name>
-      <FullPath>RdlHityazvutMissingTluna.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RdlOvdimPeilim.rdl</Name>
-      <FullPath>RdlOvdimPeilim.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RdlTigburimOvdim.rdl</Name>
-      <FullPath>RdlTigburimOvdim.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RdlTigburimRechev.rdl</Name>
-      <FullPath>RdlTigburimRechev.rdl</FullPath>
-    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
@@ -304,7 +292,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://ksafimrs01/REPORTSERVER</TargetServerURL>
+        <TargetServerURL>http://sql2012tst.egged.intra/REPORTSERVER</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>

@@ -1510,8 +1510,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DayDataEggT</DataSetName>
-        <Top>1.95827cm</Top>
-        <Left>0.25612cm</Left>
+        <Top>1.74978cm</Top>
         <Height>2.04048cm</Height>
         <Width>27.25878cm</Width>
         <Style>
@@ -1528,8 +1527,6 @@
             <Value>="נתוני עבודה יומיים אגד תעבורה "</Value>
           </Parameter>
         </Parameters>
-        <Top>0.10266cm</Top>
-        <Left>0.25612cm</Left>
         <Height>1.7145cm</Height>
         <Width>21.58444cm</Width>
         <ZIndex>1</ZIndex>
@@ -1543,10 +1540,10 @@
         </Style>
       </Subreport>
     </ReportItems>
-    <Height>1.66459in</Height>
+    <Height>1.49223in</Height>
     <Style />
   </Body>
-  <Width>10.83264in</Width>
+  <Width>10.7318in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
