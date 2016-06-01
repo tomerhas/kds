@@ -3252,7 +3252,7 @@ namespace KdsBatch
                                     objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode())
                                     bMaamadChange = true;
 
-                                if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                                if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && (objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() || (objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() && objOved.objMeafyeneyOved.GetMeafyen(33).ErechIshi == "1")))
                                 {
                                     if ((fErechRechiv == 1 || (bflag && fErechRechiv == float.Parse("0.6")) ||
                                         (objOved.objMeafyeneyOved.GetMeafyen(56).IntValue == enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() && fErechRechiv == float.Parse(Math.Round((1 * objOved.fMekademNipuach), 2).ToString())))
