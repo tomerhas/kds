@@ -41,6 +41,11 @@ namespace KDSCommon.UDT
         private float m_IZUN_MATZEVET_LETEKEN_MIZTABER;
 
         private bool m_IZUN_MATZEVET_LETEKEN_MIZTABERIsNull;
+
+        private float m_ADD_TO_MATZEVET_MIZTABER;
+
+        private bool m_ADD_TO_MATZEVET_MIZTABERIsNull;
+        
         
         private float m_BUDGET;
 
@@ -76,8 +81,9 @@ namespace KDSCommon.UDT
             this.m_TAARICHIsNull = true;
             this.m_AGE_ADDITIONIsNull = true;
             this.m_TAARICH_IDKUNIsNull = true;
-            this.m_IZUN_MATZEVET_LETEKENIsNull = true;
+            this.m_IZUN_MATZEVET_LETEKENIsNull = true;      
             this.m_IZUN_MATZEVET_LETEKEN_MIZTABERIsNull = true;
+            this.m_ADD_TO_MATZEVET_MIZTABERIsNull = true;
             this.m_BUDGETIsNull = true;
             this.m_MICHSA_BASICIsNull = true;
             this.m_CHODESHIsNull = true;
@@ -240,6 +246,32 @@ namespace KDSCommon.UDT
             }
         }
         
+        [OracleObjectMappingAttribute("ADD_TO_MATZEVET_MIZTABER")]
+        public float ADD_TO_MATZEVET_MIZTABER
+        {
+            get
+            {
+                return this.m_ADD_TO_MATZEVET_MIZTABER;
+            }
+            set
+            {
+                this.m_ADD_TO_MATZEVET_MIZTABER = value;
+                this.m_ADD_TO_MATZEVET_MIZTABERIsNull = false;
+            }
+        }
+
+        public bool ADD_TO_MATZEVET_MIZTABERIsNull
+        {
+            get
+            {
+                return this.m_ADD_TO_MATZEVET_MIZTABERIsNull;
+            }
+            set
+            {
+                this.m_ADD_TO_MATZEVET_MIZTABERIsNull = value;
+            }
+        }
+
         [OracleObjectMappingAttribute("BUDGET")]
         public float BUDGET
         {
@@ -444,6 +476,10 @@ namespace KDSCommon.UDT
             {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "IZUN_MATZEVET_LETEKEN_MIZTABER", this.IZUN_MATZEVET_LETEKEN_MIZTABER);
             }
+            if ((ADD_TO_MATZEVET_MIZTABERIsNull == false))
+            {
+                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "ADD_TO_MATZEVET_MIZTABER", this.ADD_TO_MATZEVET_MIZTABER);
+            }
             if ((BUDGETIsNull == false))
             {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "BUDGET", this.BUDGET);
@@ -501,6 +537,14 @@ namespace KDSCommon.UDT
             {
                 this.IZUN_MATZEVET_LETEKEN_MIZTABER = ((float)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "IZUN_MATZEVET_LETEKEN_MIZTABER")));
             }
+
+            this.ADD_TO_MATZEVET_MIZTABERIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "ADD_TO_MATZEVET_MIZTABER");
+            if ((ADD_TO_MATZEVET_MIZTABERIsNull == false))
+            {
+                this.ADD_TO_MATZEVET_MIZTABER = ((float)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "ADD_TO_MATZEVET_MIZTABER")));
+            }
+
+            
             this.BUDGETIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "BUDGET");
             if ((BUDGETIsNull == false))
             {

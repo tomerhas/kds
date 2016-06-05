@@ -5163,8 +5163,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         Dictionary<string, string> ReportParameters = new Dictionary<string, string>();
         string ReportNameStr = ReportName.Presence.ToString();
-        ////if (_wcResult.oOvedYomAvodaDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode())
-        ////    ReportNameStr = ReportName.PresenceAllSidurim.ToString();
+        if (_wcResult.oOvedYomAvodaDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode())
+            ReportNameStr = ReportName.PresenceAllSidurim.ToString();
         
         ReportParameters.Add("P_MISPAR_ISHI", iMisparIshi.ToString());
         ReportParameters.Add("P_STARTDATE",dDateCard.AddDays(-DateTime.DaysInMonth(dDateCard.Year, dDateCard.Month)).ToShortDateString());

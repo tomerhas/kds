@@ -31,6 +31,9 @@ namespace KDSCommon.DataModels.BankShaot
         public ParametrimDM oParams { get; set; }
 
         public OBJ_BUDGET objBudget;
+
+        //public DataTable SugeyYamimMeyuchadim;
+        //public DataTable YamimMeyuchadim;
        // public COLL_BUDGET oCollBudgets { get; set; }
     }
 }
