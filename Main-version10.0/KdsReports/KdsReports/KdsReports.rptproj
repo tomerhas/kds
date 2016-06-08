@@ -292,7 +292,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://sql2012tst.egged.intra/REPORTSERVER</TargetServerURL>
+        <TargetServerURL>http://ksafimrs01/REPORTSERVER</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>

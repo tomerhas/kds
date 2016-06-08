@@ -620,7 +620,6 @@
                                               <PaddingBottom>1pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -865,7 +864,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value ,"",cstr(Fields!TAARICH.Value)+ cstr(" -" &amp; Fields!DAYOFWEEK.Value))</Value>
+                                                    <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value and Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"",cstr(Fields!TAARICH.Value)+ cstr(" -" &amp; Fields!DAYOFWEEK.Value))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <Format>d</Format>
@@ -889,6 +888,7 @@
                                               <Direction>RTL</Direction>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>

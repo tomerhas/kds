@@ -866,7 +866,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value ,"",cstr(Format(Fields!TAARICH.Value,"dd/MM/yyyy"))+ cstr(" -" &amp; Fields!DAYOFWEEK.Value))</Value>
+                                                    <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value and Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"",cstr(Format(Fields!TAARICH.Value,"dd/MM/yyyy"))+ cstr(" -" &amp; Fields!DAYOFWEEK.Value))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <Format>d</Format>
@@ -890,6 +890,7 @@
                                               <Direction>RTL</Direction>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
