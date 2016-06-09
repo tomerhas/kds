@@ -19,7 +19,7 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
         {
 
 
-            if (input.curSidur.iKodHeterNehiga != 80 && input.curSidur.htPeilut.Count>0 && IsSidurWithPeiluyotOnlyWithHeterEmptyBus(input.curSidur))
+            if (input.curSidur.iKodHeterNehiga == 80 && input.curSidur.htPeilut.Count>0 && !IsSidurWithPeiluyotOnlyWithHeterEmptyBus(input.curSidur))
             {
                 AddNewError(input);
                 return false;

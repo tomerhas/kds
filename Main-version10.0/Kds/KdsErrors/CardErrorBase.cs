@@ -251,11 +251,11 @@ namespace KdsErrors
                 //. עובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה (יודעים שעובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה לפי ערכים 6, 7 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים) במקרה זה יש לבדוק אם הסידור מכיל רק נסיעות ריקות, מפעילים את הרוטינה לזיהוי מקט
                 bError = IsOvedMutaamForEmptyPeilut(input);
             }
-            ////if (checkHeter && bError)//ה
-            ////{
-            ////    if (input.curSidur.iKodHeterNehiga == 80 && input.curSidur.htPeilut.Count > 0 && IsSidurWithPeiluyotOnlyWithHeterEmptyBus(input.curSidur))
-            ////        bError = false;
-            ////}
+            if (checkHeter && bError)//ה
+            {
+                if (input.curSidur.iKodHeterNehiga == 80)// && input.curSidur.htPeilut.Count > 0 && IsSidurWithPeiluyotOnlyWithHeterEmptyBus(input.curSidur))
+                    bError = false;
+            }
             return bError;
         }
 
