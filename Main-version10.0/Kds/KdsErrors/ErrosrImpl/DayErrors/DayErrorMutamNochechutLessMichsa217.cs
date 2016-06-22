@@ -17,16 +17,18 @@ namespace KdsErrors.ErrosrImpl.DayErrors
         }
         public override bool InternalIsCorrect(ErrorInputData input)
         {
-               
-            if (input.OvedDetails.sMutamut.Trim() == "1" && input.curSidur.sSidurDay != enDay.Shishi.GetHashCode().ToString() &&
-                input.curSidur.sSidurDay != enDay.Shabat.GetHashCode().ToString() && !DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim))
-            {
-                var nochechut = GetSachNochechutDay(input);
-                var michsa = GetMichsaYomit(input);
-                if (nochechut > 0 && michsa > 0 && nochechut < michsa && (michsa-nochechut)<30)
+            if (input.OvedDetails.sHashlamaLeyom != "1")
+            { 
+                if (input.OvedDetails.sMutamut.Trim() == "1" && input.curSidur.sSidurDay != enDay.Shishi.GetHashCode().ToString() &&
+                    input.curSidur.sSidurDay != enDay.Shabat.GetHashCode().ToString() && !DateHelper.CheckShaaton(input.iSugYom, input.CardDate, input.SugeyYamimMeyuchadim))
                 {
-                    AddNewError(input);
-                    return false;
+                    var nochechut = GetSachNochechutDay(input);
+                    var michsa = GetMichsaYomit(input);
+                    if (nochechut > 0 && michsa > 0 && nochechut < michsa && (michsa - nochechut) < 30)
+                    {
+                        AddNewError(input);
+                        return false;
+                    }
                 }
             }
 
