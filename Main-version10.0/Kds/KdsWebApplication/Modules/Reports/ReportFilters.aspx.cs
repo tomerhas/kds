@@ -63,7 +63,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         clUtils oUtils = new clUtils();
         try
         {
-            dtParametrim = oUtils.getErechParamByKod("100,280,300", DateTime.Now.ToShortDateString());
+            dtParametrim = oUtils.getErechParamByKod("100,280,303", DateTime.Now.ToShortDateString());
             Param100.Value = dtParametrim.Select("KOD_PARAM=100")[0]["ERECH_PARAM"].ToString();
             Param280.Value = dtParametrim.Select("KOD_PARAM=280")[0]["ERECH_PARAM"].ToString();
             switch (Report.NameReport)
@@ -73,7 +73,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.RdlTigburimRechev:
                 case ReportName.ProfitOfLinesDetailed:
                 case ReportName.ProfitOfLinesGroup:
-                    FromParam.Value = dtParametrim.Select("KOD_PARAM=300")[0]["ERECH_PARAM"].ToString();
+                    FromParam.Value = dtParametrim.Select("KOD_PARAM=303")[0]["ERECH_PARAM"].ToString();
                     break;
                 default:
                     FromParam.Value = dtParametrim.Select("KOD_PARAM=100")[0]["ERECH_PARAM"].ToString();
