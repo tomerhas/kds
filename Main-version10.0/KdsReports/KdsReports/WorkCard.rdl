@@ -1953,7 +1953,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                   <Width>1.14023cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>6.44299cm</Width>
+                  <Width>6.04047cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.0922cm</Width>
@@ -1962,7 +1962,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                   <Width>1.41536cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.3cm</Width>
+                  <Width>1.65928cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.4cm</Width>
@@ -2977,7 +2977,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             <DataSetName>dsSidurimVePeiluyot</DataSetName>
             <Top>6.09352cm</Top>
             <Height>0.81773cm</Height>
-            <Width>19.41429cm</Width>
+            <Width>19.37105cm</Width>
             <ZIndex>12</ZIndex>
             <Style>
               <Border>
@@ -3489,7 +3489,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>19.32007cm</Width>
+                  <Width>19.35533cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -3520,7 +3520,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>S_LIST</rd:DefaultName>
-                              <Left>0.00001cm</Left>
+                              <Top>0.03527cm</Top>
                               <Height>0.33542cm</Height>
                               <Width>17.63837cm</Width>
                               <Style>
@@ -3554,7 +3554,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox16</rd:DefaultName>
-                              <Left>17.70894cm</Left>
+                              <Left>17.7442cm</Left>
                               <Height>0.33542cm</Height>
                               <Width>1.61113cm</Width>
                               <ZIndex>1</ZIndex>
@@ -3570,6 +3570,9 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                             </Textbox>
                           </ReportItems>
                           <KeepTogether>true</KeepTogether>
+                          <Visibility>
+                            <Hidden>=iif(Fields!S_LIST.Value &lt;&gt; "",false  ,true )</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -3596,9 +3599,9 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             </TablixRowHierarchy>
             <DataSetName>dsListOto</DataSetName>
             <Top>7.05236cm</Top>
-            <Left>0.09422cm</Left>
+            <Left>0.05896cm</Left>
             <Height>0.37069cm</Height>
-            <Width>19.32007cm</Width>
+            <Width>19.35533cm</Width>
             <ZIndex>22</ZIndex>
             <Visibility>
               <Hidden>=iif(Fields!S_LIST.Value &lt;&gt; "" and Sum(Fields!MISPAR_SIDUR.Value, "dsSidurimVePeiluyot") ,false  ,true )</Hidden>
@@ -3614,7 +3617,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
         <Top>0.15566cm</Top>
         <Left>0.23335cm</Left>
         <Height>7.42306cm</Height>
-        <Width>19.48215cm</Width>
+        <Width>19.41429cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3633,7 +3636,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
       </Border>
     </Style>
   </Body>
-  <Width>7.76201in</Width>
+  <Width>7.73529in</Width>
   <Page>
     <PageHeight>28cm</PageHeight>
     <PageWidth>21cm</PageWidth>

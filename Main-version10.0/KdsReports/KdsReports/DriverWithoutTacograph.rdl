@@ -864,10 +864,10 @@
                                 <Width>1.45344cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>3.22616cm</Width>
+                                <Width>2.65881cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.50635cm</Width>
+                                <Width>1.90954cm</Width>
                               </TablixColumn>
                               <TablixColumn>
                                 <Width>1.45344cm</Width>
@@ -1769,7 +1769,7 @@
                           </SortExpressions>
                           <Top>6.97714cm</Top>
                           <Height>3.00845cm</Height>
-                          <Width>15.7183cm</Width>
+                          <Width>15.55414cm</Width>
                           <ZIndex>9</ZIndex>
                           <Style>
                             <Border>
