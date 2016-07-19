@@ -17,6 +17,7 @@ namespace KDSCommon.DataModels
         public DateTime dFullShatYetzia;
         public DateTime dOldFullShatYetzia;
         public long lOtoNo = 0;
+        public long lLicenseNumber = 0;
         public long lOldOtoNo = 0;
         public long lMisparSiduriOto;
         public long iElementLeYedia = 0;//לשנות לטקסט?
