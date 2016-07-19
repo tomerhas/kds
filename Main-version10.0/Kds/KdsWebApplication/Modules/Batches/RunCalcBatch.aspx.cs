@@ -137,7 +137,34 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
         }
     }
 
+    
+    protected void btnCountSiba16_Click(object sender, EventArgs e)
+    {
+        clOvdim objOvdim = new clOvdim();
+        string sMaamad = "";
+        DateTime dFrom, dTo;
+        DataTable dtParametrim;
+        clUtils oUtils = new clUtils();
+        int iCount;
+        string sMessage;
+        try
+        {
+            if (chkFriends.Checked) { sMaamad = clGeneral.enMaamad.Friends.GetHashCode().ToString(); }
 
+            dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+            dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) * -1);
+            dTo = (DateTime.Parse(ddlToMonth.SelectedValue)).AddMonths(1).AddDays(-1);
+            iCount = objOvdim.GetCountWorkCardWithSidurimImSiba(dFrom, dTo,16);
+            sMessage = " כמות כרטיסי העבודה בסטטוס מאשר/מסתייג וגם קיים בהם סידור לא לתשלום עם סיבה 16 : " + iCount;
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Err", "alert('" + sMessage + "');", true);
+
+        }
+        catch (Exception ex)
+        {
+            clGeneral.BuildError(Page, ex.Message);
+        }
+    }
     protected void btnCountMeafyen_Click(object sender, EventArgs e)
     {
           clOvdim objOvdim = new clOvdim();

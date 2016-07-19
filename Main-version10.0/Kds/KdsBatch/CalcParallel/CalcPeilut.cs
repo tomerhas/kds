@@ -422,7 +422,7 @@ namespace KdsBatch
              DateTime dShatYetzia = DateTime.MinValue;
              int iMakatType;
              enMakatType oMakatType;
-             bool IsFirst = true;
+             bool IsFirst = true,HaveRechev,flag;
              try
              {
                  drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "");
@@ -434,11 +434,20 @@ namespace KdsBatch
                      iMakatType = StaticBL.GetMakatType(int.Parse(drPeiluyot[J]["makat_nesia"].ToString()));
                      oMakatType = (enMakatType)iMakatType;
 
+
                      if (oMakatType != enMakatType.mVisa && oMakatType != enMakatType.mElement && oMakatType != enMakatType.mEmpty && oMakatType != enMakatType.mVisut && iMisparKnisa == 0)
                      {
-                         if (drPeiluyot[J]["oto_no"].ToString().Length > 0)
+                        if (objOved.Taarich < objOved.objParameters.dParam319)
+                            HaveRechev = drPeiluyot[J]["oto_no"].ToString().Length > 0;
+                        else HaveRechev=drPeiluyot[J]["license_number"].ToString().Length > 0;
+
+                        if (HaveRechev)
                          {
-                             if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and (SHASSIS_TYPE=6 or TRAFFIC_ASSIGMENT=1) ").Length > 0)
+                            if (objOved.Taarich < objOved.objParameters.dParam319)
+                                flag = objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and (SHASSIS_TYPE=6 or TRAFFIC_ASSIGMENT=1) ").Length > 0;
+                            else flag = objOved.oGeneralData.dtBusNumbersAll.Select("license_number=" + drPeiluyot[J]["license_number"].ToString() + " and (SHASSIS_TYPE=6 or TRAFFIC_ASSIGMENT=1) ").Length > 0;
+
+                            if (flag)
                              {
                                  if (IsFirst)
                                  {
@@ -451,15 +460,22 @@ namespace KdsBatch
                                  else
                                      fErech += float.Parse("1.25");
                              }
-                             else if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and (TRAFFIC_ASSIGMENT in (2,7)) ").Length > 0)
+                             else 
                              {
-                                 if (IsFirst)
-                                 {
-                                     fErech += 2;
-                                     IsFirst = false;
-                                 }
-                                 else
-                                     fErech += float.Parse("2.25");
+                                if (objOved.Taarich < objOved.objParameters.dParam319)
+                                    flag = objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and (TRAFFIC_ASSIGMENT in (2,7)) ").Length > 0;
+                                else flag = objOved.oGeneralData.dtBusNumbersAll.Select("license_number=" + drPeiluyot[J]["license_number"].ToString() + " and (TRAFFIC_ASSIGMENT in (2,7)) ").Length > 0;
+
+                                if (flag)
+                                {
+                                    if (IsFirst)
+                                    {
+                                        fErech += 2;
+                                        IsFirst = false;
+                                    }
+                                    else
+                                        fErech += float.Parse("2.25");
+                                }
                              }
                          }
                      }
@@ -499,7 +515,7 @@ namespace KdsBatch
              string sCarNumbers = "" ;
              int iSugAuto;
              int J = 0;
-             bool SidurMifraki = false;
+             bool SidurMifraki = false,HaveRechev, flag;
              try
              {
                  drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur,"");
@@ -527,10 +543,18 @@ namespace KdsBatch
                              if (!string.IsNullOrEmpty(drDetailsPeilut["sug_auto"].ToString()))
                                  iSugAuto = int.Parse(drDetailsPeilut["sug_auto"].ToString());
 
-                             // if ((iSugAuto == 4 || iSugAuto == 5))
-                             if (drPeiluyot[J]["oto_no"].ToString().Length > 0)
+                            if (objOved.Taarich < objOved.objParameters.dParam319)
+                                HaveRechev = drPeiluyot[J]["oto_no"].ToString().Length > 0;
+                            else HaveRechev = drPeiluyot[J]["license_number"].ToString().Length > 0;
+                            // if ((iSugAuto == 4 || iSugAuto == 5))
+                            if (HaveRechev)
                              {
-                                 if (iMisparSidur.ToString().Substring(0, 2) != "99" && objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
+                                if (objOved.Taarich < objOved.objParameters.dParam319)
+                                    flag = objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0;
+                                else flag = objOved.oGeneralData.dtBusNumbersAll.Select("license_number=" + drPeiluyot[J]["license_number"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0;
+
+
+                                if (iMisparSidur.ToString().Substring(0, 2) != "99" && flag)
                                  {
                                      var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
                                      dsSidurim = kavimDal.GetSidurDetailsFromTnua(iMisparSidur, objOved.Taarich, out iResult);
@@ -556,9 +580,17 @@ namespace KdsBatch
 
                              if (SidurMifraki)
                              {
-                                 if (drPeiluyot[J]["oto_no"].ToString().Length > 0)
+                                if (objOved.Taarich < objOved.objParameters.dParam319)
+                                    HaveRechev = drPeiluyot[J]["oto_no"].ToString().Length > 0;
+                                else HaveRechev = drPeiluyot[J]["license_number"].ToString().Length > 0;
+                                // if ((iSugAuto == 4 || iSugAuto == 5))
+                                 if (HaveRechev)
                                  {
-                                     if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
+                                    if (objOved.Taarich < objOved.objParameters.dParam319)
+                                        flag = objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0;
+                                    else flag = objOved.oGeneralData.dtBusNumbersAll.Select("license_number=" + drPeiluyot[J]["license_number"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0;
+
+                                    if (flag)
                                      {
                                          fHistaglutMifraki = (objOved.objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetashlumPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                                      }

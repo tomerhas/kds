@@ -18,6 +18,7 @@ using KdsLibrary.Utils.Reports;
 using KdsBatch;
 using KdsBatch.Reports;
 using KDSCommon.Enums;
+using System.Xml;
 
 public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 {
@@ -178,7 +179,8 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                     Session["FileName"] = "RikuzAvodaChodshi";
 
                     //sScript = "window.showModalDialog('../../modalshowprint.aspx','','dialogwidth:800px;dialogheight:750px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
-                    sScript = "window.showModalDialog('../../ModalShowPrint.aspx','','dialogwidth:800px;dialogheight:750px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
+                    ///  sScript = "window.showModalDialog('../../ModalShowPrint.aspx','','dialogwidth:800px;dialogheight:750px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
+                    sScript = "window.open('../../ModalShowPrint.aspx');";
                     MasterPage mp = (MasterPage)Page.Master;
 
                     ScriptManager.RegisterStartupScript(mp.ImagePrintClick, this.GetType(), "PrintPdf", sScript, true);
@@ -203,7 +205,8 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                     Session["TypeReport"] = "PDF";
                     Session["FileName"] = "RikuzAvodaChodshi";
 
-                    sScript = "window.showModalDialog('../../modalshowprint.aspx','','dialogwidth:800px;dialogheight:750px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
+                      sScript = "window.showModalDialog('../../modalshowprint.aspx','','dialogwidth:800px;dialogheight:750px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
+               //      sScript = "window.open('../../ModalShowPrint.aspx');";
                     MasterPage mp = (MasterPage)Page.Master;
 
                     ScriptManager.RegisterStartupScript(mp.ImagePrintClick, this.GetType(), "PrintPdf", sScript, true);
@@ -612,7 +615,19 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
             MainCalc objMainCalc = new MainCalc();
             objMainCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 2, ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10, ref  dtRikuz11To20, ref dtRikuz21To31, ref dtAllRikuz, ref dsRikuz);
             Session.Add("dsRikuz", dsRikuz);
-           // dsRikuz.WriteXmlSchema("C:\\Temp\\RikuzChodshi.xml");
+
+
+            foreach (DataTable dt in dsRikuz.Tables)
+            {
+                SetValueForNull(dt);
+            }
+            var xml = dsRikuz.GetXml();
+            //XmlDataDocument xmlDoc = new XmlDataDocument(dsRikuz);
+            // xmlDoc.Load("C:\\Temp\\RikuzChodshi.xml");
+
+
+
+            dsRikuz.WriteXmlSchema("C:\\Temp\\RikuzChodshi.xml");
             grdHeadrut.DataSource = dtHeadrut;
             grdHeadrut.DataBind();
             /*  dtHeadrut.TableName = "Headruyot";
@@ -647,6 +662,30 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 
     }
 
+    public void SetValueForNull(DataTable dt)
+    {
+        int i, j;
+        for (i = 0; i < dt.Columns.Count; i++)
+        {
+            for (j = 0; j < dt.Rows.Count; j++)
+            {
+                if (dt.Columns[i].DataType.ToString() == "System.Int32" || dt.Columns[i].DataType.ToString() == "System.Single" || dt.Columns[i].DataType.ToString() == "System.Double" || dt.Columns[i].DataType.ToString() == "System.Decimal")
+                {
+                    if (dt.Rows[j][i] == DBNull.Value)
+                        dt.Rows[j][i] = 0;
+
+
+                }
+                else if (dt.Columns[i].DataType.ToString() == "System.String")
+                {
+
+
+                    if (dt.Rows[j][i] == DBNull.Value || dt.Rows[j][i].ToString().Trim() == "")
+                        dt.Rows[j][i] = "0";
+                }
+            }
+        }
+    }
     protected void btnHidden_OnClick(object sender, EventArgs e)
     {
         divNetunim.Visible = false;

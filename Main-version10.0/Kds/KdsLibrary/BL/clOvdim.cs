@@ -1833,6 +1833,30 @@ namespace KdsLibrary.BL
            }
        }
 
+        public int GetCountWorkCardWithSidurimImSiba(DateTime dTarMe, DateTime dTarAd, int iSiba)
+        {
+            clDal oDal = new clDal();
+            int iCount;
+            try
+            {
+                oDal.AddParameter("p_count", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
+                oDal.AddParameter("p_siba", ParameterType.ntOracleInteger, iSiba, ParameterDir.pdInput);
+             
+                oDal.ExecuteSP(clGeneral.cFunGetCountWorkCardWithSiba);
+
+                iCount = int.Parse(oDal.GetValParam("p_count"));
+
+                return iCount;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        
        public int GetCountWCLoLetashlumWithMeafyenim(DateTime dTarMe, DateTime dTarAd)
        {
            clDal oDal = new clDal();

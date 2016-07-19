@@ -24,8 +24,17 @@
             </asp:DropDownList><asp:RequiredFieldValidator ID="vldMonth" runat="server" Display="Dynamic" CssClass="ErrorMessage"  ErrorMessage="חובה לבחור חודש!" ControlToValidate="ddlToMonth"></asp:RequiredFieldValidator>
         </td>
        
-        <td > <asp:Button  ID="btnRefresh" runat="server" Width="130px" CausesValidation="false"  Text="רענן פרמיות משק"  CssClass="ImgButtonSearch"  onclick="btnRefresh_Click"/></td>
+        <td > <%--<asp:Button  ID="btnRefresh" runat="server" Width="130px" CausesValidation="false"  Text="רענן פרמיות משק"  CssClass="ImgButtonSearch"  onclick="btnRefresh_Click"/>--%></td>
         <td>  <asp:UpdatePanel ID="upBtnShguyim" runat="server" RenderMode="Inline">
+                  <ContentTemplate>
+                   <asp:Button  ID="btnCount16" runat="server" Width="370px" CausesValidation="false"  Text="כרטיס מאשר/מסתייג וסידור לא לתשלום עם סיבה 16"  CssClass="ImgButtonSearch"  onclick="btnCountSiba16_Click" />  
+                   </ContentTemplate>
+              </asp:UpdatePanel> </td>
+        <td>    </td>
+    </tr>
+     <tr>
+        <td colspan="5" ></td><%--<asp:Button  ID="btnRefresh" runat="server" Width="130px" CausesValidation="false"  Text="רענן פרמיות משק"  CssClass="ImgButtonSearch"  onclick="btnRefresh_Click"/>--%>
+        <td>  <asp:UpdatePanel ID="UpdatePanel3" runat="server" RenderMode="Inline">
                   <ContentTemplate>
                    <asp:Button  ID="btnCount" runat="server" Width="300px" CausesValidation="false"  Text="כמות כ''ע עם ש. התחלה/גמר לתשלום חסרה"  CssClass="ImgButtonSearch"  onclick="btnCount_Click" />  
                    </ContentTemplate>

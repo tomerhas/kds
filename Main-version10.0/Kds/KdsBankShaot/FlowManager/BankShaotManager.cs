@@ -35,19 +35,19 @@ namespace KdsBankShaot.FlowManager
             DateTime Taarich, Month;
             try
             {
-                //Month = DateTime.Parse("01/05/2016");
-                //Taarich = DateTime.Parse("01/05/2016");
-                //for (int j = 0; j <31; j++)
-                //{
-                //    oCollBudgets = new COLL_BUDGET();
-                Months = dal.GetMonthsToCalc();
-                foreach (DataRow dr in Months.Rows)
+                Month = DateTime.Parse("01/06/2016");
+                Taarich = DateTime.Parse("01/06/2016");
+                for (int j = 0; j <30; j++)
                 {
                     oCollBudgets = new COLL_BUDGET();
-                    Month = DateTime.Parse(dr["taarich"].ToString());
-                    if (Month.Month != DateTime.Now.Month)
-                        Taarich = Month.AddMonths(1).AddDays(-1);
-                    else Taarich = DateTime.Now.Date;// DateTime.Parse(dr["taarich"].ToString());
+                //Months = dal.GetMonthsToCalc();
+                //foreach (DataRow dr in Months.Rows)
+                //{
+                //    oCollBudgets = new COLL_BUDGET();
+                //    Month = DateTime.Parse(dr["taarich"].ToString());
+                //    if (Month.Month != DateTime.Now.Month)
+                //        Taarich = Month.AddMonths(1).AddDays(-1);
+                //    else Taarich = DateTime.Now.Date;// DateTime.Parse(dr["taarich"].ToString());
 
 
                     TbYechidotBank = dal.GetYechidotLeChishuv(Taarich);

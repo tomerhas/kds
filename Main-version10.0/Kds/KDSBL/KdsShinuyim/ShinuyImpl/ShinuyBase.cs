@@ -597,6 +597,7 @@ namespace KdsShinuyim.ShinuyImpl
         protected void CopyPeilutToObj(OBJ_PEILUT_OVDIM oObjPeilutOvdimIns, PeilutDM oPeilut)
         {
             oObjPeilutOvdimIns.OTO_NO = oPeilut.lOtoNo;
+            oObjPeilutOvdimIns.LICENSE_NUMBER = oPeilut.lLicenseNumber;
             oObjPeilutOvdimIns.DAKOT_BAFOAL = oPeilut.iDakotBafoal;
             oObjPeilutOvdimIns.KISUY_TOR = oPeilut.iKisuyTor;
             if (oPeilut.iKmVisa > 0)

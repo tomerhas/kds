@@ -116,7 +116,7 @@ namespace KdsShinuyim.ShinuyImpl
         {
             int i = 0, indexPeilutMechona = -1;
             bool bPeilutHachanatMechona = false;
-            long oMakatType, otoNum;
+            long oMakatType, otoNum,licenseNumber;
             PeilutDM oPeilut;
             try
             {
@@ -138,11 +138,13 @@ namespace KdsShinuyim.ShinuyImpl
                     {
                         oPeilut = (PeilutDM)curSidur.htPeilut[indexPeilutMechona];
                         otoNum = oPeilut.lOtoNo;
+                        licenseNumber = oPeilut.lLicenseNumber;
                         i = indexPeilutMechona - 1;
                         while (i >= 0)
                         {
                             oPeilut = (PeilutDM)curSidur.htPeilut[i];
                             if (peilutManager.IsMustBusNumber(oPeilut, inputData.oParam.iVisutMustRechevWC) && oPeilut.lOtoNo != otoNum)
+                              //**  ((inputData.CardDate < inputData.oParam.dParam319 && oPeilut.lOtoNo != otoNum) || (inputData.CardDate >= inputData.oParam.dParam319 && oPeilut.lLicenseNumber != licenseNumber))
                                 break;
                             i--;
                         }

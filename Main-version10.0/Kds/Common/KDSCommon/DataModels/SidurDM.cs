@@ -110,6 +110,7 @@ namespace KDSCommon.DataModels
         public bool bElement2HovaExists; //מאפיין 94
         public bool bElement3HovaExists; //מאפיין 95
         public bool bSidurAsurBeyomShishi;//102
+        public bool bSidurLebdikatHityazvut;//106
         public int iSidurLebdikatRezefMachala;//103
         public bool bMatalaKlalitLeloRechev;//101
         public int iNitanLedaveachBemachalaAruca;

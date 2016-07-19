@@ -175,7 +175,7 @@ namespace KdsBatch
                                         oObjPeilutOvdim.MISPAR_KNISA = int.Parse(dr["SIDURI"].ToString());
                                         oObjPeilutOvdim.MAKAT_NESIA = (long)int.Parse(PirteyKav["MAKAT8"].ToString());
                                         oObjPeilutOvdim.OTO_NO = int.Parse(dtMakatim.Rows[i]["OTO_NO"].ToString());
-                                        oObjPeilutOvdim.LICENSE_NUMBER = int.Parse(dtMakatim.Rows[i]["LICENSE_NUMBER"].ToString());
+                                        oObjPeilutOvdim.LICENSE_NUMBER =long.Parse(dtMakatim.Rows[i]["LICENSE_NUMBER"].ToString());
                                         oObjPeilutOvdim.MISPAR_SIDURI_OTO = int.Parse(dtMakatim.Rows[i]["MISPAR_SIDURI_OTO"].ToString());
                                         if (dtMakatim.Rows[i]["SNIF_TNUA"].ToString() != "")
                                             oObjPeilutOvdim.SNIF_TNUA = int.Parse(dtMakatim.Rows[i]["SNIF_TNUA"].ToString());

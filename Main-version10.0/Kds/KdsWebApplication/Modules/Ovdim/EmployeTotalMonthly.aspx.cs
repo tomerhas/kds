@@ -226,6 +226,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                     Session["FileName"] = "RikuzAvodaChodshi";
 
                     sScript = "window.showModalDialog('../../ModalShowPrint.aspx','','dialogwidth:800px;dialogheight:740px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
+                   // sScript = "window.open('../../ModalShowPrint.aspx');";
                 }
 
                 MasterPage mp = (MasterPage)Page.Master;

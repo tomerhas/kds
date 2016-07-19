@@ -147,7 +147,7 @@ namespace KDSCommon.UDT
 
         private string m_TEUR_NESIA;
 
-        private int m_LICENSE_NUMBER;
+        private long m_LICENSE_NUMBER;
 
         private bool m_LICENSE_NUMBERIsNull;
             
@@ -1098,7 +1098,7 @@ namespace KDSCommon.UDT
         }
 
         [OracleObjectMappingAttribute("LICENSE_NUMBER")]
-        public int LICENSE_NUMBER
+        public long LICENSE_NUMBER
         {
             get
             {

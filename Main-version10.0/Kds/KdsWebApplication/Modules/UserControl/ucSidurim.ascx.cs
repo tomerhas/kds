@@ -1636,6 +1636,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         _NewPeilut.lOldMakatNesia = _PeilutReka.lMakatNesia;
         _NewPeilut.lOldOtoNo = _Peilut.lOtoNo;
         _NewPeilut.lOtoNo = _Peilut.lOtoNo;
+        _NewPeilut.lLicenseNumber = _Peilut.lLicenseNumber;
         _NewPeilut.iMakatType = enMakatType.mEmpty.GetHashCode();
         _NewPeilut.iMazanTashlum = _PeilutReka.iMazanTashlum;
         _NewPeilut.iMazanTichnun = _PeilutReka.iMazanTichnun;

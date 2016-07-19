@@ -294,6 +294,7 @@ namespace KdsLibrary.KDSLogic.Managers
             cls.bIsKnisaTkina_err197 = bool.Parse(dr["knisa_tkina_err197"].ToString());
             cls.bIsYetziaTkina_err198 = bool.Parse(dr["yatzia_tkina_err198"].ToString());
             cls.bSidurAsurBeyomShishi = !(String.IsNullOrEmpty(dr["sidur_asur_beyom_shishi"].ToString()));
+            cls.bSidurLebdikatHityazvut = !(String.IsNullOrEmpty(dr["sidur_lebdikat_hityazvut"].ToString()));
             cls.bMatalaKlalitLeloRechev = !(String.IsNullOrEmpty(dr["matala_klalit_lelo_rechev"].ToString()));
             cls.iSidurLebdikatRezefMachala = System.Convert.IsDBNull(dr["lebdikat_rezef_machala"]) ? 0 : int.Parse(dr["lebdikat_rezef_machala"].ToString());
 
@@ -453,6 +454,7 @@ namespace KdsLibrary.KDSLogic.Managers
                 cls.sHovatHityatzvut = dr["hovat_hityazvut"].ToString();
                 cls.bHovaMisparMachsan = !(String.IsNullOrEmpty(dr["hova_ledaveach_mispar_machsan"].ToString()));
                 cls.bSidurAsurBeyomShishi = !(String.IsNullOrEmpty(dr["sidur_asur_beyom_shishi"].ToString()));
+                cls.bSidurLebdikatHityazvut = !(String.IsNullOrEmpty(dr["sidur_lebdikat_hityazvut"].ToString()));
                 cls.bMatalaKlalitLeloRechev = !(String.IsNullOrEmpty(dr["matala_klalit_lelo_rechev"].ToString()));
                 cls.iSidurLebdikatRezefMachala = System.Convert.IsDBNull(dr["lebdikat_rezef_machala"]) ? 0 : int.Parse(dr["lebdikat_rezef_machala"].ToString());
 
@@ -565,6 +567,7 @@ namespace KdsLibrary.KDSLogic.Managers
                 cls.sHovatHityatzvut = dr["hovat_hityazvut"].ToString();
                 cls.bHovaMisparMachsan = !(String.IsNullOrEmpty(dr["hova_ledaveach_mispar_machsan"].ToString()));
                 cls.bSidurAsurBeyomShishi = !(String.IsNullOrEmpty(dr["sidur_asur_beyom_shishi"].ToString()));
+                cls.bSidurLebdikatHityazvut = !(String.IsNullOrEmpty(dr["sidur_lebdikat_hityazvut"].ToString()));
                 cls.bMatalaKlalitLeloRechev = !(String.IsNullOrEmpty(dr["matala_klalit_lelo_rechev"].ToString()));
                 cls.iSidurLebdikatRezefMachala = System.Convert.IsDBNull(dr["lebdikat_rezef_machala"]) ? 0 : int.Parse(dr["lebdikat_rezef_machala"].ToString());
 

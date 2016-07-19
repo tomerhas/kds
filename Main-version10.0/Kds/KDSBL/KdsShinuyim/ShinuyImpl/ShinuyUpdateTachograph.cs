@@ -58,6 +58,7 @@ namespace KdsShinuyim.ShinuyImpl
                             if (inputData.dtMashar != null)
                             {
                                 if (inputData.dtMashar.Select("bus_number=" + oPeilut.lOtoNo + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2)<>64").Length > 0)
+                                //**if (inputData.dtMashar.Select("lisence_number=" + oPeilut.lLicenseNumber + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2)<>64").Length > 0)
                                 {
                                     bNotDegem64 = true;
                                     break;

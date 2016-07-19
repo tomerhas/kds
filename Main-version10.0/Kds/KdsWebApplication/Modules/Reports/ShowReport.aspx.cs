@@ -21,8 +21,9 @@ public partial class Modules_Reports_ShowReport : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             SetReportViewerDefaultValues();
+            SetObjectParameter();
         }
-        SetObjectParameter();
+       
     }
 
     private void SetReportViewerDefaultValues() 

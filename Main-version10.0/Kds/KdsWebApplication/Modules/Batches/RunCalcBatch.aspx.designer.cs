@@ -57,15 +57,6 @@ public partial class Modules_Batches_RunCalcBatch {
     protected global::System.Web.UI.WebControls.RequiredFieldValidator vldMonth;
     
     /// <summary>
-    /// btnRefresh control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.Button btnRefresh;
-    
-    /// <summary>
     /// upBtnShguyim control.
     /// </summary>
     /// <remarks>
@@ -73,6 +64,24 @@ public partial class Modules_Batches_RunCalcBatch {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.UpdatePanel upBtnShguyim;
+    
+    /// <summary>
+    /// btnCount16 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Button btnCount16;
+    
+    /// <summary>
+    /// UpdatePanel3 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.UpdatePanel UpdatePanel3;
     
     /// <summary>
     /// btnCount control.

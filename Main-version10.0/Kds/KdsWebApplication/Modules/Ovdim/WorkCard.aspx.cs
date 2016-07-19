@@ -3298,6 +3298,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     bChanged = true;
                 }
                 break;
+            case "LICENSE_NUMBER":
+                if (!_Peilut.lOldOtoNo.Equals(_Peilut.lLicenseNumber))
+                {
+                    _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
+                    _ObjIdkunRashemet.PAKAD_ID = iPakadId;
+                    bChanged = true;
+                }
+                break;
             case "Makat_nesia":
                 if (!_Peilut.lOldMakatNesia.Equals(_Peilut.lMakatNesia))
                 {
@@ -3898,6 +3906,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //נעדכן את ה-HashTable בערכים המקוריים
         oPeilut.dFullShatYetzia = oObjPeluyotOvdim.NEW_SHAT_YETZIA;
         oPeilut.lOtoNo = oObjPeluyotOvdim.OTO_NO;
+        oPeilut.lLicenseNumber = oObjPeluyotOvdim.LICENSE_NUMBER;
         oPeilut.lMakatNesia = oObjPeluyotOvdim.MAKAT_NESIA;
         oPeilut.iKisuyTor = oObjPeluyotOvdim.KISUY_TOR;
         oPeilut.iDakotBafoal = oObjPeluyotOvdim.DAKOT_BAFOAL;
