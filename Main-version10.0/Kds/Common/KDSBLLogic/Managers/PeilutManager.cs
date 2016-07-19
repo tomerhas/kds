@@ -245,6 +245,7 @@ namespace KdsLibrary.KDSLogic.Managers
                 cls.lMisparSiduriOto = oObjPeilutOvdimIns.MISPAR_SIDURI_OTO;
                 cls.lMisparMatala = oObjPeilutOvdimIns.MISPAR_MATALA;
                 cls.lOtoNo = oObjPeilutOvdimIns.OTO_NO;
+                cls.lLicenseNumber = oObjPeilutOvdimIns.LICENSE_NUMBER;
                 cls.lOldOtoNo = cls.lOtoNo;
 
                 var kavimManager = _container.Resolve<IKavimManager>();
@@ -315,6 +316,7 @@ namespace KdsLibrary.KDSLogic.Managers
             cls.dOldFullShatYetzia = cls.dFullShatYetzia;
             cls.sShatYetzia = (System.Convert.IsDBNull(dr["Shat_Yetzia"]) ? "" : DateTime.Parse(dr["Shat_Yetzia"].ToString()).ToString("HH:mm"));
             cls.lOtoNo = (System.Convert.IsDBNull(dr["Oto_No"]) ? 0 : long.Parse(dr["Oto_No"].ToString()));
+            cls.lLicenseNumber = (System.Convert.IsDBNull(dr["LICENSE_NUMBER"]) ? 0 : long.Parse(dr["LICENSE_NUMBER"].ToString()));
             cls.lOldOtoNo = cls.lOtoNo;
             cls.lMisparSiduriOto = (System.Convert.IsDBNull(dr["mispar_siduri_oto"]) ? 0 : int.Parse(dr["mispar_siduri_oto"].ToString()));
             cls.iElementLeYedia = (System.Convert.IsDBNull(dr["element_for_yedia"]) ? 0 : int.Parse(dr["element_for_yedia"].ToString()));
