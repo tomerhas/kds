@@ -101,8 +101,9 @@ namespace KdsLibrary.UI
             Session["ReportParameters"] = ReportParameters;
 
             sDomain = clGeneral.AsDomain(Request.UrlReferrer.ToString()) + Request.ApplicationPath;
-            EventLog.WriteEntry("kds", "Url: " + sDomain);
+           // EventLog.WriteEntry("kds", "Url: " + sDomain);
             string sScript = "window.showModalDialog('" + sDomain + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
+         //   string sScript = "window.open('" + sDomain + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "');";
 
             ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "ReportViewer", sScript, true);
 
