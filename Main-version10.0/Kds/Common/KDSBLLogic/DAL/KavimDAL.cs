@@ -27,6 +27,7 @@ namespace KdsLibrary.KDSLogic.DAL
         public const string cProGetMasharData = "PKG_TNUA.pro_get_mashar_data";
         public const string cProGetBusesDetails = "PKG_TNUA.pro_get_buses_details";
         public const string cFnIsOtoNumberExists = "pkg_errors.fn_is_oto_number_exists";
+        public const string cFnILisenceNumberExists = "pkg_errors.fn_is_lisence_number_exists";
         public const string cGetSidurDetails = "KDS_SIDUR_AVODA_PACK.GetSidurDetails";
         public const string cCheckHityatzvutNehag = "kds.KdsVerifyDriverCheckIn";
         public const string cProGetMakatimLeTkinut = "PKG_BATCH.pro_Get_Makatim_LeTkinut";
@@ -354,7 +355,31 @@ namespace KdsLibrary.KDSLogic.DAL
                 throw ex;
             }
         }
+        
+        public int IsLicenseNumberValid(long lLicenseNumber, DateTime dCardDate)
+        {
+            clDal oDal = new clDal();
 
+            try
+            {   //בודק מול מש"ר אם מספר רכב תקין:   
+                //0-תקין 
+                //1- שגיאה
+                //2- לא אותר
+                oDal.AddParameter("p_result", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_license_number", ParameterType.ntOracleLong, lLicenseNumber, ParameterDir.pdInput);
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
+                oDal.ExecuteSP(cFnILisenceNumberExists);
+                var result = oDal.GetValParam("p_result").ToString();
+                return int.Parse(result);
+
+            }
+            catch (Exception ex)
+            {
+                _container.Resolve<ILogger>().LogMessage("IsLicenseNumberValid: " + ex.Message, EventLogEntryType.Error, enEventId.ProblemOfAccessToTnua.GetHashCode());
+
+                throw ex;
+            }
+        }
         public void GetBusLicenseNumber(long lOtoNo, ref long lLicenseNumber)
         {
             clDal oDal = new clDal();
