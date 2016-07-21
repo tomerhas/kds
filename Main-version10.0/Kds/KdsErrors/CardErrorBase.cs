@@ -396,6 +396,22 @@ namespace KdsErrors
             }
         }
 
+        protected int IsLicenseNumberValid(long licenseNumber, DateTime cardDate)
+        {
+            string sCacheKey = licenseNumber + cardDate.ToShortDateString();
+            if (HttpRuntime.Cache.Get(sCacheKey) == null || HttpRuntime.Cache.Get(sCacheKey).ToString() == "")
+            {
+                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                var result = kavimDal.IsLicenseNumberValid(licenseNumber, cardDate);
+
+                HttpRuntime.Cache.Insert(sCacheKey, result, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+                return result;
+            }
+            else
+            {
+                return int.Parse(HttpRuntime.Cache.Get(sCacheKey).ToString().Trim());
+            }
+        }
         protected bool HaveSidurNahgutInDay(ErrorInputData inputData)
         {
             SidurDM sidur;
