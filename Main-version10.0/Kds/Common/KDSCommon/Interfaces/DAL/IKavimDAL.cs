@@ -28,5 +28,7 @@ namespace KDSCommon.Interfaces.DAL
         DataTable GetSidurDetailsFromTnua(int iMisparSidur, DateTime dDate, out int iResult);
         DataTable GetVisutDetails(long lNewMakat);
         int IsBusNumberValid(long lOtoNo, DateTime dCardDate);
+
+        int IsLicenseNumberValid(long lLicenseNumber, DateTime dCardDate);
     }
 }
