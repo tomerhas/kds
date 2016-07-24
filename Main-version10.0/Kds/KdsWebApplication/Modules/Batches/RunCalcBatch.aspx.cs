@@ -77,7 +77,7 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
 
                 try
                 {
-                    var resultShinuy = btchMan.MainOvedErrorsNew(int.Parse(dt.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dt.Rows[i]["taarich"].ToString()));
+                    var resultShinuy = btchMan.MainInputDataNew(int.Parse(dt.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dt.Rows[i]["taarich"].ToString()));
                     nextStep = resultShinuy.IsSuccess; 
                    // nextStep = btchMan.MainInputData(int.Parse(dt.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dt.Rows[i]["taarich"].ToString()));
 

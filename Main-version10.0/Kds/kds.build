@@ -8,37 +8,20 @@
 		<property name="build.web.profile" value="KdsProd01"/>
 		<call target="build.per.type" />
 		
-		<property name="build.type" value="KdsProd02"/>
-		<property name="build.web.profile" value="KdsProd02"/>
-		<call target="build.per.type" />
 		
-		<property name="build.type" value="KdsTest"/>
-		<property name="build.web.profile" value="KdsTestProfile"/>
-		<call target="build.per.type" />
 	</target>
 	<target name="build.per.type">
 		<echo message="Compiling kds. Config: ${build.type}" />
 		<call target="buildSlnKds" />
-		<call target="CopyCalculBin" />
-		<call target="CopyServiceBin" />
-		<call target="CopyKdsTaskManagerBin" />
-		<call target="CopyKdsClockBin" />
 	</target>
 	
 	
 	<target name="buildSlnKds" description="compiles the source code">
 		<msbuild project="kds.sln">
-				<property name="Configuration" value="${build.type}" />
-				<property name="SGenToolPath" value="C:\Program Files (x86)\Microsoft SDKs\Windows\v8.0A\bin\NETFX 4.0 Tools" />
+			<property name="Configuration" value="${build.type}" />
+			<property name="SGenToolPath" value="C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools" />	
 		</msbuild>
-		<msbuild project="kds.sln">
-				<property name="Configuration" value="${build.type}" />
-				<property name="SGenToolPath" value="C:\Program Files (x86)\Microsoft SDKs\Windows\v8.0A\bin\NETFX 4.0 Tools" />
-				<arg value="/t:KdsWebApplication" />
-				<arg value="/nologo" />
-				<arg value="/p:DeployOnBuild=true" />
-				<arg value="/p:PublishProfile=${build.web.profile}" />
-		</msbuild>
+		
 	</target>
 	
 	<target name="CopyCalculBin">
