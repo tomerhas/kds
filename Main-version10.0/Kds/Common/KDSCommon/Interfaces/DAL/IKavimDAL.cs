@@ -29,6 +29,6 @@ namespace KDSCommon.Interfaces.DAL
         DataTable GetVisutDetails(long lNewMakat);
         int IsBusNumberValid(long lOtoNo, DateTime dCardDate);
 
-        int IsLicenseNumberValid(long lLicenseNumber, DateTime dCardDate);
+        int IsRechevValid(long lLicenseNumber, DateTime dCardDate);
     }
 }

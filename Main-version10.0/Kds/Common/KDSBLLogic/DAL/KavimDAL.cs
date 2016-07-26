@@ -356,7 +356,7 @@ namespace KdsLibrary.KDSLogic.DAL
             }
         }
         
-        public int IsLicenseNumberValid(long lLicenseNumber, DateTime dCardDate)
+        public int IsRechevValid(long lLicenseNumber, DateTime dCardDate)
         {
             clDal oDal = new clDal();
 
@@ -366,7 +366,7 @@ namespace KdsLibrary.KDSLogic.DAL
                 //1- שגיאה
                 //2- לא אותר
                 oDal.AddParameter("p_result", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
-                oDal.AddParameter("p_license_number", ParameterType.ntOracleLong, lLicenseNumber, ParameterDir.pdInput);
+                oDal.AddParameter("p_rechev", ParameterType.ntOracleLong, lLicenseNumber, ParameterDir.pdInput);
                 oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
                 oDal.ExecuteSP(cFnILisenceNumberExists);
                 var result = oDal.GetValParam("p_result").ToString();

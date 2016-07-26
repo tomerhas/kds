@@ -21,6 +21,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
         public override bool InternalIsCorrect(ErrorInputData input)
         {
             int kod=0;
+            long rechev=0;
             enMakatType oMakatType = (enMakatType)input.curPeilut.iMakatType;
             if (((oMakatType == enMakatType.mKavShirut) || (oMakatType == enMakatType.mEmpty) || (oMakatType == enMakatType.mNamak) || (oMakatType == enMakatType.mVisa)
                 || (oMakatType == enMakatType.mElement && input.curPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")) || ((input.curPeilut.iMakatType == enMakatType.mElement.GetHashCode()) && input.curPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "700" && (input.curPeilut.bBusNumberMustExists) && (input.curPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "701") && (input.curPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "712") && (input.curPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "711")))
@@ -32,11 +33,13 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
                 {
 
                     if (input.CardDate < input.oParameters.dParam319)
-                        kod = IsBusNumberValid(input.curPeilut.lOtoNo, input.CardDate);
+                        rechev = input.curPeilut.lOtoNo;
                     if (input.CardDate >= input.oParameters.dParam319)
-                        kod = IsLicenseNumberValid(input.curPeilut.lLicenseNumber, input.CardDate);
+                        rechev = input.curPeilut.lLicenseNumber;
 
-                    if (kod==1 || kod==2)
+                    kod = IsRechevValid(rechev, input.CardDate);
+
+                    if (kod>=4 && kod<=9)
                     {
                         AddNewError(input);
                         return false;

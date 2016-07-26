@@ -396,13 +396,13 @@ namespace KdsErrors
             }
         }
 
-        protected int IsLicenseNumberValid(long licenseNumber, DateTime cardDate)
+        protected int IsRechevValid(long licenseNumber, DateTime cardDate)
         {
             string sCacheKey = licenseNumber + cardDate.ToShortDateString();
             if (HttpRuntime.Cache.Get(sCacheKey) == null || HttpRuntime.Cache.Get(sCacheKey).ToString() == "")
             {
                 var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
-                var result = kavimDal.IsLicenseNumberValid(licenseNumber, cardDate);
+                var result = kavimDal.IsRechevValid(licenseNumber, cardDate);
 
                 HttpRuntime.Cache.Insert(sCacheKey, result, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
                 return result;
