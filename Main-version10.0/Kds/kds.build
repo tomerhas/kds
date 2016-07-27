@@ -19,7 +19,7 @@
 	<target name="buildSlnKds" description="compiles the source code">
 		<msbuild project="kds.sln">
 			<property name="Configuration" value="${build.type}" />
-			<property name="SGenToolPath" value="C:\Program Files (x86)\Microsoft SDKs\Windows\v8.1A\bin\NETFX 4.5.1 Tools" />	
+			<property name="SGenToolPath" value="C:\Program Files (x86)\Microsoft SDKs\Windows\v8.0A\bin\NETFX 4.5.1 Tools" />	
 		</msbuild>
 		
 	</target>

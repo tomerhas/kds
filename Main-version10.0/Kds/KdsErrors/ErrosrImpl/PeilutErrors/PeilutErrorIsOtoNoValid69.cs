@@ -39,7 +39,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
 
                     kod = IsRechevValid(rechev, input.CardDate);
 
-                    if (kod>=4 && kod<=9)
+                    if ((kod>=4 && kod<=9) || kod<0)
                     {
                         AddNewError(input);
                         return false;

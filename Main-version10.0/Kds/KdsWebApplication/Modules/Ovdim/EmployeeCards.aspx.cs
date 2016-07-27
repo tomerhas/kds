@@ -363,7 +363,9 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
 
         Session["ReportParameters"] = ReportParameters;
 
-        string sScript = "window.showModalDialog('" + this.PureUrlRoot + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:850px;dialogheight:745px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
+       // string sScript = "window.showModalDialog('" + this.PureUrlRoot + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:850px;dialogheight:745px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
+        string sScript = "window.showModalDialog('" + this.PureUrlRoot + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "');";
+                 
         ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "ReportViewer", sScript, true);
 
     }

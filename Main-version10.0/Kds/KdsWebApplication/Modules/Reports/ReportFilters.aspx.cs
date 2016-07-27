@@ -495,8 +495,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 PrepareReportParameters();
                 if (Report.ProductionType == ProductionType.Normal)
                 {
-                    sScript = "window.showModalDialog('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
-                  //  sScript = "window.open('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
+                  //  sScript = "window.showModalDialog('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
+                 // sScript = "window.open('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
+                    sScript = "window.open('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "');";
                 }
                 else // ProductionType.Heavy
                 {

@@ -32,7 +32,7 @@ public partial class Modules_Reports_ShowReport : System.Web.UI.Page
         {
             KdsReport _Report = (KdsReport)Session["Report"];
             lblRsVersion.Text = _Report.RSVersion;
-            RptViewer.Width = (_Report.Orientation == KdsLibrary.Utils.Reports.Orientation.Portrait) ? 790 : 1160;
+            RptViewer.Width = (_Report.Orientation == KdsLibrary.Utils.Reports.Orientation.Portrait) ? 850 : 1160;
             RptViewer.PromptAreaCollapsed = true;
             RptViewer.ShowBackButton = false;
             RptViewer.ShowToolBar = true;

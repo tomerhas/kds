@@ -12,38 +12,48 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-     <meta http-equiv="X-UA-Compatible" content="IE=8" />
+   <%--  <meta http-equiv="X-UA-Compatible" content="IE=8" />--%>
     <base target="_self" />
     <title runat="server" id="TitleWindow">דו"חות</title>
     <link id="Link1" runat="server" href="../../StyleSheet.css" type="text/css" rel="stylesheet" />
 
      <style type="text/css">
          .auto-style1 {
-             height: 148px;
+           height:10px;
          }
          .auto-style2 {
              color: Red;
              font-size: 12px;
-             height: 148px;
+           
          }
      </style>
+        
+    <script type="text/javascript">
 
+      //  var lastScrollPos = 0;
+        var uri = window.location.toString();
+        if (uri.indexOf("?") > 0) {
+            var clean_uri = uri.substring(0, uri.indexOf("?"));
+            window.history.replaceState({}, document.title, clean_uri);
+        }
+        </script>
     </head>
+   
 <body dir="rtl">
     <form id="form1" runat="server" style="margin:0px">
     
 
-        <table width="100%"  border="1" cellpadding="0" cellspacing="0" >
+        <table width="100%"  border="0" cellpadding="0" cellspacing="0" >
             <tr>
                <td width="20px" class="auto-style1" ></td>
-                <td id="ErrorMsg" class="auto-style2" runat="server" style="display:block"/>
+                <td id="ErrorMsg" class="auto-style2" runat="server"  align="center"  style="display:block"></td>
                 <td width="20px" class="auto-style1" ></td>
             </tr>
             <tr>
                 <td colspan="3"  align="center" >
 <%--                    <rsweb:ReportViewer ID="RptViewer" runat="server" Height="680px"  />--%>
                    
-                    <rsweb:ReportViewer ID="RptViewer" runat="server" Height="680px" InteractivityPostBackMode="SynchronousOnDrillthrough" ClientIDMode="Static">
+                    <rsweb:ReportViewer ID="RptViewer" runat="server" Height="750px"  InteractivityPostBackMode="SynchronousOnDrillthrough" ClientIDMode="Static">
                     </rsweb:ReportViewer>
                     
                 </td>
@@ -55,6 +65,7 @@
             <asp:scriptmanager id="ScriptManager1" runat="server" enablepagemethods="true" />
         </div>
     </form>
-
+ 
 </body>
 </html>
+
