@@ -12,7 +12,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-   <%--  <meta http-equiv="X-UA-Compatible" content="IE=8" />--%>
+   <%--  <meta http-equiv="X-UA-Compatible" content="IE=10" />--%>
     <base target="_self" />
     <title runat="server" id="TitleWindow">דו"חות</title>
     <link id="Link1" runat="server" href="../../StyleSheet.css" type="text/css" rel="stylesheet" />
@@ -28,15 +28,7 @@
          }
      </style>
         
-    <script type="text/javascript">
 
-      //  var lastScrollPos = 0;
-        var uri = window.location.toString();
-        if (uri.indexOf("?") > 0) {
-            var clean_uri = uri.substring(0, uri.indexOf("?"));
-            window.history.replaceState({}, document.title, clean_uri);
-        }
-        </script>
     </head>
    
 <body dir="rtl">
@@ -65,7 +57,16 @@
             <asp:scriptmanager id="ScriptManager1" runat="server" enablepagemethods="true" />
         </div>
     </form>
- 
+  <%-- <script type="text/javascript">
+
+      //  var lastScrollPos = 0;
+        var uri = window.location.toString();
+        if (uri.indexOf("?") > 0) {
+            var clean_uri = uri.substring(0, uri.indexOf("?"));
+      
+            window.history.replaceState({}, '', clean_uri);
+        }
+        </script>--%>
 </body>
 </html>
 

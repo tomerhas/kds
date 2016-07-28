@@ -617,17 +617,17 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
             Session.Add("dsRikuz", dsRikuz);
 
 
-            foreach (DataTable dt in dsRikuz.Tables)
-            {
-                SetValueForNull(dt);
-            }
-            var xml = dsRikuz.GetXml();
+            //foreach (DataTable dt in dsRikuz.Tables)
+            //{
+            //    SetValueForNull(dt);
+            //}
+            //var xml = dsRikuz.GetXml();
             //XmlDataDocument xmlDoc = new XmlDataDocument(dsRikuz);
             // xmlDoc.Load("C:\\Temp\\RikuzChodshi.xml");
 
 
 
-            dsRikuz.WriteXmlSchema("C:\\Temp\\RikuzChodshi.xml");
+           // dsRikuz.WriteXmlSchema("C:\\Temp\\RikuzChodshi.xml");
             grdHeadrut.DataSource = dtHeadrut;
             grdHeadrut.DataBind();
             /*  dtHeadrut.TableName = "Headruyot";
