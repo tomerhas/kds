@@ -46,6 +46,7 @@
 <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:1000;width:150px" >
         <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
 </div> 
+
 <div id="divSinun" runat="server"  onkeydown="if (event.keyCode==107) {event.keyCode=9; return event.keyCode }">
       <fieldset class="FilterFieldSet" style="width:950px;height:80px">
         <legend>רשימת כרטיסי עבודה עבור</legend> 
@@ -182,6 +183,10 @@
             </td>
         </tr>
      </table>
+<%--<div id = "divBackground" style="position: fixed; z-index: 999; height: 100%; width: 100%; top: 0; left:0; background-color: Black; filter: alpha(opacity=60); opacity: 0.6; -moz-opacity: 0.8;display:none">
+
+</div>--%>
+
        <input type="hidden" runat="server" id="HidOpenWC" name="HidOpenWC" />
        <input type="hidden" runat="server" id="hidFromEmda" name="hidFromEmda" />
        <input type="hidden" runat="server" id="HidLoginUse" name="HidLoginUse" />
@@ -376,6 +381,68 @@
                 return ReturnWin;
              
            }
+
+           ////var popUpObj;
+           ////function OpenEmpWorkCard(RowDate) {
+           ////    // debugger;
+           ////    // var canOpen = document.getElementById("ctl00_KdsContent_HidOpenWC").value;
+           ////    var EmpId = document.getElementById("ctl00_KdsContent_txtId").value;
+           ////    var WCardDate = RowDate;
+           ////    var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
+
+
+           ////    document.getElementById("divHourglass").style.display = 'block';
+           ////  //  var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
+           ////    // var ReturnWin = window.open('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
+
+           ////    popUpObj = window.open('WorkCard.aspx' + sQuryString,
+
+           ////      "ModalPopUp",
+
+           ////      "toolbar=no," +
+
+           ////      "scrollbars=no," +
+
+           ////      "location=no," +
+
+           ////      "statusbar=no," +
+
+           ////      "menubar=no," +
+
+           ////      "resizable=0," +
+
+           ////      "width=1010," +
+
+           ////      "height=680," +
+
+           ////      "left = 490," +
+
+           ////      "top=300"
+
+           ////      );
+
+           ////    popUpObj.focus();
+           ////    LoadModalDiv();
+           ////    //if (ReturnWin == '' || ReturnWin == 'undefined' || ReturnWin == undefined)
+           ////  //      ReturnWin = false;
+           ////    //else {
+           ////    //    var DatailsSplit = ReturnWin.split('|');                 
+           ////    //    var userLogin = document.getElementById("ctl00_KdsContent_HidLoginUse").value;            
+           ////    //    if (ReturnWin == userLogin);
+           ////    //    wsGeneral.FreeWC(DatailsSplit[0], DatailsSplit[1], DatailsSplit[2]);
+           ////    //}
+           ////    document.getElementById("divHourglass").style.display = 'none';
+           ////    document.getElementById("ctl00_KdsContent_btnExecute").click();
+           ////   // return ReturnWin;
+
+           ////}
+           ////function LoadModalDiv() {
+
+           ////    var bcgDiv = document.getElementById("divBackground");
+
+           ////    bcgDiv.style.display = "block";
+
+           ////}
 
            function continue_click() {
              
