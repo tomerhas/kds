@@ -2790,8 +2790,116 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             throw ex;
         }
     }
-    
-   
+
+    public void PrintCard_2(object sender, EventArgs e)
+    {
+
+        string urlBarcode, key;
+        try
+        {
+            int iOldMeasherMistayeg = int.Parse(Session["MeasherMistyeg"].ToString());
+            clGeneral.enMeasherOMistayeg oMeasherMistayeg = (clGeneral.enMeasherOMistayeg)_wcResult.oOvedYomAvodaDetails.iMeasherOMistayeg;
+            bWorkCardWasUpdate = IsWorkCardWasUpdate();
+            key = "|" + iMisparIshi.ToString() + "|" + dDateCard.ToString("yyyyMMdd") + "|";
+            urlBarcode = ConfigurationManager.AppSettings["WsBarcode"].ToString() + "&text=" + key;
+
+            //arrParams[2].ToString()=="0") התחברות מהבית
+            //לכן רק אם לא התחברנו מהבית ונדפיס ישירות, אחרת נפתח PDF
+            if (hidFromEmda.Value == "true")
+            {
+
+                ViewState["PrintWcFromEmda"] = "true";
+                string sScript = "";
+                string sIp;
+                string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
+                byte[] s;
+                clReportOnLine oReportOnLine = new clReportOnLine("PrintWorkCard", eFormat.PDF);
+
+                //EventLog.WriteEntry("Kds", "PathFileReportsTemp: " + sPathFilePrint, EventLogEntryType.Error);
+                oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", iMisparIshi.ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_TAARICH", dDateCard.ToShortDateString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_EMDA", "0"));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_URL_BARCODE", urlBarcode));
+                //במידה ויש ערך בטבלת מעדכן אחרון והכרטיס עלה ללא התייחסות ולחצו על מאשר או מסתייג נשלח תיקון 0, שלא היה תיקון
+                if ((iOldMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull.GetHashCode()) && (oMeasherMistayeg != clGeneral.enMeasherOMistayeg.ValueNull))
+                    oReportOnLine.ReportParams.Add(new clReportParam("P_TIKUN", "0"));
+
+                else
+                    oReportOnLine.ReportParams.Add(new clReportParam("P_TIKUN", "1"));
+
+                oReportOnLine.ReportParams.Add(new clReportParam("P_DT", DateTime.Now.ToString()));
+
+                s = oReportOnLine.CreateFile();
+                string sFileName, sPathFile;
+                FileStream fs;
+                sIp = "";// arrParams[1];
+                sFileName = "WorkCard.pdf";
+
+                sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
+                // EventLog.WriteEntry("Kds", "sPathFile: " + sPathFile, EventLogEntryType.Error);
+                if (!Directory.Exists(sPathFile))
+                {
+                    Directory.CreateDirectory(sPathFile);
+                }
+
+                fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);
+                fs.Write(s, 0, s.Length);
+                fs.Flush();
+                fs.Close();
+                //EventLog.WriteEntry("Kds", "oBatchManager.dtErrors: " + oBatchManager.dtErrors, EventLogEntryType.Error);
+                if (_wcResult.dtErrors != null)
+                {
+                    for (int i = 0; i < _wcResult.dtErrors.Rows.Count; i++)
+                    {
+                        if (_wcResult.dtErrors.Rows[i]["check_num"].ToString().Trim() == "69")
+                        {
+                            sScript = "document.all('msgErrCar').style.display='block';";
+                            break;
+                        }
+                    }
+                }
+
+                //  EventLog.WriteEntry("kds", Page.Title + ": path = " + sPathFilePrint + sFileName, EventLogEntryType.Error);
+                //EventLog.WriteEntry("kds", "sIp" + sIp, EventLogEntryType.Error);
+                sScript += "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000); ";
+                //FreeWC();
+                ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);
+            }
+            else
+            {
+
+                clReportOnLine oReportOnLine = new clReportOnLine(ReportName.PrintWorkCard.ToString(), eFormat.PDF);
+               
+
+                oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", iMisparIshi.ToString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_TAARICH", dDateCard.ToShortDateString()));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_EMDA", "0"));
+                oReportOnLine.ReportParams.Add(new clReportParam("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString()));
+
+
+                oReportOnLine.ReportParams.Add(new clReportParam("P_URL_BARCODE", urlBarcode));
+                //if (bWorkCardWasUpdate)
+                //{
+                if ((iOldMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull.GetHashCode()) && (oMeasherMistayeg != clGeneral.enMeasherOMistayeg.ValueNull))
+                    oReportOnLine.ReportParams.Add(new clReportParam("P_TIKUN", "0"));
+                else
+                    oReportOnLine.ReportParams.Add(new clReportParam("P_TIKUN", "1"));
+                //}
+                //else
+                //    ReportParameters.Add("P_TIKUN", "0");
+
+
+                OpenReportFile(oReportOnLine, btnPrint, ReportName.PrintWorkCard.ToString());
+            }
+        }
+        catch (Exception ex)
+        {
+            EventLog.WriteEntry("Kds", "PrintCard Faild: " + ex.Message, EventLogEntryType.Error);
+            throw ex;
+        }
+    }
+
     protected void btnPrint_click(object sender, EventArgs e)
     {
         //string sCloseAllBtn = "";
@@ -5181,7 +5289,41 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         OpenReport(ReportParameters, (Button)sender, ReportNameStr);
     }
-   
+
+
+    protected void btnClock_click_2(object sender, EventArgs e)
+    {
+        Dictionary<string, string> ReportParameters = new Dictionary<string, string>();
+        string ReportNameStr = ReportName.Presence.ToString();
+        if (_wcResult.oOvedYomAvodaDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode())
+            ReportNameStr = ReportName.PresenceAllSidurim.ToString();
+        clReportOnLine oReportOnLine = new clReportOnLine(ReportNameStr, eFormat.PDF);
+        DateTime FromDate = DateTime.Parse("01/" + DateTime.Now.Month.ToString().PadLeft(2 ,(char)48) + "/" + DateTime.Now.Year);
+        oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", iMisparIshi.ToString()));
+        oReportOnLine.ReportParams.Add(new clReportParam("P_STARTDATE", FromDate.ToShortDateString()));
+        oReportOnLine.ReportParams.Add(new clReportParam("P_ENDDATE", DateTime.Now.ToShortDateString()));
+
+        //  OpenReport(ReportParameters, (Button)sender, ReportNameStr);
+
+        OpenReportFile(oReportOnLine, btnClock, ReportNameStr);
+    }
+
+    public void OpenReportFile(clReportOnLine oReportOnLine, Button btnScript, string sRdlName)
+    {
+        byte[] s;
+        string sScript;
+        string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
+       
+
+        s = oReportOnLine.CreateFile();
+        Session["BinaryResult"] = s;
+        Session["TypeReport"] = "PDF";
+        Session["FileName"] = sRdlName;
+
+        sScript = "window.open('../../ModalShowPrint.aspx');";
+        ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "PrintPdf", sScript, true);
+
+    }
     protected DataTable GetMasachPakadim()
     {
         clOvdim _ovdim = new clOvdim();
