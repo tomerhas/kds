@@ -82,7 +82,64 @@ namespace KdsBankShaot.FlowManager
                 throw ex;
             }
         }
+        //public void ExecBankShaot_2(long BakashaId)
+        //{
+        //    BankShaotDal dal = new BankShaotDal();
+        //    DataTable TbYechidotBank = new DataTable();
+        //    DataTable Months = new DataTable();
+        //    BudgetData inputData = null;
+        //    COLL_BUDGET oCollBudgets;
+        //    DateTime Taarich, Month;
+        //    try
+        //    {
+        //        Month = DateTime.Parse("01/07/2016");
+        //        Taarich = DateTime.Parse("01/07/2016");
+        //        for (int j = 0; j < 28; j++)
+        //        {
+        //            oCollBudgets = new COLL_BUDGET();
+        //            //Months = dal.GetMonthsToCalc();
+        //            //foreach (DataRow dr in Months.Rows)
+        //            //{
+        //            //oCollBudgets = new COLL_BUDGET();
+        //            //Month = DateTime.Parse(dr["taarich"].ToString());
+        //            //if (Month.Month != DateTime.Now.Month)
+        //            //    Taarich = Month.AddMonths(1).AddDays(-1);
+        //            //else Taarich = DateTime.Now.Date;// DateTime.Parse(dr["taarich"].ToString());
 
+
+        //            //TbYechidotBank = dal.GetYechidotLeChishuv(Taarich);
+
+        //            //for (int i = 0; i < TbYechidotBank.Rows.Count; i++)
+        //            //{
+        //            try
+        //            {
+        //                //        inputData = FillBudgetData(int.Parse(TbYechidotBank.Rows[i][0].ToString()), Month, Taarich, BakashaId);
+        //                inputData = FillBudgetData(90639, Month, Taarich, BakashaId);
+
+        //                CalcBudgetToYechida(inputData);
+
+        //                oCollBudgets.Add(inputData.objBudget);
+
+        //                dal.SaveEmployeesBudget(inputData.kodYechida, Taarich, inputData.RequestId, inputData.UserId);
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                _container.Resolve<ILogBakashot>().InsertLog(inputData.RequestId, "E", 0, "ExecBankShaot: yechida= " + inputData.kodYechida + ",err: " + ex.Message, null);
+        //            }
+
+        //            // }
+
+        //            dal.SaveNetuneyBudgets(oCollBudgets);
+
+        //            Taarich = Taarich.AddDays(1);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _container.Resolve<ILogBakashot>().InsertLog(inputData.RequestId, "E", 0, "ExecBankShaot: " + ex.Message, null);
+        //        throw ex;
+        //    }
+        //}
         private BudgetData FillBudgetData(int kodYechida, DateTime Month, DateTime Taarich, long BakashaId)
         {
             BudgetData inputData = new BudgetData();
