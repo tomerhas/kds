@@ -5,7 +5,7 @@ using System.Text;
 using KdsLibrary.Utils.Reports;
 using System.Configuration;
 
-namespace KdsBatch.Reports
+namespace KdsLibrary.Utils.Reports
 {
     class clRikuz : clReport
     {

@@ -129,7 +129,10 @@ namespace KDSBLLogic.Logs
         {
             return SetError(lRequestId, iSugHodaa, null, iKodYeshut, null, null, null, null, null, null, sTeurHodaa, null, ex);
         }
-      
-   
+
+        public void UpdateLogBakasha(long lRequestNum, DateTime dZmanSiyum, int iStatus)
+        {
+            _container.Resolve<ILogDAL>().UpdateLogBakasha(lRequestNum,  dZmanSiyum,  iStatus);
+        }
     }
 }

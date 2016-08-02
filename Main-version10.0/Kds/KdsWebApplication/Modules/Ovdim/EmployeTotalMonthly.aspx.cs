@@ -19,7 +19,6 @@ using KdsBatch;
 using System.IO;
 using System.Collections.Generic;
 using KDSCommon.Enums;
-using KdsBatch.Reports;
 
 public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
 {

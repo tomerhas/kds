@@ -16,6 +16,7 @@ namespace KDSCommon.Interfaces.Logs
         BakashotException SetError(long lRequestId, string iSugHodaa, int? iKodTahalich, int iKodYeshut, int? iMisparIshi, DateTime? dTaarich, int? iMisparSidur, DateTime? dShatHatchalaSidur, DateTime? dShatYetzia, int? iMisparKnisa, string sTeurHodaa, int? iKodHodaa, Exception ex);
         BakashotException SetError(long lRequestId, int? iMisparIshi, string iSugHodaa, int iKodYeshut, DateTime? dTaarich, string sTeurHodaa, Exception ex);
         BakashotException SetError(long lRequestId, string iSugHodaa, int iKodYeshut, string sTeurHodaa, Exception ex);
-        
+
+        void UpdateLogBakasha(long lRequestNum, DateTime dZmanSiyum, int iStatus);
     }
 }

@@ -18,7 +18,7 @@ using KDSCommon.Interfaces.Managers;
 using KDSCommon.Interfaces.Logs;
 using System.Net.Mail;
 using KDSCommon.DataModels.Mails;
-namespace KdsBatch.Reports
+namespace KdsLibrary.Utils.Reports
 {
 
     public abstract class ClFactoryReport
@@ -185,15 +185,15 @@ namespace KdsBatch.Reports
                 }
 
                 if (flag)
-                    clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, clGeneral.enStatusRequest.PartEnded.GetHashCode());
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().UpdateLogBakasha(iRequestId, DateTime.Now, clGeneral.enStatusRequest.PartEnded.GetHashCode());
                 else
-                    clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, _EndProcesSucceed.GetHashCode());
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().UpdateLogBakasha(iRequestId, DateTime.Now, _EndProcesSucceed.GetHashCode());
             }
             catch (Exception ex)
             {
                 clGeneral.LogMessage(ex.Message, System.Diagnostics.EventLogEntryType.Error, true);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, iStatus);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().UpdateLogBakasha(iRequestId, DateTime.Now, iStatus);
                 logManager.InsertLog(iRequestId, "E", 0, "MakeReports: " + ex.Message + ((name != string.Empty) ? " for report :" + name : ""), _loginUser,null);
             }
         }

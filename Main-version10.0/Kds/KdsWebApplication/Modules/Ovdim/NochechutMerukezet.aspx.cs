@@ -356,8 +356,9 @@ namespace KdsWebApplication.Modules.Ovdim
         }
         protected void btnPrint_OnClick(object sender, EventArgs e)
         {
-            Dictionary<string, string> ReportParameters = new Dictionary<string, string>();
+            //Dictionary<string, string> ReportParameters = new Dictionary<string, string>();
             string listMI = "";
+            string rptName = ReportName.Presence.ToString();
             if (txtId.Text.Length > 0)
                 listMI = txtId.Text;
             else
@@ -370,13 +371,18 @@ namespace KdsWebApplication.Modules.Ovdim
                    listMI = listMI.Substring(1);
             }
 
-            ReportParameters.Add("P_MISPAR_ISHI", listMI);
+            clReportOnLine oReportOnLine = new clReportOnLine(rptName, eFormat.PDF);
 
-            ReportParameters.Add("P_STARTDATE", DateTime.Parse(clnFromDate.Text).ToShortDateString());
-            ReportParameters.Add("P_ENDDATE",  DateTime.Parse(clnToDate.Text).ToShortDateString());
+            oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", listMI));
+            oReportOnLine.ReportParams.Add(new clReportParam("P_STARTDATE", DateTime.Parse(clnFromDate.Text).ToShortDateString()));
+            oReportOnLine.ReportParams.Add(new clReportParam("P_ENDDATE",  DateTime.Parse(clnToDate.Text).ToShortDateString()));
 
-            ScriptManager.RegisterStartupScript(hidBtnShow, this.GetType(), "", "openDetails();", true);
-            OpenReport(ReportParameters, (Button)sender, ReportName.Presence.ToString());
+            //  ScriptManager.RegisterStartupScript(hidBtnShow, this.GetType(), "", "openDetails();", true);
+            //  OpenReport(ReportParameters, (Button)sender, ReportName.Presence.ToString());
+
+            OpenReportFile(oReportOnLine, (Button)sender, rptName);
+
+
         }
     }
 

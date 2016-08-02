@@ -189,6 +189,15 @@
     <Compile Include="Utils\KdsErrorHttpModule.cs" />
     <Compile Include="Utils\KdsExtensions.cs" />
     <Compile Include="Utils\MatchList.cs" />
+    <Compile Include="Utils\Reports\clDestinationReport.cs" />
+    <Compile Include="Utils\Reports\ClFactoryReport.cs" />
+    <Compile Include="Utils\Reports\ClManageHeavyReport.cs" />
+    <Compile Include="Utils\Reports\clManagerReport.cs" />
+    <Compile Include="Utils\Reports\clManagerRikuzim.cs" />
+    <Compile Include="Utils\Reports\clReport.cs" />
+    <Compile Include="Utils\Reports\clReportOnLine.cs" />
+    <Compile Include="Utils\Reports\clReportParam.cs" />
+    <Compile Include="Utils\Reports\clRikuz.cs" />
     <Compile Include="Utils\Reports\KdsDynamicReports.cs" />
     <Compile Include="Utils\Reports\clReportFunctions.cs" />
     <Compile Include="Utils\Reports\KdsReportTemplate.cs" />

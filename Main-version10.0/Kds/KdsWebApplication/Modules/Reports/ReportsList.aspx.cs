@@ -47,7 +47,7 @@ public partial class Modules_Reports_ReportsList : KdsPage
     private void GetReports(string profil)
     {
 
-        clReport objReports = clReport.GetInstance();
+        KdsLibrary.BL.clReport objReports = KdsLibrary.BL.clReport.GetInstance();
         DataView dvReport;
         DataTable dtReport;
         KdsDynamicReport _ConstDynamicReportParam;
@@ -71,7 +71,7 @@ public partial class Modules_Reports_ReportsList : KdsPage
         }
 
         Session["ConstDynamicReportParam"] = _ConstDynamicReportParam;
-        clReport _Report = new clReport();
+        KdsLibrary.BL.clReport _Report = new KdsLibrary.BL.clReport();
         dvReport = new DataView(dtReport);
 
         grdReports.DataSource = dvReport;

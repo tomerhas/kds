@@ -6,13 +6,15 @@
 <head runat="server">
       <meta http-equiv="X-UA-Compatible" content="IE=8" />
      <script src="Js/GeneralFunction.js" type="text/javascript"></script>
+     <link href="StyleSheet.css" type="text/css" rel="stylesheet" />
     <title></title>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <table >
-            <tr>
-               <td>   <input type="button" onclick="PrintReport()" value="הדפסה" /></td>
+    <form id="form1" dir="ltr" runat="server">
+        <table dir="ltr" >
+            <tr align="left">
+              <td>   <input type="button" class="ImgButtonSearch" onclick="window.close()" style="height:28px" value="סגור" /></td> <%--<asp:Button ID="CloseWindow" CssClass="ImgButtonSearch" runat="server" Text="סגור" OnClientClick="window.close()" />--%>
+               <td>   <input type="button"class="btnWorkCardClocks" onclick="PrintReport()"   value="הדפסה" /></td>
                <td dir="rtl">  <label id="lblPrint" style="background-color:lightgray;display:none;font-family:Arial;font-size:medium"> הדף נשלח להדפסה אנא המתן... &nbsp;&nbsp;</label></td>
             </tr>
         </table>

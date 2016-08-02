@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using KdsLibrary.Utils.Reports;
 
-namespace KdsBatch.Reports
+namespace KdsLibrary.Utils.Reports
 {
     public class clReport
     {

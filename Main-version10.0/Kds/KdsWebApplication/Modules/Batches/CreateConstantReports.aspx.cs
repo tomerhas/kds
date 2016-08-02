@@ -7,7 +7,6 @@ using System.Web.UI.WebControls;
 using KdsLibrary;
 using KdsLibrary.BL;
 using KdsLibrary.UI;
-using KdsBatch.Reports;
 using System.Data;
 public partial class Modules_Batches_CreateConstantReports : KdsPage
 {

@@ -21,7 +21,7 @@ public partial class Modules_Rikuzim_ShowRikuz : System.Web.UI.Page
 
     protected void ShowRikuz(int EmpID, int bakashaID,DateTime taarich)
     {
-        clReport BlReport = new clReport();
+        KdsLibrary.BL.clReport BlReport = new KdsLibrary.BL.clReport();
         byte[] bPdf;
         //string path,name;
         ////ReportModule _RptModule = ReportModule.GetInstance();

@@ -40,7 +40,7 @@ namespace KdsLibrary.Utils.Reports
         public Byte[] CreateReport(String rptName, eFormat sFormat,bool AutoRefresh)
         {
             int LengthParam;
-            clReport rep = new clReport();
+            KdsLibrary.BL.clReport rep = new KdsLibrary.BL.clReport();
             string RSVersion, ServiceUrlConfigKey,sRdlName;
 
             if (AutoRefresh)

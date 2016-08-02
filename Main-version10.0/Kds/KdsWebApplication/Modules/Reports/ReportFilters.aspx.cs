@@ -88,7 +88,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     }
     private void SetProfilUser()
     {
-        clReport oReports = new clReport();
+        KdsLibrary.BL.clReport oReports = new KdsLibrary.BL.clReport();
         DataTable dtProfils = new DataTable();
         int profil;
         try
@@ -408,7 +408,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     private void ddlRitza_SelectedIndexChanged(object sender, EventArgs e)
     {
         DataTable dt = new DataTable();
-        clReport oReport = clReport.GetInstance();
+        KdsLibrary.BL.clReport oReport = KdsLibrary.BL.clReport.GetInstance();
         string riza = clGeneral.GetControlValue(Ritza).ToString();
         string rizaLeHashvaa = clGeneral.GetControlValue(RitzaLeHashvaa).ToString();
         if (riza != "-1")
@@ -454,7 +454,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     private void ddlEzor_SelectedIndexChanged(object sender, EventArgs e)
     {
         DataTable dt = new DataTable();
-        clReport oReport = clReport.GetInstance();
+        KdsLibrary.BL.clReport oReport = KdsLibrary.BL.clReport.GetInstance();
         int p_ezor = 0;
 
         p_ezor = int.Parse(clGeneral.GetControlValue(Region).ToString());
@@ -495,16 +495,18 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 PrepareReportParameters();
                 if (Report.ProductionType == ProductionType.Normal)
                 {
-                    sScript = "window.showModalDialog('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
+                    ShowReportOnLine();
+                  //  sScript = "window.showModalDialog('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
                  // sScript = "window.open('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
                   //  sScript = "window.open('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "');";
                 }
                 else // ProductionType.Heavy
                 {
-                 //   Response.Redirect("BackgroundReport.aspx?Dt=" + DateTime.Now.ToString() + "&UserId=" + LoginUser.UserInfo.EmployeeNumber + "&ReportName=" + RdlName);
-                   sScript = "window.showModalDialog('BackgroundReport.aspx?Dt=" + DateTime.Now.ToString() + "&UserId=" + LoginUser.UserInfo.EmployeeNumber + "&ReportName=" + RdlName + "&PageHeader=" + HttpUtility.UrlEncodeUnicode(Report.PageHeader) + "','','dialogwidth:450px;dialogheight:200px;center:yes;status:no;resizable:no;scroll:no;');";
+                    //   Response.Redirect("BackgroundReport.aspx?Dt=" + DateTime.Now.ToString() + "&UserId=" + LoginUser.UserInfo.EmployeeNumber + "&ReportName=" + RdlName);
+                    sScript = "window.showModalDialog('BackgroundReport.aspx?Dt=" + DateTime.Now.ToString() + "&UserId=" + LoginUser.UserInfo.EmployeeNumber + "&ReportName=" + RdlName + "&PageHeader=" + HttpUtility.UrlEncodeUnicode(Report.PageHeader) + "','','dialogwidth:450px;dialogheight:200px;center:yes;status:no;resizable:no;scroll:no;');";
+                    ScriptManager.RegisterStartupScript(btnDisplay, btnDisplay.GetType(), "ReportViewer", sScript, true);
                 }
-                ScriptManager.RegisterStartupScript(btnDisplay, btnDisplay.GetType(), "ReportViewer", sScript, true);
+                
             }
         }
         catch (Exception ex)
@@ -525,7 +527,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         DataTable dt = null;
         clOvdim oOvdim = new clOvdim();
         clUtils oUtils = new clUtils();
-        clReport oReport = clReport.GetInstance();
+        KdsLibrary.BL.clReport oReport = KdsLibrary.BL.clReport.GetInstance();
         switch (Report.NameReport)
         {
             case ReportName.HashvaatRizotChishuv: //m ??
@@ -582,7 +584,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         _KdsDynamicReport = KdsDynamicReport.GetKdsReport();
         _Report = new KdsReport();
         _Report = _KdsDynamicReport.FindReport(RdlName);
-        clReport rep = new clReport();
+        KdsLibrary.BL.clReport rep = new KdsLibrary.BL.clReport();
         DataTable dt = rep.GetReportDetails(((ReportName)Enum.Parse(typeof(ReportName), RdlName)).GetHashCode());
         _Report.PageHeader = dt.Rows[0]["PageHeader"].ToString() ;
         _Report.RSVersion = dt.Rows[0]["RS_VERSION"].ToString();
@@ -925,9 +927,25 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             KdsLibrary.clGeneral.BuildError(Page, ex.Message, true);
         }
     }
+
+    private void ShowReportOnLine()
+    {
+       
+        string ReportNameStr = Report.RdlName;
+        clReportOnLine oReportOnLine = new clReportOnLine(ReportNameStr, eFormat.PDF);
+    
+
+        Dictionary<string, string> Params = (Dictionary<string, string>)Session["ReportParameters"];
+        foreach (KeyValuePair<string, string> param in Params)
+        {
+            oReportOnLine.ReportParams.Add(new clReportParam(param.Key, param.Value));
+        }
+
+        OpenReportFile(oReportOnLine, btnDisplay, ReportNameStr);
+    }
     private void AddSpecificReportParameters(KdsReport rpt, ref Dictionary<string, string> Params)
     {
-        clReport oReports = new clReport();
+        KdsLibrary.BL.clReport oReports = new KdsLibrary.BL.clReport();
         DataTable dtProfils = new DataTable();
         int profil;
         try{
@@ -968,6 +986,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         }
     }
 
+
     private void ChangeReportParameters(KdsReport rpt, ref Dictionary<string, string> Params)
     {
      
@@ -1001,6 +1020,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         }
     }
 
+  
     private void FillChildControls()
     {
         _PanelFilters = (PanelFilters)Session["PanelFilters"];

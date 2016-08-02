@@ -183,18 +183,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Reports\ClFactoryReport.cs" />
-    <Compile Include="Reports\ClManageHeavyReport.cs" />
-    <Compile Include="Reports\clManagerReport.cs" />
-    <Compile Include="Reports\clManagerRikuzim.cs" />
-    <Compile Include="Reports\clReport.cs" />
-    <Compile Include="Reports\clReportOnLine.cs" />
-    <Compile Include="Reports\clReportParam.cs" />
-    <Compile Include="Reports\clDestinationReport.cs" />
     <Compile Include="Premia\SystemCompare\CompareScope.cs" />
     <Compile Include="Premia\SystemCompare\ImportColumn.cs" />
     <Compile Include="Premia\SystemCompare\ImportStructure.cs" />
-    <Compile Include="Reports\clRikuz.cs" />
     <Compile Include="TaskManager\Utils.cs" />
     <Compile Include="Transfer\clErua.cs" />
     <Compile Include="Transfer\clErua416.cs" />

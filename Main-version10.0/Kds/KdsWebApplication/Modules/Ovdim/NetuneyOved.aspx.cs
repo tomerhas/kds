@@ -11,7 +11,6 @@ using KdsLibrary.BL;
 using KdsLibrary.Utils;
 using KdsLibrary.Utils.Reports;
 using System.Data;
-using KdsBatch.Reports;
 
 public partial class Modules_Ovdim_NetuneyOved : KdsPage
 {

@@ -16,7 +16,6 @@ using KdsLibrary.Security;
 using KdsLibrary.BL;
 using KdsLibrary.Utils.Reports;
 using KdsBatch;
-using KdsBatch.Reports;
 using KDSCommon.Enums;
 using System.Xml;
 

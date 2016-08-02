@@ -30,7 +30,6 @@ using KDSCommon.Interfaces.Managers;
 using KDSCommon.Interfaces.DAL;
 using KDSCommon.UDT;
 using KDSCommon.Helpers;
-using KdsBatch.Reports;
 
 public partial class Modules_Ovdim_WorkCard : KdsPage
 {
@@ -5310,37 +5309,25 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         OpenReportFile(oReportOnLine, btnClock, ReportNameStr);
     }
 
-    public void OpenReportFile(clReportOnLine oReportOnLine, Button btnScript, string sRdlName)
-    {
-        byte[] s;
-        string sScript;
-        //string sFileName, sPathFile;
-        //FileStream fs;
+    //public void OpenReportFile(clReportOnLine oReportOnLine, Button btnScript, string sRdlName)
+    //{
+    //    byte[] s;
+    //    string sScript;
+        
+    //    s = oReportOnLine.CreateFile();
+    //    Session["BinaryResult"] = s;
+    //    Session["TypeReport"] = "PDF";
+    //    Session["FileName"] = sRdlName;
 
-        //sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
-            
 
-        s = oReportOnLine.CreateFile();
-        Session["BinaryResult"] = s;
-        Session["TypeReport"] = "PDF";
-        Session["FileName"] = sRdlName;
-
-        //sFileName = "Shaonim.pdf";
-        //if (!Directory.Exists(sPathFile))
-        //    Directory.CreateDirectory(sPathFile);
-        //fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);
-        //fs.Write(s, 0, s.Length);
-        //fs.Flush();
-        //fs.Close();
-
-       // sScript = "window.showModalDialog('../../ModalShowPrint.aspx');";
-        sScript = "window.showModalDialog('../../ModalShowPrint.aspx','','dialogwidth:800px;dialogheight:850px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
-        ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "PrintPdf", sScript, true);
+    //   // sScript = "window.showModalDialog('../../ModalShowPrint.aspx');";
+    //    sScript = "window.showModalDialog('../../ModalShowPrint.aspx','','dialogwidth:800px;dialogheight:850px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
+    //    ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "PrintPdf", sScript, true);
  
 
-    //    sIp = "";// arrParams[1];
+    ////    sIp = "";// arrParams[1];
        
-    }
+    //}
     protected DataTable GetMasachPakadim()
     {
         clOvdim _ovdim = new clOvdim();

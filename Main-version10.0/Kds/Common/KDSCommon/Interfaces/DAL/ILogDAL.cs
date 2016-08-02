@@ -8,6 +8,7 @@ namespace KDSCommon.Interfaces.DAL
 {
     public interface  ILogDAL
     {
-        void InsertLog(BakashaLog Log ); 
+        void InsertLog(BakashaLog Log );
+        void UpdateLogBakasha(long lRequestNum, DateTime dZmanSiyum, int iStatus);
     }
 }

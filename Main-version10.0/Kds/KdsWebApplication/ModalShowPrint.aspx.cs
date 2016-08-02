@@ -34,8 +34,11 @@ public partial class ModalShowPrint : KdsPage
                     case "PrintWorkCard":
                         sFileName = "WorkCard.pdf";
                         break;
-                    case "RikuzAvodaChodshi":
-                        sFileName = "RikuzAvodaChodshi.pdf";
+                    default:
+                        sFileName = "TempFile.pdf";
+
+                    //case "RikuzAvodaChodshi":
+                    //    sFileName = "RikuzAvodaChodshi.pdf";
                         break; 
                 }
 

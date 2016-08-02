@@ -109,6 +109,25 @@ namespace KdsLibrary.UI
 
         }
 
+        public void OpenReportFile(clReportOnLine oReportOnLine, Button btnScript, string sRdlName)
+        {
+            byte[] s;
+            string sScript;
+
+            s = oReportOnLine.CreateFile();
+            Session["BinaryResult"] = s;
+            Session["TypeReport"] = "PDF";
+            Session["FileName"] = sRdlName;
+
+
+            // sScript = "window.showModalDialog('../../ModalShowPrint.aspx');";
+            sScript = "window.showModalDialog('../../ModalShowPrint.aspx','','dialogwidth:1010px;dialogheight:850px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
+            ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "PrintPdf", sScript, true);
+
+
+            //    sIp = "";// arrParams[1];
+
+        }
         public void ProvideMenuForRole()
         {
             _secManager.ProvideMenuForRole(this);

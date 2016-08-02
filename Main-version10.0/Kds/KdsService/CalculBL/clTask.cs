@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using KdsLibrary;
-using KdsBatch.Reports;
+using KdsLibrary.Utils.Reports;
 
 namespace KdsService.CalculBL
 {

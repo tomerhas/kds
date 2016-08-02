@@ -13,6 +13,7 @@ namespace KDSBLLogic.DAL
     public class LogDAL : ILogDAL
     {
         public const string cProInsLogBakasha = "pkg_batch.pro_ins_log_bakasha";
+        public const string cProUpdBakasha = "pkg_batch.pro_upd_bakasha";
         private IUnityContainer _container;
 
         public LogDAL(IUnityContainer container)
@@ -109,6 +110,28 @@ namespace KDSBLLogic.DAL
                 _container.Resolve<ILogger>().LogError(ex.Message);
             }
          
+        }
+
+        public void UpdateLogBakasha(long lRequestNum, DateTime dZmanSiyum, int iStatus)
+        {
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
+                oDal.AddParameter("p_status", ParameterType.ntOracleInteger, iStatus, ParameterDir.pdInput);
+                oDal.AddParameter("p_huavra_lesachar", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+                oDal.AddParameter("p_zman_siyum", ParameterType.ntOracleDate, dZmanSiyum, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_haavara_lesachar", ParameterType.ntOracleDate, null, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(cProUpdBakasha);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        
         }
     }
 }

@@ -6,7 +6,6 @@ using System.ServiceModel;
 using System.Text;
 using KdsBatch;
 using System.Threading;
-using KdsBatch.Reports;
 using KdsBatch.Premia;
 using KdsBatch.MonthlyMails;
 using KdsDataImport;
@@ -23,6 +22,8 @@ using KDSCommon.Interfaces.Logs;
 using KDSCommon.Interfaces.Service;
 using KDSCommon.Enums;
 using KdsLibrary;
+using KdsLibrary.Utils.Reports;
+
 namespace KdsService
 {
     public class BatchService : IBatchService

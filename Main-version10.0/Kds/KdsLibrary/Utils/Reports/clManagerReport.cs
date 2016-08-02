@@ -16,7 +16,7 @@ using KDSCommon.Interfaces.Logs;
 
 
 
-namespace KdsBatch.Reports
+namespace KdsLibrary.Utils.Reports
 {
     public class clManagerReport : ClFactoryReport 
     {
@@ -73,7 +73,7 @@ namespace KdsBatch.Reports
             {
                 clGeneral.LogMessage(ex.Message, System.Diagnostics.EventLogEntryType.Error,true);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, iStatus);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().UpdateLogBakasha(iRequestId, DateTime.Now, iStatus);
                 ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(iRequestId, "E", 0, "clManagerReport: " + ex.Message, _loginUser,null);
             }
 

@@ -10,7 +10,6 @@ using KdsLibrary.Utils.Reports;
 using KdsLibrary;
 using System.Configuration;
 using System.IO;
-using KdsBatch.Reports;
 
 
 public partial class Modules_Reports_PresenceReport : KdsPage
