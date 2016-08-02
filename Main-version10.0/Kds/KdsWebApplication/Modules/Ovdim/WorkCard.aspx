@@ -19,7 +19,7 @@
      
     <link type='text/css' href='../../css/jquery-ui.min.css' rel='stylesheet'/>
 </head>
-<body dir="rtl" style="margin:0px">
+<body dir="rtl" style="margin:0px"> <%--  <body dir="rtl" style="margin:auto; width:1010px; height:680px">--%>
     <form id="frmWorkCard" runat="server" > 
         <%--  <div id="dialog" title="שגיאת מערכת" >
              <div >משתמש יקר ארעה שגיאה במערכת. אנא פנה למנהל המערכת.</div>
@@ -657,7 +657,9 @@
     
     <script language="javascript" type="text/javascript">
         var iCount=0;
-        var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %> 
+   
+        var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;
+        var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %>;
         document.onkeydown = KeyCheck; 
         function KeyCheck(){  
           var KeyID = event.keyCode; 

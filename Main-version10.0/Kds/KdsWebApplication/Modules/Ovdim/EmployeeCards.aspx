@@ -183,8 +183,8 @@
             </td>
         </tr>
      </table>
+  <%--   <div id="MyDialogID" title="Example">test</div>--%>
 <%--<div id = "divBackground" style="position: fixed; z-index: 999; height: 100%; width: 100%; top: 0; left:0; background-color: Black; filter: alpha(opacity=60); opacity: 0.6; -moz-opacity: 0.8;display:none">
-
 </div>--%>
 
        <input type="hidden" runat="server" id="HidOpenWC" name="HidOpenWC" />
@@ -355,9 +355,18 @@
                $get("<%=btnExecute.ClientID %>").click();
            }
 
+           //var dialog1 = $("#MyDialogID").dialog({
+           //    autoOpen: false,
+           //    height: 680,
+           //    width: 1010
 
+           //      dialog1.load('WorkCard.aspx' + sQuryString).dialog('open');
+           //});
+
+           // load content and open dialog
+         
            function OpenEmpWorkCard(RowDate) {
-               // debugger;
+
               // var canOpen = document.getElementById("ctl00_KdsContent_HidOpenWC").value;
                var EmpId = document.getElementById("ctl00_KdsContent_txtId").value;
                var WCardDate = RowDate;
@@ -365,9 +374,10 @@
 
               
                 document.getElementById("divHourglass").style.display = 'block';
+               //** window.location = 'WorkCard.aspx' + sQuryString;
                 var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
                 // var ReturnWin = window.open('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
-
+              //  dialog1.load('WorkCard.aspx' + sQuryString).dialog('open');
                 if (ReturnWin == '' || ReturnWin == 'undefined' || ReturnWin == undefined)
                     ReturnWin = false;
                 //else {
@@ -382,67 +392,7 @@
              
            }
 
-           ////var popUpObj;
-           ////function OpenEmpWorkCard(RowDate) {
-           ////    // debugger;
-           ////    // var canOpen = document.getElementById("ctl00_KdsContent_HidOpenWC").value;
-           ////    var EmpId = document.getElementById("ctl00_KdsContent_txtId").value;
-           ////    var WCardDate = RowDate;
-           ////    var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
-
-
-           ////    document.getElementById("divHourglass").style.display = 'block';
-           ////  //  var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
-           ////    // var ReturnWin = window.open('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no;status: 1;");
-
-           ////    popUpObj = window.open('WorkCard.aspx' + sQuryString,
-
-           ////      "ModalPopUp",
-
-           ////      "toolbar=no," +
-
-           ////      "scrollbars=no," +
-
-           ////      "location=no," +
-
-           ////      "statusbar=no," +
-
-           ////      "menubar=no," +
-
-           ////      "resizable=0," +
-
-           ////      "width=1010," +
-
-           ////      "height=680," +
-
-           ////      "left = 490," +
-
-           ////      "top=300"
-
-           ////      );
-
-           ////    popUpObj.focus();
-           ////    LoadModalDiv();
-           ////    //if (ReturnWin == '' || ReturnWin == 'undefined' || ReturnWin == undefined)
-           ////  //      ReturnWin = false;
-           ////    //else {
-           ////    //    var DatailsSplit = ReturnWin.split('|');                 
-           ////    //    var userLogin = document.getElementById("ctl00_KdsContent_HidLoginUse").value;            
-           ////    //    if (ReturnWin == userLogin);
-           ////    //    wsGeneral.FreeWC(DatailsSplit[0], DatailsSplit[1], DatailsSplit[2]);
-           ////    //}
-           ////    document.getElementById("divHourglass").style.display = 'none';
-           ////    document.getElementById("ctl00_KdsContent_btnExecute").click();
-           ////   // return ReturnWin;
-
-           ////}
-           ////function LoadModalDiv() {
-
-           ////    var bcgDiv = document.getElementById("divBackground");
-
-           ////    bcgDiv.style.display = "block";
-
-           ////}
+  
 
            function continue_click() {
              

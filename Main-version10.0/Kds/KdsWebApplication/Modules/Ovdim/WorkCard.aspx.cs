@@ -2685,7 +2685,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         }
         MPEPrintMsg.Hide();
     }
-    public void PrintCard(object sender, EventArgs e)
+    public void PrintCard_2(object sender, EventArgs e)
     {
         
         string urlBarcode,key;
@@ -2791,7 +2791,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         }
     }
 
-    public void PrintCard_2(object sender, EventArgs e)
+    public void PrintCard(object sender, EventArgs e)
     {
 
         string urlBarcode, key;
@@ -5276,7 +5276,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ReportParameters.Add("P_TAARICH", dDateCard.ToShortDateString());
         OpenReport(ReportParameters, (Button)sender, ReportName.IshurimLekartisAvoda.ToString());
     }
-    protected void btnClock_click(object sender, EventArgs e)
+    protected void btnClock_click_2(object sender, EventArgs e)
     {
         Dictionary<string, string> ReportParameters = new Dictionary<string, string>();
         string ReportNameStr = ReportName.Presence.ToString();
@@ -5291,17 +5291,19 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
 
 
-    protected void btnClock_click_2(object sender, EventArgs e)
+    protected void btnClock_click(object sender, EventArgs e)
     {
         Dictionary<string, string> ReportParameters = new Dictionary<string, string>();
         string ReportNameStr = ReportName.Presence.ToString();
         if (_wcResult.oOvedYomAvodaDetails.iKodHevra == enEmployeeType.enEggedTaavora.GetHashCode())
             ReportNameStr = ReportName.PresenceAllSidurim.ToString();
         clReportOnLine oReportOnLine = new clReportOnLine(ReportNameStr, eFormat.PDF);
-        DateTime FromDate = DateTime.Parse("01/" + DateTime.Now.Month.ToString().PadLeft(2 ,(char)48) + "/" + DateTime.Now.Year);
+        DateTime FromDate = DateTime.Parse("01/" + dDateCard.Month.ToString().PadLeft(2 ,(char)48) + "/" + dDateCard.Year);
+        DateTime ToDate = FromDate.AddMonths(1).AddDays(-1);
+        ToDate = ToDate < DateTime.Now ? ToDate : DateTime.Now;
         oReportOnLine.ReportParams.Add(new clReportParam("P_MISPAR_ISHI", iMisparIshi.ToString()));
         oReportOnLine.ReportParams.Add(new clReportParam("P_STARTDATE", FromDate.ToShortDateString()));
-        oReportOnLine.ReportParams.Add(new clReportParam("P_ENDDATE", DateTime.Now.ToShortDateString()));
+        oReportOnLine.ReportParams.Add(new clReportParam("P_ENDDATE", ToDate.ToShortDateString()));
 
         //  OpenReport(ReportParameters, (Button)sender, ReportNameStr);
 
@@ -5312,17 +5314,32 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         byte[] s;
         string sScript;
-        string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
-       
+        //string sFileName, sPathFile;
+        //FileStream fs;
+
+        //sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
+            
 
         s = oReportOnLine.CreateFile();
         Session["BinaryResult"] = s;
         Session["TypeReport"] = "PDF";
         Session["FileName"] = sRdlName;
 
-        sScript = "window.open('../../ModalShowPrint.aspx');";
-        ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "PrintPdf", sScript, true);
+        //sFileName = "Shaonim.pdf";
+        //if (!Directory.Exists(sPathFile))
+        //    Directory.CreateDirectory(sPathFile);
+        //fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);
+        //fs.Write(s, 0, s.Length);
+        //fs.Flush();
+        //fs.Close();
 
+       // sScript = "window.showModalDialog('../../ModalShowPrint.aspx');";
+        sScript = "window.showModalDialog('../../ModalShowPrint.aspx','','dialogwidth:800px;dialogheight:850px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
+        ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "PrintPdf", sScript, true);
+ 
+
+    //    sIp = "";// arrParams[1];
+       
     }
     protected DataTable GetMasachPakadim()
     {

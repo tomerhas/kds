@@ -13,6 +13,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
    <%--  <meta http-equiv="X-UA-Compatible" content="IE=10" />--%>
+    <script src="../../Js/jquery.js"></script>
     <base target="_self" />
     <title runat="server" id="TitleWindow">דו"חות</title>
     <link id="Link1" runat="server" href="../../StyleSheet.css" type="text/css" rel="stylesheet" />
@@ -31,9 +32,9 @@
 
     </head>
    
-<body dir="rtl">
+<body dir="rtl" >
     <form id="form1" runat="server" style="margin:0px">
-    
+  <%--  <input type="button" onclick="javascript: opennormalwindow();" />--%>
 
         <table width="100%"  border="0" cellpadding="0" cellspacing="0" >
             <tr>
@@ -67,6 +68,43 @@
             window.history.replaceState({}, '', clean_uri);
         }
         </script>--%>
+<%--    <script type="text/javascript">
+        //function opennormalwindow()
+        //{
+        //    window.open(window.location + "&print=true", "", "width=2px,height=1px,left=-300");
+
+
+        //}
+        //function print()
+        //{
+        //    if(getParameterByName('print')=='true')
+        //    $("[title=Print]").click();
+        //    //document.Form1.RptViewer$ctl05$ctl06$ctl00$ctl00$ctl00.click();
+
+
+        //}
+        //function getParameterByName(name, url) {
+        //    if (!url) url = window.location.href;
+        //    name = name.replace(/[\[\]]/g, "\\$&");
+        //    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        //        results = regex.exec(url);
+        //    if (!results) return null;
+        //    if (!results[2]) return '';
+        //    return decodeURIComponent(results[2].replace(/\+/g, " "));
+        //}
+
+    </script>--%>
 </body>
 </html>
+<%--<script type="text/javascript">
+    $(document).ready(function () {
+        if (getParameterByName('print') == 'true') {
 
+            setTimeout(function () {
+               // alert($("[title=Print]").length);
+                $("[title=Print]")[1].click();
+                window.close();
+            }, 5000);
+        }
+    });
+</script>--%>
