@@ -362,7 +362,7 @@
 
   </Report>
 
-  <Report  RdlName="IdkuneyRashemet" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח עדכוני רשמת">
+  <Report  RdlName="IdkuneyRashemet" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח עדכוני רשמת" ProductionType="Heavy">
     <Filter ParameterName="P_MIS_RASHEMET" Caption="מ.א רשם" BoxeType="TextBox" DataType="System.Int32" Required="true">
       <FilterValidator ValidatorName="ValidMisRashemet1" ErrorMessageValidator="לא ניתן להוציא דוח כל עוד לא נבחר מספר אישי של רשמת" ValidationFunction="IsValidRashemet1"/>
       <DropDownList QueryType="AjaxAutoComplete"  Select="getMispareiRashamot" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
@@ -376,7 +376,7 @@
     </Filter>
   </Report>
 
-  <Report  RdlName="IdkuneyRashemetMasach4" Roles="kds_administrators" FilterByLine="3" PageHeader="מסך 4 - דוח עדכוני רשמת">
+  <Report  RdlName="IdkuneyRashemetMasach4" Roles="kds_administrators" FilterByLine="3" PageHeader="מסך 4 - דוח עדכוני רשמת" ProductionType="Heavy">
     <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32" Required="true">
       <FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>
     </Filter>
@@ -706,7 +706,7 @@
       <DropDownList QueryType="Select"  Select="select -1 KOD_SNIF_TNUAA,'הכל' teur from dual union select KOD_SNIF_TNUAA,teur_snif_tnuaa ||' (' ||KOD_SNIF_TNUAA||')' teur from ctb_snifey_tnuaa ORDER BY KOD_SNIF_TNUAA" ValueField="KOD_SNIF_TNUAA" TextField="teur" />
     </Filter>
   </Report>
-  <Report  RdlName="Query4" Roles="kds_administrators" FilterByLine="3" PageHeader="רשימת סידורים לעובד (שאילתה 4) " >
+  <Report  RdlName="Query4" Roles="kds_administrators" FilterByLine="3" PageHeader="רשימת סידורים לעובד (שאילתה 4) " ProductionType="Heavy">
     <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="TextBox" DataType="System.Int32">
     </Filter>
     <Filter ParameterName="P_DATE" Caption="חודש" BoxeType="DropDown" DataType="System.String">
@@ -762,7 +762,7 @@
     </Filter>
   </Report>
 
-  <Report  RdlName="RdlPrecenceOvdeyMeshekShishiShabat" Roles="kds_administrators" FilterByLine="3" PageHeader="נוכחות עובדי משק שישי ושבתון" >
+  <Report  RdlName="RdlPrecenceOvdeyMeshekShishiShabat" Roles="kds_administrators" FilterByLine="3" PageHeader="נוכחות עובדי משק שישי ושבתון" ProductionType="Heavy">
     <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
@@ -776,7 +776,7 @@
     </Filter>
   </Report>
 
-  <Report  RdlName="RdlCountOvdeyMeshekShabat" Roles="kds_administrators" FilterByLine="3" PageHeader="עבודת משק בשבתות ומועדים" >
+  <Report  RdlName="RdlCountOvdeyMeshekShabat" Roles="kds_administrators" FilterByLine="3" PageHeader="עבודת משק בשבתות ומועדים" ProductionType="Heavy">
     <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
@@ -891,7 +891,7 @@
       <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
     </Filter>
   </Report>
-  <Report  RdlName="RdlOvdimPeilim" Roles="kds_administrators" FilterByLine="3" PageHeader="עובדים פעילים" ZoomPercent="100">
+  <Report  RdlName="RdlOvdimPeilim" Roles="kds_administrators" FilterByLine="3" PageHeader="עובדים פעילים" ZoomPercent="100" ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  RunAtServer="true" Required="true">
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
     </Filter>

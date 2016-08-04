@@ -12,6 +12,31 @@ using System.Web.UI.WebControls;
 
 public partial class ModalShowPrint : KdsPage
 {
+    private string[] arrParams;
+    private int iMisparIshiKiosk;
+    protected override void CreateUser()
+    {
+        if (((Session["arrParams"] != null) && (Request.QueryString["Page"] != null)) || ((((string)Session["hidSource"]) == "1") && (Session["arrParams"] != null)))
+        {
+            arrParams = (string[])Session["arrParams"];
+            SetUserKiosk(arrParams);
+        }
+        else { base.CreateUser(); }
+    }
+
+
+    private void SetUserKiosk(string[] arrParamsKiosk)
+    {
+        iMisparIshiKiosk = int.Parse(arrParamsKiosk[0].ToString());
+
+        LoginUser = LoginUser.GetLimitedUser(iMisparIshiKiosk.ToString());
+        LoginUser.InjectEmployeeNumber(iMisparIshiKiosk.ToString());
+    }
+    protected override void OnInit(EventArgs e)
+    {
+        base.OnInit(e);
+
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         byte[] s;

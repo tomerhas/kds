@@ -179,7 +179,8 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 
                     //sScript = "window.showModalDialog('../../modalshowprint.aspx','','dialogwidth:800px;dialogheight:750px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
                     ///  sScript = "window.showModalDialog('../../ModalShowPrint.aspx','','dialogwidth:800px;dialogheight:750px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
-                    sScript = "window.open('../../ModalShowPrint.aspx');";
+                 
+                    sScript = "window.showModalDialog('../../ModalShowPrint.aspx','','dialogwidth:1010px;dialogheight:850px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
                     MasterPage mp = (MasterPage)Page.Master;
 
                     ScriptManager.RegisterStartupScript(mp.ImagePrintClick, this.GetType(), "PrintPdf", sScript, true);

@@ -14,7 +14,7 @@
         <table dir="ltr" >
             <tr align="left">
               <td>   <input type="button" class="ImgButtonSearch" onclick="window.close()" style="height:28px" value="סגור" /></td> <%--<asp:Button ID="CloseWindow" CssClass="ImgButtonSearch" runat="server" Text="סגור" OnClientClick="window.close()" />--%>
-               <td>   <input type="button"class="btnWorkCardClocks" onclick="PrintReport()"   value="הדפסה" /></td>
+               <td>   <input type="button" class="ImgButtonSearch"  onclick="PrintReport()"  style="height:28px"   value="הדפסה" /></td>
                <td dir="rtl">  <label id="lblPrint" style="background-color:lightgray;display:none;font-family:Arial;font-size:medium"> הדף נשלח להדפסה אנא המתן... &nbsp;&nbsp;</label></td>
             </tr>
         </table>

@@ -29,7 +29,7 @@ public partial class ShowPrint : System.Web.UI.Page
            else
            {
                Response.ContentType = "application/vnd.ms-excel";
-               Response.AddHeader("Content-Disposition", "attachment; Filename=" + Session["FileName"].ToString() + ".xls");
+               Response.AddHeader("Content-Disposition", "inline; Filename=" + Session["FileName"].ToString() + ".xls");
 
            }
 
