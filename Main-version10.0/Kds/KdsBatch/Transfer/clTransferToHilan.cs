@@ -11,6 +11,9 @@ using KDSCommon.UDT;
 using DalOraInfra.DAL;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Logs;
+using KDSCommon.DataModels;
+using KdsBatch.Premia;
+
 namespace KdsBatch
 {
    public class clTransferToHilan
@@ -32,7 +35,9 @@ namespace KdsBatch
        private StreamWriter _sFileToWrite;
        private DataTable dtEzerYomi;
        private List<PirteyOved> _PirteyOved;
-       private enum enFileType
+       private ExcelAdapter exAdpt;
+       private int ixls = 2;
+        private enum enFileType
        {
            Friends = 1, 
            Salarieds = 2,
@@ -46,12 +51,13 @@ namespace KdsBatch
        {
 
            int i;//iMisparIshi, i, iMaamad, iMaamadRashi;
-           DataTable dtOvdim, dtRechivim, dtPrem, dtRechivimYomi,dtChufshaRezufa,dtOvdimDorB,dtRechiveyDorB;
+            DataTable dtOvdim, dtRechivim, dtPrem, dtRechivimYomi,dtChufshaRezufa,dtOvdimDorB,dtRechiveyDorB;
            DataSet dsNetunim, dsTables;
            int iStatus = 0;
            string bDelete = ConfigurationSettings.AppSettings["DeleteTablesAfterTransfer"];
            string sPathFile = ConfigurationSettings.AppSettings["PathFileTransfer"];
-           string sChodeshIbud, sFileNameSchirim, sFileNameChaverim, sFileNameChozim, sFileNameETBTashlum, sFileNameETBakaraReg, sFileNameETBakaraHef;
+            string sPathExl;
+           string sChodeshIbud, sFileNameSchirim, sFileNameChaverim, sFileNameChozim, sFileNameETBTashlum, sFileNameETBakaraReg, sFileNameETBakaraHef, sFileExlName;
            var logger = ServiceLocator.Current.GetInstance<ILogBakashot>();
            //PirteyOved oPirteyOved;
           // DateTime dChodesh;
@@ -65,6 +71,7 @@ namespace KdsBatch
            sFileNameETBTashlum = "QDIVmmyy.162";
            sFileNameETBakaraReg = "REGLmmyy.162";
            sFileNameETBakaraHef = "HEFR_Cmmyy.162";
+            sFileExlName = "hefreshim_input_mmyy.xlsx";
 
            _lBakashaId = lBakashaId;
 
@@ -74,14 +81,17 @@ namespace KdsBatch
                sFileStrS = new StreamWriter(sPathFile + sFileNameSchirim, false, Encoding.Default);
                sFileStrCh = new StreamWriter(sPathFile + sFileNameChaverim, false, Encoding.Default);
                sFileStrC = new StreamWriter(sPathFile + sFileNameChozim, false, Encoding.Default);
-               
+             //  sPathExl = sPathFile + sFileExlName;// "C:\\Temp\\test.xlsx";
+              // OpenExcel(sPathExl);
 
                try
                {
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer, before GetOvdimToTransfer");
                    dsNetunim = GetOvdimToTransfer(lRequestNumToTransfer);
 
-                   dtRechivimYomi = GetRechivimYomiim(lRequestNumToTransfer);
+                  
+
+                    dtRechivimYomi = GetRechivimYomiim(lRequestNumToTransfer);
                    dtChufshaRezufa = GetOvdimWithChufshaRezufa(lRequestNumToTransfer);
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer,  after GetOvdimToTransfer Before GetNetuneyDorB");
  
@@ -125,14 +135,19 @@ namespace KdsBatch
                    }
                    if (sFileStrEt == null && _PirteyOved.Exists( item =>(item.iDirug == 85 && item.iDarga == 30)) )
                    {
-                       sChodeshIbud = dtOvdim.Rows[0]["chodesh_ibud"].ToString();
-                       sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
+                      sChodeshIbud = dtOvdim.Rows[0]["chodesh_ibud"].ToString();
+                      sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
 
                        sFileStrEtBakaraReg = new StreamWriter(sPathFile + sFileNameETBakaraReg.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
                        sFileStrEtBakaraHef = new StreamWriter(sPathFile + sFileNameETBakaraHef.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
+
+                     /**0808  sPathExl = sPathFile + sFileExlName.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2));// "C:\\Temp\\test.xlsx";
+                        sPathExl = "C:\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
+                        OpenExcel(sPathExl);**/
                     }
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer, before WriteEruimToFile");
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
+               //** 0808   SaveExcel();
                   // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer, after WriteEruimToFile");
                    
@@ -310,6 +325,8 @@ namespace KdsBatch
                     WriteEruaToFile(sFileStrEtBakaraHef, oOved.oBakaraEt);
 
                WriteEruaToFile(sFileStrEt, oOved.oDataEt);
+              /**  if(oOved.oHefreshEt != null)
+                 WriteToExcelFile(oOved.oHefreshEt.oErueyHefreshEt);**/
            }
           else
            {
@@ -621,5 +638,70 @@ namespace KdsBatch
                 throw ex;
             }
         }
+
+        /******************************************************/
+        private void OpenExcel(string sPath)
+        {
+            exAdpt = new ExcelAdapter(sPath);
+            exAdpt.OpenNewWorkBook();
+            exAdpt.AddRow(GetExcelCols(), 1, GetTitleValuesForExcel());
+        }
+
+        private void WriteToExcelFile(List<EtHefreshLineDM> list)
+        {
+            //string sPath = "C:\\Temp\\test.xlsx";           
+            try
+            {
+               
+                string[] cols = GetExcelCols();
+                foreach (EtHefreshLineDM item in list)
+                {
+                    exAdpt.AddRow(cols, ixls, item.GetExcelRowValues());
+                    ixls++;
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_lBakashaId, "E", 0, "WriteToExcelFile: " + ex.Message );
+                throw ex;
+            }
+            //finally
+            //{
+            //    exAdpt.Quit();
+            //    exAdpt.Dispose();
+            //    exAdpt = null;
+            //}
+        }
+
+        private void SaveExcel()
+        {
+            try
+            {
+                exAdpt.SaveNewWorkBook(DateTime.Now);
+            }
+            catch (Exception ex)
+            {
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_lBakashaId, "E", 0, "SaveExcel: " + ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                exAdpt.Quit();
+                exAdpt.Dispose();
+                exAdpt = null;
+            }
+        }
+        private string[] GetExcelCols()
+        {
+            return new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M" };
+        }
+
+        private string[] GetTitleValuesForExcel()
+        {
+            return new string[] { "מספר ארוע", " משרד/חבר", "זהוי עובד", "מ.נ.", "שם עובד", "סמל רכיב", "תוקף מ", "תוקף עד", "קוד עדכון", "סכום", "כמות", "אחוז", "תעריף" };
+        }
+
+
     }
 }

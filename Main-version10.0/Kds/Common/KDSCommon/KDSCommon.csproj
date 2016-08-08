@@ -88,6 +88,7 @@
     <Compile Include="DataModels\clParametersDM.cs" />
     <Compile Include="DataModels\Errors\ErrorDualKey.cs" />
     <Compile Include="DataModels\Errors\FlowErrorResult.cs" />
+    <Compile Include="DataModels\EtHefreshLineDM.cs" />
     <Compile Include="DataModels\Exceptions\BakashotException.cs" />
     <Compile Include="DataModels\Logs\BakashaLog.cs" />
     <Compile Include="DataModels\Mails\MailMessageWrapper.cs" />

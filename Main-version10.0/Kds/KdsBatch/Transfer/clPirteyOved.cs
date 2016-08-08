@@ -7,6 +7,9 @@ using KdsLibrary;
 using DalOraInfra.DAL;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Logs;
+using KDSCommon.DataModels;
+using KdsBatch.Transfer;
+
 namespace KdsBatch
 {
     public class PirteyOved
@@ -25,6 +28,7 @@ namespace KdsBatch
 
         public clEruaDataEt oDataEt { get; set; }
         public clEruaBakaraEt oBakaraEt { get; set; }
+        public clEruaHefreshEt oHefreshEt { get; set; }
         public clErua462 oErua462 { get; set; }
         public clErua589 oErua589 { get; set; }
         public clErua413 oErua413 { get; set; }
@@ -35,6 +39,7 @@ namespace KdsBatch
         public clErua419 oErua419 { get; set; }
         public clErua460 oErua460 { get; set; }
 
+       
         private DataRow _drPirteyOved;
         private int _iCntYamim;
         private DataTable _dtRechivim;
@@ -56,6 +61,8 @@ namespace KdsBatch
                 _drPirteyOved = drPirteyOved;
 
                 iBakashaIdRizatChishuv = lRequestNumToTransfer;
+
+             //   oErueyHefreshEt = new List<EtHefreshLineDM>();
             }
             catch (Exception ex)
             {
@@ -67,6 +74,7 @@ namespace KdsBatch
         public void InitializeErueyOved(DataSet dsTables)
         //public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem)
         {
+            DataRow[] drsHefreshimEt;
             _dtRechivim =dsTables.Tables[0];
             _dtRechiveyPrem = dsTables.Tables[2];
             try
@@ -78,6 +86,10 @@ namespace KdsBatch
                         oDataEt = new clEruaDataEt(iBakashaId, _drPirteyOved, dsTables);
 
                     oBakaraEt = new clEruaBakaraEt(iBakashaId, _drPirteyOved, dsTables, sChodeshIbud);
+                  /**0808  if (sChodeshIbud != DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy")) {
+                     //  drsHefreshimEt = GetHefreshimEt(int.Parse(_drPirteyOved["mispar_ishi"].ToString()), dsTables.Tables[3], DateTime.Parse(_drPirteyOved["taarich"].ToString()));
+                        oHefreshEt = new clEruaHefreshEt(iBakashaId, _drPirteyOved, dsTables);//, drsHefreshimEt);
+                    }**/
                 }
                 else
                 {
@@ -128,6 +140,23 @@ namespace KdsBatch
                 throw ex;
             }
         }
+
+        private DataRow[] GetHefreshimEt(int iMisparIshi, DataTable dtRechivimYomiim, DateTime dChodesh)
+        {
+            DataRow[] drs;
+
+            try
+            {
+                drs = dtRechivimYomiim.Select("mispar_ishi= " + iMisparIshi + " and chodesh=Convert('" + dChodesh.ToShortDateString() + "', 'System.DateTime') and chodesh<>chodesh_ibud");
+                return drs;
+            }
+            catch (Exception ex)
+            {
+                //   //clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
+                throw ex;
+            }
+        }
+
         private DataTable GetChishuvYomiToOved(int iMisparIshi, DataTable dtRechivimYomiim)
         {
             DataTable dt = new DataTable();

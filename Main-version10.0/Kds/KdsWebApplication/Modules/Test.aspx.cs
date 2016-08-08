@@ -33,7 +33,7 @@ using KDSCommon.Enums;
 using KDSCommon.Interfaces.Logs;
 using KDSCommon.DataModels.Exceptions;
 using System.Xml;
-
+using KdsBatch.Premia;
 
 public partial class Modules_Test :Page
 {
@@ -801,11 +801,69 @@ public partial class Modules_Test :Page
     }
     protected void Button4_Click(object sender, EventArgs e)
     {
-        
+        //DataTable dt = new DataTable();
         clTransferToHilan objTran = new clTransferToHilan();
+        EtHefreshLineDM item;
+          objTran.Transfer(0, 72206);
 
-        objTran.Transfer(0, 27591);
+        //List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
+        //for (int i = 0; i < 9; i++)
+        //{
+        //    item = new EtHefreshLineDM();
+        //    item.OvedName = "A" + i;
+        //    list.Add(item);
+        //};
+        //ExportToFile(list);
+
+
+    }
+
+
+    private void ExportToFile(List<EtHefreshLineDM> list)
+    {
+        string sPath = "C:\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
+        var exAdpt = new ExcelAdapter(sPath);
+        try
+        {
+           
+            exAdpt.OpenNewWorkBook();
+            AddTitles(exAdpt);
+            int i = 2;
+            string[] cols = GetExcelCols();
+            foreach (EtHefreshLineDM item in list)
+            {
+                exAdpt.AddRow(cols, i, item.GetExcelRowValues());
+                i++;
+            }
+            exAdpt.SaveNewWorkBook(DateTime.Now);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            exAdpt.Quit();
+            exAdpt.Dispose();
+            exAdpt = null;
+        }
+    }
+
+   
+    private string[] GetExcelCols()
+    {
+        return new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M" };
+    }
+
+    private string[] GetTitleValuesForExcel()
+    {
+        return new string[] { "מספר ארוע", " משרד/חבר", "זהוי עובד", "מ.נ.", "שם עובד", "סמל רכיב", "תוקף מ", "תוקף עד", "קוד עדכון", "סכום", "כמות", "אחוז", "תעריף" };
      }
+
+    private void AddTitles(ExcelAdapter exAdpt)
+    {
+        exAdpt.AddRow(GetExcelCols(), 1, GetTitleValuesForExcel());
+    }
 
 
 
@@ -1063,6 +1121,7 @@ public partial class Modules_Test :Page
         clUtils.RunCalculationPremyot();
     }
 
+    
 
     protected void btnShguimBatch_click(object sender, EventArgs e)
     {

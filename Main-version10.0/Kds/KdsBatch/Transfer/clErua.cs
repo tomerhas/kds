@@ -9,6 +9,7 @@ using KdsLibrary.BL;
 using System.Web;
 using Microsoft.Practices.ServiceLocation;
 using KDSCommon.Interfaces.Logs;
+using KDSCommon.DataModels;
 
 namespace KdsBatch
 {
@@ -33,6 +34,8 @@ namespace KdsBatch
         protected DataTable _dtNetuneyDorB;
         protected DataRow _drPirteyOved;
         private List<string> _sLine;
+        protected List<int> SmalimHefreshET;
+        public List<EtHefreshLineDM> oErueyHefreshEt { get; set; }
         public bool bKayamEfreshBErua=false;
         
         protected bool _sadeLeloErech;
@@ -59,7 +62,7 @@ namespace KdsBatch
                  _iGil = int.Parse(drPirteyOved["gil"].ToString());
              else _iGil = -1;
              _sLine = new List<string>();
-
+            SmalimHefreshET = new List<int> {100,1,20,4,63,78,79,7,8,48,125,85,77,84};
              dTakanonSoziali = GetTakanonSoziali();
              SetHeader();
              SetFooter();

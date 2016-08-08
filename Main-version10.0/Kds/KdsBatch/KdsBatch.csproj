@@ -189,6 +189,7 @@
     <Compile Include="TaskManager\Utils.cs" />
     <Compile Include="Transfer\clErua.cs" />
     <Compile Include="Transfer\clErua416.cs" />
+    <Compile Include="Transfer\clEruaHefreshEt.cs" />
     <Compile Include="Transfer\clPirteyOved.cs" />
     <Compile Include="Transfer\clTransferToHilan.cs" />
     <Compile Include="Transfer\clErua415.cs" />
