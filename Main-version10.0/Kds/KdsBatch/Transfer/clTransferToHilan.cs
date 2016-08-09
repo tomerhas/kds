@@ -71,7 +71,7 @@ namespace KdsBatch
            sFileNameETBTashlum = "QDIVmmyy.162";
            sFileNameETBakaraReg = "REGLmmyy.162";
            sFileNameETBakaraHef = "HEFR_Cmmyy.162";
-            sFileExlName = "hefreshim_input_mmyy.xlsx";
+            sFileExlName = "hefreshim_input_mmyyyy.xlsx";
 
            _lBakashaId = lBakashaId;
 
@@ -141,13 +141,13 @@ namespace KdsBatch
                        sFileStrEtBakaraReg = new StreamWriter(sPathFile + sFileNameETBakaraReg.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
                        sFileStrEtBakaraHef = new StreamWriter(sPathFile + sFileNameETBakaraHef.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
 
-                     /**0808  sPathExl = sPathFile + sFileExlName.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2));// "C:\\Temp\\test.xlsx";
-                        sPathExl = "C:\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
-                        OpenExcel(sPathExl);**/
+                     sPathExl =  ConfigurationSettings.AppSettings["PathFileExlTransfer"] + sFileExlName.Replace("mmyyyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(3, 4));// "C:\\Temp\\test.xlsx";
+                     //   sPathExl = "C:\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
+                        OpenExcel(sPathExl);
                     }
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer, before WriteEruimToFile");
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
-               //** 0808   SaveExcel();
+                   SaveExcel();
                   // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer, after WriteEruimToFile");
                    
@@ -325,8 +325,8 @@ namespace KdsBatch
                     WriteEruaToFile(sFileStrEtBakaraHef, oOved.oBakaraEt);
 
                WriteEruaToFile(sFileStrEt, oOved.oDataEt);
-              /**  if(oOved.oHefreshEt != null)
-                 WriteToExcelFile(oOved.oHefreshEt.oErueyHefreshEt);**/
+               if(oOved.oHefreshEt != null)
+                 WriteToExcelFile(oOved.oHefreshEt.oErueyHefreshEt);
            }
           else
            {
@@ -642,9 +642,15 @@ namespace KdsBatch
         /******************************************************/
         private void OpenExcel(string sPath)
         {
+            string[] cols = GetExcelCols();
+
+
             exAdpt = new ExcelAdapter(sPath);
             exAdpt.OpenNewWorkBook();
+           
             exAdpt.AddRow(GetExcelCols(), 1, GetTitleValuesForExcel());
+            Excel.Range rangeStyles = exAdpt.ws.Application.get_Range(cols[0] +"1", cols[cols.Length-1] + "1");
+            rangeStyles.Font.Bold = true;
         }
 
         private void WriteToExcelFile(List<EtHefreshLineDM> list)
@@ -654,9 +660,19 @@ namespace KdsBatch
             {
                
                 string[] cols = GetExcelCols();
+                string[] colsToChange = GetExcelColsToChange();
+                Excel.Range range;
                 foreach (EtHefreshLineDM item in list)
                 {
                     exAdpt.AddRow(cols, ixls, item.GetExcelRowValues());
+
+                    foreach (string col in colsToChange)
+                    {
+                       range = exAdpt.ws.Application.get_Range(col + ixls, col + ixls);
+                        if (range.Text == "0")
+                            range.Value = String.Empty;
+                    }
+                   
                     ixls++;
                 }
                
@@ -697,6 +713,10 @@ namespace KdsBatch
             return new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M" };
         }
 
+        private string[] GetExcelColsToChange()
+        {
+            return new string[] {"J", "K"};
+        }
         private string[] GetTitleValuesForExcel()
         {
             return new string[] { "מספר ארוע", " משרד/חבר", "זהוי עובד", "מ.נ.", "שם עובד", "סמל רכיב", "תוקף מ", "תוקף עד", "קוד עדכון", "סכום", "כמות", "אחוז", "תעריף" };

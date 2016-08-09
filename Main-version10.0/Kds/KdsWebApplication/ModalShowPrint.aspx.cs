@@ -68,11 +68,11 @@ public partial class ModalShowPrint : KdsPage
                 }
 
 
-                sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
+                sPathFile = ConfigurationManager.AppSettings["PathFileReportsSave"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
                 if (!Directory.Exists(sPathFile))
                     Directory.CreateDirectory(sPathFile);
                 fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);
-                idpath.Value = sPathFile + sFileName;
+                idpath.Value = ConfigurationManager.AppSettings["PathFileReportsOut"] + LoginUser.UserInfo.EmployeeNumber + @"\\" + sFileName;
                 fs.Write(s, 0, s.Length);
                 fs.Flush();
                 fs.Close();

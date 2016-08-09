@@ -22,8 +22,8 @@ namespace KDSCommon.DataModels
         public decimal Schum { get; set; }
         public decimal Kamut { get; set; }
 
-        public float Achuz { get; set; }
-        public decimal Taarif { get; set; }
+        public string Achuz { get; set; }
+        public string Taarif { get; set; }
 
         public object[] GetExcelRowValues()
         {

@@ -804,7 +804,7 @@ public partial class Modules_Test :Page
         //DataTable dt = new DataTable();
         clTransferToHilan objTran = new clTransferToHilan();
         EtHefreshLineDM item;
-          objTran.Transfer(0, 72206);
+            objTran.Transfer(0, 72206);
 
         //List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
         //for (int i = 0; i < 9; i++)
@@ -821,7 +821,8 @@ public partial class Modules_Test :Page
 
     private void ExportToFile(List<EtHefreshLineDM> list)
     {
-        string sPath = "C:\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
+        string sPath = "C:\\Temp\\hefreshim_input_0616.xlsx";
+        //string sPath = ConfigurationSettings.AppSettings["PathFileExlTransfer"] + "hefreshim_input_0616.xlsx";
         var exAdpt = new ExcelAdapter(sPath);
         try
         {
@@ -830,9 +831,18 @@ public partial class Modules_Test :Page
             AddTitles(exAdpt);
             int i = 2;
             string[] cols = GetExcelCols();
+            string[] colsToChange = GetExcelColsToChange();
+            Excel.Range range;
             foreach (EtHefreshLineDM item in list)
             {
                 exAdpt.AddRow(cols, i, item.GetExcelRowValues());
+                foreach (string col in colsToChange)
+                {
+                    range = exAdpt.ws.Application.get_Range(col + i, col + i);
+                    if (range.Text == "0")
+                        range.Value = String.Empty;
+                }
+                
                 i++;
             }
             exAdpt.SaveNewWorkBook(DateTime.Now);
@@ -854,6 +864,10 @@ public partial class Modules_Test :Page
     {
         return new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M" };
     }
+    private string[] GetExcelColsToChange()
+    {
+        return new string[] { "J", "K" };
+    }
 
     private string[] GetTitleValuesForExcel()
     {
@@ -863,8 +877,14 @@ public partial class Modules_Test :Page
     private void AddTitles(ExcelAdapter exAdpt)
     {
         exAdpt.AddRow(GetExcelCols(), 1, GetTitleValuesForExcel());
+        Excel.Range rangeStyles = exAdpt.ws.Application.get_Range("A1","M1");
+        rangeStyles.Font.Bold = true;
+      
+        // var range=exAdpt.ws.get_Range("A", "M");
+        //var range = exAdpt.ws.get_Range["A", "M"].Select();// ws.Range("A1").End(xlToLeft).Select
+        //range.Font.Bold = true;
+        // range.Font.Color = System.Drawing.Color.PeachPuff.ToArgb();
     }
-
 
 
     protected void rdoTst_CheckedChanged(object sender, EventArgs e)

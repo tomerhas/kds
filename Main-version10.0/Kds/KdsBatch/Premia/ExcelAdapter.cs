@@ -19,7 +19,7 @@ namespace KdsBatch.Premia
         Excel.Application _application;
         Excel.Workbook _workBook;
         Excel.Worksheet _excelSheet;
-        string _filename; 
+        string _filename;
         #endregion
 
         #region Constractor
@@ -27,10 +27,15 @@ namespace KdsBatch.Premia
         {
             _application = new Excel.Application();
             _filename = filename;
-        } 
+        }
         #endregion
 
         #region Methods
+
+        public Excel.Worksheet ws {
+            get { return _excelSheet; }
+            set { _excelSheet = value; }
+        }
         public void OpenNewWorkBook()
         {
            // clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In OpenNewWorkBook ");

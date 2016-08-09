@@ -86,10 +86,10 @@ namespace KdsBatch
                         oDataEt = new clEruaDataEt(iBakashaId, _drPirteyOved, dsTables);
 
                     oBakaraEt = new clEruaBakaraEt(iBakashaId, _drPirteyOved, dsTables, sChodeshIbud);
-                  /**0808  if (sChodeshIbud != DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy")) {
+                   if (sChodeshIbud != DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy")) {
                      //  drsHefreshimEt = GetHefreshimEt(int.Parse(_drPirteyOved["mispar_ishi"].ToString()), dsTables.Tables[3], DateTime.Parse(_drPirteyOved["taarich"].ToString()));
                         oHefreshEt = new clEruaHefreshEt(iBakashaId, _drPirteyOved, dsTables);//, drsHefreshimEt);
-                    }**/
+                    }
                 }
                 else
                 {
