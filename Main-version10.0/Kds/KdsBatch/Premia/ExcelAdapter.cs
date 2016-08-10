@@ -47,7 +47,7 @@ namespace KdsBatch.Premia
             //    false, Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
         }
 
-        public void SaveNewWorkBook(DateTime _periodDate)
+        public void SaveNewWorkBook(DateTime _periodDate,string esName)
         {
            // clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In SaveNewWorkBook with period" + _periodDate + ",_filename:" + _filename);
             object misValue = System.Reflection.Missing.Value;
@@ -55,7 +55,8 @@ namespace KdsBatch.Premia
            // _wsLocalProcesses.DeleteFile(_filename);
             if (System.IO.File.Exists(_filename))
                 System.IO.File.Delete(_filename);
-            _excelSheet.Name = "TCT_ATTEND2";// +_periodDate.ToString("MMyyyy");
+            if(esName !="")
+                _excelSheet.Name = esName;// "TCT_ATTEND2";// +_periodDate.ToString("MMyyyy");
             _excelSheet.SaveAs(_filename, misValue, misValue, misValue, misValue, misValue, misValue, misValue,
                 misValue, misValue);
         }

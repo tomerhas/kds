@@ -804,16 +804,16 @@ public partial class Modules_Test :Page
         //DataTable dt = new DataTable();
         clTransferToHilan objTran = new clTransferToHilan();
         EtHefreshLineDM item;
-            objTran.Transfer(0, 72206);
+        //    objTran.Transfer(0, int.Parse(txtId.Text));
 
-        //List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
-        //for (int i = 0; i < 9; i++)
-        //{
-        //    item = new EtHefreshLineDM();
-        //    item.OvedName = "A" + i;
-        //    list.Add(item);
-        //};
-        //ExportToFile(list);
+        List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
+        for (int i = 0; i < 9; i++)
+        {
+            item = new EtHefreshLineDM();
+            item.OvedName = "A" + i;
+            list.Add(item);
+        };
+        ExportToFile(list);
 
 
     }
@@ -821,7 +821,7 @@ public partial class Modules_Test :Page
 
     private void ExportToFile(List<EtHefreshLineDM> list)
     {
-        string sPath = "C:\\Temp\\hefreshim_input_0616.xlsx";
+        string sPath = "C:\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
         //string sPath = ConfigurationSettings.AppSettings["PathFileExlTransfer"] + "hefreshim_input_0616.xlsx";
         var exAdpt = new ExcelAdapter(sPath);
         try
@@ -829,23 +829,23 @@ public partial class Modules_Test :Page
            
             exAdpt.OpenNewWorkBook();
             AddTitles(exAdpt);
-            int i = 2;
-            string[] cols = GetExcelCols();
-            string[] colsToChange = GetExcelColsToChange();
-            Excel.Range range;
-            foreach (EtHefreshLineDM item in list)
-            {
-                exAdpt.AddRow(cols, i, item.GetExcelRowValues());
-                foreach (string col in colsToChange)
-                {
-                    range = exAdpt.ws.Application.get_Range(col + i, col + i);
-                    if (range.Text == "0")
-                        range.Value = String.Empty;
-                }
+            //int i = 2;
+            //string[] cols = GetExcelCols();
+            //string[] colsToChange = GetExcelColsToChange();
+            //Excel.Range range;
+            //foreach (EtHefreshLineDM item in list)
+            //{
+            //    exAdpt.AddRow(cols, i, item.GetExcelRowValues());
+            //    foreach (string col in colsToChange)
+            //    {
+            //        range = exAdpt.ws.Application.get_Range(col + i, col + i);
+            //        if (range.Text == "0")
+            //            range.Value = String.Empty;
+            //    }
                 
-                i++;
-            }
-            exAdpt.SaveNewWorkBook(DateTime.Now);
+            //    i++;
+            //}
+            exAdpt.SaveNewWorkBook(DateTime.Now,"");
         }
         catch (Exception ex)
         {
