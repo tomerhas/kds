@@ -1555,8 +1555,11 @@ namespace KdsBatch
 
                 //דקות לתוספת מיוחדת בנהגת  - תמריץ (רכיב 11) 
                 CalcRechiv11();
-         
-            }
+
+                //  תמריץ מכסת שעות הגה ( רכיב 305)
+                CalcRechiv305();
+
+        }
 
         private void CalcRechiv1()
         {
@@ -7032,6 +7035,39 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiv305()
+        {
+            float fErech;
+            bool flag = false;
+            try
+            {
+
+                fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode());
+                switch (objOved.Month.ToShortDateString())
+                {
+                    case "01/08/2016":
+                        if(fErech>=180)
+                            flag = true;
+                        break;
+                    case "01/09/2016":
+                        if (fErech >= 250)
+                            flag = true;
+                        break;
+                    case "01/10/2016":
+                        if (objOved.objPirteyOved.iEzor == clGeneral.enEzor.Yerushalim.GetHashCode() && fErech >= 205)
+                            flag = true;
+                        break;
+                }
+                if (flag)
+                    addRowToTable(clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode(), 1);
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode(), objOved.Taarich, "", ex);
+                throw (exec);
+            }
+        }
+        
         private void CalcRechiv931()
         {
             float fSumDakotRechiv;

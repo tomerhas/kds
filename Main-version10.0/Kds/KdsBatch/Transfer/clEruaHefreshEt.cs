@@ -56,7 +56,7 @@ namespace KdsBatch.Transfer
             { 
                 EtHefreshLineDM EtHefresh = new EtHefreshLineDM();
                 SetConstantValues(EtHefresh);
-                EtHefresh.Semel = 100;
+                EtHefresh.Semel = semel;
                 fErech = 0;
               
                 switch (semel)

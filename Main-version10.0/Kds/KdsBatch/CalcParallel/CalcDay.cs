@@ -653,13 +653,16 @@ namespace KdsBatch
 
                 //   דקות נהיגה השלמה ליום עבודה(רכיב 303) 
                 CalcRechiv303();
+
+                //  תמריץ מכסת שעות הגה ( רכיב 305)
+                CalcRechiv305();
             //}
             //catch (Exception ex)
             //{
             //    var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0,objOved.Taarich, "CalcRechivim: " + ex.StackTrace + "\n message: "+ ex.StackTrace + "\n message: "+ ex.Message);
             //    throw (exec);
             //}
-            }
+        }
 
         public void SetNullObjects()
         {
@@ -8352,6 +8355,24 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNehigaHashlamaLeyomAvoda.GetHashCode(), objOved.Taarich, "", ex);
+                throw (exec);
+            }
+        }
+
+
+        private void CalcRechiv305()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                oSidur.CalcRechiv305();
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode(), objOved.Taarich);
+                addRowToTable(clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode(), fSumDakotRechiv);
+
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode(), objOved.Taarich, "", ex);
                 throw (exec);
             }
         }

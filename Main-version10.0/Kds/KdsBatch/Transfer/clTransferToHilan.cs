@@ -712,7 +712,7 @@ namespace KdsBatch
         }
         private string[] GetExcelCols()
         {
-            return new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M" };
+            return new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K" };
         }
 
         private string[] GetExcelColsToChange()
@@ -721,7 +721,7 @@ namespace KdsBatch
         }
         private string[] GetTitleValuesForExcel()
         {
-            return new string[] { "מספר ארוע", " משרד/חבר", "זהוי עובד", "מ.נ.", "שם עובד", "סמל רכיב", "תוקף מ", "תוקף עד", "קוד עדכון", "סכום", "כמות", "אחוז", "תעריף" };
+            return new string[] { "מספר ארוע", " משרד/חבר", "זהוי עובד", "מ.נ.", "שם עובד", "סמל רכיב", "תוקף מ", "תוקף עד", "קוד עדכון", "סכום", "כמות" };
         }
 
 

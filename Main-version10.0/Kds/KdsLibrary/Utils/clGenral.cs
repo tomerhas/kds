@@ -874,6 +874,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             Shaot100Nahagut=302,
             DakotNehigaHashlamaLeyomAvoda=303,
             Shaot100LetashlumNahagut=304,
+            TamrizMichsatShaotHege=305,
             HalbashaTchilatYom=931,
             HalbashaSofYom=932,
             TosefetGririoTchilatSidur=1281,

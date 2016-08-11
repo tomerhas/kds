@@ -7736,6 +7736,47 @@ namespace KdsBatch
             }
         }
 
+        public void CalcRechiv305()
+        {
+            float fErech=0;
+            DataRow[] drSidurim;
+            bool bSidurNehiga;
+            int iMisparSidur = 0;
+            DateTime dShatHatchalaSidur,dShatGmarSidur,dShaa, shaa12;
+            dShatHatchalaSidur = DateTime.MinValue;
+            try
+            {
+                
+                if (objOved.Taarich >= DateTime.Parse("09/08/2016") && objOved.Taarich < DateTime.Parse("01/11/2016"))
+                {
+                    drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null");
+                    for (int i = 0; i < drSidurim.Length; i++)
+                    {
+                        bSidurNehiga = false;
+                        bSidurNehiga = isSidurNehiga(ref drSidurim[i]);
+                        if (bSidurNehiga)
+                        {
+                            shaa12 = DateHelper.GetDateTimeFromStringHour("12:00", objOved.Taarich.Date);
+                            dShatHatchalaSidur = DateTime.Parse(drSidurim[i]["shat_hatchala_sidur"].ToString());
+                            dShatGmarSidur = DateTime.Parse(drSidurim[i]["shat_gmar_sidur"].ToString());
+                            iMisparSidur = int.Parse(drSidurim[i]["mispar_sidur"].ToString());
+                            if (objOved.SugYom == enSugYom.Chol.GetHashCode() || (objOved.SugYom == enSugYom.Shishi.GetHashCode() && (dShatHatchalaSidur >= shaa12 || (dShatHatchalaSidur <= shaa12 && dShatGmarSidur >= shaa12))))
+                            {
+                                dShaa = DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) < shaa12 ? DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) : shaa12;
+                                fErech = float.Parse((DateTime.Parse(drSidurim[i]["shat_gmar_letashlum"].ToString()) - dShaa).TotalMinutes.ToString());
+                            }
+                            addRowToTable(clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode(), dShatHatchalaSidur, int.Parse(drSidurim[i]["mispar_sidur"].ToString()), fErech);
+                        }
+                    }
+                 
+                }
+            }
+            catch (Exception ex)
+            {
+                var excep = SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "", null, ex);
+                throw (excep);
+            }
+        }
         private void HachsaratPeilut790SidureyBoker(int iMisparSidur, DateTime dShatHatchalaSidur, ref float fErechRechiv)
         {
             DataRow[] dr790;
