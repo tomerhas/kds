@@ -36,7 +36,7 @@ namespace KdsBatch.Transfer
             EtHefresh.MisparErua = 90226;
             EtHefresh.MisparHevra = 1705;
             EtHefresh.Mn = 0;
-            EtHefresh.OvedName = _drPirteyOved["shem_mish"].ToString() +" "+ _drPirteyOved["shem_prat"].ToString();
+            //EtHefresh.OvedName = ""; _drPirteyOved["shem_mish"].ToString() +" "+ _drPirteyOved["shem_prat"].ToString();
             EtHefresh.KodIdkun = 1;
             EtHefresh.Tz = int.Parse(_drPirteyOved["TEUDAT_ZEHUT"].ToString());
             EtHefresh.TokefMe = _dMonth;
@@ -121,23 +121,23 @@ namespace KdsBatch.Transfer
                         EtHefresh.Kamut = fErech;
                         break;
                     case 7:
-                        fErech = decimal.Round((decimal)GetErechRechiv(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode()/60, "erech_rechiv"), 2);
+                        fErech = decimal.Round((decimal)GetErechRechiv(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode(), "erech_rechiv")/60, 2);
                         EtHefresh.Kamut = fErech;
                         break;
                     case 8:
-                        fErech = decimal.Round((decimal)GetErechRechiv(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode()/60, "erech_rechiv"), 2);
+                        fErech = decimal.Round((decimal)GetErechRechiv(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode(), "erech_rechiv")/60, 2);
                         EtHefresh.Kamut = fErech;
                         break;
                     case 48:
-                        fErech = decimal.Round((decimal)GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode()/60, "erech_rechiv"), 2);
+                        fErech = decimal.Round((decimal)GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode(), "erech_rechiv")/60, 2);
                         EtHefresh.Kamut = fErech;
                         break;
                     case 125:
-                        fErech = decimal.Round((decimal)GetErechRechiv(clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode()/60, "erech_rechiv"), 2);
+                        fErech = decimal.Round((decimal)GetErechRechiv(clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode(), "erech_rechiv")/60, 2);
                         EtHefresh.Kamut = fErech;
                         break;
                     case 85:
-                        fErech = decimal.Round((decimal)GetErechRechiv(clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode()/60, "erech_rechiv"), 2);
+                        fErech = decimal.Round((decimal)GetErechRechiv(clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), "erech_rechiv")/60, 2);
                         EtHefresh.Kamut = fErech;
                         break;
                     case 77:

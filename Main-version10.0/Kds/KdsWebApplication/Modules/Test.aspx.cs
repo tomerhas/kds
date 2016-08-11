@@ -804,16 +804,16 @@ public partial class Modules_Test :Page
         //DataTable dt = new DataTable();
         clTransferToHilan objTran = new clTransferToHilan();
         EtHefreshLineDM item;
-        //    objTran.Transfer(0, int.Parse(txtId.Text));
+            objTran.Transfer(0, int.Parse(txtId.Text));
 
-        List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
-        for (int i = 0; i < 9; i++)
-        {
-            item = new EtHefreshLineDM();
-            item.OvedName = "A" + i;
-            list.Add(item);
-        };
-        ExportToFile(list);
+        //List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
+        //for (int i = 0; i < 9; i++)
+        //{
+        //    item = new EtHefreshLineDM();
+        //    item.OvedName = "A" + i;
+        //    list.Add(item);
+        //};
+        //ExportToFile(list);
 
 
     }

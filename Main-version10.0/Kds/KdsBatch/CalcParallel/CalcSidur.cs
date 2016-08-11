@@ -7760,7 +7760,9 @@ namespace KdsBatch
                             dShatHatchalaSidur = DateTime.Parse(drSidurim[i]["shat_hatchala_sidur"].ToString());
                             dShatGmarSidur = DateTime.Parse(drSidurim[i]["shat_gmar_sidur"].ToString());
                             iMisparSidur = int.Parse(drSidurim[i]["mispar_sidur"].ToString());
-                            if (objOved.SugYom == enSugYom.Chol.GetHashCode() || (objOved.SugYom == enSugYom.Shishi.GetHashCode() && (dShatHatchalaSidur >= shaa12 || (dShatHatchalaSidur <= shaa12 && dShatGmarSidur >= shaa12))))
+                            if (objOved.Taarich.Day >=1 && objOved.Taarich.Day >= 5)
+                                fErech = float.Parse((DateTime.Parse(drSidurim[i]["shat_gmar_letashlum"].ToString()) - DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
+                            else if(objOved.Taarich.Day == 6 && (dShatHatchalaSidur >= shaa12 || (dShatHatchalaSidur <= shaa12 && dShatGmarSidur >= shaa12)))
                             {
                                 dShaa = DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) < shaa12 ? DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) : shaa12;
                                 fErech = float.Parse((DateTime.Parse(drSidurim[i]["shat_gmar_letashlum"].ToString()) - dShaa).TotalMinutes.ToString());

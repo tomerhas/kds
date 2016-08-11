@@ -27,7 +27,7 @@ namespace KDSCommon.DataModels
 
         public object[] GetExcelRowValues()
         {
-            return new object[]{ MisparErua, MisparHevra, Tz,Mn,OvedName, Semel, TokefMe, TokefAd, KodIdkun, Schum, Kamut , Achuz , Taarif };
+            return new object[]{ MisparErua, MisparHevra, Tz,Mn,OvedName, Semel, TokefMe, TokefAd, KodIdkun, Schum, Kamut };
         }
     }
 }
