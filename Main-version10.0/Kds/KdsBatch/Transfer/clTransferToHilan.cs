@@ -51,6 +51,7 @@ namespace KdsBatch
        {
 
            int i;//iMisparIshi, i, iMaamad, iMaamadRashi;
+            bool flagOpenExl = false;
             DataTable dtOvdim, dtRechivim, dtPrem, dtRechivimYomi,dtChufshaRezufa,dtOvdimDorB,dtRechiveyDorB;
            DataSet dsNetunim, dsTables;
            int iStatus = 0;
@@ -144,10 +145,12 @@ namespace KdsBatch
                      sPathExl =  ConfigurationSettings.AppSettings["PathFileExlTransfer"] + sFileExlName.Replace("mmyyyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(3, 4));// "C:\\Temp\\test.xlsx";
                      //   sPathExl = "C:\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
                         OpenExcel(sPathExl);
+                        flagOpenExl = true;
                     }
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer, before WriteEruimToFile");
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
-                   SaveExcel();
+                    if(flagOpenExl)
+                        SaveExcel();
                   // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer, after WriteEruimToFile");
                    

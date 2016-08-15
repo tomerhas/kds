@@ -21,7 +21,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
         }
         public override bool InternalIsCorrect(ErrorInputData input)
         {
-            int kod=0;
+            int kod=0,type=0;
             long rechev = 0;
             enMakatType oMakatType = (enMakatType)input.curPeilut.iMakatType;
             if (((oMakatType == enMakatType.mKavShirut) || (oMakatType == enMakatType.mEmpty) || (oMakatType == enMakatType.mNamak) || (oMakatType == enMakatType.mVisa)
@@ -34,11 +34,17 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
                 {
 
                     if (input.CardDate < input.oParameters.dParam319)
+                    { 
                         rechev = input.curPeilut.lOtoNo;
+                        type = 1;
+                    }
                     if (input.CardDate >= input.oParameters.dParam319)
+                    {
                         rechev = input.curPeilut.lLicenseNumber;
+                        type = 2;
+                    }
 
-                    kod = IsRechevValid(rechev, input.CardDate);
+                    kod = IsRechevValid(rechev, input.CardDate,type);
 
 
                     if (kod==1)

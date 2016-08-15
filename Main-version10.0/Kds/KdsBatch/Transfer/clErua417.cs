@@ -46,10 +46,8 @@ namespace KdsBatch
                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzulKaful.GetHashCode()),4,0));
                sErua417.Append(GetBlank(4));          //sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelBoker.GetHashCode()),4,0));
                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode()), 4, 0));
-                if (_iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
-                    sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode()),4,2));
-               else sErua417.Append(GetBlank(4));
-                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode()),4,0));
+               sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode()),4,2));
+               sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode()),4,0));
 
 
               if (MaamadDorB())

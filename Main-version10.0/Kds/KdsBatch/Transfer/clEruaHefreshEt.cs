@@ -90,8 +90,11 @@ namespace KdsBatch.Transfer
                             {
                                 fSumA = (decimal)GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode(), "erech_rechiv_a")* (decimal)GetErechRechiv(clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode(), "erech_rechiv_a");
                                 fSumB = (decimal)GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode(), "erech_rechiv_b") * (decimal)GetErechRechiv(clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode(), "erech_rechiv_b");
-                                if (fSumA != fSumB) 
-                                    EtHefresh.Schum = fSumA- fSumB;
+                                if (fSumA != fSumB)
+                                {
+                                    fErech = fSumA - fSumB;
+                                    EtHefresh.Schum = fErech;
+                                }
                             
                              }
                             else if (sMeafyen53.Substring(0, 1) == "2")
@@ -102,8 +105,7 @@ namespace KdsBatch.Transfer
                             }
                         }
 
-                        EtHefresh.Kamut = decimal.Round((decimal)GetErechRechiv(clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode(), "erech_rechiv"), 2);
-                        break;
+                       break;
                     case 63:
                         if (isuk >= 500 && isuk < 600)
                         {
