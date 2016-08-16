@@ -7767,7 +7767,7 @@ namespace KdsBatch
                                     fErech = float.Parse((DateTime.Parse(drSidurim[i]["shat_gmar_letashlum"].ToString()) - DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
                                 else if ((dShatHatchalaSidur >= shaa12 || (dShatHatchalaSidur <= shaa12 && dShatGmarSidur >= shaa12)))
                                 {
-                                    dShaa = DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) < shaa12 ? DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) : shaa12;
+                                    dShaa = DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) < shaa12 ? shaa12:DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) ;
                                     fErech = float.Parse((DateTime.Parse(drSidurim[i]["shat_gmar_letashlum"].ToString()) - dShaa).TotalMinutes.ToString());
                                 }
                                 addRowToTable(clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode(), dShatHatchalaSidur, int.Parse(drSidurim[i]["mispar_sidur"].ToString()), fErech);

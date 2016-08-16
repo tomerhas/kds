@@ -7042,7 +7042,7 @@ namespace KdsBatch
             try
             {
 
-                fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode());
+                fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode())/60;
                 switch (objOved.Month.ToShortDateString())
                 {
                     case "01/08/2016":
