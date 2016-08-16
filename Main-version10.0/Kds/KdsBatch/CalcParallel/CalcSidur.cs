@@ -7760,14 +7760,18 @@ namespace KdsBatch
                             dShatHatchalaSidur = DateTime.Parse(drSidurim[i]["shat_hatchala_sidur"].ToString());
                             dShatGmarSidur = DateTime.Parse(drSidurim[i]["shat_gmar_sidur"].ToString());
                             iMisparSidur = int.Parse(drSidurim[i]["mispar_sidur"].ToString());
-                            if (objOved.Taarich.Day >=1 && objOved.Taarich.Day >= 5)
-                                fErech = float.Parse((DateTime.Parse(drSidurim[i]["shat_gmar_letashlum"].ToString()) - DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
-                            else if(objOved.Taarich.Day == 6 && (dShatHatchalaSidur >= shaa12 || (dShatHatchalaSidur <= shaa12 && dShatGmarSidur >= shaa12)))
+
+                            if ((objOved.Taarich.DayOfWeek.GetHashCode() + 1) != enDay.Shabat.GetHashCode())
                             {
-                                dShaa = DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) < shaa12 ? DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) : shaa12;
-                                fErech = float.Parse((DateTime.Parse(drSidurim[i]["shat_gmar_letashlum"].ToString()) - dShaa).TotalMinutes.ToString());
+                                if ((objOved.Taarich.DayOfWeek.GetHashCode() + 1) != enDay.Shishi.GetHashCode())
+                                    fErech = float.Parse((DateTime.Parse(drSidurim[i]["shat_gmar_letashlum"].ToString()) - DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
+                                else if ((dShatHatchalaSidur >= shaa12 || (dShatHatchalaSidur <= shaa12 && dShatGmarSidur >= shaa12)))
+                                {
+                                    dShaa = DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) < shaa12 ? DateTime.Parse(drSidurim[i]["shat_hatchala_letashlum"].ToString()) : shaa12;
+                                    fErech = float.Parse((DateTime.Parse(drSidurim[i]["shat_gmar_letashlum"].ToString()) - dShaa).TotalMinutes.ToString());
+                                }
+                                addRowToTable(clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode(), dShatHatchalaSidur, int.Parse(drSidurim[i]["mispar_sidur"].ToString()), fErech);
                             }
-                            addRowToTable(clGeneral.enRechivim.TamrizMichsatShaotHege.GetHashCode(), dShatHatchalaSidur, int.Parse(drSidurim[i]["mispar_sidur"].ToString()), fErech);
                         }
                     }
                  

@@ -58,7 +58,7 @@ namespace KdsBatch
            string bDelete = ConfigurationSettings.AppSettings["DeleteTablesAfterTransfer"];
            string sPathFile = ConfigurationSettings.AppSettings["PathFileTransfer"];
             string sPathExl;
-            string sChodeshIbud, sFileNameSchirim, sFileNameChaverim, sFileNameChozim, sFileNameETBTashlum, sFileExlName,sFileNameETBakaraReg, sFileNameETBakaraHef, ;
+            string sChodeshIbud, sFileNameSchirim, sFileNameChaverim, sFileNameChozim, sFileNameETBTashlum, sFileExlName,sFileNameETBakaraReg, sFileNameETBakaraHef;
            var logger = ServiceLocator.Current.GetInstance<ILogBakashot>();
            //PirteyOved oPirteyOved;
           // DateTime dChodesh;

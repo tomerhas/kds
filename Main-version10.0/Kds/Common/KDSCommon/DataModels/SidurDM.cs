@@ -80,6 +80,8 @@ namespace KDSCommon.DataModels
         public bool bSidurInSummerExists;
         public string sNoOtoNo;
         public bool bNoOtoNoExists;
+        public string sLicenseNo;
+        public bool bLicenseNoExists;
         public string sHeadrutTypeKod; //מאפיין 53
         public bool bHeadrutTypeKodExists; //מאפיין 53
         public string sNitanLedaveachAdTaarich; //מאפיין 27
