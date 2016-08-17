@@ -2022,6 +2022,26 @@ namespace KdsLibrary.BL
                throw ex;
            }
        }
+  
+        public DataTable GetOvedHityazvuyot(int iMisparIshi, DateTime taarich)
+        {
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+            try
+            {
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput, 100);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+
+                oDal.ExecuteSP(clGeneral.cProGetHityazvutLeoved, ref dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 

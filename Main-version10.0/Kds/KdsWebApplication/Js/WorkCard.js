@@ -670,6 +670,26 @@ open ModalDialog.  Complexity - Low
         return true;
         }
    }
+   function ShowDrvHityazvut() {
+       var iLaoved;
+       if ($get("hidRashemet").value == "1" || $get("hidMenahelBank").value == "1")
+           iLaoved = "0";
+       else
+           iLaoved = "1";
+
+       var sQueryString;
+       sQueryString = "?dt=" + Date();
+       sQueryString = sQueryString + "&EmpID=" + $get("txtId").value;
+       sQueryString = sQueryString + "&CardDate=" + $get("clnDate").value;
+       res = window.showModalDialog('HachtamotHityzvut.aspx' + sQueryString, '', 'dialogwidth:1000px;dialogheight:600px;dialogtop:280px;dialogleft:180px;status:no;resizable:no;');
+       if (res == undefined) {
+           return false;
+       }
+       else {
+           return true;
+       }
+   }
+   
 /**
 recieves params.open ModalDialog.  Complexity - Low
 @method ShowDrvErr

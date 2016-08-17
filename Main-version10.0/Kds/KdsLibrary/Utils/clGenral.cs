@@ -200,6 +200,7 @@ namespace KdsLibrary
         public const string cFunGetMeafyenLeOved = "pkg_ovdim.fun_get_meafyen_oved";
         public const string cProGetOvedSnifUnit = "pkg_ovdim.pro_get_oved_snif_unit";
         public const string cProGetOvedCards = "pkg_ovdim.pro_get_oved_cards";
+        public const string cProGetHityazvutLeoved = "pkg_ovdim.pro_get_hityazvut_leoved";
         public const string cProGetOvedCardsTipul = "pkg_ovdim.pro_get_oved_cards_in_tipul";
         public const string cProGetSharedAndMonthlyQuota = "pkg_ovdim.pro_get_SharedMonthly_Quota";
         public const string cProGetHourApproval = "pkg_ovdim.pro_get_Hour_Approval";

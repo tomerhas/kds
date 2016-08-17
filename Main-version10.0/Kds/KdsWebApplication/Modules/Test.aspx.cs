@@ -804,16 +804,16 @@ public partial class Modules_Test :Page
         //DataTable dt = new DataTable();
         clTransferToHilan objTran = new clTransferToHilan();
         EtHefreshLineDM item;
-            objTran.Transfer(0, int.Parse(txtId.Text));
+        //    objTran.Transfer(0, int.Parse(txtId.Text));
 
-        //List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
-        //for (int i = 0; i < 9; i++)
-        //{
-        //    item = new EtHefreshLineDM();
-        //    item.OvedName = "A" + i;
-        //    list.Add(item);
-        //};
-        //ExportToFile(list);
+        List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
+        for (int i = 0; i < 9; i++)
+        {
+            item = new EtHefreshLineDM();
+            item.OvedName = "A" + i;
+            list.Add(item);
+        };
+        ExportToFile(list);
 
 
     }
@@ -821,7 +821,7 @@ public partial class Modules_Test :Page
 
     private void ExportToFile(List<EtHefreshLineDM> list)
     {
-        string sPath = "C:\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
+        string sPath = "\\kdstst02\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
         //string sPath = ConfigurationSettings.AppSettings["PathFileExlTransfer"] + "hefreshim_input_0616.xlsx";
         var exAdpt = new ExcelAdapter(sPath);
         try
@@ -842,9 +842,10 @@ public partial class Modules_Test :Page
             //        if (range.Text == "0")
             //            range.Value = String.Empty;
             //    }
-                
+
             //    i++;
             //}
+            //exAdpt.SaveExistingWorkBook();
             exAdpt.SaveNewWorkBook(DateTime.Now,"");
         }
         catch (Exception ex)
