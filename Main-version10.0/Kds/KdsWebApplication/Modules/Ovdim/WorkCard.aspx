@@ -426,7 +426,7 @@
                             <td  style="width: 90px">
                                 <input type="hidden" runat="server" id="hidChanges" />
                                 <input type="hidden" value="" id="btnHidClose" runat="server" causesvalidation="false" />                                         
-                                <asp:Button Text="שגיאות לעובד" ID="btnDrvErrors" runat="server" CssClass="btnWorkCardAddMap" Style="width: 102px; " OnClientClick="return ShowDrvErr();"  CausesValidation="false" />                                                                           
+                                <asp:Button Text="שגיאות לעובד" ID="btnDrvErrors" runat="server" CssClass="btnWorkCardAddMap" Style="width: 102px; " OnClientClick="return ShowDrvErr();"  CausesValidation="false" />  
                                 <asp:Button ID="btnShowMessage" runat="server" OnClick="btnShowMessage_Click" Style="display: none;" />
                                 <cc1:ModalPopupExtender ID="ModalPopupEx" DropShadow="false" X="300" Y="200" PopupControlID="paCloseMsg"
                                     TargetControlID="btnHidClose" CancelControlID="btnCancel"  OnCancelScript="CloseWindow();" runat="server" BehaviorID="MPClose" backgroundcssclass="modalBackground">
@@ -496,7 +496,10 @@
                                         </tr>
                                     </table>                                            
                                 </asp:Panel>
-                            </td>      
+                            </td>  
+                            <td style="width: 90px">
+                                <asp:Button Text="התייצבות לעובד" ID="Button1" runat="server" CssClass="btnWorkCardAddMap" Style="width: 115px; " OnClientClick="return ShowDrvHityazvut();"  CausesValidation="false" />                                                                                                                                                        
+                             </td>
                             <td style="width: 90px">
                                 <asp:Button Text="שעונים" ID="btnClock" runat="server" CssClass="btnWorkCardClocks" Style="width: 88px;" OnClick="btnClock_click" CausesValidation="false" />                                           
                             </td>
