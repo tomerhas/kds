@@ -708,7 +708,39 @@ namespace KdsBatch.TaskManager
 
          }
 
-         public void KlitatTnuotAgtan()
+        public void ChishuvBankShaotMeshekByParams(int mitkan,DateTime chodesh)
+        {
+      
+            long lRequestNum = 0;
+            clBatch objBatch = new clBatch();
+            try
+            {
+
+                IBankShaotManager BankManager = ServiceLocator.Current.GetInstance<IBankShaotManager>();
+                //   lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.ChishuvBankShaotMeshek, "ChishuvBankShaotMeshek", -12);
+                
+                lRequestNum = objBatch.InsBakashaChishuvBankShaot(clGeneral.enGeneralBatchType.ChishuvBankShaotMeshek, "ChishuvBankShaotMeshek", clGeneral.enStatusRequest.InProcess, -12, chodesh.ToShortDateString());
+                // ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "before BankManager.ExecBankShaot");
+                //  ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "BankManager obj=" + BankManager);
+                BankManager.ExecBankShaotLefiParametrim(lRequestNum, mitkan, chodesh);
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "after BankManager.ExecBankShaot");
+                clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
+            }
+            catch (Exception ex)
+            {
+                if (lRequestNum > 0)
+                {
+                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, ex.Message);
+                    clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
+                }
+                else clGeneral.LogError(ex);
+
+                throw (ex);
+            }
+
+        }
+
+        public void KlitatTnuotAgtan()
          {
              string FileName,InPath,SubFolder,FileNameOld;
              string[] _files,splitName;

@@ -498,7 +498,7 @@
                                 </asp:Panel>
                             </td>  
                             <td style="width: 90px">
-                                <asp:Button Text="התייצבות לעובד" ID="Button1" runat="server" CssClass="btnWorkCardAddMap" Style="width: 115px; " OnClientClick="return ShowDrvHityazvut();"  CausesValidation="false" />                                                                                                                                                        
+                                <asp:Button Text="התייצבות נהג" ID="Button1" runat="server" CssClass="btnWorkCardAddMap" Style="width: 115px; " OnClientClick="return ShowDrvHityazvut();"  CausesValidation="false" />                                                                                                                                                        
                              </td>
                             <td style="width: 90px">
                                 <asp:Button Text="שעונים" ID="btnClock" runat="server" CssClass="btnWorkCardClocks" Style="width: 88px;" OnClick="btnClock_click" CausesValidation="false" />                                           

@@ -61,11 +61,13 @@ namespace KdsWebApplication.Modules.Ovdim
         {
             DataView dv;
             DateTime taarich;
+            int MisaprIshi;
             if (!IsPostBack)
             {
                 taarich = DateTime.Parse(Request.QueryString["CardDate"]);
-                LabelHeader.Text = " החתמות התייצבות למספר אישי " + LoginUser.UserInfo.EmployeeNumber + " לתאריך " + taarich.ToShortDateString();                //DataTable dtAllErrors = Session["Errors"] as DataTable;
-                dv = GetHityazvuyot(int.Parse(Request.QueryString["EmpID"]), DateTime.Parse(Request.QueryString["CardDate"]));
+                MisaprIshi = int.Parse(Request.QueryString["EmpID"]);
+                LabelHeader.Text = " החתמות התייצבות למספר אישי " + MisaprIshi + " לתאריך " + taarich.ToShortDateString();                //DataTable dtAllErrors = Session["Errors"] as DataTable;
+                dv = GetHityazvuyot(MisaprIshi, DateTime.Parse(Request.QueryString["CardDate"]));
                 grdHityazvut.DataSource = dv;
                 grdHityazvut.DataBind();
 

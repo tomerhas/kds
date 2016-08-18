@@ -12,6 +12,9 @@ using KdsLibrary.BL;
 using KdsLibrary.UI;
 using KdsLibrary;
 using KdsBatch;
+using KdsBatch.TaskManager;
+using KDSCommon.Interfaces.Managers.BankShaot;
+using Microsoft.Practices.ServiceLocation;
 
 public partial class Modules_Batches_RunCalcBatch : KdsPage
 {
@@ -28,6 +31,7 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
                 divRizaGorefet.Style.Add("display", "none");
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
                 clGeneral.LoadDateCombo(ddlToMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
+                clGeneral.LoadDateCombo(ddlBank, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));  
            //  clGeneral.LoadDateCombo(ddlToMonth,11);
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
                 
@@ -238,8 +242,25 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
         }
         
     }
+    protected void btnRunBank_Click(object sender, EventArgs e)
+    {
+        DateTime month;
+        int Mitkan;
+        Utils clUtils = new Utils();
+        try
+        {
 
-    protected void btnConfirm_Click(object sender, EventArgs e)
+            Mitkan = int.Parse(txtMitkan.Text);
+            month = DateTime.Parse("01/"+ ddlBank.SelectedValue);
+
+            clUtils.ChishuvBankShaotMeshekByParams(Mitkan,month);
+        }
+        catch (Exception ex)
+        {
+            clGeneral.BuildError(Page, ex.Message);
+        }
+    }
+protected void btnConfirm_Click(object sender, EventArgs e)
     {
         ModalPopupEx.Hide();
         Page.Response.Redirect("~/Modules/Requests/MaakavBakashot.aspx?RequestId=" + ViewState["iRequestId"], false);
