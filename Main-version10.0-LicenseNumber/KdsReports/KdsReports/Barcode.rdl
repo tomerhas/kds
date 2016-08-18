@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Tablix Name="Tablix1">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>6.76346cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>6.89575cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>6.31366cm</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>2.05052cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Image Name="image2">
+                      <Source>Database</Source>
+                      <Value>=code.barcode(Fields!NUM.Value)</Value>
+                      <MIMEType>image/bmp</MIMEType>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                          <Width>4pt</Width>
+                        </Border>
+                        <PaddingLeft>60pt</PaddingLeft>
+                        <PaddingTop>10pt</PaddingTop>
+                        <PaddingBottom>20pt</PaddingBottom>
+                      </Style>
+                    </Image>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Image Name="image3">
+                      <Source>Database</Source>
+                      <Value>=code.barcode(Fields!NUM.Value)</Value>
+                      <MIMEType>image/bmp</MIMEType>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                          <Width>4pt</Width>
+                        </Border>
+                        <PaddingLeft>50pt</PaddingLeft>
+                        <PaddingTop>10pt</PaddingTop>
+                        <PaddingBottom>20pt</PaddingBottom>
+                      </Style>
+                    </Image>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Image Name="image4">
+                      <Source>Database</Source>
+                      <Value>=code.barcode(Fields!NUM.Value)</Value>
+                      <MIMEType>image/bmp</MIMEType>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                          <Width>4pt</Width>
+                        </Border>
+                        <PaddingLeft>30pt</PaddingLeft>
+                        <PaddingTop>10pt</PaddingTop>
+                        <PaddingBottom>20pt</PaddingBottom>
+                      </Style>
+                    </Image>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="Details" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>DataSet1</DataSetName>
+        <Left>0.50271cm</Left>
+        <Height>2.05052cm</Height>
+        <Width>19.97287cm</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+            <Width>4pt</Width>
+          </Border>
+        </Style>
+      </Tablix>
+    </ReportItems>
+    <Height>0.80729in</Height>
+    <Style />
+  </Body>
+  <Width>8.06125in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0.5cm</TopMargin>
+    <BottomMargin>0.5cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource1">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>a3231361-a0a6-45fe-9499-b56374f6491c</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>select (12345+kod_rechiv) num
+from
+(select * from ctb_rechivim
+order by kod_rechiv)
+where rownum&lt;=100</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="NUM">
+          <DataField>NUM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <Code>public function Barcode(byval Input As String) as byte()
+
+        Dim ValidInput As String = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%*"
+        Dim ValidCodes As String = "4191459566472786097041902596264733841710595784729059950476626106644590602984801043246599624767444602600464775861090446866032248034439186013047842447705803036526582823575858090365863556658042365383495434978353624150635770"
+        Dim i As Integer
+   
+        Input = UCase(IIf(Left(Input, 1) = "*", "", "*") &amp; Input &amp; IIf(Right(Input, 1) = "*", "", "*"))
+        Dim bmp As System.Drawing.Bitmap = New System.Drawing.Bitmap(Input.Length * 16, 50)
+        Dim g As System.Drawing.Graphics =System.Drawing. Graphics.FromImage(bmp)
+
+        g.FillRectangle(New System.Drawing.SolidBrush(System.Drawing.Color.White), 0, 0, Input.Length * 16, 50)
+        Dim p As New System.Drawing.Pen(System.Drawing.Color.Black, 0.5)
+        Dim BarValue, BarX As Integer
+        Dim BarSlice As Short
+
+        For i = 1 To Input.Length
+            Try
+                BarValue = Val(Mid(ValidCodes, ((InStr(1, ValidInput, Mid(Input, i, 1)) - 1) * 5) + 1, 5))
+                BarValue = IIf(BarValue = 0, 36538, BarValue)
+                For BarSlice = 15 To 0 Step -1
+                    If BarValue &gt;= 2 ^ BarSlice Then
+                        g.DrawLine(p, BarX, 0, BarX, 50)
+                        BarValue = BarValue - (2 ^ BarSlice)
+                    End If
+                    BarX += 1
+                Next
+            Catch
+            End Try
+        Next
+
+	Dim  ms As System.IO.MemoryStream = New System.IO.MemoryStream
+	Dim ret As byte()
+
+	bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp)
+	ms.Position = 0
+	Ret = ms.ToArray()
+
+        	g.Dispose()
+        	bmp.Dispose()
+	return ret
+
+    End function
+</Code>
+  <CodeModules>
+    <CodeModule>System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</CodeModule>
+  </CodeModules>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>6c4901e7-a385-4099-be87-d31ebcb43062</rd:ReportID>
+</Report>
