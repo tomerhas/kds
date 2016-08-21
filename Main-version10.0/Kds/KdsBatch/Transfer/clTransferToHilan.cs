@@ -256,18 +256,17 @@ namespace KdsBatch
                objMisparIshiSugChishuv.TAARICH = dTaarich;
                objMisparIshiSugChishuv.BAKASHA_ID = oPirteyOved.iBakashaIdRizatChishuv;
                objMisparIshiSugChishuv.SUG_CHISHUV = 0;
-
-               if (oPirteyOved.iDirug != 85 && oPirteyOved.iDarga != 30)
-               {
-                   if ((oPirteyOved.oErua413 != null && oPirteyOved.oErua413.bKayamEfreshBErua) ||
-                       (oPirteyOved.oErua415 != null && oPirteyOved.oErua415.bKayamEfreshBErua) ||
-                       (oPirteyOved.oErua416 != null && oPirteyOved.oErua416.bKayamEfreshBErua) || 
-                       (oPirteyOved.oErua417 != null && oPirteyOved.oErua417.bKayamEfreshBErua) ||
-                       (oPirteyOved.oErua418 != null && oPirteyOved.oErua418.bKayamEfreshBErua) || 
-                       (oPirteyOved.oErua419 != null && oPirteyOved.oErua419.bKayamEfreshBErua) ||
-                       (oPirteyOved.oErua589 != null && oPirteyOved.oErua589.bKayamEfreshBErua) )
-                        objMisparIshiSugChishuv.SUG_CHISHUV = 1;
-               }
+ 
+            if ((oPirteyOved.oErua413 != null && oPirteyOved.oErua413.bKayamEfreshBErua) ||
+                (oPirteyOved.oErua415 != null && oPirteyOved.oErua415.bKayamEfreshBErua) ||
+                (oPirteyOved.oErua416 != null && oPirteyOved.oErua416.bKayamEfreshBErua) || 
+                (oPirteyOved.oErua417 != null && oPirteyOved.oErua417.bKayamEfreshBErua) ||
+                (oPirteyOved.oErua418 != null && oPirteyOved.oErua418.bKayamEfreshBErua) || 
+                (oPirteyOved.oErua419 != null && oPirteyOved.oErua419.bKayamEfreshBErua) ||
+                (oPirteyOved.oErua589 != null && oPirteyOved.oErua589.bKayamEfreshBErua) ||
+                (oPirteyOved.oHefreshEt != null && oPirteyOved.oHefreshEt.bKayamEfreshBErua))
+                objMisparIshiSugChishuv.SUG_CHISHUV = 1;
+               
            }
            catch (Exception ex)
            {
