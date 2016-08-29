@@ -149,8 +149,11 @@ namespace KdsBatch
                     }
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer, before WriteEruimToFile");
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
-                    if(flagOpenExl)
+                    if (flagOpenExl)
+                    {
+                        ExportToFileCsv();
                         SaveExcel();
+                    }
                   // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer, after WriteEruimToFile");
                    
@@ -224,31 +227,61 @@ namespace KdsBatch
            }
        }
 
-       ////private DataTable GetChishuvYomiToOved(int iMisparIshi, DataTable dtRechivimYomiim)
-       ////{
-       ////    clDal oDal = new clDal();
-       ////    DataRow[] rows;
-       ////    try
-       ////    {
-       ////        rows = dtRechivimYomiim.Select("mispar_ishi= " + iMisparIshi);
-       ////        if (rows.Length > 0)
-       ////        {
-       ////            dtEzerYomi = rows.CopyToDataTable();
-       ////        }
-       ////        else
-       ////        {
-       ////            dtEzerYomi = dtRechivimYomiim.Clone();
-       ////        }
-       ////        return dtEzerYomi;
-       ////    }
-       ////    catch (Exception ex)
-       ////    {
-       ////     //   //clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
-       ////        throw ex;
-       ////    }
-       ////}
 
-       private void SetSugChishuvUDT(int mispar_ishi,DateTime dTaarich, PirteyOved oPirteyOved, ref OBJ_MISPAR_ISHI_SUG_CHISHUV objMisparIshiSugChishuv)
+        private void ExportToFileCsv()
+        {
+            string sPath = "C:\\PrintFiles\\kds\\bdika.csv";
+            //string sPath = ConfigurationSettings.AppSettings["PathFileExlTransfer"] + "hefreshim_input_0616.xlsx";
+            //var exAdpt = new ExcelAdapter(sPath);
+            try
+            {
+
+                //before your loop
+                var csv = new StringBuilder();
+
+                //in your loop
+
+                //Suggestion made by KyleMit
+                var newLine = string.Format("{0},{1}", "111", "222");
+                csv.AppendLine(newLine);
+
+                //after your loop
+                File.WriteAllText(sPath, csv.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+          
+        }
+
+
+        ////private DataTable GetChishuvYomiToOved(int iMisparIshi, DataTable dtRechivimYomiim)
+        ////{
+        ////    clDal oDal = new clDal();
+        ////    DataRow[] rows;
+        ////    try
+        ////    {
+        ////        rows = dtRechivimYomiim.Select("mispar_ishi= " + iMisparIshi);
+        ////        if (rows.Length > 0)
+        ////        {
+        ////            dtEzerYomi = rows.CopyToDataTable();
+        ////        }
+        ////        else
+        ////        {
+        ////            dtEzerYomi = dtRechivimYomiim.Clone();
+        ////        }
+        ////        return dtEzerYomi;
+        ////    }
+        ////    catch (Exception ex)
+        ////    {
+        ////     //   //clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
+        ////        throw ex;
+        ////    }
+        ////}
+
+        private void SetSugChishuvUDT(int mispar_ishi,DateTime dTaarich, PirteyOved oPirteyOved, ref OBJ_MISPAR_ISHI_SUG_CHISHUV objMisparIshiSugChishuv)
        {
            try
            {

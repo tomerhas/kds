@@ -34,6 +34,7 @@ using KDSCommon.Interfaces.Logs;
 using KDSCommon.DataModels.Exceptions;
 using System.Xml;
 using KdsBatch.Premia;
+using System.Text;
 
 public partial class Modules_Test :Page
 {
@@ -803,16 +804,16 @@ public partial class Modules_Test :Page
     {
         //DataTable dt = new DataTable();
         clTransferToHilan objTran = new clTransferToHilan();
-        EtHefreshLineDM item;
-        //    objTran.Transfer(0, int.Parse(txtId.Text));
+           EtHefreshLineDM item;
+         //    objTran.Transfer(0, int.Parse(txtId.Text));
 
-        List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
-        for (int i = 0; i < 9; i++)
-        {
-            item = new EtHefreshLineDM();
-            item.OvedName = "A" + i;
-            list.Add(item);
-        };
+      List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
+        //for (int i = 0; i < 9; i++)
+        //{
+        //    item = new EtHefreshLineDM();
+        //    item.OvedName = "A" + i;
+        //    list.Add(item);
+        //};
         ExportToFile(list);
 
 
@@ -821,14 +822,26 @@ public partial class Modules_Test :Page
 
     private void ExportToFile(List<EtHefreshLineDM> list)
     {
-        string sPath = "\\kdstst02\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
+        string sPath = "C:\\PrintFiles\\kds\\bdika.csv";
         //string sPath = ConfigurationSettings.AppSettings["PathFileExlTransfer"] + "hefreshim_input_0616.xlsx";
-        var exAdpt = new ExcelAdapter(sPath);
+       // var exAdpt = new ExcelAdapter(sPath);
         try
         {
+
+            //before your loop
+            var csv = new StringBuilder();
+
+            //in your loop
            
-            exAdpt.OpenNewWorkBook();
-            AddTitles(exAdpt);
+            //Suggestion made by KyleMit
+            var newLine = string.Format("{0},{1}", "111", "222");
+            csv.AppendLine(newLine);
+
+            //after your loop
+            File.WriteAllText(sPath, csv.ToString());
+
+            // exAdpt.OpenNewWorkBook();
+            //  AddTitles(exAdpt);
             //int i = 2;
             //string[] cols = GetExcelCols();
             //string[] colsToChange = GetExcelColsToChange();
@@ -846,7 +859,7 @@ public partial class Modules_Test :Page
             //    i++;
             //}
             //exAdpt.SaveExistingWorkBook();
-            exAdpt.SaveNewWorkBook(DateTime.Now,"");
+            //  exAdpt.SaveNewWorkBook(DateTime.Now,"");
         }
         catch (Exception ex)
         {

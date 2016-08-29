@@ -12,7 +12,7 @@ namespace KdsBatch.Transfer
     {
    //     DataRow[] hereshim;
         public clEruaHefreshEt(long lBakashaId, DataRow drPirteyOved, DataSet dsNetunim)//,DataRow[] drsHefreshimET)
-            : base(lBakashaId, drPirteyOved, dsNetunim,162)
+            : base(lBakashaId, drPirteyOved, dsNetunim,0)
          {
           //  hereshim = drsHefreshimET;
             oErueyHefreshEt = new List<EtHefreshLineDM>();
@@ -94,6 +94,8 @@ namespace KdsBatch.Transfer
                                 {
                                     fErech = fSumA - fSumB;
                                     EtHefresh.Schum = fErech;
+                                    if (!bKayamEfreshBErua)
+                                        bKayamEfreshBErua = true;
                                 }
                             
                              }

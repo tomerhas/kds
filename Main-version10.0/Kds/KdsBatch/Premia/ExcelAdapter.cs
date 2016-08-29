@@ -57,8 +57,13 @@ namespace KdsBatch.Premia
                 System.IO.File.Delete(_filename);
             if(esName !="")
                 _excelSheet.Name = esName;// "TCT_ATTEND2";// +_periodDate.ToString("MMyyyy");
-            _excelSheet.SaveAs(_filename, misValue, misValue, misValue, misValue, misValue, misValue, misValue,
-                misValue, misValue);
+            object fileType = (object)XlFileFormat.xlHtml;
+            //_excelSheet.SaveAs(_filename, fileType, misValue, misValue, misValue, misValue, misValue, misValue,
+            //    misValue, misValue);
+
+            _workBook.Saved = true;
+            _workBook.SaveCopyAs(_filename);
+            _workBook.Close(null, null, null);
         }
 
         public void CloseWorkBook()
