@@ -321,7 +321,6 @@
     <Content Include="Main.aspx" />
     <Content Include="ModalShowPrint.aspx" />
     <Content Include="Modules\Approvals\Approvals.aspx" />
-    <Content Include="Modules\Batches\CalcBankShaot.aspx" />
     <Content Include="Modules\Batches\CreateConstantReports.aspx" />
     <Content Include="Modules\Batches\HaavaraLesachar.aspx" />
     <Content Include="Modules\Batches\HasavatNetuneyMFtoOracle.aspx" />
@@ -481,13 +480,6 @@
     </Compile>
     <Compile Include="Modules\Approvals\Approvals.aspx.designer.cs">
       <DependentUpon>Approvals.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Batches\CalcBankShaot.aspx.cs">
-      <DependentUpon>CalcBankShaot.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Modules\Batches\CalcBankShaot.aspx.designer.cs">
-      <DependentUpon>CalcBankShaot.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modules\Batches\CreateConstantReports.aspx.cs">
       <DependentUpon>CreateConstantReports.aspx</DependentUpon>

@@ -865,12 +865,12 @@ public partial class Modules_Test :Page
         {
             throw ex;
         }
-        finally
-        {
-            exAdpt.Quit();
-            exAdpt.Dispose();
-            exAdpt = null;
-        }
+        //finally
+        //{
+        //    exAdpt.Quit();
+        //    exAdpt.Dispose();
+        //    exAdpt = null;
+        //}
     }
 
    
