@@ -804,16 +804,16 @@ public partial class Modules_Test :Page
     {
         //DataTable dt = new DataTable();
         clTransferToHilan objTran = new clTransferToHilan();
-           EtHefreshLineDM item;
-         //    objTran.Transfer(0, int.Parse(txtId.Text));
+        EtHefreshLineDM item;
+        //    objTran.Transfer(0, int.Parse(txtId.Text));
 
-      List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
-        //for (int i = 0; i < 9; i++)
-        //{
-        //    item = new EtHefreshLineDM();
-        //    item.OvedName = "A" + i;
-        //    list.Add(item);
-        //};
+        List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
+        for (int i = 0; i < 9; i++)
+        {
+            item = new EtHefreshLineDM();
+            item.OvedName = "A" + i;
+            list.Add(item);
+        };
         ExportToFile(list);
 
 
@@ -822,39 +822,14 @@ public partial class Modules_Test :Page
 
     private void ExportToFile(List<EtHefreshLineDM> list)
     {
-        string sPath = "C:\\PrintFiles\\kds\\bdika.csv";
-         string sPathTxt = "C:\\PrintFiles\\kds\\bdika2.txt";
-          StreamWriter  sFileStrStXT, sFileStrSCsv;
-      
+        string sPath = "\\kdsappl02\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
         //string sPath = ConfigurationSettings.AppSettings["PathFileExlTransfer"] + "hefreshim_input_0616.xlsx";
-        // var exAdpt = new ExcelAdapter(sPath);
+        var exAdpt = new ExcelAdapter(sPath);
         try
         {
-            sFileStrSCsv= new StreamWriter(sPath, false, Encoding.Default);
-            sFileStrStXT = new StreamWriter(sPathTxt, false, Encoding.Default);
-            
-         //before your loop
-        // var csv = new StringBuilder();
 
-            //in your loop
-           
-            //Suggestion made by KyleMit
-            var newLine = string.Format("{0},{1}", "111", "222");
-           // csv.AppendLine(newLine);
-
-            sFileStrSCsv.WriteLine(newLine);
-            sFileStrSCsv.Flush();
-
-            sFileStrStXT.WriteLine(newLine);
-            sFileStrStXT.Flush();
-
-            sFileStrSCsv.Close();
-            sFileStrStXT.Close();
-            //after your loop
-            //File.WriteAllText(sPath, csv.ToString());
-            // File.WriteAllText(sPathTxt, csv.ToString());
-            // exAdpt.OpenNewWorkBook();
-            //  AddTitles(exAdpt);
+            exAdpt.OpenNewWorkBook();
+            AddTitles(exAdpt);
             //int i = 2;
             //string[] cols = GetExcelCols();
             //string[] colsToChange = GetExcelColsToChange();
@@ -872,21 +847,22 @@ public partial class Modules_Test :Page
             //    i++;
             //}
             //exAdpt.SaveExistingWorkBook();
-            //  exAdpt.SaveNewWorkBook(DateTime.Now,"");
+            exAdpt.SaveNewWorkBook(DateTime.Now, "");
         }
         catch (Exception ex)
         {
             throw ex;
         }
-        //finally
-        //{
-        //    exAdpt.Quit();
-        //    exAdpt.Dispose();
-        //    exAdpt = null;
-        //}
+        finally
+        {
+            exAdpt.Quit();
+            exAdpt.Dispose();
+            exAdpt = null;
+        }
     }
 
-   
+
+
     private string[] GetExcelCols()
     {
         return new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M" };
