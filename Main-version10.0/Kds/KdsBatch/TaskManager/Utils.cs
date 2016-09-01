@@ -708,7 +708,7 @@ namespace KdsBatch.TaskManager
 
          }
 
-        public void ChishuvBankShaotMeshekByParams(int mitkan,DateTime chodesh)
+        public long ChishuvBankShaotMeshekByParams(int mitkan,DateTime chodesh)
         {
       
             long lRequestNum = 0;
@@ -718,13 +718,14 @@ namespace KdsBatch.TaskManager
 
                 IBankShaotManager BankManager = ServiceLocator.Current.GetInstance<IBankShaotManager>();
                 //   lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.ChishuvBankShaotMeshek, "ChishuvBankShaotMeshek", -12);
-                
+
                 lRequestNum = objBatch.InsBakashaChishuvBankShaot(clGeneral.enGeneralBatchType.ChishuvBankShaotMeshek, "ChishuvBankShaotMeshek", clGeneral.enStatusRequest.InProcess, -12, chodesh.ToShortDateString());
                 // ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "before BankManager.ExecBankShaot");
                 //  ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "BankManager obj=" + BankManager);
                 BankManager.ExecBankShaotLefiParametrim(lRequestNum, mitkan, chodesh);
                 ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "after BankManager.ExecBankShaot");
                 clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
+                return lRequestNum;
             }
             catch (Exception ex)
             {
@@ -738,6 +739,7 @@ namespace KdsBatch.TaskManager
                 throw (ex);
             }
 
+           
         }
 
         public void KlitatTnuotAgtan()

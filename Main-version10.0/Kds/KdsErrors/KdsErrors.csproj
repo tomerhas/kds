@@ -131,6 +131,7 @@
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsZakaiLina31.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorKisuyTorLifneyHatchalatSidur189.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorCheckHityzvutMissingLater218.cs" />
+    <Compile Include="ErrosrImpl\SidurErrors\SidurErrorHoursLeTaslumNotValid219.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorMachalaMisradHaBitachonLoYachid212.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorMachalatYeledMugbal214.cs" />
     <Compile Include="ErrosrImpl\SidurErrors\SidurErrorMichsatMachalaYeledImMugbalut210.cs" />

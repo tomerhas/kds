@@ -165,33 +165,6 @@ public partial class Modules_Batches_RunCalcBatch {
     protected global::System.Web.UI.WebControls.TextBox txtDescription;
     
     /// <summary>
-    /// txtMitkan control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.TextBox txtMitkan;
-    
-    /// <summary>
-    /// ddlBank control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.DropDownList ddlBank;
-    
-    /// <summary>
-    /// btnBank control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.Button btnBank;
-    
-    /// <summary>
     /// divRizaGorefet control.
     /// </summary>
     /// <remarks>

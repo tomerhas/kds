@@ -32,7 +32,8 @@ namespace KdsBatch
         //private clErua419 oErua419;
         //private clErua460 oErua460;
         private StreamWriter sFileStrCh, sFileStrS, sFileStrC, sFileStrEt, sFileStrEtBakaraReg, sFileStrEtBakaraHef;
-       private StreamWriter _sFileToWrite;
+       // StreamWriter  sFileStrSCsv;
+        private StreamWriter _sFileToWrite;
        private DataTable dtEzerYomi;
        private List<PirteyOved> _PirteyOved;
        private ExcelAdapter exAdpt;
@@ -63,10 +64,15 @@ namespace KdsBatch
            //PirteyOved oPirteyOved;
           // DateTime dChodesh;
            COLL_MISPAR_ISHI_SUG_CHISHUV objCollMisparIshiSugChishuv = new COLL_MISPAR_ISHI_SUG_CHISHUV();
-          // OBJ_MISPAR_ISHI_SUG_CHISHUV objMisparIshiSugChishuv; 
-          // int iDirug, iDarga;
+            // OBJ_MISPAR_ISHI_SUG_CHISHUV objMisparIshiSugChishuv; 
+            // int iDirug, iDarga;
 
-           sFileNameChaverim = "EGD3NOCH.txt"; //"EGD3TEST.txt"; //
+            //string sPath = "C:\\PrintFiles\\kds\\bdika.csv";
+            //string sPathTxt = "C:\\PrintFiles\\kds\\bdika2.txt";
+           
+
+
+            sFileNameChaverim = "EGD3NOCH.txt"; //"EGD3TEST.txt"; //
            sFileNameSchirim = "EGD6NOCH.txt"; //"EGD6TEST.txt"; //
            sFileNameChozim = "EGB2NOCH.txt"; //"EGB2TEST.txt"; //
            sFileNameETBTashlum = "QDIVmmyy.162";
@@ -142,19 +148,20 @@ namespace KdsBatch
                        sFileStrEtBakaraReg = new StreamWriter(sPathFile + sFileNameETBakaraReg.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
                        sFileStrEtBakaraHef = new StreamWriter(sPathFile + sFileNameETBakaraHef.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
 
-                     sPathExl =  ConfigurationSettings.AppSettings["PathFileExlTransfer"] + sFileExlName.Replace("mmyyyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(3, 4));// "C:\\Temp\\test.xlsx";
-                     //   sPathExl = "C:\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
-                        OpenExcel(sPathExl);
-                        flagOpenExl = true;
+                      sPathExl = sPathFile + sFileExlName.Replace("mmyyyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(3, 4));// "C:\\Temp\\test.xlsx";
+                    //  sFileStrSCsv = new StreamWriter(sPathExl, false, Encoding.Default);
+                        //   sPathExl = "C:\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
+                          OpenExcel(sPathExl);
+                          flagOpenExl = true;
                     }
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer, before WriteEruimToFile");
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
                     if (flagOpenExl)
                     {
-                        ExportToFileCsv();
-                        SaveExcel();
-                    }
-                  // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
+                         SaveExcel();
+                     }
+
+                  
                    logger.InsertLog(lBakashaId, "I", 0, "Transfer, after WriteEruimToFile");
                    
                    InserIntoTableSugChishuv(objCollMisparIshiSugChishuv, lRequestNumToTransfer);
@@ -230,7 +237,8 @@ namespace KdsBatch
 
         private void ExportToFileCsv()
         {
-            string sPath = "C:\\PrintFiles\\kds\\bdika.csv";
+            string sPath = "C:\\PrintFiles\\kds\\bdika3.csv";
+          //  string sPathTxt = "C:\\PrintFiles\\kds\\bdika2.txt";
             //string sPath = ConfigurationSettings.AppSettings["PathFileExlTransfer"] + "hefreshim_input_0616.xlsx";
             //var exAdpt = new ExcelAdapter(sPath);
             try
@@ -247,6 +255,7 @@ namespace KdsBatch
 
                 //after your loop
                 File.WriteAllText(sPath, csv.ToString());
+              //  File.WriteAllText(sPathTxt, csv.ToString());
 
             }
             catch (Exception ex)
@@ -325,15 +334,21 @@ namespace KdsBatch
            {
                sFileStrEt.Close();
            }
-           //if (!(sFileStrEtBakaraReg == null))
-           //{
-           //    sFileStrEtBakaraReg.Close();
-           //}
-           //if (!(sFileStrEtBakaraHef == null))
-           //{
-           //    sFileStrEtBakaraHef.Close();
-           //}
-       }
+            if (!(sFileStrEtBakaraReg == null))
+            {
+                sFileStrEtBakaraReg.Close();
+            }
+            if (!(sFileStrEtBakaraHef == null))
+            {
+                sFileStrEtBakaraHef.Close();
+            }
+
+            //if (!(sFileStrSCsv == null))
+            //{
+            //    sFileStrSCsv.Close();
+            //}
+            
+        }
 
        //private void ClearObject()
        //{
@@ -361,9 +376,13 @@ namespace KdsBatch
                     WriteEruaToFile(sFileStrEtBakaraHef, oOved.oBakaraEt);
 
                 WriteEruaToFile(sFileStrEt, oOved.oDataEt);
-               if(oOved.oHefreshEt != null)
-                 WriteToExcelFile(oOved.oHefreshEt.oErueyHefreshEt);
-           }
+                if (oOved.oHefreshEt != null)
+                {
+                    WriteToExcelFile(oOved.oHefreshEt.oErueyHefreshEt);
+
+                    //**     WriteToExcelFile2(oOved.oHefreshEt.oErueyHefreshEt);
+                }
+            }
           else
            {
                _sFileToWrite = GetFileToWrite(oOved.iMaamad, oOved.iMaamadRashi, oOved.iDirug, oOved.iDarga);
@@ -727,6 +746,37 @@ namespace KdsBatch
             //}
         }
 
+        private void WriteToExcelFile2(List<EtHefreshLineDM> list)
+        {
+            //string sPath = "C:\\Temp\\test.xlsx";           
+            try
+            {
+
+                string line = "";
+                string[] colsToChange = GetExcelColsToChange();
+                Excel.Range range;
+                foreach (EtHefreshLineDM item in list)
+                {
+                    line = item.MisparErua.ToString() + "," + item.MisparHevra.ToString() + "," + item.Tz.ToString() + "," + item.Mn.ToString() + "," + item.OvedName.ToString() + "," +
+                        item.Semel.ToString() + "," + item.TokefMe.ToString() + "," + item.TokefAd.ToString() + "," + item.KodIdkun.ToString() + "," + item.Schum.ToString() + "," + item.Kamut.ToString() + ",";
+
+                    //sFileStrSCsv.WriteLine(line);
+                    //sFileStrSCsv.Flush();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(_lBakashaId, "E", 0, "WriteToExcelFile: " + ex.Message);
+                throw ex;
+            }
+            //finally
+            //{
+            //    exAdpt.Quit();
+            //    exAdpt.Dispose();
+            //    exAdpt = null;
+            //}
+        }
         private void SaveExcel()
         {
             try

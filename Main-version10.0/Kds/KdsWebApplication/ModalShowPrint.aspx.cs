@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 public partial class ModalShowPrint : KdsPage
 {
     private string[] arrParams;
@@ -76,6 +77,7 @@ public partial class ModalShowPrint : KdsPage
                 fs.Write(s, 0, s.Length);
                 fs.Flush();
                 fs.Close();
+      
             }
         }
         catch (Exception ex)

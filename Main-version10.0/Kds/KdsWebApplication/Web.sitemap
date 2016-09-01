@@ -26,6 +26,7 @@
     <siteMapNode  title="הפעלת מהלכים"  description="" roles="*">
       <siteMapNode url="~/Modules/Batches/RunErrorsBatch.aspx" title="ריצה גורפת לשגויים"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Batches/RunCalcBatch.aspx" title="הרצת חישוב"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Batches/CalcBankShaot.aspx" title="הרצת בנק שעות"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Batches/HaavaraLesachar.aspx" title="העברה לשכר"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Batches/CreateConstantReports.aspx" title=" הפקת דו''חות קבועים"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Premia/PremiaCalculation.aspx" title="פרמיות ניהול תנועה"  description="" roles="*"/>

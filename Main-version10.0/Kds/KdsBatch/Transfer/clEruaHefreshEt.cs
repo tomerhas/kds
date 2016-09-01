@@ -36,7 +36,9 @@ namespace KdsBatch.Transfer
             EtHefresh.MisparErua = 90226;
             EtHefresh.MisparHevra = 1705;
             EtHefresh.Mn = 0;
-            //EtHefresh.OvedName = ""; _drPirteyOved["shem_mish"].ToString() +" "+ _drPirteyOved["shem_prat"].ToString();
+            EtHefresh.OvedName = ""; //_drPirteyOved["shem_mish"].ToString() +" "+ _drPirteyOved["shem_prat"].ToString();
+            EtHefresh.Achuz = "";
+            EtHefresh.Taarif = "";
             EtHefresh.KodIdkun = 1;
             EtHefresh.Tz = int.Parse(_drPirteyOved["TEUDAT_ZEHUT"].ToString());
             EtHefresh.TokefMe = _dMonth;

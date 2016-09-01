@@ -128,7 +128,9 @@ namespace KdsErrors
             Add(_container.Resolve<SidurErrorMachalatYeledMugbal214>());
             Add(_container.Resolve<SidurErrorOvedLoMushalWithTaavura215>());
             Add(_container.Resolve<SidurErrorOvedLeloHeterEmptyBus216>());
-       
+            Add(_container.Resolve<SidurErrorHoursLeTaslumNotValid219>());
+
+
 
             Add(_container.Resolve<PeilutErrorIsKodNesiaExists81>());
             Add(_container.Resolve<PeilutErorMisparSiduriOtoNotExists139>());

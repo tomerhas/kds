@@ -115,6 +115,7 @@ namespace KdsErrors.FlowManagers.SubFlowManagers
             errorTypeList.Add(ErrorTypes.errOvedLoMushalWithTaavura215);//215
             errorTypeList.Add(ErrorTypes.errOvedLeloHeterEmptyBus216);//216
             errorTypeList.Add(ErrorTypes.errHityzvutMissingLater218);//218
+            errorTypeList.Add(ErrorTypes.errSidurimChofefimBeshaotLetashlum219);//219
 
 
             ExecuteListOfErrors(errContainer, input, errorTypeList, ErrorSubLevel.Sidur);

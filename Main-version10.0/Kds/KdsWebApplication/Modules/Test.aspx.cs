@@ -823,23 +823,36 @@ public partial class Modules_Test :Page
     private void ExportToFile(List<EtHefreshLineDM> list)
     {
         string sPath = "C:\\PrintFiles\\kds\\bdika.csv";
+         string sPathTxt = "C:\\PrintFiles\\kds\\bdika2.txt";
+          StreamWriter  sFileStrStXT, sFileStrSCsv;
+      
         //string sPath = ConfigurationSettings.AppSettings["PathFileExlTransfer"] + "hefreshim_input_0616.xlsx";
-       // var exAdpt = new ExcelAdapter(sPath);
+        // var exAdpt = new ExcelAdapter(sPath);
         try
         {
-
-            //before your loop
-            var csv = new StringBuilder();
+            sFileStrSCsv= new StreamWriter(sPath, false, Encoding.Default);
+            sFileStrStXT = new StreamWriter(sPathTxt, false, Encoding.Default);
+            
+         //before your loop
+        // var csv = new StringBuilder();
 
             //in your loop
            
             //Suggestion made by KyleMit
             var newLine = string.Format("{0},{1}", "111", "222");
-            csv.AppendLine(newLine);
+           // csv.AppendLine(newLine);
 
+            sFileStrSCsv.WriteLine(newLine);
+            sFileStrSCsv.Flush();
+
+            sFileStrStXT.WriteLine(newLine);
+            sFileStrStXT.Flush();
+
+            sFileStrSCsv.Close();
+            sFileStrStXT.Close();
             //after your loop
-            File.WriteAllText(sPath, csv.ToString());
-
+            //File.WriteAllText(sPath, csv.ToString());
+            // File.WriteAllText(sPathTxt, csv.ToString());
             // exAdpt.OpenNewWorkBook();
             //  AddTitles(exAdpt);
             //int i = 2;

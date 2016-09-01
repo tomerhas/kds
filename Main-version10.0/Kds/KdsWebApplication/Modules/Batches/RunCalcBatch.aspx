@@ -61,34 +61,12 @@
         <td colspan="2"> </td>
     </tr>
  <tr>
-         <td colspan="4" align="right">
+         <td colspan="7" align="right">
          תאור: &nbsp; <asp:RequiredFieldValidator ID="vldDescription" Display="Dynamic" CssClass="ErrorMessage"  runat="server"     ErrorMessage="חובה להגדיר תיאור לריצה!" ControlToValidate="txtDescription"></asp:RequiredFieldValidator><br />
          <asp:TextBox ID="txtDescription" runat="server"  MaxLength="100"   TextMode="MultiLine" Width="320" Height="100px" ></asp:TextBox></td>
-     <td ></td>
-      <td colspan="2" align="right">
-          <fieldset class="FilterFieldSet" style="width:400px;height:110px">
-                <legend>הרצת חישוב בנק שעות</legend> 
-               <br />
-                <table>
-                    <tr>
-                        <td>מתקן:</td>
-                        <td><asp:TextBox ID="txtMitkan" MaxLength="6" runat="server"></asp:TextBox></td>
-                        <td style="width:5px"></td>
-                        <td>חודש:</td>
-                        <td><asp:DropDownList ID="ddlBank"  runat="server" Width="100px"></asp:DropDownList></td>
-                    </tr>
-                    <tr style="margin-top:15px">
-                        <td colspan="5" align="center">
-                            <br />
-                              <asp:Button Text="הפעל חישוב בנק" ID="btnBank" Width="120px"  runat="server" CssClass="ImgButtonSearch" CausesValidation="false" onclick="btnRunBank_Click"  /> 
-                        </td>
-                    </tr>
-                    </table>
-          </fieldset>
-      </td>
      </tr>
       <tr>
-        <td colspan="2"><div id="divRizaGorefet" runat="server"><asp:CheckBox ID="chkRunAll" runat="server"  />&nbsp; ריצה גורפת</div></td>
+        <td colspan="3"><div id="divRizaGorefet" runat="server"><asp:CheckBox ID="chkRunAll" runat="server"  />&nbsp; ריצה גורפת</div></td>
          <td></td>
          <td align="left"> 
             <asp:UpdatePanel ID="upButton" runat="server">
@@ -99,7 +77,7 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
          </td>
-         <td style="width:35px" colspan="1">
+         <td style="width:35px" colspan="2">
          
                </td>
     </tr>

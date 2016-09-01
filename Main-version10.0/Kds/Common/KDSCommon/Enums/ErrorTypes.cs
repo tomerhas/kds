@@ -140,6 +140,7 @@ namespace KDSCommon.Enums
         errOvedLoMushalWithTaavura215=215,
         errOvedLeloHeterEmptyBus216=216,
         errMutamNahagutNochechutLessMichsa=217,
-        errHityzvutMissingLater218=218
+        errHityzvutMissingLater218=218,
+        errSidurimChofefimBeshaotLetashlum219 = 219
     }
 }
