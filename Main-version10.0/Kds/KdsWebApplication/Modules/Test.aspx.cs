@@ -803,17 +803,20 @@ public partial class Modules_Test :Page
     protected void Button4_Click(object sender, EventArgs e)
     {
         //DataTable dt = new DataTable();
-        clTransferToHilan objTran = new clTransferToHilan();
-        EtHefreshLineDM item;
-        //    objTran.Transfer(0, int.Parse(txtId.Text));
+        //long iRequestId;
+        //clBatch objBatch = new clBatch();
+        //clTransferToHilan objTran = new clTransferToHilan();
+        //EtHefreshLineDM item;
+        //iRequestId = objBatch.RunTransferToSachar(clGeneral.enGeneralBatchType.TransferToPayment, "", clGeneral.enStatusRequest.InProcess, 75757, int.Parse(txtId.Text));
+        //objTran.Transfer(iRequestId, int.Parse(txtId.Text));
 
         List<EtHefreshLineDM> list = new List<EtHefreshLineDM>();
-        for (int i = 0; i < 9; i++)
-        {
-            item = new EtHefreshLineDM();
-            item.OvedName = "A" + i;
-            list.Add(item);
-        };
+        //for (int i = 0; i < 9; i++)
+        //{
+        //    item = new EtHefreshLineDM();
+        //    item.OvedName = "A" + i;
+        //    list.Add(item);
+        //};
         ExportToFile(list);
 
 
@@ -822,7 +825,7 @@ public partial class Modules_Test :Page
 
     private void ExportToFile(List<EtHefreshLineDM> list)
     {
-        string sPath = "\\kdsappl02\\PrintFiles\\kds\\hefreshim_input_0616.xlsx";
+        string sPath = "C:\\PrintFiles\\kds\\hefreshim_input_0816.xlsx";
         //string sPath = ConfigurationSettings.AppSettings["PathFileExlTransfer"] + "hefreshim_input_0616.xlsx";
         var exAdpt = new ExcelAdapter(sPath);
         try
