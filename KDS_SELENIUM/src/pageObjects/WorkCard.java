@@ -187,7 +187,7 @@ public class WorkCard {
 	 
 	 public static WebElement Car_Num(WebDriver driver){
 		 
-		    element = driver.findElement(By.id("SD_000_ctl03_SD_000_ctl03CarNumber"));
+		    element = driver.findElement(By.id("SD_000_ctl03_SD_000_ctl03LicenseNumber"));
 		 
 		    return element;
 	
@@ -197,7 +197,7 @@ public class WorkCard {
 	 
 	 public static WebElement Assert_Car_Num(WebDriver driver){
 		 
-		    element = driver.findElement(By.id("SD_000_ctl04_SD_000_ctl04CarNumber"));
+		    element = driver.findElement(By.id("SD_000_ctl04_SD_000_ctl04LicenseNumber"));
 		 
 		    return element;
 	

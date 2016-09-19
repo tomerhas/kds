@@ -26,9 +26,9 @@ public class UpdateCarNo  extends Base {
 	 @DataProvider(name = "Param_Car")
 	  public Object[][] Parameters_Car_No() {
 	          return new Object[][] {
-	              {"11111"},
-	              { "34918"},
-	              { "22228"}
+	              {"8079614"},
+	              { "8777901"},
+	              { "7620669"}
 	            
 	            
 	           };
@@ -73,14 +73,15 @@ public class UpdateCarNo  extends Base {
 		  
 		  //Work_Card.findElement(driver, By.id("txtId"),60).sendKeys("77104");
 		  WorkCard.TxtId(driver).sendKeys("77104");
-		  WorkCard.Date(driver).sendKeys("03/03/2015");
+		  WorkCard.Date(driver).clear();
+		  WorkCard.Date(driver).sendKeys("04092016");
 		  WorkCard.Btn_Show(driver).click();
 		  //Thread.sleep(3000);	
-		  WorkCard.Wait_For_Element_Visibile(driver, 60, "SD_000_ctl03_SD_000_ctl03CarNumber");
+		  WorkCard.Wait_For_Element_Visibile(driver, 60, "SD_000_ctl03_SD_000_ctl03LicenseNumber");
 		  WorkCard.Car_Num(driver).click();
 	      WorkCard.Car_Num(driver).sendKeys(sCar_No);
-	      if (sCar_No=="11111") {
-	      Assert.assertEquals(WorkCard.Validate_Popup(driver).getText(),"מספר רכב שגוי");
+	      if (sCar_No=="8079614") {
+	      Assert.assertEquals(WorkCard.Validate_Popup(driver).getText(),"מספר רישוי שגוי");
 	      
 	      WorkCard.Btn_Close(driver).click();
 	      
@@ -94,20 +95,20 @@ public class UpdateCarNo  extends Base {
 	      else {
 	      WorkCard.Btn_No_Copy_Car_Num(driver).click();
 	      System.out.println(WorkCard.Assert_Car_Num(driver).getAttribute("value"));
-	      if (sCar_No=="34918"){
-	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"22228");
+	      if (sCar_No=="8777901"){
+	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"7620669");
 	      }
 	      else {
-	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"34918");	
+	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"8777901");	
 	      }
 	      WorkCard.Car_Num(driver).click();
 	      WorkCard.Car_Num(driver).sendKeys(sCar_No);
 	      WorkCard.Btn_Yes_Copy_Car_Num(driver).click();
 	      System.out.println(WorkCard.Assert_Car_Num(driver).getAttribute("value"));
-	      if (sCar_No=="34918")
-	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"34918");
+	      if (sCar_No=="8777901")
+	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"8777901");
 	      else {
-	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"22228");
+	      Assert.assertEquals(WorkCard.Assert_Car_Num(driver).getAttribute("value"),"7620669");
           }
 	      WorkCard.Btn_Update(driver).click();
 	      //Thread.sleep(3000);
