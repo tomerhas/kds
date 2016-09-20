@@ -30,12 +30,12 @@ public class AddScheduleMapa    extends Base  {
 	
   @Test
   public void addScheduleMapa () throws SQLException {
-	  DB_DML.deleteRecordFromTable("77104", "to_date('23/06/2015','dd/mm/yyyy')", "33011");
+	  DB_DML.deleteRecordFromTable("77104", "to_date('14/09/2016','dd/mm/yyyy')", "33011");
 	  Utilsfn a= new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
 	  WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("24062015");
+	  WorkCard.Date(driver).sendKeys("15092016");
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver, "btnFindSidur",null);
 	  WorkCard.Btn_Add_Mapa(driver).click();
@@ -60,7 +60,7 @@ public class AddScheduleMapa    extends Base  {
 	  HosafatSidur.Btn_Cheak_ALL(driver).click();
 	  Assert.assertFalse( HosafatSidur.Car_No_Mapa_1(driver).isEnabled(), "Car_No_Mapa is enebled" );
 	  HosafatSidur.Car_No_Mapa_2(driver).click();
-	  HosafatSidur.Car_No_Mapa_2(driver).sendKeys("34918");
+	  HosafatSidur.Car_No_Mapa_2(driver).sendKeys("8777901");
 	  HosafatSidur.Btn_Update_Mapa(driver).click();
 	  Utilsfn c= new Utilsfn();
 	  c.waitForWindow("WorkCard",driver);
@@ -72,7 +72,7 @@ public class AddScheduleMapa    extends Base  {
 	  WorkCard.Btn_Update(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver, "clnDate",null);
 	  WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("23062015");
+	  WorkCard.Date(driver).sendKeys("14092016");
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver, "btnFindSidur",null);
 	  WorkCard.Btn_Add_Mapa(driver).click();
@@ -82,7 +82,7 @@ public class AddScheduleMapa    extends Base  {
 	  HosafatSidur.Btn_Show_Mapa(driver).click();
 	  HosafatSidur.Btn_Cheak_ALL(driver).click();
 	  HosafatSidur.Car_No_Mapa_2(driver).click();
-	  HosafatSidur.Car_No_Mapa_2(driver).sendKeys("34918");
+	  HosafatSidur.Car_No_Mapa_2(driver).sendKeys("8777901");
 	  HosafatSidur.Btn_Update_Mapa(driver).click();
 	  WorkCard.Btn_Yes_Copy_Car_Num(driver).click();
 	  HosafatSidur.Btn_Update_Mapa(driver).click();

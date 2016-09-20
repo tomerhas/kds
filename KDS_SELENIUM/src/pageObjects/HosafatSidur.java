@@ -101,7 +101,7 @@ public class HosafatSidur {
 	 
 	 public static WebElement Car_No_Mapa_2(WebDriver driver){
 		 
-		    element = driver.findElement(By.id("grdPeiluyot_ctl03_txtMisRechev"));
+		    element = driver.findElement(By.id("grdPeiluyot_ctl03_txtMisRishuy"));
 		 
 		    return element;
 	
