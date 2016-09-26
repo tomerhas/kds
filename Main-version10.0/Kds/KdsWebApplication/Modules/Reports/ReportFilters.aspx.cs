@@ -1089,6 +1089,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 sPathFileIn = ConfigurationManager.AppSettings["HeavyReportsPath"].ToString() + sFileName;
                 sPathFileOut = ConfigurationManager.AppSettings["HeavyReportsUrl"].ToString() + sFileName;
 
+                if (File.Exists(sPathFileIn))
+                    File.Delete(sPathFileIn);
 
                 fs = new FileStream(sPathFileIn, FileMode.Create, FileAccess.Write);
                     
