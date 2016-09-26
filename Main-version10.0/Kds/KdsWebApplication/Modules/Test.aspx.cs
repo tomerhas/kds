@@ -826,11 +826,13 @@ public partial class Modules_Test :Page
     private void ExportToFile(List<EtHefreshLineDM> list)
     {
         string sPath = "C:\\PrintFiles\\kds\\hefreshim_input_0816.xlsx";
+        string sPathFile = "\\\\kdsappl01\\PrintFiles\\kds\\hefreshim_input_0716.xlsx";
         //string sPath = ConfigurationSettings.AppSettings["PathFileExlTransfer"] + "hefreshim_input_0616.xlsx";
-        var exAdpt = new ExcelAdapter(sPath);
+        var exAdpt = new ExcelAdapter(sPathFile);
         try
         {
-
+            if (System.IO.File.Exists(sPathFile))
+                System.IO.File.Delete(sPathFile);
             exAdpt.OpenNewWorkBook();
             AddTitles(exAdpt);
             //int i = 2;

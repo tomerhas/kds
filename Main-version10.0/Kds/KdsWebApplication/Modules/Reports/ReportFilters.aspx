@@ -104,7 +104,11 @@
                     <td align="right">
                         <asp:Button Text="הצג" ID="btnDisplay" runat="server" CssClass="ImgButtonSearch"
                             OnClick="btnDisplay_Click" OnClientClick="CancelAllSelectedItems();" />
+
+                         <asp:Button Text="הפק אקסל" ID="btnExcel" runat="server" Width="100"  Visible="false" CssClass="ImgButtonSearch"
+                            OnClick="btnExcel_Click" OnClientClick="CancelAllSelectedItems();" />
                     </td>
+                    
                 </tr>
             </table>
             <input type="hidden" id="Param100" name="Param100" runat="server" />
@@ -275,6 +279,7 @@
             }
         }
         function ValidateTvachChodashim(sender, args) {
+          
             var chodesh_me = document.getElementById('ctl00_KdsContent_P_STARTDATE').value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
             var chodesh_ad = document.getElementById('ctl00_KdsContent_P_ENDDATE').value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "AD").value;
             var MeDate, AdDate;
@@ -292,7 +297,8 @@
         }
 
         function IsAlowedDate(sender, args) {
-             //debugger
+            //debugger
+            
             var CurrentObj = sender.controltovalidate;
             var chodesh_me = document.getElementById(CurrentObj).value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
             var FromDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1] - 1), Number(chodesh_me[0]), '00', '00', '00');
@@ -344,7 +350,7 @@
         }
 
         function IsAlowedEndDate(sender, args) {
-            //  debugger
+          
             var CurrentObj = sender.controltovalidate;
             var chodesh_ad = document.getElementById(CurrentObj).value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
             var AdDate = new Date(Number(chodesh_ad[2]), Number(chodesh_ad[1] - 1), Number(chodesh_ad[0]), '00', '00', '00');

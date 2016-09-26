@@ -2889,7 +2889,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //    ReportParameters.Add("P_TIKUN", "0");
 
 
-                OpenReportFile(oReportOnLine, btnPrint, ReportName.PrintWorkCard.ToString());
+                OpenReportFile(oReportOnLine, btnPrint, ReportName.PrintWorkCard.ToString(), eFormat.PDF);
             }
         }
         catch (Exception ex)
@@ -5306,7 +5306,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         //  OpenReport(ReportParameters, (Button)sender, ReportNameStr);
 
-        OpenReportFile(oReportOnLine, btnClock, ReportNameStr);
+        OpenReportFile(oReportOnLine, btnClock, ReportNameStr, eFormat.PDF);
     }
 
     //public void OpenReportFile(clReportOnLine oReportOnLine, Button btnScript, string sRdlName)

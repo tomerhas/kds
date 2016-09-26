@@ -75,6 +75,15 @@ public partial class Modules_Reports_ReportFilters {
     protected global::System.Web.UI.WebControls.Button btnDisplay;
     
     /// <summary>
+    /// btnExcel control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Button btnExcel;
+    
+    /// <summary>
     /// Param100 control.
     /// </summary>
     /// <remarks>

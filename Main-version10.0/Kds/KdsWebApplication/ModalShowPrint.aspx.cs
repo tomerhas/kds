@@ -43,11 +43,20 @@ public partial class ModalShowPrint : KdsPage
         byte[] s;
         string sFileName = "", sPathFile, src;
         FileStream fs;
-
+        string format=".pdf";
         try
         {
             if (!Page.IsPostBack)
             {
+                switch ((eFormat)Enum.Parse(typeof(eFormat), (string)Session["TypeReport"]))
+                {
+                    case eFormat.PDF:
+                        format =".pdf";
+                        break;
+                    case eFormat.EXCEL:
+                        sFileName = ".xlsx";
+                        break;
+                }
 
                 s = (byte[])Session["BinaryResult"];
                 src = Session["FileName"].ToString();
@@ -55,16 +64,16 @@ public partial class ModalShowPrint : KdsPage
                 switch (src)
                 {
                     case "Presence":
-                        sFileName = "Shaonim.pdf";
+                        sFileName = "Shaonim" + format;
                         break;
                     case "PrintWorkCard":
-                        sFileName = "WorkCard.pdf";
+                        sFileName = "WorkCard" + format;
                         break;
                     default:
-                        sFileName = "TempFile.pdf";
+                        sFileName = "TempFile" + format;
 
-                    //case "RikuzAvodaChodshi":
-                    //    sFileName = "RikuzAvodaChodshi.pdf";
+                        //case "RikuzAvodaChodshi":
+                        //    sFileName = "RikuzAvodaChodshi.pdf";
                         break; 
                 }
 

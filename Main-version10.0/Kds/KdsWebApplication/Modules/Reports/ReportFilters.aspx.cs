@@ -17,6 +17,7 @@ using KdsLibrary.Controls;
 using KdsLibrary.UI.SystemManager;
 using Microsoft.Reporting.WebForms;
 using Saplin.Controls;
+using System.IO;
 //using Egged.WebCustomControls;
 
 
@@ -172,9 +173,20 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //    break;
                     
             }
+
+            switch (Report.NameReport)
+            {
+                case ReportName.Presence:
+                case ReportName.IdkuneyRashemet:
+                case ReportName.PresenceAllSidurim:
+                case ReportName.Query4:
+                    btnExcel.Visible = true;
+                    break;
+            }
+               
             //if (TdFilter.FindControl("P_STARTDATE") != null && TdFilter.FindControl("P_STARTDATE").GetType().Name == "TextBox")
             //    ((TextBox)TdFilter.FindControl("P_STARTDATE")).TextChanged += new EventHandler(EndDate_OnChanged);
-                 
+
         }
         catch (Exception ex)
         {
@@ -214,7 +226,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         Snif.Style.Add("Display", "inline");
                         SnifLabel.Style.Add("Display", "inline");
                     }
-                    //f(ReportName.Presence);
+                   
                     break;
                 case ReportName.IshurimLerashemet:
                     if (!Page.IsPostBack)
@@ -495,7 +507,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 PrepareReportParameters();
                 if (Report.ProductionType == ProductionType.Normal)
                 {
-                    ShowReportOnLine();
+                    ShowReportOnLine(eFormat.PDF);
                   //  sScript = "window.showModalDialog('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
                  // sScript = "window.open('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
                   //  sScript = "window.open('ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + RdlName + "');";
@@ -594,6 +606,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         _Report.RdlName = RdlName;
         Session["Report"] = _Report;
         Session["Resources"] = (KdsSysManResources)_KdsDynamicReport.Resources;
+
+        //if (_Report.ProductionType == ProductionType.Normal)
+        //    btnExcel.Visible = true;
         
     }
     private KdsReport Report
@@ -928,11 +943,11 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         }
     }
 
-    private void ShowReportOnLine()
+    private void ShowReportOnLine(eFormat Format )
     {
        
         string ReportNameStr = Report.RdlName;
-        clReportOnLine oReportOnLine = new clReportOnLine(ReportNameStr, eFormat.PDF);
+        clReportOnLine oReportOnLine = new clReportOnLine(ReportNameStr, Format);
     
 
         Dictionary<string, string> Params = (Dictionary<string, string>)Session["ReportParameters"];
@@ -941,7 +956,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             oReportOnLine.ReportParams.Add(new clReportParam(param.Key, param.Value));
         }
 
-        OpenReportFile(oReportOnLine, btnDisplay, ReportNameStr);
+        OpenReportFile(oReportOnLine, btnDisplay, ReportNameStr, Format);
     }
     private void AddSpecificReportParameters(KdsReport rpt, ref Dictionary<string, string> Params)
     {
@@ -1044,6 +1059,54 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         }
     }
 
+
+
+    protected void btnExcel_Click(object sender, EventArgs e)
+    {
+        byte[] s;
+        string sFileName = "", sPathFileOut, sPathFileIn, sScript;
+        FileStream fs;
+        try
+        {
+
+            if (Page.IsValid)
+            {
+                PrepareReportParameters();
+            
+                string ReportNameStr = Report.RdlName;
+                clReportOnLine oReportOnLine = new clReportOnLine(ReportNameStr, eFormat.EXCEL);
+
+
+                Dictionary<string, string> Params = (Dictionary<string, string>)Session["ReportParameters"];
+                foreach (KeyValuePair<string, string> param in Params)
+                {
+                    oReportOnLine.ReportParams.Add(new clReportParam(param.Key, param.Value));
+                }
+
+                s = oReportOnLine.CreateFile();
+
+                sFileName = ReportNameStr + LoginUser.UserInfo.EmployeeNumber + ".xls";
+                sPathFileIn = ConfigurationManager.AppSettings["HeavyReportsPath"].ToString() + sFileName;
+                sPathFileOut = ConfigurationManager.AppSettings["HeavyReportsUrl"].ToString() + sFileName;
+
+
+                fs = new FileStream(sPathFileIn, FileMode.Create, FileAccess.Write);
+                    
+                fs.Write(s, 0, s.Length);
+                fs.Flush();
+                fs.Close();
+
+                sScript = "window.open('" + sPathFileOut + "');";
+                ScriptManager.RegisterStartupScript(btnExcel, btnExcel.GetType(), "ReportViewer", sScript, true);
+                
+            }
+        }
+        catch (Exception ex)
+        {
+            KdsLibrary.clGeneral.BuildError(Page, ex.Message, true);
+        }
+
+    }
 
 }
 

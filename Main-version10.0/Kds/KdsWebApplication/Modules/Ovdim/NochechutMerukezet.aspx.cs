@@ -380,7 +380,7 @@ namespace KdsWebApplication.Modules.Ovdim
             //  ScriptManager.RegisterStartupScript(hidBtnShow, this.GetType(), "", "openDetails();", true);
             //  OpenReport(ReportParameters, (Button)sender, ReportName.Presence.ToString());
 
-            OpenReportFile(oReportOnLine, (Button)sender, rptName);
+            OpenReportFile(oReportOnLine, (Button)sender, rptName, eFormat.PDF);
 
 
         }

@@ -14,7 +14,7 @@
         <table dir="ltr" >
             <tr align="left">
               <td>   <input type="button" class="ImgButtonSearch" onclick="window.close()" style="height:28px" value="סגור" /></td> <%--<asp:Button ID="CloseWindow" CssClass="ImgButtonSearch" runat="server" Text="סגור" OnClientClick="window.close()" />--%>
-               <td><asp:Button  type="button" class="ImgButtonSearch" ID="exl"  runat="server" OnClick="ExportToExcel_Click" style="height:28px" value="ייצוא לאקסל" /></td> 
+              
                <td>   <input type="button" class="ImgButtonSearch"  onclick="PrintReport()"  style="height:28px"   value="הדפסה" /></td>
                <td dir="rtl">  <label id="lblPrint" style="background-color:lightgray;display:none;font-family:Arial;font-size:medium"> הדף נשלח להדפסה אנא המתן... &nbsp;&nbsp;</label></td>
             </tr>

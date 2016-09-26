@@ -223,7 +223,7 @@ namespace KdsBatch
                      for (int J = 0; J < drPeiluyot.Length; J++)
                      {
                          iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
-                         fDakotSikun =   objOved.objParameters.fAchuzSikunLehamtana / 100 * iMakat;
+                        fDakotSikun = objOved.objParameters.fAchuzSikunLehamtana / 100 * int.Parse(iMakat.ToString().Substring(3, 3));
                          if (fDakotSikun > 0)
                          {
                              dShatHatchla = DateTime.Parse(drPeiluyot[J]["shat_hatchala_sidur"].ToString());

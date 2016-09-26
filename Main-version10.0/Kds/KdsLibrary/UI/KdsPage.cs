@@ -109,14 +109,14 @@ namespace KdsLibrary.UI
 
         }
 
-        public void OpenReportFile(clReportOnLine oReportOnLine, Button btnScript, string sRdlName)
+        public void OpenReportFile(clReportOnLine oReportOnLine, Button btnScript, string sRdlName, eFormat Format)
         {
             byte[] s;
             string sScript;
 
             s = oReportOnLine.CreateFile();
             Session["BinaryResult"] = s;
-            Session["TypeReport"] = "PDF";
+            Session["TypeReport"] = Format.ToString();
             Session["FileName"] = sRdlName;
 
 
@@ -320,5 +320,6 @@ namespace KdsLibrary.UI
             get { return true; }
         }
         #endregion
+
     }
 }
