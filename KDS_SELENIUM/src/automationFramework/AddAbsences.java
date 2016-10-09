@@ -75,7 +75,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  WorkCard.Date(driver).sendKeys("27042015");
 	  WorkCard.Btn_Show(driver).click();
 	  //Thread.sleep(2000);
-	  WorkCard.Wait_For_Element_Visibile(driver,60,"SD_lblSidur0");
+	  WorkCard.Wait_For_Element_Stalenes(driver, "SD_lblSidur0", null);
 	  //WebDriverWait wait = new WebDriverWait(driver,50);
 	  //wait.until(ExpectedConditions.visibilityOf(Work_Card.Lbl_Sidur_Num_0(driver)));
 	  Assert.assertEquals(WorkCard.Lbl_Sidur_Num_0(driver).getText(),"99830");
