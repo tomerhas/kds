@@ -494,12 +494,15 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              wcResult.htEmployeeDetails = ovedManager.GetEmployeeDetails(false,ovedDetails, cardDate, misparIshi, out iLast, out htSpecialEmployeeDetails, out htFullEmployeeDetails);
              wcResult.htFullEmployeeDetails = htFullEmployeeDetails;
              wcResult.Succeeded = true;
-             wcResult.dtMashar = GetMasharData(wcResult.htEmployeeDetails);
+           
          //}
          var cacheAged = ServiceLocator.Current.GetInstance<IKDSAgedQueueParameters>();
          wcResult.oParam = cacheAged.GetItem(cardDate);
 
-         var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+        bool byNum = cardDate < wcResult.oParam.dParam319 ? true : false;
+        wcResult.dtMashar = GetMasharData(wcResult.htEmployeeDetails, byNum);
+
+        var cache = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
          wcResult.dtLookUp = cache.GetCacheItem<DataTable>(CachedItems.LookUpTables);
          wcResult.dtSugSidur = cache.GetCacheItem<DataTable>(CachedItems.SugeySidur);
 
@@ -1085,7 +1088,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          {
              if (_wcResult.htFullEmployeeDetails != null)
              {
-                 dt = GetMasharData(_wcResult.htFullEmployeeDetails); //SD.Mashar;
+                bool byNum = dDateCard < _wcResult.oParam.dParam319 ? true : false;
+                dt = GetMasharData(_wcResult.htFullEmployeeDetails, byNum); //SD.Mashar;
                  if (dt != null)
                  {
                      if (dt.Rows.Count > 0)
@@ -1535,19 +1539,30 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              throw ex;
          }
      }
-     private DataTable GetMasharData(OrderedDictionary htEmployeeDetails)
+     private DataTable GetMasharData(OrderedDictionary htEmployeeDetails,bool ByNumOto)
      {
          string sCarNumbers = "";
          DataTable dtLicenseNumber = new DataTable();
 
 
-         sCarNumbers = ServiceLocator.Current.GetInstance<IKavimManager>().GetMasharCarNumbers(htEmployeeDetails);
+        if (ByNumOto)//cardDate < inputData.oParam.dParam319)
+        {
+            sCarNumbers = ServiceLocator.Current.GetInstance<IKavimManager>().GetMasharCarNumbers(htEmployeeDetails);
+            dtLicenseNumber = sCarNumbers != string.Empty ? ServiceLocator.Current.GetInstance<IKavimDAL>().GetMasharData(sCarNumbers) : null;
+        }
+        else
+        {
+            sCarNumbers = ServiceLocator.Current.GetInstance<IKavimManager>().GetMasharLicenseNumbers(htEmployeeDetails);
+            dtLicenseNumber = sCarNumbers != string.Empty ? ServiceLocator.Current.GetInstance<IKavimDAL>().GetMasharDataByLicense(sCarNumbers) : null;
+        }
 
-         if (sCarNumbers != string.Empty)
-         {
-             var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
-             dtLicenseNumber = kavimDal.GetMasharData(sCarNumbers);
-         }
+        //sCarNumbers = ServiceLocator.Current.GetInstance<IKavimManager>().GetMasharCarNumbers(htEmployeeDetails);
+
+        // if (sCarNumbers != string.Empty)
+        // {
+        //     var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+        //     dtLicenseNumber = kavimDal.GetMasharData(sCarNumbers);
+        // }
          return dtLicenseNumber;
      }
 
@@ -1978,6 +1993,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         SD.Param244 = _wcResult.oParam.dShatHatchalaNahagutNihulTnua;
         SD.Param276 = _wcResult.oParam.dShatHatchalaGrira;
         SD.Param252 = _wcResult.oParam.iValidDays;
+        SD.Param319= _wcResult.oParam.dParam319;
         SD.RefreshBtn = (hidRefresh.Value!=string.Empty) ? int.Parse(hidRefresh.Value) : 0;
         
      
@@ -3406,7 +3422,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 }
                 break;
             case "LICENSE_NUMBER":
-                if (!_Peilut.lOldOtoNo.Equals(_Peilut.lLicenseNumber))
+                if (!_Peilut.lOldLicenseNumber.Equals(_Peilut.lLicenseNumber))
                 {
                     _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
                     _ObjIdkunRashemet.PAKAD_ID = iPakadId;
@@ -3880,6 +3896,16 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 _objIdkunRashemet.UPDATE_OBJECT = 1;
                 oCollIdkunRashemet.Add(_objIdkunRashemet);
             }
+
+            if (FillObjIdkunRashemet(oSidur, iRowIndex, "LICENSE_NUMBER", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
+            {
+                //_objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
+                //_objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
+                //_objIdkunRashemet.SHAT_YETZIA = dShatYetiza;
+                //_objIdkunRashemet.NEW_SHAT_YETZIA = dNewShatYetiza;
+                _objIdkunRashemet.UPDATE_OBJECT = 1;
+                oCollIdkunRashemet.Add(_objIdkunRashemet);
+            }
             //_Txt = ((TextBox)oGridRow.Cells[SD.COL_MAKAT].Controls[0]);
             //if (FillObjIdkunRashemet(_Txt, clUtils.GetPakadId(dtPakadim, "MAKAT_NO"), iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
             if (FillObjIdkunRashemet(oSidur, iRowIndex, "Makat_nesia", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))  
@@ -3983,7 +4009,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         oObjPeluyotOvdim.KISUY_TOR = (int)(dblKisuyTor);
         oObjPeluyotOvdim.NEW_SHAT_YETZIA = dShatYetiza;
         oObjPeluyotOvdim.SHAT_YETZIA = bUpdate ? DateTime.Parse(oShatYetiza.Attributes["OrgShatYetiza"]) : dShatYetiza;
-        oObjPeluyotOvdim.OTO_NO = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[SD.COL_CAR_NUMBER].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[SD.COL_CAR_NUMBER].Controls[0]).Text);        
+        oObjPeluyotOvdim.OTO_NO = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[SD.COL_CAR_NUMBER].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[SD.COL_CAR_NUMBER].Controls[0]).Text);
+        oObjPeluyotOvdim.LICENSE_NUMBER = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[SD.COL_CAR_LICESNCE_NUMBER].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[SD.COL_CAR_LICESNCE_NUMBER].Controls[0]).Text);
         oObjPeluyotOvdim.MAKAT_NESIA = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[SD.COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[SD.COL_MAKAT].Controls[0]).Text);
         oObjPeluyotOvdim.DAKOT_BAFOAL = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[SD.COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[SD.COL_ACTUAL_MINUTES].Controls[0]).Text);
         arrKnisaVal = oGridRow.Cells[SD.COL_KNISA].Text.Split(",".ToCharArray());
@@ -4472,6 +4499,30 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 return true;
         }
 
+        //מספר רישוי
+        _txt = ((TextBox)oGridRow.Cells[SD.COL_CAR_LICESNCE_NUMBER].Controls[0]);
+        if (_txt.Text == string.Empty)
+        {
+            if (oPeilut.lOldLicenseNumber != 0)
+                return true;
+        }
+        else
+        {
+            if (long.Parse(_txt.Text) != oPeilut.lOldLicenseNumber)
+                return true;
+        }
+        //_txt = ((TextBox)oGridRow.Cells[SD.COL_CAR_NUMBER].Controls[0]);
+        //if (_txt.Text == string.Empty)
+        //{
+        //    if (oPeilut.lOldLicenseNumber != 0)
+        //        return true;
+        //}
+        //else
+        //{
+        //    if (long.Parse(_txt.Text) != oPeilut.lOldLicenseNumber)
+        //        return true;
+        //}
+
         //ביטול-הוספה
         bool bCancelPeilut = ((System.Web.UI.WebControls.WebControl)(((Button)(oGridRow.Cells[SD.COL_CANCEL].Controls[0])))).CssClass == "ImgCancel";
         //int iCancelPeilut = int.Parse(((TextBox)oGridRow.Cells[SD.COL_CANCEL_PEILUT].Controls[0]).Text);
@@ -4948,6 +4999,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         drPeilutyot["makat_shilut"] = "";
         drPeilutyot["Shirut_type_Name"] = "";
         drPeilutyot["oto_no"] = 0;
+        drPeilutyot["license_number"] = 0;
         drPeilutyot["makat_nesia"] =0;
         drPeilutyot["dakot_bafoal"] = 0;
         drPeilutyot["imut_netzer"] = "לא" ;

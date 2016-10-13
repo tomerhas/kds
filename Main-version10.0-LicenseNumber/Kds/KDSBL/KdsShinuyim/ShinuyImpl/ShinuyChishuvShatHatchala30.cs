@@ -143,8 +143,8 @@ namespace KdsShinuyim.ShinuyImpl
                         while (i >= 0)
                         {
                             oPeilut = (PeilutDM)curSidur.htPeilut[i];
-                            if (peilutManager.IsMustBusNumber(oPeilut, inputData.oParam.iVisutMustRechevWC) && oPeilut.lOtoNo != otoNum)
-                              //**  ((inputData.CardDate < inputData.oParam.dParam319 && oPeilut.lOtoNo != otoNum) || (inputData.CardDate >= inputData.oParam.dParam319 && oPeilut.lLicenseNumber != licenseNumber))
+                            if (peilutManager.IsMustBusNumber(oPeilut, inputData.oParam.iVisutMustRechevWC) && //oPeilut.lOtoNo != otoNum)
+                              ((inputData.CardDate < inputData.oParam.dParam319 && oPeilut.lOtoNo != otoNum) || (inputData.CardDate >= inputData.oParam.dParam319 && oPeilut.lLicenseNumber != licenseNumber)))
                                 break;
                             i--;
                         }

@@ -314,11 +314,20 @@ namespace KdsShinuyim.FlowManager
                             inputData.htFullEmployeeDetails = htFullEmployeeDetails;
                             inputData.htSpecialEmployeeDetails = htSpecialEmployeeDetails;
 
-                            sCarNumbers = _container.Resolve<IKavimManager>().GetMasharCarNumbers(inputData.htEmployeeDetails);
-                            if (sCarNumbers != string.Empty)
+                            if (cardDate < inputData.oParam.dParam319)
                             {
-                                inputData.dtMashar = _container.Resolve<IKavimDAL>().GetMasharData(sCarNumbers);
+                                sCarNumbers = _container.Resolve<IKavimManager>().GetMasharCarNumbers(inputData.htEmployeeDetails);
+                                inputData.dtMashar = sCarNumbers != string.Empty ? _container.Resolve<IKavimDAL>().GetMasharData(sCarNumbers) : null;
                             }
+                            else
+                            {
+                                sCarNumbers = _container.Resolve<IKavimManager>().GetMasharLicenseNumbers(inputData.htEmployeeDetails);
+                                inputData.dtMashar = sCarNumbers != string.Empty ? _container.Resolve<IKavimDAL>().GetMasharDataByLicense(sCarNumbers) : null;
+                            }
+                            //if (sCarNumbers != string.Empty)
+                            //{
+                            //    inputData.dtMashar = _container.Resolve<IKavimDAL>().GetMasharData(sCarNumbers);
+                            //}
                         }
                         //_dtApproval = clDefinitions.GetApprovalToEmploee(iMisparIshi, dCardDate);
 

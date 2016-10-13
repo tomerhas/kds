@@ -273,11 +273,16 @@ public class wsGeneral : System.Web.Services.WebService
                             //{
                             sXML.Append(string.Concat("<OTO_NO>", "", "</OTO_NO>"));
                             sXML.Append(string.Concat("<OTO_NO_ENABLED>", "0", "</OTO_NO_ENABLED>"));
-                            sXML.Append(string.Concat("<OTO_NO_TITEL>", "", "</OTO_NO_TITEL>"));                           
+                            sXML.Append(string.Concat("<OTO_NO_TITEL>", "", "</OTO_NO_TITEL>"));
+
+                            sXML.Append(string.Concat("<LICENSE_NUMBER>", "", "</LICENSE_NUMBER>"));
+                            sXML.Append(string.Concat("<LICENSE_NUMBER_ENABLED>", "0", "</LICENSE_NUMBER_ENABLED>"));
+                            sXML.Append(string.Concat("<LICENSE_NUMBER_TITEL>", "", "</LICENSE_NUMBER_TITEL>"));
                             // }
                         }
                         else{
                             sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
+                            sXML.Append(string.Concat("<LICENSE_NUMBER_ENABLED>", "1", "</LICENSE_NUMBER_ENABLED>"));
                             _PeilutElement.bBusNumberMustExists = true;
                         }
                         dr = dtElement.Select("kod_meafyen=" + 40);
@@ -359,7 +364,8 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<DESC>", dtMakat.Rows[0]["description"].ToString(), "</DESC>"));
                         sXML.Append(string.Concat("<DAKOT_DEF>", dtMakat.Rows[0]["mazantichnun"].ToString(), "</DAKOT_DEF>"));
                         sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));                       
-                        sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));                        
+                        sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
+                        sXML.Append(string.Concat("<LICENSE_NUMBER_ENABLED>", "1", "</LICENSE_NUMBER_ENABLED>"));
                         sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + dtMakat.Rows[0]["mazantashlum"].ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
                        
@@ -426,6 +432,7 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<DAKOT_DEF>", dtMakat.Rows[0]["mazantichnun"].ToString(), "</DAKOT_DEF>"));
                         sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));                        
                         sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
+                        sXML.Append(string.Concat("<LICENSE_NUMBER_ENABLED>", "1", "</LICENSE_NUMBER_ENABLED>"));
                         sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + dtMakat.Rows[0]["mazantashlum"].ToString() + " דקות ","</DAKOT_DEF_TITLE>")) ;
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
                         if (iPeilutIndex==0)//נאפשר הוספת ריקה למעלה
@@ -464,6 +471,8 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
                         sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
+                        sXML.Append(string.Concat("<LICENSE_NUMBER_ENABLED>", "1", "</LICENSE_NUMBER_ENABLED>"));
+                        
                         if (iPeilutIndex==0)//נאפשר הוספת ריקה למעלה
                             sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
                         if (iPeilutIndex == 1) //נבדוק את הפעילות הקודמת, אם היא הכנת מכונה, נאפשר הוספת ריקה למעלה
@@ -1218,6 +1227,32 @@ public class wsGeneral : System.Web.Services.WebService
         catch (Exception ex)
         {
                 throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string CheckLicenseNo(long lLicenseNo,string CardDate)
+    {
+        long lOtoNo = 0;
+
+        try
+        {
+            //if (Session["Parameters"] == null)
+            //    lLicenseNumber =-1;
+            //else
+            //{
+            if (lLicenseNo > 0)
+            {
+                //בודק אם מספר רכב קיים בתנועה ואם כן מחזיר מספר רישוי
+                var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
+                kavimDal.GetBusOtoNumber(lLicenseNo,DateTime.Parse(CardDate), ref lOtoNo);
+            }
+            // }
+            return lOtoNo.ToString();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
         }
     }
     [WebMethod]

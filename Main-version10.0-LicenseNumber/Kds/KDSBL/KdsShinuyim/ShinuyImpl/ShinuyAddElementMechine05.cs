@@ -11,6 +11,7 @@ using KDSCommon.UDT;
 using KdsShinuyim.DataModels;
 using KdsShinuyim.Enums;
 using Microsoft.Practices.Unity;
+using System.Data;
 
 namespace KdsShinuyim.ShinuyImpl
 {
@@ -350,6 +351,7 @@ namespace KdsShinuyim.ShinuyImpl
             OBJ_PEILUT_OVDIM oObjPeilutOvdimIns = new OBJ_PEILUT_OVDIM();
             PeilutDM oPeilut;
             int idakot, iMeshechElement;
+            DataRow[] dr;
             DateTime dRefferenceDate, dShatYetziaPeilut, dShatKisuyTor;
             try
             {
@@ -369,8 +371,17 @@ namespace KdsShinuyim.ShinuyImpl
                     oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", inputData.oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
                     //    dShatYetziaPeilut = dShatYetziaPeilut.AddMinutes(-3);
                 }
+
                 oObjPeilutOvdimIns.OTO_NO = oPeilut.lOtoNo;
-                oObjPeilutOvdimIns.LICENSE_NUMBER = oPeilut.lLicenseNumber;
+
+                if (inputData.CardDate >= inputData.oParam.dParam319)
+                {
+                    dr = inputData.dtMashar.Select("license_number = " + oPeilut.lLicenseNumber);
+                    if (dr.Length > 0)
+                        oObjPeilutOvdimIns.OTO_NO = int.Parse(dr[0]["bus_number"].ToString());
+
+                    oObjPeilutOvdimIns.LICENSE_NUMBER = oPeilut.lLicenseNumber;
+                }
 
                 PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oObjPeilutOvdimIns, inputData.dtTmpMeafyeneyElements);
 
@@ -473,10 +484,9 @@ namespace KdsShinuyim.ShinuyImpl
                                             oPeilut = (PeilutDM)oLocalSidur.htPeilut[j];
                                             if (peilutManager.IsMustBusNumber(oPeilut, inputData.oParam.iVisutMustRechevWC))
                                             {
-                                               /* if((inputData.CardDate< inputData.oParam.dParam319 && oPeilut.lOtoNo != lOtoNo && oPeilut.lOtoNo > 0 && lOtoNo > 0 && oPeilut.lOtoNo.ToString().Length >= 5)
-                                                  || (inputData.CardDate >= inputData.oParam.dParam319 && oPeilut.lLicenseNumber != lincesNumber && oPeilut.lLicenseNumber > 0 && lincesNumber > 0 && oPeilut.lLicenseNumber.ToString().Length >= 5))*/
-                                                
-                                                if (oPeilut.lOtoNo != lOtoNo && oPeilut.lOtoNo > 0 && lOtoNo > 0 && oPeilut.lOtoNo.ToString().Length >= 5)
+                                                if((inputData.CardDate< inputData.oParam.dParam319 && oPeilut.lOtoNo != lOtoNo && oPeilut.lOtoNo > 0 && lOtoNo > 0 && oPeilut.lOtoNo.ToString().Length >= 5)
+                                                  || (inputData.CardDate >= inputData.oParam.dParam319 && oPeilut.lLicenseNumber != lincesNumber && oPeilut.lLicenseNumber > 0 && lincesNumber > 0 && oPeilut.lLicenseNumber.ToString().Length >= 5))    
+                                             //   if (oPeilut.lOtoNo != lOtoNo && oPeilut.lOtoNo > 0 && lOtoNo > 0 && oPeilut.lOtoNo.ToString().Length >= 5)
                                                 {
                                                     //אם אין להן אותו מספר רכב אז מוסיפים אלמנט הכנת מכונה (71100000).
                                                     AddElementHachanatMechine711( oSidur,inputData, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref  bUsedMazanTichnunInSidur,  oObjSidurimOvdimUpd);
@@ -485,8 +495,8 @@ namespace KdsShinuyim.ShinuyImpl
                                                         l += 1;
                                                 }
                                                 else if (oLocalSidur != oSidur && l == 0 && isPeilutMashmautit((PeilutDM)oSidur.htPeilut[l]) && 
-                                                  //**((iputData.CardDate < inputData.oParam.dParam319 && oPeilut.lOtoNo == lOtoNo) || (inputData.CardDate >= inputData.oParam.dParam319 && oPeilut.lLicenseNumber== lincesNumber))
-                                                    oPeilut.lOtoNo == lOtoNo && 
+                                                  ((inputData.CardDate < inputData.oParam.dParam319 && oPeilut.lOtoNo == lOtoNo) || (inputData.CardDate >= inputData.oParam.dParam319 && oPeilut.lLicenseNumber== lincesNumber)) &&
+                                                  //  oPeilut.lOtoNo == lOtoNo && 
                                                     (dShatYetziaPeilut - oLocalSidur.dFullShatGmar).TotalMinutes > inputData.oParam.iMinTimeBetweenSidurim
                                                    && ((dShatYetziaPeilut - oLocalSidur.dFullShatGmar).TotalMinutes - inputData.oParam.iPrepareOtherMechineMaxTime) > inputData.oParam.iMinTimeBetweenSidurim)
                                                 {
@@ -569,6 +579,7 @@ namespace KdsShinuyim.ShinuyImpl
         {
             OBJ_PEILUT_OVDIM oObjPeilutOvdimIns = new OBJ_PEILUT_OVDIM();
             PeilutDM oPeilut;
+            DataRow[] dr;
             int idakot, iMeshechElement;
             DateTime dShatYetziaPeilut;
             try
@@ -590,7 +601,15 @@ namespace KdsShinuyim.ShinuyImpl
                
                // oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711",inputData.oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
                 oObjPeilutOvdimIns.OTO_NO = oPeilut.lOtoNo;
-                oObjPeilutOvdimIns.LICENSE_NUMBER = oPeilut.lLicenseNumber;
+
+                if (inputData.CardDate >= inputData.oParam.dParam319)
+                {
+                    dr = inputData.dtMashar.Select("license_number = " + oPeilut.lLicenseNumber);
+                    if (dr.Length > 0)
+                        oObjPeilutOvdimIns.OTO_NO = int.Parse(dr[0]["bus_number"].ToString());
+
+                    oObjPeilutOvdimIns.LICENSE_NUMBER = oPeilut.lLicenseNumber;
+                }
 
                 PeilutDM oPeilutNew = CreatePeilut(inputData.iMisparIshi, inputData.CardDate, oObjPeilutOvdimIns, inputData.dtTmpMeafyeneyElements);
 
