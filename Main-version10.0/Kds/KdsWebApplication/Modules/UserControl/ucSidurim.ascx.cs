@@ -46,6 +46,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private int _Param101;//השלמה ליום רגיל
     private int _Param102;//השלמה ליום שישי
     private int _Param103;//השלמה ליום שבת
+    private DateTime _Param319;//  
     //private int _Param108;
     //private int _Param109;
     //private int _Param110;
@@ -102,20 +103,21 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     public const int _COL_ACTUAL_MINUTES = 10;
 
     public const int _COL_CAR_NUMBER = 11;
-    //public const int _COL_CAR_LICESNCE_NUMBER = 10;
+   public const int _COL_CAR_LICESNCE_NUMBER = 12;
    
-    public const int _COL_NETZER = 12;
-    public const int _COL_CANCEL = 13;
-    public const int _COL_LAST_UPDATE = 14;
-    public const int _COL_MAZAN_TASHLUM = 15;
-    public const int _COL_CANCEL_PEILUT = 16;
-    public const int _COL_KNISA = 17;
-    public const int _COL_DAY_TO_ADD = 18;
-    public const int _COL_KISUY_TOR_MAP = 19;
-    public const int _COL_PEILUT_STATUS = 20; //מציין אם ברמת פעילות יש שגיאה או אישור או תקין  ללא אישורים. 
+    public const int _COL_NETZER = 13;
+    public const int _COL_CANCEL = 14;
+    public const int _COL_LAST_UPDATE = 15;
+    public const int _COL_MAZAN_TASHLUM = 16;
+    public const int _COL_CANCEL_PEILUT = 17;
+    public const int _COL_KNISA = 18;
+    public const int _COL_DAY_TO_ADD = 19;
+    public const int _COL_KISUY_TOR_MAP = 20;
+    public const int _COL_PEILUT_STATUS = 21; //מציין אם ברמת פעילות יש שגיאה או אישור או תקין  ללא אישורים. 
     
     private const int MAX_LEN_LINE_NUMBER = 8;
-    private const int MAX_LEN_CAR_NUMBER = 5;
+    private const int MAX_LEN_CAR_NUMBER =  5;
+    private const int MAX_LEN_CAR_LICENSE_NUMBER = 8;
     private const int MAX_LEN_HOUR = 5;
     private const int MAX_LEN_ACTUAL_MINTUES = 4;
     public const int SIDUR_CONTINUE_NAHAGUT = 99500;
@@ -467,14 +469,21 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //Add grid   
             grdPeiluyot = BuildSidurPeiluyot(((SidurDM)(htFullEmployeeDetails[iIndex])).htPeilut, iIndex, ref dvPeiluyot);
 
-            //Add Update Panel
-            up = AddUpdatePanel();
+          
+                //Add Update Panel
+                up = AddUpdatePanel();
             pnlContent.Controls.Add(up);
             up.ContentTemplateContainer.Controls.Add(grdPeiluyot);
                        
             grdPeiluyot.DataSource = dvPeiluyot;
             grdPeiluyot.DataBind();
 
+            //for (int i = 0; i < ((SidurDM)(htFullEmployeeDetails[iIndex])).htPeilut.Count; i++)
+            //{
+            //    PeilutDM oPeilut = (PeilutDM)(((SidurDM)(htFullEmployeeDetails[iIndex])).htPeilut[i]);
+            //    if (oPeilut.oPeilutStatus == PeilutDM.enPeilutStatus.enNew)
+            //        ((TextBox)grdPeiluyot.Rows[i].Cells[_COL_CAR_NUMBER].Controls[0]).Attributes.Remove("disabled"); ;
+            //}
             if (!bEnableSidur)
                 grdPeiluyot.Enabled = false;
            
@@ -627,11 +636,20 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             return _COL_SHAT_YETIZA;
         }
     }
+
+
     public int COL_CAR_NUMBER
     {
         get
         {
             return _COL_CAR_NUMBER;
+        }
+    }
+    public int COL_CAR_LICESNCE_NUMBER
+    {
+        get
+        {
+            return _COL_CAR_LICESNCE_NUMBER;
         }
     }
     public int COL_MAKAT
@@ -707,13 +725,48 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 drPeilutyot["Makat_Description"] = oPeilut.sMakatDescription;
                 drPeilutyot["makat_shilut"] = oPeilut.sShilut;
                 drPeilutyot["Shirut_type_Name"] = oPeilut.sSugShirutName;
-               
-                drPeilutyot["oto_no"] = oPeilut.lOtoNo;
-                //אם פעילות חדשה והוכנס ערך למספר רכב, נכניס גם לערך המקורי את 
-                if ((oPeilut.oPeilutStatus==PeilutDM.enPeilutStatus.enNew) && (oPeilut.lOtoNo>0))
-                    drPeilutyot["old_oto_no"] = oPeilut.lOtoNo;
+
+
+
+
+                if (_CardDate < Param319)
+                {
+
+                    drPeilutyot["oto_no"] = oPeilut.lOtoNo;
+                    //אם פעילות חדשה והוכנס ערך למספר רכב, נכניס גם לערך המקורי את 
+                    if ((oPeilut.oPeilutStatus == PeilutDM.enPeilutStatus.enNew) && (oPeilut.lOtoNo > 0))
+                        drPeilutyot["old_oto_no"] = oPeilut.lOtoNo;
+                    else
+                        drPeilutyot["old_oto_no"] = oPeilut.lOldOtoNo;
+
+                    if ((Mashar != null) && (Mashar.Rows.Count > 0))
+                    {
+                        drLicenseNumber = Mashar.Select("bus_number=" + oPeilut.lOtoNo);
+                        if (drLicenseNumber.Length > 0)
+                            drPeilutyot["license_number"] = long.Parse(drLicenseNumber[0]["license_number"].ToString());
+                    }
+                    else
+                        drPeilutyot["license_number"] = 0;
+
+                }
                 else
-                    drPeilutyot["old_oto_no"] = oPeilut.lOldOtoNo;
+                {
+                    if ((Mashar != null) && (Mashar.Rows.Count > 0))
+                    {
+                        drLicenseNumber = Mashar.Select("license_number=" + oPeilut.lLicenseNumber);
+                        if (drLicenseNumber.Length > 0)
+                            drPeilutyot["oto_no"] = long.Parse(drLicenseNumber[0]["bus_number"].ToString());
+                    }
+                    else
+                        drPeilutyot["oto_no"] = 0;
+
+                    drPeilutyot["license_number"] = oPeilut.lLicenseNumber;
+                    //אם פעילות חדשה והוכנס ערך למספר רכב, נכניס גם לערך המקורי את 
+                    if ((oPeilut.oPeilutStatus == PeilutDM.enPeilutStatus.enNew) && (oPeilut.lLicenseNumber > 0))
+                        drPeilutyot["old_license_number"] = oPeilut.lLicenseNumber;
+                    else
+                        drPeilutyot["old_license_number"] = oPeilut.lOldLicenseNumber;
+                }
 
                 drPeilutyot["makat_nesia"] = oPeilut.lMakatNesia;
                 drPeilutyot["dakot_bafoal"] = oPeilut.iDakotBafoal == -1 ? "" : oPeilut.iDakotBafoal.ToString();
@@ -728,14 +781,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 //3ואם זה אלמנט עם מאפיין 9
                 drPeilutyot["knisa"] = oPeilut.iMisparKnisa + "," + oPeilut.bKnisaNeeded.GetHashCode().ToString() + "," + oPeilut.bBusNumberMustExists.GetHashCode() + "," + oPeilut.bElementIgnoreReka.GetHashCode(); 
                 drPeilutyot["DayToAdd"] = "0";
-                if ((Mashar !=null) && (Mashar.Rows.Count > 0))
-                {
-                    drLicenseNumber = Mashar.Select("bus_number=" + oPeilut.lOtoNo);
-                    if (drLicenseNumber.Length > 0)
-                        drPeilutyot["license_number"] = long.Parse(drLicenseNumber[0]["license_number"].ToString());
-                }
-                else
-                    drPeilutyot["license_number"] = 0;
+               
 
                 if ((!oPeilut.bBusNumberMustExists) && (int.Parse(drPeilutyot["makat_type"].ToString()) == enMakatType.mElement.GetHashCode()))
                 {
@@ -743,6 +789,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     oPeilut.lOldOtoNo = 0;
                     drPeilutyot["oto_no"] = 0;
                     drPeilutyot["old_oto_no"] =0;
+
+                    oPeilut.lLicenseNumber = 0;
+                    oPeilut.lOldLicenseNumber = 0;
+                    drPeilutyot["license_number"] = 0;
+                    drPeilutyot["old_license_number"] = 0;
                 }
                 drPeilutyot["PeilutStatus"] = enPeilutStatus.enValid.GetHashCode();                
                 dtPeilutyot.Rows.Add(drPeilutyot);
@@ -922,7 +973,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         dcPeilut.ColumnName = "old_oto_no";
         dcPeilut.DataType = System.Type.GetType("System.Int64");
         dtPeilutyot.Columns.Add(dcPeilut);
-      
+
+        dcPeilut = new DataColumn();
+        dcPeilut.ColumnName = "old_license_number";
+        dcPeilut.DataType = System.Type.GetType("System.Int64");
+        dtPeilutyot.Columns.Add(dcPeilut);
+        
+
+
     }
     protected bool IsElementTime(long lMakatNesia)
     {
@@ -1165,6 +1223,20 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             tGridField.ItemStyle.Width = Unit.Pixel(60);
             grdPeiluyot.Columns.Add(tGridField);
 
+            //רישיון רכב
+            iArrControlSize = 0;
+            tGridField = new TemplateField();
+            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "מספר רכב");
+            arrControlToAdd = new enControlToAdd[iArrControlSize + 1];
+            arrControlToAdd[iArrControlSize] = enControlToAdd.TextBox;
+            oGridControls = new GridControls(arrControlToAdd, "", "", "", "", ListItemType.Item, "license_number", iIndex);
+            tGridField.ItemTemplate = new GridViewTemplate(oGridControls);
+            tGridField.SortExpression = "license_number";
+            tGridField.HeaderStyle.CssClass = "wcard_header";
+            tGridField.FooterStyle.CssClass = "wcard_footer";
+            tGridField.ItemStyle.Width = Unit.Pixel(60);
+            grdPeiluyot.Columns.Add(tGridField);
+
             //נצר
             boundGridField = new BoundField();
             boundGridField.HeaderText = "נצ" + (char)34 + "ר";
@@ -1304,7 +1376,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         }
     }
 
-    long GetMakatEndForReaka(ref int iSidurIndex, ref int iPeilutIndex, ref long lCarNum )
+    long GetMakatEndForReaka(ref int iSidurIndex, ref int iPeilutIndex, ref long lCarNum, ref long lLicense_number)
     {      
         GridView _NextSidur= new GridView();
         GridView _CurrSidur = new GridView();
@@ -1327,7 +1399,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             lCarNum = 0;
         else
             lCarNum = long.Parse(((TextBox)_NextPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text);
-     
+
+        if (((TextBox)_NextPeilut.Cells[_COL_CAR_LICESNCE_NUMBER].Controls[0]).Text == string.Empty)
+            lLicense_number = 0;
+        else
+            lLicense_number = long.Parse(((TextBox)_NextPeilut.Cells[_COL_CAR_LICESNCE_NUMBER].Controls[0]).Text);
 
         if (bLastPeilut)
         {   //אם פעילות אחרונה בסידור נעבור לסידור הבא
@@ -1403,7 +1479,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 lMakatEnd = long.Parse(((TextBox) _NextPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
                 if (lCarNum != long.Parse(((TextBox) _NextPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text))
                     lCarNum = 0;
-               
+
+                if (lLicense_number != long.Parse(((TextBox)_NextPeilut.Cells[_COL_CAR_LICESNCE_NUMBER].Controls[0]).Text))
+                    lLicense_number = 0;
             }
             else
             {                    
@@ -1490,7 +1568,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }
 
 
-    long GetMakatStartForReaka(ref long lCarNum, ref int iSidurIndex, ref int iPeilutIndex)
+    long GetMakatStartForReaka(ref long lCarNum, ref int iSidurIndex, ref int iPeilutIndex, ref long lLicenseNumber)
     {
         //הפונקציה מביאה את המק"ט הראשון בין שתי נסיעות שאפשר להכניס ביניהם נסיעה ריקה
         GridView _PrevSidur = new GridView();        
@@ -1562,6 +1640,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                                 lMakatStart = long.Parse(((TextBox)_PrevPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
                                 if (lCarNum != long.Parse(((TextBox)_PrevPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text))
                                     lCarNum = 0;
+                                if (lLicenseNumber != long.Parse(((TextBox)_PrevPeilut.Cells[_COL_CAR_LICESNCE_NUMBER].Controls[0]).Text))
+                                    lLicenseNumber = 0;
                             }
                             else
                             {
@@ -1637,6 +1717,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         _NewPeilut.lOldOtoNo = _Peilut.lOtoNo;
         _NewPeilut.lOtoNo = _Peilut.lOtoNo;
         _NewPeilut.lLicenseNumber = _Peilut.lLicenseNumber;
+        _NewPeilut.lOldLicenseNumber = _Peilut.lLicenseNumber;
         _NewPeilut.iMakatType = enMakatType.mEmpty.GetHashCode();
         _NewPeilut.iMazanTashlum = _PeilutReka.iMazanTashlum;
         _NewPeilut.iMazanTichnun = _PeilutReka.iMazanTichnun;
@@ -1679,7 +1760,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         }
     }
     private void InsertPeilutReaka(int iSidurIndexStart,int iSidurIndex, int iPeilutIndex,int iPeilutIndexOrg,
-                                   long lMakat, long lCarNum,
+                                   long lMakat, long lCarNum, long lLicense_number,
                                    DataTable _NesiaDetails, enRekaMapaDirection _Direction)
     {
         int iMazanTichnun, iPos ;
@@ -1755,6 +1836,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             _Peilut.lOldMakatNesia = lMakat;
             _Peilut.lOldOtoNo = lCarNum;
             _Peilut.lOtoNo = lCarNum;
+            _Peilut.lLicenseNumber = lLicense_number;
+            _Peilut.lOldLicenseNumber = lLicense_number;
             _Peilut.iMakatType = StaticBL.GetMakatType(lMakat);
             _Peilut.iMazanTashlum = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["mazantashlum"].ToString()) ? 0 : int.Parse(_NesiaDetails.Rows[0]["mazantashlum"].ToString());
             _Peilut.iMazanTichnun = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["mazantichnun"].ToString()) ? 0 : int.Parse(_NesiaDetails.Rows[0]["mazantichnun"].ToString());
@@ -2234,7 +2317,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         long lMakatEnd;
         long lMakatStart=0;
         long lMakat = 0;
-        long lCarNum = 0;
+        long lCarNum = 0,lLicenseNumber=0;
         string sScript = "";
         int iSidurIndexOrg = iSidurIndex;
         int iPeilutIndexOrg = iPeilutIndex;
@@ -2246,10 +2329,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
          _CurrPeilut = _CurrSidur.Rows[iPeilutIndex];
          lMakatEnd = long.Parse(((TextBox)_CurrPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
          lCarNum = long.Parse(((TextBox)_CurrPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text);
+         lLicenseNumber = long.Parse(((TextBox)_CurrPeilut.Cells[_COL_CAR_LICESNCE_NUMBER].Controls[0]).Text);
         //נמצא את מספר המק"ט הקודם שביניהם תכנס הנסיעה הריקה
         //למעשה במקרה זה מה שחשוב זה האינדקס של הסידור והפעילות של מק"ט ההתחלה
-         if (iSidurIndexOrg != 0)
-            lMakatStart = GetMakatStartForReaka(ref lCarNum,ref iSidurIndex, ref iPeilutIndex);
+        if (iSidurIndexOrg != 0)
+            lMakatStart = GetMakatStartForReaka(ref lCarNum,ref iSidurIndex, ref iPeilutIndex,ref lLicenseNumber);
 
         
         if ((lMakatStart == 0) || (iSidurIndexOrg==0))       
@@ -2261,7 +2345,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 OrderedDictionary hashSidurimPeiluyot = DataSource;
                 UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
-                InsertPeilutReaka(iSidurIndex, iSidurIndexOrg, iPeilutIndex,iPeilutIndexOrg, lMakat, lCarNum, _NesiaDetails, enRekaMapaDirection.enUp);
+                InsertPeilutReaka(iSidurIndex, iSidurIndexOrg, iPeilutIndex,iPeilutIndexOrg, lMakat, lCarNum, lLicenseNumber, _NesiaDetails, enRekaMapaDirection.enUp);
                 bOpenUpdateBtn = true;
             }
             else            
@@ -2274,13 +2358,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         long lMakatEnd;
         long lMakat = 0;       
-        long lCarNum = 0;
+        long lCarNum = 0, lLicense_number=0;
         string sScript="";
         int iSidurIndexOrg = iSidurIndex;
         int iPeilutIndexOrg = iPeilutIndex;
 
         //נמצא את מספר המק"ט הבא שביניהם תכנס הנסיעה הריקה
-        lMakatEnd = GetMakatEndForReaka(ref iSidurIndex, ref iPeilutIndex, ref lCarNum);
+        lMakatEnd = GetMakatEndForReaka(ref iSidurIndex, ref iPeilutIndex, ref lCarNum, ref lLicense_number);
         
         if (lMakatEnd == 0)
         {
@@ -2294,7 +2378,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 OrderedDictionary hashSidurimPeiluyot = DataSource;
                 UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
-                InsertPeilutReaka(iSidurIndexOrg,iSidurIndexOrg, iPeilutIndexOrg,iPeilutIndexOrg, lMakat, lCarNum, _NesiaDetails, enRekaMapaDirection.enDown);
+                InsertPeilutReaka(iSidurIndexOrg,iSidurIndexOrg, iPeilutIndexOrg,iPeilutIndexOrg, lMakat, lCarNum, lLicense_number, _NesiaDetails, enRekaMapaDirection.enDown);
                 bOpenUpdateBtn = true;
             }
             else
@@ -3067,6 +3151,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                 
                 _Peilut.lOtoNo = ((TextBox)(oGridRow.Cells[COL_CAR_NUMBER].Controls[0])).Text == "" ? 0 : long.Parse(((TextBox)(oGridRow.Cells[COL_CAR_NUMBER].Controls[0])).Text);
+                _Peilut.lLicenseNumber = ((TextBox)(oGridRow.Cells[COL_CAR_LICESNCE_NUMBER].Controls[0])).Text == "" ? 0 : long.Parse(((TextBox)(oGridRow.Cells[COL_CAR_LICESNCE_NUMBER].Controls[0])).Text);
                 _Peilut.iKisuyTor = (int)(dblKisuyTor);
                 
                 _Peilut.dFullShatYetzia = dShatYetiza;
@@ -3377,10 +3462,18 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         if (_Peilut.lMakatNesia.Equals(MAKAT_VISA))
                         {
                             long lCarNumber = FindCarNumber();
+                            
                             if (lCarNumber != 0)
                             {
                                 _Peilut.lOldOtoNo = lCarNumber;
                                 _Peilut.lOtoNo = lCarNumber;
+                            }
+
+                            long lLicenseNumber = FindLicenseNumber();
+                            if (lLicenseNumber != 0)
+                            {
+                                _Peilut.lOldLicenseNumber = lLicenseNumber;
+                                _Peilut.lLicenseNumber = lLicenseNumber;
                             }
                         }
                            
@@ -3422,6 +3515,37 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 lCarNumber = 0;
         }
         return lCarNumber;
+    }
+
+    
+    private long FindLicenseNumber()
+    {
+        //נעבור על כל הסידורים ונבדוק אם קיים מספר רכב אחיד בכל הפעילויות, אם כן נחזיר אותו
+        long lLicenseNumber = 0;
+        SidurDM _Sidur;
+        bool bFoundChanges = false;
+
+        if (_DataSource != null)
+        {
+            for (int iIndex = 0; iIndex < _DataSource.Count; iIndex++)
+            {
+                _Sidur = (SidurDM)(_DataSource[iIndex]);
+                for (int j = 0; j < _Sidur.htPeilut.Count; j++)
+                {
+                    if ((j == 0) && (iIndex == 0))
+                        lLicenseNumber = ((PeilutDM)_Sidur.htPeilut[j]).lLicenseNumber;
+                    else
+                        if ((lLicenseNumber != ((PeilutDM)_Sidur.htPeilut[j]).lLicenseNumber) && (((PeilutDM)_Sidur.htPeilut[j]).lLicenseNumber != 0))
+                    {
+                        bFoundChanges = true;
+                        break;
+                    }
+                }
+            }
+            if (bFoundChanges)
+                lLicenseNumber = 0;
+        }
+        return lLicenseNumber;
     }
     private int FindNextKey(ref OrderedDictionary _SidurPeilut)
     {
@@ -5708,7 +5832,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         int iSidurIndex=0;
         int iBitulOHosafa=0;
         bool bElementHachanatMechona;       
-        long lMakatNumber; 
+        long lMakatNumber;
         try
         {
             switch (e.Row.RowType)
@@ -5724,7 +5848,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     bPeilutActive = ((iBitulOHosafa != clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) && (iBitulOHosafa != clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()));
                     lMakatNumber = long.Parse(((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Text);
                     bElementHachanatMechona = (IsElementHachanatMechona(lMakatNumber));
-                   // bMktTypeToEnable = IsMktToEnable(lMakatNumber);
+                    // bMktTypeToEnable = IsMktToEnable(lMakatNumber);
 
 
                     TextBox oTxt = new TextBox();
@@ -5736,9 +5860,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                     SetShatYetiza(e, bSidurActive, bPeilutActive, iSidurIndex, bElementHachanatMechona);
 
-                    iMakatType =  int.Parse(DataBinder.Eval(e.Row.DataItem, "makat_type").ToString());
+                    iMakatType = int.Parse(DataBinder.Eval(e.Row.DataItem, "makat_type").ToString());
                     oMakatType = (enMakatType)iMakatType;
-                    bEnabled =( ((oMakatType == enMakatType.mKavShirut) || (oMakatType==enMakatType.mNamak)) && (lMakatNumber!=MAKAT_VISA));
+                    bEnabled = (((oMakatType == enMakatType.mKavShirut) || (oMakatType == enMakatType.mNamak)) && (lMakatNumber != MAKAT_VISA));
 
                     //הוספת נסיעה ריקה למעלה
                     SetAddNesiaRekaUpColumn(e, bSidurActive, bPeilutActive, bElementHachanatMechona, oMakatType, iSidurIndex);
@@ -5750,10 +5874,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     SetKisuyTor(e, bEnabled, bSidurActive, bPeilutActive, iSidurIndex, bElementHachanatMechona);
 
                     //תיאור
-                    SetDescription(e,iSidurIndex, lMakatNumber);
+                    SetDescription(e, iSidurIndex, lMakatNumber);
 
                     //מספר רכב          
                     SetCarNumber(e, bSidurActive, bPeilutActive, iSidurIndex, bElementHachanatMechona, oMakatType);
+
+                    //מספר רישוי          
+                    SetCarLicenseNumber(e, bSidurActive, bPeilutActive, iSidurIndex, bElementHachanatMechona, oMakatType);
 
                     //מספר מקט
                     SetMakatNumber(e, bSidurActive, bPeilutActive, iSidurIndex, bElementHachanatMechona, ref oMakatType);
@@ -5765,7 +5892,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     SetActualMinutes(e, bSidurActive, bPeilutActive, oMakatType, bElementHachanatMechona);
 
                     //פעיל            
-                    SetCancelColumn(e, bSidurActive, ref bPeilutActive, bElementHachanatMechona );
+                    SetCancelColumn(e, bSidurActive, ref bPeilutActive, bElementHachanatMechona);
 
                     SetDayToAdd(e, iSidurIndex);
 
@@ -5791,9 +5918,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     }
                     break;
                 case DataControlRowType.Footer:
-                   // btn=AddInputButton("הוסף/חפש פעילות", "ImgButtonUpdate");
-                   // e.Row.Cells[_COL_LINE_DESCRIPTION].Controls.Add(btn);
-                   //((Button)e.Row.Cells[_COL_LINE_DESCRIPTION].Controls[0]).Attributes.Add("onclick", "AddPeilut(" + e.Row.ClientID.Substring("SD_".Length, 3) + ")");
+                    // btn=AddInputButton("הוסף/חפש פעילות", "ImgButtonUpdate");
+                    // e.Row.Cells[_COL_LINE_DESCRIPTION].Controls.Add(btn);
+                    //((Button)e.Row.Cells[_COL_LINE_DESCRIPTION].Controls[0]).Attributes.Add("onclick", "AddPeilut(" + e.Row.ClientID.Substring("SD_".Length, 3) + ")");
                     //e.Row.Cells[_COL_LINE_TYPE].Controls.Add(AddInputButton("שדות נוספים לסידור", "ImgButtonUpdate"));
                     //((Button)e.Row.Cells[_COL_LINE_TYPE].Controls[0]).Attributes.Add("onclick", "(" + e.Row.ClientID.Substring("SD_".Length, 3) + ")");
                     break;
@@ -5805,7 +5932,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             e.Row.Cells[_COL_DAY_TO_ADD].Style["display"] = "none";
             e.Row.Cells[_COL_KISUY_TOR_MAP].Style["display"] = "none";
             e.Row.Cells[_COL_PEILUT_STATUS].Style["display"] = "none";
-           
+
+            if (_CardDate < Param319)
+                e.Row.Cells[_COL_CAR_LICESNCE_NUMBER].Style["display"] = "none";
+            else e.Row.Cells[_COL_CAR_NUMBER].Style["display"] = "none";
         }
         catch (Exception ex)
         {
@@ -6320,14 +6450,21 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             sTargetControlId = oTxt.ID;
             oTxt.MaxLength = MAX_LEN_CAR_NUMBER;
             oTxt.Width = Unit.Pixel(60);
+
             
             oTxt.Attributes.Add("onchange", "SetBtnChanges();");
-            oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ");");          
+            oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ");");
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_CAR_NUMBER + ");");
             oTxt.ToolTip = (DataBinder.Eval(e.Row.DataItem, "license_number").ToString());
             oTxt.CssClass = "WCPilutTxt";
-           // oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
-            AddAttribute(oTxt, "OldV",DataBinder.Eval(e.Row.DataItem, "old_oto_no").ToString());//AddAttribute(oTxt, "OldV", oTxt.Text);
+            // oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
+            AddAttribute(oTxt, "OldV", DataBinder.Eval(e.Row.DataItem, "old_oto_no").ToString());//AddAttribute(oTxt, "OldV", oTxt.Text);
+
+            if (_CardDate < Param319)// && ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text != enPeilutStatus.enError.GetHashCode().ToString())
+            {
+                oTxt.Attributes.Add("disabled", "true");
+            }
+
 
             sID = "vldFilCarNum";
             oFilterTextBox = AddFilterTextBoxExtender(sTargetControlId, sID, "0123456789", AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers, e);
@@ -6346,6 +6483,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Right);
             vldExtenderCallOut.BehaviorID = "vldCarNumBehv" + e.Row.ClientID;
             e.Row.Cells[_COL_CAR_NUMBER].Controls.Add(vldExtenderCallOut);
+
 
             //Check if Error Exists
             oTxt = ((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0]));
@@ -6388,6 +6526,102 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         }
     }
 
+
+    
+    protected void SetCarLicenseNumber(GridViewRowEventArgs e, bool bSidurActive, bool bPeilutActive, int iSidurIndex,
+                                bool bElementHachanatMechona,
+                                enMakatType oMakatType)
+    {
+        string sID, sMessage, sTargetControlId, sClientScriptFunction;
+        TextBox oTxt;
+        AjaxControlToolkit.FilteredTextBoxExtender oFilterTextBox;
+        CustomValidator vldCarNumber;
+        AjaxControlToolkit.ValidatorCalloutExtender vldExtenderCallOut;
+        DateTime dShatYetiza, dOldShatYetiza;
+        bool bIdkunRashemet = false;
+        String sPeilutKey;
+        HtmlTableCell hCell = new HtmlTableCell();
+
+
+        try
+        {
+            oTxt = ((TextBox)(e.Row.Cells[_COL_CAR_LICESNCE_NUMBER].Controls[0]));
+            oTxt.CausesValidation = true;
+
+            oTxt.ID = e.Row.ClientID + "LicenseNumber";
+            sTargetControlId = oTxt.ID;
+            oTxt.MaxLength = MAX_LEN_CAR_LICENSE_NUMBER;
+            oTxt.Width = Unit.Pixel(60);
+
+
+            oTxt.Attributes.Add("onchange", "SetBtnChanges();");
+            oTxt.Attributes.Add("onkeyup", "ChkLiscenseNumber(" + e.Row.Cells[_COL_CAR_LICESNCE_NUMBER].ClientID + ");");
+            oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_CAR_LICESNCE_NUMBER + ");");
+            oTxt.ToolTip = (DataBinder.Eval(e.Row.DataItem, "oto_no").ToString());
+            oTxt.CssClass = "WCPilutTxt";
+            ////// oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
+            AddAttribute(oTxt, "OldV", DataBinder.Eval(e.Row.DataItem, "old_license_number").ToString());//AddAttribute(oTxt, "OldV", oTxt.Text);
+
+            sID = "vldFilCarLicenseNum";
+            oFilterTextBox = AddFilterTextBoxExtender(sTargetControlId, sID, "0123456789", AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers, e);
+            e.Row.Cells[_COL_CAR_LICESNCE_NUMBER].Controls.Add(oFilterTextBox);
+
+          //  Add CustomeValidator
+            sMessage = "מספר רישוי שגוי";
+            sID = "vldLisenceCarNum";
+            sClientScriptFunction = "Test";
+            vldCarNumber = AddCustomValidator(sTargetControlId, sMessage, sID, sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
+            e.Row.Cells[_COL_CAR_LICESNCE_NUMBER].Controls.Add(vldCarNumber);
+
+            //Add Ajax CallOutCustomeValidator
+            sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_CAR_LICESNCE_NUMBER].Controls[2])).ID;
+            sID = "vExCLN";
+            vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Right);
+            vldExtenderCallOut.BehaviorID = "vldCarLicenseNumBehv" + e.Row.ClientID;
+            e.Row.Cells[_COL_CAR_LICESNCE_NUMBER].Controls.Add(vldExtenderCallOut);
+
+
+            //Check if Error Exists
+            oTxt = ((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0]));
+            sPeilutKey = string.Concat(oTxt.ClientID, "|", e.Row.Cells[_COL_KNISA].ClientID, "|", iSidurIndex, "|", e.Row.ClientID);
+            dShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "shat_yetzia").ToString());
+            dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
+            oTxt = ((TextBox)(e.Row.Cells[_COL_CAR_LICESNCE_NUMBER].Controls[0]));
+            string[] arrKnisaVal;
+            arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
+            int iMisparKnisa = int.Parse(arrKnisaVal[0]);
+            bool bBusMustOtoNumber = arrKnisaVal[2] == "1" ? true : false;
+            //אם לא קיים מאפיין 11
+            //לא דרוש מספר רכב, נחסום ונמחוק את השדהS
+            //רק לאלמנטים
+            if ((!bBusMustOtoNumber) && (oMakatType == enMakatType.mElement))
+            {
+                ((TextBox)(e.Row.Cells[_COL_CAR_LICESNCE_NUMBER].Controls[0])).Text = "";
+                //((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0])).Attributes["OldV"] = "";
+            }
+
+            long lMakat = long.Parse(((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Text);
+            oTxt.Attributes.Add("MustOtoNum", IsPeilutMustOtoNumber(lMakat, bBusMustOtoNumber).GetHashCode().ToString());
+            switch (_StatusCard)
+            {
+                case CardStatus.Error:
+                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, _FullOldShatHatchala, dOldShatYetiza, iMisparKnisa, sPeilutKey, "oto_no"))
+                        ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text = enPeilutStatus.enError.GetHashCode().ToString();
+
+                    break;
+            }
+            //iMisparKnisa = int.Parse(e.Row.Cells[_COL_KNISA].Text);
+            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "LICENSE_NUMBER"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
+            oTxt = ((TextBox)(e.Row.Cells[_COL_CAR_LICESNCE_NUMBER].Controls[0]));
+            bool bEnabled = IsCarEnabled(bIdkunRashemet, bElementHachanatMechona, bBusMustOtoNumber, oMakatType);//((!bIdkunRashemet) && (!bElementHachanatMechona) && ((((bBusMustOtoNumber) && (oMakatType == enMakatType.mElement)) || (oMakatType != enMakatType.mElement))));
+            oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
+            oTxt.Enabled = ((bSidurActive) && (bPeilutActive) && (bEnabled));
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
     protected void SetShatYetiza(GridViewRowEventArgs e, bool bSidurActive, bool bPeilutActive, int iSidurIndex, bool bElementHachanatMechona)
     {
         int iKisuyTor, iKisuyTorMap;
@@ -7103,6 +7337,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             return _Param276;
         }
+    }
+
+    
+     public DateTime Param319
+    {
+        set { _Param319 = value; }
+        get { return _Param319; }
     }
     public int Param252
     {

@@ -24,7 +24,9 @@ namespace KdsLibrary.KDSLogic.DAL
         public const string cProGetVisutDetails = "PKG_ELEMENTS.pro_get_visut_details";
         public const string cGetKatalogKavim = "pkg_tnua.pro_get_kavim_details";
         public const string cProGetMasharBusLicenseNum = "pkg_tnua.pro_get_mashar_bus_license_num";
+        public const string cProGetMasharBusNum = "pkg_tnua.pro_get_mashar_bus_num";
         public const string cProGetMasharData = "PKG_TNUA.pro_get_mashar_data";
+        public const string cProGetMasharDataByLicense = "PKG_TNUA.pro_get_data_by_license";
         public const string cProGetBusesDetails = "PKG_TNUA.pro_get_buses_details";
         public const string cFnIsOtoNumberExists = "pkg_errors.fn_is_oto_number_exists";
         public const string cFnILisenceNumberExists = "pkg_errors.fn_is_lisence_number_exists";
@@ -409,6 +411,36 @@ namespace KdsLibrary.KDSLogic.DAL
             }
         }
 
+        public void GetBusOtoNumber(long lLicenseNo,DateTime CardDate, ref long lOtoNo)
+        {
+            clDal oDal = new clDal();
+
+            try
+            {   //בדיקה אם קיים מספר רכב במש"ר ואם כן מחזיר מספר רישוי:                                 
+                oDal.AddParameter("p_license_no", ParameterType.ntOracleLong, lLicenseNo, ParameterDir.pdInput);
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, CardDate, ParameterDir.pdInput);
+                oDal.AddParameter("p_oto_no", ParameterType.ntOracleLong, lOtoNo, ParameterDir.pdOutput, 200);
+
+                oDal.ExecuteSP(cProGetMasharBusNum);
+
+                if (string.IsNullOrEmpty(oDal.GetValParam("p_oto_no")))
+                {
+                    lOtoNo = 0;
+                }
+                else
+                {
+                    lOtoNo = long.Parse(oDal.GetValParam("p_oto_no").ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                _container.Resolve<ILogger>().LogMessage("GetBusOtoNumber: " + ex.Message, EventLogEntryType.Error, enEventId.ProblemOfAccessToTnua.GetHashCode());
+
+                throw ex;
+            }
+        }
+
+       
         public DataTable GetSidurDetailsFromTnua(int iMisparSidur, DateTime dDate, out int iResult)
         {
             clTnua oTnua = new clTnua((string)ConfigurationSettings.AppSettings["KDS_TNPR_CONNECTION"]);
@@ -500,8 +532,25 @@ namespace KdsLibrary.KDSLogic.DAL
             }
         }
 
+        public DataTable GetMasharDataByLicense(string sCarsLicenses)
+        {
+            clDal oDal = new clDal();
+         DataTable dt = new DataTable();
 
+            try
+            {   //מביא את נתוני מש"ר: 
+                oDal.AddParameter("p_cars_license", ParameterType.ntOracleVarchar, sCarsLicenses, ParameterDir.pdInput, 500);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(cProGetMasharDataByLicense, ref dt);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                _container.Resolve<ILogger>().LogMessage("GetMasharData: " + ex.Message, EventLogEntryType.Error, enEventId.ProblemOfAccessToTnua.GetHashCode());
 
+                throw ex;
+            }
+        }
         public DataTable GetRekaDetailsByXY(DateTime dDate, long lMokedStart, long lMokedEnd, out int iResult)
         {
             clTnua _Tnua = new clTnua((string)ConfigurationSettings.AppSettings["KDS_TNPR_CONNECTION"]);

@@ -27,11 +27,15 @@ namespace KDSBLLogic.Managers
             _container.Resolve<IClockDAL>().InsertControlClockRecord(taarich, status, teur);
         }
 
+        //public void UpdateControlClockRecord(DateTime taarich, int status, string teur)
+        //{
+        //    _container.Resolve<IClockDAL>().UpdateControlClockRecord(taarich, status, teur);
+        //}
+
         public void UpdateControlClockRecord(DateTime taarich, int status, string teur)
         {
             _container.Resolve<IClockDAL>().UpdateControlClockRecord(taarich, status, teur);
         }
-
         public string GetLastHourClock()
         {
             return _container.Resolve<IClockDAL>().GetLastHourClock();
@@ -318,9 +322,9 @@ namespace KDSBLLogic.Managers
             return _container.Resolve<IClockDAL>().getLastCntrlAttend();
         }
 
-        public void UpdateControlAttendRecord(DateTime taarich, int status, string teur)
+        public void UpdateControlAttendRecord(DateTime taarich, long LastNumerator, int status, string teur)
         {
-            _container.Resolve<IClockDAL>().UpdateControlAttendRecord(taarich, status, teur);
+            _container.Resolve<IClockDAL>().UpdateControlAttendRecord(taarich, LastNumerator, status, teur);
         }
 
         public DataSet GetKnisaIfExists(int iMisparIshi, DateTime taarich, string inShaa, int mispar_sidur, int p24)

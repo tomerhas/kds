@@ -12,6 +12,7 @@ namespace KDSCommon.Interfaces.Managers
         DataTable GetMakatDetails(long lNewMakat, DateTime dDate);
         bool IsElementValid(long lMakatNesia, DateTime dDate);
         string GetMasharCarNumbers(OrderedDictionary htEmployeeDetails);
+        string GetMasharLicenseNumbers(OrderedDictionary htEmployeeDetails);
         DataTable GetKatalogKavim(int iMisparIshi, DateTime dFromDate, DateTime dToDate);
     }
 }

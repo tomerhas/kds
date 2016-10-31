@@ -133,6 +133,30 @@ namespace KdsLibrary.KDSLogic.Managers
             return sCarNumbers;
         }
 
+        
+         public string GetMasharLicenseNumbers(OrderedDictionary htEmployeeDetails)
+        {
+            string sCarLicense = "";
+            PeilutDM oPeilut;
+            SidurDM oSidur;
+
+            //נשרשר את כל מספרי הרכב, כדי לפנות למש"ר עם פחות נתונים
+            for (int i = 0; i < htEmployeeDetails.Count; i++)
+            {
+                oSidur = (SidurDM)htEmployeeDetails[i];
+                for (int j = 0; j < oSidur.htPeilut.Count; j++)
+                {
+                    oPeilut = (PeilutDM)oSidur.htPeilut[j];
+                    sCarLicense += oPeilut.lLicenseNumber.ToString() + ",";
+                }
+            }
+
+            if (sCarLicense.Length > 0)
+            {
+                sCarLicense = sCarLicense.Substring(0, sCarLicense.Length - 1);
+            }
+            return sCarLicense;
+        }
         public DataTable GetKatalogKavim(int iMisparIshi, DateTime dFromDate, DateTime dToDate)
         {
             DataTable _Peiluyot;

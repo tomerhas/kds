@@ -11,6 +11,7 @@ namespace KDSCommon.Interfaces.DAL
         int CheckHityazvutNehag(int? iNekudatTziyunTnua, int iRadyus, int iSnif, int? iMikumShaon, int? iMisparSiduriShaon);
         DataTable GetBusesDetailsLeOvedForMonth(DateTime dTarMe, DateTime dTarAd, int iMispar_ishi);
         void GetBusLicenseNumber(long lOtoNo, ref long lLicenseNumber);
+        void GetBusOtoNumber(long lLicenseNo,DateTime CardDate, ref long lOtoNo);
         DataTable GetElementDetails(long lNewMakat);
         DataTable GetKatalogKavim(int iMisparIshi, DateTime dFromDate, DateTime dToDate);
         DataSet GetKavimDetailsFromTnuaDS(long lMakatNesia, DateTime dDate, out int iResult, int? reciveVisut);
@@ -22,6 +23,7 @@ namespace KDSCommon.Interfaces.DAL
         DataTable GetMakatNamakDetailsFromTnua(long lMakatNesia, DateTime dDate, out int iResult);
         DataTable GetMakatRekaDetailsFromTnua(long lMakatNesia, DateTime dDate, out int iResult);
         DataTable GetMasharData(string sCarsNumbers);
+        DataTable GetMasharDataByLicense(string sCarsLicenses);
         DataTable GetMeafyeneyElementByKod(long lMakatNesia, DateTime dDate);
         DataTable GetRekaDetailsByXY(DateTime dDate, long lMokedStart, long lMokedEnd, out int iResult);
         DataSet GetSidurAndPeiluyotFromTnua(int iMisparSidur, DateTime dDate, int? iKnisaVisut, out int iResult);

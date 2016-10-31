@@ -40,7 +40,7 @@ namespace KdsShinuyim.ShinuyImpl
             PeilutDM oPeilut;
             SidurDM oSidur;
             bool bNotDegem64 = false;
-            int CountPeiluyot = 0;
+            int CountPeiluyot = 0,num;
             string oVal;
             try
             {
@@ -57,8 +57,11 @@ namespace KdsShinuyim.ShinuyImpl
                             oPeilut = (PeilutDM)oSidur.htPeilut[j];
                             if (inputData.dtMashar != null)
                             {
-                                if (inputData.dtMashar.Select("bus_number=" + oPeilut.lOtoNo + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2)<>64").Length > 0)
-                                //**if (inputData.dtMashar.Select("lisence_number=" + oPeilut.lLicenseNumber + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2)<>64").Length > 0)
+                                if(inputData.CardDate < inputData.oParam.dParam319)
+                                    num = inputData.dtMashar.Select("bus_number=" + oPeilut.lOtoNo + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2)<>64").Length;
+                                else num = inputData.dtMashar.Select("license_number = " + oPeilut.lLicenseNumber + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2)<>64").Length;
+                               // if (inputData.dtMashar.Select("bus_number=" + oPeilut.lOtoNo + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2)<>64").Length > 0)
+                                if (num>0)
                                 {
                                     bNotDegem64 = true;
                                     break;

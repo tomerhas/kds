@@ -64,6 +64,11 @@ public partial class Modules_Ovdim_HosafatKnisot : KdsPage
                 {
                     ViewState["OtoNo"] = Request.QueryString["OtoNo"].ToString();
                 }
+                if (Request.QueryString["LicenseNumber"] != null)
+                {
+                    ViewState["LicenseNumber"] = Request.QueryString["LicenseNumber"].ToString();
+                }
+                
                 lMakat = long.Parse(Request.QueryString["makatNesia"].ToString());
                 ViewState["Makat"] = lMakat;
                 tdHeader.InnerHtml = "  כניסות למק''ט " + lMakat;
@@ -125,7 +130,11 @@ public partial class Modules_Ovdim_HosafatKnisot : KdsPage
                     oObjPeiluyotOvdimIns.MAKAT_NESIA = long.Parse(ViewState["Makat"].ToString());
                     if (ViewState["OtoNo"] != null && ViewState["OtoNo"] != "")
                         oObjPeiluyotOvdimIns.OTO_NO = int.Parse(ViewState["OtoNo"].ToString());
-                   oObjPeiluyotOvdimIns.BITUL_O_HOSAFA = 2;
+
+                    if (ViewState["LicenseNumber"] != null && ViewState["LicenseNumber"] != "")
+                        oObjPeiluyotOvdimIns.LICENSE_NUMBER = int.Parse(ViewState["LicenseNumber"].ToString());
+
+                    oObjPeiluyotOvdimIns.BITUL_O_HOSAFA = 2;
                     oObjPeiluyotOvdimIns.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
                     if (!string.IsNullOrEmpty(((TextBox)grdKnisot.Rows[i].Cells[DAKOT_BAFOAL].FindControl("txtDakotBafoal")).Text))
                         oObjPeiluyotOvdimIns.DAKOT_BAFOAL = int.Parse(((TextBox)grdKnisot.Rows[i].Cells[DAKOT_BAFOAL].FindControl("txtDakotBafoal")).Text);

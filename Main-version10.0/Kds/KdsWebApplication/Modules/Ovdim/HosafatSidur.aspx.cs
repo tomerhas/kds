@@ -59,6 +59,8 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         tmpValidMakat,
         IS_VALID_MIS_RECHEV,
         tmpValidMisRechev,
+        IS_VALID_MIS_RISHUY,
+        tmpValidRishuyRechev,
         PRATIM,
         SHAT_YEZIA_DATE,
         txtShatYeziaDate
@@ -71,9 +73,9 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
     public const int MAKAT = 12;
     public const int HOSEF_PEILUT = 17;
     public const int PEILUT_CHOVA = 18;
-    public const int PRATIM = 23;
-    public const int TXT_SHAT_YETZIA = 25;
-    public const int MISPAR_KNISA = 26;
+    public const int PRATIM = 25;
+    public const int TXT_SHAT_YETZIA = 27;
+    public const int MISPAR_KNISA = 28;
     
 
     
@@ -511,6 +513,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         dtSource.Columns.Add("PEILUT_CHOVA");
         dtSource.Columns.Add("IS_VALID_MAKAT");
         dtSource.Columns.Add("IS_VALID_MIS_RECHEV");
+        dtSource.Columns.Add("IS_VALID_MIS_RISHUY"); 
         dtSource.Columns.Add("PRATIM");
         dtSource.Columns.Add("SHAT_YEZIA_DATE");
         dtSource.Columns.Add("MUST_DAKOT");
@@ -556,7 +559,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
     {
         string makat;
         string[] pratim;
-        TextBox Rechev;
+        TextBox Rechev,Rishuy;
         DataTable dtElements;
         DataRow[] drSelect;
         string sSQL = "";
@@ -602,19 +605,25 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     }
                 }
                 e.Row.Cells[(int)enPeilut.DAKOT_HAGDARA].ToolTip = ((DataRowView)e.Row.DataItem).Row["HAGDARA_LEGMAR"].ToString();
-                Rechev = ((TextBox)e.Row.Cells[(int)enPeilut.MISPAR_RECHEV].FindControl("txtMisRechev"));
-                if (e.Row.Cells[(int)enPeilut.hidMisRechev].Text != "&nbsp;")
-                    Rechev.Text = e.Row.Cells[(int)enPeilut.hidMisRechev].Text;
-                ((AjaxControlToolkit.ValidatorCalloutExtender)e.Row.Cells[(int)enPeilut.MISPAR_RECHEV].FindControl("exvMisRechev")).BehaviorID = e.Row.ClientID + "_vldExvldMisRechev";
-                Rechev.Attributes.Add("onchange", "onchange_txtMisparRechev(" + e.Row.ClientID + "," + (e.Row.RowIndex+1) +")");
-                Rechev.Attributes.Add("onFocus ", "onSadeFocus(" + e.Row.ClientID + "_txtMisRechev)");
-                
-             //   ((TextBox)e.Row.Cells[(int)enPeilut.MISPAR_RISHUY].FindControl("lblMisparRishuy")).Text = e.Row.Cells[(int)enPeilut.hidMisRishuy].Text;
-                if (e.Row.Cells[(int)enPeilut.hidMisRishuy].Text != "&nbsp;")
-                    Rechev.ToolTip = e.Row.Cells[(int)enPeilut.hidMisRishuy].Text;
-             //?   if (e.Row.Cells[(int)enPeilut.hidMisRishuy].Text != "&nbsp;")
-             //?       ((HtmlInputText)e.Row.Cells[(int)enPeilut.MISPAR_RISHUY].FindControl("lblMisparRishuy")).Value = e.Row.Cells[(int)enPeilut.hidMisRishuy].Text;
+            Rechev = ((TextBox)e.Row.Cells[(int)enPeilut.MISPAR_RECHEV].FindControl("txtMisRechev"));
+            if (e.Row.Cells[(int)enPeilut.hidMisRechev].Text != "&nbsp;")
+                Rechev.Text = e.Row.Cells[(int)enPeilut.hidMisRechev].Text;
+            ((AjaxControlToolkit.ValidatorCalloutExtender)e.Row.Cells[(int)enPeilut.MISPAR_RECHEV].FindControl("exvMisRechev")).BehaviorID = e.Row.ClientID + "_vldExvldMisRechev";
+            Rechev.Attributes.Add("onchange", "onchange_txtMisparRechev(" + e.Row.ClientID + "," + (e.Row.RowIndex + 1) + ")");
+            Rechev.Attributes.Add("onFocus ", "onSadeFocus(" + e.Row.ClientID + "_txtMisRechev)");
 
+            Rishuy = ((TextBox)e.Row.Cells[(int)enPeilut.MISPAR_RISHUY].FindControl("txtMisRishuy"));
+            if (e.Row.Cells[(int)enPeilut.hidMisRishuy].Text != "&nbsp;")
+                Rishuy.Text = e.Row.Cells[(int)enPeilut.hidMisRishuy].Text;
+            ((AjaxControlToolkit.ValidatorCalloutExtender)e.Row.Cells[(int)enPeilut.MISPAR_RISHUY].FindControl("exvLicenseRechev")).BehaviorID = e.Row.ClientID + "_vldExvLicenseRechev";
+            Rishuy.Attributes.Add("onchange", "onchange_txtMisparRishuy(" + e.Row.ClientID + "," + (e.Row.RowIndex + 1) + ")");
+            Rishuy.Attributes.Add("onFocus ", "onSadeFocus(" + e.Row.ClientID + "_txtMisRishuy)");
+
+            if (e.Row.Cells[(int)enPeilut.hidMisRechev].Text != "&nbsp;")
+                Rishuy.ToolTip = e.Row.Cells[(int)enPeilut.hidMisRechev].Text;
+            //if (e.Row.Cells[(int)enPeilut.hidMisRishuy].Text != "&nbsp;")
+            //        Rechev.ToolTip = e.Row.Cells[(int)enPeilut.hidMisRishuy].Text;
+            
                 makat = e.Row.Cells[(int)enPeilut.hidMakat].Text;
                 if (makat != "&nbsp;")
                 {
@@ -656,6 +665,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
 
                 ((TextBox)e.Row.Cells[(int)enPeilut.tmpValidMakat].FindControl("txtIsMakatValid")).Text = e.Row.Cells[(int)enPeilut.IS_VALID_MAKAT].Text;
                 ((TextBox)e.Row.Cells[(int)enPeilut.tmpValidMisRechev].FindControl("txtIsMisRechevValid")).Text = e.Row.Cells[(int)enPeilut.IS_VALID_MIS_RECHEV].Text;
+                ((TextBox)e.Row.Cells[(int)enPeilut.tmpValidMisRechev].FindControl("txtIsRishuyRechevValid")).Text = e.Row.Cells[(int)enPeilut.IS_VALID_MIS_RISHUY].Text;
                 ((TextBox)e.Row.Cells[(int)enPeilut.txtShatYeziaDate].FindControl("txtShatYeziaDate")).Text = e.Row.Cells[(int)enPeilut.SHAT_YEZIA_DATE].Text;
                 //if (e.Row.Cells[(int)enPeilut.SHAT_YEZIA_DATE].Text != "&nbsp;")
                 //    ((TextBox)e.Row.Cells[(int)enPeilut.t].FindControl("txtShatYeziaDate")).Text = e.Row.Cells[(int)enPeilut.hidShatYezia].Text;
@@ -665,13 +675,16 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 if (e.Row.Cells[(int)enPeilut.PRATIM].Text != "&nbsp;")
                 {
                     pratim = e.Row.Cells[(int)enPeilut.PRATIM].Text.Split(';');
-                    Rechev.Attributes.Add("Is_Required", pratim[0].Split('=')[1]);
-                    if ((Rechev.Text == "&nbsp;" || Rechev.Text == "") && pratim[0].Split('=')[1] == "1")
-                        Rechev.Text = "0";
+                    Rishuy.Attributes.Add("Is_Required", pratim[0].Split('=')[1]);
+                    if ((Rishuy.Text == "&nbsp;" || Rechev.Text == "") && pratim[0].Split('=')[1] == "1")
+                        Rishuy.Text = "0";
                     if (pratim[0].Split('=')[1] == "0" || makat.Substring(0, 3) == "701" || makat.Substring(0, 3) == "711" || makat.Substring(0, 3) == "712")
                         ((TextBox)e.Row.Cells[(int)enPeilut.MISPAR_RECHEV].FindControl("txtMisRechev")).Enabled = false;
+                    if (pratim[0].Split('=')[1] == "0" || makat.Substring(0, 3) == "701" || makat.Substring(0, 3) == "711" || makat.Substring(0, 3) == "712")
+                        ((TextBox)e.Row.Cells[(int)enPeilut.MISPAR_RISHUY].FindControl("txtMisRishuy")).Enabled = false;
+
                     if (pratim[1].Split('=')[1] != "1" && pratim[1].Split('=')[1] != "3")// לא נמק או שרות
-                        ((TextBox)e.Row.Cells[(int)enPeilut.KISUY_TOR].FindControl("txtKisuiTor")).Enabled = false;
+                            ((TextBox)e.Row.Cells[(int)enPeilut.KISUY_TOR].FindControl("txtKisuiTor")).Enabled = false;
                     if (pratim.Length > 2)
                         if (pratim[2].Split('=')[1] == "0" || pratim[2].Split('=')[1] == "")
                             ((TextBox)e.Row.Cells[(int)enPeilut.KISUY_TOR].FindControl("txtKisuiTor")).Enabled = false;
@@ -701,7 +714,8 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 }
                 
                 Rechev.Attributes.Add("OldV", Rechev.Text);
-            }
+                Rishuy.Attributes.Add("OldV", Rishuy.Text);
+        }
 
 
     }
@@ -790,6 +804,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 newRow["PEILUT_CHOVA"] = drPeiluyot[i]["PEILUT_CHOVA"];
                 newRow["IS_VALID_MAKAT"] = drPeiluyot[i]["IS_VALID_MAKAT"];
                 newRow["IS_VALID_MIS_RECHEV"] = drPeiluyot[i]["IS_VALID_MIS_RECHEV"];
+                newRow["IS_VALID_MIS_RISHUY"] = drPeiluyot[i]["IS_VALID_MIS_RISHUY"];
                 newRow["PRATIM"] = getPratimLeMakat(int.Parse(newRow["MAKAT"].ToString()), ref newRow,ref type);
                 newRow["PRATIM"] += ";KISUY_TOR=" + drPeiluyot[i]["KISUY_TOR"];// +";ENABLE_MAKAT=False";
                 makat = drPeiluyot[i]["MAKAT"].ToString();
@@ -892,11 +907,15 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
             if (erech != "&nbsp;")
                 dtSource.Rows[i]["MISPAR_RECHEV"] = erech;
 
-           //? erech = ((HtmlInputText)grdPeiluyot.Rows[i].Cells[(int)enPeilut.MISPAR_RISHUY].FindControl("lblMisparRishuy")).Value;
+            //? erech = ((HtmlInputText)grdPeiluyot.Rows[i].Cells[(int)enPeilut.MISPAR_RISHUY].FindControl("lblMisparRishuy")).Value;
             //erech = (grdPeiluyot.Rows[i].Cells[(int)enPeilut.hidMisRishuy]).Text;
             //if (erech != "&nbsp;")
             //    dtSource.Rows[i]["MISPAR_RISHUY"] = erech;
-            dtSource.Rows[i]["MISPAR_RISHUY"] = ((TextBox)grdPeiluyot.Rows[i].Cells[(int)enPeilut.MISPAR_RISHUY].FindControl("lblMisparRishuy")).Text;
+
+            erech = ((TextBox)grdPeiluyot.Rows[i].Cells[(int)enPeilut.MISPAR_RISHUY].FindControl("txtMisRishuy")).Text;
+            if (erech != "&nbsp;")
+                dtSource.Rows[i]["MISPAR_RISHUY"] = erech;
+          //  dtSource.Rows[i]["MISPAR_RISHUY"] = ((TextBox)grdPeiluyot.Rows[i].Cells[(int)enPeilut.MISPAR_RISHUY].FindControl("lblMisparRishuy")).Text;
 
             erech = ((TextBox)grdPeiluyot.Rows[i].Cells[(int)enPeilut.DAKOT_BAFOAL].FindControl("txtDakotBafoal")).Text;
             if (erech != "&nbsp;")
@@ -910,6 +929,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
 
             dtSource.Rows[i]["IS_VALID_MAKAT"] = ((TextBox)grdPeiluyot.Rows[i].Cells[(int)enPeilut.tmpValidMakat].FindControl("txtIsMakatValid")).Text;
             dtSource.Rows[i]["IS_VALID_MIS_RECHEV"] = ((TextBox)grdPeiluyot.Rows[i].Cells[(int)enPeilut.tmpValidMisRechev].FindControl("txtIsMisRechevValid")).Text;
+            dtSource.Rows[i]["IS_VALID_MIS_RISHUY"] = ((TextBox)grdPeiluyot.Rows[i].Cells[(int)enPeilut.tmpValidMisRechev].FindControl("txtIsRishuyRechevValid")).Text;
 
             MakatYashan = grdPeiluyot.Rows[i].Cells[(int)enPeilut.hidMakat].Text;
             erech = ((TextBox)grdPeiluyot.Rows[i].Cells[(int)enPeilut.MAKAT].FindControl("txtMakat")).Text;
@@ -936,12 +956,14 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         CurrentRow.Cells[(int)enPeilut.hidDakotBafoal].Style.Add("display", "none");
         CurrentRow.Cells[(int)enPeilut.hidHosefPeilut].Style.Add("display", "none");
         CurrentRow.Cells[(int)enPeilut.hidMisRishuy].Style.Add("display", "none");
-        CurrentRow.Cells[(int)enPeilut.MISPAR_RISHUY].Style.Add("display", "none");
+        CurrentRow.Cells[(int)enPeilut.MISPAR_RECHEV].Style.Add("display", "none");
         CurrentRow.Cells[(int)enPeilut.PEILUT_CHOVA].Style.Add("display", "none");
         CurrentRow.Cells[(int)enPeilut.IS_VALID_MAKAT].Style.Add("display", "none");
         CurrentRow.Cells[(int)enPeilut.IS_VALID_MIS_RECHEV].Style.Add("display", "none");
+        CurrentRow.Cells[(int)enPeilut.IS_VALID_MIS_RISHUY].Style.Add("display", "none");
         CurrentRow.Cells[(int)enPeilut.tmpValidMakat].Style.Add("display", "none");
         CurrentRow.Cells[(int)enPeilut.tmpValidMisRechev].Style.Add("display", "none");
+        CurrentRow.Cells[(int)enPeilut.tmpValidRishuyRechev].Style.Add("display", "none");
         CurrentRow.Cells[(int)enPeilut.PRATIM].Style.Add("display", "none");
         CurrentRow.Cells[MISPAR_KNISA].Style.Add("display", "none");
         CurrentRow.Cells[(int)enPeilut.SHAT_YEZIA_DATE].Style.Add("display", "none");
@@ -1142,6 +1164,9 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     if (erech != "")
                         oObjPeiluyotOvdimIns.OTO_NO = int.Parse(erech);
 
+                    erech = drPeilut["MISPAR_RISHUY"].ToString();
+                    if (erech != "")
+                        oObjPeiluyotOvdimIns.LICENSE_NUMBER = int.Parse(erech);
                     if (drPeilut["PRATIM"].ToString().Split(';').Length > 2)
                     {
                         erech = drPeilut["PRATIM"].ToString().Split(';')[2].Split('=')[1].ToString();

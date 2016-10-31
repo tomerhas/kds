@@ -72,6 +72,7 @@ Need to replace with controller. Need to understand logic
 */
     function callBackMkt(result,sArrPrm)
 {
+   
         if (result == "-1") {
             unloadCard();
         }
@@ -169,14 +170,26 @@ Need to replace with controller. Need to understand logic
                             case "OTO_NO":
                                 $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value = "";
                                 break;
+                            case "LICENSE_NUMBER":
+                                $get(oRId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].value = "";
+                                break;
                             case "OTO_NO_ENABLED":
                                 $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = (_FirstChild.text == "0");
                                 bMustCarNum = (_FirstChild.text == "1");
                                 if (_FirstChild.text == "1")
                                     $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("MustOtoNum", "1");
                                 break;
+                            case "LICENSE_NUMBER_ENABLED":
+                                $get(oRId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].disabled = (_FirstChild.text == "0");
+                                bMustCarNum = (_FirstChild.text == "1");
+                                if (_FirstChild.text == "1")
+                                    $get(oRId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].setAttribute("MustOtoNum", "1");
+                                break;
                             case "OTO_NO_TITEL":
                                 $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].title = _FirstChild.text;
+                                break;
+                            case "LICENSE_NUMBER_TITEL":
+                                $get(oRId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].title = _FirstChild.text;
                                 break;
                             case "SHAT_YETIZA":
                                 $get(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].value = "";
@@ -202,6 +215,7 @@ Need to replace with controller. Need to understand logic
                                 $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id='" + $get(oRId).id + "_AddRekaUp" + $get(oRId).id + "' name='SD$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekaUpSD_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + "' src='../../images/up.png' type='image'  SdrInd='" + iSidurIndex + "' PeilutInd='" + String(iPeilutIndex) + "' NesiaRekaUp='1'>"
                                 break;
                             case "HYPER_LINK":
+                                //debugger;
                                 if (_FirstChild.text == "1") {
                                     if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
                                         $get(oRId).cells[_COL_LINE_DESCRIPTION].innerHTML = "<a onclick='AddHosafatKnisot(" + iSidurIndex + "," + $get(oRId).id + ");' style='text-decoration:underline;cursor:pointer;'>" + $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue + "</a>"; //"<".concat(_FirstChild.text) + "</a>";
@@ -227,8 +241,10 @@ Need to replace with controller. Need to understand logic
                             alert('יש להקליד ערך בתחום: ' + sMeafyen6 + " " + " עד " + sMeafyen7);
                         } else
                         //נשתול מספר רכב
-                            if (bMustCarNum)
+                            if (bMustCarNum) {
                                 SetCarNumber(iSidurIndex, oRId, iPeilutIndex);
+                                SetLicenseNumber(iSidurIndex, oRId, iPeilutIndex);
+                            }
                         SetBtnChanges();
                     }
                 }
@@ -388,6 +404,18 @@ gets value from ui and validates. Complexity - Low
           }
           return bFound;
      }
+
+
+     function CheckIfFirstPeilutWithCarLicense(_Peilut, iCurrPeilutIndex) {
+         var bFound = false;
+         var sMustOtoNum;
+         for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
+             sMustOtoNum = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].getAttribute("MustOtoNum");
+             if ((sMustOtoNum == '1') && (Number(iCurrPeilutIndex) - 1 != j))
+                 bFound = true;
+         }
+         return bFound;
+     }
 /**
 gets value from ui and validates. Complexity - Medium
 @method FindCarNumInAllSidurim
@@ -419,6 +447,35 @@ gets value from ui and validates. Complexity - Medium
              _Sidur = $get("SD_lblSidur" + iCurrSidurNumber);
          }
          return bMultiCarNum + "|" + lCarNumber + "|" + lCarLicence;
+     }
+
+     function FindCarLicenseInAllSidurim() {
+         var bMultiCarNum = false;
+         var iCurrSidurNumber = 0;
+         var _Sidur, _Peilut;
+         var lCurrCarLicenseNumber = 0;
+         var lCarLicence = 0;
+          var lCarNumber = 0;
+         _Sidur = $get("SD_lblSidur" + iCurrSidurNumber);
+         while (_Sidur != null) {
+             _Peilut = $get("SD_" + padLeft(iCurrSidurNumber, '0', 3));
+             if (_Peilut != null) {
+                 for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
+                     lCurrCarLicenseNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].value;
+                     if ((lCurrCarLicenseNumber != '') && (lCurrCarLicenseNumber != '0'))
+                         if (lCarLicence == 0) {
+                             lCarLicence = lCurrCarLicenseNumber;
+                             lCarNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].title;
+                         }
+                         else
+                             if (lCurrCarLicenseNumber != lCarLicence)
+                                 bMultiCarNum = true;
+                 }
+             }
+             iCurrSidurNumber = iCurrSidurNumber + 1;
+             _Sidur = $get("SD_lblSidur" + iCurrSidurNumber);
+         }
+         return bMultiCarNum + "|" + lCarLicence + "|" + lCarNumber;
      }
 /**
 recieves params. gets UI values. Updates ui values and attributes. Complexity - Low
@@ -463,6 +520,48 @@ recieves params. gets UI values. Updates ui values and attributes. Complexity - 
                   $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("OldV", lCarNumber);
                   $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].title = lCurrCarLicence;         
               }
+     }
+
+     function SetLicenseNumber(iSidurIndex, oRId, iPeilutIndex) {
+         var lCarNumber = 0;
+         var lCurrCarLicenseNumber = 0; 
+         var lCurrCarLicence = 0;
+         var bMultiCarNum = false;
+         var sResult;
+         _Peilut = $get("SD_" + padLeft(iSidurIndex, '0', 3));
+         if (_Peilut != null) {
+             //אם יש פעילות אחת בסידור היא הפעילות שהוספנו ולכן נחפש את מספר הרכב בכל הסידור
+             //או שיש מספר פעילויות אבל זו הראשונה שדורשת מספר רכב
+             if ((_Peilut.firstChild.childNodes.length <= 2) || (!CheckIfFirstPeilutWithCarLicense(_Peilut, iPeilutIndex))) {
+                 sResult = FindCarLicenseInAllSidurim();
+                 sResult = sResult.split("|");
+                 
+                 if (sResult[0] == 'false')
+                     bMultiCarNum = false;
+                 else
+                     bMultiCarNum = true;
+                 lCurrCarLicence = sResult[1];
+                  lCarNumber = sResult[2];
+             }
+             else {
+                 for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
+                     lCurrCarLicenseNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].value;
+                     if ((lCurrCarLicenseNumber != '') && (lCurrCarLicenseNumber != '0'))
+                         if (lCurrCarLicence == 0) {
+                             lCurrCarLicence = lCurrCarLicenseNumber;
+                             lCarNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].title;
+                         }
+                         else
+                             if (lCurrCarLicenseNumber != lCurrCarLicence)
+                                 bMultiCarNum = true;
+                 }
+             }
+         }
+         if ((!bMultiCarNum) && (lCurrCarLicence != 0)) {
+             $get(oRId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].value = lCurrCarLicence;
+             $get(oRId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].setAttribute("OldV", lCurrCarLicence);
+             $get(oRId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].title = lCarNumber;
+         }
      }
 /**
 recieves params. gets UI values. Updates ui values and attributes. Complexity - Low
@@ -518,7 +617,7 @@ recieves params. gets UI values. raises alert. Complexity - Low
 /**
 recieves params. does validations. uses wsGeneral service. Complexity - Low
 @method ChkOto
-*/
+*/  
     function ChkOto(oRow) {
         var KeyID = event.keyCode;
         if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105))) {
@@ -1487,8 +1586,9 @@ recieves params. open ModalDialog  . Complexity - Low
 @method AddHosafatKnisot
 */
     function AddHosafatKnisot(iSidurIndx, iPeilutIndx) {
+      
         _bScreenChanged = bScreenChanged;
-        if ($get(iPeilutIndx.id).cells[13].childNodes[0].className == 'ImgCheckedPeilut') {
+        if ($get(iPeilutIndx.id).cells[14].childNodes[0].className == 'ImgCheckedPeilut') {
             if (_bScreenChanged) {
                 if (!ChkCardVld())
                     return false;
@@ -1517,7 +1617,8 @@ recieves params. open ModalDialog  . Complexity - Low
             var ShatYetzia = $get(iPeilutIndx.id).cells[_COL_SHAT_YETIZA].childNodes[0].value;
             var MakatNesia = $get(iPeilutIndx.id).cells[_COL_MAKAT].childNodes[0].value;
             var OtoNo = $get(iPeilutIndx.id).cells[_COL_CAR_NUMBER].childNodes[0].value;
-            var sQueryString = "?EmpID=" + id + "&SidurID=" + SidurId + "&CardDate=" + CardDate + "&SidurDate=" + SidurDate + "&SidurHour=" + SidurHour + "&ShatYetzia=" + GetDateDDMMYYYY(dPeilutDate).concat(" " + ShatYetzia) + "&MakatNesia=" + MakatNesia + "&OtoNo=" + OtoNo + "&dt=" + Date();
+            var LicenseNumber = $get(iPeilutIndx.id).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].value;
+            var sQueryString = "?EmpID=" + id + "&SidurID=" + SidurId + "&CardDate=" + CardDate + "&SidurDate=" + SidurDate + "&SidurHour=" + SidurHour + "&ShatYetzia=" + GetDateDDMMYYYY(dPeilutDate).concat(" " + ShatYetzia) + "&MakatNesia=" + MakatNesia + "&OtoNo=" + OtoNo +"&LicenseNumber="+LicenseNumber+ "&dt=" + Date();
             $get("divHourglass").style.display = 'block';
             res = window.showModalDialog('HosafatKnisot.aspx' + sQueryString, window, 'dialogwidth:617px;dialogheight:400px;dialogtop:280px;dialogleft:340px;status:no;resizable:no;');
             $get("divHourglass").style.display = 'none';
@@ -2322,6 +2423,70 @@ recieves params. play another button click. Complexity - Medium
        }      
        _CarNum.disabled = false;
    }
+
+/*************************** license number *******************************************/
+
+   function ChkLiscenseNumber(oRow) {
+
+       var KeyID = event.keyCode;
+       var sCardDate = $get("clnDate").value;
+       if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105))) {
+           oId = String(oRow.id).substr(0, oRow.id.length - 6);
+           var lLicenseNo = $get(oId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].value;
+           SetBtnChanges(); //SetLvlChg(3);
+           if ((lLicenseNo != '') && (trim(String(lLicenseNo)).length >= 7)) {
+               wsGeneral.CheckLicenseNo(lLicenseNo,sCardDate, callBackOtoLicense, null, oRow);
+           }
+       }
+   }
+   /**
+   recieves params. does validations. updates ui. . Complexity - Low
+   @method callBackOto
+   */
+   function callBackOtoLicense(result, oRow) {
+
+       var oId = String(oRow.id).substr(0, oRow.id.length - 6);
+       if (result == '0') {
+           var sBehaviorId = 'vldCarLicenseNumBehv'.concat(oId);
+           $find(sBehaviorId)._ensureCallout();
+           $find(sBehaviorId).show(true);
+           $get(oId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].title = "מספר רישוי שגוי";
+           $get(oId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].value = "";
+       }
+       else {
+           $get(oId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].title = result;
+           $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].value = result;
+           var OrgDisable = $get(oId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].disabled;
+           $get(oId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].disabled = true;
+           CopyOtoLicenseNum(oRow);
+       }
+   }
+
+   function CopyOtoLicenseNum(oRow) {
+       oId = String(oRow.id).substr(0, oRow.id.length - 6);
+       var _CarNum = $get(oId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0];
+       var _CurrCarNum = _CarNum.value;
+       var _OrgCarNum = _CarNum.getAttribute("OldV");
+       var _MustCarNum = _CarNum.getAttribute("MustOtoNum");
+       if ($get(oId).nextSibling != null) {
+           var _NextPeilut = $get(oId).nextSibling.cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0];
+           var _NextCarNum = _NextPeilut.value;
+           var _CurrPeilutMkt = $get(oId).nextSibling.cells[_COL_MAKAT].childNodes[0];
+           if (_NextCarNum != undefined) {
+               var _NextMustCarNum = _NextPeilut.getAttribute("MustOtoNum");
+               if (_NextCarNum == '') { _NextCarNum = '0'; }
+               if (_CurrCarNum != '') {
+                   if (((_MustCarNum == '1') && (((_NextCarNum == _OrgCarNum) || (Number(_NextCarNum) == 0))) && (_NextMustCarNum == '1')) || (_CurrPeilutMkt.value == '') || (_CurrPeilutMkt.value == '0')) {
+                       $get("lblCarNumQ").innerText = "האם להחליף את מספר הרישוי בכל הפעילויות בסידור בהן מספר הרכב הוא ריק או ".concat(String(_OrgCarNum));
+                       $get("hidCarKey").value = _OrgCarNum + ',' + _CurrCarNum + ',' + oId;
+                       $get("btnCopy").click();
+                   }
+               }
+           }
+       }
+       _CarNum.disabled = false;
+   }
+/***************************************************************************************/
    function disableUpdateBtn(bDisabled) {
        $get("btnUpdateCard").disabled = bDisabled;
        if (bDisabled==true)
@@ -2435,19 +2600,19 @@ recieves params.  Update UI. Complexity - Low
         var oId = arrKey[2];
         var _OrgCarNum = arrKey[0];
         var _CurrCarNum = arrKey[1];
-        var _CarNum = $get(oId).cells[_COL_CAR_NUMBER].childNodes[0]; 
+        var _CarNum = $get(oId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0];
         var _NextPeilut = $get(oId).nextSibling;
         while (_NextPeilut!=null){
-            _NextPeilutCarNum = _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].value;
+            _NextPeilutCarNum = _NextPeilut.cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].value;
             _NextPeilutMakat = _NextPeilut.cells[_COL_MAKAT].childNodes[0].value;
             if (_NextPeilutCarNum!=undefined){
-            _MustCarNum = _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].getAttribute("MustOtoNum");
+                _MustCarNum = _NextPeilut.cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].getAttribute("MustOtoNum");
             if (((((_NextPeilutCarNum == _OrgCarNum) || (Number(_NextPeilutCarNum) == 0) || (_NextPeilutCarNum == '')) && (((_MustCarNum == '1') || ((_NextPeilutMakat == '') || (_NextPeilutMakat == '0'))))))){
-                if ((_NextPeilut.cells[_COL_CANCEL_PEILUT].firstChild.value!='1') && (_NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].disabled!=true)) {
+                if ((_NextPeilut.cells[_COL_CANCEL_PEILUT].firstChild.value != '1') && (_NextPeilut.cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].disabled != true)) {
                     _CarNum.setAttribute("OldV",_CurrCarNum);
-                    _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("OldV",_CurrCarNum);
-                    _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].value = _CurrCarNum;
-                    _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].title = _CarNum.title;
+                    _NextPeilut.cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].setAttribute("OldV", _CurrCarNum);
+                    _NextPeilut.cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].value = _CurrCarNum;
+                    _NextPeilut.cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].title = _CarNum.title;
                 }
             }
             else{//אם נתקלים במספר רכב שונה עוצרים. אם נתקלים בפעילות שאינה דורשת מספר רכב או ריקה או 0 ממשיכים

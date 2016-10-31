@@ -169,12 +169,13 @@ namespace KDSBLLogic.DAL
         }
 
 
-        public void UpdateControlAttendRecord(DateTime taarich, int status, string teur)
+        public void UpdateControlAttendRecord(DateTime taarich, long LastNumerator, int status, string teur)
         {
             clDal oDal = new clDal();
             try
             {
                 oDal.AddParameter("pTAARICH", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
+                oDal.AddParameter("p_last_Num", ParameterType.ntOracleInt64, LastNumerator, ParameterDir.pdInput); 
                 oDal.AddParameter("pSTATUS", ParameterType.ntOracleInteger, status, ParameterDir.pdInput);
                 oDal.AddParameter("pteur", ParameterType.ntOracleVarchar, teur, ParameterDir.pdInput);
 

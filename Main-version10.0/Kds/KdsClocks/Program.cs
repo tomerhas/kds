@@ -21,29 +21,30 @@ namespace KdsClocks
 {
     class Program
     {
-        
+
         static void Main(string[] args)
         {
             Bootstrapper b = new Bootstrapper();
             b.Init();
-            
-          //  Clock oClock= new Clock();
-            long lRequestNum=0;
+
+            //  Clock oClock= new Clock();
+            long lRequestNum = 0;
             DateTime StartClock = DateTime.Now;
             string LastHour;
-            int status=0;
+            int status = 0;
             try
             {
-                   lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocks", -12);
-                   var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
-                   logManager.InsertLog(lRequestNum, "I", 0, "start clock , time=" + DateTime.Now.ToString());
+                lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.Clocks, "RunClocks", -12);
+                var logManager = ServiceLocator.Current.GetInstance<ILogBakashot>();
+                logManager.InsertLog(lRequestNum, "I", 0, "start clock , time=" + DateTime.Now.ToString());
 
-                   var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
-                   logManager.InsertLog(lRequestNum, "I", 0, "before select to tb_harmony_movment");
-                   clockManager.InsertTnuotShaon(lRequestNum);
-                   logManager.InsertLog(lRequestNum, "I", 0, "after select to tb_harmony_movment, before attend");
-                   RunAttendShaonim(lRequestNum);
-                   logManager.InsertLog(lRequestNum, "I", 0, "after  attend");
+                var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
+             //   logManager.InsertLog(lRequestNum, "I", 0, "before select to tb_harmony_movment");//**remove
+             //   clockManager.InsertTnuotShaon(lRequestNum);//**remove
+             //   logManager.InsertLog(lRequestNum, "I", 0, "after select to tb_harmony_movment, before attend");//** remove
+                logManager.InsertLog(lRequestNum, "I", 0, "before attend");//** add
+                RunAttendShaonim(lRequestNum);
+                logManager.InsertLog(lRequestNum, "I", 0, "after  attend");
                 ////   StartClock = DateTime.Now;
                 ////   var clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
                 ////   status = clGeneral.enStatusRequest.InProcess.GetHashCode();
@@ -53,9 +54,9 @@ namespace KdsClocks
                 ////   InsertMovemetRecords(lRequestNum, LastHour);            
                 //////   InsertMovemetErrRecords(lRequestNum,LastHour);
                 ////   clockManager.UpdateControlClockRecord(StartClock, clGeneral.enStatusRequest.ToBeEnded.GetHashCode(), "End");
-                   status = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
-                   logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
-                /***************************************/ 
+                status = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+                logManager.InsertLog(lRequestNum, "I", 0, "end clock , time=" + DateTime.Now.ToString());
+                /***************************************/
             }
             catch (Exception ex)
             {
@@ -65,7 +66,7 @@ namespace KdsClocks
             finally
             {
                 clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, status);
-               // ServiceLocator.Current.GetInstance<IClockManager>().UpdateControlClockRecord(StartClock, status, "End");
+                // ServiceLocator.Current.GetInstance<IClockManager>().UpdateControlClockRecord(StartClock, status, "End");
             }
         }
         //private static void RunAttandHarmony()
@@ -138,67 +139,69 @@ namespace KdsClocks
         //}
 
         private static void RunAttendShaonim(long lRequestNum)
-      {
-        DataSet dsNetunim = new DataSet();
-        DataSet ds;
-        DateTime taarich=new DateTime(), taarichCtl;
-        IClockManager clockManager; 
-        ILogBakashot log;
-        int  SugRec=0 ,status = 1,mispar_ishi=0,clockId=0,pmispar_sidur=0,p24,isuk,meafyen43;
-        string  istm, inShaa, outShaa,knisaH, teur = "AttendHarmony now";
-        try
         {
-
-            clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
-            log = ServiceLocator.Current.GetInstance<ILogBakashot>();
-            if (clockManager.getLastCntrlAttend() != 1)
+            DataSet dsNetunim = new DataSet();
+            DataSet ds;
+            DateTime taarich = new DateTime(), taarichCtl;
+            IClockManager clockManager;
+            ILogBakashot log;
+            int SugRec = 0, status = 1, mispar_ishi = 0, clockId = 0, pmispar_sidur = 0, p24, isuk, meafyen43;
+            string istm, inShaa, outShaa, knisaH, teur = "AttendHarmony now";
+            long LastNumerator;
+            try
             {
-                dsNetunim = clockManager.GetNetunimToAttend();
-                if (dsNetunim.Tables.Count > 0 && dsNetunim.Tables[0].Rows.Count > 0)
+
+                clockManager = ServiceLocator.Current.GetInstance<IClockManager>();
+                log = ServiceLocator.Current.GetInstance<ILogBakashot>();
+                if (clockManager.getLastCntrlAttend() != 1)
                 {
-                    ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "כמות רשומות להצמדה: " + dsNetunim.Tables[0].Rows.Count);
-                    taarichCtl = DateTime.Now;
-                    clockManager.InsertControlAttendRecord(taarichCtl, status, teur);
-
-               //     var cacheManager = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
-               //     var pundakim = cacheManager.GetCacheItem<DataTable>(CachedItems.Pundakim);
-
-                    foreach (DataRow dr in dsNetunim.Tables[0].Rows)
+                    dsNetunim = clockManager.GetNetunimToAttend();
+                    if (dsNetunim.Tables.Count > 0 && dsNetunim.Tables[0].Rows.Count > 0)
                     {
-                        try
+                        ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "I", 0, "כמות רשומות להצמדה: " + dsNetunim.Tables[0].Rows.Count);
+                        taarichCtl = DateTime.Now;
+                        clockManager.InsertControlAttendRecord(taarichCtl, status, teur);
+
+                        LastNumerator = GetLastNumerator(dsNetunim.Tables[0]);
+                        //     var cacheManager = ServiceLocator.Current.GetInstance<IKDSCacheManager>();
+                        //     var pundakim = cacheManager.GetCacheItem<DataTable>(CachedItems.Pundakim);
+
+                        foreach (DataRow dr in dsNetunim.Tables[0].Rows)
                         {
-                            mispar_ishi = int.Parse(dr["MISPAR_ISHI"].ToString());
-                            taarich = DateTime.Parse(dr["TAARICH"].ToString());
-                            inShaa = dr["Shaa"].ToString().Split(' ')[1].Substring(0, 5).Replace(":", "");
-                            pmispar_sidur = int.Parse(dr["MISPAR_SIDUR"].ToString());
-                            meafyen43 = int.Parse(dr["meafyen43"].ToString());
-                            if(dr["ISUK"].ToString().Trim() != "")
+                            try
                             {
-                                isuk = int.Parse(dr["ISUK"].ToString());
-                                if (isuk == 420 && pmispar_sidur == 99001)
-                                    pmispar_sidur = 99224;
-                                if (isuk == 422 && pmispar_sidur == 99001)
-                                    pmispar_sidur = 99225;
+                                mispar_ishi = int.Parse(dr["MISPAR_ISHI"].ToString());
+                                taarich = DateTime.Parse(dr["TAARICH"].ToString());
+                                inShaa = dr["Shaa"].ToString().Split(' ')[1].Substring(0, 5).Replace(":", "");
+                                pmispar_sidur = int.Parse(dr["MISPAR_SIDUR"].ToString());
+                                meafyen43 = int.Parse(dr["meafyen43"].ToString());
+                                if (dr["ISUK"].ToString().Trim() != "")
+                                {
+                                    isuk = int.Parse(dr["ISUK"].ToString());
+                                    if (isuk == 420 && pmispar_sidur == 99001)
+                                        pmispar_sidur = 99224;
+                                    if (isuk == 422 && pmispar_sidur == 99001)
+                                        pmispar_sidur = 99225;
 
-                                if (dr["code_shaon"].ToString().Trim() != "")
-                                {
-                                    clockId = int.Parse(dr["code_shaon"].ToString());
-                                    var shaon = clockId.ToString().PadLeft(5, '0').Substring(0, 3);
-                                    //    var p = pundakim.Select("MIKUM_PUNDAK=" + shaon + " and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH");
-                                    //   if (p.Length > 0)
-                                    //      IsPundak = true;
-                                }
-                                else
-                                {
-                                    clockId = 0;
-                                }
-                                istm = null;
+                                    if (dr["code_shaon"].ToString().Trim() != "")
+                                    {
+                                        clockId = int.Parse(dr["code_shaon"].ToString());
+                                        var shaon = clockId.ToString().PadLeft(5, '0').Substring(0, 3);
+                                        //    var p = pundakim.Select("MIKUM_PUNDAK=" + shaon + " and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH");
+                                        //   if (p.Length > 0)
+                                        //      IsPundak = true;
+                                    }
+                                    else
+                                    {
+                                        clockId = 0;
+                                    }
+                                    istm = null;
 
-                                SugRec = int.Parse(dr["SugRec"].ToString());
-                                if (taarich.Year > DateTime.Now.Year)
-                                    log.InsertLog(lRequestNum, "E", 0, "שנה לא תקינה", mispar_ishi, taarich);
-                                else
-                                {
+                                    SugRec = int.Parse(dr["SugRec"].ToString());
+                                    if (taarich.Year > DateTime.Now.Year)
+                                        log.InsertLog(lRequestNum, "E", 0, "שנה לא תקינה", mispar_ishi, taarich);
+                                    else
+                                    {
                                         switch (SugRec)
                                         {
                                             case 1:
@@ -229,8 +232,8 @@ namespace KdsClocks
                                                 break;
                                             case 3:
                                                 p24 = 0;
-                                                var val= int.Parse(inShaa);
-                                             
+                                                var val = int.Parse(inShaa);
+
                                                 ds = clockManager.GetYetziaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
                                                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() == "0")
                                                 {
@@ -246,34 +249,34 @@ namespace KdsClocks
                                                     }
                                                     else
                                                     {
-                                                        if (val < 401 || (val <801 && meafyen43==1))
+                                                        if (val < 401 || (val < 801 && meafyen43 == 1))
                                                         {
                                                             p24 = 1;
-                                                             ds = clockManager.GetYetziaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
-                                                             if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() == "0")
-                                                             {
-                                                                 ds = clockManager.GetKnisaNull(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
-                                                                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                                                                 {
-                                                                     if (ds.Tables[0].Rows[0]["knisa"].ToString().Length == 12)
-                                                                         knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(8, 4);
-                                                                     else
-                                                                         knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(0, 4);
+                                                            ds = clockManager.GetYetziaIfExists(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
+                                                            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0][0].ToString() == "0")
+                                                            {
+                                                                ds = clockManager.GetKnisaNull(mispar_ishi, taarich, inShaa, pmispar_sidur, p24);
+                                                                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                                                {
+                                                                    if (ds.Tables[0].Rows[0]["knisa"].ToString().Length == 12)
+                                                                        knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(8, 4);
+                                                                    else
+                                                                        knisaH = ds.Tables[0].Rows[0]["knisa"].ToString().Substring(0, 4);
 
-                                                                     clockManager.UpdateYeziaRecord(mispar_ishi, taarich, knisaH, inShaa, clockId, pmispar_sidur, istm, p24);
-                                                                 }
-                                                                 else
-                                                                 {
-                                                                     p24 = 0;
-                                                                     clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, clockId, pmispar_sidur, istm, p24);
-                                                                 }
-                                                             }
+                                                                    clockManager.UpdateYeziaRecord(mispar_ishi, taarich, knisaH, inShaa, clockId, pmispar_sidur, istm, p24);
+                                                                }
+                                                                else
+                                                                {
+                                                                    p24 = 0;
+                                                                    clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, clockId, pmispar_sidur, istm, p24);
+                                                                }
+                                                            }
                                                         }
                                                         else clockManager.InsertYeziatShaon(mispar_ishi, taarich, inShaa, clockId, pmispar_sidur, istm, p24);
                                                     }
-                                                    
+
                                                 }
-                                             
+
                                                 break;
                                             case 4:
                                                 if (int.Parse(inShaa) < 400)
@@ -327,38 +330,54 @@ namespace KdsClocks
                                                 log.InsertLog(lRequestNum, "E", 0, "לא קיים קוד תנועת שעון", mispar_ishi, taarich);
                                                 break;
                                         }
+                                    }
                                 }
+                                else log.InsertLog(lRequestNum, "E", 0, " לא קיים עיסוק ", mispar_ishi, taarich);
                             }
-                            else log.InsertLog(lRequestNum, "E", 0, " לא קיים עיסוק ", mispar_ishi, taarich);
+                            catch (Exception ex)
+                            {
+                                log.InsertLog(lRequestNum, "E", 0, " בעיה בקליטת רשומה ", mispar_ishi, taarich, ex);
+                            }
                         }
-                        catch (Exception ex)
-                        {
-                            log.InsertLog(lRequestNum, "E", 0, " בעיה בקליטת רשומה ", mispar_ishi, taarich, ex);
-                        }
+                        teur = "AttendHarmony finished";
+                        //clockManager.UpdateControlAttendRecord(taarichCtl, 2, teur);
+
+                        clockManager.UpdateControlAttendRecord(taarichCtl,LastNumerator, 2, teur);
                     }
-                    teur = "AttendHarmony finished";
-                    clockManager.UpdateControlAttendRecord(taarichCtl, 2, teur);
+                    else
+                    {
+                        log.InsertLog(lRequestNum, "I", 0, "לא קיימים נתונים להצמדות");
+                    }
                 }
                 else
                 {
-                    log.InsertLog(lRequestNum, "I", 0, "לא קיימים נתונים להצמדות");
+                    log.InsertLog(lRequestNum, "I", 0, "עודכנו רשומות בטבלה TB_HARMONY_MOVMENT לא בוצעו הצמדות. ריצה קודמת לא סיימה");
                 }
+
             }
-            else
+
+            catch (Exception ex)
             {
-                log.InsertLog(lRequestNum, "I", 0, "עודכנו רשומות בטבלה TB_HARMONY_MOVMENT לא בוצעו הצמדות. ריצה קודמת לא סיימה");
+                status = 3;
+                ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunAttandShaonim Faild: " + ex.Message);
             }
 
+
         }
 
-        catch (Exception ex)
+        private static long GetLastNumerator(DataTable dt)
         {
-            status = 3;
-            ServiceLocator.Current.GetInstance<ILogBakashot>().InsertLog(lRequestNum, "E", 0, "RunAttandShaonim Faild: " + ex.Message);
+            DataRow[] drs;
+            long num;
+            try {
+                drs = dt.Select("", "NUMERATOR DESC");
+                num = long.Parse(drs[0]["NUMERATOR"].ToString());
+                return num;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
-       
-
-      }
-
     }
 }

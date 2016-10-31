@@ -156,7 +156,7 @@ namespace KdsLibrary.KDSLogic.Managers
                 cls.iOldKisuyTor = cls.iKisuyTor;
 
                 cls.lOldOtoNo = cls.lOtoNo;
-
+                cls.lOldLicenseNumber = cls.lLicenseNumber;
 
                 cls.iOldDakotBafoal = cls.iDakotBafoal;
 
@@ -245,8 +245,11 @@ namespace KdsLibrary.KDSLogic.Managers
                 cls.lMisparSiduriOto = oObjPeilutOvdimIns.MISPAR_SIDURI_OTO;
                 cls.lMisparMatala = oObjPeilutOvdimIns.MISPAR_MATALA;
                 cls.lOtoNo = oObjPeilutOvdimIns.OTO_NO;
-                cls.lLicenseNumber = oObjPeilutOvdimIns.LICENSE_NUMBER;
                 cls.lOldOtoNo = cls.lOtoNo;
+                cls.lLicenseNumber = oObjPeilutOvdimIns.LICENSE_NUMBER;
+                cls.lOldLicenseNumber = cls.lLicenseNumber;
+
+
 
                 var kavimManager = _container.Resolve<IKavimManager>();
                 dtPeiluyot = kavimManager.GetKatalogKavim(iMisparIshi, dDateCard, dDateCard);
@@ -318,6 +321,7 @@ namespace KdsLibrary.KDSLogic.Managers
             cls.lOtoNo = (System.Convert.IsDBNull(dr["Oto_No"]) ? 0 : long.Parse(dr["Oto_No"].ToString()));
             cls.lLicenseNumber = (System.Convert.IsDBNull(dr["LICENSE_NUMBER"]) ? 0 : long.Parse(dr["LICENSE_NUMBER"].ToString()));
             cls.lOldOtoNo = cls.lOtoNo;
+            cls.lOldLicenseNumber = cls.lLicenseNumber;
             cls.lMisparSiduriOto = (System.Convert.IsDBNull(dr["mispar_siduri_oto"]) ? 0 : int.Parse(dr["mispar_siduri_oto"].ToString()));
             cls.iElementLeYedia = (System.Convert.IsDBNull(dr["element_for_yedia"]) ? 0 : int.Parse(dr["element_for_yedia"].ToString()));
             cls.iErechElement = (System.Convert.IsDBNull(dr["erech_element"]) ? 0 : int.Parse(dr["erech_element"].ToString()));

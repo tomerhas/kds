@@ -212,7 +212,7 @@
          var vldArr;
          var Rechev;
          var checked;
-       //  debugger;
+         //  debugger;
          is_valid = onchange_txtShatHatchala(false, "");
            if (is_valid) {
                is_valid = onchange_txtShatGmar(false, "");
@@ -265,27 +265,47 @@
                                 }
                             }
 
-                            Rechev = document.getElementById(row.id + "_txtMisRechev");
+                            //Rechev = document.getElementById(row.id + "_txtMisRechev");
+                            //if (Rechev.disabled == false) {
+                            //    if ((trim(Rechev.value) == "" || trim(Rechev.value) == "0") && Rechev.attributes("Is_Required").value == "1") {
+                            //        document.getElementById(row.id + "_vldMisRechev").errormessage = 'חובה להכניס מספר רכב';
+                            //        ShowValidatorCalloutExtender(row.id + "_vldExvldMisRechev");
+                            //        is_valid = false;
+                            //        break;
+                            //    }
+                            //    else {
+                            //        vldArr = document.getElementById(row.id + "_txtIsMisRechevValid").value.split(';');
+                            //        if (vldArr.length > 1) {
+                            //            if (vldArr[1] == "0") {
+                            //                document.getElementById(row.id + "_vldMisRechev").errormessage = vldArr[0];
+                            //                ShowValidatorCalloutExtender(row.id + "_vldExvldMisRechev");
+                            //                is_valid = false;
+                            //                break;
+                            //            }
+                            //        }
+                            //    }
+                            //}                 
+                           
+                             Rechev = document.getElementById(row.id + "_txtMisRishuy");
                             if (Rechev.disabled == false) {
                                 if ((trim(Rechev.value) == "" || trim(Rechev.value) == "0") && Rechev.attributes("Is_Required").value == "1") {
-                                    document.getElementById(row.id + "_vldMisRechev").errormessage = 'חובה להכניס מספר רכב';
-                                    ShowValidatorCalloutExtender(row.id + "_vldExvldMisRechev");
+                                    document.getElementById(row.id + "_vldLicenseRechev").errormessage = 'חובה להכניס מספר רישוי';
+                                    ShowValidatorCalloutExtender(row.id + "_vldExvLicenseRechev");
                                     is_valid = false;
                                     break;
                                 }
                                 else {
-                                    vldArr = document.getElementById(row.id + "_txtIsMisRechevValid").value.split(';');
+                                    vldArr = document.getElementById(row.id + "_txtIsRishuyRechevValid").value.split(';');
                                     if (vldArr.length > 1) {
                                         if (vldArr[1] == "0") {
-                                            document.getElementById(row.id + "_vldMisRechev").errormessage = vldArr[0];
-                                            ShowValidatorCalloutExtender(row.id + "_vldExvldMisRechev");
+                                            document.getElementById(row.id + "_vldLicenseRechev").errormessage = vldArr[0];
+                                            ShowValidatorCalloutExtender(row.id + "_vldExvLicenseRechev");
                                             is_valid = false;
                                             break;
                                         }
                                     }
                                 }
                             }
-
 
                             is_valid = onchange_txtDakot(row);
                             if (!is_valid)
@@ -843,7 +863,121 @@
                document.getElementById(oId).cells[col_MisRechev].childNodes[0].setAttribute("OldV", _CurrCarNum);
            }
        }  
+     //**********************************************  רישוי  ************************************************/
+
+       function onchange_txtMisparRishuy(row, IndexRow) {
+           var idMisRechev = row.id + "_txtMisRishuy";
+           var Mis_Rishuy = document.getElementById(idMisRechev).value;
+           var vld;
+           iRowIndexNochehi = IndexRow;
+           var oCell = document.getElementById(row.id + "_txtMisRechev");
+           var ObjIsValidMis = document.getElementById(row.id + "_txtIsRishuyRechevValid");
+           var Makat = document.getElementById(row.id + "_txtMakat").value;
+           var taarich = document.getElementById("TaarichCA").value;
+           if (IsNumeric(Mis_Rishuy)) {
+               if (Mis_Rishuy != "")
+                   wsGeneral.CheckLicenseNo(Mis_Rishuy,taarich, CheckRishuyRechevSucceded, null, row);
+           }
+           else {
+               oCell.value = "";
+               document.getElementById(idMisRechev).title = "";
+               vld = document.getElementById(row.id + "_vldLicenseRechev");
+               vld.errormessage = "יש להזין ערך מספרי חיובי ושלם בלבד";
+               ShowValidatorCalloutExtender(row.id + "_vldExvLicenseRechev");
+               ObjIsValidMis.value = vld.errormessage + ";0";
+           }
+       }
+       function CheckRishuyRechevSucceded(result, oRow) {
+           var iRowIndex = iRowIndexNochehi;
+           var oCell = document.getElementById(oRow.id + "_txtMisRechev");
+           //var oCell = oRow.childNodes.item(9).innerText;
+           var ObjIsValidMis = document.getElementById(oRow.id + "_txtIsRishuyRechevValid");
+           var vld;
+           if (result != 0) {
+               oCell.value = result;
+               //oRow.childNodes.item(8).title = result;
+               oRow.cells[col_MisRishuy].childNodes[0].title = result;
+               ObjIsValidMis.value = "1";
+               changeRiishuyRechevForAllPeiluyot(oRow, iRowIndex);
+           }
+           else {
+               oCell.value = "";
+               oRow.cells[col_MisRishuy].childNodes[0].title = "";
+               vld = document.getElementById(oRow.id + "_vldLicenseRechev");
+               vld.errormessage = "!מספר רישוי לא קיים";
+               ShowValidatorCalloutExtender(oRow.id + "_vldExvLicenseRechev");
+               ObjIsValidMis.value = vld.errormessage + ";0";
+           }
+       }
+
+
+       function changeRiishuyRechevForAllPeiluyot(oRow, iRowIndex) {
         
+           if (document.getElementById(oRow.id).nextSibling != null) {
+               var oMisRishuy = document.getElementById(oRow.id + "_txtMisRishuy");
+               var iMisRisuy = document.getElementById(oRow.id + "_txtMisRishuy").value;
+               var OrgMisRechev = oMisRishuy.getAttribute("OldV");
+               var MustCarNum = oMisRishuy.getAttribute("Is_Required");
+               var NextPeilut = document.getElementById(oRow.id).nextSibling.cells[col_MisRishuy].childNodes[0];
+               var NextCarNum = NextPeilut.value;
+               var misRechev = document.getElementById(oRow.id + "_txtMisRechev").value;
+               if (NextCarNum != undefined) {
+                   var NextMustCarNum =  NextPeilut.getAttribute("Is_Required");
+                   if (NextCarNum == '') { NextCarNum = '0'; }
+                   if (iMisRisuy != '') {
+                       if ((MustCarNum == '1') && (((NextCarNum == OrgMisRechev) || (Number(NextCarNum) == 0))) && (NextMustCarNum)) {
+                           //     document.getElementById("lblCarNumQ").innerText = "האם להחליף את מספר הרכב בכל הפעילויות בסידור בהן מספר הרכב הוא ריק או ".concat(String(OrgMisRechev));
+                           document.getElementById("lblCarNumQ").innerText = "האם להחליף את מספר הרישוי בכל הפעילויות בסידור בהן מספר הרישוי הוא ריק ";
+                           if (String(OrgMisRechev) != "") {
+                               document.getElementById("lblCarNumQ").innerText = document.getElementById("lblCarNumQ").innerText.concat(" או ", String(OrgMisRechev));
+                           }
+                           document.getElementById("hidCarKey").value = OrgMisRechev + ',' + iMisRisuy + ',' + oRow.id + "," + misRechev;
+                           document.getElementById("btnCopy").click();
+                       }
+                   }
+               }
+           }
+       }
+
+       function btnCopyOtoNum(iAction) {
+          // debugger;
+           $find("pBehvCopy").hide();
+           var arrKey = document.getElementById("hidCarKey").value.split(",");
+           var oId = arrKey[2];
+           var _OrgCarNum = arrKey[0];
+           var _CurrCarNum = arrKey[1];
+           if (iAction == 1) {
+               var _NextPeilutCarNum, _MustCarNum;
+               var _CarNum = document.getElementById(oId).cells[col_MisRishuy].childNodes[0];
+               var _CarNumToolTip = arrKey[3];
+               var _NextPeilut = document.getElementById(oId).nextSibling;
+               while (_NextPeilut != null) {
+                   _NextPeilutCarNum = _NextPeilut.cells[col_MisRishuy].childNodes[0].value;
+                   if (_NextPeilutCarNum != undefined) {
+                       _MustCarNum = _NextPeilut.cells[col_MisRishuy].childNodes[0].getAttribute("Is_Required");
+
+                       if (((_NextPeilutCarNum == _OrgCarNum) || (_NextPeilutCarNum == _CurrCarNum) || (Number(_NextPeilutCarNum) == 0) || (_NextPeilutCarNum == '')) && (_MustCarNum == '1')) {
+                           if ((_NextPeilut.cells[col_MisRishuy].childNodes[0].disabled != true)) {
+                               _CarNum.setAttribute("OldV", _CurrCarNum);
+                               _NextPeilut.cells[col_MisRishuy].childNodes[0].setAttribute("OldV", _CurrCarNum);
+                               _NextPeilut.cells[col_MisRishuy].childNodes[0].value = _CurrCarNum;
+                               _NextPeilut.cells[col_MisRishuy].childNodes[0].title = _CarNumToolTip;
+                               _NextPeilut.cells[col_MisRechev].childNodes[0].value = _CarNumToolTip;
+                           }
+                       }
+                       else {//אם נתקלים במספר רכב שונה עוצרים. אם נתקלים בפעילות שאינה דורשת מספר רכב או ריקה או 0 ממשיכים
+                           if ((_NextPeilutCarNum != '0') && (_NextPeilutCarNum != '') && (_MustCarNum != '0')) {
+                               break;
+                           }
+                       }
+                   }
+                   _NextPeilut = _NextPeilut.nextSibling;
+               }
+           }
+           else {
+               document.getElementById(oId).cells[col_MisRishuy].childNodes[0].setAttribute("OldV", _CurrCarNum);
+           }
+       }
        /**************** מקט *******************/
        function onchange_txtMakat(row) {
            var vld = document.getElementById(row.id + "_vldMakat");
@@ -898,7 +1032,8 @@
           }
            else {
                ObjIsValidMakat.value = "1";
-               document.getElementById(orow.id + "_txtMisRechev").attributes("Is_Required").value = "1";
+               //  document.getElementById(orow.id + "_txtMisRechev").attributes("Is_Required").value = "1";
+               document.getElementById(orow.id + "_txtMisRishuy").attributes("Is_Required").value = "1";
            }
        }
        function ErechLeElemntSucceded(result, orow) {
@@ -1375,13 +1510,22 @@
                                        </ItemTemplate>
                                    </asp:TemplateField>
                                   
-                                    <asp:BoundField DataField="MISPAR_RISHUY" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
+                                  <asp:BoundField DataField="MISPAR_RISHUY" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
+                                   <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Wrap="true" HeaderText="מספר רכב" ItemStyle-Width="80px">
+                                       <ItemTemplate>
+                                            <asp:TextBox ID="txtMisRishuy" runat="server" MaxLength="8" Width="65px" CssClass="WCPilutTxt"></asp:TextBox>
+                                            <asp:CustomValidator runat="server" id="vldLicenseRechev" ControlToValidate="txtMisRishuy" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
+                                             <cc1:ValidatorCalloutExtender runat="server" ID="exvLicenseRechev" BehaviorID="vldExvLicenseRechev"  TargetControlID="vldLicenseRechev" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>  
+                                       </ItemTemplate>
+                                   </asp:TemplateField>
+
+                                   <%-- <asp:BoundField DataField="MISPAR_RISHUY" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
                                     <asp:TemplateField HeaderStyle-HorizontalAlign="Center"  HeaderStyle-Wrap="true" HeaderText="מספר רישוי" >
                                        <ItemTemplate>
                                         <asp:TextBox ID="lblMisparRishuy" runat="server" ></asp:TextBox>
-                                     <%--  <input  type="text" ID="lblMisparRishuy" runat="server" readonly="readonly" style="width:50px;border:none;background:none;" />--%>
+                                 
                                        </ItemTemplate>
-                                   </asp:TemplateField>
+                                   </asp:TemplateField>--%>
                                    <asp:BoundField DataField="MAKAT" ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="90px" />
                                    <asp:TemplateField ItemStyle-Width="85px" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-Wrap="true" HeaderText="מק''ט" >
                                        <ItemTemplate>
@@ -1437,6 +1581,14 @@
                                                 <asp:TextBox ID="txtIsMisRechevValid" runat="server" Width="40px"></asp:TextBox>
                                           </ItemTemplate>
                                       </asp:TemplateField>
+
+                                    <asp:BoundField DataField="IS_VALID_MIS_RISHUY" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
+                                      <asp:TemplateField  >
+                                           <ItemTemplate>
+                                                <asp:TextBox ID="txtIsRishuyRechevValid" runat="server" Width="40px"></asp:TextBox>
+                                          </ItemTemplate>
+                                      </asp:TemplateField>
+
                                       <asp:BoundField DataField="PRATIM" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
                                       <asp:BoundField DataField="SHAT_YEZIA_DATE" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
                                       <asp:TemplateField  >

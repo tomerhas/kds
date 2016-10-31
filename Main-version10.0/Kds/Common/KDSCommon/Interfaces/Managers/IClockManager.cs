@@ -19,7 +19,8 @@ namespace KDSCommon.Interfaces.Managers
         DataSet GetNetunimToAttend();
         void InsertControlAttendRecord(DateTime taarich, int status, string teur);
         int getLastCntrlAttend();
-        void UpdateControlAttendRecord(DateTime taarich, int status, string teur);
+        //  void UpdateControlAttendRecord(DateTime taarich, int status, string teur);
+        void UpdateControlAttendRecord(DateTime taarich,long LastNumerator, int status, string teur);
         DataSet GetKnisaIfExists(int iMisparIshi, DateTime taarich, string inShaa, int mispar_sidur, int p24);
         void InsertKnisatShaon(int mispar_ishi, DateTime taarich, string shaa, int site_kod, int mispar_sidur, string iStm, int p24);
         DataSet GetYetziaNull(int mispar_ishi, DateTime taarich, string shaa, int mispar_sidur, int p24);
