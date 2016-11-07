@@ -351,7 +351,7 @@ namespace KdsClocks
                 }
                 else
                 {
-                    log.InsertLog(lRequestNum, "I", 0, "עודכנו רשומות בטבלה TB_HARMONY_MOVMENT לא בוצעו הצמדות. ריצה קודמת לא סיימה");
+                    log.InsertLog(lRequestNum, "I", 0, ".לא בוצעו הצמדות. ריצה קודמת לא סיימה");
                 }
 
             }

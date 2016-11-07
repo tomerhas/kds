@@ -59,32 +59,41 @@ namespace KdsWebApplication.Modules.Ovdim
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            DataView dv;
+            DataView dv,dvM;
             DateTime taarich;
             int MisaprIshi;
+            DataSet ds;
             if (!IsPostBack)
             {
                 taarich = DateTime.Parse(Request.QueryString["CardDate"]);
                 MisaprIshi = int.Parse(Request.QueryString["EmpID"]);
                 LabelHeader.Text = " החתמות התייצבות למספר אישי " + MisaprIshi + " לתאריך " + taarich.ToShortDateString();                //DataTable dtAllErrors = Session["Errors"] as DataTable;
-                dv = GetHityazvuyot(MisaprIshi, DateTime.Parse(Request.QueryString["CardDate"]));
+
+                ds = GetHityazvuyot(MisaprIshi, DateTime.Parse(Request.QueryString["CardDate"]));
+                dv = new DataView(ds.Tables[0]);
                 grdHityazvut.DataSource = dv;
                 grdHityazvut.DataBind();
 
+              
+                dvM = new DataView(ds.Tables[1]);
+                GridView1.DataSource = dvM;
+                GridView1.DataBind();
+                GridView1.BorderStyle = BorderStyle.None;
                 if (dv.Table.Rows.Count == 0)
                     LabelHeader.CssClass = "WorkCardRechivimGridHeader";
             }
         }
 
-        private DataView GetHityazvuyot(int mispar_ishi , DateTime taarich)
+        private DataSet GetHityazvuyot(int mispar_ishi , DateTime taarich)
         {
             clOvdim oOvdim = new clOvdim();
-            DataTable dt;
-            DataView dv;
-       
-             dt = oOvdim.GetOvedHityazvuyot(mispar_ishi, taarich);
-             dv = new DataView(dt);
-            return dv;
+
+
+            return oOvdim.GetOvedHityazvuyot(mispar_ishi, taarich); ;
+            //ds = oOvdim.GetOvedHityazvuyot(mispar_ishi, taarich);
+            // dt = ds.Tables[0];
+            // dv = new DataView(dt);
+            //return dv;
         }
         protected void grdHityazvut_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -111,6 +120,20 @@ namespace KdsWebApplication.Modules.Ovdim
                 }
 
               
+            }
+        }
+
+
+        protected void grdMessage_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            string txt;
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+
+                txt = e.Row.Cells[0].Text + " - לא נמצאה התייצבות מתאימה ";
+                e.Row.Cells[0].Text = txt;
+
             }
         }
 

@@ -7,6 +7,15 @@
     <title>החתמות התייצבות </title>
     <link href="../../StyleSheet.css"type="text/css" rel="stylesheet" />
     <script src="../../Js/GeneralFunction.js" ></script>
+      <style type="text/css">
+        .GridPagerNew
+        {
+	        color:#115799;	       
+	        font-size:15px;
+	        font-weight:bold;
+	        border:none;
+        }
+     </style>
 </head>
 <body dir="rtl">
     <form id="form1" runat="server">
@@ -61,6 +70,19 @@
         </tr>
         </table>
         <br />
+       <div  align="right" style="border:hidden;padding-right:60px">
+            <asp:GridView runat="server" ID="GridView1" AutoGenerateColumns="false"  ShowHeader="false" BorderWidth="0px" BorderStyle="None" BorderColor="White"
+                OnRowDataBound="grdMessage_RowDataBound">
+            <Columns>
+                <asp:BoundField DataField="Hodaa" ControlStyle-BorderStyle="None" />
+            </Columns> 
+                     
+            <RowStyle CssClass="GridPagerNew"  BorderStyle="None"  />
+                <AlternatingRowStyle BorderStyle="None"  />
+        </asp:GridView>
+       </div>
+       <br />
+
         <table style="width:90%;">
             <tr>
                 <td style="width:100%;" align="right">

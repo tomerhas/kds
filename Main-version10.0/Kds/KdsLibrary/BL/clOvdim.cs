@@ -2023,19 +2023,20 @@ namespace KdsLibrary.BL
            }
        }
   
-        public DataTable GetOvedHityazvuyot(int iMisparIshi, DateTime taarich)
+        public DataSet GetOvedHityazvuyot(int iMisparIshi, DateTime taarich)
         {
             clDal oDal = new clDal();
-            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
             try
             {
                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
                 oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput, 100);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.AddParameter("p_Cur_h", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
 
-                oDal.ExecuteSP(clGeneral.cProGetHityazvutLeoved, ref dt);
+                oDal.ExecuteSP(clGeneral.cProGetHityazvutLeoved, ref ds);
 
-                return dt;
+                return ds;
             }
             catch (Exception ex)
             {
