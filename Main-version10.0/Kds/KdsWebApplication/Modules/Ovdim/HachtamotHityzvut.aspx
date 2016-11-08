@@ -25,6 +25,7 @@
    <div align="center">
        <asp:Label runat="server" ID="lblError" ForeColor="Red" Font-Bold="true" Visible="false" Text="לא נמצאו התייצבויות לעובד!" ></asp:Label>
         <br />
+        <br />
        <table style="width:90%;" cellspacing="0">
         <tr>
             <td align="center" style="width:100%;">
@@ -36,14 +37,14 @@
          <tr>
             <td style="width:100%;">
                 <asp:GridView runat="server" ID="grdHityazvut" AutoGenerateColumns="false"  
-                    EmptyDataText="לא נמצאו נתונים!" AllowPaging="true" PageSize="6" 
+                    EmptyDataText="לא קיימות התייצבויות לתאריך זה" AllowPaging="true" PageSize="6" 
                     HeaderStyle-CssClass="WorkCardRechivimGridHeader" CssClass="WorkCardRechivimGridRow"
                      OnRowDataBound="grdHityazvut_RowDataBound" 
                     HeaderStyle-ForeColor="White" Width="100%">
                     <Columns>
                         <asp:BoundField DataField="Mispar_Sidur" HeaderText="מספר סידור" ItemStyle-CssClass="WorkCardRechivimGridRow" />
                          <asp:BoundField DataField="TEUR_SIDUR_MEYCHAD" HeaderText="תאור סידור" ItemStyle-CssClass="WorkCardRechivimGridRow"/>
-                         <asp:BoundField DataField="SHAT_HATCHALA" HeaderText="שעת החתמה" DataFormatString="{0:HH:mm}" ItemStyle-CssClass="WorkCardRechivimGridRow"/>
+                         <asp:BoundField DataField="SHAT_HATCHALA" HeaderText="שעת החתמה" DataFormatString="{0:HH:mm dd/MM/yyyy}" ItemStyle-CssClass="WorkCardRechivimGridRow"/>
                          <asp:BoundField DataField="TEUR_MIKUM_YECHIDA" HeaderText="מיקום החתמה" ItemStyle-CssClass="WorkCardRechivimGridRow"/>
 
                           <asp:TemplateField HeaderText="התייצבות ראשונה"    ItemStyle-HorizontalAlign="Center"  ItemStyle-CssClass="WorkCardRechivimGridRow"   >
