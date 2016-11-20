@@ -112,6 +112,10 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  g.waitForWindow("WorkCard",driver);
       WorkCard.Btn_Close(driver).click();
       
+      
+      
+      
+      
      
 	  
 	  
