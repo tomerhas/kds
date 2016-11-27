@@ -21,9 +21,6 @@
           <QueryParameter Name="P_MISPAR_ISHI">
             <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="P_TAARICH_T">
-            <Value>=Parameters!P_TAARICH_T.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="P_TAARICH">
             <Value>=Parameters!P_TAARICH.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
@@ -3217,7 +3214,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif(Fields!R308.Value&gt;0,Fields!R28.Value+Fields!R203.Value+Fields!R29.Value+" *",Fields!R28.Value+Fields!R203.Value+Fields!R29.Value)</Value>
+                                  <Value>=iif(Fields!R308.Value &lt;&gt; nothing and Fields!R308.Value&gt;0,"* " &amp; Fields!R28.Value+Fields!R203.Value+Fields!R29.Value,Fields!R28.Value+Fields!R203.Value+Fields!R29.Value)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <Format>0;(0);''</Format>
@@ -3262,7 +3259,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif(Fields!R307.Value&gt;0, Fields!R30.Value+Fields!R202.Value+Fields!R26.Value &amp;" *", Fields!R30.Value+Fields!R202.Value+Fields!R26.Value)</Value>
+                                  <Value>=iif(Fields!R307.Value &lt;&gt; nothing and Fields!R307.Value&gt;0, "* " &amp; Fields!R30.Value+Fields!R202.Value+Fields!R26.Value,Fields!R30.Value+Fields!R202.Value+Fields!R26.Value)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <Format>0;(0);''</Format>
@@ -3296,6 +3293,7 @@
                             <PaddingBottom>0.5pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -3442,7 +3440,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!R131.Value - Fields!R95</Value>
+                                  <Value>=Fields!R131.Value - Fields!R95.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <Format>0;(0);''</Format>
@@ -13573,7 +13571,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
             <Width>3.61973in</Width>
             <ZIndex>18</ZIndex>
             <Visibility>
-              <Hidden>=iif(Sum(Fields!R307.Value, "DsRechivim")&gt;0 or Sum(Fields!R308.Value, "DsRechivim")&gt;0,true,false)</Hidden>
+              <Hidden>=iif(Sum(Fields!R307.Value, "DsRechivim")&gt;0 or Sum(Fields!R308.Value, "DsRechivim")&gt;0,false,true)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -13681,10 +13679,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
       </DefaultValue>
       <Prompt>P_DT</Prompt>
     </ReportParameter>
-    <ReportParameter Name="P_TAARICH_T">
-      <DataType>String</DataType>
-      <Prompt>P TAARICH T</Prompt>
-    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -13730,11 +13724,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>3</RowIndex>
           <ParameterName>P_DT</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>0</ColumnIndex>
-          <RowIndex>4</RowIndex>
-          <ParameterName>P_TAARICH_T</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
