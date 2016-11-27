@@ -1,18 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "KdsReports", "KdsReports\KdsReports.rptproj", "{BB1C05B1-32B7-44CC-ABB1-A01B840AC64D}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = KdsReports\\KdsReports.rptproj
-		SccProjectName1 = KdsReports
-		SccLocalPath1 = KdsReports
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Default = Debug|Default
 		DebugLocal|Default = DebugLocal|Default
@@ -30,5 +23,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfssrv2015:8080/tfs/ksafimcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = KdsReports\\KdsReports.rptproj
+		SccProjectName1 = KdsReports
+		SccLocalPath1 = KdsReports
 	EndGlobalSection
 EndGlobal

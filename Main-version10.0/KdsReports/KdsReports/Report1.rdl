@@ -1,0 +1,1586 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource1">
+      <DataSourceReference>DataSource1</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>6dc056e5-3e9f-4d13-afcf-c8b65bb2fff6</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>&lt;?xml version="1.0" standalone="yes"?&gt;
+&lt;xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop"&gt;
+  &lt;xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+        &lt;xs:element name="Rechivim_Yomi" msprop:REFCursorName="REFCursor"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="DAY_NUM" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="DAY_OT" msprop:OraDbType="126" type="xs:string" minOccurs="0" /&gt;
+              &lt;xs:element name="MISPAR_ISHI" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="TAARICH" msprop:OraDbType="106" type="xs:dateTime" minOccurs="0" /&gt;
+              &lt;xs:element name="R1" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R22" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R26" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R28" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R29" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R30" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R47" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R48" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R49" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R50" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R55" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R66" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R67" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R76" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R77" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R78" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R91" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R92" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R95" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R125" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R126" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R131" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R202" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R203" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R220" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R221" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+ 	      &lt;xs:element name="R307" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R308" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="HEARA" msprop:OraDbType="126" type="xs:string" minOccurs="0" /&gt;
+              &lt;xs:element name="SIMUN" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+            &lt;/xs:sequence&gt;
+          &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+        &lt;xs:element name="Rechivim_Chodshi" msprop:REFCursorName="REFCursor1"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="R1" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R5" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R22" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R44" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R26" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R28" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R29" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R30" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R47" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R48" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R49" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R50" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R55" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R66" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R67" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R76" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R77" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R78" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R91" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R92" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R95" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R100" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R101" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R102" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R103" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R108" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R119" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R120" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R121" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R122" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R125" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R126" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R131" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R146" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R147" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R160" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R202" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R203" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R219" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R220" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R221" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+            &lt;/xs:sequence&gt;
+          &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+        &lt;xs:element name="Rechivey_Headrut" msprop:REFCursorName="REFCursor2"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="R53" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R56" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R57" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R60" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R61" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R62" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R64" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R65" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R66" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R67" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R68" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R69" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R70" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R71" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R72" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R266" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R280" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R289" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R290" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R292" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+            &lt;/xs:sequence&gt;
+          &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+        &lt;xs:element name="Rechivey_Shonot" msprop:REFCursorName="REFCursor3"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="R1" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R10" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R11" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R12" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R39" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R41" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R43" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R75" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R95" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R112" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R113" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R114" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R115" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R116" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R117" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R118" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R126" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R204" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R205" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R206" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R224" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R225" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R226" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R227" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R228" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R229" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R230" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R231" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R232" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R242" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R243" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R247" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R282" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R283" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R284" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R285" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R286" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R287" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R288" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R297" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="R1B" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+            &lt;/xs:sequence&gt;
+          &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+        &lt;xs:element name="Num_Rechivim" msprop:REFCursorName="REFCursor4"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="CNT_HEADRUT" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="CNT_SHONOT" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+            &lt;/xs:sequence&gt;
+          &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+        &lt;xs:element name="Rechivey_Kizuz" msprop:REFCursorName="REFCursor5"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="KOD_RECHIV" msprop:OraDbType="112" type="xs:int" minOccurs="0" /&gt;
+              &lt;xs:element name="ERECH_RECHIV" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+              &lt;xs:element name="TEUR_RECHIV" msprop:OraDbType="126" type="xs:string" minOccurs="0" /&gt;
+            &lt;/xs:sequence&gt;
+          &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+        &lt;xs:element name="Rechivey_kizuz_Neemanim" msprop:REFCursorName="REFCursor6"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="TEUR_SIDUR_MEYCHAD" msprop:OraDbType="126" type="xs:string" minOccurs="0" /&gt;
+              &lt;xs:element name="MISPAR_SIDUR" msprop:OraDbType="112" type="xs:int" minOccurs="0" /&gt;
+              &lt;xs:element name="DAKOT" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" /&gt;
+            &lt;/xs:sequence&gt;
+          &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+      &lt;/xs:choice&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="DAY_NUM">
+          <DataField>DAY_NUM</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DataSet2">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>
+&lt;Query&gt;
+
+ &lt;XmlData&gt;
+&lt;a&gt;
+	&lt;b id="bb01"&gt;
+		&lt;b1&gt;bbbbbbb1&lt;/b1&gt;
+		&lt;b2&gt;bbbbbbb2&lt;/b2&gt;
+	&lt;/b&gt;
+	&lt;b id="bb02"&gt;
+		&lt;b1&gt;bbbbbbb3&lt;/b1&gt;
+		&lt;b2&gt;bbbbbbb4&lt;/b2&gt;
+	&lt;/b&gt;
+&lt;/a&gt;
+ &lt;/XmlData&gt;
+
+
+ &lt;/Query&gt;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="b1">
+          <DataField>b1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="b2">
+          <DataField>b2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Tablix Name="Tablix3">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>2.5cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox13">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>b1</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox13</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="b1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!b1.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>b1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details1" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>DataSet2</DataSetName>
+            <Top>6.39974cm</Top>
+            <Left>6.95537cm</Left>
+            <Height>1.2cm</Height>
+            <Width>2.5cm</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+        </ReportItems>
+        <Height>6.50627in</Height>
+        <Style />
+      </Body>
+      <Width>16.58131in</Width>
+      <Page>
+        <PageHeight>29.7cm</PageHeight>
+        <PageWidth>21cm</PageWidth>
+        <LeftMargin>2cm</LeftMargin>
+        <RightMargin>2cm</RightMargin>
+        <TopMargin>2cm</TopMargin>
+        <BottomMargin>2cm</BottomMargin>
+        <ColumnSpacing>0.13cm</ColumnSpacing>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="data">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>&lt;NewDataSet&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;1&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;א&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-01T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;445&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.14&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;72&lt;/R221&gt;
+    &lt;HEARA&gt;עח חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;2&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ב&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-02T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;565&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;49&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;3&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ג&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-03T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;516&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;מחלת ילד&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;4&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ד&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-04T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;486&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.06&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;31&lt;/R221&gt;
+    &lt;HEARA&gt;עח חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;5&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ה&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-05T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;476&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.08&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;41&lt;/R221&gt;
+    &lt;HEARA&gt;עח חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;6&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ו&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-06T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;0&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;0&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;7&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ש&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-07T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;0&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;0&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;8&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;א&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-08T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;471&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.09&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;46&lt;/R221&gt;
+    &lt;HEARA&gt;עח חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;9&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ב&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-09T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;479&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.07&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;36&lt;/R221&gt;
+    &lt;HEARA&gt;עח  חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;10&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ג&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-10T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;478&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.07&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;36&lt;/R221&gt;
+    &lt;HEARA&gt;עח  חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;11&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ע&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-11T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;345&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;45&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;300&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;12&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ח&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-12T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;0&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;0&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;13&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ו&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-13T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;0&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;0&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;14&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ש&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-14T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;0&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;0&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;15&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;א&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-15T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;470&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.09&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;46&lt;/R221&gt;
+    &lt;HEARA&gt;עח  חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;16&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ב&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-16T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;480&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.07&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;36&lt;/R221&gt;
+    &lt;HEARA&gt;עח  חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;17&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ג&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-17T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;476&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.08&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;41&lt;/R221&gt;
+    &lt;HEARA&gt;עח  חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;18&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ד&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-18T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;533&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;17&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;19&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ה&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-19T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;0&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;מחלה&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;20&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ו&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-20T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;0&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;0&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;21&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ש&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-21T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;0&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;0&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;22&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;א&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-22T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;488&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.05&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;26&lt;/R221&gt;
+    &lt;HEARA&gt;עח  חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;23&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ב&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-23T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;439&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.15&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;77&lt;/R221&gt;
+    &lt;HEARA&gt;עח  חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;24&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ג&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-24T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;477&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.08&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;41&lt;/R221&gt;
+    &lt;HEARA&gt;עח  חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;25&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ד&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-25T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;487&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.06&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;31&lt;/R221&gt;
+    &lt;HEARA&gt;עח  חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;26&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;לג&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-26T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;533&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;17&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;27&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ו&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-27T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;0&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;0&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;28&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ש&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-28T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;0&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;0&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;29&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;א&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-29T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;477&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.08&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;41&lt;/R221&gt;
+    &lt;HEARA&gt;עח  חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;30&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ב&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-30T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;470&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.09&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;46&lt;/R221&gt;
+    &lt;HEARA&gt;עח  חופש&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Yomi&gt;
+    &lt;DAY_NUM&gt;31&lt;/DAY_NUM&gt;
+    &lt;DAY_OT&gt;ג&lt;/DAY_OT&gt;
+    &lt;MISPAR_ISHI&gt;75757&lt;/MISPAR_ISHI&gt;
+    &lt;TAARICH&gt;2016-05-31T00:00:00+03:00&lt;/TAARICH&gt;
+    &lt;R1&gt;535&lt;/R1&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0&lt;/R67&gt;
+    &lt;R76&gt;19&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;516&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;0&lt;/R221&gt;
+    &lt;HEARA&gt;0&lt;/HEARA&gt;
+    &lt;SIMUN&gt;0&lt;/SIMUN&gt;
+  &lt;/Rechivim_Yomi&gt;
+  &lt;Rechivim_Chodshi&gt;
+    &lt;R1&gt;10126&lt;/R1&gt;
+    &lt;R5&gt;0&lt;/R5&gt;
+    &lt;R22&gt;0&lt;/R22&gt;
+    &lt;R44&gt;0&lt;/R44&gt;
+    &lt;R26&gt;0&lt;/R26&gt;
+    &lt;R28&gt;0&lt;/R28&gt;
+    &lt;R29&gt;0&lt;/R29&gt;
+    &lt;R30&gt;0&lt;/R30&gt;
+    &lt;R47&gt;0&lt;/R47&gt;
+    &lt;R48&gt;0&lt;/R48&gt;
+    &lt;R49&gt;0&lt;/R49&gt;
+    &lt;R50&gt;0&lt;/R50&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R55&gt;0&lt;/R55&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.98&lt;/R67&gt;
+    &lt;R76&gt;0&lt;/R76&gt;
+    &lt;R77&gt;0&lt;/R77&gt;
+    &lt;R78&gt;0&lt;/R78&gt;
+    &lt;R91&gt;0&lt;/R91&gt;
+    &lt;R92&gt;0&lt;/R92&gt;
+    &lt;R100&gt;0&lt;/R100&gt;
+    &lt;R101&gt;0&lt;/R101&gt;
+    &lt;R102&gt;0&lt;/R102&gt;
+    &lt;R103&gt;0&lt;/R103&gt;
+    &lt;R108&gt;0&lt;/R108&gt;
+    &lt;R119&gt;0&lt;/R119&gt;
+    &lt;R120&gt;0&lt;/R120&gt;
+    &lt;R121&gt;0&lt;/R121&gt;
+    &lt;R122&gt;0&lt;/R122&gt;
+    &lt;R125&gt;0&lt;/R125&gt;
+    &lt;R126&gt;11136&lt;/R126&gt;
+    &lt;R131&gt;0&lt;/R131&gt;
+    &lt;R146&gt;0&lt;/R146&gt;
+    &lt;R147&gt;0&lt;/R147&gt;
+    &lt;R160&gt;0&lt;/R160&gt;
+    &lt;R202&gt;0&lt;/R202&gt;
+    &lt;R203&gt;0&lt;/R203&gt;
+    &lt;R219&gt;10.80&lt;/R219&gt;
+    &lt;R220&gt;0&lt;/R220&gt;
+    &lt;R221&gt;647&lt;/R221&gt;
+  &lt;/Rechivim_Chodshi&gt;
+  &lt;Rechivey_Headrut&gt;
+    &lt;R53&gt;0&lt;/R53&gt;
+    &lt;R56&gt;0&lt;/R56&gt;
+    &lt;R57&gt;0&lt;/R57&gt;
+    &lt;R60&gt;1&lt;/R60&gt;
+    &lt;R61&gt;0&lt;/R61&gt;
+    &lt;R62&gt;0&lt;/R62&gt;
+    &lt;R64&gt;0&lt;/R64&gt;
+    &lt;R65&gt;0&lt;/R65&gt;
+    &lt;R66&gt;0&lt;/R66&gt;
+    &lt;R67&gt;0.98&lt;/R67&gt;
+    &lt;R68&gt;0&lt;/R68&gt;
+    &lt;R69&gt;0&lt;/R69&gt;
+    &lt;R70&gt;0&lt;/R70&gt;
+    &lt;R71&gt;0.14&lt;/R71&gt;
+    &lt;R72&gt;0&lt;/R72&gt;
+    &lt;R266&gt;0&lt;/R266&gt;
+    &lt;R280&gt;0&lt;/R280&gt;
+    &lt;R289&gt;0&lt;/R289&gt;
+    &lt;R290&gt;0&lt;/R290&gt;
+    &lt;R292&gt;0&lt;/R292&gt;
+  &lt;/Rechivey_Headrut&gt;
+  &lt;Rechivey_Shonot&gt;
+    &lt;R1&gt;10126&lt;/R1&gt;
+    &lt;R10&gt;0&lt;/R10&gt;
+    &lt;R11&gt;0&lt;/R11&gt;
+    &lt;R12&gt;0&lt;/R12&gt;
+    &lt;R39&gt;0&lt;/R39&gt;
+    &lt;R41&gt;0&lt;/R41&gt;
+    &lt;R43&gt;0&lt;/R43&gt;
+    &lt;R75&gt;21&lt;/R75&gt;
+    &lt;R95&gt;0&lt;/R95&gt;
+    &lt;R112&gt;0&lt;/R112&gt;
+    &lt;R113&gt;0&lt;/R113&gt;
+    &lt;R114&gt;0&lt;/R114&gt;
+    &lt;R115&gt;0&lt;/R115&gt;
+    &lt;R116&gt;0&lt;/R116&gt;
+    &lt;R117&gt;0&lt;/R117&gt;
+    &lt;R118&gt;0&lt;/R118&gt;
+    &lt;R126&gt;0&lt;/R126&gt;
+    &lt;R204&gt;0&lt;/R204&gt;
+    &lt;R205&gt;0&lt;/R205&gt;
+    &lt;R206&gt;0&lt;/R206&gt;
+    &lt;R224&gt;0&lt;/R224&gt;
+    &lt;R225&gt;0&lt;/R225&gt;
+    &lt;R226&gt;0&lt;/R226&gt;
+    &lt;R227&gt;0&lt;/R227&gt;
+    &lt;R228&gt;0&lt;/R228&gt;
+    &lt;R229&gt;0&lt;/R229&gt;
+    &lt;R230&gt;0&lt;/R230&gt;
+    &lt;R231&gt;0&lt;/R231&gt;
+    &lt;R232&gt;0&lt;/R232&gt;
+    &lt;R242&gt;0&lt;/R242&gt;
+    &lt;R243&gt;0&lt;/R243&gt;
+    &lt;R247&gt;0&lt;/R247&gt;
+    &lt;R282&gt;0&lt;/R282&gt;
+    &lt;R283&gt;0&lt;/R283&gt;
+    &lt;R284&gt;0&lt;/R284&gt;
+    &lt;R285&gt;0&lt;/R285&gt;
+    &lt;R286&gt;0&lt;/R286&gt;
+    &lt;R287&gt;0&lt;/R287&gt;
+    &lt;R288&gt;0&lt;/R288&gt;
+    &lt;R297&gt;0&lt;/R297&gt;
+    &lt;R1B&gt;0&lt;/R1B&gt;
+  &lt;/Rechivey_Shonot&gt;
+  &lt;Num_Rechivim&gt;
+    &lt;CNT_HEADRUT&gt;1&lt;/CNT_HEADRUT&gt;
+    &lt;CNT_SHONOT&gt;1&lt;/CNT_SHONOT&gt;
+  &lt;/Num_Rechivim&gt;
+&lt;/NewDataSet&gt;</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>data</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>data</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <EmbeddedImages>
+    <EmbeddedImage Name="logo1">
+      <MIMEType>image/jpeg</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>2cafc2ee-3d3c-4f28-97b0-c1651b965e8d</rd:ReportID>
+</Report>
