@@ -763,7 +763,7 @@ namespace KdsBatch
         private void HashlamatNochehutLetashlumMiRechiveyPremia()
         {
             float fErechRechiv1, fErechRechiv126, fErechRechiv2, fErechRechiv133, fErechRechiv134, fErechRechiv30, fErechRechiv28;
-            float ftosefetMax28,ftosefetMax30,ftosefetMax30_2, fErechRechiv1New, fErechRechiv1New2;
+            float ftosefetMax28,ftosefetMax30,ftosefetMax30_2, fErechRechiv1New, fErechRechiv1New2, Dakot;
             try
             {
                 Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], objOved.Taarich);
@@ -787,8 +787,10 @@ namespace KdsBatch
                     fErechRechiv1New = Math.Min(fErechRechiv126, fErechRechiv1 + ftosefetMax28);
                     addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), fErechRechiv1New);
 
-                    fErechRechiv28 = fErechRechiv28 - (Math.Min(ftosefetMax28, fErechRechiv126 - fErechRechiv1));
-                    fErechRechiv134 = fErechRechiv134 - (Math.Min(ftosefetMax28, fErechRechiv126 - fErechRechiv1));
+                    Dakot= Math.Min(ftosefetMax28, fErechRechiv126 - fErechRechiv1);
+                    fErechRechiv28 = fErechRechiv28 - Dakot;
+                    fErechRechiv134 = fErechRechiv134 - Dakot;
+                    addRowToTable(clGeneral.enRechivim.HashlamaNochechutYomitFromPremiaNamlak.GetHashCode(), Dakot);
                     addRowToTable(clGeneral.enRechivim.DakotPremiaVisa.GetHashCode(), fErechRechiv28);
                     addRowToTable(clGeneral.enRechivim.PremyaNamlak.GetHashCode(), fErechRechiv134);
 
@@ -798,8 +800,10 @@ namespace KdsBatch
                         fErechRechiv1New2 = Math.Min(fErechRechiv126, fErechRechiv1New + ftosefetMax30_2);
                         addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), fErechRechiv1New2);
 
-                        fErechRechiv30 = fErechRechiv30 - (Math.Min(ftosefetMax30_2, fErechRechiv126 - fErechRechiv1New));
-                        fErechRechiv133 = fErechRechiv133 - (Math.Min(ftosefetMax30_2, fErechRechiv126 - fErechRechiv1New));
+                        Dakot = Math.Min(ftosefetMax30_2, fErechRechiv126 - fErechRechiv1New);
+                        fErechRechiv30 = fErechRechiv30 - Dakot;
+                        fErechRechiv133 = fErechRechiv133 - Dakot;
+                        addRowToTable(clGeneral.enRechivim.HashlamaNochechutYomitFromPremiaRegila.GetHashCode(), Dakot);
                         addRowToTable(clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), fErechRechiv30);
                         addRowToTable(clGeneral.enRechivim.PremyaRegila.GetHashCode(), fErechRechiv133);
                    }
@@ -3414,7 +3418,9 @@ namespace KdsBatch
                                  if (fMichsaYomit > 0 && fDakotNochehut > 0 &&  fDakotNochehut < objOved.objPirteyOved.iZmanMutamut && !HaveRechivimInDay(objOved.Taarich, "60,61,71,70,69,65,280") )
                                      fErechRechiv = (objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit;
                                  //6.עובד מותאם מחלה ללא אישור קרן 
-                                 if ((objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && fDakotNochehut == 0  && objOved.objPirteyOved.iIshurKeren == 0)
+                                 if (objOved.objMeafyeneyOved.GetMeafyen(33).IntValue == 0 &&
+                                     (objOved.objPirteyOved.iSibotMutamut == 2 || objOved.objPirteyOved.iSibotMutamut == 3 || objOved.objPirteyOved.iSibotMutamut == 22) && 
+                                     fDakotNochehut == 0  && objOved.objPirteyOved.iIshurKeren == 0)
                                  {
                                     fErech60 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMachla.GetHashCode(), objOved.Taarich);
                                     if ((fErech60 > 0 && fErech60 < 1))

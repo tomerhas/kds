@@ -96,6 +96,12 @@ namespace KdsLibrary
         public const string cProRunSdrnWithDate = "KDSADMIN.RunSdrnWithDate";
         public const string cProRunRetrospectSdrn = "PKG_sdrn.pro_runRetrospectSdrn";
         #endregion
+
+        #region pkg_bank_shaot constants
+        public const string cProGetYechidotLebank = "PKG_BANK_SHAOT.pro_get_mitkanim_lebank";
+     
+        #endregion
+
         #region pkg_calc constants
         public const string cProCheckOvedPutar = "pkg_calc.pro_get_oved_putar";
         public const string cProGetPeiluyotLeoved = "pkg_calc.pro_get_peiluyot_leoved";
@@ -876,7 +882,9 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             DakotNehigaHashlamaLeyomAvoda=303,
             Shaot100LetashlumNahagut=304,
             TamrizMichsatShaotHege=305,
-            HalbashaTchilatYom=931,
+            HashlamaNochechutYomitFromPremiaRegila = 307,
+            HashlamaNochechutYomitFromPremiaNamlak = 308,
+            HalbashaTchilatYom =931,
             HalbashaSofYom=932,
             TosefetGririoTchilatSidur=1281,
             TosefetGrirotSofSidur=1282,

@@ -968,6 +968,37 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
+
+    [WebMethod(EnableSession = true)]
+    public string[] GetYechidotBankMeshek(string prefixText, int count, string contextKey)
+    {   //מבירא רשימת בקשות
+        DataTable dt;
+        clUtils oUtils = new clUtils();
+
+        try
+        {
+            prefixText = string.Concat(prefixText, "%");
+
+            dt = oUtils.GetYechidotLebankShaot(prefixText,DateTime.Parse( contextKey));
+           
+            List<string> items = new List<string>(count);
+
+            int i = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (i > count) { break; }
+                items.Add(dr["Yechida"].ToString());
+                i++;
+            }
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
     [WebMethod]
     public string[] GetMeafyenyeBitzuaCode(string prefixText, int count)
     {   //מביא מאפייני ביצוע

@@ -49,11 +49,11 @@ namespace KdsShinuyim.ShinuyImpl
 
         private void ChishuvShatHatchala30(SidurDM curSidur, int iIndexSidur, ShinuyInputData inputData)
         {
-            int i,iIndexPeilutMashmautit = -1;
-            PeilutDM oPeilut, oFirstPeilutMashmautit;       
+            //int i,iIndexPeilutMashmautit = -1;
+            //PeilutDM oPeilut, oFirstPeilutMashmautit;       
             bool bPeilutHachanatMechona = false;
             DateTime dShatHatchala;
-            bool bUsedMazanTichnunInSidur = false;
+         //   bool bUsedMazanTichnunInSidur = false;
             try
             {
                 if (curSidur.htPeilut.Count > 0 && curSidur.iMisparSidur > 1000 && string.IsNullOrEmpty(curSidur.sSidurVisaKod))
@@ -62,44 +62,45 @@ namespace KdsShinuyim.ShinuyImpl
 
                     if (!bPeilutHachanatMechona)
                     {
-                        //קיימת פעילות משמעותית
-                        oFirstPeilutMashmautit = null;
-                        for (i = 0; i <= curSidur.htPeilut.Values.Count - 1; i++)
-                        {
-                            oPeilut = (PeilutDM)curSidur.htPeilut[i];
-                            if (isPeilutMashmautit(oPeilut)) //oPeilut.iMakatType == enMakatType.mVisa.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mNamak.GetHashCode() || (oNextPeilut.iMakatType == enMakatType.mElement.GetHashCode() && (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element701.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element712.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element711.GetHashCode().ToString()) && (oNextPeilut.iElementLeShatGmar > 0 || oNextPeilut.iElementLeShatGmar == -1 || oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
-                            {
-                                oFirstPeilutMashmautit = oPeilut;
-                                iIndexPeilutMashmautit = i;
-                                break;
-                            }
-                        }
+                        dShatHatchala = CalcShatHatchala(curSidur,iIndexSidur, inputData);
+                        ////קיימת פעילות משמעותית
+                        //oFirstPeilutMashmautit = null;
+                        //for (i = 0; i <= curSidur.htPeilut.Values.Count - 1; i++)
+                        //{
+                        //    oPeilut = (PeilutDM)curSidur.htPeilut[i];
+                        //    if (isPeilutMashmautit(oPeilut)) //oPeilut.iMakatType == enMakatType.mVisa.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mKavShirut.GetHashCode() || oNextPeilut.iMakatType == enMakatType.mNamak.GetHashCode() || (oNextPeilut.iMakatType == enMakatType.mElement.GetHashCode() && (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element701.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element712.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != enElementHachanatMechona.Element711.GetHashCode().ToString()) && (oNextPeilut.iElementLeShatGmar > 0 || oNextPeilut.iElementLeShatGmar == -1 || oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
+                        //    {
+                        //        oFirstPeilutMashmautit = oPeilut;
+                        //        iIndexPeilutMashmautit = i;
+                        //        break;
+                        //    }
+                        //}
 
-                        if (oFirstPeilutMashmautit != null)
-                        {
-                            if (iIndexPeilutMashmautit == 0)
-                            {
-                                dShatHatchala = oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-oFirstPeilutMashmautit.iKisuyTor);
-                            }
-                            else
-                            {
-                                dShatHatchala = oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-oFirstPeilutMashmautit.iKisuyTor);
+                        //if (oFirstPeilutMashmautit != null)
+                        //{
+                        //    if (iIndexPeilutMashmautit == 0)
+                        //    {
+                        //        dShatHatchala = oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-oFirstPeilutMashmautit.iKisuyTor);
+                        //    }
+                        //    else
+                        //    {
+                        //        dShatHatchala = oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-oFirstPeilutMashmautit.iKisuyTor);
 
-                                for (i = iIndexPeilutMashmautit - 1; i >= 0; i--)
-                                {
-                                    oPeilut = (PeilutDM)curSidur.htPeilut[i];
-                                    if ((isElemntLoMashmauti(oPeilut) && string.IsNullOrEmpty(oPeilut.sLoNitzbarLishatGmar)) || oPeilut.iMakatType == enMakatType.mEmpty.GetHashCode())
-                                        dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilut, curSidur, inputData, ref bUsedMazanTichnunInSidur)));
-                                    //if (bUsedMazanTichnunInSidur)
-                                    //    inputData.bUsedMazanTichnun = true;   
-                                }
-                            }
-                        }
-                        else
-                        {
-                            oPeilut = (PeilutDM)curSidur.htPeilut[0];
-                            dShatHatchala = oPeilut.dFullShatYetzia;
-                        }
+                        //        for (i = iIndexPeilutMashmautit - 1; i >= 0; i--)
+                        //        {
+                        //            oPeilut = (PeilutDM)curSidur.htPeilut[i];
+                        //            if ((isElemntLoMashmauti(oPeilut) && string.IsNullOrEmpty(oPeilut.sLoNitzbarLishatGmar)) || oPeilut.iMakatType == enMakatType.mEmpty.GetHashCode())
+                        //                dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilut, curSidur, inputData, ref bUsedMazanTichnunInSidur)));
+                        //            //if (bUsedMazanTichnunInSidur)
+                        //            //    inputData.bUsedMazanTichnun = true;   
+                        //        }
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    oPeilut = (PeilutDM)curSidur.htPeilut[0];
+                        //    dShatHatchala = oPeilut.dFullShatYetzia;
+                        //}
 
                         UpdateShatHatchala(curSidur, iIndexSidur, dShatHatchala, inputData);
                     }

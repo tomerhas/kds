@@ -435,7 +435,7 @@ namespace KdsShinuyim.ShinuyImpl
         {
             PeilutDM oPeilut;
             SidurDM oLocalSidur;
-            DateTime dShatYetziaPeilut;
+            DateTime dShatYetziaPeilut, dShatHatchalaTmp;
             int iPeilutNesiaIndex = 0;
             long lOtoNo = 0;
             long lincesNumber = 0;
@@ -494,7 +494,7 @@ namespace KdsShinuyim.ShinuyImpl
                                                     if (i == iSidurIndex)
                                                         l += 1;
                                                 }
-                                                else if (oLocalSidur != oSidur && l == 0 && isPeilutMashmautit((PeilutDM)oSidur.htPeilut[l]) && 
+                                                else if (oLocalSidur != oSidur && l == 0 && isPeilutMashmautit((PeilutDM)oSidur.htPeilut[l]) && //ד
                                                   ((inputData.CardDate < inputData.oParam.dParam319 && oPeilut.lOtoNo == lOtoNo) || (inputData.CardDate >= inputData.oParam.dParam319 && oPeilut.lLicenseNumber== lincesNumber)) &&
                                                   //  oPeilut.lOtoNo == lOtoNo && 
                                                     (dShatYetziaPeilut - oLocalSidur.dFullShatGmar).TotalMinutes > inputData.oParam.iMinTimeBetweenSidurim
@@ -512,20 +512,30 @@ namespace KdsShinuyim.ShinuyImpl
                                         }
                                     }
 
-                                    if (!CheckHaveElementHachanatMechona( oSidur, iPeilutNesiaIndex) && !bAddElementPitzul)
+                                    if (!CheckHaveElementHachanatMechona( oSidur, iPeilutNesiaIndex) && !bAddElementPitzul)//ב
                                     {
-                                        if (oLocalSidur != oSidur && (oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes > inputData.oParam.iMinTimeBetweenSidurim
-                                            && ((oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes - inputData.oParam.iPrepareOtherMechineMaxTime) > inputData.oParam.iMinTimeBetweenSidurim)
+                                        dShatHatchalaTmp = CalcShatHatchala(oSidur, iSidurIndex, inputData);
+
+                                        if (oLocalSidur != oSidur && (dShatHatchalaTmp - oLocalSidur.dFullShatGmar).TotalMinutes > inputData.oParam.iMinTimeBetweenSidurim
+                                           && ((dShatHatchalaTmp - oLocalSidur.dFullShatGmar).TotalMinutes - inputData.oParam.iPrepareOtherMechineMaxTime) > inputData.oParam.iMinTimeBetweenSidurim)
                                         {
-                                            AddElementHachanatMechine711( oSidur, inputData, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref  iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref bUsedMazanTichnunInSidur,  oObjSidurimOvdimUpd);
+                                            AddElementHachanatMechine711(oSidur, inputData, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref iIndexElement, ref bUsedMazanTichnunInSidur, oObjSidurimOvdimUpd);
                                             inputData.htEmployeeDetails[iSidurIndex] = oSidur;
                                             bAddElementPitzul = true;
                                         }
+
+                                        //if (oLocalSidur != oSidur && (oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes > inputData.oParam.iMinTimeBetweenSidurim
+                                        //    && ((oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes - inputData.oParam.iPrepareOtherMechineMaxTime) > inputData.oParam.iMinTimeBetweenSidurim)
+                                        //{
+                                        //    AddElementHachanatMechine711( oSidur, inputData, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref  iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref bUsedMazanTichnunInSidur,  oObjSidurimOvdimUpd);
+                                        //    inputData.htEmployeeDetails[iSidurIndex] = oSidur;
+                                        //    bAddElementPitzul = true;
+                                        //}
                                     }
 
                                     if (!CheckHaveElementHachanatMechona( oSidur, iPeilutNesiaIndex) && !bAddElementHamtana)
                                     {
-                                        if (oLocalSidur.htPeilut.Count > 0)
+                                        if (oLocalSidur.htPeilut.Count > 0) //ג
                                         {
                                             lMakat = ((PeilutDM)oLocalSidur.htPeilut[oLocalSidur.htPeilut.Count - 1]).lMakatNesia;
                                             if (oLocalSidur != oSidur && iSidurIndex == i + 1 && (oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes <= inputData.oParam.iMinTimeBetweenSidurim

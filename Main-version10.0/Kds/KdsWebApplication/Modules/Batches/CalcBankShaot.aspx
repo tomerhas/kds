@@ -16,13 +16,21 @@
                 <table>
                     <tr>
                         <td>מתקן:</td>
-                        <td><asp:TextBox ID="txtMitkan" MaxLength="6" runat="server"></asp:TextBox></td>
+                        <td>
+                            <asp:TextBox ID="txtMitkan" runat="server" MaxLength="6"  dir="rtl" style="width:100px;"></asp:TextBox>                            
+                            <cc1:AutoCompleteExtender id="AutoCompleteExtenderMitkan" runat="server" CompletionInterval="0"   CompletionSetCount="25" UseContextKey="true"  
+                            TargetControlID="txtMitkan" MinimumPrefixLength="1" ServiceMethod="GetYechidotBankMeshek" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
+                            EnableCaching="true"  CompletionListCssClass="ACLst"
+                            CompletionListHighlightedItemCssClass="ACLstItmSel"
+                            CompletionListItemCssClass="ACLstItmE">                        
+                            </cc1:AutoCompleteExtender>                                                  
+                        </td>              
                         <td style="width:5px"></td>
                         <td>חודש:</td>
-                        <td><asp:DropDownList ID="ddlBank"  runat="server" Width="100px"></asp:DropDownList></td>
+                        <td><asp:DropDownList ID="ddlBank"  runat="server" AutoPostBack="true" OnSelectedIndexChanged="SetContextKey"  Width="100px"></asp:DropDownList></td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
                         <td >
-                              <asp:Button Text="הפעל חישוב בנק" ID="btnBank" Width="120px"  runat="server" CssClass="ImgButtonSearch" CausesValidation="false" onclick="btnRunBank_Click"  /> 
+                              <asp:Button Text="הפעל חישוב בנק" ID="btnBank" Width="120px"   runat="server" CssClass="ImgButtonSearch" CausesValidation="false" onclick="btnRunBank_Click"  /> 
                         </td>
                     </tr>
                  </table>
