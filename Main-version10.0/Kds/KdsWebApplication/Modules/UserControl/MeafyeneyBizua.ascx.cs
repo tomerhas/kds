@@ -331,8 +331,8 @@ public partial class Modules_UserControl_MeafyeneyBizua : System.Web.UI.UserCont
             txtCodeMeafyen.Text = grdMeafyeneyBitzua.Rows[iRowId].Cells[COL_CODE].Text;
             txtTeurMeafyen.Text = Server.HtmlDecode(grdMeafyeneyBitzua.Rows[iRowId].Cells[COL_TEUR].Text);
 
-            sScript = "document.getElementById('" + ViewState["Element"] + "_pnlContainer').scrollTop = document.getElementById('" + ViewState["Element"] + "_grdMeafyeneyBitzua').firstChild.childNodes(" + (iRowId + 1) + ").offsetTop-24;";
-
+            //   sScript = "document.getElementById('" + ViewState["Element"] + "_pnlContainer').scrollTop = document.getElementById('" + ViewState["Element"] + "_grdMeafyeneyBitzua').firstChild.childNodes(" + (iRowId + 1) + ").offsetTop-24;";
+            sScript = "document.getElementById('" + ViewState["Element"] + "_pnlContainer').scrollTop = document.getElementById('" + ViewState["Element"] + "_grdMeafyeneyBitzua').childNodes['1'].childNodes['" + (iRowId + 1) + "'].offsetTop-24;";
             ScriptManager.RegisterStartupScript(btnBindHistory, this.GetType(), "Scroll", sScript, true);
             GetHistory();
         }

@@ -45,7 +45,7 @@
                                 </td>
                                                          
                                 <td style="width:120px;">
-                                        <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" onchange="GetOvedNameById();"    MaxLength="5" style="width:100px;" TabIndex="1" ></asp:TextBox>                            
+                                        <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" onchange="GetOvedNameById();"  onfocusin="DisplayError();"     MaxLength="5" style="width:100px;" TabIndex="1" ></asp:TextBox>                            
                                         <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                             TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                             EnableCaching="true"  CompletionListCssClass="ACLst"
@@ -59,7 +59,7 @@
                                 </td>   
                                 
                                 <td style="width:220px;">
-                                        <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"   onchange="GetOvedIdByName();" ></asp:TextBox>
+                                        <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2" onfocusin="DisplayError();"   onchange="GetOvedIdByName();" ></asp:TextBox>
                                         <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                                     TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                                     EnableCaching="true"  CompletionListCssClass="ACLst" 

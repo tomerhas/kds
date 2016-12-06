@@ -336,8 +336,8 @@ public partial class Modules_UserControl_PirteyOved : System.Web.UI.UserControl
             txtCodeNatun.Text = grdPirteyOved.Rows[iRowId].Cells[COL_CODE].Text;
             txtTeurNatun.Text = grdPirteyOved.Rows[iRowId].Cells[COL_TEUR].Text;
 
-            sScript = "document.getElementById('" + ViewState["Element"] + "_pnlContainerDetails').scrollTop = document.getElementById('" + ViewState["Element"] + "_grdPirteyOved').firstChild.childNodes(" + (iRowId + 1) + ").offsetTop-24;";
-
+          //  sScript = "document.getElementById('" + ViewState["Element"] + "_pnlContainerDetails').scrollTop = document.getElementById('" + ViewState["Element"] + "_grdPirteyOved').firstChild.childNodes(" + (iRowId + 1) + ").offsetTop-24;";
+            sScript = "document.getElementById('" + ViewState["Element"] + "_pnlContainerDetails').scrollTop =   document.getElementById('" + ViewState["Element"] + "_grdPirteyOved').childNodes['1'].childNodes['" + (iRowId + 1) + "'].offsetTop-24;";
             ScriptManager.RegisterStartupScript(btnBindHistory, this.GetType(), "NatunScroll", sScript, true);
 
             GetHistory();

@@ -37,7 +37,7 @@
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
                         <ContentTemplate> 
                             <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl"    
-                                Width="80px"   EnableViewState="true" onfocus="this.select();"  onkeydown="return ChangeKeyCode(event);"  onchange="onchange_txtid();"></asp:TextBox>                            
+                                Width="80px"   EnableViewState="true" onfocus="this.select();"  onkeydown="return ChangeKeyCode(event);" onfocusin="DisplayError();"  onchange="onchange_txtid();"></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="ACLst"  EnableViewState="true"

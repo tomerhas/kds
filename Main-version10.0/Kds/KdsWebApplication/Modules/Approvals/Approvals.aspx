@@ -143,7 +143,7 @@
                 <td style="width:200px">
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline" UpdateMode="Conditional"  >
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" onchange="GetOvedIdByName();" style="width:200px" ></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" onchange="GetOvedIdByName();" style="width:200px" onfocusin="DisplayError();"  ></asp:TextBox>
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                         EnableCaching="true"  CompletionListCssClass="ACLst"

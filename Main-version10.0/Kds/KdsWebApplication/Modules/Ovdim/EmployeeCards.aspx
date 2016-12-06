@@ -64,7 +64,7 @@
                                 <td style="width:120px;">
                                     <%--<asp:UpdatePanel ID="upId" runat="server" RenderMode="Inline"  >
                                         <ContentTemplate> --%>
-                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" onchange="GetOvedNameById();"    MaxLength="5" style="width:100px;" TabIndex="1"  onfocusout=" this.value=this.value; setMonthFocus();"
+                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" onchange="GetOvedNameById();"    MaxLength="5" style="width:100px;" TabIndex="1" onfocusin="DisplayError();" onfocusout="this.value=this.value; setMonthFocus();"
                                               onkeydown="return ChangeKeyCode(event);"></asp:TextBox>                            
                                            <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                             TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
@@ -87,7 +87,7 @@
                                 <td style="width:220px;">
                                    <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline"  >
                                         <ContentTemplate>--%> 
-                                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"   onchange="setMonthFocus();GetOvedIdByName();"
+                                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"   onchange="setMonthFocus();GetOvedIdByName();"  onfocusin="DisplayError();" 
                                              onkeydown="return ChangeKeyCode(event);" ></asp:TextBox>
                                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 

@@ -2525,12 +2525,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         DataTable dt = new DataTable();
         try
         {
-            dt = oOvdim.GetLastUpdateData(iMisparIshi, dCardDate);
+            dt = oOvdim.GetLastUpdator(iMisparIshi, dCardDate); //oOvdim.GetLastUpdateData(iMisparIshi, dCardDate);
             if (dt.Rows.Count > 0)
             {
-                lblLastUpdateDate.InnerText = DateTime.Parse(dt.Rows[0]["last_date"].ToString()).ToShortDateString();
-                lnkLastUpdateUser.InnerText = dt.Rows[0]["MEADKEN_ACHARON"].ToString().IndexOf("-") >= 0 ? "מערכת" : dt.Rows[0]["full_name"].ToString();
-                LastUpdateUserId.Value = dt.Rows[0]["MEADKEN_ACHARON"].ToString();
+                lblLastUpdateDate.InnerText = DateTime.Parse(dt.Rows[0]["UpdateDate"].ToString()).ToShortDateString();// DateTime.Parse(dt.Rows[0]["last_date"].ToString()).ToShortDateString();
+                lnkLastUpdateUser.InnerText = dt.Rows[0]["FullName"].ToString(); // dt.Rows[0]["MEADKEN_ACHARON"].ToString().IndexOf("-") >= 0 ? "מערכת" : dt.Rows[0]["full_name"].ToString();
+                LastUpdateUserId.Value = dt.Rows[0]["IDNUM"].ToString(); // dt.Rows[0]["MEADKEN_ACHARON"].ToString();
             }
         }
         catch (Exception ex)
