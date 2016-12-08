@@ -270,7 +270,7 @@ recieves params.  update ui.  Complexity - Low
         var id = $get("txtId").value;
         var date = $get("clnDate").value;
         var sQuryString="?id=" + id + "&date=" + date;
-        var ReturnWin = window.showModalDialog('MadknAcharon.aspx' + sQuryString, window, "dialogHeight: 280px; dialogWidth: 490px;dialogtop:200px;status:no;resizable:no;scroll:no;");                         
+        var ReturnWin = window.showModalDialog('MadknAcharon.aspx' + sQuryString, window, "dialogHeight: 280px; dialogWidth: 620px;dialogtop:200px;status:no;resizable:no;scroll:no;");                         
         if(ReturnWin=='' || ReturnWin=='undefined') ReturnWin=false;
         return ReturnWin;   
     }

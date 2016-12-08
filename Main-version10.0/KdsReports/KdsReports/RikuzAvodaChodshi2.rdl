@@ -903,6 +903,27 @@
         </Field>
       </Fields>
     </DataSet>
+    <DataSet Name="dsHearotLerikuz">
+      <Query>
+        <DataSourceName>DsRikuz</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_RIKUZ_AVODA.PRO_GET_HEAROT_LERIKUZ</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="HEARA">
+          <DataField>HEARA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -3293,7 +3314,6 @@
                             <PaddingBottom>0.5pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -3963,8 +3983,8 @@
             <DataSetName>DsRechivim</DataSetName>
             <Top>3.5616cm</Top>
             <Left>0.02829cm</Left>
-            <Height>0.98451cm</Height>
-            <Width>20.43408cm</Width>
+            <Height>0.9845cm</Height>
+            <Width>20.43417cm</Width>
             <ZIndex>7</ZIndex>
             <Style>
               <Border>
@@ -3976,66 +3996,66 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.54633cm</Width>
+                  <Width>1.54072cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.97704cm</Width>
+                  <Width>0.97187cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.63292cm</Width>
+                  <Width>0.63101cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.78055cm</Width>
+                  <Width>0.77168cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.0125cm</Width>
+                  <Width>1.01059cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.11042cm</Width>
+                  <Width>1.10154cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.10905cm</Width>
+                  <Width>1.1048cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.73231cm</Width>
+                  <Width>0.72714cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.95705cm</Width>
+                  <Width>0.95335cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.84435cm</Width>
+                  <Width>0.83738cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.43043cm</Width>
+                  <Width>1.42673cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.99886cm</Width>
+                  <Width>0.99166cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.95979cm</Width>
+                  <Width>0.95609cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.0919cm</Width>
+                  <Width>1.08493cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.07981cm</Width>
+                  <Width>1.07611cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.99985cm</Width>
+                  <Width>0.99288cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.04953cm</Width>
+                  <Width>1.04583cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.30737cm</Width>
+                  <Width>1.31469cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.8139cm</Width>
+                  <Width>1.89cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.3487cm</Height>
+                  <Height>0.3081cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -7111,10 +7131,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsRechivimChodshiym</DataSetName>
-            <Top>4.61665cm</Top>
-            <Left>0.02885cm</Left>
-            <Height>1.4276cm</Height>
-            <Width>20.43387cm</Width>
+            <Top>4.56373cm</Top>
+            <Left>0.03507cm</Left>
+            <Height>1.38699cm</Height>
+            <Width>20.42739cm</Width>
             <ZIndex>8</ZIndex>
             <Style>
               <Border>
@@ -10067,8 +10087,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox6</rd:DefaultName>
-            <Top>5.72669in</Top>
-            <Left>2.36534in</Left>
+            <Top>5.93503in</Top>
+            <Left>2.22149in</Left>
             <Height>1.09523in</Height>
             <Width>3.96481in</Width>
             <ZIndex>16</ZIndex>
@@ -10213,9 +10233,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                   <Width>1cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.03137cm</Width>
-                </TablixColumn>
-                <TablixColumn>
                   <Width>1.37532cm</Width>
                 </TablixColumn>
               </TablixColumns>
@@ -10256,10 +10273,9 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>43</ColSpan>
+                        <ColSpan>42</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell />
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
@@ -11762,41 +11778,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox132">
-                          <CanGrow>true</CanGrow>
-                          <CanShrink>true</CanShrink>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>זמן נסיעה</Value>
-                                  <Style>
-                                    <FontSize>7pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox69</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
                         <Textbox Name="Textbox133">
                           <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
@@ -13228,40 +13209,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox138">
-                          <CanGrow>true</CanGrow>
-                          <CanShrink>true</CanShrink>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=iif(Round(Fields!R95.Value / 60, 1, MidpointRounding.AwayFromZero) &gt; 0, Round(Fields!R95.Value / 60, 1, MidpointRounding.AwayFromZero), "")</Value>
-                                  <Style>
-                                    <FontSize>8pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox70</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
                         <Textbox Name="R14">
                           <CanGrow>true</CanGrow>
                           <CanShrink>true</CanShrink>
@@ -13448,7 +13395,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                 </TablixMember>
                 <TablixMember>
                   <Visibility>
-                    <Hidden>=iif(Fields!R1B.Value &lt;&gt; Nothing And (First(Fields!MEAFYEN56.Value, "dsPirteyOved") = 52 Or First(Fields!MEAFYEN56.Value, "dsPirteyOved") = 62), False, True)</Hidden>
+                    <Hidden>=iif(Fields!R1B.Value &lt;&gt; Nothing , False, True)</Hidden>
                   </Visibility>
                 </TablixMember>
                 <TablixMember>
@@ -13513,11 +13460,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                     <Hidden>=iif(Fields!R10.Value &lt;&gt; Nothing Or Fields!R11.Value &lt;&gt; Nothing, False, True)</Hidden>
                   </Visibility>
                 </TablixMember>
-                <TablixMember>
-                  <Visibility>
-                    <Hidden>=iif(Fields!R95.Value &lt;&gt; Nothing, False, True)</Hidden>
-                  </Visibility>
-                </TablixMember>
                 <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
@@ -13538,9 +13480,9 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
             <FixedRowHeaders>true</FixedRowHeaders>
             <DataSetName>dsRechiveyShonot</DataSetName>
             <Top>7.63076cm</Top>
-            <Left>0.0477cm</Left>
+            <Left>0.04771cm</Left>
             <Height>1.24282cm</Height>
-            <Width>42.09189cm</Width>
+            <Width>41.06052cm</Width>
             <ZIndex>17</ZIndex>
             <Style>
               <Border>
@@ -13583,15 +13525,86 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Tablix Name="Tablix3">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>3.62164in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="HEARA1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!HEARA.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>HEARA1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Details3" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>dsHearotLerikuz</DataSetName>
+            <Top>5.65725in</Top>
+            <Left>4.44871in</Left>
+            <Height>0.25in</Height>
+            <Width>3.62164in</Width>
+            <ZIndex>19</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
         </ReportItems>
-        <Height>6.82687in</Height>
+        <Height>7.03026in</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>16.59245in</Width>
+      <Width>16.18434in</Width>
       <Page>
         <PageHeight>13in</PageHeight>
         <PageWidth>9in</PageWidth>
