@@ -39,7 +39,7 @@ public class MenahelBameshek    extends Base {
 	
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	  DB_DML.deleteRecordFromTable("46194","to_date('11/06/2015','dd/mm/yyyy')","99001");
+	  DB_DML.deleteRecordFromTable("46194","to_date('24/11/2016','dd/mm/yyyy')","99001");
 	  driver.manage().window().maximize();
 	  LogInPage.Txt_Change_User(driver).sendKeys("igalr");
 	  LogInPage.Btn_Change_User(driver).click();
@@ -56,7 +56,7 @@ public class MenahelBameshek    extends Base {
 	  EmployeeCard.Txt_Id(driver).sendKeys("46194");
 	  EmployeeCard.Txt_Id(driver).sendKeys(Keys.TAB);
 	  Select droplist = new Select(EmployeeCard.List_Month(driver));
-      droplist.selectByVisibleText("06/2015"); 
+      droplist.selectByVisibleText("11/2016"); 
       EmployeeCard.Btn_Execute(driver).click();
       EmployeeCard.Link_Date_Menahel_Bameshek(driver).click();
       Utilsfn a =new Utilsfn();
@@ -92,7 +92,7 @@ public class MenahelBameshek    extends Base {
       WorkCard.Btn_Update(driver).click();      
 	  WorkCard.Wait_For_Element_Stalenes(driver,"clnDate",null);
 	  WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("18072015");
+	  WorkCard.Date(driver).sendKeys("21112016");
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver,"btnAddMyuchad",null);
 	  WorkCard.Btn_Add_Special(driver).click();
