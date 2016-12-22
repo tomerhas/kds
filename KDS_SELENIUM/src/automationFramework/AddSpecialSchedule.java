@@ -35,7 +35,7 @@ public class AddSpecialSchedule  extends Base {
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
 	  WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("20052015");
+	  WorkCard.Date(driver).sendKeys("15112016");
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver, "btnAddMyuchad",null);
 	  WorkCard.Btn_Add_Special(driver).click();
