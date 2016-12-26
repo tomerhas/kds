@@ -40,6 +40,7 @@ public class MenahelBameshek    extends Base {
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  DB_DML.deleteRecordFromTable("46194","to_date('24/11/2016','dd/mm/yyyy')","99001");
+	  DB_DML.deleteRecordFromTable("46194","to_date('24/11/2016','dd/mm/yyyy')","99818");
 	  driver.manage().window().maximize();
 	  LogInPage.Txt_Change_User(driver).sendKeys("igalr");
 	  LogInPage.Btn_Change_User(driver).click();
