@@ -2,14 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc5.jar"/>
-	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc5_g.jar"/>
-	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc5dms.jar"/>
-	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc5dms_g.jar"/>
-	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc6.jar"/>
-	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc6_g.jar"/>
-	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc6dms.jar"/>
-	<classpathentry kind="lib" path="C:/app/tomerh/product/11.2.0/client_1/jdbc/lib/ojdbc6dms_g.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/selenium/selenium-2.52.0/selenium-java-2.52.0.jar"/>
 	<classpathentry kind="lib" path="C:/selenium/selenium-2.52.0/selenium-java-2.52.0-srcs.jar"/>
@@ -63,5 +55,14 @@
 	<classpathentry kind="lib" path="C:/selenium/selenium-2.52.0/libs/xalan-2.7.2.jar"/>
 	<classpathentry kind="lib" path="C:/selenium/selenium-2.52.0/libs/xercesImpl-2.11.0.jar"/>
 	<classpathentry kind="lib" path="C:/selenium/selenium-2.52.0/libs/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/ojdbc6_g.jar"/>
+	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/ojdbc6dms.jar"/>
+	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/ojdbc6dms_g.jar"/>
+	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/ojdbc7.jar"/>
+	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/ojdbc7_g.jar"/>
+	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/ojdbc7dms.jar"/>
+	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/ojdbc7dms_g.jar"/>
+	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/simplefan.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
