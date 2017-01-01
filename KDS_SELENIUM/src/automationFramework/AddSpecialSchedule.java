@@ -35,6 +35,7 @@ public class AddSpecialSchedule  extends Base {
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  DB_DML.deleteRecordFromTable("77104","to_date('15/11/2016','dd/mm/yyyy')","99818");
+	  DB_DML.deleteRecordFromTable("77104","to_date('15/11/2016','dd/mm/yyyy')","99810");
 	  Utilsfn a =new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
