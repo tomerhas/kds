@@ -1,5 +1,6 @@
 package automationFramework;
 
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
@@ -11,6 +12,8 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
+
+import JDBC.DB_DML;
 import pageObjects.DivuachHeadrut;
 import pageObjects.WorkCard;
 import utils.Utilsfn;
@@ -27,14 +30,15 @@ public class AddAbsences    extends Base {
 	
 	
   @Test
-  public void addAbsences() throws InterruptedException {
+  public void addAbsences() throws InterruptedException, SQLException {
 	  
 	  
 	  
 	  
 driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
 	  
-	  
+      //DB_DML.deleteRecordFromTable("85400","to_date('26/04/2015','dd/mm/yyyy')","99830");
+      //DB_DML.deleteRecordFromTable("85400","to_date('27/04/2015','dd/mm/yyyy')","99830");
 	  Utilsfn a= new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("85400");
