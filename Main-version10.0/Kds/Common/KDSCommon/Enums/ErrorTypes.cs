@@ -141,6 +141,7 @@ namespace KDSCommon.Enums
         errOvedLeloHeterEmptyBus216=216,
         errMutamNahagutNochechutLessMichsa=217,
         errHityzvutMissingLater218=218,
-        errSidurimChofefimBeshaotLetashlum219 = 219
+        errSidurimChofefimBeshaotLetashlum219 = 219,
+        errElementNotAllowedInSidurNihulTnua220 = 220
     }
 }

@@ -129,7 +129,7 @@ namespace KdsErrors
             Add(_container.Resolve<SidurErrorOvedLoMushalWithTaavura215>());
             Add(_container.Resolve<SidurErrorOvedLeloHeterEmptyBus216>());
             Add(_container.Resolve<SidurErrorHoursLeTaslumNotValid219>());
-
+            
 
 
             Add(_container.Resolve<PeilutErrorIsKodNesiaExists81>());
@@ -155,7 +155,7 @@ namespace KdsErrors
             Add(_container.Resolve<PeilutErrorIsRechevMushbat211>());
             Add(_container.Resolve<PeilutErrorElementNehigaForMatalaLoNahagut213>());
             Add(_container.Resolve<SidurErrorCheckHityzvutMissingLater218>());
-
+            Add(_container.Resolve<PeilutErrorElementNotAllowedInSidurNihulTnua220>());
 
 
 

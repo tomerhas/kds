@@ -16,6 +16,9 @@ using KdsLibrary;
 //using System.Linq;
 //using System.Xml.Linq;
 using KdsLibrary.Security;
+using KDSCommon.Interfaces.Managers;
+using KDSCommon.DataModels.Mails;
+using Microsoft.Practices.ServiceLocation;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {
@@ -65,9 +68,21 @@ public partial class MasterPage : System.Web.UI.MasterPage
         clReport objReport = new clReport();
         DataTable dtReports;
         string sScript;
+        int num;
         dtReports = objReport.GetPrepareReports(clGeneral.GetIntegerValue(LoginUser.GetLoginUser().UserInfo.EmployeeNumber), "4");
         if (dtReports.Rows.Count > 0)
         {
+            num= int.Parse(dtReports.Rows[0]["MailDeviationRows"].ToString());
+            if (num > 0)
+            {
+                IMailManager mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
+                string RecipientsList = dtReports.Rows[0]["email"].ToString();
+                if (RecipientsList == "")
+                    RecipientsList = LoginUser.GetLoginUser().UserInfo.Username + "@Egged.co.il";
+                string subject = "חריגת שורות בדו''ח";
+                mailManager.SendMessage(new MailMessageWrapper(RecipientsList) { Subject = subject, Body = "דו''ח שביקשת להפיק חרג מכמות השורות המקסימלית" });
+            }
+
             objReport.updatePrepareReports(int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber));
             sScript = "ShowMessageReport('" + PureUrlRoot + "');";
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Report", sScript, true);

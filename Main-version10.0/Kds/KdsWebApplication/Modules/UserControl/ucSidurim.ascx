@@ -58,9 +58,19 @@ function SaveScrollPosToHidden()
    $get('SD_hidScrollPos').value=$get("SD_dvS").scrollTop;
 }
 
-window.onload = function () {
+    window.onload = function () {
+        
     SetSidurimCollapseImg();
-    HasSidurHashlama();     
+    HasSidurHashlama();   
+        
+  
+    
+    ////$("td[id^='SD_Cell']").each(function() {
+    ////   // debugger;
+    ////    $($(this).find('div')[1]).css("height", "");
+    ////});
+  
+
 };
 
 </script>

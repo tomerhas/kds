@@ -3175,11 +3175,15 @@ namespace KdsBatch
                                         {
                                             fErechRechiv = ((fMichsaYomit  - fDakotNochehut) / fMichsaYomit);
                                         }
-                                        //else if (objOved.objMeafyeneyOved.GetMeafyen(33).IntValue == 0 && fDakotNochehut < objOved.objPirteyOved.iMutamBitachon)
+                                        //else if (objOved.objMeafyeneyOved.GetMeafyen(33).IntValue == 0) // && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut)
                                         //{
-                                        //    fErechRechiv = ((objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit);
+                                        //    fErechRechiv = ((fMichsaYomit - fDakotNochehut) / fMichsaYomit);
                                         //}
-                                    }
+                                    //else if (objOved.objMeafyeneyOved.GetMeafyen(33).IntValue == 0 && fDakotNochehut < objOved.objPirteyOved.iMutamBitachon)
+                                    //{
+                                    //    fErechRechiv = ((objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit);
+                                    //}
+                                }
                                 }
                                 else
                                 {

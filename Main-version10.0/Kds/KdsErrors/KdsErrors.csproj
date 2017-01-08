@@ -111,6 +111,7 @@
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorBase.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorElementInSpecialSidurNotAllowed123.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorElementNehigaForMatalaLoNahagut213.cs" />
+    <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorElementNotAllowedInSidurNihulTnua220.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorHightValueDakotBefoal179.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorHighValueKisuyTor87.cs" />
     <Compile Include="ErrosrImpl\PeilutErrors\PeilutErrorIsCurrentPeilutInPrevPeilut162.cs" />
