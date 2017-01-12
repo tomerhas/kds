@@ -304,6 +304,12 @@ namespace KdsLibrary.BL
             {
                 objDal.TxBegin();
                 iRequestId = InsertBakasha(ref objDal, iTypeRequest, sDescription, iStatus, UserId);
+
+                if (ReportName  == KdsLibrary.Utils.Reports.ReportName.RptIturim.ToString())
+                {
+                    ColUdt.Add(new OBJ_REPORT_PARAM("p_bakasha_id", iRequestId.ToString()));
+                }
+
                 objDal.ClearCommand();
                 InsertHeavyReport(iRequestId, ReportName, ColUdt, UserId, Extension, DestinationFolder, SendToMail);
                 objDal.ClearCommand();

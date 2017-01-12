@@ -55,10 +55,7 @@ public partial class Modules_Reports_BackgroundReport : System.Web.UI.Page
 
             _SendToMail =  CkSendInEmail.Checked;
             _BakashaId = objBatch.RunReportsBatch(clGeneral.enGeneralBatchType.CreateHeavyReports, PageHeader + ":" + TxtDescription.Text, clGeneral.enStatusRequest.InProcess, UserId, ColUdt, ReportName, _Extension, _DestinationFolder, _SendToMail);
-            if (_Report.NameReport == KdsLibrary.Utils.Reports.ReportName.RptIturim)
-            {
-                ControlsList.Add("p_bakasha_id", _BakashaId.ToString());
-            }
+            
             sMessage = " בקשתך נשלחה לביצוע ומספרה הוא: " + _BakashaId;
         }
         catch (Exception ex)
