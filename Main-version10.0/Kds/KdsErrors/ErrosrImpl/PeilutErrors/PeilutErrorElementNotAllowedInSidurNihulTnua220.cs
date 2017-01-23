@@ -22,7 +22,7 @@ namespace KdsErrors.ErrosrImpl.PeilutErrors
             string kod;
             int sug_sidur,mfyn21;
             bool bError = false;
-            if (input.drSugSidur.Length > 0)
+            if (input.CardDate>=input.oParameters.dParam320 && input.drSugSidur.Length > 0)
             {
                 if (input.drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nihul.GetHashCode().ToString())
                 {
