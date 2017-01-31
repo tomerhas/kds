@@ -78,9 +78,13 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 IMailManager mailManager = ServiceLocator.Current.GetInstance<IMailManager>();
                 string RecipientsList = dtReports.Rows[0]["email"].ToString();
                 if (RecipientsList == "")
-                    RecipientsList = LoginUser.GetLoginUser().UserInfo.Username + "@Egged.co.il";
+                    RecipientsList = LoginUser.GetLoginUser().UserInfo.Username.Split('\\')[1] + "@Egged.co.il";
+                RecipientsList+= ";"+ ConfigurationManager.AppSettings["RecipientsMailList"].ToString(); 
                 string subject = "חריגת שורות בדו''ח";
-                mailManager.SendMessage(new MailMessageWrapper(RecipientsList) { Subject = subject, Body = "דו''ח שביקשת להפיק חרג מכמות השורות המקסימלית" });
+                string body = "משתמש יקר, הדוח שביקשת להפיק חרג מכמות רשומות מקסימלית.";
+                body += " \n   מספר בקשה" + dtReports.Rows[0]["Bakasha_ID"].ToString();
+                body += " \n   תאור בקשה" + dtReports.Rows[0]["Teur"].ToString();
+                mailManager.SendMessage(new MailMessageWrapper(RecipientsList) { Subject = subject, Body =body });
             }
 
             objReport.updatePrepareReports(int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber));

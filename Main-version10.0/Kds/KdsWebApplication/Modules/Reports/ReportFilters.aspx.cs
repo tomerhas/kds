@@ -267,13 +267,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.Average:
                     fsFilter.Style["width"] = "1105px";
                     //SetWorkerViewLevel(ReportName.Average);
-                    break;
-                //case ReportName.AverageSnifEzor:
-                //    SetWorkerViewLevel(ReportName.AverageSnifEzor);
-                //    break;
-                //case ReportName.AverageSnifInEzor:
-                //    SetWorkerViewLevel(ReportName.AverageSnifInEzor);
-                //    break;
+                    break;  
                 //case ReportName.AverageOvdimBeSnif:
                 //    SetWorkerViewLevel(ReportName.AverageOvdimBeSnif);
                 //    break;
@@ -374,9 +368,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                             break;
                         }
                     }
-                    break;
-            //    case ReportName.AverageSnifEzor:
-            //    case ReportName.AverageSnifInEzor:
+                    break;  
             ////    case ReportName.AverageOvdimBeSnif:
             //        if (!Page.IsPostBack)
             //            WorkerViewLevel.Items.RemoveAt(0);
@@ -976,9 +968,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     Params.Add("P_PAGE_ADDRESS", PureUrlRoot + "/Modules/Ovdim/WorkCard.aspx?");
                     Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
                     break;
-                case ReportName.AverageOvdimBeSnif:
-                case ReportName.AverageSnifInEzor:
-                case ReportName.AverageSnifEzor:
+                case ReportName.AverageOvdimBeSnif: 
                 case ReportName.Average:
                 case ReportName.Presence:
                 case ReportName.PresenceAllSidurim:
@@ -987,7 +977,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     //                Params.Add("P_WORKERVIEWLEVEL", ((int)PageModule.SecurityLevel).ToString());
                     Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
                     Params.Add("P_WORKERVIEWLEVEL", _sProfilUser);
-                    if (rpt.NameReport == ReportName.Average || rpt.NameReport == ReportName.AverageSnifEzor || rpt.NameReport == ReportName.AverageOvdimBeSnif || rpt.NameReport == ReportName.AverageSnifInEzor)
+                    if (rpt.NameReport == ReportName.Average || rpt.NameReport == ReportName.AverageOvdimBeSnif) 
                         Params.Add("p_type_rpt", null); 
                    break;
                 case ReportName.RptIturim:
@@ -1013,9 +1003,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     Params["P_STARTDATE"] = StartMonth.ToShortDateString();
                     Params["P_ENDDATE"] = EndMonth.ToShortDateString();
                     break;
-                case ReportName.Average:
-                case ReportName.AverageSnifEzor:
-                case ReportName.AverageSnifInEzor:
+                case ReportName.Average: 
                 case ReportName.AverageOvdimBeSnif:
                     Params["P_STARTDATE"] = StartMonth.ToShortDateString();
                     Params["P_ENDDATE"] = EndMonth.ToShortDateString();

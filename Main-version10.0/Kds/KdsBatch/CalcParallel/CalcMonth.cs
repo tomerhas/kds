@@ -5717,37 +5717,16 @@ namespace KdsBatch
 
         private void CalcRechiv204()
         {
-            float fSumDakotRechiv, fNochehutPremia;
-            int iMutaam;
+            float fSumDakotRechiv;
             try
             {
-                var rasham = objOved.PirteyOved.FirstOrDefault(p => p.iIsuk == (int)clGeneral.enIsukOved.Rasham);
-                var sgan = objOved.PirteyOved.FirstOrDefault(p => p.iIsuk == (int)clGeneral.enIsukOved.SganMenahel);
-                var menahel = objOved.PirteyOved.FirstOrDefault(p => p.iIsuk == (int)clGeneral.enIsukOved.MenahelMachlaka);
-              //  if (objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.Rasham.GetHashCode() || objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.SganMenahel.GetHashCode() || objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.MenahelMachlaka.GetHashCode())
-               if(rasham!=null || sgan!=null ||menahel!= null)
-                {
-              //      if (objOved.objPirteyOved.iYechidaIrgunit == clGeneral.enYechidaIrgunit.RishumZafonHaifa.GetHashCode() || objOved.objPirteyOved.iYechidaIrgunit == clGeneral.enYechidaIrgunit.RishumArtzi.GetHashCode() || objOved.objPirteyOved.iYechidaIrgunit == clGeneral.enYechidaIrgunit.RishumBameshek.GetHashCode())
-                    if ((objOved.PirteyOved.FirstOrDefault(p => p.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumZafonHaifa) != null) ||
-                        (objOved.PirteyOved.FirstOrDefault(p => p.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumArtzi) != null) ||
-                        (objOved.PirteyOved.FirstOrDefault(p => p.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumBameshek) != null))
-                    {
-                        iMutaam = objOved.objPirteyOved.iMutamut;
-                        if (iMutaam != clGeneral.enMutaam.enMutaam1.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam3.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam5.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam7.GetHashCode())
-                        {
-                            if (objOved.objMeafyeneyOved.GetMeafyen(60).IntValue == 0)
-                            {
-                                fNochehutPremia = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.NochehutPremiaLerishum.GetHashCode());
-                                fSumDakotRechiv = (objOved.objParameters.fAchuzPremiaRishum * fNochehutPremia) / 100;
-                                addRowToTable(clGeneral.enRechivim.PremiaLariushum.GetHashCode(), float.Parse(Math.Round(fSumDakotRechiv).ToString()));
-                            }
-                        }
-                    }
-                }
+                //ערך הרכיב = סכימת ערך הרכיב לכל הימים בחודש  
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.PremiaLariushum.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.PremiaLariushum.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
             {
-                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaLariushum.GetHashCode(), _dTaarichChishuv, "",ex);
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaLariushum.GetHashCode(), _dTaarichChishuv, "", ex);
                 throw (exec);
             }
         }

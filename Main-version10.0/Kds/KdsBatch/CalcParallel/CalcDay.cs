@@ -386,6 +386,9 @@ namespace KdsBatch
                 //נוכחות לפרמיה - רישום ( רכיב 209): 
                 CalcRechiv209();
 
+              //פרמיה לרישום ( רכיב 204
+                CalcRechiv204();
+
                 //סהכ תפקיד (רכיב 192):  
                 CalcRechiv192();
 
@@ -3162,7 +3165,9 @@ namespace KdsBatch
                                         if (objOved.objMeafyeneyOved.GetMeafyen(33).IntValue== 1)
                                         {
                                             fErechRechiv = ((fMichsaYomit - fDakotNochehut) / fMichsaYomit);
-                                        }
+                                            if(fDakotNochehut==0)
+                                                fErechRechiv = ((fMichsaYomit - objOved.objPirteyOved.iZmanMutamut) / fMichsaYomit);
+                                    }
                                    
                                         if (objOved.objMeafyeneyOved.GetMeafyen(33).IntValue == 0)// && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut)
                                         {
@@ -6979,6 +6984,36 @@ namespace KdsBatch
             }
         }
 
+
+        private void CalcRechiv204()
+        {
+            float fSumDakotRechiv, fNochehutPremia;
+            int iMutaam;
+            try
+            {
+                if (objOved.objPirteyOved.iIsuk == (int)clGeneral.enIsukOved.Rasham || objOved.objPirteyOved.iIsuk == (int)clGeneral.enIsukOved.SganMenahel || objOved.objPirteyOved.iIsuk == (int)clGeneral.enIsukOved.MenahelMachlaka)
+                {
+                    if(objOved.objPirteyOved.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumZafonHaifa || objOved.objPirteyOved.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumArtzi || objOved.objPirteyOved.iYechidaIrgunit == (int)clGeneral.enYechidaIrgunit.RishumBameshek)
+                    {
+                        iMutaam = objOved.objPirteyOved.iMutamut;
+                        if (iMutaam != clGeneral.enMutaam.enMutaam1.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam3.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam5.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam7.GetHashCode())
+                        {
+                            if (objOved.objMeafyeneyOved.GetMeafyen(60).IntValue == 0)
+                            {
+                                fNochehutPremia = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.NochehutPremiaLerishum.GetHashCode(), objOved.Taarich);
+                                fSumDakotRechiv = (objOved.objParameters.fAchuzPremiaRishum * fNochehutPremia) / 100;
+                                addRowToTable(clGeneral.enRechivim.PremiaLariushum.GetHashCode(), float.Parse(Math.Round(fSumDakotRechiv).ToString()));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var exec = SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaLariushum.GetHashCode(), objOved.Taarich, "", ex);
+                throw (exec);
+            }
+        }
         private void CalcRechiv210()
         {
             float fSumDakotRechiv, fZmanAruchatBoker, fZmanAruchatTzharayim, fZmanAruchatErev;
