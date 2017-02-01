@@ -82,8 +82,8 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 RecipientsList+= ";"+ ConfigurationManager.AppSettings["RecipientsMailList"].ToString(); 
                 string subject = "חריגת שורות בדו''ח";
                 string body = "משתמש יקר, הדוח שביקשת להפיק חרג מכמות רשומות מקסימלית.";
-                body += " \n   מספר בקשה" + dtReports.Rows[0]["Bakasha_ID"].ToString();
-                body += " \n   תאור בקשה" + dtReports.Rows[0]["Teur"].ToString();
+                body += "\n" + "מספר בקשה:  " + dtReports.Rows[0]["Bakasha_ID"].ToString();
+                body += "\n" +"תאור בקשה:  " + dtReports.Rows[0]["Teur"].ToString();
                 mailManager.SendMessage(new MailMessageWrapper(RecipientsList) { Subject = subject, Body =body });
             }
 

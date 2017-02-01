@@ -55,7 +55,7 @@ namespace KDSBLLogic.Managers
                 mm.Body = "<div dir='rtl' style='Text-align:Right'>" + mm.Body + "</Div>";
             }
             if (message.Body != null)
-                mm.Body = message.Body.Replace("\n", "<br/>");
+                mm.Body = message.Body.Replace(@"\n", @"<br/>");
             message.Attachments.ForEach(at => mm.Attachments.Add(at));
             client.Send(mm);
         }

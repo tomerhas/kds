@@ -1267,21 +1267,23 @@ namespace KdsBatch
             dShatHatchalaSidur = DateTime.MinValue;
             try
             {
-               // //oPeilut.objOved.Taarich = objOved.Taarich;
-
-                _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null");
-                for (int I = 0; I < _drSidurim.Length; I++)
+                // //oPeilut.objOved.Taarich = objOved.Taarich;
+                if (objOved.Taarich < objOved.objParameters.dParam322)
                 {
-                    iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
-                    dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
-
-                    oPeilut.CalcRechiv23(iMisparSidur, dShatHatchalaSidur);
-
-
-                    fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_PEILUT"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotSikun.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                    if (fErech > 0)
+                    _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null");
+                    for (int I = 0; I < _drSidurim.Length; I++)
                     {
-                        addRowToTable(clGeneral.enRechivim.DakotSikun.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                        iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
+                        dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
+
+                        oPeilut.CalcRechiv23(iMisparSidur, dShatHatchalaSidur);
+
+
+                        fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_PEILUT"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotSikun.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        if (fErech > 0)
+                        {
+                            addRowToTable(clGeneral.enRechivim.DakotSikun.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                        }
                     }
                 }
 
