@@ -3398,8 +3398,8 @@ namespace KdsBatch
                    
                     objOved.fHashlamaAlCheshbonNosafotChofesh = float.Parse(Math.Round(fHashlama, 3).ToString());
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomChofesh.GetHashCode());
-                    fSumYamimMeusharim = GetSumErechRechivYamimMeusharim(objOved, clGeneral.enRechivim.YomChofesh);
-                    fSumDakotRechiv = (float.Parse(fSumDakotRechiv.ToString())- fSumYamimMeusharim) - float.Parse(fHashlama.ToString());
+                //    fSumYamimMeusharim = GetSumErechRechivYamimMeusharim(objOved, clGeneral.enRechivim.YomChofesh);
+                    fSumDakotRechiv = (float.Parse(fSumDakotRechiv.ToString())) - float.Parse(fHashlama.ToString());
 
                    
                 //    UpdateRechiv146(fNochehutChodshitChelkit, fMichsaChodshitChelkit);
