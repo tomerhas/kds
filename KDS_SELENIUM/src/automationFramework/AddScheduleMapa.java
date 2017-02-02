@@ -9,6 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
+
 import pageObjects.HosafatSidur;
 import pageObjects.WorkCard;
 import utils.Base;
@@ -67,7 +68,20 @@ public class AddScheduleMapa    extends Base  {
 	  WorkCard.Wait_For_Element_Visibile(driver,60, "btnRefreshOvedDetails");
 	  WorkCard.Btn_Show(driver).click();
 	  //Work_Card.Wait_For_Element_Visibile(driver, 60, "SD_imgCancel0");
-	  Assert.assertEquals(WorkCard.Lbl_Sidur_Num_0(driver).getText(), "58011");
+	  try  {
+		  
+		  Assert.assertEquals(WorkCard.Lbl_Sidur_Num_0(driver).getText(), "58011");
+		  
+	  }
+	  
+	  catch(AssertionError e ) {
+		  
+		  Assert.assertEquals(WorkCard.Lbl_Sidur_Num_0(driver).getText(), "58011");
+		  
+		  
+		  
+	  }
+	  
 	  WorkCard.Cancel_Sidur(driver).click();
 	  WorkCard.Btn_Update(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver, "clnDate",null);
