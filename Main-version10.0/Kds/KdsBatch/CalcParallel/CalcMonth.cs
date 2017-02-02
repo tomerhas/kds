@@ -2981,8 +2981,8 @@ namespace KdsBatch
                    
                     objOved.fHashlamaAlCheshbonNosafotHeadrut = float.Parse(Math.Round(fHashlama, 3).ToString());
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomHeadrut.GetHashCode());
-                    fSumYamimMeusharim = GetSumErechRechivYamimMeusharim(objOved,clGeneral.enRechivim.YomHeadrut);
-                    fSumDakotRechiv = (fSumDakotRechiv- fSumYamimMeusharim) - fHashlama - fSumYamimMeusharim;
+                  //  fSumYamimMeusharim = GetSumErechRechivYamimMeusharim(objOved,clGeneral.enRechivim.YomHeadrut);
+                    fSumDakotRechiv = fSumDakotRechiv - fHashlama;
 
                    
                 //   UpdateRechiv146(fNochehutChodshitChelkit, fMichsaChodshitChelkit);
