@@ -83,6 +83,7 @@ public class AddScheduleMapa    extends Base  {
 	  }
 	  
 	  WorkCard.Cancel_Sidur(driver).click();
+	  WorkCard.Wait_For_Element_Visibile(driver, 30, "btnUpdateCard");
 	  WorkCard.Btn_Update(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver, "clnDate",null);
 	  WorkCard.Date(driver).click();
