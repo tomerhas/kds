@@ -73,7 +73,7 @@
         <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
     </div>  
    <center>       
-       <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
+         <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
         <ContentTemplate>
          <table class="WorkCardTable1" style="width: 100%">
         <tr>                           
@@ -87,7 +87,7 @@
             <td class="WorkCardTable1Label" align="right"><label id="lblLastUpdateDate" runat="server"></label></td>                    
         </tr>
       </table>     
-    
+  
          <table width="100%" class="WorkCardTable2" cellspacing="0">
             <tr>
               <td width="89%">                                      

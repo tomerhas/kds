@@ -3253,6 +3253,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 }
                 HttpRuntime.Cache.Remove(iMisparIshi.ToString() + dDateCard.ToShortDateString());
             }
+            ShowLastUpdateData(iMisparIshi, dDateCard);
             return bResult;
         }
         catch (Exception ex)
