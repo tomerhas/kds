@@ -63,7 +63,7 @@ public class OpenRikuzOnline extends Base {
       String text1 = TickurChishuvLeOved.List_Month(driver).getText();
       System.out.println(text1);
       
-      droplist.selectByVisibleText("07/2015");
+      droplist.selectByVisibleText("01/2017");
       TickurChishuvLeOved.List_Month(driver).sendKeys(Keys.ENTER);
       TickurChishuvLeOved.Btn_Show(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver,null, "ItemRow");
@@ -87,20 +87,7 @@ public class OpenRikuzOnline extends Base {
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+ 
   
   
   

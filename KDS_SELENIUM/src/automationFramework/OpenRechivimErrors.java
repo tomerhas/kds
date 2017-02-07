@@ -20,7 +20,7 @@ public class OpenRechivimErrors extends Base {
 		Utilsfn a = new Utilsfn();
 		a.waitForWindow("WorkCard", driver);
 		WorkCard.TxtId(driver).sendKeys(Keys.TAB);
-		WorkCard.Date(driver).sendKeys("27102015");
+		WorkCard.Date(driver).sendKeys("26012017");
 		WorkCard.Btn_Show(driver).click();
 		WorkCard.Wait_For_Element_Stalenes(driver, "btnCalcItem", null);
 		WorkCard.BtnCalcItems(driver).click();
@@ -28,7 +28,7 @@ public class OpenRechivimErrors extends Base {
 		b.waitForWindow("Rechivim", driver);
 		System.out.println(driver.getCurrentUrl());
 		Assert.assertEquals(driver.getCurrentUrl(),
-				"http://kdstest/Modules/Ovdim/Rechivim.aspx?id=31777&date=27/10/2015");
+				"http://kdstest/Modules/Ovdim/Rechivim.aspx?id=31777&date=26/01/2017");
 		//JavascriptExecutor executor = (JavascriptExecutor) driver;
 		//executor.executeScript("arguments[0].click();",
 				//Work_Card.BtnCloseErrors(driver));
@@ -48,7 +48,7 @@ public class OpenRechivimErrors extends Base {
 		Utilsfn a = new Utilsfn();
 		a.waitForWindow("WorkCard", driver);
 		WorkCard.TxtId(driver).sendKeys(Keys.TAB);
-		WorkCard.Date(driver).sendKeys("27102015");
+		WorkCard.Date(driver).sendKeys("26012017");
 		WorkCard.Btn_Show(driver).click();
 		WorkCard.Wait_For_Element_Stalenes(driver, "btnDrvErrors", null);
 		WorkCard.BtnDriverErrors(driver).click();
