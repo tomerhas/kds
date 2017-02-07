@@ -11,7 +11,7 @@
      <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" >        
      </asp:ScriptManager>
 
-    <div style="overflow:auto" width="100%">
+    <div style="overflow:hidden; height:100%" width="100%">
       <table cellspacing="0" cellpadding="0"  width="100%" >
             <tr>
                 <td >
