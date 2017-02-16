@@ -273,6 +273,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //    break;
                 case ReportName.RptIturim:
                     fsFilter.Style["width"] = "1105px";
+                  //  Ezor.Style.Add("width", "100px");
                     if (!Page.IsPostBack)
                         CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
                     MisparVisa.TextBoxe.MaxLength = 10;

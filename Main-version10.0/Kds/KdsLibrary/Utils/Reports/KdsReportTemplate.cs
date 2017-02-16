@@ -333,8 +333,8 @@ namespace KdsLibrary.Utils.Reports
             Ddl.DataTextField = filter.DropDownList.TextField;
             Ddl.DataValueField = filter.DropDownList.ValueField;
            Ddl.Attributes.Add("dir", "rtl");
-            Ddl.Style.SelectBoxWidth = 250;
-            Ddl.Style.DropDownBoxBoxWidth = 250;// DropDownBoxBoxHeight='150'"; 
+            Ddl.Style.SelectBoxWidth = filter.Width!=0? filter.Width: 250;
+            Ddl.Style.DropDownBoxBoxWidth = filter.Width != 0 ? filter.Width : 250;// DropDownBoxBoxHeight='150'"; 
             Ddl.Texts.SelectBoxCaption = "";
           //  Ddl.TextAlign = TextAlign.Right;
            Ddl.Texts.SelectAllNode = "הכל";

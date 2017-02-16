@@ -193,6 +193,7 @@ namespace KdsLibrary.Utils.Reports
     public class KdsFilter : IComparable<KdsFilter>
     {
         private string _ParameterName, _Caption, _DataType, _DefaultValue, _ErrorMessageValidator, _ClassName="";
+        private int _Width=0;
         private bool _IsParent = false, _Required = false, _RunAtServer=false;
         private KdsBoxeType _BoxeType;
         private KdsListValueExtended _DropDownList;
@@ -280,6 +281,12 @@ namespace KdsLibrary.Utils.Reports
             set { _DropDownList = value; }
         }
 
+        [XmlAttribute("Width")]
+        public int Width
+        {
+            get { return _Width; }
+            set { _Width = value; }
+        }
     }
     public class FilterValidator
     {

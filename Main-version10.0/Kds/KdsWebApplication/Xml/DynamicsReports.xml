@@ -81,9 +81,13 @@
     <Filter ClassName="נתוני HR"  ParameterName="P_WORKERID" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
       <!--<DropDownList QueryType="AjaxAutoComplete" Select="GetIdOfYameyAvoda" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />-->
     </Filter>
-    <Filter ClassName="נתוני HR" ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32">
+    <!--<Filter ClassName="נתוני HR" ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
+    </Filter>-->
+    <Filter ClassName="נתוני HR"  ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDownCheckBoxes" Width="120"  DataType="System.Int32">
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
+    
     <Filter ClassName="נתוני HR"  ParameterName="P_SNIF" Caption="סניף אב"  BoxeType="ListBox" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="select KOD_SNIF_AV,teur_snif_av from ctb_snif_av ORDER BY teur_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" />
     </Filter>
@@ -132,8 +136,9 @@
 
   </Report>
   <Report  RdlName="DriverWithoutTacograph" Roles="kds_administrators" FilterByLine="3" PageHeader="נהגים שלא צרפו טכוגרף" ProductionType="Heavy">
-    <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
+
+    <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDownCheckBoxes" DataType="System.Int32" >
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
@@ -167,9 +172,11 @@
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
       </DropDownList>
     </Filter>
-     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32" >
-      <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
-    </Filter>
+     
+     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDownCheckBoxes" DataType="System.Int32">
+       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
+     </Filter>
+
    
     <Filter ParameterName="P_SNIF" Caption="סניף אב" BoxeType="DropDownCheckBoxes"  DataType="System.Int32">
         <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_kod_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" >
@@ -198,10 +205,9 @@
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
       </DropDownList>
     </Filter>
-     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32" Required="true">
-      <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
+    <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDownCheckBoxes" DataType="System.Int32" Required="true">
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
-   
     <Filter ParameterName="P_SNIF" Caption="סניף אב" BoxeType="DropDownCheckBoxes"  DataType="System.Int32">
         <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_kod_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" >
         </DropDownList>
@@ -267,8 +273,9 @@
         <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
       </DropDownList>
     </Filter>
-    <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
+   
+    <Filter  ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDownCheckBoxes"   DataType="System.Int32">
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
     <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
       <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdimForPremiot" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
