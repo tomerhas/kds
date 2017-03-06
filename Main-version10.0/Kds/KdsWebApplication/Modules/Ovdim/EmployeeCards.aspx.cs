@@ -328,28 +328,6 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
         }
     }
 
-    protected void btnShowApproval_Click(object sender, EventArgs e)
-    {
-         string[] arrDate;
-        DateTime dDateStart;
-        try {
-            arrDate = ddlMonth.Items[ddlMonth.Items.Count-1].Value.Split(char.Parse("/"));
-            dDateStart = new DateTime(int.Parse(arrDate[1].ToString()), int.Parse(arrDate[0].ToString()), 1);
-               
-            Dictionary<string, string> ReportParameters = new Dictionary<string, string>();
-            ReportParameters.Add("P_MISPAR_ISHI", txtId.Text.ToString());
-            ReportParameters.Add("P_KOD_ISHUR", "-1");
-            ReportParameters.Add("P_STATUS","-1");
-            ReportParameters.Add("P_STARTDATE", dDateStart.ToShortDateString());
-            ReportParameters.Add("P_ENDDATE", DateTime.Now.ToShortDateString());
-            ReportParameters.Add("P_FACTORCONFIRM", "-1");
-            OpenReport(ReportParameters, (Button)sender, ReportName.IshurimLerashemet.ToString());
-        }
-        catch (Exception ex)
-        {
-            clGeneral.BuildError(Page, ex.Message);
-        }
-    }
 
     protected void OpenReport(Dictionary<string, string> ReportParameters, Button btnScript, string sRdlName)
     {

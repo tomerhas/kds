@@ -374,6 +374,24 @@ namespace KdsLibrary.BL
             return dt;
         }
 
+        
+        public DataTable GetSnifByEzor(int p_ezor)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                clDal dal = new clDal();
+                dal.AddParameter("P_KOD_EZOR", ParameterType.ntOracleInteger, p_ezor, ParameterDir.pdInput);
+                dal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                dal.ExecuteSP(clGeneral.cProGetSnifimByEzor, ref dt);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
+
         public DataTable GetSnifeyTnuaa(string p_ezor, string p_snif_av)
         {
             DataTable dt = new DataTable();

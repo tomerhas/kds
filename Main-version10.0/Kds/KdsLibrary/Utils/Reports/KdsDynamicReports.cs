@@ -561,7 +561,6 @@ namespace KdsLibrary.Utils.Reports
         WorkCardVisa=3,
         RikuzAvodaChodshi2=4,
         RikuzAvodaChodshiOnLine2=5,
-        IshurimLerashemet=900,
         RptIturim = 300,
         Presence=200,
         PresenceAllSidurim=205,
@@ -572,7 +571,6 @@ namespace KdsLibrary.Utils.Reports
         DisregardDriversVisot=401,
         PremiotPresence=800,
         HashvaatRizotChishuv=1000,
-        AbsentWorkers=700,
         HashvaatChodsheyRizotChishuv=1001,
         IdkuneyRashemet=901,
         Average=100,
@@ -597,7 +595,6 @@ namespace KdsLibrary.Utils.Reports
         RdlTigburimOvdim = 202,
         RdlTigburimRechev=204,  
         AverageOvdimBeSnif=111,
-        Keytanot=957,
         RptRitzatChishuv=1002,
         RptSidureyVaadOvdim=301,
         RdlOvdimPeilim = 203

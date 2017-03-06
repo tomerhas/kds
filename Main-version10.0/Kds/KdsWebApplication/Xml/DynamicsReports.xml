@@ -24,34 +24,8 @@
       <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdimToUser" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
     </Filter>
   </Report>
-  <Report RdlName="IshurimLerashemet" Roles="kds_administrators" FilterByLine="3" PageHeader="בקרת אישורים" ZoomPercent="100">
-    <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" DefaultValue="10/12/2005" Required="true"  >
-      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
-      <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
-    </Filter>
-    <Filter   ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" RunAtServer="true"  >
-      <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
-      <!--<FilterValidator ValidatorName="ValidIshurimAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
-    </Filter>
-    <Filter  ParameterName="P_KOD_ISHUR" Caption="מקרה לאישור" BoxeType="DropDown" DataType="System.Int32" >
-      <DropDownList QueryType="StoredProcedure" Select="PKG_REPORTS.pro_get_Comment_Approval" ValueField="Kod_Ishur" TextField="teur_ishur" />
-    </Filter>
-    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
-      <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdimForPresence" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
-    </Filter>
-    <Filter   ParameterName="P_WORKERVIEWLEVEL" Caption="רמת תצוגה" BoxeType="RadioButtonList" DataType="System.Int32" RunAtServer="true">
-      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_ProfilToDisplay" ValueField="KOD_PROFIL" TextField="TEUR_PROFIL_HEB">
-        <ParameterOfFunction Name="p_ProfilFilter" Type="ByReference" ReferenceType="Function" Value="KdsLibrary.clGeneral.GetProfilesOfUser" DataType="System.String" ParameterType="ntOracleVarchar"/>
-      </DropDownList>
-    </Filter>
-    <Filter  ParameterName="P_STATUS" Caption="סטטוס" BoxeType="DropDown" DataType="System.Int32" >
-      <DropDownList QueryType="StoredProcedure" Select="PKG_REPORTS.pro_get_Status_Approval" ValueField="kod_status_ishur" TextField="teur_status_ishur" />
-    </Filter>
-    <Filter  ParameterName="P_FACTORCONFIRM" Caption="גורם מאשר" BoxeType="DropDown" DataType="System.Int32" >
-      <DropDownList QueryType="StoredProcedure" Select="PKG_REPORTS.pro_get_Factors_Confirm" ValueField="mispar_ishi" TextField="FullName" />
-    </Filter>
-  </Report>
-  <Report  RdlName="RptIturim" Roles="kds_administrators" FilterByLine="5" PageHeader="איתורים" Orientation="Landscape" ProductionType="Heavy">
+ 
+    <Report  RdlName="RptIturim" Roles="kds_administrators" FilterByLine="5" PageHeader="איתורים" Orientation="Landscape" ProductionType="Heavy">
     <Filter ClassName="כללי" ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" RunAtServer="true" Required="true">
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidFindMe" ErrorMessageValidator="טווח התאריכים הנבחר גדול מ-30 יום, יש להקליד טווח תאריכים נמוך יותר" ValidationFunction="IsAlowedDateIturim"/>
@@ -84,7 +58,7 @@
     <!--<Filter ClassName="נתוני HR" ParameterName="P_EZOR" Caption="איזור" BoxeType="CheckBoxList" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>-->
-    <Filter ClassName="נתוני HR"  ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDownCheckBoxes" Width="120"  DataType="System.Int32">
+    <Filter ClassName="נתוני HR"  ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDownCheckBoxes" Width="160"  DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
     
@@ -312,29 +286,6 @@
       <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdimLeRitza" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
     </Filter>
   </Report>
-  <Report  RdlName="AbsentWorkers" Roles="kds_administrators" FilterByLine="5" PageHeader="דוח העדרויות" ProductionType="Heavy">
-    <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
-      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="AbsentWorkers" DataType="System.String" />
-        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
-        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
-        <ParameterOfFunction Type="ByValue" Value="100" DataType="System.Int32" />
-      </DropDownList>
-    </Filter>
-    <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
-    </Filter>
-    <Filter ParameterName="P_ABSENCE_TYPE" Caption="סוג העדרות" BoxeType="DropDown" DataType="System.Int32">
-      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_AbsenceType" ValueField="KOD_HEADRUT_CLALI" TextField="TEUR_CLALI" />
-    </Filter>
-    <Filter ParameterName="P_WORKDAYS" Caption="ימי עבודה" BoxeType="DropDown" DataType="System.Int32">
-      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_WorkDayList" ValueField="kod" TextField="description" />
-    </Filter>
-    <Filter ParameterName="P_MAMAD" Caption="מעמד" BoxeType="DropDown" DataType="System.Int32">
-      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_maamadot" ValueField="kod" TextField="description" />
-    </Filter>
-  </Report>
-
   <Report  RdlName="HashvaatChodsheyRizotChishuv" Roles="kds_administrators" FilterByLine="2" PageHeader="דוח השוואת חודשים של ריצות חישוב" ZoomPercent="100" >
     <Filter ParameterName="P_CHODESH" Caption="חודש" BoxeType="DropDown" DataType="System.String"  IsParent="true">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
@@ -783,8 +734,11 @@
     <!--
         <DropDownList QueryType="AjaxAutoComplete"  Select="getMispareiRashamot" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
       </Filter>-->
-    <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown"   RunAtServer="true"  DataType="System.Int32"  IsParent="true">
-      <DropDownList QueryType="Select"  Select="select -1 kod_ezor,'הכל' teur_ezor from dual union select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
+    <!--<Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown"   RunAtServer="true"  DataType="System.Int32"  IsParent="true">
+      <DropDownList QueryType="Select"  Select="select -1 kod_ezor,'הכל' teur_ezor from dual union select distinct kod_ezor,teur_ezor from CTB_EZOR order by teur_ezor" ValueField="kod_ezor" TextField="teur_ezor" />
+    </Filter>-->
+     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown"   RunAtServer="true"  DataType="System.Int32"  IsParent="true">
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
     </Filter>
     <Filter ParameterName="P_SNIF" Caption="סניף" BoxeType="ListBox" DataType="System.Int32" RunAtServer="false">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_kod_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av">
@@ -812,16 +766,7 @@
     </Filter>
   </Report>
 
-  <Report  RdlName="Keytanot" Roles="kds_administrators" FilterByLine="2" PageHeader="קייטנות" ProductionType="Heavy">
-    <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
-      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
-      <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
-    </Filter>
-    <Filter   ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" RunAtServer="true"  >
-      <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
-    </Filter>
-  </Report>
-
+ 
   <Report  RdlName="RptRitzatChishuv" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ריצת חישוב" ProductionType="Heavy">
     <Filter ParameterName="p_BakashaId" Caption="מספר בקשה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Bakashot_details" ValueField="bakasha_id" TextField="teur" />

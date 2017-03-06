@@ -8723,6 +8723,10 @@ namespace KdsBatch
             }
         }
 
+        public void addRowToTableYomi(DateTime taarich,int iKodRechiv, float fErechRechiv)
+        {
+            addRowToTable(iKodRechiv, taarich,fErechRechiv);
+        }
         private void addRowToTable(int iKodRechiv, float fErechRechiv)
         {
             DataRow drChishuv;

@@ -129,8 +129,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     ListBoxExtended CurrentControl = (ListBoxExtended)TdFilter.FindControl(Filter.ParameterName);
                     CurrentControl.AddAttributes();
                     if ((!Page.IsPostBack) && ((Report.NameReport == ReportName.Presence) || 
-                                               (Report.NameReport == ReportName.PresenceAllSidurim) ||
-                                               (Report.NameReport == ReportName.IshurimLerashemet) ))
+                                               (Report.NameReport == ReportName.PresenceAllSidurim) ))
                         CurrentControl.SetDefaultValue(LoginUser.UserInfo.EmployeeNumber.ToString());
                     if (CurrentControl.ListOfValues != "")
                     {
@@ -228,11 +227,6 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     }
                    
                     break;
-                case ReportName.IshurimLerashemet:
-                    if (!Page.IsPostBack)
-                        CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
-                    SetWorkerViewLevel(ReportName.IshurimLerashemet);
-                    break;
                 case ReportName.KamutIdkuneyRashemet:
                     MisRashemet.ContextKey = "6,0133," + DateTime.Now;
                     dtMisRashemet = oUtils.getMispareiRashamot(6, "0133", DateTime.Now, "");
@@ -242,6 +236,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         for (int i = 0; i < dtMisRashemet.Rows.Count; i++)
                             MisRashamot.Value = MisRashamot.Value + dtMisRashemet.Rows[i]["MISPAR_ISHI"].ToString() + ",";
                     }
+                  
                     if (!Page.IsPostBack)
                     {
                         //var trigger = new PostBackTrigger();
@@ -255,9 +250,13 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         //trigger.EventName = "Click";
 
                         //this.PnlFilter.Triggers.Add(trigger);
+                        Region.Items.Insert(0,new ListItem("הכל", "-1"));
+                        Region.SelectedIndex = 0;
                         ScriptManager.GetCurrent(Page).RegisterPostBackControl(btnDisplay);
-
-
+                        KdsLibrary.BL.clReport oReport = KdsLibrary.BL.clReport.GetInstance();
+                        Snif.Items.Clear();
+                        Snif.DataSource = oReport.GetSnifByEzor(-1);
+                        Snif.DataBind();
                     }
                     //if (!Page.IsPostBack)
                     //    CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
@@ -638,7 +637,6 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //    WorkerID.ContextKey = CtrlStartDate + ";" + CtrlEndDate;
                 //    break;
                 case ReportName.Presence:
-                case ReportName.IshurimLerashemet:
                 case ReportName.PresenceAllSidurim:
                     MisparIshi.ContextKey = _sProfilUser + "," + LoginUser.UserInfo.EmployeeNumber + ","
                         + CtrlStartDate + "," + CtrlEndDate;
@@ -964,10 +962,6 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     break;
                 case ReportName.DisregardDriversVisot:
                     Params.Add("P_DISREGARDTYPE", "0");
-                    break;
-                case ReportName.IshurimLerashemet:
-                    Params.Add("P_PAGE_ADDRESS", PureUrlRoot + "/Modules/Ovdim/WorkCard.aspx?");
-                    Params.Add("P_WORKERID", LoginUser.UserInfo.EmployeeNumber.ToString());
                     break;
                 case ReportName.AverageOvdimBeSnif: 
                 case ReportName.Average:

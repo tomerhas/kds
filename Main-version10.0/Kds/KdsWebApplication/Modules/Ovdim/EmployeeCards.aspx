@@ -132,7 +132,7 @@
                        </ContentTemplate>                                   
                     </asp:UpdatePanel>    
                 </td>
-              <td style="width:60px;">
+             <%-- <td style="width:60px;">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                        <ContentTemplate>
                             <asp:Button Text="הצג אישורים" ID="btnShowApproval" runat="server" TabIndex="6" style="display:none"
@@ -140,7 +140,7 @@
                                 Width="112px" onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" /> 
                        </ContentTemplate>                                              
                     </asp:UpdatePanel>    
-                </td>
+                </td>--%>
              
             </tr>
          </table> 

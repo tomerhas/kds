@@ -191,6 +191,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                 txtSnif.Text = InputHiddenBack.Attributes["SNIF"];
             else
                 txtSnif.Text = "";
+            ddlSite.Attributes.Add("title", ddlSite.SelectedItem.Text);
             LoadMaamad();
         }
         catch (Exception ex)
@@ -588,7 +589,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         {
             ezor = ddlSite.SelectedValue;
             if (ezor != "-1")
-                ezor = ddlSite.SelectedItem.Text.Split('-')[1].Replace(" ", "");
+                ezor = ddlSite.SelectedItem.Text.Split('-')[1].Trim();
             snif =txtSnif.Text;
             if (snif != "" && snif.IndexOf("אגפים") == -1 && snif.IndexOf("מוסכים") == -1)
             {
