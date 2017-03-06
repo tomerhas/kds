@@ -706,16 +706,16 @@ public class wsGeneral : System.Web.Services.WebService
             if (contextKey == "1")
             {
                 sSelect="mispar_ishi_char  like '" + prefixText + "'";
-                if (Session["PirteySinun"] != null)
-                {
-                    pirteySinun = Session["PirteySinun"].ToString().Split(';');
-                    if (pirteySinun[0].ToString() != "-1" && pirteySinun[0].ToString() != "")
-                        sSelect += " and TEUR_EZOR='" + pirteySinun[0].ToString() + "'";
-                    if (pirteySinun[1].ToString() != "-1" && pirteySinun[1].ToString() != "")
-                        sSelect += " and SNIF_AV='" + pirteySinun[1].ToString() + "'";
-                    if (pirteySinun[2].ToString() != "-1" && pirteySinun[2].ToString() != "")
-                        sSelect += " and TEUR_MAAMAD_HR='" + pirteySinun[2].ToString() + "'";
-                }
+                //if (Session["PirteySinun"] != null)
+                //{
+                //    pirteySinun = Session["PirteySinun"].ToString().Split(';');
+                //    if (pirteySinun[0].ToString() != "-1" && pirteySinun[0].ToString() != "")
+                //        sSelect += " and TEUR_EZOR='" + pirteySinun[0].ToString() + "'";
+                //    if (pirteySinun[1].ToString() != "-1" && pirteySinun[1].ToString() != "")
+                //        sSelect += " and SNIF_AV='" + pirteySinun[1].ToString() + "'";
+                //    if (pirteySinun[2].ToString() != "-1" && pirteySinun[2].ToString() != "")
+                //        sSelect += " and TEUR_MAAMAD_HR='" + pirteySinun[2].ToString() + "'";
+                //}
                 dt = (DataTable)Session["MisparimIshi"];
                 if (dt != null)
                 {
