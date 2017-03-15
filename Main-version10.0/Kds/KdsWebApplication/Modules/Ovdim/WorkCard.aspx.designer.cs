@@ -381,6 +381,15 @@ public partial class Modules_Ovdim_WorkCard {
     protected global::System.Web.UI.HtmlControls.HtmlTableCell tdCardStatus2;
     
     /// <summary>
+    /// upCardDetails control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.UpdatePanel upCardDetails;
+    
+    /// <summary>
     /// tbEmpDetails control.
     /// </summary>
     /// <remarks>
@@ -397,15 +406,6 @@ public partial class Modules_Ovdim_WorkCard {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.HtmlControls.HtmlTableRow trTab1;
-    
-    /// <summary>
-    /// upEmployee control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.UpdatePanel upEmployee;
     
     /// <summary>
     /// txtIsuk control.
@@ -442,15 +442,6 @@ public partial class Modules_Ovdim_WorkCard {
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
     protected global::System.Web.UI.WebControls.TextBox txtArea;
-    
-    /// <summary>
-    /// upCardDetails control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.UpdatePanel upCardDetails;
     
     /// <summary>
     /// tblPart control.

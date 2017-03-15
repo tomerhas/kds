@@ -243,12 +243,15 @@
                 <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" />                                                                                                                                                                                                                                                                                                                                                                         
             </Triggers>
       </asp:UpdatePanel>
-      <table width="100%" id="tbEmpDetails" runat="server" class="WorkCardTable2" style="display:none">
+      
+      <asp:UpdatePanel ID="upCardDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
+        <ContentTemplate>  
+            <table width="100%" id="tbEmpDetails" runat="server" class="WorkCardTable2" style="display:none">
            <tr id="trTab1">
                <td>
                     <div style="display: none; width: 97%;" id="divEmployeeDetails">
-                        <asp:UpdatePanel ID="upEmployee" runat="server" RenderMode="Inline" UpdateMode="Conditional">
-                            <ContentTemplate>        
+                      <%--  <asp:UpdatePanel ID="upEmployee" runat="server" RenderMode="Inline" UpdateMode="Conditional">
+                            <ContentTemplate>  --%>      
                                 <fieldset class="FilterFieldSet" >                        
                                 <table width="100%" cellpadding="1">
                                     <tr>
@@ -275,17 +278,15 @@
                                     </tr>
                                 </table>                                
                                 </fieldset>
-                            </ContentTemplate>
+                       <%--     </ContentTemplate>
                             <Triggers>
                                 <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" />
                             </Triggers>
-                        </asp:UpdatePanel>
+                        </asp:UpdatePanel>--%>
                     </div>
                  </td>
            </tr>
-      </table>
-      <asp:UpdatePanel ID="upCardDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
-        <ContentTemplate>            
+      </table>          
             <table width="100%" cellpadding="1" id="tblPart" runat="server" class="WorkCardTable1" style="display:none">
                 <tr>
                   <td colspan="5">

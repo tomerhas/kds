@@ -651,8 +651,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          bFound = (!(sNextErrorCardDate.Equals(clnDate.Text)));
          //if (bFound)
          //    FreeWC();
-         clnDate.Text = sNextErrorCardDate;        
-         return bFound;
+         clnDate.Text = sNextErrorCardDate;
+        return bFound;
      }
      protected void SetRashemetVars(bool bRashemet, bool bMenahelBankShaot)
      {
@@ -2582,6 +2582,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             bChishuvShachar = _wcResult.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode());
             string sScript = SendScript(bChishuvShachar, bCalculateAndNotRashemet);
             ViewState["PrintWcFromEmda"] = null;
+          
             //if ((bChishuvShachar) || (bCalculateAndNotRashemet))
             //{
             //    sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",true);";
