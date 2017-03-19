@@ -71,7 +71,8 @@ public class OpenRikuzOnline extends Base {
 	  Utilsfn b= new Utilsfn();
 	  b.waitForWindow("ModalShowPrint",driver);
 	  System.out.println(driver.getCurrentUrl());
-	  Assert.assertEquals(driver.getCurrentUrl(), "http://kdstest/ModalShowPrint.aspx", "window doesn't exist" );
+	  //to do : change to kdstest
+	  Assert.assertEquals(driver.getCurrentUrl(), "http://kdsshaldor/ModalShowPrint.aspx", "window doesn't exist" );
 	  driver .close();
       
       

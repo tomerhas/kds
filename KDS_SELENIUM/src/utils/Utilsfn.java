@@ -36,7 +36,9 @@ public class Utilsfn {
 
 		// Runtime.getRuntime().exec("C:\\selenium\\workspace\\autotest.exe");
 
-		driver.navigate().to("http://kdstest");
+		
+		//change to http://kdstest
+		driver.navigate().to("http://kdsshaldor");
 		// driver.get("http://igalr:DD2468@kdstest");
 
 	}

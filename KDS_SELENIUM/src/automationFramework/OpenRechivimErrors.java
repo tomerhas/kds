@@ -27,8 +27,9 @@ public class OpenRechivimErrors extends Base {
 		Utilsfn b = new Utilsfn();
 		b.waitForWindow("Rechivim", driver);
 		System.out.println(driver.getCurrentUrl());
+		//to do : change to kdstest
 		Assert.assertEquals(driver.getCurrentUrl(),
-				"http://kdstest/Modules/Ovdim/Rechivim.aspx?id=31777&date=26/01/2017");
+				"http://kdsshaldor/Modules/Ovdim/Rechivim.aspx?id=31777&date=26/01/2017");
 		//JavascriptExecutor executor = (JavascriptExecutor) driver;
 		//executor.executeScript("arguments[0].click();",
 				//Work_Card.BtnCloseErrors(driver));
@@ -57,8 +58,9 @@ public class OpenRechivimErrors extends Base {
 		String result = driver.getCurrentUrl().substring(0,
 				driver.getCurrentUrl().length() - 68);
 		System.out.println(result);
+		//to do : change to kdstest
 		Assert.assertEquals(result,
-				"http://kdstest/Modules/Ovdim/WorkCardErrors.aspx?");
+				"http://kdsshaldor/Modules/Ovdim/WorkCardErrors.aspx?");
 		
 
 		JavascriptExecutor executor = (JavascriptExecutor) driver;

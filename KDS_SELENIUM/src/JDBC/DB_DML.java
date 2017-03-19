@@ -62,7 +62,8 @@ public static void deleteRecordFromTable( String sishi, String staarich , String
 private static Connection getDBConnection() {
 
 	 String DB_CONNECTION = "jdbc:oracle:thin:@oracledev:1521:kdstst";
-	 String DB_USER = "kdsadmin";
+	 //to_do:cahang to kdsadmin
+	 String DB_USER = "kdsadmin_test";
 	 String DB_PASSWORD = "maayan";
 	Connection dbConnection = null;
 

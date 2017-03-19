@@ -38,8 +38,8 @@ public class AddAbsences    extends Base {
 	  
 driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
 	  
-      //DB_DML.deleteRecordFromTable("85400","to_date('26/04/2015','dd/mm/yyyy')","99830");
-      //DB_DML.deleteRecordFromTable("85400","to_date('27/04/2015','dd/mm/yyyy')","99830");
+      DB_DML.deleteRecordFromTable("85400","to_date('10/01/2017','dd/mm/yyyy')","99830");
+      DB_DML.deleteRecordFromTable("85400","to_date('10/01/2017','dd/mm/yyyy')","99801");
 	  Utilsfn a= new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("85400");
