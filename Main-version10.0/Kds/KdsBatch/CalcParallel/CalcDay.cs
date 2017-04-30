@@ -1446,7 +1446,8 @@ namespace KdsBatch
                 if (objOved.objMeafyeneyOved.GetMeafyen(60).IntValue == 1 || objOved.objMeafyeneyOved.GetMeafyen(60).IntValue == 2)
                     if ((objOved.Taarich - objOved.dTchilatAvoda).Days <= (5 * 365))
                         flag = false;
-
+                if (HaveRechivimInDay(objOved.Taarich, "30,202,26,28,203,29"))
+                    flag = false;
                 if (flag)
                 {
                     if (objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.Sachir12.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.OvedChadshKavua.GetHashCode() ||
