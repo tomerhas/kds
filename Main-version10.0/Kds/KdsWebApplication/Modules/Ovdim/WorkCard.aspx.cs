@@ -2509,6 +2509,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             txtIsuk.Text = dt.Rows[0]["teur_isuk"].ToString();
             //איזור
             txtArea.Text = dt.Rows[0]["teur_ezor"].ToString();
+            txtArea.ToolTip = dt.Rows[0]["teur_ezor"].ToString();
             //סניף
             txtSnif.Text = dt.Rows[0]["teur_snif_av"].ToString();
             //חברה

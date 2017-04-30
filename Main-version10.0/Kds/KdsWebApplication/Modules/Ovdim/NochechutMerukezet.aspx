@@ -262,7 +262,7 @@
         var clean_uri = uri.substring(0, uri.indexOf("?"));
         window.history.replaceState({}, document.title, clean_uri);
     }
-    window.open("C:\PrintFiles\kds\75757\Presence.xls");
+  //  window.open("C:\PrintFiles\kds\75757\Presence.xls");
 
     function CheckOvedId() {
         $('#<%=divNetunim.ClientID %>').css("display", "none");
