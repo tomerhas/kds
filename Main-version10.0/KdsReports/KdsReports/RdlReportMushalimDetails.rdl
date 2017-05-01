@@ -21,6 +21,10 @@
             <Value>=Parameters!P_ENDDATE.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
+          <QueryParameter Name="P_COMPANYID">
+            <Value>=Parameters!P_COMPANYID.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
         <CommandText>PKG_REPORTS.PRO_GET_MUSHALIM_DETAILS</CommandText>
@@ -3011,7 +3015,7 @@
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>01/01/2013 00:00:00</Value>
+          <Value>01/02/2017 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P_STARTDATE</Prompt>
@@ -3020,10 +3024,14 @@
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>05/01/2013 00:00:00</Value>
+          <Value>02/28/2017 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P_ENDDATE</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_COMPANYID">
+      <DataType>Integer</DataType>
+      <Prompt>P_COMPANYID</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
@@ -3052,6 +3060,11 @@
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>P_COMPANYID</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
           <RowIndex>1</RowIndex>
           <ParameterName>P_DT</ParameterName>
         </CellDefinition>
