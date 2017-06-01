@@ -32,6 +32,7 @@ public class AddScheduleMapa    extends Base  {
   @Test
   public void addScheduleMapa () throws SQLException {
 	  DB_DML.deleteRecordFromTable("77104", "to_date('14/09/2016','dd/mm/yyyy')", "33011");
+	  //delete from db sidur_num 58011 and his activities
 	  Utilsfn a= new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
