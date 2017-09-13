@@ -25,10 +25,10 @@ public partial class Modules_Test2 : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        string fileName = "C:\\Dev\\Kds\\Main-version10.0\\Kds\\KdsWebApplication\\Xml\\Sysman.xml";
+        //string fileName = "C:\\Dev\\Kds\\Main-version10.0\\Kds\\KdsWebApplication\\Xml\\Sysman.xml";
       
-        DataTable newTable = new DataTable();
-        newTable.ReadXml(fileName);
+        //DataTable newTable = new DataTable();
+        //newTable.ReadXml(fileName);
 
     //    IBankShaotManager bankManager = ServiceLocator.Current.GetInstance<IBankShaotManager>();
     //    bankManager.ExecBankShaot(3332, DateTime.Parse("15/04/2015"));
@@ -67,11 +67,15 @@ public partial class Modules_Test2 : System.Web.UI.Page
 
     protected void OnClick_ShinuyHR(object sender, EventArgs e)
     {
-        KdsBatch.HrWorkersChanges.clMain obClManager = new KdsBatch.HrWorkersChanges.clMain();
-        obClManager.HRChangesMatzavPirteyBrerotmechdal();
+        // פותחים הערה לפי התהליך שרוצים להפעיל
 
-     //   KdsBatch.HrWorkersChanges.clMain obClManager = new KdsBatch.HrWorkersChanges.clMain();
-     //   obClManager.HRChangesMeafyenim();
+        //מצב עובדים פרטי עובדים וברירות מחדל מאפיינים 
+        //KdsBatch.HrWorkersChanges.clMain obClManager = new KdsBatch.HrWorkersChanges.clMain();
+        //obClManager.HRChangesMatzavPirteyBrerotmechdal();
+
+        //מאפיינים 
+        KdsBatch.HrWorkersChanges.clMain obClManager = new KdsBatch.HrWorkersChanges.clMain();
+        obClManager.HRChangesMeafyenim();
     }
 
     //protected void OnClick_ShinuyMeafyenim(object sender, EventArgs e)

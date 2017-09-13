@@ -141,7 +141,7 @@ namespace KdsLibrary.KDSLogic.DAL
                 oTnua.AddParameter("p_Cur2", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oTnua.AddParameter("VisutimCrs", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oTnua.ExecuteSP(cGetKavDetails, ref dt);
-
+                
                 return dt;
             }
             catch (Exception ex)

@@ -20,16 +20,15 @@ public class OpenRechivimErrors extends Base {
 		Utilsfn a = new Utilsfn();
 		a.waitForWindow("WorkCard", driver);
 		WorkCard.TxtId(driver).sendKeys(Keys.TAB);
-		WorkCard.Date(driver).sendKeys("26012017");
+		WorkCard.Date(driver).sendKeys("27102015");
 		WorkCard.Btn_Show(driver).click();
 		WorkCard.Wait_For_Element_Stalenes(driver, "btnCalcItem", null);
 		WorkCard.BtnCalcItems(driver).click();
 		Utilsfn b = new Utilsfn();
 		b.waitForWindow("Rechivim", driver);
 		System.out.println(driver.getCurrentUrl());
-		//to do : change to kdstest
 		Assert.assertEquals(driver.getCurrentUrl(),
-				"http://kdsshaldor/Modules/Ovdim/Rechivim.aspx?id=31777&date=26/01/2017");
+				"http://kdstest/Modules/Ovdim/Rechivim.aspx?id=31777&date=27/10/2015");
 		//JavascriptExecutor executor = (JavascriptExecutor) driver;
 		//executor.executeScript("arguments[0].click();",
 				//Work_Card.BtnCloseErrors(driver));
@@ -49,7 +48,7 @@ public class OpenRechivimErrors extends Base {
 		Utilsfn a = new Utilsfn();
 		a.waitForWindow("WorkCard", driver);
 		WorkCard.TxtId(driver).sendKeys(Keys.TAB);
-		WorkCard.Date(driver).sendKeys("26012017");
+		WorkCard.Date(driver).sendKeys("27102015");
 		WorkCard.Btn_Show(driver).click();
 		WorkCard.Wait_For_Element_Stalenes(driver, "btnDrvErrors", null);
 		WorkCard.BtnDriverErrors(driver).click();
@@ -58,9 +57,8 @@ public class OpenRechivimErrors extends Base {
 		String result = driver.getCurrentUrl().substring(0,
 				driver.getCurrentUrl().length() - 68);
 		System.out.println(result);
-		//to do : change to kdstest
 		Assert.assertEquals(result,
-				"http://kdsshaldor/Modules/Ovdim/WorkCardErrors.aspx?");
+				"http://kdstest/Modules/Ovdim/WorkCardErrors.aspx?");
 		
 
 		JavascriptExecutor executor = (JavascriptExecutor) driver;

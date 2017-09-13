@@ -42,13 +42,13 @@ public class EmptyActivityMapa   extends Base {
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
 	  WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("05012017");
+	  WorkCard.Date(driver).sendKeys("01042015");
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.AddRekaUp_mapa(driver).click();
 	  //Thread.sleep(2000);
 	  WorkCard.Wait_For_Element_Stalenes(driver,"SD_000_ctl03_SD_000_ctl03MakatNumber",null);
 	  System.out.println(WorkCard.Makat_Num_Reka_Mapa(driver).getAttribute("value"));
-	  Assert.assertEquals("60369400",WorkCard.Makat_Num_Reka_Mapa(driver).getAttribute("value"));
+	  Assert.assertEquals("60375800",WorkCard.Makat_Num_Reka_Mapa(driver).getAttribute("value"));
 	  WorkCard.AddRekadw_mapa(driver).click();
 	  WebDriverWait wait = new WebDriverWait(driver, 30);
 	  wait.until(ExpectedConditions.alertIsPresent());

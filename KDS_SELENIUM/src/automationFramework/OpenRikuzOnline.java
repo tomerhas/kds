@@ -63,7 +63,7 @@ public class OpenRikuzOnline extends Base {
       String text1 = TickurChishuvLeOved.List_Month(driver).getText();
       System.out.println(text1);
       
-      droplist.selectByVisibleText("01/2017");
+      droplist.selectByVisibleText("07/2015");
       TickurChishuvLeOved.List_Month(driver).sendKeys(Keys.ENTER);
       TickurChishuvLeOved.Btn_Show(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver,null, "ItemRow");
@@ -71,8 +71,7 @@ public class OpenRikuzOnline extends Base {
 	  Utilsfn b= new Utilsfn();
 	  b.waitForWindow("ModalShowPrint",driver);
 	  System.out.println(driver.getCurrentUrl());
-	  //to do : change to kdstest
-	  Assert.assertEquals(driver.getCurrentUrl(), "http://kdsshaldor/ModalShowPrint.aspx", "window doesn't exist" );
+	  Assert.assertEquals(driver.getCurrentUrl(), "http://kdstest/ModalShowPrint.aspx", "window doesn't exist" );
 	  driver .close();
       
       
@@ -88,7 +87,20 @@ public class OpenRikuzOnline extends Base {
   
   
   
- 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

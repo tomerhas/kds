@@ -1,6 +1,5 @@
 package automationFramework;
 
-import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Keys;
@@ -9,8 +8,6 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
-
-import JDBC.DB_DML;
 import pageObjects.WorkCard;
 import utils.Base;
 import utils.Utilsfn;
@@ -31,16 +28,14 @@ public class AddSpecialSchedule  extends Base {
 	
 	
   @Test
-  public void addSpecialSchedule () throws SQLException {
+  public void addSpecialSchedule () {
 	  
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	  DB_DML.deleteRecordFromTable("77104","to_date('15/11/2016','dd/mm/yyyy')","99818");
-	  DB_DML.deleteRecordFromTable("77104","to_date('15/11/2016','dd/mm/yyyy')","99810");
 	  Utilsfn a =new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
 	  WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("15112016");
+	  WorkCard.Date(driver).sendKeys("20052015");
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.Wait_For_Element_Stalenes(driver, "btnAddMyuchad",null);
 	  WorkCard.Btn_Add_Special(driver).click();

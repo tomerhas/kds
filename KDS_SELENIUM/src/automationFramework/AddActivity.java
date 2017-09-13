@@ -33,7 +33,7 @@ public class AddActivity   extends Base {
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
 	  WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("30112016");
+	  WorkCard.Date(driver).sendKeys("17052015");
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.Wait_For_Element_Visibile(driver,60,"SD_imgAddPeilut0").click();
 	  WorkCard.Wait_For_Element_Visibile(driver,60,"SD_000_ctl08_SD_000_ctl08ShatYetiza").clear();

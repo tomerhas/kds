@@ -1,10 +1,8 @@
 package automationFramework;
 
-import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -13,8 +11,6 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
-
-import JDBC.DB_DML;
 import pageObjects.DivuachHeadrut;
 import pageObjects.WorkCard;
 import utils.Utilsfn;
@@ -31,20 +27,19 @@ public class AddAbsences    extends Base {
 	
 	
   @Test
-  public void addAbsences() throws InterruptedException, SQLException {
+  public void addAbsences() throws InterruptedException {
 	  
 	  
 	  
 	  
 driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
 	  
-      DB_DML.deleteRecordFromTable("85400","to_date('10/01/2017','dd/mm/yyyy')","99830");
-      DB_DML.deleteRecordFromTable("85400","to_date('10/01/2017','dd/mm/yyyy')","99801");
+	  
 	  Utilsfn a= new Utilsfn();
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("85400");
 	  WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("10012017");
+	  WorkCard.Date(driver).sendKeys("26042015");
 	  WorkCard.Btn_Show(driver).click();
 	  //Thread.sleep(2000);
 	  //Work_Card.Wait_For_Element_Visibile(driver,60,"btnAddHeadrut");
@@ -71,14 +66,13 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  Select droplist1 = new Select(DivuachHeadrut.List_Absences(driver));
       droplist1.selectByVisibleText("מילואים"); 
       DivuachHeadrut.End_Date_Absences(driver).click();
-      DivuachHeadrut.End_Date_Absences(driver).sendKeys("11012017");
+      DivuachHeadrut.End_Date_Absences(driver).sendKeys("27042015");
       DivuachHeadrut.Btn_Update_Absence(driver).click();
       Utilsfn e= new Utilsfn();
 	  e.waitForWindow("WorkCard",driver);
       Assert.assertEquals(WorkCard.Lbl_Sidur_Num_0(driver).getText(),"99830");
       WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("11012017");
-	  WorkCard.Date(driver).sendKeys(Keys.TAB);
+	  WorkCard.Date(driver).sendKeys("27042015");
 	  WorkCard.Btn_Show(driver).click();
 	  //Thread.sleep(2000);
 	  WorkCard.Wait_For_Element_Stalenes(driver, "SD_lblSidur0", null);
@@ -90,8 +84,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
       //Thread.sleep(2000);
       WorkCard.Wait_For_Element_Stalenes(driver, "clnDate",null);
       WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("10012017");
-	  WorkCard.Date(driver).sendKeys(Keys.TAB);
+	  WorkCard.Date(driver).sendKeys("26042015");
 	  WorkCard.Btn_Show(driver).click();
 	  WebDriverWait wait1 = new WebDriverWait(driver,50);
 	  wait1.until(ExpectedConditions.visibilityOf(WorkCard.Cancel_Sidur(driver)));
@@ -100,7 +93,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
       //Thread.sleep(2000);
       WorkCard.Wait_For_Element_Stalenes(driver, "clnDate",null);
       WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("12012017");
+	  WorkCard.Date(driver).sendKeys("28042015");
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.Btn_Add_Absence(driver).click();
 	  Utilsfn f= new Utilsfn();

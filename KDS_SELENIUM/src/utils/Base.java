@@ -33,7 +33,7 @@ public  void createDriver() {
 	File file = new File("C:/Selenium/IEDriverServer.exe");
 	System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
 	 driver = new InternetExplorerDriver();
-	  driver.navigate().to("http://kdsshaldor");
+	  driver.navigate().to("http://kdstest");
 }
 	
 

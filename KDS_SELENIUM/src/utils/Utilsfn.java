@@ -36,9 +36,7 @@ public class Utilsfn {
 
 		// Runtime.getRuntime().exec("C:\\selenium\\workspace\\autotest.exe");
 
-		
-		//change to http://kdstest
-		driver.navigate().to("http://kdsshaldor");
+		driver.navigate().to("http://kdstest");
 		// driver.get("http://igalr:DD2468@kdstest");
 
 	}
@@ -50,7 +48,7 @@ public class Utilsfn {
 		System.out.println(innerTitle);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		Select droplist = new Select(EmployeeCard.List_Month(driver));
-		droplist.selectByVisibleText("01/2017");
+		droplist.selectByVisibleText("03/2015");
 		EmployeeCard.Btn_Execute(driver).click();
 		EmployeeCard.Link_Date(driver).click();
 

@@ -58,7 +58,7 @@ public void updateDayWorkCard   (String sTachograph,String sLina ) throws Interr
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
 	  WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("03112016");
+	  WorkCard.Date(driver).sendKeys("03032015");
 	  WorkCard.Btn_Show(driver).click();
 	  //Thread.sleep(3000);
 	  WorkCard.Wait_For_Element_Stalenes(driver, "btnPlus2",null);

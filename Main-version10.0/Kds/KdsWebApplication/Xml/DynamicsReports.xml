@@ -69,7 +69,11 @@
       <DropDownList QueryType="Select"  Select="Select Distinct Kod_Maamad_HR, Teur_Maamad_HR From CTB_Maamad order by 2 " ValueField="Kod_Maamad_HR" TextField="Teur_Maamad_HR" />
     </Filter>
 
-  </Report>
+    <Filter  ClassName="נתוני HR" ParameterName="P_COMPANYID" Caption="חברה" BoxeType="DropDownCheckBoxes"  Width="110"   DataType="System.Int32">
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_CompanyId" ValueField="Kod_Hevra" TextField="Teur_Hevra" />
+    </Filter>
+
+    </Report>
   <Report  RdlName="Presence" Roles="kds_administrators" FilterByLine="3" PageHeader="נוכחות" ZoomPercent="100">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  RunAtServer="true" Required="true">
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>

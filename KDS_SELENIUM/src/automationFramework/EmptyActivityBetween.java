@@ -33,7 +33,7 @@ driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 	  a.waitForWindow("WorkCard",driver);
 	  WorkCard.TxtId(driver).sendKeys("77104");
 	  WorkCard.Date(driver).click();
-	  WorkCard.Date(driver).sendKeys("13112016");
+	  WorkCard.Date(driver).sendKeys("01042015");
 	  WorkCard.Btn_Show(driver).click();
 	  WorkCard.Assert_Reka_Between_Not_Able(driver).click();
 	  WebDriverWait wait = new WebDriverWait(driver, 40);
