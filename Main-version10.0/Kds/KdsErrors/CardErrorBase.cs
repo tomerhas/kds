@@ -479,6 +479,7 @@ namespace KdsErrors
             {
                 DataRow[] drMichsa;
                 int iShvuaAvoda;
+                float michsa;
                 if (input.OvedDetails.iZmanMutamut > 0)
                     return input.OvedDetails.iZmanMutamut;
 
@@ -490,16 +491,33 @@ namespace KdsErrors
                  else  iShvuaAvoda = 5; 
 
                 drMichsa = TbMichsa.Select("Kod_Michsa=" + input.oMeafyeneyOved.GetMeafyen(1).IntValue + " and SHAVOA_AVODA=" + iShvuaAvoda + " and sug_yom=" + input.iSugYom + " and me_taarich<=Convert('" + input.CardDate.ToShortDateString() + "', 'System.DateTime')" + " and ad_taarich>=Convert('" + input.CardDate.ToShortDateString() + "', 'System.DateTime')");
-                 
+
                 if (drMichsa.Length > 0)
-                { 
-                    return int.Parse((float.Parse(drMichsa[0]["michsa"].ToString()) * 60).ToString()); 
+                {
+                    michsa = int.Parse((float.Parse(drMichsa[0]["michsa"].ToString()) * 60).ToString());
+
+                    if (input.OvedDetails.iGil == enKodGil.enKashish.GetHashCode())
+                    {
+                        if (input.iSugYom < enSugYom.Shishi.GetHashCode())
+                            michsa = michsa - 72;
+                        else if (input.iSugYom > enSugYom.Shishi.GetHashCode() && input.iSugYom < enSugYom.LagBaomerOrPurim.GetHashCode())
+                            michsa = michsa - 60;
+                    }
+
+                    if (input.OvedDetails.iGil == enKodGil.enKshishon.GetHashCode())
+                    {
+                        if (input.iSugYom < enSugYom.Shishi.GetHashCode())
+                            michsa = michsa - 36;
+                        else if (input.iSugYom > enSugYom.Shishi.GetHashCode() && input.iSugYom < enSugYom.LagBaomerOrPurim.GetHashCode())
+                            michsa = michsa - 30;
+                    }
+                  
                 }
                 else
                 {
-                    return 0;
+                    michsa= 0;
                 }
-
+                return michsa;
             }
             catch (Exception ex)
             {

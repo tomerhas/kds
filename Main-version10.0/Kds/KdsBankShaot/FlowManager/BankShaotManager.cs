@@ -25,7 +25,7 @@ namespace KdsBankShaot.FlowManager
             _container = container;
         }
 
-        public void ExecBankShaot(long BakashaId)
+        public void ExecBankShaot_2(long BakashaId)
         {
             BankShaotDal dal = new BankShaotDal();
             DataTable TbYechidotBank = new DataTable();
@@ -82,13 +82,73 @@ namespace KdsBankShaot.FlowManager
                 throw ex;
             }
         }
-        public void ExecBankShaotLefiParametrim(long BakashaId,int Mitkan,DateTime Chodesh)
+
+        public void ExecBankShaot(long BakashaId)
         {
             BankShaotDal dal = new BankShaotDal();
             DataTable TbYechidotBank = new DataTable();
             DataTable Months = new DataTable();
             BudgetData inputData = null;
             COLL_BUDGET oCollBudgets;
+            DateTime Taarich, Month;
+            try
+            {
+                //Month = DateTime.Parse("01/06/2016");
+                //Taarich = DateTime.Parse("01/06/2016");
+                //for (int j = 0; j <30; j++)
+                //{
+                //    oCollBudgets = new COLL_BUDGET();
+                Months = dal.GetMonthsToCalc();
+                foreach (DataRow dr in Months.Rows)
+                {
+                  //  oCollBudgets = new COLL_BUDGET();
+                    Month = DateTime.Parse(dr["taarich"].ToString());
+                    if (Month.Month != DateTime.Now.Month)
+                        Taarich = Month.AddMonths(1).AddDays(-1);
+                    else Taarich = DateTime.Now.Date;// DateTime.Parse(dr["taarich"].ToString());
+
+
+                    TbYechidotBank = dal.GetYechidotLeChishuv(Taarich);
+
+                    for (int i = 0; i < TbYechidotBank.Rows.Count; i++)
+                    {
+                        try
+                        {
+                            ExecBankShaotLefiParametrim(BakashaId, int.Parse(TbYechidotBank.Rows[i][0].ToString()), Month);
+
+                            //inputData = FillBudgetData(int.Parse(TbYechidotBank.Rows[i][0].ToString()), Month, Taarich, BakashaId);
+
+                            //CalcBudgetToYechida(inputData);
+
+                            //oCollBudgets.Add(inputData.objBudget);
+
+                            //dal.SaveEmployeesBudget(inputData.kodYechida, Taarich, inputData.RequestId, inputData.UserId);
+                        }
+                        catch (Exception ex)
+                        {
+                            _container.Resolve<ILogBakashot>().InsertLog(inputData.RequestId, "E", 0, "ExecBankShaot: yechida= " + inputData.kodYechida + ",err: " + ex.Message, null);
+                        }
+
+                    }
+
+                 //   dal.SaveNetuneyBudgets(oCollBudgets);
+
+                    //         Taarich = Taarich.AddDays(1);
+                }
+            }
+            catch (Exception ex)
+            {
+                _container.Resolve<ILogBakashot>().InsertLog(inputData.RequestId, "E", 0, "ExecBankShaot: " + ex.Message, null);
+                throw ex;
+            }
+        }
+        public void ExecBankShaotLefiParametrim(long BakashaId,int Mitkan,DateTime Chodesh)
+        {
+            BankShaotDal dal = new BankShaotDal();
+            DataTable TbYechidotBank = new DataTable();
+            DataTable Months = new DataTable();
+            BudgetData inputData = null;
+            COLL_BUDGET oCollBudgets =new COLL_BUDGET(); ;
             DateTime Taarich, Month,tempdate;
             int num;
             try
@@ -107,7 +167,7 @@ namespace KdsBankShaot.FlowManager
                 }
                 for (int j = 0; j < num-1; j++)
                 {
-                    oCollBudgets = new COLL_BUDGET();
+                    //oCollBudgets = new COLL_BUDGET();
                     
                     try
                     {
@@ -127,10 +187,11 @@ namespace KdsBankShaot.FlowManager
 
                     // }
 
-                    dal.SaveNetuneyBudgets(oCollBudgets);
+                   
 
                     Taarich = Taarich.AddDays(1);
                 }
+                dal.SaveNetuneyBudgets(oCollBudgets);
             }
             catch (Exception ex)
             {

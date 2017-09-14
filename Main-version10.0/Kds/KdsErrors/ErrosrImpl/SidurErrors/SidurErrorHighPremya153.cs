@@ -41,82 +41,85 @@ namespace KdsErrors.ErrosrImpl.SidurErrors
             string sShaa;
           
             var kavimDal = ServiceLocator.Current.GetInstance<IKavimDAL>();
-            dsSidur = kavimDal.GetSidurAndPeiluyotFromTnua(input.curSidur.iMisparSidur, input.CardDate, null, out iResult);
-            var peilutManager = _container.Resolve<IPeilutManager>();
-            if (iResult == 0)
-            {
-                //שעת התחלה ושעת גמר
-                if (dsSidur.Tables[1].Rows.Count > 0)
+            if (input.drSugSidur.Length>0 && input.drSugSidur[0]["sector_avoda"].ToString() == enSectorAvoda.Nahagut.GetHashCode().ToString() && !input.curSidur.bSidurVisaKodExists)
+            { 
+                dsSidur = kavimDal.GetSidurAndPeiluyotFromTnua(input.curSidur.iMisparSidur, input.CardDate, null, out iResult);
+                var peilutManager = _container.Resolve<IPeilutManager>();
+                if (iResult == 0)
                 {
-                    sShaa = dsSidur.Tables[1].Rows[0]["SHAA"].ToString();
-                    dShaHatchalaMapa = DateHelper.GetDateTimeFromStringHour(sShaa, input.CardDate);
-                    for (int i = dsSidur.Tables[1].Rows.Count - 1; i >= 0; i--)
+                    //שעת התחלה ושעת גמר
+                    if (dsSidur.Tables[1].Rows.Count > 0)
                     {
-                        long lMakatNesia = long.Parse(dsSidur.Tables[1].Rows[i]["MAKAT8"].ToString());
-                        sShaa = dsSidur.Tables[1].Rows[i]["SHAA"].ToString();
-                        if (!string.IsNullOrEmpty(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString()))
-                            dSumMazanTichnun = double.Parse(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString());
-                        dShatGmarMapa = DateHelper.GetDateTimeFromStringHour(sShaa, input.CardDate).AddMinutes(dSumMazanTichnun);
-                        fZmanSidurMapa = int.Parse((dShatGmarMapa - dShaHatchalaMapa).TotalMinutes.ToString());
-
-                        //במידה והפעילות האחרונה היא אלמנט לידיעה בלבד (ערך 2 (לידיעה בלבד) במאפיין 3  (לפעולה/לידיעה בלבד), יש לקחת את הפעילות הקודמת לה.
-
-                        if ((enMakatType)(StaticBL.GetMakatType(lMakatNesia)) == enMakatType.mElement)
+                        sShaa = dsSidur.Tables[1].Rows[0]["SHAA"].ToString();
+                        dShaHatchalaMapa = DateHelper.GetDateTimeFromStringHour(sShaa, input.CardDate);
+                        for (int i = dsSidur.Tables[1].Rows.Count - 1; i >= 0; i--)
                         {
-                            var dtTmpMeafyeneyElements = peilutManager.GetTmpMeafyeneyElements(input.CardDate, input.CardDate);
-                            DataRow drMeafyeneyElements = dtTmpMeafyeneyElements.Select("kod_element=" + int.Parse(lMakatNesia.ToString().Substring(1, 2)))[0];
-                            if (drMeafyeneyElements["element_for_yedia"].ToString() != "2")
+                            long lMakatNesia = long.Parse(dsSidur.Tables[1].Rows[i]["MAKAT8"].ToString());
+                            sShaa = dsSidur.Tables[1].Rows[i]["SHAA"].ToString();
+                            if (!string.IsNullOrEmpty(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString()))
+                                dSumMazanTichnun = double.Parse(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString());
+                            dShatGmarMapa = DateHelper.GetDateTimeFromStringHour(sShaa, input.CardDate).AddMinutes(dSumMazanTichnun);
+                            fZmanSidurMapa = int.Parse((dShatGmarMapa - dShaHatchalaMapa).TotalMinutes.ToString());
+
+                            //במידה והפעילות האחרונה היא אלמנט לידיעה בלבד (ערך 2 (לידיעה בלבד) במאפיין 3  (לפעולה/לידיעה בלבד), יש לקחת את הפעילות הקודמת לה.
+
+                            if ((enMakatType)(StaticBL.GetMakatType(lMakatNesia)) == enMakatType.mElement)
                             {
-                                break;
+                                var dtTmpMeafyeneyElements = peilutManager.GetTmpMeafyeneyElements(input.CardDate, input.CardDate);
+                                DataRow drMeafyeneyElements = dtTmpMeafyeneyElements.Select("kod_element=" + int.Parse(lMakatNesia.ToString().Substring(1, 2)))[0];
+                                if (drMeafyeneyElements["element_for_yedia"].ToString() != "2")
+                                {
+                                    break;
+                                }
+                            }
+                            else { break; }
+                        }
+
+                    }
+                }
+                // נתונים מהסידור בכרטיס העבודה 
+                fZmanSidur = float.Parse((input.curSidur.dFullShatGmar - input.curSidur.dFullShatHatchala).TotalMinutes.ToString());
+                    if (fZmanSidur >= 0)
+                    {
+                        htPeilut = input.curSidur.htPeilut;
+                        for (int i = 0; i < input.curSidur.htPeilut.Values.Count; i++)
+                        {
+                            oPeilut = ((PeilutDM)htPeilut[i]);
+                            iTypeMakat = oPeilut.iMakatType;
+                            if ((oPeilut.iMisparKnisa == 0 && iTypeMakat == enMakatType.mKavShirut.GetHashCode()) || iTypeMakat == enMakatType.mEmpty.GetHashCode() || iTypeMakat == enMakatType.mNamak.GetHashCode())
+                            {
+                                dSumMazanTashlum += oPeilut.iMazanTashlum;
+                            }
+                            else if (iTypeMakat == enMakatType.mElement.GetHashCode())
+                            {
+                                if (oPeilut.sElementInMinutes == "1" && oPeilut.sKodLechishuvPremia.Trim() == "1:1")
+                                {
+                                    dSumMazanTashlum += Int32.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
+                                }
                             }
                         }
-                        else { break; }
-                    }
 
-                }
-            }
-            // נתונים מהסידור בכרטיס העבודה 
-            fZmanSidur = float.Parse((input.curSidur.dFullShatGmar - input.curSidur.dFullShatHatchala).TotalMinutes.ToString());
-            if (fZmanSidur >= 0)
-            {
-                htPeilut = input.curSidur.htPeilut;
-                for (int i = 0; i < input.curSidur.htPeilut.Values.Count; i++)
-                {
-                    oPeilut = ((PeilutDM)htPeilut[i]);
-                    iTypeMakat = oPeilut.iMakatType;
-                    if ((oPeilut.iMisparKnisa == 0 && iTypeMakat == enMakatType.mKavShirut.GetHashCode()) || iTypeMakat == enMakatType.mEmpty.GetHashCode() || iTypeMakat == enMakatType.mNamak.GetHashCode())
-                    {
-                        dSumMazanTashlum += oPeilut.iMazanTashlum;
-                    }
-                    else if (iTypeMakat == enMakatType.mElement.GetHashCode())
-                    {
-                        if (oPeilut.sElementInMinutes == "1" && oPeilut.sKodLechishuvPremia.Trim() == "1:1")
+                        if (dSumMazanTashlum >= fZmanSidur)
                         {
-                            dSumMazanTashlum += Int32.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
+                            if (input.curSidur.bSidurMyuhad)
+                            {
+                                if (dSumMazanTashlum >= (fZmanSidur * 2))
+                                    isSidurValid = false;
+                            }
+                            else
+                            {
+                                if ((dSumMazanTashlum >= (fZmanSidur + 90)) || (dSumMazanTashlum >= (fZmanSidur * 2)))
+                                    if (((((dSumMazanTashlum - fZmanSidur) / (dSumMazanTichnun - fZmanSidurMapa)) * 100) - 100) < input.oParameters.fHighPremya)
+                                        isSidurValid = false;
+                            }
+                        }
+
+                        if (!isSidurValid)
+                        {
+                            AddNewError(input);
+                            return false;
                         }
                     }
-                }
-
-                if (dSumMazanTashlum >= fZmanSidur)
-                {
-                    if (input.curSidur.bSidurMyuhad)
-                    {
-                        if (dSumMazanTashlum >= (fZmanSidur * 2))
-                            isSidurValid = false;
-                    }
-                    else
-                    {
-                        if ((dSumMazanTashlum >= (fZmanSidur + 90)) || (dSumMazanTashlum >= (fZmanSidur * 2)))
-                            if (((((dSumMazanTashlum - fZmanSidur) / (dSumMazanTichnun - fZmanSidurMapa)) * 100) - 100) < input.oParameters.fHighPremya)
-                                isSidurValid = false;
-                    }
-                }
-
-                if (!isSidurValid)
-                {
-                    AddNewError(input);
-                    return false;
-                }
                 
             }
             
