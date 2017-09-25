@@ -1,0 +1,57 @@
+<suite name="KDS">
+
+    <test name="Work_Card">
+    
+	
+
+		<classes>
+
+	     	<class name="automationFramework.UpdateCarNo" />
+		    <class name="automationFramework.UpdateDayWorkCard" />
+            <class name="automationFramework.EmptyActivityMapa" />
+            <class name="automationFramework.EmptyActivityBetween" />
+            <class name="automationFramework.AddAbsences" />
+            <class name="automationFramework.AddActivity" />  
+            <class name="automationFramework.AddSpecialSchedule" />  
+            <class name="automationFramework.MenahelBameshek" />
+            <class name="automationFramework.AddScheduleMapa" /> 
+            <class name="automationFramework.OpenRechivimErrors" />   
+            
+            
+		</classes>
+
+
+
+	
+  
+  
+    </test>
+    
+    
+     <test name="Kds_Pages">
+    
+	
+
+		<classes>
+
+	                <class name="automationFramework.EmployeeCards" /> 
+		  	<!--   <  <class name="automationFramework.OpenRikuzOnline" /> -->
+
+		</classes>
+		
+
+		
+		
+
+    </test>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+</suite>

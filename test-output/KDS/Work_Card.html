@@ -1,0 +1,307 @@
+<html>
+<head>
+<title>TestNG:  Work_Card</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Work_Card</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>11/4/0</td>
+</tr><tr>
+<td>Started on:</td><td>Sun Sep 24 22:38:06 IDT 2017</td>
+</tr>
+<tr><td>Total time:</td><td>604 seconds (604822 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='automationFramework.AddScheduleMapa.addScheduleMapa()'><b>addScheduleMapa</b><br>Test class: automationFramework.AddScheduleMapa</td>
+<td><div><pre>org.openqa.selenium.UnhandledAlertException: Modal dialog present: There was an errorSys.WebForms.PageRequestManagerServerErrorException: ORA-04052: error occurred when looking up remote object KDS_GW.KDS_SIDUR_AVODA_PACK@KDS_GW_AT_TNPR
+ORA-00604: error occurred at recursive SQL level 1
+ORA-02019: connection description for remote database not found
+ORA-06508: PL/SQL: could not find program unit being called: &quot;KDSADMIN.PKG_SUG_SIDUR&quot;
+ORA-06512: at line 1
+Build info: version: &apos;unknown&apos;, revision: &apos;1969d75&apos;, time: &apos;2016-10-18 09:43:45 -0700&apos;
+System info: host: &apos;a25595&apos;, ip: &apos;10.0.6.81&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_111&apos;
+Driver info: org.openqa.selenium.ie.InternetExplorerDriver
+Capabilities [{browserAttachTimeout=0, enablePersistentHover=true, ie.forceCreateProcessApi=false, pageLoadStrategy=normal, ie.usePerProcessProxy=false, ignoreZoomSetting=false, handlesAlerts=true, version=11, platform=WINDOWS, nativeEvents=true, ie.ensureCleanSession=false, elementScrollBehavior=0, ie.browserCommandLineSwitches=, requireWindowFocus=false, browserName=internet explorer, initialBrowserUrl=http://localhost:48337/, takesScreenshot=true, javascriptEnabled=true, ignoreProtectedModeSettings=false, enableElementCacheCleanup=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=dismiss}]
+Session ID: 70c80804-dac5-4d79-b5be-f1d5b344490f
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:216)
+	at org.openqa.selenium.remote.ErrorHandler.createUnhandledAlertException(ErrorHandler.java:197)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:635)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:658)
+	at org.openqa.selenium.ie.InternetExplorerDriver.getScreenshotAs(InternetExplorerDriver.java:192)
+	at Listener.TestListener.CaptureScreenShot(TestListener.java:40)
+	at Listener.TestListener.onTestFailure(TestListener.java:22)
+... Removed 24 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace889928215", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace889928215'><pre>org.openqa.selenium.UnhandledAlertException: Modal dialog present: There was an errorSys.WebForms.PageRequestManagerServerErrorException: ORA-04052: error occurred when looking up remote object KDS_GW.KDS_SIDUR_AVODA_PACK@KDS_GW_AT_TNPR
+ORA-00604: error occurred at recursive SQL level 1
+ORA-02019: connection description for remote database not found
+ORA-06508: PL/SQL: could not find program unit being called: &quot;KDSADMIN.PKG_SUG_SIDUR&quot;
+ORA-06512: at line 1
+Build info: version: &apos;unknown&apos;, revision: &apos;1969d75&apos;, time: &apos;2016-10-18 09:43:45 -0700&apos;
+System info: host: &apos;a25595&apos;, ip: &apos;10.0.6.81&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_111&apos;
+Driver info: org.openqa.selenium.ie.InternetExplorerDriver
+Capabilities [{browserAttachTimeout=0, enablePersistentHover=true, ie.forceCreateProcessApi=false, pageLoadStrategy=normal, ie.usePerProcessProxy=false, ignoreZoomSetting=false, handlesAlerts=true, version=11, platform=WINDOWS, nativeEvents=true, ie.ensureCleanSession=false, elementScrollBehavior=0, ie.browserCommandLineSwitches=, requireWindowFocus=false, browserName=internet explorer, initialBrowserUrl=http://localhost:48337/, takesScreenshot=true, javascriptEnabled=true, ignoreProtectedModeSettings=false, enableElementCacheCleanup=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=dismiss}]
+Session ID: 70c80804-dac5-4d79-b5be-f1d5b344490f
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:216)
+	at org.openqa.selenium.remote.ErrorHandler.createUnhandledAlertException(ErrorHandler.java:197)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:635)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:658)
+	at org.openqa.selenium.ie.InternetExplorerDriver.getScreenshotAs(InternetExplorerDriver.java:192)
+	at Listener.TestListener.CaptureScreenShot(TestListener.java:40)
+	at Listener.TestListener.onTestFailure(TestListener.java:22)
+	at org.testng.internal.Invoker.runTestListeners(Invoker.java:1686)
+	at org.testng.internal.Invoker.runTestListeners(Invoker.java:1670)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:696)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.testng.TestNG.privateMain(TestNG.java:1355)
+	at org.testng.TestNG.main(TestNG.java:1324)
+</pre></div></td>
+<td>48</td>
+<td>automationFramework.AddScheduleMapa@45c8e616</td></tr>
+<tr>
+<td title='automationFramework.OpenRechivimErrors.openErrors()'><b>openErrors</b><br>Test class: automationFramework.OpenRechivimErrors</td>
+<td><div><pre>java.lang.AssertionError: expected [http://kdsshaldor/Modules/Ovdim/WorkCardErrors.aspx?] but found [http://kdstest/Modules/Ovdim/WorkCardErrors.aspx?]
+	at automationFramework.OpenRechivimErrors.openErrors(OpenRechivimErrors.java:62)
+... Removed 28 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1186371052", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1186371052'><pre>java.lang.AssertionError: expected [http://kdsshaldor/Modules/Ovdim/WorkCardErrors.aspx?] but found [http://kdstest/Modules/Ovdim/WorkCardErrors.aspx?]
+	at org.testng.Assert.fail(Assert.java:94)
+	at org.testng.Assert.failNotEquals(Assert.java:496)
+	at org.testng.Assert.assertEquals(Assert.java:125)
+	at org.testng.Assert.assertEquals(Assert.java:178)
+	at org.testng.Assert.assertEquals(Assert.java:188)
+	at automationFramework.OpenRechivimErrors.openErrors(OpenRechivimErrors.java:62)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.testng.TestNG.privateMain(TestNG.java:1355)
+	at org.testng.TestNG.main(TestNG.java:1324)
+</pre></div></td>
+<td>13</td>
+<td>automationFramework.OpenRechivimErrors@4cdbe50f</td></tr>
+<tr>
+<td title='automationFramework.OpenRechivimErrors.openRechivim()'><b>openRechivim</b><br>Test class: automationFramework.OpenRechivimErrors</td>
+<td><div><pre>org.openqa.selenium.UnhandledAlertException: Modal dialog present: קיימות שגיאות בכרטיס/בעיה בחישוב ולא ניתן לחשב את הרכיבים. יש לתקן את השגיאות ולפתוח מחדש את מסך רכיבים מחושבים
+Build info: version: &apos;unknown&apos;, revision: &apos;1969d75&apos;, time: &apos;2016-10-18 09:43:45 -0700&apos;
+System info: host: &apos;a25595&apos;, ip: &apos;10.0.6.81&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_111&apos;
+Driver info: org.openqa.selenium.ie.InternetExplorerDriver
+Capabilities [{browserAttachTimeout=0, enablePersistentHover=true, ie.forceCreateProcessApi=false, pageLoadStrategy=normal, ie.usePerProcessProxy=false, ignoreZoomSetting=false, handlesAlerts=true, version=11, platform=WINDOWS, nativeEvents=true, ie.ensureCleanSession=false, elementScrollBehavior=0, ie.browserCommandLineSwitches=, requireWindowFocus=false, browserName=internet explorer, initialBrowserUrl=http://localhost:20862/, takesScreenshot=true, javascriptEnabled=true, ignoreProtectedModeSettings=false, enableElementCacheCleanup=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=dismiss}]
+Session ID: 1abfb536-93a6-4e30-ab02-3c2042e59f12
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:216)
+	at org.openqa.selenium.remote.ErrorHandler.createUnhandledAlertException(ErrorHandler.java:197)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:635)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:658)
+	at org.openqa.selenium.remote.RemoteWebDriver.getCurrentUrl(RemoteWebDriver.java:332)
+	at utils.Utilsfn.waitForWindow(Utilsfn.java:70)
+	at automationFramework.OpenRechivimErrors.openRechivim(OpenRechivimErrors.java:28)
+... Removed 27 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1685134322", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1685134322'><pre>org.openqa.selenium.UnhandledAlertException: Modal dialog present: קיימות שגיאות בכרטיס/בעיה בחישוב ולא ניתן לחשב את הרכיבים. יש לתקן את השגיאות ולפתוח מחדש את מסך רכיבים מחושבים
+Build info: version: &apos;unknown&apos;, revision: &apos;1969d75&apos;, time: &apos;2016-10-18 09:43:45 -0700&apos;
+System info: host: &apos;a25595&apos;, ip: &apos;10.0.6.81&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_111&apos;
+Driver info: org.openqa.selenium.ie.InternetExplorerDriver
+Capabilities [{browserAttachTimeout=0, enablePersistentHover=true, ie.forceCreateProcessApi=false, pageLoadStrategy=normal, ie.usePerProcessProxy=false, ignoreZoomSetting=false, handlesAlerts=true, version=11, platform=WINDOWS, nativeEvents=true, ie.ensureCleanSession=false, elementScrollBehavior=0, ie.browserCommandLineSwitches=, requireWindowFocus=false, browserName=internet explorer, initialBrowserUrl=http://localhost:20862/, takesScreenshot=true, javascriptEnabled=true, ignoreProtectedModeSettings=false, enableElementCacheCleanup=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=dismiss}]
+Session ID: 1abfb536-93a6-4e30-ab02-3c2042e59f12
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:216)
+	at org.openqa.selenium.remote.ErrorHandler.createUnhandledAlertException(ErrorHandler.java:197)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:635)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:658)
+	at org.openqa.selenium.remote.RemoteWebDriver.getCurrentUrl(RemoteWebDriver.java:332)
+	at utils.Utilsfn.waitForWindow(Utilsfn.java:70)
+	at automationFramework.OpenRechivimErrors.openRechivim(OpenRechivimErrors.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.testng.TestNG.privateMain(TestNG.java:1355)
+	at org.testng.TestNG.main(TestNG.java:1324)
+</pre></div></td>
+<td>18</td>
+<td>automationFramework.OpenRechivimErrors@4cdbe50f</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='automationFramework.AddAbsences.addAbsences()'><b>addAbsences</b><br>Test class: automationFramework.AddAbsences</td>
+<td></td>
+<td>86</td>
+<td>automationFramework.AddAbsences@4563e9ab</td></tr>
+<tr>
+<td title='automationFramework.AddActivity.addActivity()'><b>addActivity</b><br>Test class: automationFramework.AddActivity</td>
+<td></td>
+<td>22</td>
+<td>automationFramework.AddActivity@11531931</td></tr>
+<tr>
+<td title='automationFramework.AddSpecialSchedule.addSpecialSchedule()'><b>addSpecialSchedule</b><br>Test class: automationFramework.AddSpecialSchedule</td>
+<td></td>
+<td>31</td>
+<td>automationFramework.AddSpecialSchedule@5e025e70</td></tr>
+<tr>
+<td title='automationFramework.EmptyActivityBetween.chkEmptyActivityBetween()'><b>chkEmptyActivityBetween</b><br>Test class: automationFramework.EmptyActivityBetween</td>
+<td></td>
+<td>25</td>
+<td>automationFramework.EmptyActivityBetween@19bb089b</td></tr>
+<tr>
+<td title='automationFramework.EmptyActivityMapa.chkEmptyActivityMapa()'><b>chkEmptyActivityMapa</b><br>Test class: automationFramework.EmptyActivityMapa</td>
+<td></td>
+<td>22</td>
+<td>automationFramework.EmptyActivityMapa@71c7db30</td></tr>
+<tr>
+<td title='automationFramework.MenahelBameshek.chkMenahelBameshek()'><b>chkMenahelBameshek</b><br>Test class: automationFramework.MenahelBameshek</td>
+<td></td>
+<td>59</td>
+<td>automationFramework.MenahelBameshek@1fbc7afb</td></tr>
+<tr>
+<td title='automationFramework.UpdateCarNo.updateCarNo()'><b>updateCarNo</b><br>Test class: automationFramework.UpdateCarNo<br>Parameters: 8079614</td>
+<td></td>
+<td>16</td>
+<td>automationFramework.UpdateCarNo@47f37ef1</td></tr>
+<tr>
+<td title='automationFramework.UpdateCarNo.updateCarNo()'><b>updateCarNo</b><br>Test class: automationFramework.UpdateCarNo<br>Parameters: 8777901</td>
+<td></td>
+<td>18</td>
+<td>automationFramework.UpdateCarNo@47f37ef1</td></tr>
+<tr>
+<td title='automationFramework.UpdateCarNo.updateCarNo()'><b>updateCarNo</b><br>Test class: automationFramework.UpdateCarNo<br>Parameters: 7620669</td>
+<td></td>
+<td>17</td>
+<td>automationFramework.UpdateCarNo@47f37ef1</td></tr>
+<tr>
+<td title='automationFramework.UpdateDayWorkCard.updateDayWorkCard()'><b>updateDayWorkCard</b><br>Test class: automationFramework.UpdateDayWorkCard<br>Parameters: חסר טכוגרף, לינה אחת</td>
+<td></td>
+<td>21</td>
+<td>automationFramework.UpdateDayWorkCard@5a01ccaa</td></tr>
+<tr>
+<td title='automationFramework.UpdateDayWorkCard.updateDayWorkCard()'><b>updateDayWorkCard</b><br>Test class: automationFramework.UpdateDayWorkCard<br>Parameters: צירף טכוגרף, אין לינה</td>
+<td></td>
+<td>19</td>
+<td>automationFramework.UpdateDayWorkCard@5a01ccaa</td></tr>
+</table><p>
+</body>
+</html>

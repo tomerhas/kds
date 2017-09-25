@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [KDS]">
+  <test name="Work_Card(failed)">
+    <classes>
+      <class name="automationFramework.EmployeeCards">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.EmployeeCards -->
+      <class name="automationFramework.AddScheduleMapa">
+        <methods>
+          <include name="addScheduleMapa"/>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.AddScheduleMapa -->
+      <class name="automationFramework.OpenRechivimErrors">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="openRechivim"/>
+          <include name="beforeMethod"/>
+          <include name="openErrors"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.OpenRechivimErrors -->
+      <class name="automationFramework.EmptyActivityMapa">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.EmptyActivityMapa -->
+      <class name="automationFramework.AddActivity">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.AddActivity -->
+      <class name="automationFramework.AddSpecialSchedule">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.AddSpecialSchedule -->
+      <class name="automationFramework.EmptyActivityBetween">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.EmptyActivityBetween -->
+      <class name="automationFramework.UpdateCarNo">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.UpdateCarNo -->
+      <class name="automationFramework.UpdateDayWorkCard">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+          <include name="beforeMethod"/>
+        </methods>
+      </class> <!-- automationFramework.UpdateDayWorkCard -->
+      <class name="automationFramework.MenahelBameshek">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.MenahelBameshek -->
+      <class name="automationFramework.AddAbsences">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.AddAbsences -->
+    </classes>
+  </test> <!-- Work_Card(failed) -->
+  <test name="Kds_Pages(failed)">
+    <classes>
+      <class name="automationFramework.EmployeeCards">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="tearDownDriver"/>
+          <include name="chkEmployeeCards" invocation-numbers="0 1 2 3 4"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.EmployeeCards -->
+      <class name="automationFramework.AddScheduleMapa">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.AddScheduleMapa -->
+      <class name="automationFramework.OpenRechivimErrors">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.OpenRechivimErrors -->
+      <class name="automationFramework.EmptyActivityMapa">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.EmptyActivityMapa -->
+      <class name="automationFramework.AddActivity">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.AddActivity -->
+      <class name="automationFramework.AddSpecialSchedule">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.AddSpecialSchedule -->
+      <class name="automationFramework.EmptyActivityBetween">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.EmptyActivityBetween -->
+      <class name="automationFramework.UpdateCarNo">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.UpdateCarNo -->
+      <class name="automationFramework.UpdateDayWorkCard">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+          <include name="beforeMethod"/>
+        </methods>
+      </class> <!-- automationFramework.UpdateDayWorkCard -->
+      <class name="automationFramework.MenahelBameshek">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.MenahelBameshek -->
+      <class name="automationFramework.AddAbsences">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- automationFramework.AddAbsences -->
+    </classes>
+  </test> <!-- Kds_Pages(failed) -->
+</suite> <!-- Failed suite [KDS] -->
