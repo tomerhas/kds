@@ -38,7 +38,7 @@ public class Utilsfn {
 
 		
 		//change to http://kdstest
-		driver.navigate().to("http://kdsshaldor");
+		driver.navigate().to("http://kdstest");
 		// driver.get("http://igalr:DD2468@kdstest");
 
 	}

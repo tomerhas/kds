@@ -29,7 +29,7 @@ public class OpenRechivimErrors extends Base {
 		System.out.println(driver.getCurrentUrl());
 		//to do : change to kdstest
 		Assert.assertEquals(driver.getCurrentUrl(),
-				"http://kdsshaldor/Modules/Ovdim/Rechivim.aspx?id=31777&date=26/01/2017");
+				"http://kdstest/Modules/Ovdim/Rechivim.aspx?id=31777&date=26/01/2017");
 		//JavascriptExecutor executor = (JavascriptExecutor) driver;
 		//executor.executeScript("arguments[0].click();",
 				//Work_Card.BtnCloseErrors(driver));
@@ -60,7 +60,7 @@ public class OpenRechivimErrors extends Base {
 		System.out.println(result);
 		//to do : change to kdstest
 		Assert.assertEquals(result,
-				"http://kdsshaldor/Modules/Ovdim/WorkCardErrors.aspx?");
+				"http://kdstest/Modules/Ovdim/WorkCardErrors.aspx?");
 		
 
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
