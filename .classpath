@@ -11,40 +11,16 @@
 	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/ojdbc7_g.jar"/>
 	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/ojdbc7dms.jar"/>
 	<classpathentry kind="lib" path="C:/app/client/Administrator/product/12.1.0/client_1/jdbc/lib/ojdbc7dms_g.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/client-combined-3.0.1-nodeps.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/testng-6.9.9.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/cglib-nodep-3.2.4.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/commons-exec-1.3.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/commons-io-2.5.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/commons-lang3-3.4.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/cssparser-0.9.20.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/gson-2.3.1.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/guava-19.0.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/hamcrest-core-1.3.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/hamcrest-library-1.3.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/htmlunit-2.23.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/htmlunit-core-js-2.23.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/httpclient-4.5.2.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/httpcore-4.4.4.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/httpmime-4.5.2.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/javax.servlet-api-3.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/jetty-io-9.2.13.v20150730.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/jetty-util-9.2.13.v20150730.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/jna-4.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/jna-platform-4.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/junit-4.12.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/neko-htmlunit-2.23.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/netty-3.5.7.Final.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/phantomjsdriver-1.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/sac-1.3.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/serializer-2.7.2.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/websocket-api-9.2.15.v20160210.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/websocket-client-9.2.15.v20160210.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/websocket-common-9.2.15.v20160210.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/xalan-2.7.2.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/xercesImpl-2.11.0.jar"/>
-	<classpathentry kind="lib" path="C:/selenium/selenium 3.0.1/lib/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="lib" path="C:/selenium/selenium 3.141.59/client-combined-3.141.59.jar"/>
+	<classpathentry kind="lib" path="C:/selenium/selenium 3.141.59/client-combined-3.141.59-sources.jar"/>
+	<classpathentry kind="lib" path="C:/selenium/selenium 3.141.59/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="C:/selenium/selenium 3.141.59/testng-6.9.9.jar"/>
+	<classpathentry kind="lib" path="C:/selenium/selenium 3.141.59/libs/byte-buddy-1.8.15.jar"/>
+	<classpathentry kind="lib" path="C:/selenium/selenium 3.141.59/libs/commons-exec-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/selenium/selenium 3.141.59/libs/guava-25.0-jre.jar"/>
+	<classpathentry kind="lib" path="C:/selenium/selenium 3.141.59/libs/okhttp-3.11.0.jar"/>
+	<classpathentry kind="lib" path="C:/selenium/selenium 3.141.59/libs/okio-1.14.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/selenium/selenium 3.141.59/jcommander-1.48.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -37,7 +37,7 @@ public  void createDriver() {
 	 driver = new InternetExplorerDriver();
 	 DesiredCapabilities cap = new DesiredCapabilities();
 		cap.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
-	  driver.navigate().to("http://kdstest");
+	  driver.navigate().to("http://kdsnew");
 }
 	
 
